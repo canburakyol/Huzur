@@ -1,0 +1,1375 @@
+:root {
+  /* Green & Gold Theme (Main App) */
+  --bg-gradient-start: #0f3d2e;
+  /* Deep Islamic Green */
+  --bg-gradient-end: #1a5c45;
+  /* Lighter Green */
+  --bg-gradient-accent: #d4af37;
+  /* Gold */
+
+  --text-color: #f0e68c;
+  /* Cream/Gold Text */
+  --text-color-light: #d4af37;
+  /* Gold Text */
+  --text-color-muted: #a3b18a;
+  /* Muted Green/Grey */
+
+  --primary-color: #d4af37;
+  /* Gold */
+  --primary-dark: #b8860b;
+  /* Dark Gold */
+  --accent-color: #f1c40f;
+  /* Bright Gold */
+
+  --glass-bg: rgba(15, 61, 46, 0.7);
+  /* Dark Green Glass */
+  --glass-border: rgba(212, 175, 55, 0.3);
+  /* Gold Border */
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+
+  --card-bg: rgba(20, 70, 55, 0.8);
+  --input-bg: rgba(255, 255, 255, 0.1);
+  --input-border: #d4af37;
+
+  --success-color: #2ecc71;
+  --warning-color: #f39c12;
+
+  /* Font Settings Defaults */
+  --arabic-font-size: 24px;
+  --turkish-font-size: 16px;
+  --arabic-font-family: 'Amiri', serif;
+  --quran-line-height: 1.8;
+
+  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-size-base: 18px;
+  --font-size-large: 24px;
+  --font-size-xl: 42px;
+}
+
+/* Scoped Original Theme for Quran Section */
+.quran-theme {
+  /* Yavruağzı (Peach) Theme - Original Concept */
+  --bg-gradient-start: #ffecd2;
+  --bg-gradient-end: #fcb69f;
+  --bg-gradient-accent: #ff9966;
+
+  --text-color: #2c3e50;
+  --text-color-light: #5d6d7e;
+  --text-color-muted: #7f8c8d;
+
+  --primary-color: #d35400;
+  --primary-dark: #a04000;
+  --accent-color: #e67e22;
+
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: 0 8px 32px 0 rgba(211, 84, 0, 0.1);
+
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --input-bg: #ffffff;
+  --input-border: #fcb69f;
+
+  /* Override body/global styles for this container */
+  background-color: var(--bg-gradient-start);
+  background-image: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  color: var(--text-color);
+}
+
+/* Dark Mode - Otomatik uyum */
+[data-theme='dark'] {
+  --bg-gradient-start: #2c3e50;
+  --bg-gradient-end: #34495e;
+  --text-color: #ecf0f1;
+  --glass-bg: rgba(44, 62, 80, 0.8);
+  /* ... diğer koyu mod ayarları ... */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  font-family: var(--font-main);
+
+  /* Green/Gold Background */
+  background-color: var(--bg-gradient-start);
+  background-image:
+    /* Cami Silueti (Alt Kısımda) - Gold Color */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23d4af37' fill-opacity='0.1' d='M0,320L0,280L60,280L60,200L80,180L100,200L100,280L180,280C180,280,200,180,320,180C440,180,460,280,460,280L540,280L540,160L560,140L580,160L580,280L640,280C640,280,680,100,880,100C1080,100,1120,280,1120,280L1180,280L1180,140L1200,120L1220,140L1220,280L1440,280L1440,320Z'%3E%3C/path%3E%3C/svg%3E"),
+    /* Ana Gradient */
+    linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+
+  background-position: center bottom, center;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 100% auto, cover;
+  background-attachment: fixed, fixed;
+
+  color: var(--text-color);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* Arka plan deseni kaldırıldı */
+body::after {
+  display: none;
+}
+
+#root {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.8s ease-out;
+  position: relative;
+  z-index: 1;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  text-shadow: none;
+}
+
+h1 {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(211, 84, 0, 0.1);
+}
+
+.btn {
+  display: inline-block;
+  padding: 16px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 16px;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--text-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  box-shadow: 0 6px 20px rgba(211, 84, 0, 0.4);
+}
+
+/* Compact Daily Content */
+.daily-item-compact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 60px;
+  padding: 8px 6px;
+  margin-bottom: 0;
+  animation: fadeIn 0.5s ease-out backwards;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.daily-item-compact:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.daily-item-compact:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.daily-item-compact:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.daily-title-compact {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--text-color-light);
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+
+/* Horizontal Prayer Times */
+.prayer-times-horizontal {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.prayer-times-horizontal::-webkit-scrollbar {
+  display: none;
+}
+
+.prayer-time-card {
+  background: rgba(255, 255, 255, 0.4);
+  padding: 10px;
+  border-radius: 12px;
+  min-width: 70px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  color: var(--text-color);
+}
+
+.prayer-time-card.active {
+  background: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
+  transform: scale(1.05);
+  border: none;
+}
+
+.prayer-time-card span:first-child {
+  font-size: 12px;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.prayer-time-card span:last-child {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Feature Grid */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.feature-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 10px;
+  background: var(--glass-bg);
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-btn:active {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.feature-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  transition: transform 0.2s;
+}
+
+.feature-btn:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+.feature-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-top: 8px;
+}
+
+/* Bottom Navigation Bar */
+.bottom-nav {
+  position: fixed;
+  bottom: 50px;
+  /* Space for AdMob banner (50px height) */
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  /* Daha belirgin sınır */
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px 0;
+  z-index: 100;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (min-width: 601px) {
+  .bottom-nav {
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+[dir="rtl"] .bottom-nav {
+  transform: translateX(50%);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #2c3e50;
+  /* Tam koyu lacivert (En net görünüm) */
+  border-radius: 12px;
+  min-width: 70px;
+  opacity: 1 !important;
+  /* Saydamlığı engelle */
+}
+
+.nav-item:active {
+  transform: scale(0.95);
+}
+
+.nav-item svg {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  fill: none !important;
+  /* Dolguyu kapat */
+  stroke: currentColor !important;
+  /* Çizgi rengini metin renginden al */
+  stroke-width: 2px;
+  opacity: 1 !important;
+  /* İkon saydamlığını engelle */
+}
+
+.nav-item span {
+  font-size: 11px;
+  font-weight: 700;
+  /* Daha kalın yazı */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1 !important;
+  /* Metin saydamlığını engelle */
+}
+
+/* Aktif Navigasyon Öğesi */
+.nav-item.active {
+  color: var(--primary-color) !important;
+  /* Tema rengi (Turuncu) - Zorla uygula */
+  background: rgba(211, 84, 0, 0.1);
+}
+
+.nav-item.active svg {
+  transform: translateY(-2px);
+  stroke-width: 2.5px;
+  /* İkonu biraz kalınlaştır */
+}
+
+.nav-item:hover:not(.active) {
+  color: var(--primary-dark);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* ==================== HAMBURGER MENU STYLES ==================== */
+
+/* FAB Button - Bottom Right (uses logical properties for RTL) */
+.hamburger-fab {
+  position: fixed;
+  bottom: 90px;
+  inset-inline-end: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  z-index: 200;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+}
+
+.hamburger-fab:active {
+  transform: scale(0.95);
+}
+
+/* Overlay */
+.hamburger-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Menu Container */
+.hamburger-menu {
+  width: 90%;
+  max-width: 400px;
+  max-height: 85vh;
+  background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  border-radius: 24px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.hamburger-header {
+  padding: 24px 20px;
+  text-align: center;
+  background: rgba(212, 175, 55, 0.1);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.hamburger-logo {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.hamburger-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0 0 4px 0;
+}
+
+.hamburger-subtitle {
+  font-size: 12px;
+  color: var(--text-color-muted);
+  margin: 0;
+}
+
+/* Grid */
+.hamburger-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hamburger-grid::-webkit-scrollbar {
+  width: 4px;
+}
+
+.hamburger-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.hamburger-grid::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+/* Menu Item */
+.hamburger-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 8px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 90px;
+}
+
+.hamburger-item:hover {
+  background: rgba(212, 175, 55, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.hamburger-item:active {
+  transform: scale(0.95);
+}
+
+.hamburger-item.active {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.hamburger-item.active .hamburger-item-label {
+  color: #fff;
+}
+
+.hamburger-item-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+  transition: transform 0.2s;
+}
+
+.hamburger-item:hover .hamburger-item-icon {
+  transform: scale(1.15);
+}
+
+.hamburger-item-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-color);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Footer */
+.hamburger-footer {
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-color-muted);
+  border-top: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Religious Days Component */
+.religious-days-container {
+  text-align: center;
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  inset-inline-end: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-color-muted);
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: var(--primary-color);
+}
+
+.religious-days-title {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.days-list {
+  text-align: start;
+}
+
+.day-item {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s;
+}
+
+.day-item.past {
+  opacity: 0.5;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.day-name {
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 18px;
+}
+
+.day-date {
+  color: var(--primary-color);
+  font-size: 16px;
+}
+
+/* ==================== STREAK BADGE STYLES ==================== */
+
+.streak-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.streak-badge .streak-emoji {
+  font-size: 16px;
+}
+
+.streak-badge .streak-count {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* 15+ gün için özel parlak badge */
+.streak-badge.milestone {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(255, 193, 7, 0.2));
+  border-color: var(--primary-color);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+  animation: streakGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes streakGlow {
+  from {
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  }
+}
+
+/* Badge Celebration Popup */
+.badge-celebration-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.badge-celebration {
+  background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  padding: 40px 32px;
+  border-radius: 24px;
+  text-align: center;
+  max-width: 340px;
+  width: 90%;
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 20px 60px rgba(212, 175, 55, 0.4);
+  animation: celebrationPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes celebrationPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.badge-celebration .badge-emoji {
+  font-size: 72px;
+  margin-bottom: 16px;
+  animation: badgeBounce 0.6s ease-out 0.3s;
+}
+
+@keyframes badgeBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.badge-celebration .badge-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 12px;
+}
+
+.badge-celebration .badge-message {
+  font-size: 16px;
+  color: var(--text-color);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.badge-celebration .badge-close-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.badge-celebration .badge-close-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.badge-celebration .badge-close-btn:active {
+  transform: scale(0.95);
+}
+
+/* ==================== MICRO ANIMATIONS ==================== */
+
+/* Utility Animation Classes */
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.animate-fadeInDown {
+  animation: fadeInDown 0.4s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.animate-pulse {
+  animation: pulse 0.4s ease-out;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-out;
+}
+
+.animate-bounce {
+  animation: bounce 0.5s ease-out;
+}
+
+.animate-heartbeat {
+  animation: heartbeat 0.3s ease-out;
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes confetti {
+  0% {
+    opacity: 0;
+    transform: translateY(0) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100vh) rotate(720deg);
+  }
+}
+
+/* Button Tap Feedback */
+.button-tap-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-tap-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+[dir="rtl"] .button-tap-effect::after {
+  transform: translate(50%, -50%);
+}
+
+.button-tap-effect:active::after {
+  width: 200%;
+  height: 200%;
+}
+
+/* Card Entry Animation (Staggered) */
+.card-stagger:nth-child(1) { animation-delay: 0.05s; }
+.card-stagger:nth-child(2) { animation-delay: 0.1s; }
+.card-stagger:nth-child(3) { animation-delay: 0.15s; }
+.card-stagger:nth-child(4) { animation-delay: 0.2s; }
+.card-stagger:nth-child(5) { animation-delay: 0.25s; }
+.card-stagger:nth-child(6) { animation-delay: 0.3s; }
+.card-stagger:nth-child(7) { animation-delay: 0.35s; }
+.card-stagger:nth-child(8) { animation-delay: 0.4s; }
+.card-stagger:nth-child(9) { animation-delay: 0.45s; }
+.card-stagger:nth-child(10) { animation-delay: 0.5s; }
+
+/* Skeleton Loading Animation */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 25%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* Floating Animation (subtle hover effect) */
+.hover-float {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-float:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Glow Effect on Focus/Active */
+.glow-effect {
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-effect:focus,
+.glow-effect.active {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+/* Progress Bar Animation */
+.progress-animate {
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Counter Number Animation */
+.counter-animate {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Success Checkmark Animation */
+@keyframes checkmark {
+  0% {
+    stroke-dashoffset: 50;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.checkmark-animate {
+  animation: checkmark 0.4s ease-out forwards;
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+}
+
+/* Like/Heart Button Animation */
+.like-button {
+  transition: transform 0.15s ease;
+}
+
+.like-button:active {
+  transform: scale(0.85);
+}
+
+.like-button.liked {
+  animation: heartbeat 0.3s ease-out;
+}
+
+/* Page Transition */
+.page-enter {
+  animation: fadeInUp 0.35s ease-out forwards;
+}
+
+.page-exit {
+  animation: fadeOut 0.2s ease-in forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Tooltip Animation */
+.tooltip-animate {
+  animation: tooltipPop 0.2s ease-out forwards;
+}
+
+@keyframes tooltipPop {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Number Count Up Animation */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.count-up {
+  animation: countUp 0.4s ease-out forwards;
+}
+
+/* Daily Tasks Widget Hover */
+.daily-tasks-widget:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.2);
+}
+
+.daily-tasks-widget:active {
+  transform: scale(0.98);
+}
+
+/* Feature Button Enhanced Animation */
+.feature-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(212, 175, 55, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+[dir="rtl"] .feature-btn::before {
+  transform: translate(50%, -50%);
+}
+
+.feature-btn:hover::before {
+  width: 150%;
+  height: 150%;
+}
+
+/* Smooth Icon Transitions */
+.icon-transition {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.icon-transition:hover {
+  transform: scale(1.1);
+}
+
+/* Badge Earned Celebration */
+.badge-new {
+  animation: badgeEarned 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes badgeEarned {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* Smooth Toggle Switch */
+.toggle-switch {
+  transition: background-color 0.3s ease;
+}
+
+.toggle-switch::before {
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Loading Spinner with Gradient */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==================== RTL (Right-to-Left) SUPPORT ==================== */
+
+/* General RTL Adjustments */
+[dir="rtl"] {
+  /* Text alignment */
+  text-align: right;
+}
+
+[dir="rtl"] body {
+  /* Flip background gradient for RTL */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23d4af37' fill-opacity='0.1' d='M0,320L0,280L60,280L60,200L80,180L100,200L100,280L180,280C180,280,200,180,320,180C440,180,460,280,460,280L540,280L540,160L560,140L580,160L580,280L640,280C640,280,680,100,880,100C1080,100,1120,280,1120,280L1180,280L1180,140L1200,120L1220,140L1220,280L1440,280L1440,320Z'%3E%3C/path%3E%3C/svg%3E"),
+    linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+}
+
+/* Arabic Font Support */
+[dir="rtl"],
+[lang="ar"] {
+  font-family: 'Amiri', 'Scheherazade New', 'Noto Naskh Arabic', 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* RTL specific text alignments */
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* Flip icons that indicate direction */
+[dir="rtl"] .icon-arrow-left,
+[dir="rtl"] .icon-arrow-right,
+[dir="rtl"] .icon-chevron-left,
+[dir="rtl"] .icon-chevron-right {
+  transform: scaleX(-1);
+}
+
+/* Prayer times horizontal scroll */
+[dir="rtl"] .prayer-times-horizontal {
+  direction: rtl;
+}
+
+/* Feature grid maintains LTR numbers */
+[dir="rtl"] .prayer-time-card span:last-child {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* Keep numbers LTR in RTL context */
+[dir="rtl"] .streak-count,
+[dir="rtl"] .package-price,
+[dir="rtl"] time,
+[dir="rtl"] .countdown-number {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* Hamburger menu grid in RTL */
+[dir="rtl"] .hamburger-grid {
+  direction: rtl;
+}
+
+/* Fix navigation items in RTL */
+[dir="rtl"] .nav-item {
+  flex-direction: column;
+}
+
+/* Daily content grid RTL */
+[dir="rtl"] .daily-content-grid {
+  direction: rtl;
+}
+
+/* Stories component RTL */
+[dir="rtl"] .stories-container {
+  direction: rtl;
+}
+
+/* Feature buttons maintain consistent layout */
+[dir="rtl"] .feature-btn {
+  flex-direction: column;
+}
+
+/* Modal close buttons */
+[dir="rtl"] .pro-modal .close-btn {
+  right: auto;
+  left: 16px;
+}
+
+/* Subscription terms alignment */
+[dir="rtl"] .subscription-terms {
+  text-align: right;
+}
+
+[dir="rtl"] .subscription-terms p {
+  text-align: right;
+}
+
+/* Legal links center alignment override */
+[dir="rtl"] .legal-links {
+  text-align: center;
+}
+
+/* Feature item flex direction */
+[dir="rtl"] .feature-item {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .feature-text {
+  text-align: right;
+}
