@@ -40,3 +40,17 @@ android/local.properties
 android/app/build/
 android/.gradle/
 .gradle_home/
+
+# Development scripts (Python/Node)
+*.py
+*.cjs
+
+# Documentation & Notes (not part of app)
+ONERILER.md
+PLAY_STORE_*.md
+PlayStore_Materials.md
+SEO_METADATA.md
+CHANGELOG.md
+localization_status_report.md
+
+# Keep README.md (important for repo)
