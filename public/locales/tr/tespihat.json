@@ -1,0 +1,77 @@
+{
+  "sections": {
+    "istigfar": {
+      "title": "İstiğfar",
+      "subtitle": "3 defa",
+      "meaning": "Yüce Allah'tan bağışlanma dilerim.",
+      "longMeaning": "Azîm ve Kerîm olan Allah'tan bağışlanma dilerim ki, O'ndan başka ilâh yoktur. O Hayy (diri) ve Kayyûm (her şeyi ayakta tutan) olandır. O'na tövbe ederim."
+    },
+    "entes-selam": {
+      "title": "Allâhümme Entes-Selâm",
+      "subtitle": "Namaz sonrası dua",
+      "meaning": "Allah'ım! Sen Selâm'sın (esenlik verensin). Selâmet ve esenlik sendendir. Ey celâl ve ikram sahibi! Sen mübarek ve yücesin."
+    },
+    "salavat": {
+      "title": "Salâvat-ı Şerîfe",
+      "subtitle": "Peygamberimize salât",
+      "meaning": "Allah'ım! Efendimiz Hz. Muhammed'e ve O'nun ailesine salât eyle (rahmet et, şerefini yücelt)."
+    },
+    "subhanallahi": {
+      "title": "Sübhânallâhi vel-Hamdülillâh",
+      "subtitle": "Tesbih, hamd ve tekbir",
+      "meaning": "Allah'ı tesbih ederim. Hamd Allah'a mahsustur. Allah'tan başka ilâh yoktur. Allah en büyüktür. Güç ve kuvvet ancak yüce Allah'ın yardımıyladır."
+    },
+    "ayetel-kursi": {
+      "title": "Âyetü'l-Kürsî",
+      "subtitle": "Bakara 255",
+      "meaning": "Rahman ve Rahim olan Allah'ın adıyla. Allah ki, O'ndan başka ilâh yoktur. Diridir, her şeyi ayakta tutandır. O'nu ne uyuklama tutar ne de uyku. Göklerde ve yerde ne varsa hepsi O'nundur. İzni olmadan O'nun katında şefaat edecek kimdir? Kullarının önlerini ve arkalarını bilir. Onlar O'nun ilminden dilediği kadarından başka bir şey kavrayamazlar. O'nun kürsüsü gökleri ve yeri kuşatmıştır. Onları korumak O'na ağır gelmez. O, çok yücedir, çok büyüktür."
+    }
+  },
+  "tesbihler": {
+    "subhanallah": {
+      "title": "Sübhanallah",
+      "meaning": "Allah'ı noksan sıfatlardan tenzih ederim."
+    },
+    "elhamdulillah": {
+      "title": "Elhamdülillah",
+      "meaning": "Her türlü övgü Allah'a mahsustur."
+    },
+    "allahuekber": {
+      "title": "Allahu Ekber",
+      "meaning": "Allah en büyüktür."
+    }
+  },
+  "tevhid": {
+    "title": "Tevhid",
+    "subtitle": "Tesbihlerin ardından",
+    "meaning": "Allah'tan başka ilâh yoktur; O tektir, ortağı yoktur. Mülk O'nundur, hamd O'na mahsustur. O'nun her şeye gücü yeter."
+  },
+  "dualar": {
+    "rabbena1": {
+      "title": "Rabbenâ Âtinâ",
+      "meaning": "Rabbimiz! Bize dünyada da ahirette de güzellik ver ve bizi ateş azabından koru."
+    },
+    "rabbena2": {
+      "title": "Rabbenağfirlî",
+      "meaning": "Rabbimiz! Hesap gününde beni, anne-babamı ve müminleri bağışla."
+    },
+    "rabbi-inni": {
+      "title": "Rabbi İnnî",
+      "meaning": "Rabbim! Bana indireceğin her hayra muhtacım."
+    },
+    "rabbi-habli": {
+      "title": "Rabbi Hablî",
+      "meaning": "Rabbim! Bana katından temiz bir nesil bağışla. Şüphesiz sen duaları işitensin."
+    }
+  },
+  "ui": {
+    "title": "Tespihat",
+    "postPrayerDhikr": "Namaz Sonrası Zikirler",
+    "tesbihs33": "33'lük Tesbihler",
+    "postPrayerDuas": "Namaz Sonrası Dualar",
+    "todayProgress": "Bugünkü İlerleme",
+    "reset": "Sıfırla",
+    "complete": "Tamamla",
+    "completed": "Tamamlandı ✓"
+  }
+}

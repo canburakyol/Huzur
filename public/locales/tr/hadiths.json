@@ -1,0 +1,473 @@
+{
+  "title": "Hadisler",
+  "daily": "Günün Hadisi",
+  "categories_title": "Kategoriler",
+  "count_suffix": "Hadis",
+  "categories": {
+    "iman": "İman",
+    "ibadet": "İbadet",
+    "ahlak": "Ahlak",
+    "aile": "Aile",
+    "ilim": "İlim",
+    "dua": "Dua",
+    "sabir": "Sabır",
+    "rizik": "Rızık"
+  },
+  "items": {
+    "1": {
+      "text": "Ameller niyetlere göredir. Herkesin niyet ettiği ne ise eline geçecek olan ancak odur.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ömer (r.a.)"
+    },
+    "2": {
+      "text": "Sizden biriniz, kendisi için istediğini kardeşi için de istemedikçe gerçek mümin olamaz.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Enes (r.a.)"
+    },
+    "3": {
+      "text": "Müslüman, dilinden ve elinden diğer Müslümanların güvende olduğu kimsedir.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Abdullah bin Amr (r.a.)"
+    },
+    "101": {
+      "text": "Allah'a ve ahiret gününe iman eden kimse ya hayır söylesin ya da sussun.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "102": {
+      "text": "Üç özellik vardır ki, bunlar kimde bulunursa o kimse imanın tadını alır: Allah ve Resûlünü her şeyden çok sevmek, sevdiği kimseyi yalnızca Allah rızası için sevmek, Allah kendisini küfürden kurtardıktan sonra tekrar küfre dönmekten ateşe atılmaktan korktuğu gibi korkmak.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Enes (r.a.)"
+    },
+    "103": {
+      "text": "Din samimiyettir.",
+      "source": "Müslim",
+      "narrator": "Hz. Temîm ed-Dârî (r.a.)"
+    },
+    "104": {
+      "text": "Müminlerin iman bakımından en mükemmeli, ahlakı en güzel olanıdır.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "105": {
+      "text": "Sizden kim bir kötülük görürse onu eliyle düzeltsin. Buna gücü yetmezse diliyle düzeltsin. Buna da gücü yetmezse kalbiyle buğzetsin. Bu ise imanın en zayıf derecesidir.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Saîd el-Hudrî (r.a.)"
+    },
+    "106": {
+      "text": "Kalbinde zerre kadar kibir bulunan kimse cennete giremez.",
+      "source": "Müslim",
+      "narrator": "Hz. Abdullah bin Mes\\'ud (r.a.)"
+    },
+    "107": {
+      "text": "Haya imandandır.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Abdullah bin Ömer (r.a.)"
+    },
+    "108": {
+      "text": "Amellerin en faziletlisi Allah için sevmek ve Allah için buğzetmektir.",
+      "source": "Ebû Dâvûd",
+      "narrator": "Hz. Ebû Zer (r.a.)"
+    },
+    "109": {
+      "text": "Kim Allah'tan başka ilah olmadığını bilerek ölürse cennete girer.",
+      "source": "Müslim",
+      "narrator": "Hz. Osman (r.a.)"
+    },
+    "110": {
+      "text": "Rab olarak Allah'tan, din olarak İslam'dan, peygamber olarak Muhammed'den razı olan kimse imanın tadını tatmıştır.",
+      "source": "Müslim",
+      "narrator": "Hz. Abbas (r.a.)"
+    },
+    "4": {
+      "text": "Namaz dinin direğidir.",
+      "source": "Beyhakî",
+      "narrator": "Hz. Ömer (r.a.)"
+    },
+    "5": {
+      "text": "Kim inanarak ve sevabını Allah'tan bekleyerek Ramazan orucunu tutarsa, geçmiş günahları bağışlanır.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "6": {
+      "text": "Temizlik imanın yarısıdır.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Mâlik el-Eş\\'arî (r.a.)"
+    },
+    "201": {
+      "text": "Kim iki serinlik namazını (sabah ve ikindi) kılarsa cennete girer.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Musa (r.a.)"
+    },
+    "202": {
+      "text": "Beş vakit namaz ve Cuma namazı diğer Cuma'ya kadar, büyük günahlardan kaçınıldığı takdirde, aralarında işlenen küçük günahlara kefarettir.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "203": {
+      "text": "Kulun Rabbine en yakın olduğu an secde halidir. Öyleyse secdede çokça dua ediniz.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "204": {
+      "text": "İslam beş temel üzerine kurulmuştur: Allah'tan başka ilah olmadığına ve Muhammed'in Allah'ın Resulü olduğuna şahitlik etmek, namaz kılmak, zekat vermek, haccetmek ve Ramazan orucunu tutmak.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Abdullah bin Ömer (r.a.)"
+    },
+    "205": {
+      "text": "Kim Kadir Gecesi'ni, faziletine inanarak ve sevabını Allah'tan bekleyerek ibadetle geçirirse, geçmiş günahları bağışlanır.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "206": {
+      "text": "Umre, diğer umreye kadar arada işlenen günahlara kefarettir. Kabul olunmuş Haccın karşılığı ise ancak cennettir.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "207": {
+      "text": "Oruçlu iken unutarak yiyip içen kimse orucunu tamamlasın. Çünkü ona Allah yedirmiş ve içirmiştir.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "208": {
+      "text": "Kim güzelce abdest alırsa, günahları tırnaklarının altına varıncaya kadar bütün vücudundan çıkar.",
+      "source": "Müslim",
+      "narrator": "Hz. Osman (r.a.)"
+    },
+    "209": {
+      "text": "İnsanlar ezan okumanın ve ilk safta namaz kılmanın sevabını bilselerdi, bunun için kura çekmekten başka çare bulamasalar, mutlaka kura çekerlerdi.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "210": {
+      "text": "Kim sabah akşam camiye giderse, Allah ona her gidiş gelişinde cennette bir ikram hazırlar.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "7": {
+      "text": "Ben ancak güzel ahlakı tamamlamak için gönderildim.",
+      "source": "Mâlik, Ahmed",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "8": {
+      "text": "Sizin en hayırlınız, ailesine karşı en hayırlı olanınızdır.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Âişe (r.a.)"
+    },
+    "9": {
+      "text": "Kardeşinin yüzüne gülümsemen sadakadır.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Ebû Zer (r.a.)"
+    },
+    "301": {
+      "text": "Güçlü kimse güreşte rakibini yenen değil, öfke anında kendine hakim olandır.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "302": {
+      "text": "Zandan sakının. Çünkü zan, sözlerin en yalanıdır.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "303": {
+      "text": "Birbirinize haset etmeyin, alışverişte birbirinizi kızıştırmayın, birbirinize kin beslemeyin, birbirinize sırt çevirmeyin.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "304": {
+      "text": "Allah'a ve ahiret gününe iman eden kimse misafirine ikram etsin.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "305": {
+      "text": "Doğruluk iyiliğe, iyilik de cennete götürür. Kişi doğru söyleye söyleye Allah katında sıddık (doğru sözlü) diye yazılır.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Abdullah bin Mes\\'ud (r.a.)"
+    },
+    "306": {
+      "text": "Müminin mümine bağlılığı, taşları birbirine kenetlenmiş bir bina gibidir.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Musa (r.a.)"
+    },
+    "307": {
+      "text": "İnsanlara teşekkür etmeyen, Allah'a da şükretmez.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "308": {
+      "text": "Nerede olursan ol Allah'tan kork. Kötülüğün arkasından hemen iyilik yap ki onu silsin. İnsanlarla güzel geçin.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Ebû Zer (r.a.)"
+    },
+    "309": {
+      "text": "Güzel söz sadakadır.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "310": {
+      "text": "Kolaylaştırınız, zorlaştırmayınız; müjdeleyiniz, nefret ettirmeyiniz.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Enes (r.a.)"
+    },
+    "10": {
+      "text": "Cennet annelerin ayakları altındadır.",
+      "source": "Nesâî",
+      "narrator": "Hz. Enes (r.a.)"
+    },
+    "11": {
+      "text": "Merhamet etmeyene merhamet olunmaz.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "12": {
+      "text": "Hepiniz çobansınız ve hepiniz güttüğünüzden sorumlusunuz.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Abdullah bin Ömer (r.a.)"
+    },
+    "401": {
+      "text": "Rabbin rızası, anne babanın rızasındadır. Rabbin gazabı da anne babanın gazabındadır.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Abdullah bin Amr (r.a.)"
+    },
+    "402": {
+      "text": "Rızkının genişletilmesini ve ömrünün uzatılmasını isteyen kimse akrabasını gözetip kollasın.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Enes (r.a.)"
+    },
+    "403": {
+      "text": "Akrabasıyla ilgisini kesen kimse cennete giremez.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Cübeyr bin Mut\\'im (r.a.)"
+    },
+    "404": {
+      "text": "Sizin en hayırlınız, kadınlarına karşı en hayırlı olanınızdır.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "405": {
+      "text": "Müminlerin iman bakımından en mükemmeli, ahlakı en güzel olanı ve ailesine en nazik davrananıdır.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Âişe (r.a.)"
+    },
+    "406": {
+      "text": "Çocuğun baba üzerindeki hakkı, ona güzel bir isim koyması ve güzel bir terbiye vermesidir.",
+      "source": "Beyhakî",
+      "narrator": "Hz. İbn Abbas (r.a.)"
+    },
+    "407": {
+      "text": "Hiçbir baba, çocuğuna güzel terbiyeden daha kıymetli bir miras bırakmamıştır.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Saîd bin Âs (r.a.)"
+    },
+    "408": {
+      "text": "Allah'tan korkun ve çocuklarınız arasında adaletli olun.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Nu\\'man bin Beşîr (r.a.)"
+    },
+    "409": {
+      "text": "Sen ve malın babana aitsiniz.",
+      "source": "İbn Mâce",
+      "narrator": "Hz. Câbir (r.a.)"
+    },
+    "410": {
+      "text": "Dünya bir geçimlikten ibarettir. Dünyanın en hayırlı nimeti ise saliha kadındır.",
+      "source": "Müslim",
+      "narrator": "Hz. Abdullah bin Amr (r.a.)"
+    },
+    "13": {
+      "text": "İlmi beşikten mezara kadar arayın.",
+      "source": "Hadis",
+      "narrator": "Hz. Peygamber (s.a.v.)"
+    },
+    "14": {
+      "text": "Kim ilim öğrenmek için bir yola girerse, Allah ona cennetin yolunu kolaylaştırır.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "501": {
+      "text": "İlim öğrenmek her Müslümana farzdır.",
+      "source": "İbn Mâce",
+      "narrator": "Hz. Enes (r.a.)"
+    },
+    "502": {
+      "text": "Sizin en hayırlınız Kuran'ı öğrenen ve öğretendir.",
+      "source": "Buhârî",
+      "narrator": "Hz. Osman (r.a.)"
+    },
+    "503": {
+      "text": "Alimler peygamberlerin varisleridir.",
+      "source": "Ebû Dâvûd",
+      "narrator": "Hz. Ebû Derdâ (r.a.)"
+    },
+    "504": {
+      "text": "Allah kimin hakkında hayır dilerse, onu dinde anlayış sahibi kılar.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Muâviye (r.a.)"
+    },
+    "505": {
+      "text": "İnsan öldüğü zaman amel defteri kapanır. Ancak üç şey hariç: Sadaka-i cariye, faydalanılan ilim ve kendisine dua eden hayırlı evlat.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "506": {
+      "text": "Alimin abide üstünlüğü, dolunayın diğer yıldızlara üstünlüğü gibidir.",
+      "source": "Ebû Dâvûd",
+      "narrator": "Hz. Ebû Derdâ (r.a.)"
+    },
+    "507": {
+      "text": "Kim bir hayra vesile olursa, o hayrı yapan kadar sevap kazanır.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Mes\\'ud (r.a.)"
+    },
+    "508": {
+      "text": "Melekler, ilim öğrenen kimseden hoşnut oldukları için kanatlarını onun üzerine gererler.",
+      "source": "Ebû Dâvûd",
+      "narrator": "Hz. Safvân bin Assâl (r.a.)"
+    },
+    "15": {
+      "text": "Dua ibadetin özüdür.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Nu\\'man bin Beşîr (r.a.)"
+    },
+    "16": {
+      "text": "Allah'a kabul edileceğinden emin olarak dua edin.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "601": {
+      "text": "Allah katında duadan daha kıymetli bir şey yoktur.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "602": {
+      "text": "Kim Allah'tan istemezse, Allah ona gazap eder.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "603": {
+      "text": "Sizden biriniz \"Dua ettim de kabul olmadı\" diyerek acele etmedikçe duası kabul olunur.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "604": {
+      "text": "Müslüman kişinin din kardeşi için gıyabında yaptığı dua kabul olunur.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Derdâ (r.a.)"
+    },
+    "605": {
+      "text": "Rabbiniz hayâ sahibidir, kerimdir. Kulu ellerini O'na kaldırdığında, o elleri boş çevirmekten hayâ eder.",
+      "source": "Ebû Dâvûd",
+      "narrator": "Hz. Selman (r.a.)"
+    },
+    "606": {
+      "text": "Rabbin kula en yakın olduğu an, gecenin son yarısıdır. Eğer o saatte Allah'ı zikredenlerden olabilirsen ol.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Amr bin Abese (r.a.)"
+    },
+    "607": {
+      "text": "Dua, inmiş ve inmemiş olan belalara karşı fayda verir. Ey Allah'ın kulları, duaya sarılın!",
+      "source": "Tirmizî",
+      "narrator": "Hz. İbn Ömer (r.a.)"
+    },
+    "608": {
+      "text": "Üç dua vardır ki, kabul olunacağında şüphe yoktur: Mazlumun duası, yolcunun duası ve babanın çocuğuna duası.",
+      "source": "Ebû Dâvûd",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "17": {
+      "text": "Sabır aydınlıktır.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Mâlik el-Eş\\'arî (r.a.)"
+    },
+    "18": {
+      "text": "Müminin işi ne güzeldir! Her hali hayırdır; sevinirse şükreder, bu onun için hayır olur; başına bir bela gelirse sabreder, bu da onun için hayır olur.",
+      "source": "Müslim",
+      "narrator": "Hz. Suheyb (r.a.)"
+    },
+    "701": {
+      "text": "Müslümana fenalık, hastalık, keder, hüzün, eziyet ve gam isabet etmez ki, hatta ayağına batan bir diken bile olsa, Allah bunları onun günahlarına kefaret kılar.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Saîd el-Hudrî (r.a.)"
+    },
+    "702": {
+      "text": "Sabır, musibetin ilk başa geldiği andadır.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Enes (r.a.)"
+    },
+    "703": {
+      "text": "Kim sabretmeye çalışırsa, Allah ona sabır verir. Hiç kimseye sabırdan daha hayırlı ve daha geniş bir nimet verilmemiştir.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Saîd el-Hudrî (r.a.)"
+    },
+    "704": {
+      "text": "Allah bir toplumu sevdiği zaman onları imtihan eder.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Enes (r.a.)"
+    },
+    "705": {
+      "text": "Kıyamet günü bela ehline sevapları verildiği zaman, dünyada afiyet içinde olanlar, derilerinin makaslarla doğranmış olmasını temenni ederler.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Câbir (r.a.)"
+    },
+    "706": {
+      "text": "Mümin erkek ve kadının nefsinde, çocuğunda ve malında bela eksik olmaz. Ta ki Allah'a günahsız olarak kavuşsun.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "707": {
+      "text": "Cennet zorluklarla, cehennem ise şehvetlerle kuşatılmıştır.",
+      "source": "Müslim",
+      "narrator": "Hz. Enes (r.a.)"
+    },
+    "19": {
+      "text": "İktisatlı davranan fakir düşmez.",
+      "source": "Ahmed",
+      "narrator": "Hz. Abdullah bin Mes\\'ud (r.a.)"
+    },
+    "20": {
+      "text": "Veren el, alan elden hayırlıdır.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Abdullah bin Ömer (r.a.)"
+    },
+    "801": {
+      "text": "Eğer siz Allah'a hakkıyla tevekkül etseydiniz, kuşları rızıklandırdığı gibi sizi de rızıklandırırdı. Onlar sabah aç gider, akşam tok dönerler.",
+      "source": "Tirmizî",
+      "narrator": "Hz. Ömer (r.a.)"
+    },
+    "802": {
+      "text": "Hiç kimse elinin emeğinden daha hayırlı bir yemek yememiştir.",
+      "source": "Buhârî",
+      "narrator": "Hz. Mikdâm (r.a.)"
+    },
+    "803": {
+      "text": "Alıcı ve satıcı birbirlerinden ayrılmadıkça muhayyerdirler. Eğer doğru söyler ve kusurları açıklarlarsa alışverişleri bereketli olur.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Hakîm bin Hizâm (r.a.)"
+    },
+    "804": {
+      "text": "Aza şükretmeyen çoğa da şükretmez.",
+      "source": "Ahmed",
+      "narrator": "Hz. Nu\\'man bin Beşîr (r.a.)"
+    },
+    "805": {
+      "text": "Allah'ım! Senden hidayet, takva, iffet ve gönül zenginliği isterim.",
+      "source": "Müslim",
+      "narrator": "Hz. Abdullah bin Mes\\'ud (r.a.)"
+    },
+    "806": {
+      "text": "Salih mal, salih kişi için ne güzeldir.",
+      "source": "Ahmed",
+      "narrator": "Hz. Amr bin Âs (r.a.)"
+    },
+    "807": {
+      "text": "Dul ve yoksullara yardım eden kimse, Allah yolunda cihat eden gibidir.",
+      "source": "Buhârî, Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    },
+    "808": {
+      "text": "Sadaka malı eksiltmez.",
+      "source": "Müslim",
+      "narrator": "Hz. Ebû Hüreyre (r.a.)"
+    }
+  }
+}

@@ -1,13 +1,23 @@
 import { useState, useMemo } from 'react';
-import { ArrowLeft, ChevronRight, ChevronDown, Book, Search, Volume2, X } from 'lucide-react';
-import { LIBRARY_CATEGORIES, BOOKS, RELIGIOUS_TEXTS, EDUCATION, REFERENCES, FAQ } from '../data/libraryData';
+import { ChevronRight, ChevronDown, Book, Search, Volume2, X, Lock, Play, Pause, Crown, Sparkles } from 'lucide-react';
+import { LIBRARY_CATEGORIES, BOOKS, RELIGIOUS_TEXTS, EDUCATION, REFERENCES, FAQ, AUDIO, VIDEO, PRAYERS } from '../data/libraryData';
+import { getReciters, getAudioUrlSync } from '../services/quranService';
+import { surahList } from '../data/surahList';
+import { isPro } from '../services/proService';
+import IslamicBackButton from './shared/IslamicBackButton';
 
-function Library({ onClose }) {
+function Library({ onClose, onShowPro }) {
     const [activeCategory, setActiveCategory] = useState(null);
     const [activeItem, setActiveItem] = useState(null);
+    const [activeReciter, setActiveReciter] = useState(null);
     const [expandedChapter, setExpandedChapter] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [playingIndex, setPlayingIndex] = useState(null);
+    const [audioPlayer, setAudioPlayer] = useState(null);
+    const [currentAudioUrl, setCurrentAudioUrl] = useState(null);
+    const [showPaywall, setShowPaywall] = useState(false);
+
+    const userIsPro = isPro();
 
     // Play Arabic letter using Web Speech API
     const speakArabic = (letter, index, e) => {
@@ -33,6 +43,26 @@ function Library({ onClose }) {
         setTimeout(() => {
             window.speechSynthesis.speak(utterance);
         }, 100);
+    };
+
+    // Handle Audio Playback
+    const toggleAudio = (url, index, e) => {
+        e.stopPropagation();
+
+        if (currentAudioUrl === url && audioPlayer && !audioPlayer.paused) {
+            audioPlayer.pause();
+            setPlayingIndex(null);
+        } else {
+            if (audioPlayer) {
+                audioPlayer.pause();
+            }
+            const newAudio = new Audio(url);
+            newAudio.play().catch(err => console.error("Audio play error:", err));
+            newAudio.onended = () => setPlayingIndex(null);
+            setAudioPlayer(newAudio);
+            setCurrentAudioUrl(url);
+            setPlayingIndex(index);
+        }
     };
 
     // Global search across all library content
@@ -118,6 +148,24 @@ function Library({ onClose }) {
             });
         });
 
+        // Search Audio
+        AUDIO.forEach(audio => {
+            if (audio.title.toLowerCase().includes(query)) {
+                results.push({ type: 'audio', category: 'Sesli Kütüphane', icon: audio.icon, item: audio });
+            }
+            audio.items?.forEach(track => {
+                if (track.title && track.title.toLowerCase().includes(query)) {
+                    results.push({
+                        type: 'track',
+                        category: audio.title,
+                        icon: audio.icon,
+                        item: audio,
+                        match: track.title
+                    });
+                }
+            });
+        });
+
         // Search FAQ
         FAQ.forEach(faq => {
             if (faq.category.toLowerCase().includes(query)) {
@@ -147,9 +195,19 @@ function Library({ onClose }) {
 
     // Go back navigation
     const goBack = () => {
-        if (activeItem) {
+        if (activeReciter) {
+            setActiveReciter(null);
+            if (audioPlayer) {
+                audioPlayer.pause();
+                setPlayingIndex(null);
+            }
+        } else if (activeItem) {
             setActiveItem(null);
             setExpandedChapter(null);
+            if (audioPlayer) {
+                audioPlayer.pause();
+                setPlayingIndex(null);
+            }
         } else if (activeCategory) {
             setActiveCategory(null);
         } else {
@@ -159,6 +217,7 @@ function Library({ onClose }) {
 
     // Get current title for header
     const getTitle = () => {
+        if (activeReciter) return activeReciter.name;
         if (activeItem) return activeItem.title || activeItem.category;
         if (activeCategory) return LIBRARY_CATEGORIES.find(c => c.id === activeCategory)?.title;
         return 'Kütüphane';
@@ -250,13 +309,22 @@ function Library({ onClose }) {
                     key={category.id}
                     className="glass-card"
                     style={{ marginBottom: '12px', padding: '20px', cursor: 'pointer' }}
-                    onClick={() => setActiveCategory(category.id)}
+                    onClick={() => {
+                        if (category.isPro && !userIsPro) {
+                            setShowPaywall(true);
+                        } else {
+                            setActiveCategory(category.id);
+                        }
+                    }}
                 >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                         <span style={{ fontSize: '40px' }}>{category.icon}</span>
                         <div style={{ flex: 1 }}>
-                            <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '18px' }}>
-                                {category.title}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '18px' }}>
+                                    {category.title}
+                                </div>
+                                {category.isPro && <Lock size={14} color="var(--primary-color)" />}
                             </div>
                             <div style={{ fontSize: '13px', color: 'var(--text-color-muted)', marginTop: '4px' }}>
                                 {category.data.length} içerik
@@ -277,6 +345,9 @@ function Library({ onClose }) {
             case 'texts': items = RELIGIOUS_TEXTS; break;
             case 'education': items = EDUCATION; break;
             case 'references': items = REFERENCES; break;
+            case 'prayers': items = PRAYERS; break;
+            case 'audio': items = AUDIO; break;
+            case 'video': items = VIDEO; break;
             case 'faq': items = FAQ; break;
         }
 
@@ -287,13 +358,22 @@ function Library({ onClose }) {
                         key={item.id}
                         className="glass-card"
                         style={{ marginBottom: '12px', padding: '16px', cursor: 'pointer' }}
-                        onClick={() => setActiveItem(item)}
+                        onClick={() => {
+                            if (item.isPro && !userIsPro) {
+                                setShowPaywall(true);
+                            } else {
+                                setActiveItem(item);
+                            }
+                        }}
                     >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                             <span style={{ fontSize: '32px' }}>{item.icon}</span>
                             <div style={{ flex: 1 }}>
-                                <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '16px' }}>
-                                    {item.title || item.category}
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '16px' }}>
+                                        {item.title || item.category}
+                                    </div>
+                                    {item.isPro && <Lock size={14} color="var(--primary-color)" />}
                                 </div>
                                 <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginTop: '2px' }}>
                                     {item.description}
@@ -307,9 +387,523 @@ function Library({ onClose }) {
         );
     };
 
+    // Render Reciter Content (List of Surahs)
+    const renderReciterContent = () => {
+        if (!activeReciter) return null;
+
+        return (
+            <div>
+                <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                    {activeReciter.name} - Hatim Seti
+                </p>
+                {surahList.map((surah, index) => {
+                    const audioUrl = getAudioUrlSync(surah.number, activeReciter.id);
+                    const isPlaying = playingIndex === index;
+
+                    return (
+                        <div
+                            key={surah.number}
+                            className="glass-card"
+                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
+                            onClick={(e) => toggleAudio(audioUrl, index, e)}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <button
+                                    style={{
+                                        background: isPlaying ? 'var(--primary-color)' : 'rgba(212, 175, 55, 0.2)',
+                                        border: 'none',
+                                        borderRadius: '50%',
+                                        width: '40px',
+                                        height: '40px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s'
+                                    }}
+                                >
+                                    {isPlaying ? 
+                                        <Pause size={20} color={isPlaying ? '#fff' : 'var(--primary-color)'} /> : 
+                                        <Play size={20} color={isPlaying ? '#fff' : 'var(--primary-color)'} />
+                                    }
+                                </button>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '15px' }}>
+                                        {surah.number}. {surah.name}
+                                    </div>
+                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                        {surah.nameTranslation} • {surah.ayahCount} Ayet
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    };
+
     // Render item content (chapters, items, topics, questions)
     const renderItemContent = () => {
         if (!activeItem) return null;
+
+        // Audio Library - Reciters List
+        if (activeItem.type === 'reciters') {
+            if (activeReciter) return renderReciterContent();
+
+            const reciters = getReciters();
+            return (
+                <div>
+                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                        {activeItem.description}
+                    </p>
+                    {reciters.map((reciter) => (
+                        <div
+                            key={reciter.id}
+                            className="glass-card"
+                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
+                            onClick={() => setActiveReciter(reciter)}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <div style={{
+                                    width: '40px',
+                                    height: '40px',
+                                    borderRadius: '50%',
+                                    background: 'var(--primary-color)',
+                                    color: '#fff',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontSize: '18px'
+                                }}>
+                                    🎤
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '15px' }}>
+                                        {reciter.name}
+                                    </div>
+                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                        {reciter.country}
+                                    </div>
+                                </div>
+                                <ChevronRight size={18} color="var(--text-color-muted)" />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        // Audio Library - Playlist
+        if (activeItem.type === 'playlist') {
+            return (
+                <div>
+                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                        {activeItem.description}
+                    </p>
+                    {activeItem.items.map((track, index) => (
+                        <div
+                            key={index}
+                            className="glass-card"
+                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
+                            onClick={(e) => toggleAudio(track.url, index, e)}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <button
+                                    style={{
+                                        background: playingIndex === index ? 'var(--primary-color)' : 'rgba(212, 175, 55, 0.2)',
+                                        border: 'none',
+                                        borderRadius: '50%',
+                                        width: '40px',
+                                        height: '40px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s'
+                                    }}
+                                >
+                                    {playingIndex === index ? 
+                                        <Pause size={20} color={playingIndex === index ? '#fff' : 'var(--primary-color)'} /> : 
+                                        <Play size={20} color={playingIndex === index ? '#fff' : 'var(--primary-color)'} />
+                                    }
+                                </button>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '15px' }}>
+                                        {track.title}
+                                    </div>
+                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                        {track.duration}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+
+
+        // Prophet Prayers
+        if (activeItem.type === 'prayer') {
+            const audioUrl = getAudioUrlSync(activeItem.surahNumber, activeItem.ayahNumber);
+            const isPlaying = currentAudioUrl === audioUrl && audioPlayer && !audioPlayer.paused;
+
+            return (
+                <div>
+                    <div className="glass-card" style={{ padding: '24px', textAlign: 'center' }}>
+                        <div style={{ 
+                            fontSize: '14px', 
+                            color: 'var(--primary-color)', 
+                            fontWeight: '600',
+                            marginBottom: '8px',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px'
+                        }}>
+                            {activeItem.prophet}
+                        </div>
+                        
+                        <h2 style={{ 
+                            fontSize: '24px', 
+                            color: 'var(--text-color)', 
+                            marginBottom: '16px',
+                            fontWeight: '700'
+                        }}>
+                            {activeItem.title}
+                        </h2>
+
+                        <div style={{ 
+                            fontSize: '14px', 
+                            color: 'var(--text-color-muted)',
+                            marginBottom: '24px',
+                            fontStyle: 'italic'
+                        }}>
+                            "{activeItem.situation}"
+                        </div>
+
+                        <div style={{ 
+                            background: 'rgba(212, 175, 55, 0.05)', 
+                            padding: '24px', 
+                            borderRadius: '16px',
+                            marginBottom: '24px'
+                        }}>
+                            <div style={{ 
+                                fontFamily: 'Amiri, serif', 
+                                fontSize: '28px', 
+                                color: 'var(--text-color)', 
+                                lineHeight: '2',
+                                marginBottom: '20px',
+                                direction: 'rtl'
+                            }}>
+                                {activeItem.arabic}
+                            </div>
+                            
+                            <div style={{ 
+                                fontSize: '16px', 
+                                color: 'var(--text-color-muted)', 
+                                marginBottom: '16px',
+                                lineHeight: '1.6'
+                            }}>
+                                {activeItem.turkish}
+                            </div>
+
+                            <div style={{ 
+                                fontSize: '18px', 
+                                color: 'var(--primary-color)', 
+                                fontWeight: '500',
+                                lineHeight: '1.6'
+                            }}>
+                                {activeItem.meaning}
+                            </div>
+                        </div>
+
+                        <div style={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'space-between',
+                            marginTop: '24px'
+                        }}>
+                            <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                Kaynak: {activeItem.source}
+                            </div>
+
+                            <button
+                                onClick={(e) => toggleAudio(audioUrl, activeItem.id, e)}
+                                style={{
+                                    background: 'var(--primary-color)',
+                                    color: '#fff',
+                                    border: 'none',
+                                    borderRadius: '50px',
+                                    padding: '12px 24px',
+                                    fontSize: '16px',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    boxShadow: '0 4px 15px rgba(212, 175, 55, 0.3)'
+                                }}
+                            >
+                                {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+                                {isPlaying ? 'Durdur' : 'Dinle'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Video Library - İslami Akademi Episodes
+        if (activeItem.type === 'video') {
+            return (
+                <div>
+                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                        {activeItem.description}
+                    </p>
+                    
+                    {/* Series Info */}
+                    <div className="glass-card" style={{ 
+                        marginBottom: '16px', 
+                        padding: '16px',
+                        background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(155, 89, 182, 0.1))'
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <span style={{ fontSize: '36px' }}>{activeItem.icon}</span>
+                            <div>
+                                <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '16px' }}>
+                                    {activeItem.episodes?.length || 0} Bölüm
+                                </div>
+                                <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                    Premium İçerik • Video Serisi
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Episode List */}
+                    {activeItem.episodes?.map((episode, index) => (
+                        <div
+                            key={index}
+                            className="glass-card"
+                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <div style={{
+                                    width: '56px',
+                                    height: '40px',
+                                    borderRadius: '8px',
+                                    background: 'linear-gradient(135deg, rgba(155, 89, 182, 0.3), rgba(52, 152, 219, 0.3))',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontSize: '20px',
+                                    position: 'relative'
+                                }}>
+                                    {episode.thumbnail}
+                                    <div style={{
+                                        position: 'absolute',
+                                        bottom: '-4px',
+                                        right: '-4px',
+                                        background: 'var(--primary-color)',
+                                        borderRadius: '50%',
+                                        width: '20px',
+                                        height: '20px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <Play size={10} color="#fff" />
+                                    </div>
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '14px' }}>
+                                        {episode.number}. {episode.title}
+                                    </div>
+                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                        ⏱️ {episode.duration}
+                                    </div>
+                                </div>
+                                <ChevronRight size={18} color="var(--text-color-muted)" />
+                            </div>
+                        </div>
+                    ))}
+
+                    {/* Coming Soon Notice */}
+                    <div style={{ 
+                        textAlign: 'center', 
+                        padding: '20px',
+                        color: 'var(--text-color-muted)',
+                        fontSize: '13px'
+                    }}>
+                        🎬 Video içerikler yakında eklenecek
+                    </div>
+                </div>
+            );
+        }
+
+        // External Video - YouTube Channel/Playlist Redirect
+        if (activeItem.type === 'external_video') {
+            const openYouTube = (url) => {
+                window.open(url, '_blank', 'noopener,noreferrer');
+            };
+
+            const youtubeSearchUrl = activeItem.searchQuery 
+                ? `https://www.youtube.com/results?search_query=${encodeURIComponent(activeItem.searchQuery)}`
+                : null;
+
+            return (
+                <div>
+                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                        {activeItem.description}
+                    </p>
+                    
+                    {/* Source Info */}
+                    <div className="glass-card" style={{ 
+                        marginBottom: '16px', 
+                        padding: '16px',
+                        background: 'linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(155, 89, 182, 0.1))'
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <div style={{
+                                width: '48px',
+                                height: '48px',
+                                borderRadius: '12px',
+                                background: '#ff0000',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <Play size={24} color="#fff" />
+                            </div>
+                            <div style={{ flex: 1 }}>
+                                <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '15px' }}>
+                                    {activeItem.source}
+                                </div>
+                                <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                    YouTube Kanalı • {activeItem.topics?.length || 0} Konu
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Topics List */}
+                    <div style={{ marginBottom: '16px' }}>
+                        <div style={{ 
+                            fontSize: '13px', 
+                            fontWeight: '600', 
+                            color: 'var(--text-color-muted)',
+                            marginBottom: '10px'
+                        }}>
+                            📚 İçerik Konuları
+                        </div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                            {activeItem.topics?.map((topic, index) => (
+                                <span 
+                                    key={index}
+                                    style={{
+                                        padding: '6px 12px',
+                                        background: 'rgba(212, 175, 55, 0.1)',
+                                        borderRadius: '20px',
+                                        fontSize: '12px',
+                                        color: 'var(--primary-color)'
+                                    }}
+                                >
+                                    {topic}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        {activeItem.channelUrl && (
+                            <button
+                                onClick={() => openYouTube(activeItem.channelUrl)}
+                                style={{
+                                    width: '100%',
+                                    padding: '14px',
+                                    background: '#ff0000',
+                                    border: 'none',
+                                    borderRadius: '12px',
+                                    color: '#fff',
+                                    fontSize: '15px',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '8px'
+                                }}
+                            >
+                                <Play size={18} />
+                                YouTube Kanalına Git
+                            </button>
+                        )}
+
+                        {activeItem.playlistUrl && (
+                            <button
+                                onClick={() => openYouTube(activeItem.playlistUrl)}
+                                style={{
+                                    width: '100%',
+                                    padding: '14px',
+                                    background: 'transparent',
+                                    border: '2px solid #ff0000',
+                                    borderRadius: '12px',
+                                    color: '#ff0000',
+                                    fontSize: '15px',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '8px'
+                                }}
+                            >
+                                📋 Oynatma Listelerini Gör
+                            </button>
+                        )}
+
+                        {youtubeSearchUrl && (
+                            <button
+                                onClick={() => openYouTube(youtubeSearchUrl)}
+                                style={{
+                                    width: '100%',
+                                    padding: '14px',
+                                    background: 'var(--glass-bg)',
+                                    border: '1px solid var(--glass-border)',
+                                    borderRadius: '12px',
+                                    color: 'var(--text-color)',
+                                    fontSize: '14px',
+                                    fontWeight: '500',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '8px'
+                                }}
+                            >
+                                <Search size={16} />
+                                YouTube'da Ara
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Info Note */}
+                    <div style={{ 
+                        textAlign: 'center', 
+                        padding: '16px',
+                        marginTop: '16px',
+                        color: 'var(--text-color-muted)',
+                        fontSize: '12px',
+                        lineHeight: '1.5'
+                    }}>
+                        ℹ️ Video içerikler harici kaynaklardan sağlanmaktadır. 
+                        YouTube uygulamasına yönlendirileceksiniz.
+                    </div>
+                </div>
+            );
+        }
 
         // Books with chapters
         if (activeItem.chapters) {
@@ -546,18 +1140,7 @@ function Library({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={goBack}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={goBack} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',
@@ -574,6 +1157,140 @@ function Library({ onClose }) {
                 {activeCategory && !activeItem && renderCategoryItems()}
                 {activeItem && renderItemContent()}
             </div>
+
+            {/* Paywall Modal */}
+            {showPaywall && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'rgba(0, 0, 0, 0.8)',
+                    backdropFilter: 'blur(8px)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 1000,
+                    padding: '20px'
+                }}>
+                    <div style={{
+                        background: 'var(--card-bg)',
+                        borderRadius: '24px',
+                        padding: '32px 24px',
+                        maxWidth: '360px',
+                        width: '100%',
+                        textAlign: 'center',
+                        border: '1px solid var(--glass-border)',
+                        animation: 'fadeIn 0.3s ease-out'
+                    }}>
+                        {/* Premium Badge */}
+                        <div style={{
+                            width: '80px',
+                            height: '80px',
+                            borderRadius: '50%',
+                            background: 'linear-gradient(135deg, #d4af37 0%, #f4d03f 50%, #d4af37 100%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            margin: '0 auto 20px',
+                            boxShadow: '0 8px 32px rgba(212, 175, 55, 0.3)'
+                        }}>
+                            <Crown size={40} color="#fff" />
+                        </div>
+
+                        <h2 style={{ 
+                            color: 'var(--primary-color)', 
+                            margin: '0 0 12px',
+                            fontSize: '22px',
+                            fontWeight: '700'
+                        }}>
+                            Premium İçerik
+                        </h2>
+
+                        <p style={{ 
+                            color: 'var(--text-color-muted)', 
+                            fontSize: '14px',
+                            lineHeight: '1.6',
+                            margin: '0 0 24px'
+                        }}>
+                            Bu içerik Huzur Pro aboneliklerine özeldir. 
+                            Tüm premium özelliklere erişmek için Pro'ya yükseltin.
+                        </p>
+
+                        {/* Features */}
+                        <div style={{ 
+                            display: 'flex', 
+                            flexDirection: 'column', 
+                            gap: '10px',
+                            marginBottom: '24px',
+                            textAlign: 'left'
+                        }}>
+                            {[
+                                { icon: '🎧', text: 'Ünlü hafızlardan hatim setleri' },
+                                { icon: '📚', text: 'Sesli kitap ve sohbetler' },
+                                { icon: '🎬', text: 'İslami Akademi video serileri' },
+                                { icon: '✨', text: 'Reklamsız deneyim' }
+                            ].map((feature, i) => (
+                                <div key={i} style={{ 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    gap: '10px',
+                                    padding: '10px 12px',
+                                    background: 'rgba(212, 175, 55, 0.1)',
+                                    borderRadius: '10px'
+                                }}>
+                                    <span style={{ fontSize: '18px' }}>{feature.icon}</span>
+                                    <span style={{ fontSize: '13px', color: 'var(--text-color)' }}>
+                                        {feature.text}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* CTA Button */}
+                        <button
+                            onClick={() => {
+                                setShowPaywall(false);
+                                if (onShowPro) onShowPro();
+                            }}
+                            style={{
+                                width: '100%',
+                                padding: '16px',
+                                background: 'linear-gradient(135deg, #d4af37 0%, #f4d03f 100%)',
+                                border: 'none',
+                                borderRadius: '14px',
+                                color: '#000',
+                                fontSize: '16px',
+                                fontWeight: '700',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '8px',
+                                marginBottom: '12px'
+                            }}
+                        >
+                            <Sparkles size={18} />
+                            Pro'ya Yükselt
+                        </button>
+
+                        <button
+                            onClick={() => setShowPaywall(false)}
+                            style={{
+                                background: 'transparent',
+                                border: 'none',
+                                color: 'var(--text-color-muted)',
+                                fontSize: '14px',
+                                cursor: 'pointer',
+                                padding: '8px'
+                            }}
+                        >
+                            Belki Daha Sonra
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

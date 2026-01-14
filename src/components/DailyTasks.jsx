@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { ArrowLeft, Check, Circle, Trophy, Star, Flame, Target, Gift } from 'lucide-react';
+import { Check, Circle, Trophy, Star, Flame, Target, Gift } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { getTodayTasks, completeTask, uncompleteTask, getStats, getTodayProgress, getEarnedBadges } from '../services/dailyTasksService';
 
 const DailyTasks = ({ onClose }) => {
@@ -74,9 +75,7 @@ const DailyTasks = ({ onClose }) => {
     <div className="daily-tasks-container">
       {/* Header */}
       <div className="daily-tasks-header">
-        <button className="back-button" onClick={onClose}>
-          <ArrowLeft size={24} />
-        </button>
+        <IslamicBackButton onClick={onClose} size="medium" />
         <div className="header-content">
           <h1>{t('menu.dailyTasks')}</h1>
           <p className="subtitle">{t('home.dailyTasksSubtitle')}</p>

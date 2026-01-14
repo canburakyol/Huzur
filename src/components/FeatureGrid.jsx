@@ -1,26 +1,26 @@
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 /**
  * FeatureGrid Component
  * Grid of buttons to access various app features
+ * Memoized to prevent unnecessary re-renders
  */
-const FeatureGrid = ({ onSelectFeature }) => {
+const FeatureGrid = memo(({ onSelectFeature }) => {
   const { t } = useTranslation();
 
-  const features = [
+  // Memoize features array - 9 essential features for cleaner homepage
+  const features = useMemo(() => [
     { id: 'qibla', icon: '🧭', labelKey: 'features.qibla' },
     { id: 'zikirmatik', icon: '📿', labelKey: 'features.dhikr' },
-    { id: 'radio', icon: '📻', labelKey: 'features.radio' },
-    { id: 'mosque', icon: '🕌', labelKey: 'features.mosque' },
-    { id: 'calendar', icon: '📅', labelKey: 'features.days' },
-    { id: 'imsakiye', icon: '🌙', labelKey: 'features.imsakiye' },
-    { id: 'tracker', icon: '📝', labelKey: 'features.qada' },
-    { id: 'fasting', icon: '🍽️', labelKey: 'features.fasting' },
-    { id: 'hadiths', icon: '📖', labelKey: 'features.hadith' },
     { id: 'adhkar', icon: '☀️', labelKey: 'features.tasbih' },
-    { id: 'zakat', icon: '🤲', labelKey: 'features.zakat' },
-    { id: 'hatim', icon: '📖', labelKey: 'features.khatm' }
-  ];
+    { id: 'hatimCoach', icon: '🧠', labelKey: 'features.smartKhatm' },
+    { id: 'family', icon: '👨‍👩‍👧', labelKey: 'features.family' },
+    { id: 'imsakiye', icon: '🌙', labelKey: 'features.imsakiye' },
+    { id: 'hadiths', icon: '📖', labelKey: 'features.hadith' },
+    { id: 'radio', icon: '📻', labelKey: 'features.radio' },
+    { id: 'seerahMap', icon: '🗺️', labelKey: 'features.seerah' }
+  ], []);
 
   return (
     <div className="feature-grid" style={{ marginBottom: '20px' }}>
@@ -36,6 +36,9 @@ const FeatureGrid = ({ onSelectFeature }) => {
       ))}
     </div>
   );
-};
+});
+
+FeatureGrid.displayName = 'FeatureGrid';
 
 export default FeatureGrid;
+

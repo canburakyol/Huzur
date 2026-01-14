@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { X, ChevronLeft, Heart, Share2, RefreshCw, BookOpen } from 'lucide-react';
+import { ChevronLeft, Heart, Share2, BookOpen } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { contentService } from '../services/contentService';
 
 const Hadiths = ({ onClose }) => {
@@ -100,13 +101,11 @@ const Hadiths = ({ onClose }) => {
 
     if (loading) {
         return (
-            <div className="glass-card" style={{
-                position: 'relative',
-                height: '85vh',
+            <div className="app-container" style={{
+                minHeight: '100vh',
                 display: 'flex',
                 justifyContent: 'center',
-                alignItems: 'center',
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,245,255,0.95))'
+                alignItems: 'center'
             }}>
                 <div className="spinner"></div>
             </div>
@@ -119,25 +118,23 @@ const Hadiths = ({ onClose }) => {
         const category = categories.find(c => c.id === selectedHadith.category);
 
         return (
-            <div className="glass-card" style={{
-                position: 'relative',
-                height: '85vh',
+            <div className="app-container" style={{
+                minHeight: '100vh',
                 display: 'flex',
                 flexDirection: 'column',
-                padding: '20px',
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,245,255,0.95))'
+                padding: '20px'
             }}>
                 {/* Header */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                    <button onClick={goBack} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#667eea', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <button onClick={goBack} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '5px' }}>
                         <ChevronLeft size={24} />
                         <span>{t('common.back', 'Geri')}</span>
                     </button>
                     <div style={{ display: 'flex', gap: '12px' }}>
                         <button onClick={() => toggleFavorite(selectedHadith.id)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-                            <Heart size={24} color={isFav ? '#e74c3c' : '#666'} fill={isFav ? '#e74c3c' : 'none'} />
+                            <Heart size={24} color={isFav ? '#e74c3c' : 'var(--text-color-muted)'} fill={isFav ? '#e74c3c' : 'none'} />
                         </button>
-                        <button onClick={() => handleShare(selectedHadith)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}>
+                        <button onClick={() => handleShare(selectedHadith)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-color-muted)' }}>
                             <Share2 size={24} />
                         </button>
                     </div>
@@ -153,7 +150,7 @@ const Hadiths = ({ onClose }) => {
                             gap: '6px',
                             padding: '6px 14px',
                             borderRadius: '20px',
-                            background: category.color || '#667eea',
+                            background: category.color || 'var(--primary-color)',
                             color: 'white',
                             fontSize: '13px',
                             fontWeight: '600',
@@ -169,7 +166,7 @@ const Hadiths = ({ onClose }) => {
                         <div style={{
                             fontFamily: 'serif',
                             fontSize: '26px',
-                            color: '#2c3e50',
+                            color: 'var(--text-color)',
                             lineHeight: 1.8,
                             marginBottom: '24px',
                             direction: 'rtl'
@@ -181,7 +178,7 @@ const Hadiths = ({ onClose }) => {
                     {/* Türkçe/English */}
                     <div style={{
                         fontSize: '18px',
-                        color: '#34495e',
+                        color: 'var(--text-color)',
                         lineHeight: 1.7,
                         fontStyle: 'italic',
                         marginBottom: '24px',
@@ -191,8 +188,8 @@ const Hadiths = ({ onClose }) => {
                     </div>
 
                     {/* Kaynak */}
-                    <div style={{ color: '#7f8c8d', fontSize: '14px' }}>
-                        <div style={{ fontWeight: '600', color: '#667eea' }}>{selectedHadith.narrator}</div>
+                    <div style={{ color: 'var(--text-color-muted)', fontSize: '14px' }}>
+                        <div style={{ fontWeight: '600', color: 'var(--primary-color)' }}>{selectedHadith.narrator}</div>
                         <div style={{ marginTop: '4px' }}>({selectedHadith.source})</div>
                     </div>
                 </div>
@@ -205,21 +202,19 @@ const Hadiths = ({ onClose }) => {
         const categoryHadiths = getHadithsByCategory(selectedCategory.id);
 
         return (
-            <div className="glass-card" style={{
-                position: 'relative',
-                height: '85vh',
+            <div className="app-container" style={{
+                minHeight: '100vh',
                 display: 'flex',
                 flexDirection: 'column',
-                padding: '20px',
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,245,255,0.95))'
+                padding: '20px'
             }}>
                 {/* Header */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                    <button onClick={goBack} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#667eea', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <button onClick={goBack} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '5px' }}>
                         <ChevronLeft size={24} />
                         <span>{t('common.back', 'Geri')}</span>
                     </button>
-                    <h2 style={{ margin: 0, color: '#2c3e50', fontSize: '20px' }}>
+                    <h2 style={{ margin: 0, color: 'var(--text-color)', fontSize: '20px' }}>
                         {selectedCategory.icon} {selectedCategory.name}
                     </h2>
                     <div style={{ width: '60px' }}></div>
@@ -231,20 +226,21 @@ const Hadiths = ({ onClose }) => {
                         <div
                             key={hadith.id}
                             onClick={() => openHadith(hadith)}
+                            className="glass-card"
                             style={{
-                                background: 'rgba(255,255,255,0.8)',
+                                background: 'var(--card-bg)',
                                 borderRadius: '14px',
                                 padding: '16px',
                                 marginBottom: '12px',
                                 cursor: 'pointer',
-                                border: '1px solid rgba(0,0,0,0.05)',
+                                border: '1px solid var(--glass-border)',
                                 transition: 'all 0.2s ease'
                             }}
                         >
-                            <div style={{ fontSize: '15px', color: '#2c3e50', lineHeight: 1.6 }}>
+                            <div style={{ fontSize: '15px', color: 'var(--text-color)', lineHeight: 1.6 }}>
                                 "{hadith.text.substring(0, 100)}{hadith.text.length > 100 ? '...' : ''}"
                             </div>
-                            <div style={{ fontSize: '12px', color: '#7f8c8d', marginTop: '8px' }}>
+                            <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginTop: '8px' }}>
                                 {hadith.source}
                             </div>
                         </div>
@@ -256,31 +252,27 @@ const Hadiths = ({ onClose }) => {
 
     // Ana Sayfa
     return (
-        <div className="glass-card" style={{
-            position: 'relative',
-            height: '85vh',
+        <div className="app-container" style={{
+            minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
-            padding: '20px',
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,245,255,0.95))'
+            padding: '20px'
         }}>
             {/* Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <div></div>
-                <h2 style={{ margin: 0, color: '#2c3e50', fontSize: '22px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <BookOpen size={24} color="#667eea" /> {t('hadith.title', 'Hadisler')}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                <IslamicBackButton onClick={onClose} size="medium" />
+                <h2 style={{ margin: 0, color: 'var(--primary-color)', fontSize: '22px', display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
+                    <BookOpen size={24} color="var(--primary-color)" /> {t('hadith.title', 'Hadisler')}
                 </h2>
-                <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}>
-                    <X size={28} />
-                </button>
             </div>
 
             {/* Günün Hadisi */}
             {dailyHadith && (
                 <div
                     onClick={() => openHadith(dailyHadith)}
+                    className="glass-card"
                     style={{
-                        background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                        background: 'var(--primary-color)',
                         borderRadius: '16px',
                         padding: '20px',
                         marginBottom: '20px',
@@ -301,7 +293,7 @@ const Hadiths = ({ onClose }) => {
             )}
 
             {/* Kategoriler */}
-            <div style={{ fontSize: '14px', fontWeight: '600', color: '#666', marginBottom: '12px' }}>
+            <div style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text-color-muted)', marginBottom: '12px' }}>
                 {t('hadith.categories', 'Kategoriler')}
             </div>
             <div style={{ flex: 1, overflowY: 'auto' }}>
@@ -310,19 +302,20 @@ const Hadiths = ({ onClose }) => {
                         <div
                             key={category.id}
                             onClick={() => openCategory(category)}
+                            className="glass-card"
                             style={{
-                                background: 'rgba(255,255,255,0.8)',
+                                background: 'var(--card-bg)',
                                 borderRadius: '14px',
                                 padding: '18px',
                                 cursor: 'pointer',
-                                border: '1px solid rgba(0,0,0,0.05)',
+                                border: '1px solid var(--glass-border)',
                                 textAlign: 'center',
                                 transition: 'all 0.2s ease'
                             }}
                         >
                             <div style={{ fontSize: '28px', marginBottom: '8px' }}>{category.icon}</div>
-                            <div style={{ fontWeight: '600', color: '#2c3e50', fontSize: '14px' }}>{category.name}</div>
-                            <div style={{ fontSize: '11px', color: '#7f8c8d', marginTop: '4px' }}>
+                            <div style={{ fontWeight: '600', color: 'var(--text-color)', fontSize: '14px' }}>{category.name}</div>
+                            <div style={{ fontSize: '11px', color: 'var(--text-color-muted)', marginTop: '4px' }}>
                                 {getHadithsByCategory(category.id).length} {t('hadith.count_suffix', 'hadis')}
                             </div>
                         </div>
@@ -337,7 +330,7 @@ const Hadiths = ({ onClose }) => {
                             setView('category');
                         }}
                         style={{
-                            background: 'linear-gradient(135deg, #e74c3c, #c0392b)',
+                            background: '#e74c3c',
                             borderRadius: '14px',
                             padding: '16px',
                             marginTop: '16px',
@@ -359,4 +352,3 @@ const Hadiths = ({ onClose }) => {
 };
 
 export default Hadiths;
-

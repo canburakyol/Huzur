@@ -9,6 +9,7 @@ import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { storageService } from './storageService';
 import { STORAGE_KEYS } from '../constants';
+import { logger } from '../utils/logger';
 
 // FCM Token storage key
 const FCM_TOKEN_KEY = 'fcm_token';
@@ -26,7 +27,7 @@ export const FCMService = {
      */
     async initialize() {
         if (!Capacitor.isNativePlatform()) {
-            console.log('[FCM] Web platform - skipped');
+            logger.log('[FCM] Web platform - skipped');
             return null;
         }
 
@@ -35,7 +36,7 @@ export const FCMService = {
             const permStatus = await PushNotifications.requestPermissions();
             
             if (permStatus.receive !== 'granted') {
-                console.warn('[FCM] Push notification permission denied');
+                logger.warn('[FCM] Push notification permission denied');
                 return null;
             }
 
@@ -49,11 +50,11 @@ export const FCMService = {
             const storedToken = storageService.getString(STORAGE_KEYS.FCM_TOKEN);
             if (storedToken) {
                 this.token = storedToken;
-                console.log('[FCM] Using stored token');
+                logger.log('[FCM] Using stored token');
                 return storedToken;
             }
 
-            console.log('[FCM] Initialized successfully, waiting for token...');
+            logger.log('[FCM] Initialized successfully, waiting for token...');
             return null;
         } catch (error) {
             console.error('[FCM] Initialization error:', error);
@@ -68,14 +69,14 @@ export const FCMService = {
     setupListeners() {
         // Prevent duplicate listener registration
         if (this.listenersSetup) {
-            console.log('[FCM] Listeners already setup, skipping');
+            logger.log('[FCM] Listeners already setup, skipping');
             return;
         }
         this.listenersSetup = true;
 
         // Registration success - get token
         PushNotifications.addListener('registration', (token) => {
-            console.log('[FCM] Registration token:', token.value);
+            logger.sensitive('[FCM] Registration token received');
             this.token = token.value;
             storageService.setString(STORAGE_KEYS.FCM_TOKEN, token.value);
             
@@ -92,7 +93,7 @@ export const FCMService = {
 
         // Push notification received (foreground)
         PushNotifications.addListener('pushNotificationReceived', async (notification) => {
-            console.log('[FCM] Push received (foreground):', notification);
+            logger.log('[FCM] Push received (foreground)');
             
             // Show as local notification when app is in foreground
             await LocalNotifications.schedule({
@@ -109,7 +110,7 @@ export const FCMService = {
 
         // Push notification action (user tapped)
         PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
-            console.log('[FCM] Push action performed:', notification);
+            logger.log('[FCM] Push action performed');
             
             // Handle notification tap - navigate to relevant screen
             const data = notification.notification.data;
@@ -137,7 +138,7 @@ export const FCMService = {
         try {
             await PushNotifications.removeAllListeners();
         } catch (error) {
-            console.warn('[FCM] Failed to remove listeners:', error);
+            logger.warn('[FCM] Failed to remove listeners:', error);
         }
     }
 };
@@ -148,7 +149,7 @@ export const FCMService = {
  */
 export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
     if (!Capacitor.isNativePlatform()) {
-        console.log('[Alarm] Web platform - using fallback');
+        logger.log('[Alarm] Web platform - using fallback');
         return;
     }
 
@@ -182,7 +183,7 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
             await LocalNotifications.cancel({ notifications: prayerIds });
         }
     } catch (e) {
-        console.warn('[Alarm] Could not cancel existing notifications:', e);
+        logger.warn('[Alarm] Could not cancel existing notifications:', e);
     }
 
     Object.entries(prayerTimes).forEach(([key, timeStr]) => {
@@ -240,13 +241,13 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
     });
 
     if (notifications.length === 0) {
-        console.log('[Alarm] No notifications to schedule');
+        logger.log('[Alarm] No notifications to schedule');
         return;
     }
 
     try {
         await LocalNotifications.schedule({ notifications });
-        console.log(`[Alarm] Scheduled ${notifications.length} prayer notifications`);
+        logger.log(`[Alarm] Scheduled ${notifications.length} prayer notifications`);
         
         // Store scheduling info
         storageService.setItem(STORAGE_KEYS.LAST_PRAYER_SCHEDULE, {
@@ -297,7 +298,7 @@ export const createNotificationChannels = async () => {
             vibration: false
         });
 
-        console.log('[Channels] Notification channels created');
+        logger.log('[Channels] Notification channels created');
     } catch (error) {
         console.error('[Channels] Failed to create channels:', error);
     }

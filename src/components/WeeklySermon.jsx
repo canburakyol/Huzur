@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { ArrowLeft, ExternalLink, Calendar, Mic, FileText, Globe } from 'lucide-react';
+// import { useState } from 'react';
+import { ExternalLink, Calendar, Mic, FileText, Globe } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 
 // Diyanet hutbe kaynakları
 const HUTBE_SOURCES = [
@@ -42,7 +43,7 @@ function WeeklySermon({ onClose }) {
     const getCurrentFriday = () => {
         const today = new Date();
         const dayOfWeek = today.getDay();
-        const daysUntilFriday = (5 - dayOfWeek + 7) % 7;
+        // const daysUntilFriday = (5 - dayOfWeek + 7) % 7;
         const friday = new Date(today);
         friday.setDate(today.getDate() - ((dayOfWeek + 2) % 7)); // Last Friday
         return friday.toLocaleDateString('tr-TR', {
@@ -66,18 +67,7 @@ function WeeklySermon({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={onClose}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={onClose} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',

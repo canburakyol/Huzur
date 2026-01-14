@@ -4,6 +4,14 @@
     "tagline": "İslami Yaşam Asistanı",
     "version": "Sürüm"
   },
+  "greeting": {
+    "generic": "Hayırlı Günler",
+    "morning": "Hayırlı Sabahlar",
+    "noon": "Hayırlı Öğlenler",
+    "afternoon": "Hayırlı İkindiler",
+    "evening": "Hayırlı Akşamlar",
+    "night": "Hayırlı Geceler"
+  },
   "common": {
     "loading": "Yükleniyor...",
     "error": "Bir hata oluştu",
@@ -23,7 +31,224 @@
     "share": "Paylaş",
     "copied": "Kopyalandı!",
     "no_results": "Sonuç bulunamadı",
-    "copy_failed": "Kopyalama başarısız."
+    "copy_failed": "Kopyalama başarısız.",
+    "view": "Görüntüle",
+    "add": "Ekle",
+    "areYouSure": "Emin misiniz?"
+  },
+  "menu": {
+    "huzurMode": "Huzur Modu",
+    "spiritualJourney": "Manevi Yolculuk",
+    "dailyTasks": "Günlük Görevler",
+    "nuzulExplorer": "Nüzul Sebebi",
+    "wordByWord": "Kelime Kelime",
+    "tajweedTutor": "Tecvid Hocası",
+    "prayers": "Dualar",
+    "prayerTeacher": "Namaz Hocası",
+    "settings": "Ayarlar",
+    "fontSettings": "Yazı Ayarları",
+    "library": "Kütüphane",
+    "tafsirLibrary": "Tefsir Kütüphanesi",
+    "tespihat": "Tespihat",
+    "agenda": "Ajanda",
+    "hatim": "Hatim",
+    "multimedia": "Multimedya",
+    "greetingCards": "Tebrik Kartları",
+    "theme": "Tema",
+    "imsakiye": "İmsakiye",
+    "zikirmatik": "Zikirmatik",
+    "deedJournal": "Amel Defteri",
+    "liveBroadcast": "Canlı Yayın",
+    "zikirWorld": "Zikir Dünyası",
+    "hikmetname": "Hikmetname",
+    "esmaUlHusna": "Esmaül Hüsna",
+    "hadiths": "Hadisler",
+    "zakat": "Zekat",
+    "weeklySermon": "Haftalık Hutbe",
+    "support": "Destek",
+    "quranMemorize": "Hafızlık",
+    "mosque": "Cami Bul",
+    "goPro": "Pro'ya Geç",
+    "proMember": "PRO ÜYE",
+    "proMembership": "Pro Üyelik",
+    "version": "Sürüm",
+    "missedPrayers": "Kaza Takipçisi",
+    "islamicMeditation": "Tefekkür",
+    "seerahMap": "Siyer Haritası",
+    "spiritualCoach": "Manevi Rehber",
+    "prayerCircle": "Dua Kardeşliği",
+    "dailyFiqh": "Günün Fıkhı"
+  },
+  "prayerCircle": {
+    "title": "Dua Kardeşliği",
+    "intro": "Müminin mümine gıyabında yaptığı dua kabul olur. Birbirimize dua edelim.",
+    "placeholder": "Dua isteğinizi buraya yazın...",
+    "submit": "Dua İste",
+    "me": "Ben",
+    "prayers": "Dua",
+    "pray": "Dua Et",
+    "prayed": "Dua Edildi"
+  },
+  "dailyFiqh": {
+    "title": "Günün Fıkıh Bilgisi",
+    "answer": "Cevap",
+    "seeAll": "Tümünü Gör"
+  },
+  "meditation": {
+    "title": "İslami Tefekkür",
+    "description": "Nefes egzersizleri ve tefekkür ile iç huzurunuzu bulun. Her seans, manevi bir yolculuğa davettir.",
+    "minutes": "dakika",
+    "breathe": "Derin nefes al... Bırak... Rabbine odaklan...",
+    "sessions": {
+      "morning": "Sabah Tefekkürü",
+      "calm": "Sakinleşme",
+      "night": "Gece Huzuru",
+      "gratitude": "Şükür Meditasyonu"
+    }
+  },
+  "seerah": {
+    "title": "Siyer Haritası",
+    "allPeriods": "Tüm Dönemler",
+    "details": "Detaylar"
+  },
+  "huzurMode": {
+    "title": "Huzur Modu",
+    "rain": "Yağmur",
+    "forest": "Orman",
+    "ocean": "Okyanus",
+    "zikirSubhan": "Sübhanallah",
+    "ney": "Ney Taksimi",
+    "rahman": "Rahman Suresi",
+    "catNature": "Doğa",
+    "catDhikr": "Zikir",
+    "catMusic": "Enstrümantal",
+    "catQuran": "Kuran",
+    "minutes": "dk",
+    "natureSounds": "Doğa Sesleri"
+  },
+  "dailyTasks": {
+    "task": "Görev",
+    "pointsToday": "puan bugün kazandın",
+    "earnedBadges": "Kazanılan Rozetler",
+    "newBadge": "Yeni Rozet Kazandın!",
+    "congrats": "Tebrikler!",
+    "allTasksCompleted": "Bugünün tüm görevlerini tamamladın!",
+    "bonusPoints": "+{{points}} Bonus Puan!",
+    "categories": {
+      "namaz": "Namaz",
+      "kuran": "Kuran",
+      "zikir": "Zikir",
+      "ilim": "İlim",
+      "iyilik": "İyilik"
+    },
+    "badges": {
+      "first_task": {
+        "title": "İlk Adım",
+        "req": "İlk görevini tamamla"
+      },
+      "daily_complete": {
+        "title": "Gün Tamamlandı",
+        "req": "Bir günde tüm görevleri tamamla"
+      },
+      "week_streak": {
+        "title": "Haftalık Seri",
+        "req": "7 gün üst üste görev tamamla"
+      },
+      "point_100": {
+        "title": "100 Puan",
+        "req": "100 puan topla"
+      },
+      "point_500": {
+        "title": "500 Puan",
+        "req": "500 puan topla"
+      },
+      "point_1000": {
+        "title": "1000 Puan",
+        "req": "1000 puan topla"
+      },
+      "quran_master": {
+        "title": "Kuran Aşığı",
+        "req": "30 Kuran görevi tamamla"
+      },
+      "dhikr_master": {
+        "title": "Zikir Ehli",
+        "req": "50 zikir görevi tamamla"
+      }
+    },
+    "tasks": {
+      "pray_fajr": {
+        "title": "Sabah namazını kıl",
+        "desc": "Sabah namazını vaktinde eda et"
+      },
+      "pray_on_time": {
+        "title": "Bir vakit namazı vaktinde kıl",
+        "desc": "Herhangi bir vakti ilk 15 dakikada kıl"
+      },
+      "pray_sunnah": {
+        "title": "Sünnet namazı kıl",
+        "desc": "Farz namazlara ek olarak sünnet kıl"
+      },
+      "read_ayah": {
+        "title": "Günün ayetini oku",
+        "desc": "Ana sayfadaki günün ayetini oku ve anlamını düşün"
+      },
+      "read_page": {
+        "title": "Kuran'dan 1 sayfa oku",
+        "desc": "Kuran-ı Kerim'den en az bir sayfa oku"
+      },
+      "listen_quran": {
+        "title": "Kuran dinle",
+        "desc": "En az 5 dakika Kuran tilaveti dinle"
+      },
+      "memorize_ayah": {
+        "title": "Bir ayet ezberle",
+        "desc": "Yeni bir ayet ezberle veya tekrar et"
+      },
+      "dhikr_33": {
+        "title": "33 tesbih çek",
+        "desc": "Subhanallah, Elhamdulillah, Allahu Ekber"
+      },
+      "dhikr_morning": {
+        "title": "Sabah zikirlerini oku",
+        "desc": "Sabah ezkarlarını oku"
+      },
+      "dhikr_evening": {
+        "title": "Akşam zikirlerini oku",
+        "desc": "Akşam ezkarlarını oku"
+      },
+      "istigfar_100": {
+        "title": "100 istiğfar çek",
+        "desc": "Estağfirullah de"
+      },
+      "read_hadith": {
+        "title": "Bir hadis oku",
+        "desc": "Günün hadisini oku ve üzerinde düşün"
+      },
+      "learn_name": {
+        "title": "Allah'ın bir ismini öğren",
+        "desc": "Esma'ül Hüsna'dan bir isim öğren"
+      },
+      "watch_lecture": {
+        "title": "Dini video izle",
+        "desc": "Multimedya bölümünden bir video izle"
+      },
+      "help_someone": {
+        "title": "Birine yardım et",
+        "desc": "Bugün birine yardım eli uzat"
+      },
+      "smile": {
+        "title": "Gülümse",
+        "desc": "Gülümsemek sadakadır"
+      },
+      "share_knowledge": {
+        "title": "Bilgi paylaş",
+        "desc": "Öğrendiğin bir şeyi başkasına anlat"
+      },
+      "make_dua": {
+        "title": "Birisi için dua et",
+        "desc": "Bir Müslüman kardeşin için dua et"
+      }
+    }
   },
   "esma": {
     "title": "Esmaül Hüsna",
@@ -52,55 +277,13 @@
     "asr": "İkindi",
     "maghrib": "Akşam",
     "isha": "Yatsı",
-    "loading": "Namaz vakitleri yükleniyor..."
+    "loading": "Namaz vakitleri yükleniyor...",
+    "time": "Vakti"
   },
   "splash": {
     "translation": "Rabbim! Göğsümü aç ve işimi kolaylaştır.",
     "reference": "(Taha Suresi, 25-26)",
-    "tapToContinue": "Devam etmek için dokunun"
-  },
-  "countdown": {
-    "timeUntil": "{{prayer}} Vaktine",
-    "remaining": "Kalan Süre",
-    "time": "Vakit",
-    "hours": "saat",
-    "min": "dk",
-    "sec": "sn"
-  },
-  "menu": {
-    "huzurMode": "Huzur Modu",
-    "dailyTasks": "Günlük Görevler",
-    "nuzulExplorer": "Nüzul Sebebi",
-    "wordByWord": "Kelime Kelime",
-    "tajweedTutor": "Tecvid Öğreticisi",
-    "prayers": "Dualar",
-    "prayerTeacher": "Namaz Hocası",
-    "settings": "Ayarlar",
-    "fontSettings": "Yazı Tipi",
-    "library": "Kütüphane",
-    "tespihat": "Tespihat",
-    "agenda": "Ajanda",
-    "hatim": "Hatimler",
-    "multimedia": "Multimedya",
-    "greetingCards": "Tebrik Kartı",
-    "theme": "Tema",
-    "imsakiye": "İmsakiye",
-    "zikirmatik": "Zikirmatik",
-    "deedJournal": "Amel Defteri",
-    "liveBroadcast": "Canlı Yayın",
-    "zikirWorld": "Zikir Dünyası",
-    "hikmetname": "Hikmetname",
-    "esmaUlHusna": "Esmaül Hüsna",
-    "hadiths": "Vaktin Hadisi",
-    "zakat": "Zekatmatik",
-    "weeklySermon": "Haftanın Hutbesi",
-    "support": "Destek",
-    "quranMemorize": "Kuran Ezberle",
-    "mosque": "Mescit",
-    "goPro": "Pro'ya Geç",
-    "proMember": "PRO ÜYE",
-    "proMembership": "Pro Üyelik",
-    "version": "Versiyon"
+    "tapToContinue": "Devam etmek için dokun"
   },
   "settings": {
     "title": "Ayarlar",
@@ -202,33 +385,33 @@
     "start": "Başla"
   },
   "prayers": {
-    "title": "Dualar",
-    "categories": "kategori",
-    "prayer": "dua",
-    "quote": "Dua ibadetin özüdür.",
+    "title": "Dua Kitabı",
+    "categories": "Kategori",
+    "prayer": "Dua",
+    "quote": "Dua müminin silahıdır.",
     "quoteAuthor": "Hz. Muhammed (s.a.v.)",
     "prayerDetail": "Dua Detayı",
-    "pronunciation": "OKUNUŞU",
-    "meaning": "ANLAMI"
+    "pronunciation": "Okunuşu",
+    "meaning": "Anlamı"
   },
   "assistant": {
     "title": "İslami Asistan",
     "online": "Çevrimiçi",
     "remaining": "Kalan Hak",
-    "welcomeMessage": "Selamun aleyküm. Ben senin İslami asistanınım. Kuran-ı Kerim'den ayetler, sure özetleri veya dini konularda sana yardımcı olabilirim. Ne öğrenmek istersin?",
-    "errorMessage": "Üzgünüm, bir hata oluştu.",
-    "found": "Bulundu",
+    "welcomeMessage": "Selamun Aleyküm! Ben İslami Asistanınızım. Size nasıl yardımcı olabilirim?",
+    "errorMessage": "Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.",
+    "found": "ayet bulundu",
     "placeholder": "Bir soru sorun...",
-    "limitReached": "Günlük ücretsiz soru hakkınız doldu. Sınırsız sohbet ve daha fazlası için Pro sürüme geçin.",
+    "limitReached": "Günlük soru limitine ulaştınız. Sınırsız erişim için Pro'ya geçin.",
     "upgradePro": "Pro'ya Yükselt",
-    "proSoon": "Pro sürüm yakında!",
+    "proSoon": "Pro sürüm çok yakında!",
     "questions": {
-      "q1": "Namazın farzları nelerdir?",
-      "q2": "Sabır ile ilgili bir ayet",
-      "q3": "Fatiha suresinin anlamı",
+      "q1": "Namaz nasıl kılınır?",
+      "q2": "Orucu bozan şeyler nelerdir?",
+      "q3": "Zekat kimlere verilir?",
       "q4": "Abdest nasıl alınır?",
-      "q5": "Zekat kimlere verilir?",
-      "q6": "Kadir gecesinin önemi"
+      "q5": "Kuran okumanın fazileti",
+      "q6": "Peygamberimizin hayatı"
     }
   },
   "community": {
@@ -253,6 +436,7 @@
     }
   },
   "hatim": {
+    "title": "Hatim Takibi",
     "newHatim": "Yeni Hatim",
     "enterCode": "Kodu Gir",
     "loading": "Yükleniyor...",
@@ -337,41 +521,125 @@
         "isha": "Yatsı Namazı"
       },
       "sunnah": {
-        "tahajjud": { "title": "Teheccüd Namazı", "desc": "Gece namazı" },
-        "duha": { "title": "Duha/Kuşluk Namazı", "desc": "Kuşluk vakti namazı" },
-        "evvabin": { "title": "Evvabin Namazı", "desc": "Akşam namazından sonra" },
-        "quran": { "title": "Kuran Okumak", "desc": "En az 1 sayfa" },
-        "dhikr": { "title": "Sabah/Akşam Zikirleri", "desc": "Günlük ezkâr" },
-        "salawat": { "title": "Salavat Getirmek", "desc": "Peygamberimize salat ve selam" },
-        "istighfar": { "title": "İstiğfar", "desc": "Tövbe ve af dilemek" },
-        "fasting": { "title": "Sünnet Orucu", "desc": "Pazartesi, Perşembe veya 3 beyaz gün" }
+        "tahajjud": {
+          "title": "Teheccüd Namazı",
+          "desc": "Gece namazı"
+        },
+        "duha": {
+          "title": "Duha/Kuşluk Namazı",
+          "desc": "Kuşluk vakti namazı"
+        },
+        "evvabin": {
+          "title": "Evvabin Namazı",
+          "desc": "Akşam namazından sonra"
+        },
+        "quran": {
+          "title": "Kuran Okumak",
+          "desc": "En az 1 sayfa"
+        },
+        "dhikr": {
+          "title": "Sabah/Akşam Zikirleri",
+          "desc": "Günlük ezkâr"
+        },
+        "salawat": {
+          "title": "Salavat Getirmek",
+          "desc": "Peygamberimize salat ve selam"
+        },
+        "istighfar": {
+          "title": "İstiğfar",
+          "desc": "Tövbe ve af dilemek"
+        },
+        "fasting": {
+          "title": "Sünnet Orucu",
+          "desc": "Pazartesi, Perşembe veya 3 beyaz gün"
+        }
       },
       "goodDeeds": {
-        "charity": { "title": "Sadaka Vermek", "desc": "Maddi yardım" },
-        "family": { "title": "Aile Ziyareti", "desc": "Sıla-i rahim" },
-        "sick": { "title": "Hasta Ziyareti", "desc": "Hasta ziyaret etmek" },
-        "salam": { "title": "Selam Vermek", "desc": "Tanımadığına selam" },
-        "feeding": { "title": "Yemek İkram Etmek", "desc": "Misafire veya ihtiyaç sahibine" },
-        "kindWord": { "title": "Güzel Söz Söylemek", "desc": "Gönül almak, teselli etmek" },
-        "teaching": { "title": "İlim Öğretmek", "desc": "Bilgi paylaşmak" },
-        "patience": { "title": "Sabretmek", "desc": "Zorluğa sabır göstermek" }
+        "charity": {
+          "title": "Sadaka Vermek",
+          "desc": "Maddi yardım"
+        },
+        "family": {
+          "title": "Aile Ziyareti",
+          "desc": "Sıla-i rahim"
+        },
+        "sick": {
+          "title": "Hasta Ziyareti",
+          "desc": "Hasta ziyaret etmek"
+        },
+        "salam": {
+          "title": "Selam Vermek",
+          "desc": "Tanımadığına selam"
+        },
+        "feeding": {
+          "title": "Yemek İkram Etmek",
+          "desc": "Misafire veya ihtiyaç sahibine"
+        },
+        "kindWord": {
+          "title": "Güzel Söz Söylemek",
+          "desc": "Gönül almak, teselli etmek"
+        },
+        "teaching": {
+          "title": "İlim Öğretmek",
+          "desc": "Bilgi paylaşmak"
+        },
+        "patience": {
+          "title": "Sabretmek",
+          "desc": "Zorluğa sabır göstermek"
+        }
       },
       "avoid": {
-        "lying": { "title": "Yalan Söyledim", "desc": "Yalandan sakınmak" },
-        "backbiting": { "title": "Gıybet Ettim", "desc": "Dedikodu yapmak" },
-        "missedPrayer": { "title": "Namaz Kaçırdım", "desc": "Vaktin namazını kılmadım" },
-        "haramLook": { "title": "Harama Baktım", "desc": "Gözlerimi haramdan sakınmadım" },
-        "anger": { "title": "Öfkelendim", "desc": "Kontrolsüz öfke" },
-        "waste": { "title": "İsraf Ettim", "desc": "Gereksiz harcama" }
+        "lying": {
+          "title": "Yalan Söyledim",
+          "desc": "Yalandan sakınmak"
+        },
+        "backbiting": {
+          "title": "Gıybet Ettim",
+          "desc": "Dedikodu yapmak"
+        },
+        "missedPrayer": {
+          "title": "Namaz Kaçırdım",
+          "desc": "Vaktin namazını kılmadım"
+        },
+        "haramLook": {
+          "title": "Harama Baktım",
+          "desc": "Gözlerimi haramdan sakınmadım"
+        },
+        "anger": {
+          "title": "Öfkelendim",
+          "desc": "Kontrolsüz öfke"
+        },
+        "waste": {
+          "title": "İsraf Ettim",
+          "desc": "Gereksiz harcama"
+        }
       }
     },
     "badges": {
-      "firstStep": { "title": "İlk Adım", "desc": "İlk gün kayıt" },
-      "weekStreak": { "title": "Hafta Şeridi", "desc": "7 gün üst üste kayıt" },
-      "monthStreak": { "title": "Ay Şeridi", "desc": "30 gün üst üste kayıt" },
-      "hundredPoints": { "title": "Yüzlük", "desc": "Bir günde 100+ puan" },
-      "thousandPoints": { "title": "Bin Sevap", "desc": "Toplam 1000 puan" },
-      "fullDay": { "title": "Tam Gün", "desc": "Bir günde 5 vakit namaz" }
+      "firstStep": {
+        "title": "İlk Adım",
+        "desc": "İlk gün kayıt"
+      },
+      "weekStreak": {
+        "title": "Hafta Şeridi",
+        "desc": "7 gün üst üste kayıt"
+      },
+      "monthStreak": {
+        "title": "Ay Şeridi",
+        "desc": "30 gün üst üste kayıt"
+      },
+      "hundredPoints": {
+        "title": "Yüzlük",
+        "desc": "Bir günde 100+ puan"
+      },
+      "thousandPoints": {
+        "title": "Bin Sevap",
+        "desc": "Toplam 1000 puan"
+      },
+      "fullDay": {
+        "title": "Tam Gün",
+        "desc": "Bir günde 5 vakit namaz"
+      }
     },
     "motivation": {
       "0": "Her iyilik bir adım, her adım cennete yaklaştırır.",
@@ -404,13 +672,34 @@
       "ozel": "ÖZEL"
     },
     "days": {
-      "monday": { "name": "Pazartesi Orucu", "desc": "Hz. Peygamber'in tutmayı tavsiye ettiği gün" },
-      "thursday": { "name": "Perşembe Orucu", "desc": "Hz. Peygamber'in tutmayı tavsiye ettiği gün" },
-      "whiteDays": { "name": "Eyyam-ı Bıyd ({{day}}. gün)", "desc": "Her ayın 13-14-15. günleri oruç tutmak müstehaptır" },
-      "ashura": { "name": "Aşure Orucu", "desc": "Muharrem ayının 9 ve 10. günleri" },
-      "arafah": { "name": "Arefe Günü Orucu", "desc": "Hacda olmayanlar için büyük sevap" },
-      "shawwal": { "name": "Şevval Orucu", "desc": "Ramazan'dan sonra 6 gün oruç tutmak" },
-      "ramadan": { "name": "Ramazan Orucu", "desc": "Ramazan ayı orucu farzdır" }
+      "monday": {
+        "name": "Pazartesi Orucu",
+        "desc": "Hz. Peygamber'in tutmayı tavsiye ettiği gün"
+      },
+      "thursday": {
+        "name": "Perşembe Orucu",
+        "desc": "Hz. Peygamber'in tutmayı tavsiye ettiği gün"
+      },
+      "whiteDays": {
+        "name": "Eyyam-ı Bıyd ({{day}}. gün)",
+        "desc": "Her ayın 13-14-15. günleri oruç tutmak müstehaptır"
+      },
+      "ashura": {
+        "name": "Aşure Orucu",
+        "desc": "Muharrem ayının 9 ve 10. günleri"
+      },
+      "arafah": {
+        "name": "Arefe Günü Orucu",
+        "desc": "Hacda olmayanlar için büyük sevap"
+      },
+      "shawwal": {
+        "name": "Şevval Orucu",
+        "desc": "Ramazan'dan sonra 6 gün oruç tutmak"
+      },
+      "ramadan": {
+        "name": "Ramazan Orucu",
+        "desc": "Ramazan ayı orucu farzdır"
+      }
     }
   },
   "greetingCards": {
@@ -433,52 +722,184 @@
       "imageError": "Görüntü oluşturulamadı"
     },
     "categories": {
-      "cuma": { "title": "Cuma", "desc": "Hayırlı Cumalar mesajları" },
-      "kandil": { "title": "Kandil", "desc": "Kandil geceleri tebrik kartları" },
-      "ramazan": { "title": "Ramazan", "desc": "Ramazan ayı tebrik kartları" },
-      "bayram": { "title": "Bayram", "desc": "Ramazan ve Kurban Bayramı" },
-      "ozel-gunler": { "title": "Özel Günler", "desc": "Arefe, Hicri Yılbaşı, Aşure..." },
-      "dogum": { "title": "Doğum Günü", "desc": "İslami doğum günü kartları" },
-      "gecmis-olsun": { "title": "Geçmiş Olsun", "desc": "Şifa dilekleri" },
-      "taziye": { "title": "Taziye", "desc": "Başsağlığı mesajları" },
-      "hayirli-isler": { "title": "Hayırlı İşler", "desc": "Yeni ev, iş, araba vs." }
+      "cuma": {
+        "title": "Cuma",
+        "desc": "Hayırlı Cumalar mesajları"
+      },
+      "kandil": {
+        "title": "Kandil",
+        "desc": "Kandil geceleri tebrik kartları"
+      },
+      "ramazan": {
+        "title": "Ramazan",
+        "desc": "Ramazan ayı tebrik kartları"
+      },
+      "bayram": {
+        "title": "Bayram",
+        "desc": "Ramazan ve Kurban Bayramı"
+      },
+      "ozel-gunler": {
+        "title": "Özel Günler",
+        "desc": "Arefe, Hicri Yılbaşı, Aşure..."
+      },
+      "dogum": {
+        "title": "Doğum Günü",
+        "desc": "İslami doğum günü kartları"
+      },
+      "gecmis-olsun": {
+        "title": "Geçmiş Olsun",
+        "desc": "Şifa dilekleri"
+      },
+      "taziye": {
+        "title": "Taziye",
+        "desc": "Başsağlığı mesajları"
+      },
+      "hayirli-isler": {
+        "title": "Hayırlı İşler",
+        "desc": "Yeni ev, iş, araba vs."
+      }
     },
     "cards": {
-      "ramazan1": { "title": "Hoş Geldin Ramazan", "message": "On bir ayın sultanı Ramazan ayınız mübarek olsun. Rabbim bu ayda tüm dualarınızı kabul etsin." },
-      "ramazan2": { "title": "İftar Daveti", "message": "İftar soframızda sizleri görmekten mutluluk duyarız. Hayırlı iftarlar." },
-      "ramazan3": { "title": "Sahur Bereketi", "message": "Sahurlarınız bereketli, oruçlarınız makbul olsun. Hayırlı sahurlar." },
-      "ramazan4": { "title": "Kadir Gecesi", "message": "Bin aydan hayırlı Kadir Geceniz mübarek olsun. Dualarınız kabul olsun." },
-      "bayram1": { "title": "Ramazan Bayramı", "message": "Ramazan Bayramınız kutlu olsun. Bayram, sevdiklerinizle birlikte sağlık ve huzur içinde geçsin." },
-      "bayram2": { "title": "Kurban Bayramı", "message": "Kurban Bayramınız mübarek olsun. Kurbanlarınız kabul, dualarınız makbul olsun." },
-      "bayram3": { "title": "Bayram Sevinci", "message": "Bayramlar huzur, mutluluk ve sevgi demektir. Sevdiklerinizle nice bayramlara." },
-      "bayram4": { "title": "Bayram Namazı", "message": "Bayram namazlarınız kabul, dualarınız makbul olsun. Hayırlı bayramlar." },
-      "kandil1": { "title": "Mevlid Kandili", "message": "Alemlere rahmet olarak gönderilen Peygamberimizin doğum günü olan Mevlid Kandiliniz mübarek olsun." },
-      "kandil2": { "title": "Regaib Kandili", "message": "Üç ayların başlangıcı, Regaib Kandiliniz mübarek olsun. Rabbim dualarınızı kabul etsin." },
-      "kandil3": { "title": "Miraç Kandili", "message": "Peygamberimizin miracının yıl dönümü olan Miraç Kandiliniz mübarek olsun." },
-      "kandil4": { "title": "Berat Kandili", "message": "Af ve bağışlanma gecesi Berat Kandiliniz mübarek olsun. Rabbim tüm günahlarımızı affetsin." },
-      "cuma1": { "title": "Hayırlı Cumalar", "message": "Cuma gününüz mübarek olsun. Rabbim dualarınızı kabul etsin." },
-      "cuma2": { "title": "Cuma Bereketi", "message": "Günlerin en hayırlısı Cuma gününüz bereketli geçsin. Hayırlı Cumalar." },
-      "cuma3": { "title": "Cuma Duası", "message": "Bu mübarek günde yapılan duaların kabul edileceği müjdelenmiştir. Dualarınız kabul olsun." },
-      "cuma4": { "title": "Cuma Selamı", "message": "Cumanız mübarek, yüreğiniz huzurlu, eviniz bereketli olsun. Selam ve dua ile..." },
-      "cuma5": { "title": "Cuma Mesajı", "message": "Hayırlı Cumalar! Allah bu mübarek günde tüm dualarınızı kabul etsin, kalbinize huzur versin." },
-      "cuma6": { "title": "Cuma Salavat", "message": "Cuma günü Peygamberimize çokça salavat getirdiğiniz, dualarınızın kabul olduğu bir gün olsun." },
-      "cuma7": { "title": "Cuma Rahmet", "message": "Cuma gününün rahmeti üzerinize olsun. Ailenizle sağlık ve huzur içinde nice Cumalara." },
-      "cuma8": { "title": "Cuma Namazı", "message": "Cuma namazlarınız kabul olsun. Bu günün feyzi ve bereketi üzerinize olsun. Cumanız mübarek olsun." },
-      "dogum1": { "title": "Doğum Günü", "message": "Nice sağlıklı, huzurlu ve imanlı yıllara. Allah sana uzun ömür, hayırlı bir yaşam nasip etsin." },
-      "dogum2": { "title": "Yaş Günü", "message": "Yeni yaşın sağlık, mutluluk ve başarılarla dolu olsun. Doğum günün kutlu olsun." },
-      "gecmis1": { "title": "Geçmiş Olsun", "message": "Allah şifa versin, acil şifalar dilerim. Rabbim sağlığınızı nasip etsin." },
-      "gecmis2": { "title": "Şifa Dileği", "message": "Şifa Allah'tandır. Rabbim acil şifalar nasip etsin. Geçmiş olsun." },
-      "taziye1": { "title": "Başsağlığı", "message": "Başınız sağ olsun. Merhuma Allah'tan rahmet, size ve ailenize sabırlar diliyorum. Mekanı cennet olsun." },
-      "taziye2": { "title": "Taziye", "message": "Allah rahmet eylesin, mekanı cennet olsun. Geride kalanlara sabır ve metanet dilerim." },
-      "hayirli1": { "title": "Hayırlı Olsun", "message": "Yeni [eviniz/arabanız/işiniz] hayırlı uğurlu olsun. Allah bereketini versin." },
-      "hayirli2": { "title": "Güle Güle Kullanın", "message": "Hayırlı olsun, güle güle kullanın. Allah nazardan korusun, bereketini versin." },
-      "hayirli3": { "title": "Yeni İş", "message": "Yeni işiniz hayırlı olsun. Allah rızkınızı bol, işinizi bereketli kılsın." },
-      "arefe1": { "title": "Arefe Günü", "message": "Arefe gününüz mübarek olsun. Bugün tutulan oruç, geçmiş ve gelecek bir yılın günahlarına kefarettir." },
-      "hicri1": { "title": "Hicri Yılbaşı", "message": "Hicri yeni yılınız kutlu olsun. Yeni yıl hayırlara vesile olsun, dualarınız kabul olsun." },
-      "asure1": { "title": "Aşure Günü", "message": "Aşure gününüz mübarek olsun. Muharremin 10. gününde oruç tutmak sünnettir. Hayırlı Aşureler." },
-      "ucaylar1": { "title": "Üç Aylar", "message": "Üç aylarınız mübarek olsun. Recep, Şaban ve Ramazan ayları hayırlara vesile olsun." },
-      "teravih1": { "title": "Teravih Namazı", "message": "Teravih namazlarınız kabul olsun. Bu mübarek gecelerin feyzinden istifade etmenizi dilerim." },
-      "mukabele1": { "title": "Mukabele", "message": "Mukabele dinlediğiniz hayırlı günler olsun. Kuran-ı Kerim'in feyzi üzerinize olsun." }
+      "ramazan1": {
+        "title": "Hoş Geldin Ramazan",
+        "message": "On bir ayın sultanı Ramazan ayınız mübarek olsun. Rabbim bu ayda tüm dualarınızı kabul etsin."
+      },
+      "ramazan2": {
+        "title": "İftar Daveti",
+        "message": "İftar soframızda sizleri görmekten mutluluk duyarız. Hayırlı iftarlar."
+      },
+      "ramazan3": {
+        "title": "Sahur Bereketi",
+        "message": "Sahurlarınız bereketli, oruçlarınız makbul olsun. Hayırlı sahurlar."
+      },
+      "ramazan4": {
+        "title": "Kadir Gecesi",
+        "message": "Bin aydan hayırlı Kadir Geceniz mübarek olsun. Dualarınız kabul olsun."
+      },
+      "bayram1": {
+        "title": "Ramazan Bayramı",
+        "message": "Ramazan Bayramınız kutlu olsun. Bayram, sevdiklerinizle birlikte sağlık ve huzur içinde geçsin."
+      },
+      "bayram2": {
+        "title": "Kurban Bayramı",
+        "message": "Kurban Bayramınız mübarek olsun. Kurbanlarınız kabul, dualarınız makbul olsun."
+      },
+      "bayram3": {
+        "title": "Bayram Sevinci",
+        "message": "Bayramlar huzur, mutluluk ve sevgi demektir. Sevdiklerinizle nice bayramlara."
+      },
+      "bayram4": {
+        "title": "Bayram Namazı",
+        "message": "Bayram namazlarınız kabul, dualarınız makbul olsun. Hayırlı bayramlar."
+      },
+      "kandil1": {
+        "title": "Mevlid Kandili",
+        "message": "Alemlere rahmet olarak gönderilen Peygamberimizin doğum günü olan Mevlid Kandiliniz mübarek olsun."
+      },
+      "kandil2": {
+        "title": "Regaib Kandili",
+        "message": "Üç ayların başlangıcı, Regaib Kandiliniz mübarek olsun. Rabbim dualarınızı kabul etsin."
+      },
+      "kandil3": {
+        "title": "Miraç Kandili",
+        "message": "Peygamberimizin miracının yıl dönümü olan Miraç Kandiliniz mübarek olsun."
+      },
+      "kandil4": {
+        "title": "Berat Kandili",
+        "message": "Af ve bağışlanma gecesi Berat Kandiliniz mübarek olsun. Rabbim tüm günahlarımızı affetsin."
+      },
+      "cuma1": {
+        "title": "Hayırlı Cumalar",
+        "message": "Cuma gününüz mübarek olsun. Rabbim dualarınızı kabul etsin."
+      },
+      "cuma2": {
+        "title": "Cuma Bereketi",
+        "message": "Günlerin en hayırlısı Cuma gününüz bereketli geçsin. Hayırlı Cumalar."
+      },
+      "cuma3": {
+        "title": "Cuma Duası",
+        "message": "Bu mübarek günde yapılan duaların kabul edileceği müjdelenmiştir. Dualarınız kabul olsun."
+      },
+      "cuma4": {
+        "title": "Cuma Selamı",
+        "message": "Cumanız mübarek, yüreğiniz huzurlu, eviniz bereketli olsun. Selam ve dua ile..."
+      },
+      "cuma5": {
+        "title": "Cuma Mesajı",
+        "message": "Hayırlı Cumalar! Allah bu mübarek günde tüm dualarınızı kabul etsin, kalbinize huzur versin."
+      },
+      "cuma6": {
+        "title": "Cuma Salavat",
+        "message": "Cuma günü Peygamberimize çokça salavat getirdiğiniz, dualarınızın kabul olduğu bir gün olsun."
+      },
+      "cuma7": {
+        "title": "Cuma Rahmet",
+        "message": "Cuma gününün rahmeti üzerinize olsun. Ailenizle sağlık ve huzur içinde nice Cumalara."
+      },
+      "cuma8": {
+        "title": "Cuma Namazı",
+        "message": "Cuma namazlarınız kabul olsun. Bu günün feyzi ve bereketi üzerinize olsun. Cumanız mübarek olsun."
+      },
+      "dogum1": {
+        "title": "Doğum Günü",
+        "message": "Nice sağlıklı, huzurlu ve imanlı yıllara. Allah sana uzun ömür, hayırlı bir yaşam nasip etsin."
+      },
+      "dogum2": {
+        "title": "Yaş Günü",
+        "message": "Yeni yaşın sağlık, mutluluk ve başarılarla dolu olsun. Doğum günün kutlu olsun."
+      },
+      "gecmis1": {
+        "title": "Geçmiş Olsun",
+        "message": "Allah şifa versin, acil şifalar dilerim. Rabbim sağlığınızı nasip etsin."
+      },
+      "gecmis2": {
+        "title": "Şifa Dileği",
+        "message": "Şifa Allah'tandır. Rabbim acil şifalar nasip etsin. Geçmiş olsun."
+      },
+      "taziye1": {
+        "title": "Başsağlığı",
+        "message": "Başınız sağ olsun. Merhuma Allah'tan rahmet, size ve ailenize sabırlar diliyorum. Mekanı cennet olsun."
+      },
+      "taziye2": {
+        "title": "Taziye",
+        "message": "Allah rahmet eylesin, mekanı cennet olsun. Geride kalanlara sabır ve metanet dilerim."
+      },
+      "hayirli1": {
+        "title": "Hayırlı Olsun",
+        "message": "Yeni [eviniz/arabanız/işiniz] hayırlı uğurlu olsun. Allah bereketini versin."
+      },
+      "hayirli2": {
+        "title": "Güle Güle Kullanın",
+        "message": "Hayırlı olsun, güle güle kullanın. Allah nazardan korusun, bereketini versin."
+      },
+      "hayirli3": {
+        "title": "Yeni İş",
+        "message": "Yeni işiniz hayırlı olsun. Allah rızkınızı bol, işinizi bereketli kılsın."
+      },
+      "arefe1": {
+        "title": "Arefe Günü",
+        "message": "Arefe gününüz mübarek olsun. Bugün tutulan oruç, geçmiş ve gelecek bir yılın günahlarına kefarettir."
+      },
+      "hicri1": {
+        "title": "Hicri Yılbaşı",
+        "message": "Hicri yeni yılınız kutlu olsun. Yeni yıl hayırlara vesile olsun, dualarınız kabul olsun."
+      },
+      "asure1": {
+        "title": "Aşure Günü",
+        "message": "Aşure gününüz mübarek olsun. Muharremin 10. gününde oruç tutmak sünnettir. Hayırlı Aşureler."
+      },
+      "ucaylar1": {
+        "title": "Üç Aylar",
+        "message": "Üç aylarınız mübarek olsun. Recep, Şaban ve Ramazan ayları hayırlara vesile olsun."
+      },
+      "teravih1": {
+        "title": "Teravih Namazı",
+        "message": "Teravih namazlarınız kabul olsun. Bu mübarek gecelerin feyzinden istifade etmenizi dilerim."
+      },
+      "mukabele1": {
+        "title": "Mukabele",
+        "message": "Mukabele dinlediğiniz hayırlı günler olsun. Kuran-ı Kerim'in feyzi üzerinize olsun."
+      }
     }
   },
   "adhkar": {
@@ -607,7 +1028,191 @@
     "hadith": "Hadis",
     "tasbih": "Tesbih",
     "zakat": "Zekat",
-    "khatm": "Hatim"
+    "khatm": "Hatim",
+    "smartKhatm": "Akıllı Hatim Koçu",
+    "family": "Huzur Aile",
+    "seerah": "Siyer Haritası"
+  },
+  "hikmet": {
+    "title": "Hikmetname",
+    "daily": "Günün Hikmeti",
+    "copied": "Kopyalandı!",
+    "favorite": "Favori",
+    "share": "Paylaş",
+    "new": "Yeni",
+    "categoriesTitle": "Kategoriler",
+    "favorites": "Favoriler",
+    "shareText": "\"{{text}}\" - {{source}} (Huzur Uygulaması)",
+    "categories": {
+      "hadis": {
+        "title": "Hadis-i Şerifler",
+        "desc": "Peygamber Efendimiz'in mübarek sözleri"
+      },
+      "alim": {
+        "title": "Âlimlerden",
+        "desc": "İslam âlimlerinden hikmetli sözler"
+      },
+      "sufi": {
+        "title": "Tasavvuf",
+        "desc": "Sufi büyüklerinden hikmetler"
+      },
+      "ayet": {
+        "title": "Kur'an'dan",
+        "desc": "Kur'an-ı Kerim'den hikmetli ayetler"
+      }
+    },
+    "items": {
+      "1": {
+        "text": "Dua, ibadetin özüdür.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Tirmizi"
+      },
+      "2": {
+        "text": "Kolaylaştırınız, zorlaştırmayınız.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari"
+      },
+      "3": {
+        "text": "İnsanların en hayırlısı, insanlara faydalı olandır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Beyhaki"
+      },
+      "4": {
+        "text": "Güzel ahlak, dinin yarısıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Hakim"
+      },
+      "5": {
+        "text": "Müslüman, elinden ve dilinden emin olunan kimsedir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari"
+      },
+      "6": {
+        "text": "Hikmet, müminin yitik malıdır; onu nerede bulursa alır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Tirmizi"
+      },
+      "7": {
+        "text": "Sabır, imanın yarısıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Ebu Nuaym"
+      },
+      "8": {
+        "text": "Tefekkür etmek, bir sene nafile ibadetten hayırlıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Deylemi"
+      },
+      "9": {
+        "text": "İlim öğrenmek, her Müslümana farzdır.",
+        "source": "İmam Gazali",
+        "ref": "İhya"
+      },
+      "10": {
+        "text": "Kalp, Allah'ın evidir.",
+        "source": "İbn Arabi",
+        "ref": "Fusus"
+      },
+      "11": {
+        "text": "Nefs, en büyük düşmandır.",
+        "source": "İmam Rabbani",
+        "ref": "Mektubat"
+      },
+      "12": {
+        "text": "Edep, aklın sureti ve lisanıdır.",
+        "source": "Mevlana",
+        "ref": "Mesnevi"
+      },
+      "13": {
+        "text": "Allah'ı seven, her şeyi sever.",
+        "source": "Yunus Emre",
+        "ref": "Divan"
+      },
+      "14": {
+        "text": "Sabır, acı bir ağaç olsa da meyvesi tatlıdır.",
+        "source": "İmam Şafii",
+        "ref": ""
+      },
+      "15": {
+        "text": "Tevazu kapıları açar, kibir kapatır.",
+        "source": "Hasan Basri",
+        "ref": ""
+      },
+      "16": {
+        "text": "Ben, benden gidince bende sen kaldın.",
+        "source": "Mevlana",
+        "ref": "Divan-ı Kebir"
+      },
+      "17": {
+        "text": "Gel, ne olursan ol, yine gel.",
+        "source": "Mevlana",
+        "ref": "Mesnevi"
+      },
+      "18": {
+        "text": "Aşk, suskunluğun dilidir.",
+        "source": "Şems-i Tebrizi",
+        "ref": ""
+      },
+      "19": {
+        "text": "Gönül bir aynadır, onu temiz tut.",
+        "source": "Hacı Bektaş Veli",
+        "ref": ""
+      },
+      "20": {
+        "text": "Bir olan Allah'a yönel, çoklukta boğulma.",
+        "source": "İbn Arabi",
+        "ref": "Fusus"
+      },
+      "21": {
+        "text": "Kalbin kapısı, zikir ile açılır.",
+        "source": "Abdulkadir Geylani",
+        "ref": ""
+      },
+      "22": {
+        "text": "Dünya bir köprüdür, üzerinde mesken tutma.",
+        "source": "Hz. İsa (a.s.)",
+        "ref": ""
+      },
+      "23": {
+        "text": "Sufi, vaktinin oğludur.",
+        "source": "Cüneyd-i Bağdadi",
+        "ref": ""
+      },
+      "24": {
+        "text": "Onlar, Allah'ı anmakla kalpleri mutmain olanlardır.",
+        "source": "Kur'an-ı Kerim",
+        "ref": "Ra'd, 28"
+      },
+      "25": {
+        "text": "Muhakkak ki zorlukla beraber kolaylık vardır.",
+        "source": "Kur'an-ı Kerim",
+        "ref": "İnşirah, 6"
+      },
+      "26": {
+        "text": "Allah, sabredenlerle beraberdir.",
+        "source": "Kur'an-ı Kerim",
+        "ref": "Bakara, 153"
+      },
+      "27": {
+        "text": "Kim Allah'a tevekkül ederse, O ona yeter.",
+        "source": "Kur'an-ı Kerim",
+        "ref": "Talak, 3"
+      },
+      "28": {
+        "text": "Rabbiniz size dua edin, size icabet edeyim dedi.",
+        "source": "Kur'an-ı Kerim",
+        "ref": "Mü'min, 60"
+      },
+      "29": {
+        "text": "İyi amel işleyenlerin mükafatı, yaptıklarının en güzeli olacaktır.",
+        "source": "Kur'an-ı Kerim",
+        "ref": "Zümer, 35"
+      },
+      "30": {
+        "text": "Kim tövbe edip salih amel işlerse, şüphesiz Allah onun tövbesini kabul eder.",
+        "source": "Kur'an-ı Kerim",
+        "ref": "Furkan, 71"
+      }
+    }
   },
   "stories": {
     "fridayMessage": "Cuma Mesajı",
@@ -625,7 +1230,6 @@
     "preparing": "Hazırlanıyor...",
     "shareAsPhoto": "Fotoğraf Olarak Paylaş"
   },
-
   "content": {
     "duas": {
       "0": "Rabbimiz! Bize dünyada da iyilik ver, ahirette de iyilik ver ve bizi ateş azabından koru.",
@@ -733,34 +1337,112 @@
         "iyilik": "İyilik"
       },
       "tasks": {
-        "pray_fajr": { "title": "Sabah namazını kıl", "desc": "Sabah namazını vaktinde eda et" },
-        "pray_on_time": { "title": "Bir vakit namazı vaktinde kıl", "desc": "Herhangi bir vakti ilk 15 dakikada kıl" },
-        "pray_sunnah": { "title": "Sünnet namazı kıl", "desc": "Farz namazlara ek olarak sünnet kıl" },
-        "read_ayah": { "title": "Günün ayetini oku", "desc": "Ana sayfadaki günün ayetini oku ve anlamını düşün" },
-        "read_page": { "title": "Kuran'dan 1 sayfa oku", "desc": "Kuran-ı Kerim'den en az bir sayfa oku" },
-        "listen_quran": { "title": "Kuran dinle", "desc": "En az 5 dakika Kuran tilaveti dinle" },
-        "memorize_ayah": { "title": "Bir ayet ezberle", "desc": "Yeni bir ayet ezberle veya tekrar et" },
-        "dhikr_33": { "title": "33 tesbih çek", "desc": "Subhanallah, Elhamdulillah, Allahu Ekber" },
-        "dhikr_morning": { "title": "Sabah zikirlerini oku", "desc": "Sabah ezkarlarını oku" },
-        "dhikr_evening": { "title": "Akşam zikirlerini oku", "desc": "Akşam ezkarlarını oku" },
-        "istigfar_100": { "title": "100 istiğfar çek", "desc": "Estağfirullah de" },
-        "read_hadith": { "title": "Bir hadis oku", "desc": "Günün hadisini oku ve üzerinde düşün" },
-        "learn_name": { "title": "Allah'ın bir ismini öğren", "desc": "Esma'ül Hüsna'dan bir isim öğren" },
-        "watch_lecture": { "title": "Dini video izle", "desc": "Multimedya bölümünden bir video izle" },
-        "help_someone": { "title": "Birine yardım et", "desc": "Bugün birine yardım eli uzat" },
-        "smile": { "title": "Gülümse", "desc": "Gülümsemek sadakadır" },
-        "share_knowledge": { "title": "Bilgi paylaş", "desc": "Öğrendiğin bir şeyi başkasına anlat" },
-        "make_dua": { "title": "Birisi için dua et", "desc": "Bir Müslüman kardeşin için dua et" }
+        "pray_fajr": {
+          "title": "Sabah namazını kıl",
+          "desc": "Sabah namazını vaktinde eda et"
+        },
+        "pray_on_time": {
+          "title": "Bir vakit namazı vaktinde kıl",
+          "desc": "Herhangi bir vakti ilk 15 dakikada kıl"
+        },
+        "pray_sunnah": {
+          "title": "Sünnet namazı kıl",
+          "desc": "Farz namazlara ek olarak sünnet kıl"
+        },
+        "read_ayah": {
+          "title": "Günün ayetini oku",
+          "desc": "Ana sayfadaki günün ayetini oku ve anlamını düşün"
+        },
+        "read_page": {
+          "title": "Kuran'dan 1 sayfa oku",
+          "desc": "Kuran-ı Kerim'den en az bir sayfa oku"
+        },
+        "listen_quran": {
+          "title": "Kuran dinle",
+          "desc": "En az 5 dakika Kuran tilaveti dinle"
+        },
+        "memorize_ayah": {
+          "title": "Bir ayet ezberle",
+          "desc": "Yeni bir ayet ezberle veya tekrar et"
+        },
+        "dhikr_33": {
+          "title": "33 tesbih çek",
+          "desc": "Subhanallah, Elhamdulillah, Allahu Ekber"
+        },
+        "dhikr_morning": {
+          "title": "Sabah zikirlerini oku",
+          "desc": "Sabah ezkarlarını oku"
+        },
+        "dhikr_evening": {
+          "title": "Akşam zikirlerini oku",
+          "desc": "Akşam ezkarlarını oku"
+        },
+        "istigfar_100": {
+          "title": "100 istiğfar çek",
+          "desc": "Estağfirullah de"
+        },
+        "read_hadith": {
+          "title": "Bir hadis oku",
+          "desc": "Günün hadisini oku ve üzerinde düşün"
+        },
+        "learn_name": {
+          "title": "Allah'ın bir ismini öğren",
+          "desc": "Esma'ül Hüsna'dan bir isim öğren"
+        },
+        "watch_lecture": {
+          "title": "Dini video izle",
+          "desc": "Multimedya bölümünden bir video izle"
+        },
+        "help_someone": {
+          "title": "Birine yardım et",
+          "desc": "Bugün birine yardım eli uzat"
+        },
+        "smile": {
+          "title": "Gülümse",
+          "desc": "Gülümsemek sadakadır"
+        },
+        "share_knowledge": {
+          "title": "Bilgi paylaş",
+          "desc": "Öğrendiğin bir şeyi başkasına anlat"
+        },
+        "make_dua": {
+          "title": "Birisi için dua et",
+          "desc": "Bir Müslüman kardeşin için dua et"
+        }
       },
       "badges": {
-        "first_task": { "title": "İlk Adım", "req": "İlk görevini tamamla" },
-        "daily_complete": { "title": "Gün Tamamlandı", "req": "Bir günde tüm görevleri tamamla" },
-        "week_streak": { "title": "Haftalık Seri", "req": "7 gün üst üste görev tamamla" },
-        "point_100": { "title": "100 Puan", "req": "100 puan topla" },
-        "point_500": { "title": "500 Puan", "req": "500 puan topla" },
-        "point_1000": { "title": "1000 Puan", "req": "1000 puan topla" },
-        "quran_master": { "title": "Kuran Aşığı", "req": "30 Kuran görevi tamamla" },
-        "dhikr_master": { "title": "Zikir Ehli", "req": "50 zikir görevi tamamla" }
+        "first_task": {
+          "title": "İlk Adım",
+          "req": "İlk görevini tamamla"
+        },
+        "daily_complete": {
+          "title": "Gün Tamamlandı",
+          "req": "Bir günde tüm görevleri tamamla"
+        },
+        "week_streak": {
+          "title": "Haftalık Seri",
+          "req": "7 gün üst üste görev tamamla"
+        },
+        "point_100": {
+          "title": "100 Puan",
+          "req": "100 puan topla"
+        },
+        "point_500": {
+          "title": "500 Puan",
+          "req": "500 puan topla"
+        },
+        "point_1000": {
+          "title": "1000 Puan",
+          "req": "1000 puan topla"
+        },
+        "quran_master": {
+          "title": "Kuran Aşığı",
+          "req": "30 Kuran görevi tamamla"
+        },
+        "dhikr_master": {
+          "title": "Zikir Ehli",
+          "req": "50 zikir görevi tamamla"
+        }
       }
     },
     "hikmet": {
@@ -774,42 +1456,174 @@
       "shareText": "\"{{text}}\"\n\n— {{source}}{{ref}}\n\n📜 {{appName}}",
       "title": "Hikmetname",
       "categories": {
-        "hadis": { "title": "Hadis-i Şerif", "desc": "Peygamber Efendimizin sözleri" },
-        "alim": { "title": "Alimlerden", "desc": "İslam alimlerinin hikmetleri" },
-        "sufi": { "title": "Tasavvuf", "desc": "Sufi büyüklerinden" },
-        "ayet": { "title": "Kuran'dan", "desc": "Hikmetli ayetler" }
+        "hadis": {
+          "title": "Hadis-i Şerif",
+          "desc": "Peygamber Efendimizin sözleri"
+        },
+        "alim": {
+          "title": "Alimlerden",
+          "desc": "İslam alimlerinin hikmetleri"
+        },
+        "sufi": {
+          "title": "Tasavvuf",
+          "desc": "Sufi büyüklerinden"
+        },
+        "ayet": {
+          "title": "Kuran'dan",
+          "desc": "Hikmetli ayetler"
+        }
       },
       "items": {
-        "1": { "text": "Kolaylaştırın, zorlaştırmayın. Müjdeleyin, nefret ettirmeyin.", "source": "Hz. Muhammed (s.a.v.)", "ref": "Buhari, İlim 11" },
-        "2": { "text": "İnsanların en hayırlısı, insanlara en çok faydalı olandır.", "source": "Hz. Muhammed (s.a.v.)", "ref": "Taberani" },
-        "3": { "text": "Güzel söz sadakadır.", "source": "Hz. Muhammed (s.a.v.)", "ref": "Buhari, Edeb 34" },
-        "4": { "text": "Müminin niyeti amelinden hayırlıdır.", "source": "Hz. Muhammed (s.a.v.)", "ref": "Taberani" },
-        "5": { "text": "Sabreden zafere erer.", "source": "Hz. Muhammed (s.a.v.)", "ref": "Ahmed b. Hanbel" },
-        "6": { "text": "Utanmadıktan sonra dilediğini yap.", "source": "Hz. Muhammed (s.a.v.)", "ref": "Buhari" },
-        "7": { "text": "Dünya ahiretin tarlasıdır.", "source": "Hz. Muhammed (s.a.v.)", "ref": "Hadis" },
-        "8": { "text": "İlim Çin'de de olsa arayınız.", "source": "Hz. Muhammed (s.a.v.)", "ref": "Beyhaki" },
-        "9": { "text": "Kendini bilen Rabbini bilir.", "source": "Hz. Ali (r.a.)", "ref": "" },
-        "10": { "text": "İnsanlarla güzel geçinmek aklın yarısıdır.", "source": "Hz. Ali (r.a.)", "ref": "" },
-        "11": { "text": "Cahil cesurdur.", "source": "İmam Gazali", "ref": "İhya-u Ulumiddin" },
-        "12": { "text": "Kalp, bir kap gibidir. İçine ne koyarsan onu alırsın.", "source": "İmam Gazali", "ref": "" },
-        "13": { "text": "En büyük cihad, nefsinle mücadeledir.", "source": "İmam Gazali", "ref": "" },
-        "14": { "text": "Sabır, imanın yarısıdır.", "source": "Abdullah ibn Mesud (r.a.)", "ref": "" },
-        "15": { "text": "Hakikat acıdır ama sonucu tatlıdır.", "source": "İmam Şafi", "ref": "" },
-        "16": { "text": "Sen kendini küçük bir cisim sanırsın, oysa en büyük alem sende gizlidir.", "source": "Hz. Ali (r.a.)", "ref": "" },
-        "17": { "text": "Her şey zıddıyla kaimdir.", "source": "Mevlana", "ref": "Mesnevi" },
-        "18": { "text": "Dün ile yarın arasında sıkışıp kalmayın, bugünle meşgul olun.", "source": "Mevlana", "ref": "" },
-        "19": { "text": "Yaratılmışı Yaratan'dan ötürü sev.", "source": "Yunus Emre", "ref": "" },
-        "20": { "text": "Aşk imiş her ne var alemde, ilim bir kıyl u kal imiş ancak.", "source": "Fuzuli", "ref": "" },
-        "21": { "text": "Gel, ne olursan ol yine gel.", "source": "Mevlana", "ref": "" },
-        "22": { "text": "Gönül ne kahve ister ne kahvehane, gönül sohbet ister kahve bahane.", "source": "Şeyh Şaban-ı Veli", "ref": "" },
-        "23": { "text": "Sözün güzelini söyle, yoksa sus.", "source": "Yunus Emre", "ref": "" },
-        "24": { "text": "Şüphesiz güçlükle birlikte kolaylık vardır.", "source": "Kuran-ı Kerim", "ref": "İnşirah, 5-6" },
-        "25": { "text": "Allah sabredenlerin yanındadır.", "source": "Kuran-ı Kerim", "ref": "Bakara, 153" },
-        "26": { "text": "Rabbim, göğsümü aç, işimi kolaylaştır.", "source": "Kuran-ı Kerim", "ref": "Taha, 25-26" },
-        "27": { "text": "Hiçbir günahkar başka bir günahkarın yükünü taşımaz.", "source": "Kuran-ı Kerim", "ref": "En'am, 164" },
-        "28": { "text": "İyilik ve takva üzere yardımlaşın.", "source": "Kuran-ı Kerim", "ref": "Maide, 2" },
-        "29": { "text": "Kalpler ancak Allah'ı anmakla huzur bulur.", "source": "Kuran-ı Kerim", "ref": "Ra'd, 28" },
-        "30": { "text": "Umulur ki hoşlanmadığınız bir şey sizin için hayırlıdır.", "source": "Kuran-ı Kerim", "ref": "Bakara, 216" }
+        "1": {
+          "text": "Kolaylaştırın, zorlaştırmayın. Müjdeleyin, nefret ettirmeyin.",
+          "source": "Hz. Muhammed (s.a.v.)",
+          "ref": "Buhari, İlim 11"
+        },
+        "2": {
+          "text": "İnsanların en hayırlısı, insanlara en çok faydalı olandır.",
+          "source": "Hz. Muhammed (s.a.v.)",
+          "ref": "Taberani"
+        },
+        "3": {
+          "text": "Güzel söz sadakadır.",
+          "source": "Hz. Muhammed (s.a.v.)",
+          "ref": "Buhari, Edeb 34"
+        },
+        "4": {
+          "text": "Müminin niyeti amelinden hayırlıdır.",
+          "source": "Hz. Muhammed (s.a.v.)",
+          "ref": "Taberani"
+        },
+        "5": {
+          "text": "Sabreden zafere erer.",
+          "source": "Hz. Muhammed (s.a.v.)",
+          "ref": "Ahmed b. Hanbel"
+        },
+        "6": {
+          "text": "Utanmadıktan sonra dilediğini yap.",
+          "source": "Hz. Muhammed (s.a.v.)",
+          "ref": "Buhari"
+        },
+        "7": {
+          "text": "Dünya ahiretin tarlasıdır.",
+          "source": "Hz. Muhammed (s.a.v.)",
+          "ref": "Hadis"
+        },
+        "8": {
+          "text": "İlim Çin'de de olsa arayınız.",
+          "source": "Hz. Muhammed (s.a.v.)",
+          "ref": "Beyhaki"
+        },
+        "9": {
+          "text": "Kendini bilen Rabbini bilir.",
+          "source": "Hz. Ali (r.a.)",
+          "ref": "-"
+        },
+        "10": {
+          "text": "İnsanlarla güzel geçinmek aklın yarısıdır.",
+          "source": "Hz. Ali (r.a.)",
+          "ref": "-"
+        },
+        "11": {
+          "text": "Cahil cesurdur.",
+          "source": "İmam Gazali",
+          "ref": "İhya-u Ulumiddin"
+        },
+        "12": {
+          "text": "Kalp, bir kap gibidir. İçine ne koyarsan onu alırsın.",
+          "source": "İmam Gazali",
+          "ref": "-"
+        },
+        "13": {
+          "text": "En büyük cihad, nefsinle mücadeledir.",
+          "source": "İmam Gazali",
+          "ref": "-"
+        },
+        "14": {
+          "text": "Sabır, imanın yarısıdır.",
+          "source": "Abdullah ibn Mesud (r.a.)",
+          "ref": "-"
+        },
+        "15": {
+          "text": "Hakikat acıdır ama sonucu tatlıdır.",
+          "source": "İmam Şafi",
+          "ref": "-"
+        },
+        "16": {
+          "text": "Sen kendini küçük bir cisim sanırsın, oysa en büyük alem sende gizlidir.",
+          "source": "Hz. Ali (r.a.)",
+          "ref": "-"
+        },
+        "17": {
+          "text": "Her şey zıddıyla kaimdir.",
+          "source": "Mevlana",
+          "ref": "Mesnevi"
+        },
+        "18": {
+          "text": "Dün ile yarın arasında sıkışıp kalmayın, bugünle meşgul olun.",
+          "source": "Mevlana",
+          "ref": "-"
+        },
+        "19": {
+          "text": "Yaratılmışı Yaratan'dan ötürü sev.",
+          "source": "Yunus Emre",
+          "ref": "-"
+        },
+        "20": {
+          "text": "Aşk imiş her ne var alemde, ilim bir kıyl u kal imiş ancak.",
+          "source": "Fuzuli",
+          "ref": "-"
+        },
+        "21": {
+          "text": "Gel, ne olursan ol yine gel.",
+          "source": "Mevlana",
+          "ref": "-"
+        },
+        "22": {
+          "text": "Gönül ne kahve ister ne kahvehane, gönül sohbet ister kahve bahane.",
+          "source": "Şeyh Şaban-ı Veli",
+          "ref": "-"
+        },
+        "23": {
+          "text": "Sözün güzelini söyle, yoksa sus.",
+          "source": "Yunus Emre",
+          "ref": "-"
+        },
+        "24": {
+          "text": "Şüphesiz güçlükle birlikte kolaylık vardır.",
+          "source": "Kuran-ı Kerim",
+          "ref": "İnşirah, 5-6"
+        },
+        "25": {
+          "text": "Allah sabredenlerin yanındadır.",
+          "source": "Kuran-ı Kerim",
+          "ref": "Bakara, 153"
+        },
+        "26": {
+          "text": "Rabbim, göğsümü aç, işimi kolaylaştır.",
+          "source": "Kuran-ı Kerim",
+          "ref": "Taha, 25-26"
+        },
+        "27": {
+          "text": "Hiçbir günahkar başka bir günahkarın yükünü taşımaz.",
+          "source": "Kuran-ı Kerim",
+          "ref": "En'am, 164"
+        },
+        "28": {
+          "text": "İyilik ve takva üzere yardımlaşın.",
+          "source": "Kuran-ı Kerim",
+          "ref": "Maide, 2"
+        },
+        "29": {
+          "text": "Kalpler ancak Allah'ı anmakla huzur bulur.",
+          "source": "Kuran-ı Kerim",
+          "ref": "Ra'd, 28"
+        },
+        "30": {
+          "text": "Umulur ki hoşlanmadığınız bir şey sizin için hayırlıdır.",
+          "source": "Kuran-ı Kerim",
+          "ref": "Bakara, 216"
+        }
       }
     },
     "tajweed": {
@@ -832,8 +1646,12 @@
           "desc": "Genizden ses getirerek (gunneli) şeddeli okumak demektir.",
           "rule": "Sakin Nun (نْ) veya Tenvin (ً ٍ ٌ)'den sonra (ي م ن و) harflerinden biri gelirse olur.",
           "examples": {
-            "0": { "explanation": "Nun harfi Ye harfine katılır." },
-            "1": { "explanation": "Nun harfi Mim harfine katılır." }
+            "0": {
+              "explanation": "Nun harfi Ye harfine katılır."
+            },
+            "1": {
+              "explanation": "Nun harfi Mim harfine katılır."
+            }
           }
         },
         "idgam-bila-gunne": {
@@ -841,8 +1659,12 @@
           "desc": "Sakin Nun veya tenvinden sonra Lam (ل) veya Ra (ر) harfi gelirse, gunnesiz (genizden ses getirmeden) şeddeli gibi okunur.",
           "rule": "Sakin Nun veya tenvinden sonra Lam (ل) veya Ra (ر) harfi gelirse olur.",
           "examples": {
-            "0": { "explanation": "Nun okunmaz, Ra şeddeli okunur." },
-            "1": { "explanation": "Tenvin Lam harfine katılır." }
+            "0": {
+              "explanation": "Nun okunmaz, Ra şeddeli okunur."
+            },
+            "1": {
+              "explanation": "Tenvin Lam harfine katılır."
+            }
           }
         },
         "ihfa": {
@@ -850,8 +1672,12 @@
           "desc": "Sakin Nun veya tenvinden sonra ihfa harflerinden biri gelirse, Nun sesi gizlenerek ve genizden getirilerek okunur.",
           "rule": "Sakin Nun veya tenvinden sonra ihfa harflerinden biri gelirse olur.",
           "examples": {
-            "0": { "explanation": "Nun sesi gizlenir." },
-            "1": { "explanation": "Nun sesi Şin harfine geçerken gizlenir." }
+            "0": {
+              "explanation": "Nun sesi gizlenir."
+            },
+            "1": {
+              "explanation": "Nun sesi Şin harfine geçerken gizlenir."
+            }
           }
         },
         "izhar": {
@@ -859,8 +1685,12 @@
           "desc": "Sakin Nun veya tenvinden sonra boğaz harflerinden biri gelirse, Nun sesi açıkça okunur.",
           "rule": "Sakin Nun veya tenvinden sonra boğaz harflerinden biri gelirse olur.",
           "examples": {
-            "0": { "explanation": "Nun sesi net çıkar." },
-            "1": { "explanation": "Tenvin net okunur." }
+            "0": {
+              "explanation": "Nun sesi net çıkar."
+            },
+            "1": {
+              "explanation": "Tenvin net okunur."
+            }
           }
         },
         "iklab": {
@@ -868,18 +1698,25 @@
           "desc": "Sakin Nun veya tenvinden sonra Be (ب) harfi gelirse, Nun sesi Mim (م) sesine dönüşür.",
           "rule": "Sakin Nun veya tenvinden sonra Be (ب) harfi gelirse olur.",
           "examples": {
-            "0": { "explanation": "Nun, Mim gibi okunur." },
-            "1": { "explanation": "Tenvin Mim'e dönüşür." }
+            "0": {
+              "explanation": "Nun, Mim gibi okunur."
+            },
+            "1": {
+              "explanation": "Tenvin Mim'e dönüşür."
+            }
           }
         },
-
         "kalkale": {
           "title": "Kalkale",
           "desc": "Kalkale harfleri sakin (cezimli) olduğunda titreterek (patlatarak) okunur.",
           "rule": "Kalkale harfleri sakin (cezimli) olduğunda olur.",
           "examples": {
-            "0": { "explanation": "Kaf harfi titretilir." },
-            "1": { "explanation": "Dal harfi sonunda titretilir." }
+            "0": {
+              "explanation": "Kaf harfi titretilir."
+            },
+            "1": {
+              "explanation": "Dal harfi sonunda titretilir."
+            }
           }
         }
       }
@@ -888,149 +1725,492 @@
       "title": "Dualar",
       "subtitle": "Günlük Dualar ve Zikirler",
       "categories": {
-        "daily": { "name": "Günlük Okunacak Dualar", "desc": "Her gün sabah, akşam ve farklı zamanlarda okunacak dualar" },
-        "debt": { "name": "Borçlular İçin Dualar", "desc": "Borç ve maddi sıkıntılardan kurtulmak için dualar" },
-        "family": { "name": "Aile ve Ev Huzuru", "desc": "Aile birliği ve ev huzuru için dualar" },
-        "protection": { "name": "Korunma ve Manevi Güçlenme", "desc": "Kötülüklerden korunma ve manevi olarak güçlenme duaları" },
-        "wishes": { "name": "İstek ve Niyaz Duaları", "desc": "Dileklerimizi Allah'a arz etmek için dualar" },
-        "prophet": { "name": "Peygamber Efendimizden Dualar", "desc": "Hz. Muhammed (s.a.v.) tarafından nakledilen dualar" },
-        "special_days": { "name": "Özel Gün ve Gece Duaları", "desc": "Mübarek gün ve geceler için özel dualar" },
-        "repentance": { "name": "Tövbe - İstiğfar Duaları", "desc": "Günahlardan arınma ve tövbe duaları" },
-        "prayer_duas": { "name": "Namaz Duaları", "desc": "Namaz esnasında ve sonrasında okunacak dualar" },
-        "distress": { "name": "Sıkıntı - Gam - Keder Duaları", "desc": "Zor zamanlar ve üzüntü anlarında okunacak dualar" }
+        "daily": {
+          "name": "Günlük Okunacak Dualar",
+          "desc": "Her gün sabah, akşam ve farklı zamanlarda okunacak dualar"
+        },
+        "debt": {
+          "name": "Borçlular İçin Dualar",
+          "desc": "Borç ve maddi sıkıntılardan kurtulmak için dualar"
+        },
+        "family": {
+          "name": "Aile ve Ev Huzuru",
+          "desc": "Aile birliği ve ev huzuru için dualar"
+        },
+        "protection": {
+          "name": "Korunma ve Manevi Güçlenme",
+          "desc": "Kötülüklerden korunma ve manevi olarak güçlenme duaları"
+        },
+        "wishes": {
+          "name": "İstek ve Niyaz Duaları",
+          "desc": "Dileklerimizi Allah'a arz etmek için dualar"
+        },
+        "prophet": {
+          "name": "Peygamber Efendimizden Dualar",
+          "desc": "Hz. Muhammed (s.a.v.) tarafından nakledilen dualar"
+        },
+        "special_days": {
+          "name": "Özel Gün ve Gece Duaları",
+          "desc": "Mübarek gün ve geceler için özel dualar"
+        },
+        "repentance": {
+          "name": "Tövbe - İstiğfar Duaları",
+          "desc": "Günahlardan arınma ve tövbe duaları"
+        },
+        "prayer_duas": {
+          "name": "Namaz Duaları",
+          "desc": "Namaz esnasında ve sonrasında okunacak dualar"
+        },
+        "distress": {
+          "name": "Sıkıntı - Gam - Keder Duaları",
+          "desc": "Zor zamanlar ve üzüntü anlarında okunacak dualar"
+        }
       },
       "items": {
-        "1": { "title": "Sabah Duası", "meaning": "Sabahladık ve mülk Allah'ındır, hamd Allah'adır." },
-        "2": { "title": "Akşam Duası", "meaning": "Akşamladık ve mülk Allah'ındır, hamd Allah'adır." },
-        "3": { "title": "Yatarken Okunacak Dua", "meaning": "Allah'ım! Senin adınla ölür ve senin adınla diriliyorum." },
-        "4": { "title": "Evden Çıkarken Dua", "meaning": "Allah'ın adıyla, Allah'a tevekkül ettim." },
-        "5": { "title": "Eve Girerken Dua", "meaning": "Allah'ım! Senden giriş ve çıkışın hayırlısını isterim." },
-        "6": { "title": "Ayetel Kürsi", "meaning": "Allah, O'ndan başka ilah yoktur. Diridir, Kaim'dir." },
-        "7": { "title": "Sübhanallah Tesbih", "meaning": "Allah'ı hamd ile tesbih ederim." },
-        "8": { "title": "Korunma Duası", "meaning": "O'nun ismiyle beraber hiçbir şey zarar vermez." },
-        "9": { "title": "Şifa Duası", "meaning": "Allah'ım! Bedenime afiyet ver." },
-        "10": { "title": "İstiğfar", "meaning": "Allah'tan bağışlanma dilerim ve O'na tevbe ederim." },
-        "11": { "title": "Salavat", "meaning": "Allah'ım! Muhammed'e salat eyle." },
-        "12": { "title": "Rıza Duası", "meaning": "Allah'a Rab olarak razı oldum." },
-        "13": { "title": "Hamd Duası", "meaning": "Hamd Allah'adır." },
-        "14": { "title": "Selamet Duası", "meaning": "Allah'ım! Senden afiyet istiyorum." },
-        "15": { "title": "Şükür Duası", "meaning": "Allah'ım! Hamd ve şükür sanadır." },
-        "16": { "title": "Borçtan Kurtulma", "meaning": "Allah'ım! Helalinle haramdan beni kurtar." },
-        "17": { "title": "Rızık Genişliği", "meaning": "Allah'ım! Keder ve üzüntüden sana sığınırım." },
-        "18": { "title": "Bereket Duası", "meaning": "Allah'ım! Bize verdiğin rızkı bereketli kıl." },
-        "19": { "title": "Hayırlı Kazanç", "meaning": "Allah'ım! Senden temiz rızık istiyorum." },
-        "20": { "title": "Kapı Açılması", "meaning": "Allah'ım! Rahmet kapılarını aç." },
-        "21": { "title": "Bolluk İstemek", "meaning": "Rabbim! Nimetine şükredebilmeyi nasip et." },
-        "22": { "title": "Zenginlik Duası", "meaning": "Allah'ım! Senden zenginlik istiyorum." },
-        "23": { "title": "Helal Rızık", "meaning": "Allah'ım! Bana helal rızık ver." },
-        "24": { "title": "İşlerin Kolaylaşması", "meaning": "Allah'ım! Sen kolaylaştırmadıkça hiçbir şey kolay olmaz." },
-        "25": { "title": "Hasbünallah", "meaning": "Allah bize yeter, O ne güzel vekildir." },
-        "26": { "title": "Genişlik Duası", "meaning": "Allah'ım! Rızkımı genişlet." },
-        "27": { "title": "Çıkış Yolu", "meaning": "Kim Allah'tan korkarsa, ona çıkış yolu gösterir." },
-        "28": { "title": "Aile Huzuru", "meaning": "Rabbimiz! Eşlerimizden ve çocuklarımızdan göz aydınlığı ver." },
-        "29": { "title": "Evlilik Bereket", "meaning": "Allah sana bereket versin." },
-        "30": { "title": "Çocuklar İçin", "meaning": "Rabbim! Bana temiz bir nesil bağışla." },
-        "31": { "title": "Ana Baba İçin", "meaning": "Rabbim! Onlara merhamet et." },
-        "32": { "title": "Ev Bereket", "meaning": "Allah'ım! Evimize bereket ver." },
-        "33": { "title": "Çocukların Salihlği", "meaning": "Rabbim! Beni ve neslimden gelenleri namaz kılan eyle." },
-        "34": { "title": "Aile Koruması", "meaning": "Rabbimiz! Cehennem azabını bizden uzaklaştır." },
-        "35": { "title": "Mutlu Yuva", "meaning": "Rabbimiz! Bize katından rahmet ver." },
-        "36": { "title": "Kalplerin Kaymaması", "meaning": "Rabbimiz! Kalplerimizi kaydırma." },
-        "37": { "title": "Komşularla İyi Geçinme", "meaning": "Allah'ım! Komşularımızla aramızı ıslah et." },
-        "38": { "title": "Aile Birliği", "meaning": "Rabbimiz! Bizi sana teslim olanlardan eyle." },
-        "39": { "title": "Dünya ve Ahiret Hayır", "meaning": "Rabbimiz! Bize dünyada iyilik ver." },
-        "40": { "title": "Şeytandan Korunma", "meaning": "Kovulmuş şeytandan Allah'a sığınırım." },
-        "41": { "title": "Nazar Duası", "meaning": "Allah'ın dilediği oldu, güç ancak Allah'tandır." },
-        "42": { "title": "Kelime-i Tevhid", "meaning": "Allah'tan başka ilah yoktur, Muhammed Allah'ın Resulüdür." },
-        "43": { "title": "Kötülüklerden Sığınma", "meaning": "Yarattığı şeylerin şerrinden Allah'ın tam kelimelerine sığınırım." },
-        "44": { "title": "Hastalıklardan Korunma", "meaning": "Allah'ın adıyla sana okuyorum." },
-        "45": { "title": "Cin ve İnslardan Korunma", "meaning": "De ki: İnsanların Rabbine sığınırım." },
-        "46": { "title": "Sabah Akşam Korunma", "meaning": "İslam fıtratı üzere sabahladık." },
-        "47": { "title": "Muavvizeteyn", "meaning": "De ki: Felak'in Rabbine sığınırım." },
-        "48": { "title": "Kaza Beladan Korunma", "meaning": "Allah'ım! Nimetin yok olmasından sana sığınırım." },
-        "49": { "title": "Güç ve Kuvvet", "meaning": "Güç ve kuvvet ancak Allah'tandır." },
-        "50": { "title": "İman Korunması", "meaning": "Allah'ım! Kalpleri çeviren! Kalbimi dinin üzere sabit kıl." },
-        "51": { "title": "Fitnedenkorunma", "meaning": "Allah'ım! Deccal fitnesinden sana sığınırım." },
-        "52": { "title": "Hayır Dua", "meaning": "Rabbimiz! Dünyada da ahirette de iyilik ver." },
-        "53": { "title": "İlim İsteme", "meaning": "Rabbim! İlmimi artır." },
-        "54": { "title": "Af ve Mağfiret", "meaning": "Rabbimiz! Günahlarımızı bağışla." },
-        "55": { "title": "Hidayet İsteme", "meaning": "Bizi doğru yola ilet." },
-        "56": { "title": "Rahmet Dileme", "meaning": "Rabbim! Bize merhamet et." },
-        "57": { "title": "Sabır İsteme", "meaning": "Rabbimiz! Üzerimize sabır yağdır." },
-        "58": { "title": "Kolaylık Dileme", "meaning": "Rabbim! Kolaylaştır, zorlaştırma." },
-        "59": { "title": "Kabul Duası", "meaning": "Rabbimiz! Bizden kabul buyur." },
-        "60": { "title": "Salih Amel", "meaning": "Beni rahmetinle salih kulların arasına kat." },
-        "61": { "title": "Şükür Duası", "meaning": "Rabbim! Nimetine şükretmeyi nasip et." },
-        "62": { "title": "İbadet Kabul", "meaning": "Rabbimiz! Bizden kabul et, sen işitensin, bilensin." },
-        "63": { "title": "Makbul Dua", "meaning": "Allah'ım! Sen affedicisin, affetmeyi seversin, beni affet." },
-        "64": { "title": "Kunut Duası", "meaning": "Allah'ım! Hidayete erdirdiklerinle beni de hidayete erdir." },
-        "65": { "title": "Seyyidul İstiğfar", "meaning": "Allah'ım! Sen benim Rabbimsin, senden başka ilah yoktur." },
-        "66": { "title": "Yolculuk Duası", "meaning": "Bunu bize boyun eğdireni tespih ederim." },
-        "67": { "title": "Yemek Duası", "meaning": "Allah'ım! Bize verdiğin rızkı bereketli kıl." },
-        "68": { "title": "Hasta Ziyareti", "meaning": "Zarar yok, inşallah temizliktir." },
-        "69": { "title": "Öfke Anında", "meaning": "Kovulmuş şeytandan Allah'a sığınırım." },
-        "70": { "title": "Rüya Duası", "meaning": "Allah'ım! Kabir azabından sana sığınırım." },
-        "71": { "title": "Mescide Giriş", "meaning": "Allah'ım! Rahmet kapılarını aç." },
-        "72": { "title": "Mescidden Çıkış", "meaning": "Allah'ım! Senden fazlını dilerim." },
-        "73": { "title": "Abdest Duası", "meaning": "Allah'tan başka ilah olmadığına şehadet ederim." },
-        "74": { "title": "Cenaze Duası", "meaning": "Allah'ım! Onu bağışla ve ona merhamet et." },
-        "75": { "title": "Hacet Namazı Duası", "meaning": "Allah'ım! Rahmetinle senden isterim." },
-        "76": { "title": "Cuma Günü Duası", "meaning": "Allah'ım! Efendimiz Muhammed'e salat eyle." },
-        "77": { "title": "Regaib Gecesi", "meaning": "Allah'ı tesbih ederim ve hamd Allah'adır." },
-        "78": { "title": "Miraç Kandili", "meaning": "Allah'ım! Peygamberinin şefaatini bize nasip et." },
-        "79": { "title": "Berat Kandili", "meaning": "Allah'ım! Günahlarımı bağışla." },
-        "80": { "title": "Kadir Gecesi", "meaning": "Allah'ım! Sen affedicisin, affet beni." },
-        "81": { "title": "Ramazan Duası", "meaning": "Allah'ım! Bizi Ramazan'a ulaştır." },
-        "82": { "title": "Arefe Günü", "meaning": "Allah'tan başka ilah yok, tektir, ortağı yoktur." },
-        "83": { "title": "Kurban Bayramı", "meaning": "Allah en büyüktür, Allah'tan başka ilah yoktur." },
-        "84": { "title": "Hac Duası", "meaning": "Buyur Allah'ım buyur, emrine amadeyim." },
-        "85": { "title": "Muharrem Ayı", "meaning": "Allah'ım! Bu ayı üzerimize bereket ve imanla helal kıl." },
-        "86": { "title": "Şaban Ayı", "meaning": "Allah'ım! Şaban ayında bize bereket ver." },
-        "87": { "title": "Zilhicce Ayı", "meaning": "Allah'ım! Bu günleri mübarek kıl." },
-        "88": { "title": "Basit İstiğfar", "meaning": "Allah'tan bağışlanma dilerim." },
-        "89": { "title": "Tevbe Duası", "meaning": "Allah'a tevbe ediyorum." },
-        "90": { "title": "Bağışlanma", "meaning": "Rabbim! Beni bağışla ve bana merhamet et." },
-        "91": { "title": "Pişmanlık", "meaning": "Allah'ım! Nefsime zulmettim." },
-        "92": { "title": "Günahtan Dönüş", "meaning": "Rabbimiz! Biz kendimize zulmettik." },
-        "93": { "title": "Af Dileme", "meaning": "Rabbim! Bağışla, merhamet et, sen merhametlilerin en hayırlısısın." },
-        "94": { "title": "Temizlenme", "meaning": "Allah'ım! Hatalarımdan beni temizle." },
-        "95": { "title": "Samimi Tevbe", "meaning": "Kendisinden başka ilah olmayan Allah'tan bağışlanma dilerim." },
-        "96": { "title": "Afv İsteme", "meaning": "Allah'ım! Sen affedicisin, kerim olansan." },
-        "97": { "title": "Rahmet Dileme", "meaning": "Rabbimiz! Unutur veya yanılırsak bizi sorguya çekme." },
-        "98": { "title": "Günahlardan Arınma", "meaning": "Allah'ım! Beni günahlardan temizle." },
-        "99": { "title": "Yeniden Başlama", "meaning": "Allah'a tevbe ettim." },
-        "100": { "title": "İftitah Tekbiri", "meaning": "Allah en büyüktür." },
-        "101": { "title": "Sübhaneke", "meaning": "Allah'ım! Seni hamd ile tesbih ederim." },
-        "102": { "title": "Fatiha", "meaning": "Hamd, alemlerin Rabbi Allah'adır." },
-        "103": { "title": "Rükû Tesbih", "meaning": "Yüce Rabbimi tesbih ederim." },
-        "104": { "title": "Secdedua", "meaning": "En yüce Rabbimi tesbih ederim." },
-        "105": { "title": "Teşehhüd", "meaning": "Dil ile, beden ile, mal ile yapılan ibadetler Allah'adır." },
-        "106": { "title": "Allahumme Salli", "meaning": "Allah'ım! Muhammed'e salat eyle." },
-        "107": { "title": "Allahumme Barik", "meaning": "Allah'ım! Muhammed'e bereket ver." },
-        "108": { "title": "Rabbena Duası", "meaning": "Rabbimiz! Dünyada iyilik ver." },
-        "109": { "title": "Selam Verme", "meaning": "Selam ve Allah'ın rahmeti üzerinize olsun." },
-        "110": { "title": "Namaz Sonrası", "meaning": "Allah'ım! Sen selamsan." },
-        "111": { "title": "Vitir Kannet", "meaning": "Allah'ım! Senden yardım dileriz." },
-        "112": { "title": "Üzüntü Duası", "meaning": "Senden başka ilah yoktur. Seni tesbih ederim. Ben zalimlerden oldum." },
-        "113": { "title": "Keder Giderme", "meaning": "Allah'ım! Ben senin kulunum." },
-        "114": { "title": "Sıkıntı Anında", "meaning": "Allah bana yeter, O'ndan başka ilah yoktur." },
-        "115": { "title": "Ferahlama Duası", "meaning": "Allah'ım! Rahmetini umarım." },
-        "116": { "title": "Zor Zamanlarda", "meaning": "Ey diri olan, ey kaim olan! Rahmetinle yardım dilerim." },
-        "117": { "title": "Elem Giderme", "meaning": "Allah'ım! Kolaylaştırmadıkça hiçbir şey kolay olmaz." },
-        "118": { "title": "Hüzün Giderme", "meaning": "Allah'ım! Kaygıdan sana sığınırım." },
-        "119": { "title": "Teselli Duası", "meaning": "Biz Allah'a aitiz ve O'na döneceğiz." },
-        "rabi2": "Rebiülahir",
-        "jumada1": "Cemaziyelevvel",
-        "jumada2": "Cemaziyelahir",
-        "rajab": "Recep",
-        "shaban": "Şaban",
-        "ramadan": "Ramazan",
-        "shawwal": "Şevval",
-        "dhul_qada": "Zilkade",
-        "dhul_hijja": "Zilhicce"
-      },
-      "gregorianMonths": {
-        "january": "Ocak",
+        "1": {
+          "title": "Sabah Duası",
+          "meaning": "Sabahladık ve mülk Allah'ındır, hamd Allah'adır."
+        },
+        "2": {
+          "title": "Akşam Duası",
+          "meaning": "Akşamladık ve mülk Allah'ındır, hamd Allah'adır."
+        },
+        "3": {
+          "title": "Yatarken Okunacak Dua",
+          "meaning": "Allah'ım! Senin adınla ölür ve senin adınla diriliyorum."
+        },
+        "4": {
+          "title": "Evden Çıkarken Dua",
+          "meaning": "Allah'ın adıyla, Allah'a tevekkül ettim."
+        },
+        "5": {
+          "title": "Eve Girerken Dua",
+          "meaning": "Allah'ım! Senden giriş ve çıkışın hayırlısını isterim."
+        },
+        "6": {
+          "title": "Ayetel Kürsi",
+          "meaning": "Allah, O'ndan başka ilah yoktur. Diridir, Kaim'dir."
+        },
+        "7": {
+          "title": "Sübhanallah Tesbih",
+          "meaning": "Allah'ı hamd ile tesbih ederim."
+        },
+        "8": {
+          "title": "Korunma Duası",
+          "meaning": "O'nun ismiyle beraber hiçbir şey zarar vermez."
+        },
+        "9": {
+          "title": "Şifa Duası",
+          "meaning": "Allah'ım! Bedenime afiyet ver."
+        },
+        "10": {
+          "title": "İstiğfar",
+          "meaning": "Allah'tan bağışlanma dilerim ve O'na tevbe ederim."
+        },
+        "11": {
+          "title": "Salavat",
+          "meaning": "Allah'ım! Muhammed'e salat eyle."
+        },
+        "12": {
+          "title": "Rıza Duası",
+          "meaning": "Allah'a Rab olarak razı oldum."
+        },
+        "13": {
+          "title": "Hamd Duası",
+          "meaning": "Hamd Allah'adır."
+        },
+        "14": {
+          "title": "Selamet Duası",
+          "meaning": "Allah'ım! Senden afiyet istiyorum."
+        },
+        "15": {
+          "title": "Şükür Duası",
+          "meaning": "Allah'ım! Hamd ve şükür sanadır."
+        },
+        "16": {
+          "title": "Borçtan Kurtulma",
+          "meaning": "Allah'ım! Helalinle haramdan beni kurtar."
+        },
+        "17": {
+          "title": "Rızık Genişliği",
+          "meaning": "Allah'ım! Keder ve üzüntüden sana sığınırım."
+        },
+        "18": {
+          "title": "Bereket Duası",
+          "meaning": "Allah'ım! Bize verdiğin rızkı bereketli kıl."
+        },
+        "19": {
+          "title": "Hayırlı Kazanç",
+          "meaning": "Allah'ım! Senden temiz rızık istiyorum."
+        },
+        "20": {
+          "title": "Kapı Açılması",
+          "meaning": "Allah'ım! Rahmet kapılarını aç."
+        },
+        "21": {
+          "title": "Bolluk İstemek",
+          "meaning": "Rabbim! Nimetine şükredebilmeyi nasip et."
+        },
+        "22": {
+          "title": "Zenginlik Duası",
+          "meaning": "Allah'ım! Senden zenginlik istiyorum."
+        },
+        "23": {
+          "title": "Helal Rızık",
+          "meaning": "Allah'ım! Bana helal rızık ver."
+        },
+        "24": {
+          "title": "İşlerin Kolaylaşması",
+          "meaning": "Allah'ım! Sen kolaylaştırmadıkça hiçbir şey kolay olmaz."
+        },
+        "25": {
+          "title": "Hasbünallah",
+          "meaning": "Allah bize yeter, O ne güzel vekildir."
+        },
+        "26": {
+          "title": "Genişlik Duası",
+          "meaning": "Allah'ım! Rızkımı genişlet."
+        },
+        "27": {
+          "title": "Çıkış Yolu",
+          "meaning": "Kim Allah'tan korkarsa, ona çıkış yolu gösterir."
+        },
+        "28": {
+          "title": "Aile Huzuru",
+          "meaning": "Rabbimiz! Eşlerimizden ve çocuklarımızdan göz aydınlığı ver."
+        },
+        "29": {
+          "title": "Evlilik Bereket",
+          "meaning": "Allah sana bereket versin."
+        },
+        "30": {
+          "title": "Çocuklar İçin",
+          "meaning": "Rabbim! Bana temiz bir nesil bağışla."
+        },
+        "31": {
+          "title": "Ana Baba İçin",
+          "meaning": "Rabbim! Onlara merhamet et."
+        },
+        "32": {
+          "title": "Ev Bereket",
+          "meaning": "Allah'ım! Evimize bereket ver."
+        },
+        "33": {
+          "title": "Çocukların Salihlği",
+          "meaning": "Rabbim! Beni ve neslimden gelenleri namaz kılan eyle."
+        },
+        "34": {
+          "title": "Aile Koruması",
+          "meaning": "Rabbimiz! Cehennem azabını bizden uzaklaştır."
+        },
+        "35": {
+          "title": "Mutlu Yuva",
+          "meaning": "Rabbimiz! Bize katından rahmet ver."
+        },
+        "36": {
+          "title": "Kalplerin Kaymaması",
+          "meaning": "Rabbimiz! Kalplerimizi kaydırma."
+        },
+        "37": {
+          "title": "Komşularla İyi Geçinme",
+          "meaning": "Allah'ım! Komşularımızla aramızı ıslah et."
+        },
+        "38": {
+          "title": "Aile Birliği",
+          "meaning": "Rabbimiz! Bizi sana teslim olanlardan eyle."
+        },
+        "39": {
+          "title": "Dünya ve Ahiret Hayır",
+          "meaning": "Rabbimiz! Bize dünyada iyilik ver."
+        },
+        "40": {
+          "title": "Şeytandan Korunma",
+          "meaning": "Kovulmuş şeytandan Allah'a sığınırım."
+        },
+        "41": {
+          "title": "Nazar Duası",
+          "meaning": "Allah'ın dilediği oldu, güç ancak Allah'tandır."
+        },
+        "42": {
+          "title": "Kelime-i Tevhid",
+          "meaning": "Allah'tan başka ilah yoktur, Muhammed Allah'ın Resulüdür."
+        },
+        "43": {
+          "title": "Kötülüklerden Sığınma",
+          "meaning": "Yarattığı şeylerin şerrinden Allah'ın tam kelimelerine sığınırım."
+        },
+        "44": {
+          "title": "Hastalıklardan Korunma",
+          "meaning": "Allah'ın adıyla sana okuyorum."
+        },
+        "45": {
+          "title": "Cin ve İnslardan Korunma",
+          "meaning": "De ki: İnsanların Rabbine sığınırım."
+        },
+        "46": {
+          "title": "Sabah Akşam Korunma",
+          "meaning": "İslam fıtratı üzere sabahladık."
+        },
+        "47": {
+          "title": "Muavvizeteyn",
+          "meaning": "De ki: Felak'in Rabbine sığınırım."
+        },
+        "48": {
+          "title": "Kaza Beladan Korunma",
+          "meaning": "Allah'ım! Nimetin yok olmasından sana sığınırım."
+        },
+        "49": {
+          "title": "Güç ve Kuvvet",
+          "meaning": "Güç ve kuvvet ancak Allah'tandır."
+        },
+        "50": {
+          "title": "İman Korunması",
+          "meaning": "Allah'ım! Kalpleri çeviren! Kalbimi dinin üzere sabit kıl."
+        },
+        "51": {
+          "title": "Fitnedenkorunma",
+          "meaning": "Allah'ım! Deccal fitnesinden sana sığınırım."
+        },
+        "52": {
+          "title": "Hayır Dua",
+          "meaning": "Rabbimiz! Dünyada da ahirette de iyilik ver."
+        },
+        "53": {
+          "title": "İlim İsteme",
+          "meaning": "Rabbim! İlmimi artır."
+        },
+        "54": {
+          "title": "Af ve Mağfiret",
+          "meaning": "Rabbimiz! Günahlarımızı bağışla."
+        },
+        "55": {
+          "title": "Hidayet İsteme",
+          "meaning": "Bizi doğru yola ilet."
+        },
+        "56": {
+          "title": "Rahmet Dileme",
+          "meaning": "Rabbim! Bize merhamet et."
+        },
+        "57": {
+          "title": "Sabır İsteme",
+          "meaning": "Rabbimiz! Üzerimize sabır yağdır."
+        },
+        "58": {
+          "title": "Kolaylık Dileme",
+          "meaning": "Rabbim! Kolaylaştır, zorlaştırma."
+        },
+        "59": {
+          "title": "Kabul Duası",
+          "meaning": "Rabbimiz! Bizden kabul buyur."
+        },
+        "60": {
+          "title": "Salih Amel",
+          "meaning": "Beni rahmetinle salih kulların arasına kat."
+        },
+        "61": {
+          "title": "Şükür Duası",
+          "meaning": "Rabbim! Nimetine şükretmeyi nasip et."
+        },
+        "62": {
+          "title": "İbadet Kabul",
+          "meaning": "Rabbimiz! Bizden kabul et, sen işitensin, bilensin."
+        },
+        "63": {
+          "title": "Makbul Dua",
+          "meaning": "Allah'ım! Sen affedicisin, affetmeyi seversin, beni affet."
+        },
+        "64": {
+          "title": "Kunut Duası",
+          "meaning": "Allah'ım! Hidayete erdirdiklerinle beni de hidayete erdir."
+        },
+        "65": {
+          "title": "Seyyidul İstiğfar",
+          "meaning": "Allah'ım! Sen benim Rabbimsin, senden başka ilah yoktur."
+        },
+        "66": {
+          "title": "Yolculuk Duası",
+          "meaning": "Bunu bize boyun eğdireni tespih ederim."
+        },
+        "67": {
+          "title": "Yemek Duası",
+          "meaning": "Allah'ım! Bize verdiğin rızkı bereketli kıl."
+        },
+        "68": {
+          "title": "Hasta Ziyareti",
+          "meaning": "Zarar yok, inşallah temizliktir."
+        },
+        "69": {
+          "title": "Öfke Anında",
+          "meaning": "Kovulmuş şeytandan Allah'a sığınırım."
+        },
+        "70": {
+          "title": "Rüya Duası",
+          "meaning": "Allah'ım! Kabir azabından sana sığınırım."
+        },
+        "71": {
+          "title": "Mescide Giriş",
+          "meaning": "Allah'ım! Rahmet kapılarını aç."
+        },
+        "72": {
+          "title": "Mescidden Çıkış",
+          "meaning": "Allah'ım! Senden fazlını dilerim."
+        },
+        "73": {
+          "title": "Abdest Duası",
+          "meaning": "Allah'tan başka ilah olmadığına şehadet ederim."
+        },
+        "74": {
+          "title": "Cenaze Duası",
+          "meaning": "Allah'ım! Onu bağışla ve ona merhamet et."
+        },
+        "75": {
+          "title": "Hacet Namazı Duası",
+          "meaning": "Allah'ım! Rahmetinle senden isterim."
+        },
+        "76": {
+          "title": "Cuma Günü Duası",
+          "meaning": "Allah'ım! Efendimiz Muhammed'e salat eyle."
+        },
+        "77": {
+          "title": "Regaib Gecesi",
+          "meaning": "Allah'ı tesbih ederim ve hamd Allah'adır."
+        },
+        "78": {
+          "title": "Miraç Kandili",
+          "meaning": "Allah'ım! Peygamberinin şefaatini bize nasip et."
+        },
+        "79": {
+          "title": "Berat Kandili",
+          "meaning": "Allah'ım! Günahlarımı bağışla."
+        },
+        "80": {
+          "title": "Kadir Gecesi",
+          "meaning": "Allah'ım! Sen affedicisin, affet beni."
+        },
+        "81": {
+          "title": "Ramazan Duası",
+          "meaning": "Allah'ım! Bizi Ramazan'a ulaştır."
+        },
+        "82": {
+          "title": "Arefe Günü",
+          "meaning": "Allah'tan başka ilah yok, tektir, ortağı yoktur."
+        },
+        "83": {
+          "title": "Kurban Bayramı",
+          "meaning": "Allah en büyüktür, Allah'tan başka ilah yoktur."
+        },
+        "84": {
+          "title": "Hac Duası",
+          "meaning": "Buyur Allah'ım buyur, emrine amadeyim."
+        },
+        "85": {
+          "title": "Muharrem Ayı",
+          "meaning": "Allah'ım! Bu ayı üzerimize bereket ve imanla helal kıl."
+        },
+        "86": {
+          "title": "Şaban Ayı",
+          "meaning": "Allah'ım! Şaban ayında bize bereket ver."
+        },
+        "87": {
+          "title": "Zilhicce Ayı",
+          "meaning": "Allah'ım! Bu günleri mübarek kıl."
+        },
+        "88": {
+          "title": "Basit İstiğfar",
+          "meaning": "Allah'tan bağışlanma dilerim."
+        },
+        "89": {
+          "title": "Tevbe Duası",
+          "meaning": "Allah'a tevbe ediyorum."
+        },
+        "90": {
+          "title": "Bağışlanma",
+          "meaning": "Rabbim! Beni bağışla ve bana merhamet et."
+        },
+        "91": {
+          "title": "Pişmanlık",
+          "meaning": "Allah'ım! Nefsime zulmettim."
+        },
+        "92": {
+          "title": "Günahtan Dönüş",
+          "meaning": "Rabbimiz! Biz kendimize zulmettik."
+        },
+        "93": {
+          "title": "Af Dileme",
+          "meaning": "Rabbim! Bağışla, merhamet et, sen merhametlilerin en hayırlısısın."
+        },
+        "94": {
+          "title": "Temizlenme",
+          "meaning": "Allah'ım! Hatalarımdan beni temizle."
+        },
+        "95": {
+          "title": "Samimi Tevbe",
+          "meaning": "Kendisinden başka ilah olmayan Allah'tan bağışlanma dilerim."
+        },
+        "96": {
+          "title": "Afv İsteme",
+          "meaning": "Allah'ım! Sen affedicisin, kerim olansan."
+        },
+        "97": {
+          "title": "Rahmet Dileme",
+          "meaning": "Rabbimiz! Unutur veya yanılırsak bizi sorguya çekme."
+        },
+        "98": {
+          "title": "Günahlardan Arınma",
+          "meaning": "Allah'ım! Beni günahlardan temizle."
+        },
+        "99": {
+          "title": "Yeniden Başlama",
+          "meaning": "Allah'a tevbe ettim."
+        },
+        "100": {
+          "title": "İftitah Tekbiri",
+          "meaning": "Allah en büyüktür."
+        },
+        "101": {
+          "title": "Sübhaneke",
+          "meaning": "Allah'ım! Seni hamd ile tesbih ederim."
+        },
+        "102": {
+          "title": "Fatiha",
+          "meaning": "Hamd, alemlerin Rabbi Allah'adır."
+        },
+        "103": {
+          "title": "Rükû Tesbih",
+          "meaning": "Yüce Rabbimi tesbih ederim."
+        },
+        "104": {
+          "title": "Secdedua",
+          "meaning": "En yüce Rabbimi tesbih ederim."
+        },
+        "105": {
+          "title": "Teşehhüd",
+          "meaning": "Dil ile, beden ile, mal ile yapılan ibadetler Allah'adır."
+        },
+        "106": {
+          "title": "Allahumme Salli",
+          "meaning": "Allah'ım! Muhammed'e salat eyle."
+        },
+        "107": {
+          "title": "Allahumme Barik",
+          "meaning": "Allah'ım! Muhammed'e bereket ver."
+        },
+        "108": {
+          "title": "Rabbena Duası",
+          "meaning": "Rabbimiz! Dünyada iyilik ver."
+        },
+        "109": {
+          "title": "Selam Verme",
+          "meaning": "Selam ve Allah'ın rahmeti üzerinize olsun."
+        },
+        "110": {
+          "title": "Namaz Sonrası",
+          "meaning": "Allah'ım! Sen selamsan."
+        },
+        "111": {
+          "title": "Vitir Kannet",
+          "meaning": "Allah'ım! Senden yardım dileriz."
+        },
         "february": "Şubat",
         "march": "Mart",
         "april": "Nisan",
@@ -1052,5 +2232,1059 @@
         "friday": "Cuma",
         "saturday": "Cumartesi"
       }
+    },
+    "tafsir": {
+      "title": "Tefsir",
+      "selectSource": "Tefsir Kaynağı Seç",
+      "loading": "Tefsir yükleniyor...",
+      "error": "Tefsir yüklenirken hata oluştu",
+      "free": "Ücretsiz",
+      "source": "Kaynak",
+      "sources": {
+        "elmalili": "Elmalılı Hamdi Yazır",
+        "elmalili_sadece": "Elmalılı (Sadeleştirilmiş)",
+        "ibnkathir_tr": "İbn Kesir",
+        "ibnkathir_ar": "تفسير ابن كثير",
+        "ibnkathir_en": "Tafsir Ibn Kathir",
+        "tabari": "تفسير الطبري",
+        "diyanet": "Diyanet İşleri",
+        "okuyan": "Mehmet Okuyan"
+      },
+      "proRequired": "Tam tefsiri okumak için Pro üyelik gereklidir",
+      "upgradeToPro": "Pro'ya Geç",
+      "libraryTitle": "Tefsir Kütüphanesi",
+      "searchSurah": "Sure ara..."
+    }
+  },
+
+  "countdown": {
+    "timeUntil": "{{prayer}} Vaktine",
+    "remaining": "Kalan Süre",
+    "time": "Vakit",
+    "hours": "saat",
+    "min": "dk",
+    "sec": "sn"
+  },
+  "tafsir": {
+    "title": "Tefsir",
+    "selectSource": "Tefsir Kaynağı Seç",
+    "loading": "Tefsir yükleniyor...",
+    "error": "Tefsir yüklenirken hata oluştu",
+    "free": "Ücretsiz",
+    "source": "Kaynak",
+    "sources": {
+      "elmalili": "Elmalılı Hamdi Yazır",
+      "elmalili_sadece": "Elmalılı (Sadeleştirilmiş)",
+      "ibnkathir_tr": "İbn Kesir",
+      "ibnkathir_ar": "تفسير ابن كثير",
+      "ibnkathir_en": "Tafsir Ibn Kathir",
+      "tabari": "تفسير الطبري",
+      "diyanet": "Diyanet İşleri",
+      "okuyan": "Mehmet Okuyan"
+    },
+    "proRequired": "Tam tefsiri okumak için Pro üyelik gereklidir",
+    "upgradeToPro": "Pro'ya Geç",
+    "libraryTitle": "Tefsir Kütüphanesi",
+    "searchSurah": "Sure ara...",
+    "externalSource": "Bu kaynak Diyanet İşleri Başkanlığı web sitesinden görüntülenmektedir.",
+    "openInBrowser": "Tarayıcıda Aç"
+  },
+  "calendar": {
+    "hijriMonths": {
+      "muharram": "Muharrem",
+      "safar": "Safer",
+      "rabi1": "Rebiülevvel",
+      "rabi2": "Rebiülahir",
+      "jumada1": "Cemaziyelevvel",
+      "jumada2": "Cemaziyelahir",
+      "rajab": "Recep",
+      "shaban": "Şaban",
+      "ramadan": "Ramazan",
+      "shawwal": "Şevval",
+      "dhul_qada": "Zilkade",
+      "dhul_hijja": "Zilhicce"
+    },
+    "gregorianMonths": {
+      "january": "Ocak",
+      "february": "Şubat",
+      "march": "Mart",
+      "april": "Nisan",
+      "may": "Mayıs",
+      "june": "Haziran",
+      "july": "Temmuz",
+      "august": "Ağustos",
+      "september": "Eylül",
+      "october": "Ekim",
+      "november": "Kasım",
+      "december": "Aralık"
+    },
+    "days": {
+      "sunday": "Pazar",
+      "monday": "Pazartesi",
+      "tuesday": "Salı",
+      "wednesday": "Çarşamba",
+      "thursday": "Perşembe",
+      "friday": "Cuma",
+      "saturday": "Cumartesi"
+    }
+  },
+  "prayerBook": {
+    "categories": {
+      "daily": {
+        "name": "Günlük Dualar",
+        "desc": "Her gün okunabilecek dualar"
+      },
+      "debt": {
+        "name": "Borç ve Rızık Duaları",
+        "desc": "Maddi sıkıntılar için dualar"
+      },
+      "family": {
+        "name": "Aile ve Ev Huzuru",
+        "desc": "Aile mutluluğu için dualar"
+      },
+      "protection": {
+        "name": "Korunma Duaları",
+        "desc": "Manevi koruma için dualar"
+      },
+      "wishes": {
+        "name": "İstek ve Niyaz",
+        "desc": "Dilekler için dualar"
+      },
+      "prophet": {
+        "name": "Peygamber Duaları",
+        "desc": "Hz. Muhammed'den dualar"
+      },
+      "special_days": {
+        "name": "Özel Gün Duaları",
+        "desc": "Kandil ve bayram duaları"
+      },
+      "repentance": {
+        "name": "Tövbe ve İstiğfar",
+        "desc": "Bağışlanma duaları"
+      },
+      "prayer_duas": {
+        "name": "Namaz Duaları",
+        "desc": "Namazda okunan dualar"
+      },
+      "distress": {
+        "name": "Sıkıntı Duaları",
+        "desc": "Gam ve keder için dualar"
+      }
+    },
+    "items": {
+      "1": {
+        "title": "Sabah Duası",
+        "meaning": "Sabaha kavuştuk, mülk de Allah'a ait olarak sabaha kavuştu. Hamd de Allah'a mahsustur."
+      },
+      "2": {
+        "title": "Akşam Duası",
+        "meaning": "Akşama eriştik, mülk de Allah'a ait olarak akşama erişti. Hamd de Allah'a mahsustur."
+      },
+      "3": {
+        "title": "Uyku Duası",
+        "meaning": "Allah'ım! Senin isminle ölür ve dirilirim."
+      },
+      "4": {
+        "title": "Evden Çıkış Duası",
+        "meaning": "Allah'ın adıyla çıkıyorum, Allah'a tevekkül ettim."
+      },
+      "5": {
+        "title": "Eve Giriş Duası",
+        "meaning": "Allah'ım! Senden en hayırlı girişi ve en hayırlı çıkışı istiyorum."
+      },
+      "6": {
+        "title": "Ayetel Kürsi",
+        "meaning": "Allah, O'ndan başka ilah yoktur. O, diridir, her şeyi ayakta tutandır."
+      },
+      "7": {
+        "title": "Tesbih Duası",
+        "meaning": "Allah'ı tüm eksikliklerden tenzih ederim ve O'na hamd ederim."
+      },
+      "8": {
+        "title": "Sabah-Akşam Korunma",
+        "meaning": "Allah'ın adıyla ki, O'nun adı anılınca yerde ve gökte hiçbir şey zarar veremez."
+      },
+      "9": {
+        "title": "Afiyet Duası",
+        "meaning": "Allah'ım! Bedenimde bana afiyet ver."
+      },
+      "10": {
+        "title": "İstiğfar",
+        "meaning": "Allah'tan bağışlanma diler ve O'na tövbe ederim."
+      },
+      "11": {
+        "title": "Salavat",
+        "meaning": "Allah'ım! Muhammed'e salat et."
+      },
+      "12": {
+        "title": "Rıza Duası",
+        "meaning": "Rab olarak Allah'tan razı oldum."
+      },
+      "13": {
+        "title": "Hamd Duası",
+        "meaning": "Hamd Allah'a mahsustur."
+      },
+      "14": {
+        "title": "Afiyet İsteme",
+        "meaning": "Allah'ım! Senden afiyet istiyorum."
+      },
+      "15": {
+        "title": "Şükür Duası",
+        "meaning": "Allah'ım! Hamd Sana, şükür de Sanadır."
+      },
+      "16": {
+        "title": "Helal Rızık Duası",
+        "meaning": "Allah'ım! Haramından beni helale kavuştur."
+      },
+      "17": {
+        "title": "Sıkıntıdan Korunma",
+        "meaning": "Allah'ım! Keder ve üzüntüden Sana sığınırım."
+      },
+      "18": {
+        "title": "Bereket Duası",
+        "meaning": "Allah'ım! Bize verdiğin rızıkları bereketlendir."
+      },
+      "19": {
+        "title": "Temiz Rızık Duası",
+        "meaning": "Allah'ım! Senden temiz bir rızık istiyorum."
+      },
+      "20": {
+        "title": "Rahmet Kapıları Duası",
+        "meaning": "Allah'ım! Bana rahmet kapılarını aç."
+      },
+      "21": {
+        "title": "Nimet Şükrü",
+        "meaning": "Rabbim! Bana nimetine şükretmeyi ilham et."
+      },
+      "22": {
+        "title": "Zenginlik Duası",
+        "meaning": "Allah'ım! Senden zenginlik istiyorum."
+      },
+      "23": {
+        "title": "Helal Kazanç Duası",
+        "meaning": "Allah'ım! Bana helal rızık nasip et."
+      },
+      "24": {
+        "title": "Kolaylık Duası",
+        "meaning": "Allah'ım! Senin kolaylaştırdığından başka kolay yoktur."
+      },
+      "25": {
+        "title": "Hasbünallah",
+        "meaning": "Allah bize yeter, O ne güzel vekildir."
+      },
+      "26": {
+        "title": "Rızık Genişliği",
+        "meaning": "Allah'ım! Rızkımı genişlet."
+      },
+      "27": {
+        "title": "Takva ile Çıkış Yolu",
+        "meaning": "Kim Allah'tan korkarsa, Allah ona bir çıkış yolu açar."
+      },
+      "28": {
+        "title": "Aile Mutluluğu Duası",
+        "meaning": "Rabbimiz! Bize eşlerimizden ve çocuklarımızdan gözümüzün aydınlığı olacak kimseler ihsan et."
+      },
+      "29": {
+        "title": "Evlilik Tebriği",
+        "meaning": "Allah sana bereket versin, üzerine bereket indirsin."
+      },
+      "30": {
+        "title": "Hayırlı Evlat Duası",
+        "meaning": "Rabbim! Bana katından hayırlı bir nesil ver."
+      },
+      "31": {
+        "title": "Anne-Baba Duası",
+        "meaning": "Rabbim! Onlara merhamet et, nasıl onlar beni küçükken büyüttülerse."
+      },
+      "32": {
+        "title": "Ev Bereketi Duası",
+        "meaning": "Allah'ım! Evimize bereket ver."
+      },
+      "33": {
+        "title": "Namazı Kılanlardan Olma",
+        "meaning": "Rabbim! Beni namazı dosdoğru kılanlardan eyle ve zürriyetimden de."
+      },
+      "34": {
+        "title": "Cehennemden Korunma",
+        "meaning": "Rabbimiz! Cehennem azabını bizden uzaklaştır."
+      },
+      "35": {
+        "title": "Rahmet Duası",
+        "meaning": "Rabbimiz! Bize katından rahmet ver."
+      },
+      "36": {
+        "title": "Kalp Sebatı Duası",
+        "meaning": "Rabbimiz! Kalplerimizi saptırma."
+      },
+      "37": {
+        "title": "Komşu Sulhu Duası",
+        "meaning": "Allah'ım! Bizimle komşularımızın arasını düzelt."
+      },
+      "38": {
+        "title": "Müslüman Olma Duası",
+        "meaning": "Rabbimiz! Bizi Sana teslim olanlardan kıl."
+      },
+      "39": {
+        "title": "Dünya-Ahiret Hasenesi",
+        "meaning": "Rabbimiz! Bize dünyada da, ahirette de iyilik ver."
+      },
+      "40": {
+        "title": "Şeytandan Korunma",
+        "meaning": "Kovulmuş şeytandan Allah'a sığınırım."
+      },
+      "41": {
+        "title": "Maşallah Duası",
+        "meaning": "Allah dilemiş, güç ancak Allah'tandır."
+      },
+      "42": {
+        "title": "Kelime-i Tevhid",
+        "meaning": "Allah'tan başka ilah yoktur, Muhammed O'nun elçisidir."
+      },
+      "43": {
+        "title": "Tam Kelimelerle Korunma",
+        "meaning": "Yarattığı şeylerin şerrinden Allah'ın tam kelimelerine sığınırım."
+      },
+      "44": {
+        "title": "Şifa Rukye",
+        "meaning": "Allah'ın adıyla seni okuyorum."
+      },
+      "45": {
+        "title": "Nas Suresi",
+        "meaning": "De ki: İnsanların Rabbine sığınırım."
+      },
+      "46": {
+        "title": "İslam Fıtratı Duası",
+        "meaning": "İslam fıtratı üzere sabaha kavuştuk."
+      },
+      "47": {
+        "title": "Felak Suresi",
+        "meaning": "De ki: Felakın Rabbine sığınırım."
+      },
+      "48": {
+        "title": "Nimet Kaybından Korunma",
+        "meaning": "Allah'ım! Nimetinin yok olmasından Sana sığınırım."
+      },
+      "49": {
+        "title": "La Havle Duası",
+        "meaning": "Güç ve kuvvet ancak Allah'tandır."
+      },
+      "50": {
+        "title": "Kalp Sebatı",
+        "meaning": "Ey kalpleri çeviren! Kalbimi dinin üzere sabit kıl."
+      },
+      "51": {
+        "title": "Deccal Fitnesinden Korunma",
+        "meaning": "Allah'ım! Deccal fitnesinden Sana sığınırım."
+      },
+      "52": {
+        "title": "Dünya-Ahiret İyiliği",
+        "meaning": "Rabbimiz! Bize dünyada da ahirette de güzellik ver."
+      },
+      "53": {
+        "title": "İlim Artışı Duası",
+        "meaning": "Rabbim! İlmimi artır."
+      },
+      "54": {
+        "title": "Günahların Affı",
+        "meaning": "Rabbimiz! Günahlarımızı bağışla."
+      },
+      "55": {
+        "title": "Dosdoğru Yol",
+        "meaning": "Bizi dosdoğru yola ilet."
+      },
+      "56": {
+        "title": "Merhamet Duası",
+        "meaning": "Rabbim! Bize merhamet et."
+      },
+      "57": {
+        "title": "Sabır Duası",
+        "meaning": "Rabbimiz! Üzerimize sabır yağdır."
+      },
+      "58": {
+        "title": "Kolaylaştırma Duası",
+        "meaning": "Rabbim! Kolaylaştır, zorlaştırma."
+      },
+      "59": {
+        "title": "Kabul Duası",
+        "meaning": "Rabbimiz! Bizden kabul buyur."
+      },
+      "60": {
+        "title": "Salih Kullarla Beraber Olma",
+        "meaning": "Rahmetinle beni salih kullarının arasına kat."
+      },
+      "61": {
+        "title": "Nimet Şükrü",
+        "meaning": "Rabbim! Nimetine şükretmeyi bana ilham et."
+      },
+      "62": {
+        "title": "Semi' Alim Kabul",
+        "meaning": "Rabbimiz! Bizden kabul buyur. Şüphesiz Sen işitensin, bilensin."
+      },
+      "63": {
+        "title": "Af Duası",
+        "meaning": "Allah'ım! Sen affedicisin, affı seversin, beni affet."
+      },
+      "64": {
+        "title": "Kunut Duası",
+        "meaning": "Allah'ım! Hidayet ettiğin kimselerle birlikte beni de hidayete erdir."
+      },
+      "65": {
+        "title": "Seyyidül İstiğfar",
+        "meaning": "Allah'ım! Sen benim Rabbimsin. Senden başka ilah yoktur."
+      },
+      "66": {
+        "title": "Yolculuk Duası",
+        "meaning": "Bunu bize boyun eğdiren (Allah) ne yücedir."
+      },
+      "67": {
+        "title": "Yemek Duası",
+        "meaning": "Allah'ım! Bizi rızıklandırdıklarında bize bereket ver."
+      },
+      "68": {
+        "title": "Hasta Ziyareti Duası",
+        "meaning": "Bir zararı yok, inşallah günahlarına kefaret olur."
+      },
+      "69": {
+        "title": "Şeytandan Allah'a Sığınma",
+        "meaning": "Kovulmuş şeytandan Allah'a sığınırım."
+      },
+      "70": {
+        "title": "Kabir Azabından Korunma",
+        "meaning": "Allah'ım! Kabir azabından Sana sığınırım."
+      },
+      "71": {
+        "title": "Mescide Giriş Duası",
+        "meaning": "Allah'ım! Rahmet kapılarını bana aç."
+      },
+      "72": {
+        "title": "Mescidden Çıkış Duası",
+        "meaning": "Allah'ım! Fazlından Sana isterim."
+      },
+      "73": {
+        "title": "Abdest Sonrası Şehadet",
+        "meaning": "Şehadet ederim ki Allah'tan başka ilah yoktur."
+      },
+      "74": {
+        "title": "Cenaze Duası",
+        "meaning": "Allah'ım! Onu bağışla ve ona merhamet et."
+      },
+      "75": {
+        "title": "Rahmet İsteme",
+        "meaning": "Allah'ım! Rahmetinle Senden istiyorum."
+      },
+      "76": {
+        "title": "Cuma Salâvatı",
+        "meaning": "Allah'ım! Efendimiz Muhammed'e salât et."
+      },
+      "77": {
+        "title": "Tesbihat",
+        "meaning": "Allah'ı tenzih ederim, hamd Allah'adır."
+      },
+      "78": {
+        "title": "Şefaat Duası",
+        "meaning": "Allah'ım! Peygamberinin şefaatini bize nasip et."
+      },
+      "79": {
+        "title": "Günahların Affı Duası",
+        "meaning": "Allah'ım! Günahlarımı bağışla."
+      },
+      "80": {
+        "title": "Kadir Gecesi Duası",
+        "meaning": "Allah'ım! Sen affedicisin, affı seversin, beni affet."
+      },
+      "81": {
+        "title": "Ramazana Ulaşma Duası",
+        "meaning": "Allah'ım! Bizi Ramazan'a ulaştır."
+      },
+      "82": {
+        "title": "Tevhid Zikri",
+        "meaning": "Allah'tan başka ilah yoktur, O tektir, ortağı yoktur."
+      },
+      "83": {
+        "title": "Bayram Tekbiri",
+        "meaning": "Allah en büyüktür, Allah en büyüktür, Allah'tan başka ilah yoktur."
+      },
+      "84": {
+        "title": "Telbiye",
+        "meaning": "Buyur Allah'ım buyur, emrine amadeyim."
+      },
+      "85": {
+        "title": "Hilal Görünce Dua",
+        "meaning": "Allah'ım! Onu üzerimize bereket ve imanla görünür kıl."
+      },
+      "86": {
+        "title": "Şaban Ayı Duası",
+        "meaning": "Allah'ım! Şaban ayını bize bereketli kıl."
+      },
+      "87": {
+        "title": "Mübarek Günler Duası",
+        "meaning": "Allah'ım! Bu günleri mübarek kıl."
+      },
+      "88": {
+        "title": "İstiğfar",
+        "meaning": "Allah'tan bağışlanma dilerim."
+      },
+      "89": {
+        "title": "Tövbe Duası",
+        "meaning": "Allah'a tövbe ederim."
+      },
+      "90": {
+        "title": "Bağışlanma ve Merhamet",
+        "meaning": "Rabbim! Beni bağışla ve bana merhamet et."
+      },
+      "91": {
+        "title": "Nefse Zulüm İtirafı",
+        "meaning": "Allah'ım! Ben nefsime zulmettim."
+      },
+      "92": {
+        "title": "Adem'in Tövbesi",
+        "meaning": "Rabbimiz! Biz nefislerimize zulmettik."
+      },
+      "93": {
+        "title": "En Hayırlı Affedici",
+        "meaning": "Rabbim! Bağışla, merhamet et. Sen merhametlilerin en hayırlısısın."
+      },
+      "94": {
+        "title": "Günahlardan Arınma",
+        "meaning": "Allah'ım! Beni hatalarımdan yıka."
+      },
+      "95": {
+        "title": "Hayy ve Kayyum'a İstiğfar",
+        "meaning": "Hay ve Kayyum olan Allah'tan bağışlanma dilerim."
+      },
+      "96": {
+        "title": "Afüvv-ü Kerim Duası",
+        "meaning": "Allah'ım! Sen affedici ve cömertsin."
+      },
+      "97": {
+        "title": "Unutma ve Hata Affı",
+        "meaning": "Rabbimiz! Unuttuğumuz veya hata ettiğimizde bizi sorumlu tutma."
+      },
+      "98": {
+        "title": "Günahlardan Temizlenme",
+        "meaning": "Allah'ım! Beni günahlardan temizle."
+      },
+      "99": {
+        "title": "Tövbe Ettim",
+        "meaning": "Allah'a tövbe ettim."
+      },
+      "100": {
+        "title": "Tekbir",
+        "meaning": "Allah en büyüktür."
+      },
+      "101": {
+        "title": "Sübhaneke",
+        "meaning": "Allah'ım! Sen her türlü noksandan münezzehsin, hamd Sanadır."
+      },
+      "102": {
+        "title": "Fatiha Suresi",
+        "meaning": "Hamd, âlemlerin Rabbi Allah'a mahsustur."
+      },
+      "103": {
+        "title": "Rükû Tesbihi",
+        "meaning": "Yüce Rabbimi tenzih ederim."
+      },
+      "104": {
+        "title": "Secde Tesbihi",
+        "meaning": "En yüce Rabbimi tenzih ederim."
+      },
+      "105": {
+        "title": "Tahiyyat",
+        "meaning": "Tahiyyat Allah'a mahsustur."
+      },
+      "106": {
+        "title": "Allahümme Salli",
+        "meaning": "Allah'ım! Muhammed'e salât et."
+      },
+      "107": {
+        "title": "Allahümme Barik",
+        "meaning": "Allah'ım! Muhammed'e bereket ver."
+      },
+      "108": {
+        "title": "Rabbena Duası",
+        "meaning": "Rabbimiz! Bize dünyada iyilik ver."
+      },
+      "109": {
+        "title": "Selam",
+        "meaning": "Allah'ın selamı ve rahmeti üzerinize olsun."
+      },
+      "110": {
+        "title": "Selam Sonrası Dua",
+        "meaning": "Allah'ım! Sen selamsın (selamet verensin)."
+      },
+      "111": {
+        "title": "Kunut Duası",
+        "meaning": "Allah'ım! Senden yardım dileriz."
+      },
+      "112": {
+        "title": "Yunus Duası",
+        "meaning": "Senden başka ilah yoktur. Sen yücesin, ben zalimlerden oldum."
+      },
+      "113": {
+        "title": "Keder Duası",
+        "meaning": "Allah'ım! Ben Senin kulunum."
+      },
+      "114": {
+        "title": "Tevekkül Ayeti",
+        "meaning": "Allah bana yeter. O'ndan başka ilah yoktur."
+      },
+      "115": {
+        "title": "Rahmet Ümidi",
+        "meaning": "Allah'ım! Rahmetini umuyorum."
+      },
+      "116": {
+        "title": "Hay ve Kayyum",
+        "meaning": "Ey Hay, ey Kayyum! Rahmetinle yardımını istiyorum."
+      },
+      "117": {
+        "title": "Zorluk Kolaylık Duası",
+        "meaning": "Allah'ım! Senin kolaylaştırdığından başka kolay yoktur."
+      },
+      "118": {
+        "title": "Üzüntüden Korunma",
+        "meaning": "Allah'ım! Üzüntüden Sana sığınırım."
+      },
+      "119": {
+        "title": "Musibet Duası",
+        "meaning": "Şüphesiz biz Allah'a aitiz ve O'na döneceğiz."
+      },
+      "120": {
+        "title": "Sabır Yağmuru",
+        "meaning": "Rabbimiz! Üzerimize sabır yağdır."
+      },
+      "121": {
+        "title": "Allah Benimle",
+        "meaning": "Allah benimle, Allah bana bakıyor."
+      },
+      "122": {
+        "title": "Ümit Ayeti",
+        "meaning": "Allah'ın rahmetinden ümit kesmeyin."
+      },
+      "123": {
+        "title": "Tevekkül Ayeti",
+        "meaning": "Müminler yalnız Allah'a tevekkül etsinler."
+      }
+    }
+  },
+
+  "family": {
+    "title": "Huzur Aile",
+    "createProfile": "Profil Oluştur",
+    "namePlaceholder": "İsim Girin",
+    "child": "Çocuk",
+    "parent": "Ebeveyn",
+    "activeProfile": "Aktif Profil",
+    "leaderboard": "Aile Sıralaması",
+    "noProfiles": "Henüz profil oluşturulmadı.",
+    "points": "Puan",
+    "tabs": {
+      "overview": "Özet",
+      "leaderboard": "Sıralama",
+      "activities": "Aktiviteler",
+      "groups": "Gruplar"
+    },
+    "welcomeBack": "Tekrar Hoş Geldin",
+    "sharedGoals": "Ortak Hedefler",
+    "goals": {
+      "familyHatim": "Aile Hatmi",
+      "desc": "Ramazan sonuna kadar tamamlanacak"
+    },
+    "chat": "Sohbet",
+    "invite": "Davet Et",
+    "recentActivity": "Son Aktiviteler",
+    "activities": {
+      "action1": "Yasin Suresini okudu",
+      "action2": "Sabah namazını kıldı",
+      "action3": "33 tesbih çekti"
+    },
+    "minutesAgo": "dakika önce",
+    "groups": {
+      "title": "Aile Grupları",
+      "create": "Grup Oluştur",
+      "join": "Gruba Katıl",
+      "code": "Grup Kodu",
+      "enterCode": "Kodu Girin",
+      "createBtn": "Oluştur",
+      "joinBtn": "Katıl",
+      "noGroups": "Henüz bir gruba üye değilsiniz.",
+      "members": "Üyeler",
+      "leave": "Ayrıl",
+      "pendingRequests": "Bekleyen İstekler",
+      "requestSent": "Katılım isteğiniz gönderildi. Yönetici onayı bekleniyor.",
+      "errorCreating": "Grup oluşturulurken hata oluştu.",
+      "errorJoining": "Gruba katılırken hata oluştu."
+    }
+  },
+
+  "hatimCoach": {
+    "title": "Akıllı Hatim Koçu",
+    "welcomeTitle": "Hatim Yolculuğuna Hoş Geldin",
+    "welcomeDesc": "Hedefine ulaşman için sana özel bir plan hazırlayalım. İster belirli bir tarihe kadar, ister günlük sayfa sayısına göre plan yapabilirsin.",
+    "startSetup": "Plan Oluştur",
+    "setupTitle": "Hatim Planı Oluştur",
+    "setupDesc": "Hatimini ne zaman bitirmek istiyorsun? Hedef tarihini seç, günlük okuman gereken sayfa sayısını hesaplayalım.",
+    "selectTarget": "Hedef Tarih Belirle",
+    "targetDateLabel": "Bitiş Tarihi",
+    "targetDate": "Hedef Tarih",
+    "startJourney": "Yolculuğa Başla",
+    "dailyGoal": "Günlük Hedef",
+    "pages": "Sayfa",
+    "days": "Gün",
+    "pagesTotal": "Sayfa Toplam",
+    "daysLeft": "Gün Kaldı",
+    "pagesLeft": "Sayfa Kaldı",
+    "summary": "Plan Özeti",
+    "confirmStart": "Planı Başlat",
+    "progress": "İlerleme",
+    "juz": "Cüz",
+    "currentPage": "Şu Anki Sayfa",
+    "avgSpeed": "Ortalama Hız",
+    "pagesDay": "Sayfa/Gün",
+    "streak": "Okuma Serisi",
+    "resetPlan": "Planı Sıfırla"
+  },
+
+  "missedPrayers": {
+    "title": "Kaza Takipçisi",
+    "calculatorTitle": "Kaza Namazı Hesaplayıcı",
+    "birthDate": "Doğum Tarihi",
+    "pubertyAge": "Buluğ Çağı (Yaş)",
+    "calculate": "Hesapla",
+    "trackerTitle": "Kaza Namazı Takibi",
+    "recalculate": "Yeniden Hesapla",
+    "confirmRecalculate": "Mevcut veriler silinecek. Devam etmek istiyor musunuz?",
+    "note": "Kaza namazı kıldığınızda '-' butonuna basarak sayıyı azaltın."
+  },
+
+  "hikmet": {
+    "title": "Hikmetname",
+    "daily": "Günün Hikmeti",
+    "favorite": "Favori",
+    "share": "Paylaş",
+    "new": "Yeni",
+    "copied": "Hikmet panoya kopyalandı!",
+    "favorites": "Favorilerim",
+    "categoriesTitle": "Kategoriler",
+    "shareText": "\"{{text}}\"\n\n— {{source}}{{ref}}\n\n{{appName}} uygulamasından",
+    "categories": {
+      "hadis": {
+        "title": "Hadis-i Şerifler",
+        "desc": "Peygamber Efendimiz'in mübarek sözleri"
+      },
+      "alim": {
+        "title": "Alimlerin Sözleri",
+        "desc": "İslam alimlerinden hikmetli sözler"
+      },
+      "sufi": {
+        "title": "Tasavvuf Büyükleri",
+        "desc": "Sufi büyüklerinden nasihatler"
+      },
+      "ayet": {
+        "title": "Kuran'dan Hikmetler",
+        "desc": "Ayetlerden öğütler ve hikmetler"
+      }
+    },
+    "items": {
+      "1": {
+        "text": "Kolaylaştırın, zorlaştırmayın. Müjdeleyin, nefret ettirmeyin.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari, İlim 11"
+      },
+      "2": {
+        "text": "Sizden biriniz kendisi için istediğini kardeşi için de istemedikçe gerçek mümin olamaz.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari, İman 7"
+      },
+      "3": {
+        "text": "İnsanların en hayırlısı, insanlara en faydalı olanıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Taberani"
+      },
+      "4": {
+        "text": "Güzel ahlak, günahları eritir; suyun buzu erittiği gibi.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Taberani"
+      },
+      "5": {
+        "text": "Öfkelendiğinde kendine hakim olan kişi, gerçek kahramandır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari, Edeb 76"
+      },
+      "6": {
+        "text": "Her kim Allah için alçakgönüllü olursa, Allah onu yükseltir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Müslim"
+      },
+      "7": {
+        "text": "Hikmetin başı Allah korkusudur.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Beyhaki"
+      },
+      "8": {
+        "text": "Dilini hayır için kullan ya da sus.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari, Edeb 31"
+      },
+      "9": {
+        "text": "İlim, isteyenin değil, arayanın hakkıdır.",
+        "source": "İmam Gazali",
+        "ref": "İhya'u Ulumi'd-din"
+      },
+      "10": {
+        "text": "Kalp, Allah'ı zikretmedikçe huzur bulamaz.",
+        "source": "İmam Gazali",
+        "ref": "İhya'u Ulumi'd-din"
+      },
+      "11": {
+        "text": "Nefsini bilen Rabbini bilir.",
+        "source": "İmam Şafi",
+        "ref": ""
+      },
+      "12": {
+        "text": "İlmin en üstün mertebesi, Allah'tan korkmaktır.",
+        "source": "İmam Malik",
+        "ref": ""
+      },
+      "13": {
+        "text": "Sabır, kalbin gözüdür.",
+        "source": "İbn-i Ataullah",
+        "ref": "el-Hikemü'l-Ataiyye"
+      },
+      "14": {
+        "text": "Bir an için bile kalbi Allah'tan gafil etmek, büyük bir kayıptır.",
+        "source": "Hasan-ı Basri",
+        "ref": ""
+      },
+      "15": {
+        "text": "Tefekkür ibadettir.",
+        "source": "İmam Ebu Hanife",
+        "ref": ""
+      },
+      "16": {
+        "text": "Aşk bir denizdir, kıyısı yoktur.",
+        "source": "Mevlana Celaleddin Rumi",
+        "ref": "Mesnevi"
+      },
+      "17": {
+        "text": "Yaratılanı severiz, Yaratandan ötürü.",
+        "source": "Yunus Emre",
+        "ref": ""
+      },
+      "18": {
+        "text": "Kendi nefsini ıslah etmeden başkasını ıslah edemezsin.",
+        "source": "Abdulkadir Geylani",
+        "ref": ""
+      },
+      "19": {
+        "text": "Dünya bir köprüdür. Üzerinden geç, ama üzerine ev yapma.",
+        "source": "Hz. İsa (a.s.)",
+        "ref": ""
+      },
+      "20": {
+        "text": "Allah sevgisi, kalbin hayatıdır.",
+        "source": "İbn-i Arabi",
+        "ref": ""
+      },
+      "21": {
+        "text": "Edep, akıldan öncedir.",
+        "source": "Beyazıd-ı Bestami",
+        "ref": ""
+      },
+      "22": {
+        "text": "İnsanların en acizi, dua edemeyendir.",
+        "source": "Ahmed bin Hanbel",
+        "ref": ""
+      },
+      "23": {
+        "text": "Kalbinde merhamet olmayanın, imanı zayıftır.",
+        "source": "Şah-ı Nakşibend",
+        "ref": ""
+      },
+      "24": {
+        "text": "Şüphesiz güçlükle beraber kolaylık vardır.",
+        "source": "Kuran-ı Kerim",
+        "ref": "İnşirah Suresi, 5-6"
+      },
+      "25": {
+        "text": "Allah sabredenleri sever.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Al-i İmran, 146"
+      },
+      "26": {
+        "text": "Rabbinizden bağışlanma dileyin. O, çok bağışlayıcıdır.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Nuh Suresi, 10"
+      },
+      "27": {
+        "text": "Kim Allah'a tevekkül ederse, O ona yeter.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Talak Suresi, 3"
+      },
+      "28": {
+        "text": "Bilesiniz ki kalpler ancak Allah'ı anmakla huzur bulur.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Ra'd Suresi, 28"
+      },
+      "29": {
+        "text": "İyiliğin karşılığı ancak iyiliktir.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Rahman Suresi, 60"
+      },
+      "30": {
+        "text": "Allah her şeye kadirdir.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Bakara Suresi, 20"
+      },
+      "31": {
+        "text": "En hayırlı sadaka, ilim öğrenmek ve öğretmektir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "İbn Mace"
+      },
+      "32": {
+        "text": "Cennet, annelerin ayakları altındadır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Nesai"
+      },
+      "33": {
+        "text": "Temizlik imanın yarısıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Müslim"
+      },
+      "34": {
+        "text": "Güleryüzle karşılamak sadakadır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Tirmizi"
+      },
+      "35": {
+        "text": "Kim bir ağaç dikerse, onun meyvesinden yiyenler kadar sevap alır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Müslim"
+      },
+      "36": {
+        "text": "Şükreden kalp, sabreden beden, zikreden dil.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Tirmizi"
+      },
+      "37": {
+        "text": "Müminin niyeti amelinden hayırlıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Taberani"
+      },
+      "38": {
+        "text": "İki nimet vardır ki insanların çoğu bunlarda aldanmıştır: Sağlık ve boş vakit.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari"
+      },
+      "39": {
+        "text": "Akıl, üzerine pratik uygulanmayan bilgidir; bilgi ise uygulanmayan akıldır.",
+        "source": "İmam Gazali",
+        "ref": ""
+      },
+      "40": {
+        "text": "Dünya ahiretin tarlasıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": ""
+      },
+      "41": {
+        "text": "Gerçek zenginlik, gönül zenginliğidir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari, Rikak 15"
+      },
+      "42": {
+        "text": "Mümin, müminin aynasıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Ebu Davud"
+      },
+      "43": {
+        "text": "Ölüm yeter öğütçü olarak.",
+        "source": "Hz. Ömer (r.a.)",
+        "ref": ""
+      },
+      "44": {
+        "text": "Nimete şükretmeyen, belanın artmasına hazırlanır.",
+        "source": "Hz. Ali (r.a.)",
+        "ref": ""
+      },
+      "45": {
+        "text": "Bir kimsenin değeri, himmetinin yüksekliği kadardır.",
+        "source": "Hz. Ali (r.a.)",
+        "ref": ""
+      },
+      "46": {
+        "text": "Cömertlik öyle bir ağaçtır ki kökleri cennettedir.",
+        "source": "Hz. Ali (r.a.)",
+        "ref": ""
+      },
+      "47": {
+        "text": "Sükut, hikmetin kapısıdır.",
+        "source": "Hz. Ali (r.a.)",
+        "ref": ""
+      },
+      "48": {
+        "text": "İnsan, dilinin altında gizlidir.",
+        "source": "Hz. Ali (r.a.)",
+        "ref": ""
+      },
+      "49": {
+        "text": "İlim, amel içindir; amel olmazsa ilim yük olur.",
+        "source": "Süfyan-ı Sevri",
+        "ref": ""
+      },
+      "50": {
+        "text": "Birlikte yenilen yemek bereketlidir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Ebu Davud"
+      },
+      "51": {
+        "text": "Dua ibadetin özüdür.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Tirmizi"
+      },
+      "52": {
+        "text": "Her kim bir hayır yolunu gösterirse, o hayrı yapanın sevabı kadar sevap alır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Müslim"
+      },
+      "53": {
+        "text": "Helal lokma, ibadetin özüdür.",
+        "source": "Bayezid-i Bestami",
+        "ref": ""
+      },
+      "54": {
+        "text": "Dost acı söyler.",
+        "source": "Hz. Ömer (r.a.)",
+        "ref": ""
+      },
+      "55": {
+        "text": "Senden öncekileri düşün de sabret, senden sonrakileri düşün de kanaat et.",
+        "source": "Ahmed er-Rufai",
+        "ref": ""
+      },
+      "56": {
+        "text": "Kalbin katılığı, çok gülmekten ve çok yemekten gelir.",
+        "source": "Fudayl bin İyaz",
+        "ref": ""
+      },
+      "57": {
+        "text": "Allah katında en sevimsiz helal, boşanmadır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Ebu Davud"
+      },
+      "58": {
+        "text": "Komşusu açken tok yatan bizden değildir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari"
+      },
+      "59": {
+        "text": "Kim Allah'a güvenirse Allah ona kâfidir.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Talak Suresi, 3"
+      },
+      "60": {
+        "text": "De ki: Rabbim! İlmimi artır.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Taha Suresi, 114"
+      }
+    }
   }
 }

@@ -1,0 +1,73 @@
+{
+  "tajweed": {
+    "title": "Tajweed Tutor",
+    "subtitle": "Improve your Quran recitation",
+    "rule": "Rule",
+    "letters": "Letters",
+    "examples": "Examples",
+    "understood": "Understood, Practice",
+    "audioNotReady": "Audio file not ready.",
+    "audioError": "Error playing audio: {{error}}",
+    "aiCheck": {
+      "title": "AI Pronunciation Check",
+      "desc": "Analyze your recitation with AI and get instant feedback.",
+      "comingSoon": "Coming Soon"
+    },
+    "rules": {
+      "idgam_meal_gunne": {
+        "title": "Idgham Ma'al Ghunnah",
+        "desc": "Merging with Nasalization",
+        "rule": "If Sakin Noon or Tanween is followed by one of the letters (ي م ن و), they are merged with a nasal sound.",
+        "examples": {
+          "0": { "explanation": "Noon meets Ya, so Idgham occurs." },
+          "1": { "explanation": "Noon meets Meem, so Idgham occurs." }
+        }
+      },
+      "idgam-bila-gunne": {
+        "title": "Idgham Bila Ghunnah",
+        "desc": "Merging without Nasalization",
+        "rule": "If Sakin Noon or Tanween is followed by Lam (ل) or Ra (ر), they are merged without a nasal sound.",
+        "examples": {
+          "0": { "explanation": "Noon meets Ra, so Idgham without Ghunnah occurs." },
+          "1": { "explanation": "Tanween meets Lam, so Idgham without Ghunnah occurs." }
+        }
+      },
+      "ihfa": {
+        "title": "Ikhfa",
+        "desc": "Concealment",
+        "rule": "If Sakin Noon or Tanween is followed by an Ikhfa letter, the Noon sound is concealed with a nasal sound.",
+        "examples": {
+          "0": { "explanation": "Sakin Noon meets Za, so Ikhfa occurs." },
+          "1": { "explanation": "Sakin Noon meets Shin, so Ikhfa occurs." }
+        }
+      },
+      "izhar": {
+        "title": "Izhar",
+        "desc": "Clarification",
+        "rule": "If Sakin Noon or Tanween is followed by a throat letter, the Noon sound is pronounced clearly.",
+        "examples": {
+          "0": { "explanation": "Sakin Noon meets Kha, so Izhar occurs." },
+          "1": { "explanation": "Tanween meets Alif, so Izhar occurs." }
+        }
+      },
+      "iklab": {
+        "title": "Iqlab",
+        "desc": "Conversion",
+        "rule": "If Sakin Noon or Tanween is followed by Ba (ب), the Noon sound changes to Meem (م) with a nasal sound.",
+        "examples": {
+          "0": { "explanation": "Sakin Noon meets Ba, so it converts to Meem." },
+          "1": { "explanation": "Tanween meets Ba, so it converts to Meem." }
+        }
+      },
+      "kalkale": {
+        "title": "Qalqalah",
+        "desc": "Echoing / Vibration",
+        "rule": "When Qalqalah letters (ق ط ب ج د) are Sakin (have Sukoon), they are pronounced with an echoing sound.",
+        "examples": {
+          "0": { "explanation": "Qaf is Sakin, so Qalqalah occurs." },
+          "1": { "explanation": "Dal is Sakin, so Qalqalah occurs." }
+        }
+      }
+    }
+  }
+}

@@ -3,8 +3,12 @@ import { X, Check, ChevronRight, Plus, Users, Key, Copy, Share2, Lock, BookOpen 
 import { db } from '../services/firebase';
 import { collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc, arrayUnion, where, getDocs } from 'firebase/firestore';
 import { useTranslation } from 'react-i18next';
+import IslamicBackButton from './shared/IslamicBackButton';
+import { ensureAuthenticated } from '../services/authService';
+import { checkRateLimit } from '../utils/rateLimiter';
+import { logger } from '../utils/logger';
 
-const HatimTracker = () => {
+const HatimTracker = ({ onClose }) => {
     const { t, i18n } = useTranslation();
     const [hatims, setHatims] = useState([]);
     const [selectedHatim, setSelectedHatim] = useState(null);
@@ -16,23 +20,31 @@ const HatimTracker = () => {
     const [createdCode, setCreatedCode] = useState(null);
     const [pendingHatim, setPendingHatim] = useState(null);
 
-    // User ID
-    const [userId] = useState(() => {
-        const saved = localStorage.getItem('hatim_user_id');
-        if (saved) return saved;
-        const newId = 'user_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('hatim_user_id', newId);
-        return newId;
-    });
+    // User ID - Firebase Auth based (secure)
+    const [userId, setUserId] = useState(null);
+    const [_authLoading, setAuthLoading] = useState(true);
 
-    // Generate Code
+    // Initialize Firebase Auth on mount
+    useEffect(() => {
+        const initAuth = async () => {
+            try {
+                const uid = await ensureAuthenticated();
+                setUserId(uid);
+            } catch (error) {
+                logger.error('[HatimTracker] Auth error:', error);
+            } finally {
+                setAuthLoading(false);
+            }
+        };
+        initAuth();
+    }, []);
+
+    // Generate Access Code - Cryptographically secure (8 chars)
     const generateAccessCode = () => {
         const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-        let code = '';
-        for (let i = 0; i < 6; i++) {
-            code += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return code;
+        const array = new Uint8Array(8); // 8 characters for better security
+        crypto.getRandomValues(array);
+        return Array.from(array, byte => chars[byte % chars.length]).join('');
     };
 
     // Listen to Hatims
@@ -54,6 +66,17 @@ const HatimTracker = () => {
 
     const createHatim = async () => {
         if (!newHatimTitle.trim()) return;
+        if (!userId) {
+            alert(t('hatim.messages.authRequired'));
+            return;
+        }
+        
+        // Rate limiting: max 3 hatims per hour
+        if (!checkRateLimit('hatim_create', 3, 3600000)) {
+            alert(t('hatim.messages.rateLimited'));
+            return;
+        }
+        
         try {
             const parts = {};
             for (let i = 1; i <= 30; i++) {
@@ -231,6 +254,11 @@ const HatimTracker = () => {
 
     const renderList = () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            {/* Header with back button */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+                <IslamicBackButton onClick={onClose} size="medium" />
+                <h2 style={{ margin: 0, fontSize: '20px', color: textDark, fontWeight: '700' }}>{t('hatim.title')}</h2>
+            </div>
             <div style={{ display: 'flex', gap: '12px' }}>
                 <button onClick={() => setView('create')} style={btnStyle(true)}>
                     <Plus size={20} /> {t('hatim.newHatim')}

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Search, Heart, Star, Share2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Search, Heart, Star, Share2, ChevronDown, ChevronUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { contentService } from '../services/contentService';
+import IslamicBackButton from './shared/IslamicBackButton';
 
 function EsmaUlHusna({ onClose }) {
     const { t, i18n } = useTranslation();
@@ -64,7 +65,7 @@ function EsmaUlHusna({ onClose }) {
             try {
                 await navigator.share({ text });
             } catch {
-                console.log('Share cancelled');
+                // Share cancelled
             }
         } else {
             navigator.clipboard.writeText(text);
@@ -90,18 +91,7 @@ function EsmaUlHusna({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={onClose}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={onClose} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',

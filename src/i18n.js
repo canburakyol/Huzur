@@ -25,7 +25,7 @@ i18n
     fallbackLng: 'tr',
     
     // Default namespace
-    ns: ['translation'],
+    ns: ['translation', 'surahs', 'tajweed', 'wordByWord', 'prayers', 'zikirWorld'],
     defaultNS: 'translation',
     
     // Debug mode (disable in production)
@@ -39,7 +39,7 @@ i18n
     
     // Backend configuration (where to load translations from)
     backend: {
-      loadPath: '/locales/{{lng}}/translation.json',
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
     },
     
     // Language detection configuration

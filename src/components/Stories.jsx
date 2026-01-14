@@ -1,15 +1,19 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { Share2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getDailyContent } from '../services/contentService';
-import html2canvas from 'html2canvas';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+// html2canvas is dynamically imported when needed to reduce initial bundle size
 
 const Stories = () => {
-    const { t } = useTranslation();
+    const { t, ready } = useTranslation(['translation', 'prayers']);
     const [activeStory, setActiveStory] = useState(null);
     const [isSharing, setIsSharing] = useState(false);
     const storyContentRef = useRef(null);
-    const [stories] = useState(() => {
+
+    const stories = useMemo(() => {
         const dailyContent = getDailyContent();
         const today = new Date().getDay();
         const isFridayTime = today === 4 || today === 5;
@@ -36,12 +40,17 @@ const Stories = () => {
             newStories.push({
                 id: 'cuma',
                 titleKey: 'stories.fridayMessage',
-                contentKey: 'stories.fridayContent',
+                content: t('stories.fridayContent'),
                 image: cumaImages[cumaImageIndex],
                 color: '#2e7d32',
                 original: { text: "Hayırlı Cumalar" }
             });
         }
+
+        // Translate dailyDua content directly here when ready
+        const dailyDuaContent = ready && dailyContent.dailyDua.text 
+            ? t(dailyContent.dailyDua.text) 
+            : dailyContent.dailyDua.arabic;
 
         newStories.push(
             {
@@ -71,7 +80,7 @@ const Stories = () => {
             {
                 id: 4,
                 titleKey: 'stories.dailyPrayer',
-                content: `${dailyContent.dailyDua.text}`,
+                content: dailyDuaContent,
                 image: dailyContent.dailyDua.image,
                 color: '#2980b9',
                 original: dailyContent.dailyDua
@@ -79,7 +88,7 @@ const Stories = () => {
         );
 
         return newStories;
-    });
+    }, [t, ready]);
 
     // Get translated title for a story
     const getStoryTitle = (story) => {
@@ -88,10 +97,7 @@ const Stories = () => {
 
     // Get translated content for a story
     const getStoryContent = (story) => {
-        if (story.contentKey) {
-            return t(story.contentKey);
-        }
-        return story.content;
+        return story.content || '';
     };
 
     const handleShare = async (story) => {
@@ -110,6 +116,9 @@ const Stories = () => {
         setIsSharing(true);
 
         try {
+            // Dynamic import - only loads when user actually shares (saves ~194KB on initial load)
+            const html2canvas = (await import('html2canvas')).default;
+            
             // Create canvas from the story content element
             const canvas = await html2canvas(storyContentRef.current, {
                 backgroundColor: null,
@@ -119,48 +128,67 @@ const Stories = () => {
                 allowTaint: true
             });
 
-            // Convert canvas to blob
-            const blob = await new Promise(resolve =>
-                canvas.toBlob(resolve, 'image/png', 1.0)
-            );
-
-            if (!blob) {
-                throw new Error(t('stories.imageError'));
-            }
-
-            // Create file from blob
-            const fileName = `huzur-${storyTitle.replace(/\s+/g, '-').toLowerCase()}.png`;
-            const file = new File([blob], fileName, { type: 'image/png' });
-
-            // Check if Web Share API supports files
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                    files: [file],
-                    title: storyTitle,
-                    text: t('stories.sharedWithApp')
+            // Check if we're on native platform (Android/iOS)
+            if (Capacitor.isNativePlatform()) {
+                // Native sharing with Capacitor Filesystem
+                const base64Data = canvas.toDataURL('image/png').split(',')[1];
+                const fileName = `huzur-${storyTitle.replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.png`;
+                
+                // Write file to cache directory
+                const writeResult = await Filesystem.writeFile({
+                    path: fileName,
+                    data: base64Data,
+                    directory: Directory.Cache
                 });
-            } else if (navigator.share) {
-                // Fallback: Share without files (text only)
-                const shareText = `${storyTitle}\n\n${storyContent}\n\n- ${t('stories.sharedFrom')}`;
-                await navigator.share({
+
+                // Share the file
+                await Share.share({
                     title: storyTitle,
-                    text: shareText
+                    text: t('stories.sharedWithApp'),
+                    url: writeResult.uri,
+                    dialogTitle: t('stories.shareAsPhoto')
                 });
             } else {
-                // Download as fallback
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileName;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                alert(t('stories.downloadedAlert'));
+                // Web sharing fallback
+                const blob = await new Promise(resolve =>
+                    canvas.toBlob(resolve, 'image/png', 1.0)
+                );
+
+                if (!blob) {
+                    throw new Error(t('stories.imageError'));
+                }
+
+                const fileName = `huzur-${storyTitle.replace(/\s+/g, '-').toLowerCase()}.png`;
+                const file = new File([blob], fileName, { type: 'image/png' });
+
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        files: [file],
+                        title: storyTitle,
+                        text: t('stories.sharedWithApp')
+                    });
+                } else if (navigator.share) {
+                    const shareText = `${storyTitle}\n\n${storyContent}\n\n- ${t('stories.sharedFrom')}`;
+                    await navigator.share({
+                        title: storyTitle,
+                        text: shareText
+                    });
+                } else {
+                    // Download as fallback
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    alert(t('stories.downloadedAlert'));
+                }
             }
         } catch (err) {
             console.error('Share error:', err);
-            if (err.name !== 'AbortError') {
+            if (err.name !== 'AbortError' && err.message !== 'Share canceled') {
                 // Fallback to text share on error
                 try {
                     const shareText = `${storyTitle}\n\n${storyContent}\n\n- ${t('stories.sharedFrom')}`;
@@ -201,6 +229,7 @@ const Stories = () => {
                                 <img
                                     src={story.image}
                                     alt={t(story.titleKey)}
+                                    loading="lazy"
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     onError={(e) => { e.target.style.display = 'none'; }}
                                 />
@@ -244,21 +273,24 @@ const Stories = () => {
                         <X size={28} />
                     </button>
 
-                    {/* Shareable Content Area - This will be captured */}
+                    {/* Shareable Content Area - This will be captured - NOW FULL HEIGHT */}
                     <div 
                         ref={storyContentRef}
                         style={{
-                            flex: 1,
-                            position: 'relative',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'flex-end',
                             alignItems: 'center',
-                            paddingBottom: '30px',
+                            paddingBottom: '100px',
                             background: `linear-gradient(135deg, ${activeStory.color} 0%, #1a1a2e 100%)`
                         }}
                     >
-                        {/* Background Image */}
+                        {/* Background Image - Full Cover */}
                         <div style={{
                             position: 'absolute',
                             top: 0,
@@ -268,8 +300,18 @@ const Stories = () => {
                             backgroundImage: `url(${activeStory.image})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
-                            backgroundColor: activeStory.color,
-                            filter: 'brightness(0.7)'
+                            backgroundColor: activeStory.color
+                        }}></div>
+
+                        {/* Gradient Overlay for text readability */}
+                        <div style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '60%',
+                            background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)',
+                            pointerEvents: 'none'
                         }}></div>
 
                         {/* Content Text */}
@@ -292,7 +334,7 @@ const Stories = () => {
                                 {getStoryTitle(activeStory)}
                             </h2>
                             <div style={{
-                                maxHeight: '50vh',
+                                maxHeight: '40vh',
                                 overflowY: 'auto',
                                 padding: '10px',
                                 scrollbarWidth: 'none',
@@ -327,19 +369,22 @@ const Stories = () => {
                         </div>
                     </div>
 
-                    {/* Share Button - Outside of capture area */}
+                    {/* Share Button - Overlay at bottom */}
                     <div style={{
-                        padding: '20px',
-                        background: '#000',
+                        position: 'absolute',
+                        bottom: '30px',
+                        left: 0,
+                        width: '100%',
                         display: 'flex',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        zIndex: 1002
                     }}>
                         <button
                             onClick={() => handleShare(activeStory)}
                             disabled={isSharing}
                             style={{
-                                background: isSharing ? '#666' : 'rgba(255, 255, 255, 0.2)',
-                                backdropFilter: 'blur(5px)',
+                                background: isSharing ? 'rgba(100,100,100,0.8)' : 'rgba(255, 255, 255, 0.2)',
+                                backdropFilter: 'blur(10px)',
                                 color: 'white',
                                 border: '1px solid rgba(255,255,255,0.4)',
                                 padding: '14px 50px',
@@ -350,7 +395,7 @@ const Stories = () => {
                                 alignItems: 'center',
                                 gap: '10px',
                                 cursor: isSharing ? 'wait' : 'pointer',
-                                boxShadow: '0 5px 15px rgba(0,0,0,0.2)',
+                                boxShadow: '0 5px 20px rgba(0,0,0,0.3)',
                                 opacity: isSharing ? 0.7 : 1
                             }}
                         >

@@ -1,4 +1,5 @@
-import { ArrowLeft, Radio, Play, ExternalLink } from 'lucide-react';
+import { Radio, Play, ExternalLink } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 
 // Live stream channels - Direct YouTube links
 const LIVE_CHANNELS = [
@@ -52,18 +53,7 @@ function LiveBroadcast({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={onClose}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={onClose} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',

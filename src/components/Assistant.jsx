@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Send, Bot, User, ChevronLeft, Sparkles, Lock, Crown } from 'lucide-react';
-import { processQuery } from '../services/chatService';
+import { chatWithGemini } from '../services/geminiService';
 
 const Assistant = ({ onClose }) => {
     const { t } = useTranslation();
@@ -78,7 +78,7 @@ const Assistant = ({ onClose }) => {
 
         // Process Query
         try {
-            const response = await processQuery(query);
+            const response = await chatWithGemini(query);
 
             let botMsg = { id: Date.now() + 1, type: 'bot', text: response.content };
 

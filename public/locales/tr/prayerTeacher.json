@@ -1,0 +1,154 @@
+{
+  "tabs": {
+    "steps": "Adımlar",
+    "recitations": "Okunuşlar",
+    "types": "Vakit",
+    "terms": "Hükümler",
+    "invalidators": "Bozanlar",
+    "quiz": "Quiz"
+  },
+  "ui": {
+    "title": "Namaz Hocası",
+    "stepsIntro": "Namazın adımlarını öğrenmek için aşağıdaki kartlara tıklayın.",
+    "recitationsIntro": "Namazda okunan dualar ve sureler.",
+    "typesIntro": "5 vakit namazın rekat sayıları ve detayları.",
+    "termsIntro": "Dini hükümler ve anlamları.",
+    "invalidatorsIntro": "Namazı bozan durumlar listesi.",
+    "totalRakat": "Toplam: {{count}} rekat",
+    "examples": "Örnekler:",
+    "quizTitle": "Namaz Bilgi Yarışması",
+    "quizIntro": "{{count}} soru ile bilginizi test edin!",
+    "start": "Başla",
+    "quizCompleted": "Quiz Tamamlandı!",
+    "score": "Puan: {{score}}",
+    "resultExcellent": "Harika! Çok iyi biliyorsunuz!",
+    "resultGood": "İyi! Biraz daha çalışabilirsiniz.",
+    "resultPoor": "Tekrar çalışmanız önerilir.",
+    "tryAgain": "Tekrar Dene",
+    "questionProgress": "Soru {{current}}/{{total}}",
+    "nextQuestion": "Sonraki Soru",
+    "seeResults": "Sonuçları Gör",
+    "pronunciation": "Okunuşu:",
+    "meaning": "Anlamı:"
+  },
+  "steps": {
+    "1": { "name": "Niyet", "description": "Hangi namazı kılacağınıza kalben niyet edin.", "detail": "Niyet kalp ile yapılır. Dil ile söylemek sünnettir. Örnek: \"Niyet ettim Allah rızası için bugünkü öğle namazının farzını kılmaya.\"" },
+    "2": { "name": "İftitah Tekbiri", "description": "Elleri kulaklara kaldırarak \"Allahu Ekber\" deyin.", "detail": "Erkekler ellerini kulak hizasına, kadınlar omuz hizasına kaldırır. Baş parmaklar kulak memesine değebilir." },
+    "3": { "name": "Kıyam", "description": "Ayakta duruş. Sağ el sol elin üzerine konur.", "detail": "Sübhaneke, Euzü-Besmele, Fatiha ve zamm-ı sure okunur. Gözler secde yerine bakar." },
+    "4": { "name": "Rükû", "description": "Eğilerek \"Allahu Ekber\" deyip rükûya varın.", "detail": "Eller dizleri kavrar, sırt düz olur. 3 kere \"Sübhane Rabbiyel Azim\" denir. Doğrulurken \"Semiallahu limen hamideh\" denir." },
+    "5": { "name": "Kavme", "description": "Rükûdan doğrulup \"Rabbena lekel hamd\" deyin.", "detail": "Tam dik durun, eller yanlara serbest bırakılır. Bir an bekleyip secdeye inin." },
+    "6": { "name": "Secde", "description": "\"Allahu Ekber\" diyerek secdeye varın.", "detail": "Önce dizler, sonra eller, sonra alın ve burun yere konur. 3 kere \"Sübhane Rabbiyel Ala\" denir." },
+    "7": { "name": "Celse", "description": "İki secde arasında dik oturun.", "detail": "\"Rabbigfirli\" denir. Eller dizlerin üzerinde durur." },
+    "8": { "name": "Ka'de (Oturuş)", "description": "Son rekatta oturarak Ettehiyyatü okuyun.", "detail": "Ettehiyyatü, Salli-Barik ve Rabbena duaları okunur. Şahadet parmağı kaldırılır." },
+    "9": { "name": "Selam", "description": "Sağa ve sola selam vererek namazı bitirin.", "detail": "\"Esselamü aleyküm ve rahmetullah\" diyerek önce sağa, sonra sola selam verilir." }
+  },
+  "recitations": {
+    "subhaneke": { "name": "Sübhaneke", "meaning": "Allah'ım! Sen eksik sıfatlardan pak ve uzaksın. Sana hamd ederim. Senin adın mübarektir. Azametin yücedir. Senden başka ilah yoktur." },
+    "fatiha": { "name": "Fatiha Suresi", "meaning": "Rahman ve Rahim olan Allah'ın adıyla. Hamd, âlemlerin Rabbi Allah'a mahsustur. O, Rahman'dır, Rahim'dir. Din gününün sahibidir. Yalnız sana ibadet eder, yalnız senden yardım dileriz. Bizi doğru yola ilet. Nimet verdiklerinin yoluna; gazaba uğrayanların ve sapıkların yoluna değil." },
+    "ihlas": { "name": "İhlas Suresi", "meaning": "De ki: O Allah birdir. Allah sameddir (her şey O'na muhtaç, O hiçbir şeye muhtaç değil). O doğurmamış ve doğurulmamıştır. Hiçbir şey O'na denk değildir." },
+    "ruku": { "name": "Rükû Tesbihi", "meaning": "Yüce Rabbimi tüm noksanlıklardan tenzih ederim." },
+    "secde": { "name": "Secde Tesbihi", "meaning": "En yüce Rabbimi tüm noksanlıklardan tenzih ederim." },
+    "ettehiyyatu": { "name": "Ettehiyyatü", "meaning": "Dil ile, beden ile ve mal ile yapılan bütün ibadetler Allah'a mahsustur. Ey Peygamber! Selam, Allah'ın rahmeti ve bereketleri senin üzerine olsun. Selam bizim ve Allah'ın salih kullarının üzerine olsun. Şehadet ederim ki Allah'tan başka ilah yoktur ve yine şehadet ederim ki Muhammed O'nun kulu ve elçisidir." },
+    "salli": { "name": "Allahümme Salli", "meaning": "Allah'ım! Muhammed'e ve Muhammed'in ailesine rahmet et. İbrahim'e ve İbrahim'in ailesine rahmet ettiğin gibi. Şüphesiz sen övülmeye layık ve yücesin." },
+    "barik": { "name": "Allahümme Barik", "meaning": "Allah'ım! Muhammed'e ve Muhammed'in ailesine bereket ver. İbrahim'e ve İbrahim'in ailesine bereket verdiğin gibi. Şüphesiz sen övülmeye layık ve yücesin." },
+    "rabbena": { "name": "Rabbenâ Duaları", "meaning": "Rabbimiz! Bize dünyada iyilik ver, ahirette de iyilik ver ve bizi cehennem azabından koru." }
+  },
+  "types": {
+    "sabah": {
+      "name": "Sabah Namazı",
+      "note": "Sabah namazının sünneti çok önemlidir, Hz. Peygamber hiç terk etmezdi.",
+      "details": {
+        "0": { "type": "Sünnet", "description": "İki rekat sünnet (kuvvetli sünnet)" },
+        "1": { "type": "Farz", "description": "İki rekat farz" }
+      }
+    },
+    "ogle": {
+      "name": "Öğle Namazı",
+      "note": "İlk sünnette her iki rekatta ayrı ayrı oturulur.",
+      "details": {
+        "0": { "type": "İlk Sünnet", "description": "Dört rekat sünnet" },
+        "1": { "type": "Farz", "description": "Dört rekat farz" },
+        "2": { "type": "Son Sünnet", "description": "İki rekat sünnet" }
+      }
+    },
+    "ikindi": {
+      "name": "İkindi Namazı",
+      "note": "İkindi namazının sünneti farzdan önce kılınır ve kuvvetli sünnet değildir.",
+      "details": {
+        "0": { "type": "Sünnet", "description": "Dört rekat sünnet (gayr-i müekked)" },
+        "1": { "type": "Farz", "description": "Dört rekat farz" }
+      }
+    },
+    "aksam": {
+      "name": "Akşam Namazı",
+      "note": "Akşam namazının farzı üç rekattır ve tek sayıda rekatı olan tek farz namazdır.",
+      "details": {
+        "0": { "type": "Farz", "description": "Üç rekat farz" },
+        "1": { "type": "Sünnet", "description": "İki rekat sünnet" }
+      }
+    },
+    "yatsi": {
+      "name": "Yatsı Namazı",
+      "note": "Vitir namazı vaciptir ve yatsı namazından sonra kılınır.",
+      "details": {
+        "0": { "type": "İlk Sünnet", "description": "Dört rekat sünnet (gayr-i müekked)" },
+        "1": { "type": "Farz", "description": "Dört rekat farz" },
+        "2": { "type": "Son Sünnet", "description": "İki rekat sünnet" },
+        "3": { "type": "Vitir", "description": "Üç rekat vitir (vacip)" }
+      }
+    }
+  },
+  "terms": {
+    "farz": {
+      "name": "Farz",
+      "description": "Allah'ın kesin olarak emrettiği ibadetlerdir. Terk edilmesi büyük günahtır.",
+      "examples": ["Beş vakit namazın farzları", "Ramazan orucu", "Zekat", "Hac (imkânı olan için)", "Abdest", "Namaz için kıbleye dönmek"]
+    },
+    "vacip": {
+      "name": "Vacip",
+      "description": "Farz kadar kuvvetli delil ile sabit olmasa da, yapılması gereken ibadetlerdir.",
+      "examples": ["Vitir namazı", "Bayram namazları", "Fıtır sadakası", "Kurban kesmek", "Namazda Fatiha okumak", "Secde-i sehiv"]
+    },
+    "sunnet": {
+      "name": "Sünnet",
+      "description": "Hz. Peygamber'in (s.a.v.) yaptığı ve yapmamızı istediği ibadetlerdir.",
+      "examples": ["Vakit namazlarının sünnetleri", "Misvak kullanmak", "Ezan ve kaamete icabet", "Selama karşılık vermek"]
+    },
+    "mustehap": {
+      "name": "Müstehap (Mendub)",
+      "description": "Yapılması sevap kazandıran, terk edilmesi günah olmayan amellerdir.",
+      "examples": ["Nafile namazlar", "Sela okumak", "Kuşluk namazı", "Gece namazı (teheccüd)"]
+    },
+    "mubah": {
+      "name": "Mübah",
+      "description": "Yapılması veya yapılmaması serbest olan, dini hüküm taşımayan davranışlardır.",
+      "examples": ["Yemek yemek", "Uyumak", "Yürümek", "Ticaret yapmak"]
+    }
+  },
+  "invalidators": {
+    "1": "Konuşmak (bilerek veya yanlışlıkla)",
+    "2": "Gülmek (kahkaha atmak)",
+    "3": "Yemek veya içmek",
+    "4": "Kıbleden göğsü çevirmek",
+    "5": "Amel-i kesir (namaz dışı fazla hareket)",
+    "6": "Abdestin bozulması",
+    "7": "Avret yerinin açılması",
+    "8": "Ağlamak (dünya işi için)",
+    "9": "Öksürüğü zorlamak (sebepsiz)",
+    "10": "Üflemek (ağızla hava çıkarmak)",
+    "11": "Kur'an'ı yanlış okumak (mana bozulacak şekilde)",
+    "12": "Bayılmak veya delirmek"
+  },
+  "quiz": {
+    "1": { "question": "Namaza başlarken söylenen tekbirin adı nedir?", "options": ["Sena", "İftitah Tekbiri", "Selamün Aleyküm", "Tekbir-i Teşrik"] },
+    "2": { "question": "Rükûda kaç kere tesbih çekilir?", "options": ["1", "3", "5", "7"] },
+    "3": { "question": "Sabah namazı toplam kaç rekattir?", "options": ["2", "4", "6", "8"] },
+    "4": { "question": "Vitir namazı hangi hükümdedir?", "options": ["Farz", "Vacip", "Sünnet", "Müstehap"] },
+    "5": { "question": "Aşağıdakilerden hangisi namazı bozmaz?", "options": ["Konuşmak", "Gülmek", "Ağlamak (Allah korkusuyla)", "Yemek"] },
+    "6": { "question": "Namazda Fatiha suresi okumak hangi hükümdedir?", "options": ["Farz", "Vacip", "Sünnet", "Mübah"] },
+    "7": { "question": "Secde tesbihi hangisidir?", "options": ["Sübhane Rabbiyel Azim", "Sübhane Rabbiyel Ala", "Semiallahu limen hamideh", "Rabbena lekel hamd"] },
+    "8": { "question": "Yatsı namazının farzı kaç rekattir?", "options": ["2", "3", "4", "5"] },
+    "9": { "question": "İki secde arasındaki oturuşun adı nedir?", "options": ["Ka'de", "Celse", "Kavme", "Kıyam"] },
+    "10": { "question": "Namazda ettehiyyatü ne zaman okunur?", "options": ["İlk rekatta", "Rükûda", "Son oturuşta", "Secdede"] }
+  }
+}

@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { RotateCcw, Volume2, VolumeX, X, ChevronLeft, BarChart3, Clock } from 'lucide-react';
+import { RotateCcw, Volume2, VolumeX, ChevronLeft, BarChart3, Maximize, Minimize } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import IslamicBackButton from './shared/IslamicBackButton';
 import Lottie from 'lottie-react';
+import { useFocus } from '../context/FocusContext';
 
 // Önceden tanımlı zikir listesi
 const DHIKR_LIST = [
@@ -16,6 +19,8 @@ const DHIKR_LIST = [
 ];
 
 const Zikirmatik = ({ onClose }) => {
+    const { t } = useTranslation();
+    const { isFocusMode, toggleFocusMode } = useFocus();
     // Görünüm modu: 'list' veya 'counter'
     const [view, setView] = useState('list');
     const [selectedDhikr, setSelectedDhikr] = useState(null);
@@ -50,9 +55,6 @@ const Zikirmatik = ({ onClose }) => {
     });
     const [showStats, setShowStats] = useState(false);
     const [showSuccessAnim, setShowSuccessAnim] = useState(false);
-
-    // Lottie Animation URL (Success/Confetti)
-    const SUCCESS_ANIM_URL = "https://lottie.host/f886369e-647d-417c-864c-687630768984/6R7m9v9v9v.json"; // Placeholder, will use a real one if possible or local
 
     // Serbest zikir adını kaydet
     const handleFreeNameChange = (e) => {
@@ -130,31 +132,28 @@ const Zikirmatik = ({ onClose }) => {
     // Liste Görünümü
     if (view === 'list') {
         return (
-            <div className="glass-card" style={{
-                position: 'relative',
-                height: '85vh',
+            <div className="app-container" style={{
+                minHeight: '100vh',
                 display: 'flex',
                 flexDirection: 'column',
-                padding: '20px',
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,245,255,0.95))'
+                padding: '20px'
             }}>
                 {/* Header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <button onClick={() => setShowStats(!showStats)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#667eea' }}>
-                            <BarChart3 size={24} />
-                        </button>
-                    </div>
-                    <h2 style={{ margin: 0, color: '#2c3e50', fontSize: '22px' }}>📿 Zikirmatik</h2>
-                    <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}>
-                        <X size={28} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                    <IslamicBackButton onClick={onClose} size="medium" />
+                    <h2 style={{ margin: 0, color: 'var(--primary-color)', fontSize: '22px', flex: 1 }}>📿 {t('menu.zikirmatik')}</h2>
+                    <button onClick={() => setShowStats(!showStats)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-color)' }}>
+                        <BarChart3 size={24} />
+                    </button>
+                    <button onClick={toggleFocusMode} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-color)', marginLeft: '8px' }}>
+                        {isFocusMode ? <Minimize size={24} /> : <Maximize size={24} />}
                     </button>
                 </div>
 
                 {/* İstatistikler */}
                 {showStats && (
-                    <div style={{
-                        background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                    <div className="glass-card" style={{
+                        background: 'var(--primary-color)',
                         borderRadius: '16px',
                         padding: '20px',
                         marginBottom: '20px',
@@ -187,33 +186,34 @@ const Zikirmatik = ({ onClose }) => {
                             <div
                                 key={dhikr.id}
                                 onClick={() => selectDhikr(dhikr)}
+                                className="glass-card"
                                 style={{
-                                    background: isComplete ? 'linear-gradient(135deg, #d4edda, #c3e6cb)' : 'rgba(255,255,255,0.7)',
+                                    background: isComplete ? 'rgba(39, 174, 96, 0.15)' : 'var(--card-bg)',
                                     borderRadius: '16px',
                                     padding: '16px',
                                     marginBottom: '12px',
                                     cursor: 'pointer',
-                                    border: isComplete ? '2px solid #28a745' : '1px solid rgba(0,0,0,0.05)',
+                                    border: isComplete ? '2px solid #27ae60' : '1px solid var(--glass-border)',
                                     transition: 'all 0.2s ease'
                                 }}
                             >
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <div>
-                                        <div style={{ fontWeight: '600', color: '#2c3e50', fontSize: '16px' }}>{displayName}</div>
-                                        <div style={{ fontFamily: 'serif', fontSize: '20px', color: '#667eea', marginTop: '4px' }}>{dhikr.arabic}</div>
+                                        <div style={{ fontWeight: '600', color: 'var(--text-color)', fontSize: '16px' }}>{displayName}</div>
+                                        <div style={{ fontFamily: 'serif', fontSize: '20px', color: 'var(--primary-color)', marginTop: '4px' }}>{dhikr.arabic}</div>
                                     </div>
                                     <div style={{ textAlign: 'right' }}>
-                                        <div style={{ fontSize: '24px', fontWeight: 'bold', color: isComplete ? '#28a745' : '#2c3e50' }}>
+                                        <div style={{ fontSize: '24px', fontWeight: 'bold', color: isComplete ? '#27ae60' : 'var(--text-color)' }}>
                                             {count}
                                         </div>
-                                        <div style={{ fontSize: '12px', color: '#666' }}>/ {target}</div>
+                                        <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>/ {target}</div>
                                     </div>
                                 </div>
 
                                 {/* İlerleme çubuğu */}
                                 <div style={{
                                     height: '4px',
-                                    background: 'rgba(0,0,0,0.1)',
+                                    background: 'var(--glass-border)',
                                     borderRadius: '2px',
                                     marginTop: '12px',
                                     overflow: 'hidden'
@@ -221,7 +221,7 @@ const Zikirmatik = ({ onClose }) => {
                                     <div style={{
                                         height: '100%',
                                         width: `${progress}%`,
-                                        background: isComplete ? '#28a745' : 'linear-gradient(90deg, #667eea, #764ba2)',
+                                        background: isComplete ? '#27ae60' : 'var(--primary-color)',
                                         borderRadius: '2px',
                                         transition: 'width 0.3s ease'
                                     }}></div>
@@ -236,25 +236,26 @@ const Zikirmatik = ({ onClose }) => {
 
     // Sayaç Görünümü
     return (
-        <div className="glass-card" style={{
+        <div className="app-container" style={{
             textAlign: 'center',
-            position: 'relative',
-            height: '85vh',
+            minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '30px 20px',
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,245,255,0.95))'
+            padding: '30px 20px'
         }}>
             {/* Header */}
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <button onClick={() => setView('list')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#667eea', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <button onClick={() => setView('list')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '5px' }}>
                     <ChevronLeft size={24} />
-                    <span style={{ fontSize: '14px' }}>Geri</span>
+                    <span style={{ fontSize: '14px' }}>{t('common.back')}</span>
                 </button>
-                <button onClick={() => setVibrateEnabled(!vibrateEnabled)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}>
+                <button onClick={() => setVibrateEnabled(!vibrateEnabled)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-color-muted)' }}>
                     {vibrateEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
+                </button>
+                <button onClick={toggleFocusMode} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-color-muted)', marginLeft: '10px' }}>
+                    {isFocusMode ? <Minimize size={24} /> : <Maximize size={24} />}
                 </button>
             </div>
 
@@ -269,9 +270,9 @@ const Zikirmatik = ({ onClose }) => {
                         style={{
                             fontSize: '18px',
                             fontWeight: '600',
-                            color: '#2c3e50',
+                            color: 'var(--text-color)',
                             border: 'none',
-                            borderBottom: '2px solid #667eea',
+                            borderBottom: '2px solid var(--primary-color)',
                             background: 'transparent',
                             textAlign: 'center',
                             width: '80%',
@@ -280,10 +281,10 @@ const Zikirmatik = ({ onClose }) => {
                         }}
                     />
                 ) : (
-                    <div style={{ fontSize: '18px', fontWeight: '600', color: '#2c3e50' }}>{selectedDhikr?.name}</div>
+                    <div style={{ fontSize: '18px', fontWeight: '600', color: 'var(--text-color)' }}>{selectedDhikr?.name}</div>
                 )}
-                <div style={{ fontFamily: 'serif', fontSize: '28px', color: '#667eea', marginTop: '8px' }}>{selectedDhikr?.arabic}</div>
-                <div style={{ fontSize: '13px', color: '#666', marginTop: '8px', fontStyle: 'italic' }}>{selectedDhikr?.meaning}</div>
+                <div style={{ fontFamily: 'serif', fontSize: '28px', color: 'var(--primary-color)', marginTop: '8px' }}>{selectedDhikr?.arabic}</div>
+                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)', marginTop: '8px', fontStyle: 'italic' }}>{selectedDhikr?.meaning}</div>
             </div>
 
             {/* Ana Sayaç Butonu */}
@@ -293,10 +294,10 @@ const Zikirmatik = ({ onClose }) => {
                     width: '220px',
                     height: '220px',
                     borderRadius: '50%',
-                    background: 'linear-gradient(145deg, #667eea, #764ba2)',
+                    background: 'var(--primary-color)',
                     boxShadow: isPressed
                         ? 'inset 10px 10px 20px rgba(0,0,0,0.3)'
-                        : '15px 15px 40px rgba(102, 126, 234, 0.4), -10px -10px 30px rgba(255,255,255,0.8)',
+                        : '15px 15px 40px rgba(var(--primary-rgb), 0.4), -10px -10px 30px var(--card-bg)',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -326,14 +327,14 @@ const Zikirmatik = ({ onClose }) => {
             <div style={{ width: '80%', marginTop: '20px' }}>
                 <div style={{
                     height: '8px',
-                    background: 'rgba(0,0,0,0.1)',
+                    background: 'var(--glass-border)',
                     borderRadius: '4px',
                     overflow: 'hidden'
                 }}>
                     <div style={{
                         height: '100%',
                         width: `${getProgress(selectedDhikr?.id)}%`,
-                        background: 'linear-gradient(90deg, #667eea, #764ba2)',
+                        background: 'var(--primary-color)',
                         borderRadius: '4px',
                         transition: 'width 0.3s ease'
                     }}></div>
@@ -354,8 +355,8 @@ const Zikirmatik = ({ onClose }) => {
                             padding: '8px 16px',
                             borderRadius: '20px',
                             border: 'none',
-                            background: targets[selectedDhikr?.id] === val ? 'linear-gradient(135deg, #667eea, #764ba2)' : 'rgba(0,0,0,0.05)',
-                            color: targets[selectedDhikr?.id] === val ? 'white' : '#2c3e50',
+                            background: targets[selectedDhikr?.id] === val ? 'var(--primary-color)' : 'var(--glass-bg)',
+                            color: targets[selectedDhikr?.id] === val ? 'white' : 'var(--text-color)',
                             cursor: 'pointer',
                             fontWeight: '600',
                             fontSize: '14px'
@@ -370,7 +371,7 @@ const Zikirmatik = ({ onClose }) => {
             <button
                 onClick={handleReset}
                 style={{
-                    background: 'linear-gradient(135deg, #e74c3c, #c0392b)',
+                    background: '#e74c3c',
                     color: 'white',
                     border: 'none',
                     padding: '14px 40px',
@@ -406,8 +407,8 @@ const Zikirmatik = ({ onClose }) => {
                     justifyContent: 'center'
                 }}>
                     <Lottie 
-                        animationData={null} // We'll use a URL if possible, or a local JSON if we had one
-                        path="https://assets9.lottiefiles.com/packages/lf20_u4yrau.json" // Confetti
+                        animationData={null}
+                        path="https://assets9.lottiefiles.com/packages/lf20_u4yrau.json"
                         loop={false}
                         style={{ width: '100%', height: '100%' }}
                     />

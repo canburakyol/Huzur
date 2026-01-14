@@ -12,12 +12,14 @@ export const MOODS = {
     ayahs: [
       {
         surah: 'İbrahim',
+        surahNumber: 14,
         ayah: 7,
         text: 'لَئِنْ شَكَرْتُمْ لَاَز۪يدَنَّكُمْ',
         translation: 'Eğer şükrederseniz, elbette size (nimetimi) artırırım.'
       },
       {
         surah: 'Duha',
+        surahNumber: 93,
         ayah: 11,
         text: 'وَاَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ',
         translation: 'Rabbinin nimetine gelince; işte onu anlat da anlat.'
@@ -32,18 +34,21 @@ export const MOODS = {
     ayahs: [
       {
         surah: 'İnşirah',
+        surahNumber: 94,
         ayah: 5,
         text: 'فَاِنَّ مَعَ الْعُسْرِ يُسْرًا',
         translation: 'Şüphesiz güçlükle beraber bir kolaylık vardır.'
       },
       {
         surah: 'Bakara',
+        surahNumber: 2,
         ayah: 286,
         text: 'لَا يُكَلِّفُ اللّٰهُ نَفْسًا اِلَّا وُسْعَهَا',
         translation: 'Allah hiçbir kimseye gücünün yeteceğinden başkasını yüklemez.'
       },
       {
         surah: 'Tevbe',
+        surahNumber: 9,
         ayah: 40,
         text: 'لَا تَحْزَنْ اِنَّ اللّٰهَ مَعَنَا',
         translation: 'Üzülme, çünkü Allah bizimle beraberdir.'
@@ -58,12 +63,14 @@ export const MOODS = {
     ayahs: [
       {
         surah: 'Rad',
+        surahNumber: 13,
         ayah: 28,
         text: 'اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُ',
         translation: 'Bilesiniz ki, kalpler ancak Allah’ı anmakla huzur bulur.'
       },
       {
         surah: 'Talak',
+        surahNumber: 65,
         ayah: 3,
         text: 'وَمَنْ يَتَوَكَّلْ عَلَى اللّٰهِ فَهُوَ حَسْبُهُ',
         translation: 'Kim Allah’a tevekkül ederse, O kendisine yeter.'
@@ -78,12 +85,14 @@ export const MOODS = {
     ayahs: [
       {
         surah: 'Al-i İmran',
+        surahNumber: 3,
         ayah: 134,
         text: 'وَالْكَاظِم۪ينَ الْغَيْظَ وَالْعَاف۪ينَ عَنِ النَّاسِ',
         translation: 'Onlar öfkelerini yenerler ve insanları affederler.'
       },
       {
         surah: 'Araf',
+        surahNumber: 7,
         ayah: 199,
         text: 'خُذِ الْعَفْوَ وَأْمُرْ بِالْعُرْفِ وَاَعْرِضْ عَنِ الْجَاهِل۪ينَ',
         translation: 'Sen affı tut, iyiliği emret ve cahillerden yüz çevir.'
@@ -98,12 +107,14 @@ export const MOODS = {
     ayahs: [
       {
         surah: 'Bakara',
+        surahNumber: 2,
         ayah: 153,
         text: 'اِنَّ اللّٰهَ مَعَ الصَّابِر۪ينَ',
         translation: 'Şüphesiz Allah sabredenlerle beraberdir.'
       },
       {
         surah: 'Nisa',
+        surahNumber: 4,
         ayah: 28,
         text: 'وَخُلِقَ الْاِنْسَانُ ضَع۪يفًا',
         translation: 'Çünkü insan zayıf yaratılmıştır.'

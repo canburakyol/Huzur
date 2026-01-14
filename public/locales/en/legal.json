@@ -1,0 +1,109 @@
+{
+  "termsOfService": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last Updated: {{date}}",
+    "intro": "By using the <strong>Huzur</strong> app, you agree to the following terms of service. Please read these terms carefully.",
+    "sections": [
+      {
+        "title": "1. License to Use",
+        "content": "This application is provided free of charge for personal and non-commercial use. Modifying, copying, or distributing the application is prohibited."
+      },
+      {
+        "title": "2. Service Description",
+        "content": "Huzur app is a mobile application that provides prayer times, Quran, prayers, and religious content. The application uses third-party APIs to provide data, and the accuracy of this data is not guaranteed."
+      },
+      {
+        "title": "3. User Responsibilities",
+        "content": "Users:",
+        "list": [
+          "Must use the application in accordance with the law",
+          "Must not misuse the content of the application",
+          "Must not use the application to the detriment of others",
+          "Must not compromise the security of the application"
+        ]
+      },
+      {
+        "title": "4. Disclaimer",
+        "content": "The application is provided \"as is\". No guarantee is given for the accuracy of prayer times and other information. Users should consult official sources for important religious practices."
+      },
+      {
+        "title": "5. Intellectual Property",
+        "content": "All content, design, and code of the application are protected by copyright. Quran texts and prayers are public domain, but the application itself is copyrighted."
+      },
+      {
+        "title": "6. Service Changes",
+        "content": "The application may be changed, updated, or discontinued without prior notice. Users should be aware of these changes."
+      },
+      {
+        "title": "7. Cancellation and Termination",
+        "content": "Use of the application may be cancelled at any time and for any reason. Users' access may be terminated if they violate the application terms."
+      },
+      {
+        "title": "8. Changes",
+        "content": "These terms of service may be updated from time to time. Important changes will be notified within the application."
+      },
+      {
+        "title": "9. Contact",
+        "content": "Please contact us for any questions regarding the terms of service."
+      }
+    ]
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last Updated: {{date}}",
+    "intro": "As <strong>Huzur</strong> app, we value our users' privacy. This privacy policy explains how our application collects, uses, and protects your personal data.",
+    "sections": [
+      {
+        "title": "1. Collected Data",
+        "content": "Our application may collect the following data:",
+        "list": [
+          "<strong>Location Information:</strong> Location information is used to show prayer times and weather correctly. This information is stored only on your device and is not sent to our servers.",
+          "<strong>Device Information:</strong> Basic device information may be used for the proper functioning of the application."
+        ]
+      },
+      {
+        "title": "2. Data Usage",
+        "content": "Collected data is used only for the following purposes:",
+        "list": [
+          "To show prayer times correctly",
+          "To provide weather information",
+          "To determine Qibla direction",
+          "To improve application performance"
+        ]
+      },
+      {
+        "title": "3. Data Sharing",
+        "content": "Your personal data is not shared with third parties. The application uses <strong>Aladhan API</strong> for prayer times, <strong>Open-Meteo API</strong> for weather, and <strong>BigDataCloud API</strong> for location information. The privacy policies of these services apply."
+      },
+      {
+        "title": "4. Data Security",
+        "content": "Your data is stored securely on your device. The application protects sensitive information with encryption technologies."
+      },
+      {
+        "title": "5. Permissions",
+        "content": "The application may request the following permissions:",
+        "list": [
+          "<strong>Location:</strong> For prayer times and weather",
+          "<strong>Notifications:</strong> For prayer time reminders",
+          "<strong>Internet:</strong> To fetch API data"
+        ]
+      },
+      {
+        "title": "6. Advertising and Analytics",
+        "content": "Our application uses <strong>Google AdMob</strong> advertising service and <strong>Google Firebase Analytics</strong>. These services may collect device identifiers (GAID) to provide personalized ads and analyze application usage. You can manage your ad preferences from application settings or device settings."
+      },
+      {
+        "title": "7. AI Assistant",
+        "content": "<strong>Pollinations AI</strong> service is used to answer your religious questions. Your questions are sent to this service and answers are received. Please avoid entering your personal information into this service."
+      },
+      {
+        "title": "8. Changes",
+        "content": "This privacy policy may be updated from time to time. Important changes will be notified within the application."
+      },
+      {
+        "title": "9. Contact",
+        "content": "For questions about our privacy policy: <strong> huzurapp.destek@gmail.com</strong>"
+      }
+    ]
+  }
+}

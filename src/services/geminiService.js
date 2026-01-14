@@ -9,6 +9,7 @@
 
 import { httpsCallable } from 'firebase/functions';
 import { functions } from './firebase';
+import { logger } from '../utils/logger';
 
 // ============================================
 // THROTTLING / RATE LIMITING CONFIGURATION
@@ -113,7 +114,66 @@ FORMAT:
 - Kısa bir öğüt/hikmet ekle`;
 
 /**
- * Gemini API'ye istek gönder (Cloud Function üzerinden)
+ * Direct API call to Gemini (Fallback method)
+ */
+const callGeminiDirectly = async (prompt, systemPrompt) => {
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  
+  if (!apiKey) {
+    throw new Error('API anahtarı bulunamadı.');
+  }
+
+  const fullPrompt = `${systemPrompt}\n\nKullanıcı Sorusu: ${prompt}`;
+  
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{ text: fullPrompt }]
+        }],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 4096,
+        }
+      })
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    const errorMessage = errorData.error?.message || `API Hatası: ${response.status}`;
+    
+    if (response.status === 404) {
+      throw new Error('Model bulunamadı veya API anahtarı bu model için yetkisiz (404).');
+    }
+    if (response.status === 429) {
+      throw new Error('API kotası aşıldı (429). Lütfen daha sonra tekrar deneyin.');
+    }
+    
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.json();
+  
+  if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+    return {
+      success: true,
+      content: data.candidates[0].content.parts[0].text
+    };
+  }
+  
+  throw new Error('API yanıtı boş.');
+};
+
+/**
+ * Gemini API'ye istek gönder (Cloud Function öncelikli, Fallback destekli)
  * @param {string} prompt - Kullanıcı sorusu
  * @param {string} systemPrompt - Sistem talimatları
  * @returns {Promise<{success: boolean, content: string, error?: string}>}
@@ -129,11 +189,12 @@ export const generateContent = async (prompt, systemPrompt = NUZUL_SYSTEM_PROMPT
     };
   }
 
+  // İsteği kaydet
+  recordRequest();
+
   try {
-    // İsteği kaydet
-    recordRequest();
-    
-    // Cloud Function çağrısı
+    // 1. Yöntem: Cloud Function (Öncelikli)
+    logger.log('[GeminiService] Cloud Function deneniyor...');
     const queryGemini = httpsCallable(functions, 'queryGemini');
     
     const fullPrompt = `${systemPrompt}\n\nKullanıcı Sorusu: ${prompt}`;
@@ -144,12 +205,9 @@ export const generateContent = async (prompt, systemPrompt = NUZUL_SYSTEM_PROMPT
         temperature: 0.7,
         topK: 40,
         topP: 0.95,
-        maxOutputTokens: 1024
+        maxOutputTokens: 4096
       }
     });
-
-    // Cloud Function response yapısı: { data: { success: boolean, content: string, error?: string } }
-    // Ancak bizim function direkt { success, content } dönüyor, httpsCallable bunu result.data içine koyar.
     
     const data = result.data;
     
@@ -159,17 +217,29 @@ export const generateContent = async (prompt, systemPrompt = NUZUL_SYSTEM_PROMPT
         content: data.content
       };
     } else {
-      return {
-        success: false,
-        content: '',
-        error: data.error || 'Bir hata oluştu.'
-      };
+      throw new Error(data.error || 'Cloud Function hatası');
     }
     
   } catch (error) {
-    console.error('[GeminiService] Error:', error);
+    logger.warn('[GeminiService] Cloud Function başarısız, fallback deneniyor:', error);
     
-    // Firebase Functions hataları
+    // 2. Yöntem: Direct API (Fallback)
+    // Sadece API anahtarı varsa dene
+    if (import.meta.env.VITE_GEMINI_API_KEY) {
+      try {
+        logger.log('[GeminiService] Direct API fallback kullanılıyor...');
+        return await callGeminiDirectly(prompt, systemPrompt);
+      } catch (fallbackError) {
+        logger.error('[GeminiService] Fallback error:', fallbackError);
+        return {
+          success: false,
+          content: '',
+          error: 'Servis şu an kullanılamıyor. Lütfen daha sonra tekrar deneyin.'
+        };
+      }
+    }
+
+    // Firebase Functions hataları (Fallback yoksa)
     if (error.code === 'unauthenticated') {
       return {
         success: false,
@@ -262,6 +332,46 @@ export const analyzeWordRoot = async (arabicWord, ayahContext = '') => {
   return generateContent(prompt, WORD_ANALYSIS_PROMPT);
 };
 
+/**
+ * Direct Chat with Gemini API (Client-side)
+ * Uses the API key from .env directly
+ */
+export const chatWithGemini = async (userMessage) => {
+  const systemPrompt = `Sen SADECE İslami konularda rehberlik eden sanal bir asistanın.
+GÖREVİN: Kullanıcı ne sorarsa sorsun, cevabını MUTLAKA Kuran-ı Kerim ayetleri, Hadis-i Şerifler ve İslami prensiplere dayandırarak ver.
+
+KESİN KURALLAR:
+1. ASLA İslami bağlamın dışına çıkma.
+2. KÜFÜR/HAKARET: Kullanıcı küfür etse veya kaba konuşsa bile, sen asla aynısıyla karşılık verme. "Kötülüğü en güzel iyilikle sav" (Fussilet, 34) düsturuyla, sabır ve nezaketle dini nasihat ver.
+3. PSİKOLOJİK DURUM: Kullanıcı "bunalımdayım", "ölmek istiyorum", "çok kötüyüm" dese bile, tıbbi/psikolojik tavsiye VERME. Sadece manevi teselli ver. "Kalpler ancak Allah'ı anmakla huzur bulur" (Rad, 28) gibi ayetlerle Allah'a sığınmayı tavsiye et.
+4. HUKUK/SAĞLIK: Hukuki veya tıbbi konularda asla profesyonel tavsiye verme. Sadece konunun İslami boyutunu (helal/haram, dua, tevekkül) anlat.
+5. KONU DIŞI: Kullanıcı alakasız bir şey (maç skoru, yemek tarifi vb.) sorsa bile, konuyu nazikçe İslam'a getir veya "Ben sadece dini konularda yardımcı olabilirim" de.
+7. TAMAMLAMA: Cevaplarını her zaman tamamla.
+8. KISALIK: Cevapların MÜMKÜN OLDUĞUNCA KISA ve ÖZ olsun. Destan yazma. Kullanıcı detay istemedikçe cevabı 2-3 cümle ile sınırla. Ayet ve hadisleri sadece çok gerekliyse kısa alıntılarla ver.`;
+
+  try {
+    const result = await generateContent(userMessage, systemPrompt);
+
+    if (result.success) {
+      return {
+        type: 'text',
+        content: result.content
+      };
+    } else {
+      return {
+        type: 'text',
+        content: result.error || 'Bir hata oluştu.'
+      };
+    }
+  } catch (error) {
+    logger.error('Gemini Chat Error:', error);
+    return {
+      type: 'text',
+      content: 'Şu anda servise ulaşamıyorum. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.'
+    };
+  }
+};
+
 // ============================================
 // DEPRECATED FUNCTIONS (Backward Compatibility)
 // ============================================
@@ -277,5 +387,6 @@ export default {
   analyzeWordRoot,
   testApiKey,
   saveApiKey,
-  hasApiKey
+  hasApiKey,
+  chatWithGemini
 };

@@ -1,8 +1,7 @@
 // Multimedia Data - Dini Fotoğraflar ve Görseller
 // Religious images, prayer cards, and shareable content
 
-// Using Unsplash for high-quality religious/mosque images
-// These are free-to-use images with proper licensing
+// Using local images for reliability
 
 export const MULTIMEDIA_CATEGORIES = [
     {
@@ -17,35 +16,35 @@ export const MULTIMEDIA_CATEGORIES = [
         title: 'Cami Fotoğrafları',
         icon: '🕌',
         description: 'Dünyanın en güzel camileri',
-        count: 8
+        count: 7
     },
     {
         id: 'kabe',
         title: 'Kabe ve Harem',
         icon: '🕋',
         description: 'Kutsal topraklar',
-        count: 6
+        count: 4
     },
     {
         id: 'ramazan',
         title: 'Ramazan Görselleri',
         icon: '🌙',
         description: 'Ramazan ve iftar görselleri',
-        count: 6
+        count: 5
     },
     {
         id: 'kuran',
         title: 'Kuran Görselleri',
         icon: '📖',
         description: 'Kuran-ı Kerim fotoğrafları',
-        count: 6
+        count: 5
     },
     {
         id: 'tesbih',
         title: 'Tesbih ve İbadet',
         icon: '📿',
         description: 'İbadet görselleri',
-        count: 6
+        count: 5
     }
 ];
 
@@ -109,247 +108,206 @@ export const DUA_IMAGES = [
     }
 ];
 
-// Mosque images from Unsplash (free to use)
+// Mosque images - Local files
 export const CAMI_IMAGES = [
     {
         id: 'cami1',
         title: 'Sultanahmet Camii',
         location: 'İstanbul, Türkiye',
-        url: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=400'
+        url: '/images/multimedia/camiler/sultanahmet.png',
+        thumbnail: '/images/multimedia/camiler/sultanahmet.png'
     },
     {
         id: 'cami2',
         title: 'Ayasofya',
         location: 'İstanbul, Türkiye',
-        url: 'https://images.unsplash.com/photo-1545153996-e96bcf6e7c2a?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1545153996-e96bcf6e7c2a?w=400'
+        url: '/images/multimedia/camiler/ayasofya.png',
+        thumbnail: '/images/multimedia/camiler/ayasofya.png'
     },
     {
         id: 'cami3',
         title: 'Şeyh Zayed Camii',
         location: 'Abu Dhabi, BAE',
-        url: 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33?w=400'
+        url: '/images/multimedia/camiler/seyh_zayed.png',
+        thumbnail: '/images/multimedia/camiler/seyh_zayed.png'
     },
     {
         id: 'cami4',
         title: 'Mescid-i Nebevi',
         location: 'Medine, Suudi Arabistan',
-        url: 'https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=400'
+        url: '/images/multimedia/camiler/mescidi_nebevi.png',
+        thumbnail: '/images/multimedia/camiler/mescidi_nebevi.png'
     },
     {
         id: 'cami5',
-        title: 'Fas Camii',
-        location: 'Fas',
-        url: 'https://images.unsplash.com/photo-1583767217245-b30f97d5c01f?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1583767217245-b30f97d5c01f?w=400'
+        title: 'Selimiye Camii',
+        location: 'Edirne, Türkiye',
+        url: '/images/multimedia/camiler/selimiye.png',
+        thumbnail: '/images/multimedia/camiler/selimiye.png'
     },
     {
         id: 'cami6',
-        title: 'Selimiye Camii',
-        location: 'Edirne, Türkiye',
-        url: 'https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1564769625905-50e93615e769?w=400'
+        title: 'Cami İç Mekan',
+        location: 'İslam Mimarisi',
+        url: '/images/multimedia/camiler/cami_ic_mekan.png',
+        thumbnail: '/images/multimedia/camiler/cami_ic_mekan.png'
     },
     {
         id: 'cami7',
-        title: 'Cami İç Mekan',
-        location: 'İslam Mimarisi',
-        url: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=400'
-    },
-    {
-        id: 'cami8',
         title: 'Kubbe Detayı',
         location: 'İslam Sanatı',
-        url: 'https://images.unsplash.com/photo-1564769610726-59cead6a6f8f?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1564769610726-59cead6a6f8f?w=400'
+        url: '/images/multimedia/camiler/kubbe_detay.png',
+        thumbnail: '/images/multimedia/camiler/kubbe_detay.png'
     }
 ];
 
-// Kabe images
+// Kabe images - Local files
 export const KABE_IMAGES = [
     {
         id: 'kabe1',
         title: 'Kabe-i Muazzama',
         location: 'Mekke, Suudi Arabistan',
-        url: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?w=400'
+        url: '/images/multimedia/kabe/kabe_1.png',
+        thumbnail: '/images/multimedia/kabe/kabe_1.png'
     },
     {
         id: 'kabe2',
-        title: 'Mescid-i Haram',
+        title: 'Mescid-i Haram Panorama',
         location: 'Mekke, Suudi Arabistan',
-        url: 'https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1564769625905-50e93615e769?w=400'
+        url: '/images/multimedia/kabe/mescidi_haram.png',
+        thumbnail: '/images/multimedia/kabe/mescidi_haram.png'
     },
     {
         id: 'kabe3',
         title: 'Tavaf',
         location: 'Mekke, Suudi Arabistan',
-        url: 'https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?w=400'
+        url: '/images/multimedia/kabe/tavaf.png',
+        thumbnail: '/images/multimedia/kabe/tavaf.png'
     },
     {
         id: 'kabe4',
-        title: 'Gece Manzarası',
+        title: 'Kabe Gece Manzarası',
         location: 'Mekke, Suudi Arabistan',
-        url: 'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=400'
-    },
-    {
-        id: 'kabe5',
-        title: 'Hac Dönemi',
-        location: 'Mekke, Suudi Arabistan',
-        url: 'https://images.unsplash.com/photo-1537031934600-f767f06e8597?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1537031934600-f767f06e8597?w=400'
-    },
-    {
-        id: 'kabe6',
-        title: 'Kutsal Topraklar',
-        location: 'Suudi Arabistan',
-        url: 'https://images.unsplash.com/photo-1566624790190-511a09f6ddbd?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1566624790190-511a09f6ddbd?w=400'
+        url: '/images/multimedia/kabe/kabe_gece.png',
+        thumbnail: '/images/multimedia/kabe/kabe_gece.png'
     }
 ];
 
-// Ramazan images
+// Ramazan images - Local files
 export const RAMAZAN_IMAGES = [
     {
         id: 'ramazan1',
         title: 'İftar Sofrası',
         description: 'Ramazan bereketi',
-        url: 'https://images.unsplash.com/photo-1532635241-17e820acc59f?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1532635241-17e820acc59f?w=400'
+        url: '/images/multimedia/ramazan/iftar.png',
+        thumbnail: '/images/multimedia/ramazan/iftar.png'
     },
     {
         id: 'ramazan2',
         title: 'Hurma',
         description: 'İftar açma sünneti',
-        url: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400'
+        url: '/images/multimedia/ramazan/hurma.png',
+        thumbnail: '/images/multimedia/ramazan/hurma.png'
     },
     {
         id: 'ramazan3',
         title: 'Ramazan Feneri',
         description: 'Ramazan süsü',
-        url: 'https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=400'
+        url: '/images/multimedia/ramazan/ramazan_feneri.png',
+        thumbnail: '/images/multimedia/ramazan/ramazan_feneri.png'
     },
     {
         id: 'ramazan4',
         title: 'Hilal',
         description: 'Ramazan ayı',
-        url: 'https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=400'
+        url: '/images/multimedia/ramazan/hilal.png',
+        thumbnail: '/images/multimedia/ramazan/hilal.png'
     },
     {
         id: 'ramazan5',
-        title: 'Cami Işıkları',
-        description: 'Mahya',
-        url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400'
-    },
-    {
-        id: 'ramazan6',
-        title: 'Dua Vakti',
-        description: 'Teravih',
-        url: 'https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=400'
+        title: 'Mahya',
+        description: 'Hoş Geldin Ramazan',
+        url: '/images/multimedia/ramazan/mahya.png',
+        thumbnail: '/images/multimedia/ramazan/mahya.png'
     }
 ];
 
-// Kuran images
+// Kuran images - Local files
 export const KURAN_IMAGES = [
     {
         id: 'kuran1',
         title: 'Kuran-ı Kerim',
         description: 'Mushaf-ı Şerif',
-        url: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=400'
+        url: '/images/multimedia/kuran/kuran_1.png',
+        thumbnail: '/images/multimedia/kuran/kuran_1.png'
     },
     {
         id: 'kuran2',
         title: 'Kuran Tilaveti',
         description: 'Okuma anı',
-        url: 'https://images.unsplash.com/photo-1585036156261-1e2c3ea61810?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1585036156261-1e2c3ea61810?w=400'
+        url: '/images/multimedia/kuran/kuran_tilavet.png',
+        thumbnail: '/images/multimedia/kuran/kuran_tilavet.png'
     },
     {
         id: 'kuran3',
         title: 'Hat Sanatı',
         description: 'İslam kaligrafisi',
-        url: 'https://images.unsplash.com/photo-1579187707643-35646d22b596?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1579187707643-35646d22b596?w=400'
+        url: '/images/multimedia/kuran/hat_sanati.png',
+        thumbnail: '/images/multimedia/kuran/hat_sanati.png'
     },
     {
         id: 'kuran4',
-        title: 'Rahle',
+        title: 'Rahle ve Kuran',
         description: 'Kuran standı',
-        url: 'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=400'
+        url: '/images/multimedia/kuran/rahle.png',
+        thumbnail: '/images/multimedia/kuran/rahle.png'
     },
     {
         id: 'kuran5',
-        title: 'Ayet',
-        description: 'Kuran sayfası',
-        url: 'https://images.unsplash.com/photo-1587620962725-abab7912c34f?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1587620962725-abab7912c34f?w=400'
-    },
-    {
-        id: 'kuran6',
-        title: 'Tezhip',
+        title: 'Tezhip Sanatı',
         description: 'Süsleme sanatı',
-        url: 'https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=400'
+        url: '/images/multimedia/kuran/tezhip.png',
+        thumbnail: '/images/multimedia/kuran/tezhip.png'
     }
 ];
 
-// Tesbih images
+// Tesbih images - Using existing local files from other categories as placeholder
+// These will be updated when quota resets
 export const TESBIH_IMAGES = [
     {
         id: 'tesbih1',
         title: 'Tesbih',
         description: 'Zikir aleti',
-        url: 'https://images.unsplash.com/photo-1590076215667-875d4ef2d7de?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1590076215667-875d4ef2d7de?w=400'
+        url: '/images/multimedia/kuran/kuran_1.png',
+        thumbnail: '/images/multimedia/kuran/kuran_1.png'
     },
     {
         id: 'tesbih2',
-        title: 'Namaz',
+        title: 'Namaz Kılan',
         description: 'İbadet anı',
-        url: 'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=400'
+        url: '/images/multimedia/camiler/cami_ic_mekan.png',
+        thumbnail: '/images/multimedia/camiler/cami_ic_mekan.png'
     },
     {
         id: 'tesbih3',
         title: 'Secde',
         description: 'Kulluk',
-        url: 'https://images.unsplash.com/photo-1571079520814-c2840ce6ec7b?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1571079520814-c2840ce6ec7b?w=400'
+        url: '/images/multimedia/kabe/kabe_1.png',
+        thumbnail: '/images/multimedia/kabe/kabe_1.png'
     },
     {
         id: 'tesbih4',
-        title: 'Dua Elleri',
+        title: 'Dua Eden Eller',
         description: 'Yalvarış',
-        url: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=400'
+        url: '/images/multimedia/ramazan/ramazan_feneri.png',
+        thumbnail: '/images/multimedia/ramazan/ramazan_feneri.png'
     },
     {
         id: 'tesbih5',
         title: 'Seccade',
-        description: 'Namaz kıyafeti',
-        url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400'
-    },
-    {
-        id: 'tesbih6',
-        title: 'Zikir',
-        description: 'Allah\'ı anma',
-        url: 'https://images.unsplash.com/photo-1585036156261-1e2c3ea61810?w=800',
-        thumbnail: 'https://images.unsplash.com/photo-1585036156261-1e2c3ea61810?w=400'
+        description: 'Namaz seccadesi',
+        url: '/images/multimedia/camiler/kubbe_detay.png',
+        thumbnail: '/images/multimedia/camiler/kubbe_detay.png'
     }
 ];
 

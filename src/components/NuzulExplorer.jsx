@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, Send, BookOpen, AlertCircle, Loader } from 'lucide-react';
+import { Send, BookOpen, AlertCircle, Loader } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { queryNuzulSebebi, hasApiKey } from '../services/geminiService';
 import { searchNuzul } from '../data/nuzulData';
 import { checkLimit, consumeLimit, getDailyLimitStatus } from '../services/proService';
@@ -121,9 +122,7 @@ const NuzulExplorer = ({ onClose }) => {
     <div className="nuzul-explorer-container">
       {/* Header */}
       <div className="nuzul-header">
-        <button className="back-button" onClick={onClose}>
-          <ArrowLeft size={24} />
-        </button>
+        <IslamicBackButton onClick={onClose} size="medium" />
         <div className="header-content">
           <h1>📖 Nüzul Sebebi</h1>
           <p className="subtitle">Ayetlerin iniş sebeplerini öğrenin</p>

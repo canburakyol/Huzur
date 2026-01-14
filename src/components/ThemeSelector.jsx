@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ArrowLeft, Check, Palette } from 'lucide-react';
+import { Check, Palette } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
 import { STORAGE_KEYS } from '../constants';
 
@@ -119,7 +120,9 @@ function ThemeSelector({ onClose }) {
         });
 
         // Apply body background
+        // eslint-disable-next-line
         document.body.style.background = theme.bodyGradient;
+        // eslint-disable-next-line
         document.body.style.backgroundAttachment = 'fixed';
 
         // Save preference
@@ -140,18 +143,7 @@ function ThemeSelector({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={onClose}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={onClose} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',

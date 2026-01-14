@@ -2,6 +2,7 @@
 import { surahList } from '../data/surahList';
 import { storageService } from './storageService';
 import { STORAGE_KEYS } from '../constants';
+import { logger } from '../utils/logger';
 
 const BASE_URL = 'https://api.alquran.cloud/v1';
 const ACIK_KURAN_URL = 'https://api.acikkuran.com';
@@ -55,10 +56,10 @@ const getCachedSurah = (surahNumber) => {
             return null;
         }
         
-        console.log(`[Quran] Using cached surah ${surahNumber}`);
+        logger.log(`[Quran] Using cached surah ${surahNumber}`);
         return data;
     } catch (e) {
-        console.warn('[Quran] Cache read error:', e);
+        logger.warn('[Quran] Cache read error:', e);
         return null;
     }
 };
@@ -72,10 +73,10 @@ const cacheSurah = (surahNumber, data) => {
             timestamp: Date.now()
         };
         storageService.setItem(cacheKey, cacheData);
-        console.log(`[Quran] Cached surah ${surahNumber}`);
+        logger.log(`[Quran] Cached surah ${surahNumber}`);
     } catch (e) {
         // storage full or other error - fail silently
-        console.warn('[Quran] Cache write error:', e);
+        logger.warn('[Quran] Cache write error:', e);
     }
 };
 
@@ -133,7 +134,7 @@ export const getSurahComplete = async (surahNumber, translationId = 'tr.vakfi') 
         }
 
         // Step 4: Al Quran Cloud API (For English, Arabic, or fallback)
-        console.log(`[Quran] Fetching from Al Quran Cloud API for ${translationId}...`);
+        logger.log(`[Quran] Fetching from Al Quran Cloud API for ${translationId}...`);
         
         // We need 3 things: Arabic text, Translation, and Transliteration (if available/needed)
         // For non-Turkish, we might not have good transliteration, but we can try 'en.transliteration' for English
@@ -209,7 +210,7 @@ export const getSurahComplete = async (surahNumber, translationId = 'tr.vakfi') 
         try {
             const cached = storageService.getItem(cacheKey);
             if (cached) {
-                console.log(`[Quran] Using expired cache for surah ${surahNumber} (offline fallback)`);
+                logger.log(`[Quran] Using expired cache for surah ${surahNumber} (offline fallback)`);
                 return cached.data;
             }
         } catch {
@@ -308,6 +309,8 @@ export const getAudioUrl = async (surahNumber, reciterId = 'ar.alafasy') => {
     }
 };
 
+
+
 // Senkron versiyon (hızlı erişim için) - Al Quran Cloud API formatı
 export const getAudioUrlSync = (surahNumber, reciterId = 'ar.alafasy') => {
     const surahNum = String(surahNumber).padStart(3, '0');
@@ -323,7 +326,9 @@ export const getAudioUrlSync = (surahNumber, reciterId = 'ar.alafasy') => {
         'ar.abdurrahmaansudais': `https://server7.mp3quran.net/sudais/${surahNum}.mp3`
     };
 
-    const url = urlFormats[reciterId] || urlFormats['ar.alafasy'];
+    // Fallback: Use the reciterId in the standard Islamic Network URL pattern
+    // This works for most reciters from Al Quran Cloud (Shuraim, Ajmy, etc.)
+    const url = urlFormats[reciterId] || `https://cdn.islamic.network/quran/audio-surah/128/${reciterId}/${surahNumber}.mp3`;
 
 
     return url;
@@ -348,6 +353,9 @@ export const getAyahAudioUrl = (surahNumber, ayahNumber, reciterId = 'ar.alafasy
     // Alafasy ve diğerleri için global ID kullanımı
     // Diğer hafızlar için format farklı olabilir, ancak şimdilik bu yapıyı deniyoruz.
     // Eğer reciterId 'ar.alafasy' ise kesinlikle global ID kullanıyor.
+    
+    // Note: For other reciters, we might need to check if they support global ID or surah:ayah format
+    // But for now, we keep the existing logic.
 
     return `https://cdn.islamic.network/quran/audio/128/${reciterId}/${globalAyahNumber}.mp3`;
 };
@@ -359,6 +367,12 @@ export const getReciters = () => {
         { id: 'ar.abdulbasitmurattal', name: 'Abdul Basit (Murattal)', country: '🇪🇬 Mısır' },
         { id: 'ar.husary', name: 'Mahmoud Khalil Al-Husary', country: '🇪🇬 Mısır' },
         { id: 'ar.minshawi', name: 'Mohamed Siddiq Al-Minshawi', country: '🇪🇬 Mısır' },
-        { id: 'ar.abdurrahmaansudais', name: 'Abdurrahman As-Sudais', country: '🇸🇦 S. Arabistan' }
+        { id: 'ar.abdurrahmaansudais', name: 'Abdurrahman As-Sudais', country: '🇸🇦 S. Arabistan' },
+        { id: 'ar.shuraim', name: 'Saud Al-Shuraim', country: '🇸🇦 S. Arabistan' },
+        { id: 'ar.mahermuaiqly', name: 'Maher Al-Muaiqly', country: '🇸🇦 S. Arabistan' },
+        { id: 'ar.basfar', name: 'Abdullah Basfar', country: '🇸🇦 S. Arabistan' },
+        { id: 'ar.ahmedajamy', name: 'Ahmed Al-Ajmy', country: '🇸🇦 S. Arabistan' },
+        { id: 'ar.nasserqatami', name: 'Nasser Al-Qatami', country: '🇸🇦 S. Arabistan' },
+        { id: 'ar.yasseraldossari', name: 'Yasser Al-Dosari', country: '🇸🇦 S. Arabistan' }
     ];
 };

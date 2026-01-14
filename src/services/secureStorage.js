@@ -129,7 +129,7 @@ export const secureStorage = {
     try {
       const { value } = await Preferences.get({ key });
       return value !== null;
-    } catch (error) {
+    } catch {
       return false;
     }
   },

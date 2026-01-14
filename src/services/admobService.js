@@ -1,5 +1,6 @@
 import { AdMob, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
+import { logger } from '../utils/logger';
 
 // Test IDs (Google Official Test IDs - always work)
 const TEST_BANNER_ID = 'ca-app-pub-3940256099942544/6300978111';
@@ -7,8 +8,8 @@ const TEST_BANNER_ID = 'ca-app-pub-3940256099942544/6300978111';
 // Real IDs - Huzur App
 const REAL_BANNER_ID = 'ca-app-pub-3074026744164717/3228028982'; // Bottom Banner (320x50)
 
-// Development mode flag
-const isDev = false; // Production mode - using real ads
+// Development mode flag - uses Vite environment
+const isDev = import.meta.env.DEV;
 const BANNER_ID = isDev ? TEST_BANNER_ID : REAL_BANNER_ID;
 
 export const adMobService = {
@@ -18,7 +19,7 @@ export const adMobService = {
      */
     initialize: async () => {
         if (Capacitor.getPlatform() === 'web') {
-            console.log('AdMob: Web platform - skipped');
+            logger.log('AdMob: Web platform - skipped');
             return;
         }
 
@@ -40,9 +41,9 @@ export const adMobService = {
                     tagForChildDirectedTreatment: false,
                     tagForUnderAgeOfConsent: false
                 });
-                console.log('AdMob: Request configuration set (General rating)');
+                logger.log('AdMob: Request configuration set (General rating)');
             } catch (configError) {
-                console.warn('AdMob: Could not set request configuration:', configError);
+                logger.warn('AdMob: Could not set request configuration:', configError);
             }
 
             // Step 4: Initialize AdMob after consent handling
@@ -50,7 +51,7 @@ export const adMobService = {
                 requestTrackingAuthorization: true,
                 initializeForTesting: isDev,
             });
-            console.log('AdMob: Initialized successfully');
+            logger.log('AdMob: Initialized successfully');
         } catch (e) {
             console.error('AdMob: Init Error -', e);
             // Fallback: Try to initialize anyway in case consent API fails
@@ -79,7 +80,7 @@ export const adMobService = {
                 margin: 0,
                 isTesting: isDev
             });
-            console.log('AdMob: Bottom banner shown');
+            logger.log('AdMob: Bottom banner shown');
         } catch (e) {
             console.error('AdMob: Show Banner Error -', e);
         }
@@ -100,7 +101,7 @@ export const adMobService = {
                 margin: 0,
                 isTesting: isDev
             });
-            console.log('AdMob: Medium Rectangle shown');
+            logger.log('AdMob: Medium Rectangle shown');
         } catch (e) {
             console.error('AdMob: Show Medium Rect Error -', e);
         }
@@ -117,7 +118,7 @@ export const adMobService = {
             // await AdMob.removeBanner(); // Don't remove, just hide to resume faster if needed? 
             // Actually removeBanner is safer to switch sizes
             await AdMob.removeBanner();
-            console.log('AdMob: Banner hidden/removed');
+            logger.log('AdMob: Banner hidden/removed');
         } catch (e) {
             console.error('AdMob: Hide Banner Error -', e);
         }
@@ -129,19 +130,19 @@ export const adMobService = {
     stopAds: async () => {
         if (Capacitor.getPlatform() === 'web') return;
 
-        console.log('AdMob: Stopping all ads...');
+        logger.log('AdMob: Stopping all ads...');
         try {
             await AdMob.hideBanner();
         } catch (e) {
-            console.warn('AdMob: Error hiding banner:', e);
+            logger.warn('AdMob: Error hiding banner:', e);
         }
         
         try {
             await AdMob.removeBanner();
         } catch (e) {
-            console.warn('AdMob: Error removing banner:', e);
+            logger.warn('AdMob: Error removing banner:', e);
         }
-        console.log('AdMob: Ads stopped for Pro user');
+        logger.log('AdMob: Ads stopped for Pro user');
     }
 };
 

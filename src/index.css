@@ -35,15 +35,15 @@
   --warning-color: #f39c12;
 
   /* Font Settings Defaults */
-  --arabic-font-size: 24px;
-  --turkish-font-size: 16px;
+  --arabic-font-size: 1.5rem; /* 24px */
+  --turkish-font-size: 1rem; /* 16px */
   --arabic-font-family: 'Amiri', serif;
   --quran-line-height: 1.8;
 
-  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --font-size-base: 18px;
-  --font-size-large: 24px;
-  --font-size-xl: 42px;
+  --font-main: 'Segoe UI', Roboto, 'system-ui', sans-serif;
+  --font-size-base: 1.125rem; /* 18px */
+  --font-size-large: 1.5rem; /* 24px */
+  --font-size-xl: 2.625rem; /* 42px */
 }
 
 /* Scoped Original Theme for Quran Section */
@@ -88,6 +88,21 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  /* Mobile Touch Optimizations - Android WebView */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Touch-friendly interactive elements */
+button, a, [role="button"], .clickable, .feature-btn, .nav-item, .hamburger-item, .glass-card {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+/* Prevent text selection on interactive elements */
+button, .no-select, .nav-item, .feature-btn, .hamburger-item {
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 @keyframes gradientBG {
@@ -149,6 +164,11 @@ body::after {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
+  /* Safe Area Support */
+  padding-top: max(20px, env(safe-area-inset-top));
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -167,7 +187,7 @@ h3 {
 }
 
 h1 {
-  font-size: 32px;
+  font-size: 2rem; /* 32px */
   text-align: center;
   margin-bottom: 20px;
   font-weight: 300;
@@ -195,7 +215,8 @@ h1 {
 .btn {
   display: inline-block;
   padding: 16px 24px;
-  font-size: 18px;
+  font-size: 1.125rem; /* 18px */
+  min-height: 48px; /* Touch target fix */
   font-weight: 600;
   text-align: center;
   text-decoration: none;
@@ -254,7 +275,7 @@ h1 {
 }
 
 .daily-title-compact {
-  font-size: 9px;
+  font-size: 0.5625rem; /* 9px */
   text-transform: uppercase;
   letter-spacing: 0.3px;
   color: var(--text-color-light);
@@ -282,6 +303,7 @@ h1 {
   padding: 10px;
   border-radius: 12px;
   min-width: 70px;
+  min-height: 48px; /* Touch target fix */
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -301,13 +323,13 @@ h1 {
 }
 
 .prayer-time-card span:first-child {
-  font-size: 12px;
+  font-size: 0.75rem; /* 12px */
   margin-bottom: 4px;
   opacity: 0.9;
 }
 
 .prayer-time-card span:last-child {
-  font-size: 16px;
+  font-size: 1rem; /* 16px */
   font-weight: bold;
 }
 
@@ -325,6 +347,7 @@ h1 {
   align-items: center;
   justify-content: center;
   padding: 15px 10px;
+  min-height: 48px; /* Touch target fix */
   background: var(--glass-bg);
   border-radius: 16px;
   border: 1px solid var(--glass-border);
@@ -338,7 +361,7 @@ h1 {
 }
 
 .feature-icon {
-  font-size: 24px;
+  font-size: 1.5rem; /* 24px */
   margin-bottom: 8px;
   transition: transform 0.2s;
 }
@@ -348,7 +371,7 @@ h1 {
 }
 
 .feature-label {
-  font-size: 12px;
+  font-size: 0.75rem; /* 12px */
   font-weight: 600;
   color: var(--text-color);
   margin-top: 8px;
@@ -357,8 +380,10 @@ h1 {
 /* Bottom Navigation Bar */
 .bottom-nav {
   position: fixed;
-  bottom: 50px;
-  /* Space for AdMob banner (50px height) */
+  bottom: 50px; /* Reklam alanı için yukarı kaydırıldı */
+  /* Safe Area Support for Bottom Nav */
+  padding-bottom: env(safe-area-inset-bottom);
+  height: 70px;
   inset-inline-start: 0;
   inset-inline-end: 0;
   background: rgba(255, 255, 255, 0.95);
@@ -370,7 +395,8 @@ h1 {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 12px 0;
+
+  padding: 0;
   z-index: 100;
   max-width: 600px;
   margin: 0 auto;
@@ -420,7 +446,7 @@ h1 {
 }
 
 .nav-item span {
-  font-size: 11px;
+  font-size: 0.6875rem; /* 11px */
   font-weight: 700;
   /* Daha kalın yazı */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -451,7 +477,8 @@ h1 {
 /* FAB Button - Bottom Right (uses logical properties for RTL) */
 .hamburger-fab {
   position: fixed;
-  bottom: 90px;
+  /* Safe Area Support for FAB */
+  bottom: calc(90px + env(safe-area-inset-bottom));
   inset-inline-end: 20px;
   width: 56px;
   height: 56px;
@@ -527,19 +554,19 @@ h1 {
 }
 
 .hamburger-logo {
-  font-size: 48px;
+  font-size: 3rem; /* 48px */
   margin-bottom: 8px;
 }
 
 .hamburger-title {
-  font-size: 24px;
+  font-size: 1.5rem; /* 24px */
   font-weight: 700;
   color: var(--primary-color);
   margin: 0 0 4px 0;
 }
 
 .hamburger-subtitle {
-  font-size: 12px;
+  font-size: 0.75rem; /* 12px */
   color: var(--text-color-muted);
   margin: 0;
 }
@@ -604,7 +631,7 @@ h1 {
 }
 
 .hamburger-item-icon {
-  font-size: 28px;
+  font-size: 1.75rem; /* 28px */
   margin-bottom: 8px;
   transition: transform 0.2s;
 }
@@ -614,7 +641,7 @@ h1 {
 }
 
 .hamburger-item-label {
-  font-size: 11px;
+  font-size: 0.6875rem; /* 11px */
   font-weight: 600;
   color: var(--text-color);
   text-align: center;
@@ -625,7 +652,7 @@ h1 {
 .hamburger-footer {
   padding: 12px 20px;
   text-align: center;
-  font-size: 11px;
+  font-size: 0.6875rem; /* 11px */
   color: var(--text-color-muted);
   border-top: 1px solid var(--glass-border);
   background: rgba(0, 0, 0, 0.1);
@@ -645,7 +672,9 @@ h1 {
   inset-inline-end: 10px;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 1.5rem; /* 24px */
+  min-width: 48px; /* Touch target fix */
+  min-height: 48px; /* Touch target fix */
   cursor: pointer;
   color: var(--text-color-muted);
   transition: color 0.2s;
@@ -678,12 +707,12 @@ h1 {
 .day-name {
   font-weight: bold;
   color: #2c3e50;
-  font-size: 18px;
+  font-size: 1.125rem; /* 18px */
 }
 
 .day-date {
   color: var(--primary-color);
-  font-size: 16px;
+  font-size: 1rem; /* 16px */
 }
 
 /* ==================== STREAK BADGE STYLES ==================== */
@@ -696,14 +725,14 @@ h1 {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 0.875rem; /* 14px */
   font-weight: 600;
   color: var(--text-color);
   transition: all 0.3s ease;
 }
 
 .streak-badge .streak-emoji {
-  font-size: 16px;
+  font-size: 1rem; /* 16px */
 }
 
 .streak-badge .streak-count {
@@ -766,7 +795,7 @@ h1 {
 }
 
 .badge-celebration .badge-emoji {
-  font-size: 72px;
+  font-size: 4.5rem; /* 72px */
   margin-bottom: 16px;
   animation: badgeBounce 0.6s ease-out 0.3s;
 }
@@ -777,14 +806,14 @@ h1 {
 }
 
 .badge-celebration .badge-title {
-  font-size: 24px;
+  font-size: 1.5rem; /* 24px */
   font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 12px;
 }
 
 .badge-celebration .badge-message {
-  font-size: 16px;
+  font-size: 1rem; /* 16px */
   color: var(--text-color);
   margin-bottom: 24px;
   line-height: 1.5;
@@ -796,7 +825,8 @@ h1 {
   border: none;
   padding: 14px 40px;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 1rem; /* 16px */
+  min-height: 48px; /* Touch target fix */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;

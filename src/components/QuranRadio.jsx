@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { surahNames } from '../data/surahs';
+import { surahList } from '../data/surahList';
 import { Play, Pause, SkipForward, SkipBack, List, X } from 'lucide-react';
+
+const surahNames = surahList.map(s => s.nameTranslation);
 
 const QuranRadio = ({ onClose }) => {
     const [isPlaying, setIsPlaying] = useState(false);

@@ -2,6 +2,9 @@
 // Comprehensive Islamic Library Content
 
 // ==================== 1. KİTAPLAR ====================
+import { prayers as PRAYERS } from './prayers';
+export { PRAYERS };
+
 export const BOOKS = [
     {
         id: 'islam-tarihi',
@@ -602,11 +605,179 @@ export const FAQ = [
     }
 ];
 
+// ==================== 6. SESLİ KÜTÜPHANE (PREMIUM) ====================
+export const AUDIO = [
+    {
+        id: 'hatim',
+        title: 'Hatim Setleri',
+        icon: '🎧',
+        description: 'Kabe imamları ve ünlü hafızlardan Kur\'an tilavetleri',
+        type: 'reciters',
+        isPro: true,
+        items: [] // Populated dynamically from quranService
+    },
+    {
+        id: 'riyazus-salihin',
+        title: 'Riyazüs Salihin',
+        icon: '📚',
+        description: 'Hadis-i Şerif okumaları ve açıklamaları',
+        type: 'playlist',
+        isPro: true,
+        items: [
+            { number: 1, title: '1. Bölüm: İhlas ve Niyet', duration: '15:30', url: 'https://example.com/audio/riyaz-1.mp3' },
+            { number: 2, title: '2. Bölüm: Tövbe', duration: '18:45', url: 'https://example.com/audio/riyaz-2.mp3' },
+            { number: 3, title: '3. Bölüm: Sabır', duration: '22:10', url: 'https://example.com/audio/riyaz-3.mp3' },
+            { number: 4, title: '4. Bölüm: Doğruluk', duration: '14:20', url: 'https://example.com/audio/riyaz-4.mp3' },
+            { number: 5, title: '5. Bölüm: Murakabe', duration: '16:50', url: 'https://example.com/audio/riyaz-5.mp3' }
+        ]
+    },
+    {
+        id: 'siyer-sohbetleri',
+        title: 'Siyer Sohbetleri',
+        icon: '🕌',
+        description: 'Hz. Peygamber\'in hayatı üzerine sohbetler',
+        type: 'playlist',
+        isPro: true,
+        items: [
+            { number: 1, title: 'Mekke Dönemi Başlangıcı', duration: '45:00', url: 'https://example.com/audio/siyer-1.mp3' },
+            { number: 2, title: 'Habeşistan Hicreti', duration: '42:15', url: 'https://example.com/audio/siyer-2.mp3' },
+            { number: 3, title: 'Hüzün Yılı ve Taif', duration: '38:50', url: 'https://example.com/audio/siyer-3.mp3' },
+            { number: 4, title: 'İsra ve Mirac', duration: '50:10', url: 'https://example.com/audio/siyer-4.mp3' },
+            { number: 5, title: 'Hicret Yolculuğu', duration: '48:30', url: 'https://example.com/audio/siyer-5.mp3' }
+        ]
+    },
+    {
+        id: 'peygamberler-tarihi',
+        title: 'Peygamberler Tarihi',
+        icon: '🌟',
+        description: 'Peygamberlerin ibretlik hayat hikayeleri',
+        type: 'playlist',
+        isPro: true,
+        items: [
+            { number: 1, title: 'Hz. Adem ve Yaradılış', duration: '35:20', url: 'https://example.com/audio/peygamberler-1.mp3' },
+            { number: 2, title: 'Hz. Nuh ve Tufan', duration: '40:15', url: 'https://example.com/audio/peygamberler-2.mp3' },
+            { number: 3, title: 'Hz. İbrahim ve Tevhid', duration: '44:50', url: 'https://example.com/audio/peygamberler-3.mp3' },
+            { number: 4, title: 'Hz. Yusuf\'un Kıssası', duration: '55:00', url: 'https://example.com/audio/peygamberler-4.mp3' },
+            { number: 5, title: 'Hz. Musa ve Firavun', duration: '52:30', url: 'https://example.com/audio/peygamberler-5.mp3' }
+        ]
+    }
+];
+
+// ==================== 7. İSLAMİ AKADEMİ (VIDEO) ====================
+export const VIDEO = [
+    {
+        id: 'tecvid-dersleri',
+        title: 'Tecvid Dersleri',
+        icon: '🎬',
+        description: 'Kur\'an Mektebim kanalından kapsamlı tecvid eğitimi',
+        type: 'external_video',
+        isPro: false,
+        source: 'Kuran Mektebim',
+        channelUrl: 'https://www.youtube.com/@KuranMektebim',
+        playlistUrl: 'https://www.youtube.com/@KuranMektebim/playlists',
+        topics: [
+            'Tecvid\'e Giriş',
+            'Harflerin Mahreçleri',
+            'İdğam Kuralları',
+            'İhfa ve İzhar',
+            'Kalkale Kuralı',
+            'Med (Uzatma) Kuralları',
+            'Ra Harfi Okuma Kuralları',
+            'Vakıf ve Geçiş İşaretleri',
+            'Uygulamalı Kısa Sureler'
+        ]
+    },
+    {
+        id: 'diyanet-kuran-ogreniyorum',
+        title: 'Kur\'an Öğreniyorum',
+        icon: '📖',
+        description: 'Diyanet TV resmi Kur\'an eğitim programı',
+        type: 'external_video',
+        isPro: false,
+        source: 'Diyanet TV',
+        channelUrl: 'https://www.youtube.com/@DiyanetTV',
+        playlistUrl: 'https://www.diyanet.tv/kuran-ogreniyorum',
+        topics: [
+            'Elif-Ba Eğitimi',
+            'Harf Tanıma ve Okuma',
+            'Tecvid Kuralları',
+            'Sure Okumaları',
+            'Pratik Uygulamalar'
+        ]
+    },
+    {
+        id: 'kisa-sureler-tefsiri',
+        title: 'Kısa Sureler Tefsiri',
+        icon: '🕌',
+        description: 'Namazda okunan surelerin anlam ve tefsirleri',
+        type: 'external_video',
+        isPro: false,
+        source: 'Diyanet TV / İsmail Yaşar',
+        channelUrl: 'https://www.youtube.com/@DiyanetTV',
+        searchQuery: 'kısa sureler tefsiri türkçe',
+        topics: [
+            'Fatiha Suresi Tefsiri',
+            'İhlas Suresi Tefsiri',
+            'Felak Suresi Tefsiri',
+            'Nas Suresi Tefsiri',
+            'Fil Suresi Tefsiri',
+            'Kureyş Suresi Tefsiri',
+            'Maun Suresi Tefsiri',
+            'Kevser Suresi Tefsiri',
+            'Kafirun Suresi Tefsiri',
+            'Nasr Suresi Tefsiri'
+        ]
+    },
+    {
+        id: 'gunluk-sunnetler',
+        title: 'Günlük Hayatta Sünnetler',
+        icon: '☀️',
+        description: 'Peygamber Efendimiz\'in günlük hayat öğretileri',
+        type: 'external_video',
+        isPro: true,
+        source: 'Çeşitli Kanallar',
+        searchQuery: 'günlük sünnetler peygamber efendimiz',
+        topics: [
+            'Sabah Rutini Sünnetleri',
+            'Yeme İçme Adabı',
+            'Uyku Öncesi Sünnetler',
+            'Eve Giriş Çıkış Adabı',
+            'Selamlaşma Sünnetleri',
+            'Temizlik ve Giyinme',
+            'Cuma Günü Sünnetleri',
+            '100 Günlük Sünnet'
+        ]
+    },
+    {
+        id: 'siyer-dersleri',
+        title: 'Siyer-i Nebi',
+        icon: '🌙',
+        description: 'Hz. Peygamber\'in hayatı - Kapsamlı siyer dersleri',
+        type: 'external_video',
+        isPro: true,
+        source: 'Diyanet TV / Akademi Kanalları',
+        channelUrl: 'https://www.youtube.com/@DiyanetTV',
+        searchQuery: 'siyer dersleri peygamber hayatı',
+        topics: [
+            'Mekke Dönemi',
+            'Hicret',
+            'Medine Dönemi',
+            'Gazve ve Seferler',
+            'Veda Hutbesi'
+        ]
+    }
+];
+
+
 // Tüm kategoriler
 export const LIBRARY_CATEGORIES = [
     { id: 'books', title: 'Kitaplar', icon: '📚', data: BOOKS },
     { id: 'texts', title: 'Dini Metinler', icon: '📜', data: RELIGIOUS_TEXTS },
     { id: 'education', title: 'Eğitim', icon: '🎓', data: EDUCATION },
     { id: 'references', title: 'Referanslar', icon: '📋', data: REFERENCES },
+    { id: 'prayers', title: 'Peygamber Duaları', icon: '🤲', data: PRAYERS },
+    { id: 'audio', title: 'Sesli Kütüphane', icon: '🎧', data: AUDIO, isPro: true },
+    { id: 'video', title: 'İslami Akademi', icon: '🎬', data: VIDEO },
     { id: 'faq', title: 'Soru-Cevap', icon: '❓', data: FAQ }
 ];
+

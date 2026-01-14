@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Share2, Heart, ChevronRight, X, Edit3, Check, Download, Image } from 'lucide-react';
+import { Share2, Heart, ChevronRight, X, Edit3, Check, Download, Image } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { GREETING_CATEGORIES, getCardsByCategory } from '../data/greetingCardsData';
-import html2canvas from 'html2canvas';
+// html2canvas is dynamically imported when needed to reduce initial bundle size
 
 function GreetingCards({ onClose }) {
     const { t } = useTranslation();
@@ -33,6 +34,9 @@ function GreetingCards({ onClose }) {
         setIsSharing(true);
         
         try {
+            // Dynamic import - only loads when user actually shares (saves ~194KB on initial load)
+            const html2canvas = (await import('html2canvas')).default;
+            
             // Create canvas from the card element
             const canvas = await html2canvas(cardRef.current, {
                 backgroundColor: null,
@@ -454,18 +458,7 @@ function GreetingCards({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={goBack}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={goBack} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '20px',

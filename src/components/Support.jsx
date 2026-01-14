@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ArrowLeft, Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
+import { Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 
 function Support({ onClose }) {
     const [formData, setFormData] = useState({
@@ -52,7 +53,7 @@ Cihaz: ${navigator.userAgent}
             // Show success anyway (email client will handle)
             setSubmitted(true);
 
-        } catch (err) {
+        } catch {
             setError('Bir hata oluştu. Lütfen tekrar deneyin.');
         } finally {
             setIsSubmitting(false);
@@ -127,18 +128,7 @@ Cihaz: ${navigator.userAgent}
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={onClose}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={onClose} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',

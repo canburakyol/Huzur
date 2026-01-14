@@ -1,5 +1,6 @@
 import { Device } from '@capacitor/device';
 import i18n from '../i18n';
+import { logger } from '../utils/logger';
 
 /**
  * Language Service
@@ -32,19 +33,19 @@ export const detectAndSetLanguage = async () => {
       // Extract the primary language code (e.g., 'en-US' -> 'en')
       const primaryLang = deviceLang.split('-')[0];
       
-      console.log('[LanguageService] Device language detected:', deviceLang, '-> Primary:', primaryLang);
+      logger.log('[LanguageService] Device language detected:', deviceLang, '-> Primary:', primaryLang);
       
       if (SUPPORTED_LANGUAGES.includes(primaryLang)) {
         languageCode = primaryLang;
       } else {
-        console.log('[LanguageService] Device language not supported, using default:', DEFAULT_LANGUAGE);
+        logger.log('[LanguageService] Device language not supported, using default:', DEFAULT_LANGUAGE);
       }
     } else {
       // Web/browser environment - use browser language
       const browserLang = navigator.language?.toLowerCase() ?? '';
       const primaryLang = browserLang.split('-')[0];
       
-      console.log('[LanguageService] Browser language detected:', browserLang, '-> Primary:', primaryLang);
+      logger.log('[LanguageService] Browser language detected:', browserLang, '-> Primary:', primaryLang);
       
       if (SUPPORTED_LANGUAGES.includes(primaryLang)) {
         languageCode = primaryLang;
@@ -54,13 +55,13 @@ export const detectAndSetLanguage = async () => {
     // Check if user has manually set a language preference (stored in localStorage)
     const savedLanguage = localStorage.getItem('app_language');
     if (savedLanguage && SUPPORTED_LANGUAGES.includes(savedLanguage)) {
-      console.log('[LanguageService] Using saved language preference:', savedLanguage);
+      logger.log('[LanguageService] Using saved language preference:', savedLanguage);
       languageCode = savedLanguage;
     }
     
     // Set the language in i18next
     await i18n.changeLanguage(languageCode);
-    console.log('[LanguageService] Language set to:', languageCode);
+    logger.log('[LanguageService] Language set to:', languageCode);
     
     // Set document direction for RTL languages (Arabic)
     if (languageCode === 'ar') {
@@ -89,7 +90,7 @@ export const detectAndSetLanguage = async () => {
  */
 export const changeLanguage = async (languageCode) => {
   if (!SUPPORTED_LANGUAGES.includes(languageCode)) {
-    console.warn('[LanguageService] Unsupported language:', languageCode);
+    logger.warn('[LanguageService] Unsupported language:', languageCode);
     return false;
   }
   
@@ -109,7 +110,7 @@ export const changeLanguage = async (languageCode) => {
       document.documentElement.setAttribute('lang', languageCode);
     }
     
-    console.log('[LanguageService] Language changed to:', languageCode);
+    logger.log('[LanguageService] Language changed to:', languageCode);
     return true;
   } catch (error) {
     console.error('[LanguageService] Error changing language:', error);

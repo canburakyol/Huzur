@@ -189,8 +189,15 @@ export const STORAGE_KEYS = {
   QURAN_FAVORITES: 'quranFavorites',
   QURAN_LAST_READ: 'quranLastRead',
   
+  // Daily Reminders
+  MORNING_REMINDER: 'morningReminderEnabled',
+  EVENING_REMINDER: 'eveningReminderEnabled',
+  
   // FCM
   FCM_TOKEN: 'fcm_token',
+  
+  // Theme
+  THEME: 'app_theme',
   
   // Gemini
   GEMINI_API_KEY: 'gemini_api_key'

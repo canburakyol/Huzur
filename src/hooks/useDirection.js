@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '../utils/logger';
 
 /**
  * useDirection Hook
@@ -25,7 +26,7 @@ export const useDirection = () => {
     // Add data attribute for CSS targeting
     document.documentElement.setAttribute('data-direction', isRTL ? 'rtl' : 'ltr');
     
-    console.log(`[useDirection] Language: ${currentLang}, Direction: ${isRTL ? 'RTL' : 'LTR'}`);
+    logger.log(`[useDirection] Language: ${currentLang}, Direction: ${isRTL ? 'RTL' : 'LTR'}`);
     
     return () => {
       // Cleanup on unmount (optional)

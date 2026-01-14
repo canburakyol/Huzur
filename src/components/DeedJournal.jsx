@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
-import { ArrowLeft, Check, X, Calendar, TrendingUp, Award, Target, Plus, Minus, RefreshCw } from 'lucide-react';
+import { Check, X, Calendar, TrendingUp, Award, Target, Plus, Minus, RefreshCw } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { useTranslation } from 'react-i18next';
 import {
     DAILY_WORSHIP,
@@ -10,9 +11,11 @@ import {
     ACHIEVEMENTS,
     MOTIVATION_MESSAGES
 } from '../data/deedJournalData';
+import { useGamification } from '../context/GamificationContext';
 
 function DeedJournal({ onClose }) {
     const { t } = useTranslation();
+    const { addPoints } = useGamification();
     const [activeTab, setActiveTab] = useState('today'); // today, stats, achievements
     const [todayDate] = useState(new Date().toDateString());
     
@@ -88,11 +91,16 @@ function DeedJournal({ onClose }) {
     }, [todayDeeds]);
 
     // Toggle a deed
-    const toggleDeed = (deedId) => {
+    const toggleDeed = (deedId, points) => {
+        const isCompleted = !todayDeeds[deedId];
+        
         setTodayDeeds(prev => ({
             ...prev,
-            [deedId]: prev[deedId] ? false : true
+            [deedId]: isCompleted
         }));
+
+        // Update global gamification points
+        addPoints(isCompleted ? points : -points);
     };
 
 
@@ -551,18 +559,7 @@ function DeedJournal({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={onClose}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={onClose} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',

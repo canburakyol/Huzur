@@ -1,0 +1,154 @@
+{
+  "tabs": {
+    "steps": "Steps",
+    "recitations": "Recitations",
+    "types": "Times",
+    "terms": "Rulings",
+    "invalidators": "Invalidators",
+    "quiz": "Quiz"
+  },
+  "ui": {
+    "title": "Prayer Teacher",
+    "stepsIntro": "Click on the cards below to learn the steps of prayer.",
+    "recitationsIntro": "Prayers and Surahs recited in Salah.",
+    "typesIntro": "Rakat counts and details of the 5 daily prayers.",
+    "termsIntro": "Religious rulings and their meanings.",
+    "invalidatorsIntro": "List of things that invalidate prayer.",
+    "totalRakat": "Total: {{count}} rakats",
+    "examples": "Examples:",
+    "quizTitle": "Prayer Knowledge Quiz",
+    "quizIntro": "Test your knowledge with {{count}} questions!",
+    "start": "Start",
+    "quizCompleted": "Quiz Completed!",
+    "score": "Score: {{score}}",
+    "resultExcellent": "Excellent! You know very well!",
+    "resultGood": "Good! You can study a bit more.",
+    "resultPoor": "Review is recommended.",
+    "tryAgain": "Try Again",
+    "questionProgress": "Question {{current}}/{{total}}",
+    "nextQuestion": "Next Question",
+    "seeResults": "See Results",
+    "pronunciation": "Pronunciation:",
+    "meaning": "Meaning:"
+  },
+  "steps": {
+    "1": { "name": "Niyyah (Intention)", "description": "Make intention in your heart for the prayer you will perform.", "detail": "Intention is made with the heart. Saying it with the tongue is Sunnah. Example: \"I intend to perform the Fard of today's Dhuhr prayer for the sake of Allah.\"" },
+    "2": { "name": "Takbir al-Ihram", "description": "Raise your hands to your ears and say \"Allahu Akbar\".", "detail": "Men raise their hands to ear level, women to shoulder level. Thumbs may touch the earlobes." },
+    "3": { "name": "Qiyam", "description": "Standing position. Right hand is placed over the left hand.", "detail": "Subhanaka, A'udhu-Basmala, Fatiha and a Surah are recited. Eyes look at the place of Sujood." },
+    "4": { "name": "Ruku", "description": "Bow down saying \"Allahu Akbar\".", "detail": "Hands grasp the knees, back is straight. Say \"Subhana Rabbiyal Azim\" 3 times. While rising, say \"Sami'allahu liman hamidah\"." },
+    "5": { "name": "Qawmah", "description": "Stand up from Ruku saying \"Rabbana lakal hamd\".", "detail": "Stand completely straight, hands released to sides. Pause for a moment then go down for Sujood." },
+    "6": { "name": "Sujood", "description": "Go down to prostration saying \"Allahu Akbar\".", "detail": "First knees, then hands, then forehead and nose touch the ground. Say \"Subhana Rabbiyal A'la\" 3 times." },
+    "7": { "name": "Jalsah", "description": "Sit upright between two prostrations.", "detail": "Say \"Rabbighfirli\". Hands rest on the knees." },
+    "8": { "name": "Qa'dah (Sitting)", "description": "Sit in the last rakat and recite At-Tahiyyat.", "detail": "At-Tahiyyat, Salli-Barik and Rabbana prayers are recited. The index finger is raised." },
+    "9": { "name": "Salam", "description": "End the prayer by giving salam to the right and left.", "detail": "Say \"Assalamu alaykum wa rahmatullah\" turning head first to the right, then to the left." }
+  },
+  "recitations": {
+    "subhaneke": { "name": "Subhanaka", "meaning": "O Allah! You are pure and far from any deficiency. I praise You. Your name is blessed. Your majesty is exalted. There is no god but You." },
+    "fatiha": { "name": "Surah Al-Fatiha", "meaning": "In the name of Allah, the Entirely Merciful, the Especially Merciful. [All] praise is [due] to Allah, Lord of the worlds. The Entirely Merciful, the Especially Merciful. Sovereign of the Day of Recompense. It is You we worship and You we ask for help. Guide us to the straight path. The path of those upon whom You have bestowed favor, not of those who have evoked [Your] anger or of those who are astray." },
+    "ihlas": { "name": "Surah Al-Ikhlas", "meaning": "Say, \"He is Allah, [who is] One. Allah, the Eternal Refuge. He neither begets nor is born. Nor is there to Him any equivalent.\"" },
+    "ruku": { "name": "Ruku Tasbih", "meaning": "Glory be to my Lord, the Almighty." },
+    "secde": { "name": "Sujood Tasbih", "meaning": "Glory be to my Lord, the Most High." },
+    "ettehiyyatu": { "name": "At-Tahiyyat", "meaning": "All compliments, prayers and pure words are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and on the righteous slaves of Allah. I bear witness that there is no god but Allah, and I bear witness that Muhammad is His slave and His Messenger." },
+    "salli": { "name": "Allahumma Salli", "meaning": "O Allah, send prayers upon Muhammad and upon the family of Muhammad, as You sent prayers upon Ibrahim and upon the family of Ibrahim; You are indeed Worthy of Praise, Full of Glory." },
+    "barik": { "name": "Allahumma Barik", "meaning": "O Allah, send blessings upon Muhammad and upon the family of Muhammad, as You sent blessings upon Ibrahim and upon the family of Ibrahim; You are indeed Worthy of Praise, Full of Glory." },
+    "rabbena": { "name": "Rabbana Prayers", "meaning": "Our Lord, give us in this world [that which is] good and in the Hereafter [that which is] good and protect us from the punishment of the Fire." }
+  },
+  "types": {
+    "sabah": {
+      "name": "Fajr Prayer",
+      "note": "The Sunnah of Fajr prayer is very important, the Prophet never abandoned it.",
+      "details": {
+        "0": { "type": "Sunnah", "description": "Two rakats Sunnah (emphasized)" },
+        "1": { "type": "Fard", "description": "Two rakats Fard" }
+      }
+    },
+    "ogle": {
+      "name": "Dhuhr Prayer",
+      "note": "In the first Sunnah, one sits separately in every two rakats.",
+      "details": {
+        "0": { "type": "First Sunnah", "description": "Four rakats Sunnah" },
+        "1": { "type": "Fard", "description": "Four rakats Fard" },
+        "2": { "type": "Last Sunnah", "description": "Two rakats Sunnah" }
+      }
+    },
+    "ikindi": {
+      "name": "Asr Prayer",
+      "note": "The Sunnah of Asr prayer is performed before Fard and is not an emphasized Sunnah.",
+      "details": {
+        "0": { "type": "Sunnah", "description": "Four rakats Sunnah (non-emphasized)" },
+        "1": { "type": "Fard", "description": "Four rakats Fard" }
+      }
+    },
+    "aksam": {
+      "name": "Maghrib Prayer",
+      "note": "The Fard of Maghrib prayer is three rakats and is the only Fard prayer with an odd number of rakats.",
+      "details": {
+        "0": { "type": "Fard", "description": "Three rakats Fard" },
+        "1": { "type": "Sunnah", "description": "Two rakats Sunnah" }
+      }
+    },
+    "yatsi": {
+      "name": "Isha Prayer",
+      "note": "Witr prayer is Wajib and is performed after Isha prayer.",
+      "details": {
+        "0": { "type": "First Sunnah", "description": "Four rakats Sunnah (non-emphasized)" },
+        "1": { "type": "Fard", "description": "Four rakats Fard" },
+        "2": { "type": "Last Sunnah", "description": "Two rakats Sunnah" },
+        "3": { "type": "Witr", "description": "Three rakats Witr (Wajib)" }
+      }
+    }
+  },
+  "terms": {
+    "farz": {
+      "name": "Fard",
+      "description": "Acts of worship that Allah has strictly commanded. Abandoning them is a major sin.",
+      "examples": ["Fard parts of 5 daily prayers", "Ramadan Fasting", "Zakat", "Hajj (for those able)", "Wudu", "Facing Qibla for prayer"]
+    },
+    "vacip": {
+      "name": "Wajib",
+      "description": "Acts of worship that are necessary to perform, although not established with as strong evidence as Fard.",
+      "examples": ["Witr prayer", "Eid prayers", "Sadaqat al-Fitr", "Sacrificing animal", "Reciting Fatiha in prayer", "Prostration of forgetfulness"]
+    },
+    "sunnet": {
+      "name": "Sunnah",
+      "description": "Acts of worship that the Prophet (pbuh) performed and wanted us to perform.",
+      "examples": ["Sunnahs of daily prayers", "Using Miswak", "Responding to Adhan and Iqamah", "Responding to Salam"]
+    },
+    "mustehap": {
+      "name": "Mustahabb (Mandub)",
+      "description": "Deeds that earn reward if done, but are not sinful if abandoned.",
+      "examples": ["Nafile prayers", "Reciting Sala", "Duha prayer", "Night prayer (Tahajjud)"]
+    },
+    "mubah": {
+      "name": "Mubah",
+      "description": "Behaviors that are free to do or not do, carrying no religious ruling.",
+      "examples": ["Eating", "Sleeping", "Walking", "Trading"]
+    }
+  },
+  "invalidators": {
+    "1": "Talking (intentionally or accidentally)",
+    "2": "Laughing (loudly)",
+    "3": "Eating or drinking",
+    "4": "Turning chest away from Qibla",
+    "5": "Amal al-Kathir (excessive movement outside prayer)",
+    "6": "Breaking Wudu",
+    "7": "Uncovering of Awrah",
+    "8": "Crying (for worldly matters)",
+    "9": "Forcing a cough (without reason)",
+    "10": "Blowing (air from mouth)",
+    "11": "Reciting Quran incorrectly (changing meaning)",
+    "12": "Fainting or insanity"
+  },
+  "quiz": {
+    "1": { "question": "What is the name of the Takbir said when starting prayer?", "options": ["Sana", "Takbir al-Ihram", "Salamun Alaykum", "Takbir al-Tashriq"] },
+    "2": { "question": "How many times is tasbih recited in Ruku?", "options": ["1", "3", "5", "7"] },
+    "3": { "question": "How many rakats is Fajr prayer in total?", "options": ["2", "4", "6", "8"] },
+    "4": { "question": "What is the ruling of Witr prayer?", "options": ["Fard", "Wajib", "Sunnah", "Mustahabb"] },
+    "5": { "question": "Which of the following does not invalidate prayer?", "options": ["Talking", "Laughing", "Crying (out of fear of Allah)", "Eating"] },
+    "6": { "question": "What is the ruling of reciting Surah Al-Fatiha in prayer?", "options": ["Fard", "Wajib", "Sunnah", "Mubah"] },
+    "7": { "question": "Which one is the Sujood tasbih?", "options": ["Subhana Rabbiyal Azim", "Subhana Rabbiyal A'la", "Sami'allahu liman hamidah", "Rabbana lakal hamd"] },
+    "8": { "question": "How many rakats is the Fard of Isha prayer?", "options": ["2", "3", "4", "5"] },
+    "9": { "question": "What is the name of sitting between two prostrations?", "options": ["Qa'dah", "Jalsah", "Qawmah", "Qiyam"] },
+    "10": { "question": "When is At-Tahiyyat recited in prayer?", "options": ["In the first rakat", "In Ruku", "In the last sitting", "In Sujood"] }
+  }
+}

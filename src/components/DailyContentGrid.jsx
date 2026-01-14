@@ -1,10 +1,12 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 /**
  * DailyContentGrid Component
  * Displays the Esma, Dua, and Verse of the day
+ * Memoized to prevent unnecessary re-renders
  */
-const DailyContentGrid = ({ dailyContent }) => {
+const DailyContentGrid = memo(({ dailyContent }) => {
   const { t } = useTranslation();
 
   return (
@@ -17,7 +19,7 @@ const DailyContentGrid = ({ dailyContent }) => {
       <div className="glass-card daily-item-compact">
         <div className="daily-title-compact">{t('home.dailyPrayer')}</div>
         <div className="daily-text-compact" style={{ fontSize: '9px', overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
-          "{dailyContent.dua.text}"
+          "{t(dailyContent.dua.text)}"
         </div>
       </div>
       <div className="glass-card daily-item-compact">
@@ -27,6 +29,9 @@ const DailyContentGrid = ({ dailyContent }) => {
       </div>
     </div>
   );
-};
+});
+
+DailyContentGrid.displayName = 'DailyContentGrid';
 
 export default DailyContentGrid;
+

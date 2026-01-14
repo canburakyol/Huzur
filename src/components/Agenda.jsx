@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, X, Plus, Trash2, Calendar as CalendarIcon, MapPin } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, Trash2, Calendar as CalendarIcon, X } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { getMonthDays, getMonthName, getHijriDate } from '../data/agendaData';
 
 const Agenda = ({ onClose }) => {
@@ -95,30 +96,9 @@ const Agenda = ({ onClose }) => {
                 padding: '15px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                position: 'relative'
+                gap: '12px'
             }}>
-                <button
-                    onClick={onClose}
-                    style={{
-                        position: 'absolute',
-                        left: '15px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        background: 'rgba(255,255,255,0.1)',
-                        border: 'none',
-                        borderRadius: '50%',
-                        width: '32px',
-                        height: '32px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <X size={20} />
-                </button>
+                <IslamicBackButton onClick={onClose} size="medium" />
 
                 <div style={{ flex: 1, textAlign: 'center' }}>
                     <h2 style={{ margin: 0, color: 'var(--primary-color)', fontSize: '18px' }}>

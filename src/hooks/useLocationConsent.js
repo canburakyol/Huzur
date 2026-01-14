@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Geolocation } from '@capacitor/geolocation';
 import { storageService } from '../services/storageService';
 import { STORAGE_KEYS } from '../constants';
+import { logger } from '../utils/logger';
 
 // Default coordinates for Istanbul
 const DEFAULT_LAT = 41.0082;
@@ -44,7 +45,7 @@ export const useLocationConsent = (onLocationUpdate) => {
         setLocationName(locData.city || locData.locality || 'Konum');
       }
     } catch (error) {
-      console.error('[useLocationConsent] Weather/Location error:', error);
+      logger.error('[useLocationConsent] Weather/Location error:', error);
     }
   }, []);
 
@@ -58,22 +59,22 @@ export const useLocationConsent = (onLocationUpdate) => {
 
       // Request location after consent
       Geolocation.getCurrentPosition({
-        enableHighAccuracy: true,
+        enableHighAccuracy: false, // Battery optimization: Use low accuracy by default
         timeout: 15000,
-        maximumAge: 0
+        maximumAge: 30000 // Accept cached location up to 30s old
       }).then((position) => {
         const { latitude, longitude } = position.coords;
-        console.log('[useLocationConsent] Location obtained:', latitude, longitude);
+        logger.log('[useLocationConsent] Location obtained:', latitude, longitude);
         window.debugLat = latitude;
         window.debugLon = longitude;
 
-        fetchWeatherData(latitude, longitude).catch(err => console.error(err));
+        fetchWeatherData(latitude, longitude).catch(err => logger.error(err));
         // Notify parent about location update
         if (onLocationUpdate) {
           onLocationUpdate({ latitude, longitude });
         }
       }).catch((error) => {
-        console.warn('[useLocationConsent] Location permission denied/error after consent:', error);
+        logger.warn('[useLocationConsent] Location permission denied/error after consent:', error);
         // Fallback to Istanbul
         fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
         window.debugLat = DEFAULT_LAT;
@@ -95,6 +96,7 @@ export const useLocationConsent = (onLocationUpdate) => {
     if (!storedConsent) {
       // First-time users - showLocationPrompt is already true from initial state
       // Use fallback location until consent is given (but still load prayer times)
+      // eslint-disable-next-line
       fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
       // Load prayer times with default location so app doesn't stay stuck on loading
       if (onLocationUpdate) {
@@ -102,12 +104,12 @@ export const useLocationConsent = (onLocationUpdate) => {
       }
     } else if (storedConsent === 'true') {
       Geolocation.getCurrentPosition({
-        enableHighAccuracy: true,
+        enableHighAccuracy: false, // Battery optimization
         timeout: 15000,
-        maximumAge: 0
+        maximumAge: 30000
       }).then((position) => {
         const { latitude, longitude } = position.coords;
-        console.log('[useLocationConsent] Initial location obtained:', latitude, longitude);
+        logger.log('[useLocationConsent] Initial location obtained:', latitude, longitude);
         window.debugLat = latitude;
         window.debugLon = longitude;
         fetchWeatherData(latitude, longitude);
@@ -116,7 +118,7 @@ export const useLocationConsent = (onLocationUpdate) => {
           onLocationUpdate({ latitude, longitude });
         }
       }).catch((error) => {
-        console.warn('[useLocationConsent] Initial location error:', error);
+        logger.warn('[useLocationConsent] Initial location error:', error);
         window.debugLat = DEFAULT_LAT;
         window.debugLon = DEFAULT_LON;
         if (onLocationUpdate) onLocationUpdate({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });

@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, BookOpen, Play, Info, CheckCircle } from 'lucide-react';
+import { BookOpen, Play, Info, CheckCircle, ChevronRight } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { useTranslation } from 'react-i18next';
 import { tajweedData } from '../data/tajweedData';
 
 const TajweedTutor = ({ onClose }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('tajweed');
   const [selectedRule, setSelectedRule] = useState(null);
   const audioRef = useRef(null);
 
@@ -33,7 +34,6 @@ const TajweedTutor = ({ onClose }) => {
   };
 
   const playAudio = (example) => {
-    console.log("Ses oynatma isteği:", example);
     if (!example.surah || !example.ayah) {
         console.warn("Eksik veri:", example);
         alert(t('tajweed.audioNotReady'));
@@ -47,8 +47,6 @@ const TajweedTutor = ({ onClose }) => {
     const surahPad = example.surah.toString().padStart(3, '0');
     const ayahPad = example.ayah.toString().padStart(3, '0');
     const audioUrl = `https://everyayah.com/data/Alafasy_128kbps/${surahPad}${ayahPad}.mp3`;
-    
-    console.log("Oynatılacak URL:", audioUrl);
 
     const audio = new Audio(audioUrl);
     audioRef.current = audio;
@@ -56,7 +54,6 @@ const TajweedTutor = ({ onClose }) => {
     const playPromise = audio.play();
     if (playPromise !== undefined) {
         playPromise.then(() => {
-            console.log("Ses çalınıyor...");
         }).catch(e => {
             console.error("Ses çalma hatası:", e);
             // If it was aborted by stopAudio, don't show alert
@@ -71,9 +68,7 @@ const TajweedTutor = ({ onClose }) => {
     <div className="tajweed-container">
       {/* Header */}
       <div className="tajweed-header">
-        <button className="back-button" onClick={handleBack}>
-          <ArrowLeft size={24} />
-        </button>
+        <IslamicBackButton onClick={handleBack} size="medium" />
         <div className="header-content">
           <h1>📖 {t('tajweed.title')}</h1>
           <p className="subtitle">
@@ -148,7 +143,7 @@ const TajweedTutor = ({ onClose }) => {
                 <p>{t(rule.description)}</p>
               </div>
               <div className="rule-arrow">
-                <ArrowLeft size={20} style={{ transform: 'rotate(180deg)' }} />
+                <ChevronRight size={20} />
               </div>
             </div>
           ))}

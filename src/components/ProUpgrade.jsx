@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, Check, Crown } from 'lucide-react';
 import { getOfferings, purchasePackage, restorePurchases } from '../services/revenueCatService';
+import { setProStatus } from '../services/proService';
+import { logger } from '../utils/logger';
 
 const ProUpgrade = ({ onClose }) => {
   const { t } = useTranslation();
@@ -13,20 +15,39 @@ const ProUpgrade = ({ onClose }) => {
 
   useEffect(() => {
     loadOfferings();
-  }, []);
+  }, [loadOfferings]);
 
-  const loadOfferings = async () => {
+  const loadOfferings = useCallback(async () => {
     // Platform kontrolü
     const isNativePlatform = window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false;
     
     if (!isNativePlatform) {
-      setError(t('pro.mobileOnly'));
+      // Browser Mock Data
+      logger.log('[ProUpgrade] Browser detected, loading mock packages...');
+      setPackages([
+        {
+          identifier: 'monthly',
+          product: {
+            title: 'Huzur Pro (Aylık)',
+            priceString: '₺29.99',
+            description: 'Aylık abonelik'
+          }
+        },
+        {
+          identifier: 'yearly',
+          product: {
+            title: 'Huzur Pro (Yıllık)',
+            priceString: '₺299.99',
+            description: 'Yıllık abonelik'
+          }
+        }
+      ]);
       setLoading(false);
       return;
     }
 
     try {
-      console.log('[ProUpgrade] Loading offerings from RevenueCat...');
+      logger.log('[ProUpgrade] Loading offerings from RevenueCat...');
       const availablePackages = await getOfferings();
       if (availablePackages.length === 0) {
         setError(t('pro.noPackages'));
@@ -34,12 +55,12 @@ const ProUpgrade = ({ onClose }) => {
         setPackages(availablePackages);
       }
     } catch (err) {
-      console.error('[ProUpgrade] Error loading offerings:', err);
+      logger.error('[ProUpgrade] Error loading offerings:', err);
       setError(t('common.error'));
     } finally {
       setLoading(false);
     }
-  };
+  }, [t]);
 
   const handlePurchase = async (pkg) => {
     setProcessing(true);
@@ -48,23 +69,29 @@ const ProUpgrade = ({ onClose }) => {
     // Platform kontrolü
     const isNativePlatform = window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false;
     if (!isNativePlatform) {
-      setError(t('pro.mobileOnly'));
-      setProcessing(false);
+      // Browser Mock Purchase
+      logger.log('[ProUpgrade] Browser mock purchase...');
+      setTimeout(() => {
+         logger.log('[ProUpgrade] Mock purchase successful');
+         setProStatus(true); // Activate Pro
+         onClose();
+         setProcessing(false);
+      }, 1500);
       return;
     }
 
     try {
-      console.log('[ProUpgrade] Starting purchase for package:', pkg.identifier);
+      logger.log('[ProUpgrade] Starting purchase for package:', pkg.identifier);
       const success = await purchasePackage(pkg);
       if (success) {
-        console.log('[ProUpgrade] Purchase successful');
+        logger.log('[ProUpgrade] Purchase successful');
         onClose();
       } else {
         // Kullanıcı iptal etti veya hata - UI zaten error state'i gösterecek
-        console.log('[ProUpgrade] Purchase not completed');
+        logger.log('[ProUpgrade] Purchase not completed');
       }
     } catch (err) {
-      console.error('[ProUpgrade] Purchase error:', err);
+      logger.error('[ProUpgrade] Purchase error:', err);
       setError(t('pro.purchaseFailed'));
     } finally {
       setProcessing(false);

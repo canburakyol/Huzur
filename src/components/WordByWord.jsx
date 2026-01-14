@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, ChevronDown, ChevronUp, Lock, Crown, Book, Loader, Sparkles } from 'lucide-react';
+import { ChevronDown, ChevronUp, Lock, Crown, Book, Loader, Sparkles } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { getWordByWordData, getFreeSurahs, hasWordByWordData } from '../data/wordByWordData';
 import { canAccessWordByWord, isPro, FREE_WORD_BY_WORD_SURAHS, checkLimit, useLimit as consumeLimit } from '../services/proService';
 import { surahList } from '../data/surahList';
@@ -76,9 +77,7 @@ const WordByWord = ({ onClose, onUpgrade, initialSurah = null }) => {
     <div className="wbw-container">
       {/* Header */}
       <div className="wbw-header">
-        <button className="back-button" onClick={showSurahList ? onClose : () => setShowSurahList(true)}>
-          <ArrowLeft size={24} />
-        </button>
+        <IslamicBackButton onClick={showSurahList ? onClose : () => setShowSurahList(true)} size="medium" />
         <div className="header-content">
           <h1>📝 {t('wordByWord.title')}</h1>
           <p className="subtitle">

@@ -43,7 +43,47 @@ export const VAKIT_THEMES = {
     },
     bodyGradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
   },
-  NIGHT: { // Akşam & Yatsı
+  MAGHRIB: { // Akşam
+    id: 'vakit-maghrib',
+    name: 'Akşam (Mağrib)',
+    colors: {
+      '--bg-gradient-start': '#2c3e50', // Alacakaranlık mavisi
+      '--bg-gradient-end': '#fd746c',   // Gün batımı turuncusu
+      '--bg-gradient-accent': '#ff9068', // Sıcak turuncu
+      '--text-color': '#ffffff',
+      '--text-color-light': '#ff9068',
+      '--text-color-muted': '#bdc3c7',
+      '--primary-color': '#ff9068',
+      '--primary-dark': '#e67e22',
+      '--accent-color': '#f39c12',
+      '--glass-bg': 'rgba(44, 62, 80, 0.7)',
+      '--glass-border': 'rgba(253, 116, 108, 0.3)',
+      '--card-bg': 'rgba(60, 80, 100, 0.8)',
+      '--input-border': '#ff9068'
+    },
+    bodyGradient: 'linear-gradient(135deg, #2c3e50 0%, #fd746c 100%)'
+  },
+  ISHA: { // Yatsı
+    id: 'vakit-isha',
+    name: 'Yatsı (Yatsı)',
+    colors: {
+      '--bg-gradient-start': '#000428', // Gece yarısı mavisi
+      '--bg-gradient-end': '#004e92',   // Derin okyanus mavisi
+      '--bg-gradient-accent': '#764ba2', // Mistik mor
+      '--text-color': '#e0e0e0',
+      '--text-color-light': '#764ba2',
+      '--text-color-muted': '#8e9eab',
+      '--primary-color': '#764ba2',
+      '--primary-dark': '#667eea',
+      '--accent-color': '#9b59b6',
+      '--glass-bg': 'rgba(0, 4, 40, 0.8)',
+      '--glass-border': 'rgba(118, 75, 162, 0.3)',
+      '--card-bg': 'rgba(0, 78, 146, 0.6)',
+      '--input-border': '#764ba2'
+    },
+    bodyGradient: 'linear-gradient(135deg, #000428 0%, #004e92 100%)'
+  },
+  NIGHT: { // Gece (Teheccüd)
     id: 'vakit-night',
     name: 'Gece',
     colors: {

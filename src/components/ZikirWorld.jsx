@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, TrendingUp, Award, Heart, Calendar, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { TrendingUp, Award, Heart, Calendar, Clock } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 
 // Zikir types with their meanings
 const DHIKR_TYPES = [
@@ -7,8 +9,6 @@ const DHIKR_TYPES = [
         id: 'subhanallah',
         arabic: 'سُبْحَانَ اللهِ',
         latin: 'Sübhanallah',
-        meaning: 'Allah eksikliklerden münezzehtir',
-        reward: 'Her biri için cennette bir ağaç dikilir',
         icon: '🌳',
         color: '#27ae60'
     },
@@ -16,8 +16,6 @@ const DHIKR_TYPES = [
         id: 'elhamdulillah',
         arabic: 'الْحَمْدُ لِلهِ',
         latin: 'Elhamdülillah',
-        meaning: 'Hamd Allah\'a mahsustur',
-        reward: 'Terazinin sevap kefesini doldurur',
         icon: '⚖️',
         color: '#f39c12'
     },
@@ -25,8 +23,6 @@ const DHIKR_TYPES = [
         id: 'allahuekber',
         arabic: 'اللهُ أَكْبَرُ',
         latin: 'Allahu Ekber',
-        meaning: 'Allah en büyüktür',
-        reward: 'Gök ile yer arasını sevapla doldurur',
         icon: '🌟',
         color: '#9b59b6'
     },
@@ -34,8 +30,6 @@ const DHIKR_TYPES = [
         id: 'lailaheillallah',
         arabic: 'لَا إِلٰهَ إِلَّا اللهُ',
         latin: 'Lâ ilâhe illallah',
-        meaning: 'Allah\'tan başka ilah yoktur',
-        reward: 'Sözlerin en faziletlisi',
         icon: '💎',
         color: '#3498db'
     },
@@ -43,8 +37,6 @@ const DHIKR_TYPES = [
         id: 'estagfirullah',
         arabic: 'أَسْتَغْفِرُ اللهَ',
         latin: 'Estağfirullah',
-        meaning: 'Allah\'tan bağışlanma dilerim',
-        reward: 'Günahları siler, rızkı artırır',
         icon: '💧',
         color: '#1abc9c'
     },
@@ -52,14 +44,13 @@ const DHIKR_TYPES = [
         id: 'salavat',
         arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ',
         latin: 'Allahümme salli ala Muhammed',
-        meaning: 'Allah\'ım Muhammed\'e salat et',
-        reward: 'On salat ile karşılık görür',
         icon: '🌹',
         color: '#e74c3c'
     }
 ];
 
 function ZikirWorld({ onClose }) {
+    const { t } = useTranslation('zikirWorld');
     const [personalStats, setPersonalStats] = useState({
         total: 0,
         startDate: null,
@@ -96,6 +87,7 @@ function ZikirWorld({ onClose }) {
         const now = new Date();
         const daysActive = Math.floor((now - start) / (1000 * 60 * 60 * 24)) + 1;
 
+        // eslint-disable-next-line
         setPersonalStats({
             total,
             startDate: new Date(startDate).toLocaleDateString('tr-TR'),
@@ -120,30 +112,19 @@ function ZikirWorld({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={onClose}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={onClose} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',
                     color: 'var(--primary-color)',
                     fontWeight: '700'
                 }}>
-                    🌍 Zikir Dünyam
+                    🌍 {t('title')}
                 </h1>
             </div>
 
             <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '20px' }}>
-                Uygulamayı kullanmaya başladığından beri zikir istatistiklerin
+                {t('subtitle')}
             </p>
 
             {/* Personal Stats */}
@@ -160,7 +141,7 @@ function ZikirWorld({ onClose }) {
                     alignItems: 'center',
                     gap: '8px'
                 }}>
-                    <Heart size={18} /> Zikir İstatistiklerim
+                    <Heart size={18} /> {t('statsTitle')}
                 </h3>
 
                 {/* Main Stat */}
@@ -173,7 +154,7 @@ function ZikirWorld({ onClose }) {
                         {formatNumber(personalStats.total)}
                     </div>
                     <div style={{ fontSize: '14px', color: 'var(--text-color)' }}>
-                        Toplam Zikir
+                        {t('totalDhikr')}
                     </div>
                 </div>
 
@@ -193,7 +174,7 @@ function ZikirWorld({ onClose }) {
                             {personalStats.daysActive}
                         </div>
                         <div style={{ fontSize: '10px', color: 'var(--text-color-muted)' }}>
-                            Gün
+                            {t('days')}
                         </div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
@@ -205,7 +186,7 @@ function ZikirWorld({ onClose }) {
                             ⭐ {Math.floor(personalStats.total / 33)}
                         </div>
                         <div style={{ fontSize: '10px', color: 'var(--text-color-muted)' }}>
-                            Sefer
+                            {t('times')}
                         </div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
@@ -217,7 +198,7 @@ function ZikirWorld({ onClose }) {
                             {personalStats.daysActive > 0 ? Math.round(personalStats.total / personalStats.daysActive) : 0}
                         </div>
                         <div style={{ fontSize: '10px', color: 'var(--text-color-muted)' }}>
-                            Günlük Ort.
+                            {t('dailyAvg')}
                         </div>
                     </div>
                 </div>
@@ -232,7 +213,7 @@ function ZikirWorld({ onClose }) {
                     textAlign: 'center'
                 }}>
                     <Clock size={12} style={{ marginRight: '4px', verticalAlign: 'middle' }} />
-                    Başlangıç: {personalStats.startDate}
+                    {t('startDate')} {personalStats.startDate}
                 </div>
             </div>
 
@@ -245,7 +226,7 @@ function ZikirWorld({ onClose }) {
                 alignItems: 'center',
                 gap: '8px'
             }}>
-                📿 Zikir Çeşitleri ve Faziletleri
+                📿 {t('typesTitle')}
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -294,7 +275,7 @@ function ZikirWorld({ onClose }) {
                                     color: 'var(--text-color-muted)',
                                     marginBottom: '8px'
                                 }}>
-                                    <strong>Anlamı:</strong> {dhikr.meaning}
+                                    <strong>{t('meaning')}</strong> {t(`types.${dhikr.id}.meaning`)}
                                 </div>
                                 <div style={{
                                     fontSize: '13px',
@@ -304,7 +285,7 @@ function ZikirWorld({ onClose }) {
                                     borderRadius: '8px'
                                 }}>
                                     <Award size={14} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
-                                    <strong>Fazileti:</strong> {dhikr.reward}
+                                    <strong>{t('reward')}</strong> {t(`types.${dhikr.id}.reward`)}
                                 </div>
                             </div>
                         )}
@@ -328,14 +309,14 @@ function ZikirWorld({ onClose }) {
                     fontStyle: 'italic',
                     lineHeight: '1.6'
                 }}>
-                    "Dikkat edin! Kalpler ancak Allah'ı anmakla huzur bulur."
+                    "{t('quote')}"
                 </div>
                 <div style={{
                     fontSize: '11px',
                     color: 'var(--text-color-muted)',
                     marginTop: '8px'
                 }}>
-                    — Ra'd Suresi, 28. Ayet
+                    {t('quoteRef')}
                 </div>
             </div>
         </div>

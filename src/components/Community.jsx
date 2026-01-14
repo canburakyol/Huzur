@@ -4,6 +4,8 @@ import { db } from '../services/firebase';
 import { collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc, increment } from 'firebase/firestore';
 import HatimTracker from './HatimTracker';
 import { useTranslation } from 'react-i18next';
+import { checkRateLimit } from '../utils/rateLimiter';
+import { storageService } from '../services/storageService';
 
 const Community = ({ onClose }) => {
     const { t, i18n } = useTranslation();
@@ -34,6 +36,12 @@ const Community = ({ onClose }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!newDua.trim()) return;
+        
+        // Rate limiting: max 5 duas per hour
+        if (!checkRateLimit('dua_submit', 5, 3600000)) {
+            alert(t('community.messages.rateLimited'));
+            return;
+        }
 
         try {
             await addDoc(collection(db, 'duas'), {
@@ -50,215 +58,238 @@ const Community = ({ onClose }) => {
     };
 
     const handlePray = async (id) => {
+        // Prevent multiple amins on same dua (per session)
+        const aminKey = `amin_${id}`;
+        if (storageService.getItem(aminKey)) {
+            // Already said amin for this dua
+            return;
+        }
+        
         try {
             const duaRef = doc(db, 'duas', id);
             await updateDoc(duaRef, {
                 count: increment(1)
             });
+            // Mark as already prayed for this session
+            storageService.setItem(aminKey, true);
         } catch (error) {
             console.error("Error updating count:", error);
         }
     };
 
     return (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, paddingBottom: '80px', minHeight: '100vh', background: '#f9fafb', zIndex: 100, overflowY: 'auto' }}>
-            {/* Header with Tabs */}
-            <div style={{
-                background: 'linear-gradient(135deg, #10b981, #047857)',
-                padding: '20px 20px 0 20px',
-                color: 'white',
-                borderBottomLeftRadius: '24px',
-                borderBottomRightRadius: '24px',
-                marginBottom: '20px',
-                boxShadow: '0 4px 20px rgba(16, 185, 129, 0.2)'
-            }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                    <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '800' }}>{t('community.title')}</h2>
-                    <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'white' }}>
-                        <X size={20} />
-                    </button>
-                </div>
+        <div className="app-container" style={{ minHeight: '100vh', padding: '20px', background: 'var(--bg-color)', paddingBottom: '100px' }}>
+            {/* Header */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+                <h2 style={{ margin: 0, fontSize: '22px', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <Users size={24} />
+                    {t('community.title')}
+                </h2>
+                <button onClick={onClose} style={{ 
+                    background: 'var(--glass-bg)', 
+                    border: '1px solid var(--glass-border)', 
+                    borderRadius: '50%', 
+                    width: '36px', 
+                    height: '36px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    cursor: 'pointer', 
+                    color: 'var(--text-color)' 
+                }}>
+                    <X size={20} />
+                </button>
+            </div>
 
-                <div style={{ display: 'flex', gap: '20px' }}>
-                    <button
-                        onClick={() => setActiveTab('duas')}
-                        style={{
-                            padding: '12px 4px',
-                            background: 'transparent',
-                            border: 'none',
-                            borderBottom: activeTab === 'duas' ? '3px solid white' : '3px solid transparent',
-                            color: activeTab === 'duas' ? 'white' : 'rgba(255,255,255,0.6)',
-                            fontWeight: '600',
-                            fontSize: '16px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            transition: 'all 0.3s'
-                        }}
-                    >
-                        <MessageCircle size={18} /> {t('community.tabs.duas')}
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('hatims')}
-                        style={{
-                            padding: '12px 4px',
-                            background: 'transparent',
-                            border: 'none',
-                            borderBottom: activeTab === 'hatims' ? '3px solid white' : '3px solid transparent',
-                            color: activeTab === 'hatims' ? 'white' : 'rgba(255,255,255,0.6)',
-                            fontWeight: '600',
-                            fontSize: '16px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            transition: 'all 0.3s'
-                        }}
-                    >
-                        <BookOpen size={18} /> {t('community.tabs.hatims')}
-                    </button>
-                </div>
+            {/* Tabs */}
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                <button
+                    onClick={() => setActiveTab('duas')}
+                    style={{
+                        flex: 1,
+                        padding: '12px',
+                        background: activeTab === 'duas' ? 'var(--primary-color)' : 'var(--glass-bg)',
+                        border: activeTab === 'duas' ? 'none' : '1px solid var(--glass-border)',
+                        borderRadius: '12px',
+                        color: activeTab === 'duas' ? 'white' : 'var(--text-color)',
+                        fontWeight: '600',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        transition: 'all 0.3s'
+                    }}
+                >
+                    <MessageCircle size={18} /> {t('community.tabs.duas')}
+                </button>
+                <button
+                    onClick={() => setActiveTab('hatims')}
+                    style={{
+                        flex: 1,
+                        padding: '12px',
+                        background: activeTab === 'hatims' ? 'var(--primary-color)' : 'var(--glass-bg)',
+                        border: activeTab === 'hatims' ? 'none' : '1px solid var(--glass-border)',
+                        borderRadius: '12px',
+                        color: activeTab === 'hatims' ? 'white' : 'var(--text-color)',
+                        fontWeight: '600',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        transition: 'all 0.3s'
+                    }}
+                >
+                    <BookOpen size={18} /> {t('community.tabs.hatims')}
+                </button>
             </div>
 
             {/* Content */}
-            <div style={{ padding: '0 20px' }}>
-                {activeTab === 'hatims' ? (
-                    <HatimTracker />
-                ) : (
-                    <div className="animate-fadeIn">
-                        {/* Dua İste Button */}
-                        <button
-                            onClick={() => setShowForm(!showForm)}
-                            style={{
-                                width: '100%',
-                                padding: '16px',
-                                borderRadius: '16px',
-                                border: 'none',
-                                background: 'white',
-                                color: '#10b981',
-                                fontWeight: '700',
-                                fontSize: '16px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '10px',
-                                marginBottom: '20px',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                                cursor: 'pointer'
-                            }}
-                        >
-                            {showForm ? <X size={20} /> : <MessageCircle size={20} />}
-                            {showForm ? t('community.buttons.cancel') : t('community.buttons.requestDua')}
-                        </button>
+            {activeTab === 'hatims' ? (
+                <HatimTracker />
+            ) : (
+                <div className="animate-fadeIn">
+                    {/* Intro Card */}
+                    <div className="glass-card" style={{ padding: '15px', marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        <Heart size={24} color="var(--primary-color)" />
+                        <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-color)' }}>
+                            {t('prayerCircle.intro')}
+                        </p>
+                    </div>
 
-                        {/* Form */}
-                        {showForm && (
-                            <div style={{ background: 'white', padding: '20px', borderRadius: '16px', marginBottom: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-                                <form onSubmit={handleSubmit}>
-                                    <textarea
-                                        value={newDua}
-                                        onChange={(e) => setNewDua(e.target.value)}
-                                        placeholder={t('community.placeholders.writeDua')}
-                                        style={{
-                                            width: '100%',
-                                            minHeight: '120px',
-                                            padding: '16px',
-                                            borderRadius: '12px',
-                                            border: '2px solid #f3f4f6',
-                                            marginBottom: '16px',
-                                            fontSize: '16px',
-                                            resize: 'none',
-                                            outline: 'none',
-                                            fontFamily: 'inherit'
-                                        }}
-                                    />
-                                    <button
-                                        type="submit"
-                                        style={{
-                                            width: '100%',
-                                            padding: '14px',
-                                            borderRadius: '12px',
-                                            border: 'none',
-                                            background: '#10b981',
-                                            color: 'white',
-                                            fontWeight: '700',
-                                            fontSize: '16px',
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: '8px'
-                                        }}
-                                    >
-                                        <Send size={18} />
-                                        {t('community.buttons.share')}
-                                    </button>
-                                </form>
-                            </div>
-                        )}
+                    {/* Add Button */}
+                    <button
+                        onClick={() => setShowForm(!showForm)}
+                        style={{
+                            background: 'var(--primary-color)', 
+                            color: 'white',
+                            border: 'none', 
+                            borderRadius: '12px', 
+                            padding: '14px',
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            gap: '8px',
+                            cursor: 'pointer', 
+                            boxShadow: '0 4px 10px rgba(46, 204, 113, 0.3)',
+                            width: '100%',
+                            marginBottom: '20px',
+                            fontSize: '15px',
+                            fontWeight: '600'
+                        }}
+                    >
+                        {showForm ? <X size={20} /> : <MessageCircle size={20} />}
+                        {showForm ? t('community.buttons.cancel') : t('community.buttons.requestDua')}
+                    </button>
 
-                        {/* List */}
-                        {loading ? (
-                            <div style={{ textAlign: 'center', padding: '40px', color: '#9ca3af' }}>{t('community.messages.loading')}</div>
-                        ) : (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                                {duas.length === 0 && (
-                                    <div style={{ textAlign: 'center', padding: '40px', color: '#9ca3af' }}>{t('community.messages.noDuas')}</div>
-                                )}
-                                {duas.map(dua => (
-                                    <div key={dua.id} style={{ background: 'white', padding: '20px', borderRadius: '16px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)', border: '1px solid #f3f4f6' }}>
-                                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+                    {/* Form */}
+                    {showForm && (
+                        <form onSubmit={handleSubmit} style={{ marginBottom: '20px', animation: 'fadeIn 0.3s ease' }}>
+                            <textarea
+                                value={newDua}
+                                onChange={(e) => setNewDua(e.target.value)}
+                                placeholder={t('community.placeholders.writeDua')}
+                                style={{
+                                    width: '100%', 
+                                    padding: '15px', 
+                                    borderRadius: '12px',
+                                    border: '1px solid var(--glass-border)', 
+                                    background: 'var(--glass-bg)',
+                                    minHeight: '100px', 
+                                    marginBottom: '10px', 
+                                    resize: 'vertical',
+                                    color: 'var(--text-color)',
+                                    fontSize: '14px'
+                                }}
+                            />
+                            <button 
+                                type="submit"
+                                className="btn btn-primary"
+                                style={{ width: '100%' }}
+                            >
+                                <Send size={18} />
+                                {t('community.buttons.share')}
+                            </button>
+                        </form>
+                    )}
+
+                    {/* List */}
+                    {loading ? (
+                        <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-color-muted)' }}>
+                            {t('community.messages.loading')}
+                        </div>
+                    ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                            {duas.length === 0 && (
+                                <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-color-muted)' }}>
+                                    {t('community.messages.noDuas')}
+                                </div>
+                            )}
+                            {duas.map(dua => (
+                                <div key={dua.id} className="glass-card" style={{ padding: '15px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                                        <div style={{ 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            gap: '8px' 
+                                        }}>
                                             <div style={{
-                                                background: '#ecfdf5',
+                                                background: 'var(--glass-bg)',
                                                 borderRadius: '50%',
-                                                width: '44px',
-                                                height: '44px',
+                                                width: '32px',
+                                                height: '32px',
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
-                                                flexShrink: 0
+                                                border: '1px solid var(--glass-border)'
                                             }}>
-                                                <User size={22} color="#10b981" />
+                                                <User size={16} color="var(--primary-color)" />
                                             </div>
-                                            <div style={{ flex: 1 }}>
-                                                <p style={{ margin: '0 0 12px 0', fontSize: '16px', lineHeight: '1.6', color: '#1f2937' }}>
-                                                    {dua.text}
-                                                </p>
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                    <span style={{ fontSize: '13px', color: '#9ca3af' }}>
-                                                        {new Date(dua.date).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long' })}
-                                                    </span>
-                                                    <button
-                                                        onClick={() => handlePray(dua.id)}
-                                                        style={{
-                                                            background: dua.count > 0 ? '#fee2e2' : '#f3f4f6',
-                                                            border: 'none',
-                                                            borderRadius: '20px',
-                                                            padding: '6px 14px',
-                                                            color: dua.count > 0 ? '#ef4444' : '#6b7280',
-                                                            cursor: 'pointer',
-                                                            display: 'flex',
-                                                            alignItems: 'center',
-                                                            gap: '6px',
-                                                            fontWeight: '600',
-                                                            fontSize: '13px',
-                                                            transition: 'all 0.2s ease'
-                                                        }}
-                                                    >
-                                                        <Heart size={14} fill={dua.count > 0 ? "#ef4444" : "none"} />
-                                                        <span>{dua.count} {t('community.buttons.amin')}</span>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                            <span style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                                {new Date(dua.date).toLocaleDateString(i18n.language, { day: 'numeric', month: 'long' })}
+                                            </span>
                                         </div>
+                                        <span style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                            {dua.count} {t('prayerCircle.prayers')}
+                                        </span>
                                     </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                )}
-            </div>
+                                    
+                                    <p style={{ margin: '0 0 15px 0', fontSize: '14px', color: 'var(--text-color)', lineHeight: '1.5' }}>
+                                        {dua.text}
+                                    </p>
+
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                        <button
+                                            onClick={() => handlePray(dua.id)}
+                                            disabled={storageService.getItem(`amin_${dua.id}`)}
+                                            style={{
+                                                padding: '8px 16px',
+                                                borderRadius: '20px',
+                                                background: storageService.getItem(`amin_${dua.id}`) ? '#2ecc71' : 'var(--glass-bg)',
+                                                color: storageService.getItem(`amin_${dua.id}`) ? 'white' : 'var(--primary-color)',
+                                                border: storageService.getItem(`amin_${dua.id}`) ? 'none' : '1px solid var(--primary-color)',
+                                                cursor: storageService.getItem(`amin_${dua.id}`) ? 'default' : 'pointer',
+                                                display: 'flex', 
+                                                alignItems: 'center', 
+                                                gap: '6px',
+                                                fontSize: '13px', 
+                                                fontWeight: '600',
+                                                transition: 'all 0.2s ease'
+                                            }}
+                                        >
+                                            <Heart size={16} fill={storageService.getItem(`amin_${dua.id}`) ? "white" : "none"} />
+                                            {storageService.getItem(`amin_${dua.id}`) ? t('prayerCircle.prayed') : t('prayerCircle.pray')}
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

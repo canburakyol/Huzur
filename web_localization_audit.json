@@ -1,0 +1,204 @@
+{
+  "hardcodedTexts": [
+    {
+      "file": "src\\data\\detailedFihrist.js",
+      "line": 16,
+      "text": "\"Namaz\"",
+      "context": "{ title: \"Namaz\", ayahs: [{ s: 2, a: 3 }, { s: 2, a: 43 }, { s: 2, a: 110 }, { s: 4, a: 103 }, { s: "
+    },
+    {
+      "file": "src\\data\\detailedFihrist.js",
+      "line": 17,
+      "text": "\"Oruç\"",
+      "context": "{ title: \"Oruç\", ayahs: [{ s: 2, a: 183 }, { s: 2, a: 184 }, { s: 2, a: 185 }, { s: 2, a: 187 }] },"
+    },
+    {
+      "file": "src\\data\\detailedFihrist.js",
+      "line": 18,
+      "text": "\"Zekat ve Sadaka\"",
+      "context": "{ title: \"Zekat ve Sadaka\", ayahs: [{ s: 2, a: 43 }, { s: 2, a: 110 }, { s: 2, a: 261 }, { s: 9, a: "
+    },
+    {
+      "file": "src\\data\\detailedFihrist.js",
+      "line": 21,
+      "text": "\"Dua ve Zikir\"",
+      "context": "{ title: \"Dua ve Zikir\", ayahs: [{ s: 2, a: 152 }, { s: 2, a: 186 }, { s: 7, a: 55 }, { s: 13, a: 28"
+    },
+    {
+      "file": "src\\data\\fihrist.js",
+      "line": 3,
+      "text": "'Namaz'",
+      "context": "topic: 'Namaz',"
+    },
+    {
+      "file": "src\\data\\fihrist.js",
+      "line": 7,
+      "text": "'Namaz müminlere vakitli olarak farz kılınmıştır'",
+      "context": "{ surah: 4, ayah: 103, note: 'Namaz müminlere vakitli olarak farz kılınmıştır' },"
+    },
+    {
+      "file": "src\\data\\fihrist.js",
+      "line": 9,
+      "text": "'Namaz insanı hayâsızlıktan ve kötülükten alıkoyar'",
+      "context": "{ surah: 29, ayah: 45, note: 'Namaz insanı hayâsızlıktan ve kötülükten alıkoyar' }"
+    },
+    {
+      "file": "src\\data\\fihrist.js",
+      "line": 13,
+      "text": "'Oruç'",
+      "context": "topic: 'Oruç',"
+    },
+    {
+      "file": "src\\data\\fihrist.js",
+      "line": 15,
+      "text": "'Oruç sizden öncekilere farz kılındığı gibi size de farz kılındı'",
+      "context": "{ surah: 2, ayah: 183, note: 'Oruç sizden öncekilere farz kılındığı gibi size de farz kılındı' },"
+    },
+    {
+      "file": "src\\data\\fihrist.js",
+      "line": 21,
+      "text": "'Zekat ve Sadaka'",
+      "context": "topic: 'Zekat ve Sadaka',"
+    },
+    {
+      "file": "src\\data\\fihrist.js",
+      "line": 54,
+      "text": "'Dua'",
+      "context": "topic: 'Dua',"
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 330,
+      "text": "'Namaz'",
+      "context": "{ number: 2, title: 'Namaz', text: 'Günde beş vakit namaz kılmak', explanation: 'Sabah, öğle, ikindi"
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 331,
+      "text": "'Oruç'",
+      "context": "{ number: 3, title: 'Oruç', text: 'Ramazan ayında oruç tutmak', explanation: 'İmsak vaktinden iftar "
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 332,
+      "text": "'Zekat'",
+      "context": "{ number: 4, title: 'Zekat', text: 'Malın zekatını vermek', explanation: 'Nisap miktarına ulaşan mal"
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 352,
+      "text": "'Namaz Sureleri'",
+      "context": "title: 'Namaz Sureleri',"
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 442,
+      "text": "'Hadis'",
+      "context": "{ number: 9, name: 'Hadis', meaning: 'Hz. Peygamber\\'in sözleri', explanation: 'Sahih, hasen, zayıf "
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 464,
+      "text": "'Namaz Vakitleri'",
+      "context": "{ title: 'Namaz Vakitleri', content: 'İmsak, güneş, öğle, ikindi, akşam, yatsı vakitlerinin belirlen"
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 466,
+      "text": "'Oruç'",
+      "context": "{ title: 'Oruç', content: 'Ramazan orucunun farziyeti, orucu bozan ve bozmayan şeyler, fidye ve kefa"
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 467,
+      "text": "'Zekat'",
+      "context": "{ title: 'Zekat', content: 'Nisap miktarı, zekat verilecek yerler, zekatın hesaplanması.' },"
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 576,
+      "text": "'Zekat nisabı nedir?'",
+      "context": "{ q: 'Zekat nisabı nedir?', a: 'Zekat nisabı, 80.18 gram altın veya 561.2 gram gümüş değerindedir. B"
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 582,
+      "text": "'Namaz Soruları'",
+      "context": "category: 'Namaz Soruları',"
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 594,
+      "text": "'Oruç Soruları'",
+      "context": "category: 'Oruç Soruları',"
+    },
+    {
+      "file": "src\\data\\libraryData.js",
+      "line": 599,
+      "text": "'Oruç fidyesi ne kadardır?'",
+      "context": "{ q: 'Oruç fidyesi ne kadardır?', a: 'Oruç fidyesi, bir fakiri bir gün doyuracak miktardır. Güncel D"
+    },
+    {
+      "file": "src\\hooks\\usePrayerTimes.js",
+      "line": 53,
+      "text": "'Namaz vakitleri yüklenemedi. Lütfen internet bağlantınızı kontrol edin.'",
+      "context": "setError('Namaz vakitleri yüklenemedi. Lütfen internet bağlantınızı kontrol edin.');"
+    },
+    {
+      "file": "src\\hooks\\usePrayerTimes.js",
+      "line": 57,
+      "text": "'Namaz vakitleri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.'",
+      "context": "setError('Namaz vakitleri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');"
+    },
+    {
+      "file": "src\\services\\chatService.js",
+      "line": 165,
+      "text": "\"Zekat kimlere verilir?\"",
+      "context": "\"Zekat kimlere verilir?\","
+    },
+    {
+      "file": "src\\services\\fcmService.js",
+      "line": 271,
+      "text": "'Namaz Vakitleri'",
+      "context": "name: 'Namaz Vakitleri',"
+    },
+    {
+      "file": "src\\services\\fcmService.js",
+      "line": 272,
+      "text": "'Namaz vakti bildirimleri'",
+      "context": "description: 'Namaz vakti bildirimleri',"
+    },
+    {
+      "file": "src\\services\\fcmService.js",
+      "line": 283,
+      "text": "'Namaz vaktinden önce hatırlatmalar'",
+      "context": "description: 'Namaz vaktinden önce hatırlatmalar',"
+    },
+    {
+      "file": "src\\services\\notificationService.js",
+      "line": 68,
+      "text": "`Ezan Vakti: ${name}`",
+      "context": "title: `Ezan Vakti: ${name}`,"
+    },
+    {
+      "file": "src\\services\\quranService.js",
+      "line": 17,
+      "text": "'Sure yüklenemedi'",
+      "context": "throw new Error('Sure yüklenemedi');"
+    },
+    {
+      "file": "src\\services\\quranService.js",
+      "line": 103,
+      "text": "'Sure yüklenemedi'",
+      "context": "throw new Error('Sure yüklenemedi');"
+    },
+    {
+      "file": "src\\services\\quranService.js",
+      "line": 167,
+      "text": "'Sure yüklenemedi - kritik veri eksik'",
+      "context": "throw new Error('Sure yüklenemedi - kritik veri eksik');"
+    }
+  ],
+  "rawKeys": [],
+  "potentialIssues": []
+}

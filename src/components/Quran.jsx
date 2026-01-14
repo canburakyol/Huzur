@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { surahList, reciters } from '../data/surahList';
 import { getSurahComplete, getAyahAudioUrl, getAvailableTranslations } from '../services/quranService';
 import { detailedFihrist } from '../data/detailedFihrist';
-import { ChevronLeft, Play, Pause, Volume2, VolumeX, BookOpen, Loader, Menu, X, SkipBack, SkipForward, Heart, Share2, Headphones, List, FileText, Settings, Bookmark, Info, Globe } from 'lucide-react';
+import { ChevronLeft, Play, Pause, Volume2, VolumeX, BookOpen, Loader, Menu, X, SkipBack, SkipForward, Heart, Share2, Headphones, List, FileText, Settings, Bookmark, Info, Globe, Maximize, Minimize } from 'lucide-react';
+import { useFocus } from '../context/FocusContext';
 
 function Quran({ onClose }) {
     const { t, i18n } = useTranslation();
+    const { isFocusMode, toggleFocusMode } = useFocus();
     // Core State
     const [selectedSurah, setSelectedSurah] = useState(null);
     const [surahContent, setSurahContent] = useState(null);
@@ -280,6 +282,57 @@ function Quran({ onClose }) {
         }
     };
 
+    // Media Session API Integration (Lock Screen Controls)
+    useEffect(() => {
+        if ('mediaSession' in navigator && selectedSurah && playingAyah) {
+            // Update Metadata
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: `${selectedSurah.nameTranslation} - ${playingAyah}. Ayet`,
+                artist: selectedReciter.name,
+                album: 'Huzur - Kuran-ı Kerim',
+                artwork: [
+                    { src: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+                    { src: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' }
+                ]
+            });
+
+            // Action Handlers
+            navigator.mediaSession.setActionHandler('play', () => setIsPlaying(true));
+            navigator.mediaSession.setActionHandler('pause', () => setIsPlaying(false));
+            
+            navigator.mediaSession.setActionHandler('previoustrack', () => {
+                if (playingAyah > 1) {
+                    setPlayingAyah(prev => prev - 1);
+                    setIsPlaying(true);
+                }
+            });
+            
+            navigator.mediaSession.setActionHandler('nexttrack', () => {
+                if (selectedSurah && playingAyah < selectedSurah.ayahCount) {
+                    setPlayingAyah(prev => prev + 1);
+                    setIsPlaying(true);
+                }
+            });
+
+            // Seek handler (optional but good for progress bars)
+            navigator.mediaSession.setActionHandler('seekto', (details) => {
+                if (audioRef.current && details.seekTime) {
+                    audioRef.current.currentTime = details.seekTime;
+                }
+            });
+        }
+
+        return () => {
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.setActionHandler('play', null);
+                navigator.mediaSession.setActionHandler('pause', null);
+                navigator.mediaSession.setActionHandler('previoustrack', null);
+                navigator.mediaSession.setActionHandler('nexttrack', null);
+                navigator.mediaSession.setActionHandler('seekto', null);
+            }
+        };
+    }, [selectedSurah, playingAyah, selectedReciter, setIsPlaying]); // Re-run when track changes to update metadata/closures
+
     // Render Side Menu Content
     const renderSideMenu = () => (
         <div className={`side-menu ${showSideMenu ? 'open' : ''}`}>
@@ -438,6 +491,9 @@ function Quran({ onClose }) {
                                 setShowSideMenu(true);
                             }} className="icon-btn-light">
                                 <Menu size={24} />
+                            </button>
+                            <button onClick={toggleFocusMode} className="icon-btn-light" style={{ marginLeft: '5px' }}>
+                                {isFocusMode ? <Minimize size={24} /> : <Maximize size={24} />}
                             </button>
                         </div>
                     </div>

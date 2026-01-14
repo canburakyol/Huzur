@@ -72,9 +72,6 @@ const QiblaCompass = ({ onClose }) => {
                         
                         const declination = calculateMagneticDeclination(latitude, longitude);
                         setMagneticDeclination(declination);
-                        
-                        console.log(`[Qibla] Konum: ${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
-                        console.log(`[Qibla] Gerçek Kıble: ${direction.toFixed(1)}°, Manyetik Sapma: ${declination.toFixed(1)}°`);
                     },
                     () => {
                         if (!isMounted) return;

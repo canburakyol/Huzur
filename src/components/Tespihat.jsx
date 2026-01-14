@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, RotateCcw, Check, ChevronRight, ChevronDown, Volume2 } from 'lucide-react';
+import { RotateCcw, Check, ChevronRight, ChevronDown, Volume2 } from 'lucide-react';
 import { TESPIHAT_SECTIONS, TESBIHLER, TEVHID, NAMAZSONRASI_DUALAR } from '../data/tespihatData';
+import IslamicBackButton from './shared/IslamicBackButton';
 
 function Tespihat({ onClose }) {
     const [activeSection, setActiveSection] = useState(null);
@@ -17,7 +18,7 @@ function Tespihat({ onClose }) {
         const saved = localStorage.getItem('tespihat_progress');
         if (saved) {
             const data = JSON.parse(saved);
-            setTesbihCounts(data.counts || { subhanallah: 0, elhamdulillah: 0, allahuekber: 0 });
+            setTesbihCounts(data.counts || { subhanallah: 0, elhamdulillah: 0, allahuekber: 0 }); // eslint-disable-line
             setCompletedSections(data.completed || []);
         }
     }, []);
@@ -464,18 +465,7 @@ function Tespihat({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={() => activeSection ? setActiveSection(null) : onClose()}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={() => activeSection ? setActiveSection(null) : onClose()} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',

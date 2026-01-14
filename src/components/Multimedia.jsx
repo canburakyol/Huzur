@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { ArrowLeft, Download, Share2, Heart, ChevronRight, X, Grid, Image as ImageIcon } from 'lucide-react';
+import { Download, Share2, Heart, ChevronRight, X, Grid, Image as ImageIcon } from 'lucide-react';
 import { MULTIMEDIA_CATEGORIES, DUA_IMAGES, getImagesByCategory } from '../data/multimediaData';
+import IslamicBackButton from './shared/IslamicBackButton';
+import { Share } from '@capacitor/share';
+import { Capacitor } from '@capacitor/core';
 
 function Multimedia({ onClose }) {
     const [activeCategory, setActiveCategory] = useState(null);
@@ -8,7 +11,7 @@ function Multimedia({ onClose }) {
     const [favorites, setFavorites] = useState(() => {
         return JSON.parse(localStorage.getItem('multimedia_favorites') || '[]');
     });
-    const [loading, setLoading] = useState({});
+    const [setLoading] = useState({});
 
     // Toggle favorite
     const toggleFavorite = (imageId) => {
@@ -19,26 +22,38 @@ function Multimedia({ onClose }) {
         localStorage.setItem('multimedia_favorites', JSON.stringify(newFavorites));
     };
 
-    // Share image
+    // Share image using Capacitor Share plugin
     const shareImage = async (image) => {
         const shareText = image.text
             ? `${image.title}\n\n"${image.text}"\n\n📱 Huzur Uygulaması`
             : `${image.title} - ${image.location || image.description || ''}\n\n📱 Huzur Uygulaması`;
 
-        if (navigator.share) {
-            try {
+        try {
+            // On native platform, use Capacitor Share
+            if (Capacitor.isNativePlatform()) {
+                await Share.share({
+                    title: image.title,
+                    text: shareText,
+                    url: image.url || '',
+                    dialogTitle: 'Paylaş'
+                });
+            } else if (navigator.share) {
+                // Web fallback with native Web Share API
                 await navigator.share({
                     title: image.title,
                     text: shareText,
                     url: image.url || window.location.href
                 });
-            } catch (err) {
-                console.log('Share cancelled');
+            } else {
+                // Final fallback: Copy to clipboard
+                await navigator.clipboard.writeText(shareText);
+                alert('Paylaşım metni kopyalandı!');
             }
-        } else {
-            // Fallback: Copy to clipboard
-            navigator.clipboard.writeText(shareText);
-            alert('Paylaşım metni kopyalandı!');
+        } catch (err) {
+            // User cancelled or error
+            if (err.message !== 'Share canceled') {
+                // console.log('Share error:', err);
+            }
         }
     };
 
@@ -526,18 +541,7 @@ function Multimedia({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={goBack}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={goBack} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',

@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { Sparkles, Heart, Info, X, Loader } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Sparkles, Heart, Info, X, Loader, Play, Pause, ChevronRight } from 'lucide-react';
 import { MOODS } from '../data/moodData';
+import { getAudioUrlSync } from '../services/quranService';
 
 // Pollinations.ai için sistem prompt'u
 const MOOD_PROMPT = (moodLabel) => `
@@ -23,60 +24,35 @@ FORMAT (TAM OLARAK BU FORMATI KULLAN):
 
 const MoodSelector = ({ onClose }) => {
   const [selectedMood, setSelectedMood] = useState(null);
-  const [result, setResult] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [playingUrl, setPlayingUrl] = useState(null);
+  const [audioPlayer, setAudioPlayer] = useState(null);
 
-  const handleMoodSelect = async (mood) => {
-    setSelectedMood(mood);
-    setIsLoading(true);
-    setError(null);
-    setResult(null);
-
-    // Önce hızlı bir statik sonuç hazırla (fallback için)
-    const ayahs = mood.ayahs || [];
-    const fallbackAyah = ayahs.length > 0 
-      ? ayahs[Math.floor(Math.random() * ayahs.length)] 
-      : null;
-
-    try {
-      // Pollinations.ai API çağrısı (ücretsiz, API key gerektirmez)
-      const prompt = MOOD_PROMPT(mood.label);
-      const encodedPrompt = encodeURIComponent(prompt);
-      
-      // AbortController ile timeout
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 20000); // 20 saniye
-      
-      const response = await fetch(`https://text.pollinations.ai/${encodedPrompt}?model=mistral`, {
-        signal: controller.signal
-      });
-      
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        throw new Error('API hatası');
+  useEffect(() => {
+    return () => {
+      if (audioPlayer) {
+        audioPlayer.pause();
       }
+    };
+  }, [audioPlayer]);
 
-      const text = await response.text();
-      
-      if (text && text.length > 10) {
-        setResult({ type: 'ai', content: text });
-      } else {
-        throw new Error('Boş yanıt');
+  const toggleAudio = (url) => {
+    if (playingUrl === url) {
+      audioPlayer.pause();
+      setPlayingUrl(null);
+    } else {
+      if (audioPlayer) {
+        audioPlayer.pause();
       }
-
-    } catch (err) {
-      console.error('Pollinations API Error:', err);
-      // Fallback: Statik veri kullan
-      if (fallbackAyah) {
-        setResult({ type: 'static', content: fallbackAyah });
-      } else {
-        setError('Şu anda servis yoğun. Lütfen tekrar deneyin.');
-      }
-    } finally {
-      setIsLoading(false);
+      const newAudio = new Audio(url);
+      newAudio.play();
+      newAudio.onended = () => setPlayingUrl(null);
+      setAudioPlayer(newAudio);
+      setPlayingUrl(url);
     }
+  };
+
+  const handleMoodSelect = (mood) => {
+    setSelectedMood(mood);
   };
 
   return (
@@ -116,41 +92,44 @@ const MoodSelector = ({ onClose }) => {
               {selectedMood.emoji} {selectedMood.label}
             </div>
 
-            {isLoading ? (
-              <div className="loading-state">
-                <Loader className="spin" size={40} color="var(--primary-color)" />
-                <p>Senin için en uygun ayet araştırılıyor...</p>
-                <span className="ai-badge"><Sparkles size={12} /> AI Destekli</span>
-              </div>
-            ) : error ? (
-              <div className="error-state">
-                <Info size={40} color="#e74c3c" />
-                <p>{error}</p>
-                <button className="btn btn-primary" onClick={() => setSelectedMood(null)}>Tekrar Dene</button>
-              </div>
-            ) : (
-              <div className="result-content animate-fadeIn">
-                {result.type === 'static' ? (
-                  <div className="static-result">
-                    <div className="ayah-arabic">{result.content.text}</div>
-                    <div className="ayah-translation">"{result.content.translation}"</div>
-                    <div className="ayah-reference">({result.content.surah}, {result.content.ayah})</div>
-                  </div>
-                ) : (
-                  <div className="ai-result">
-                    {result.content.split('\n').map((line, i) => (
-                      <p key={i}>{line}</p>
-                    ))}
-                    <div className="ai-badge-footer">
-                      <Sparkles size={14} /> Gemini AI tarafından hazırlandı
+            <div className="result-content animate-fadeIn">
+              <p style={{ color: 'var(--text-color-muted)', marginBottom: '20px' }}>
+                Bu ruh haline özel seçilmiş şifa ayetleri:
+              </p>
+
+              <div className="ayah-list">
+                {selectedMood.ayahs.map((item, index) => {
+                  const audioUrl = getAudioUrlSync(item.surahNumber, item.ayah);
+                  const isPlaying = playingUrl === audioUrl;
+
+                  return (
+                    <div key={index} className="ayah-card glass-card">
+                      <div className="ayah-header">
+                        <span className="surah-badge">{item.surah}, {item.ayah}</span>
+                        <button 
+                          className={`play-btn ${isPlaying ? 'playing' : ''}`}
+                          onClick={() => toggleAudio(audioUrl)}
+                          style={{ backgroundColor: isPlaying ? selectedMood.color : 'var(--card-bg)' }}
+                        >
+                          {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                        </button>
+                      </div>
+                      
+                      <div className="ayah-arabic">{item.text}</div>
+                      <div className="ayah-translation">"{item.translation}"</div>
                     </div>
-                  </div>
-                )}
-                <button className="btn btn-primary" onClick={() => setSelectedMood(null)} style={{ marginTop: '20px' }}>
-                  Başka Bir Ruh Hali
-                </button>
+                  );
+                })}
               </div>
-            )}
+
+              <button className="btn btn-primary" onClick={() => {
+                if(audioPlayer) audioPlayer.pause();
+                setPlayingUrl(null);
+                setSelectedMood(null);
+              }} style={{ marginTop: '20px' }}>
+                Başka Bir Ruh Hali Seç
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -361,6 +340,55 @@ const MoodSelector = ({ onClose }) => {
         @keyframes slideUp {
           from { transform: translateY(20px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
+        }
+
+        .ayah-list {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          max-height: 400px;
+          overflow-y: auto;
+          padding-right: 5px;
+        }
+
+        .ayah-card {
+          padding: 16px;
+          border-radius: 16px;
+          background: rgba(255,255,255,0.03);
+          text-align: left;
+          border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .ayah-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 12px;
+        }
+
+        .surah-badge {
+          font-size: 12px;
+          background: rgba(255,255,255,0.1);
+          padding: 4px 10px;
+          border-radius: 20px;
+          color: var(--text-color-muted);
+        }
+
+        .play-btn {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: var(--primary-color);
+          transition: all 0.2s;
+        }
+
+        .play-btn.playing {
+          color: #fff;
         }
       `}</style>
     </div>

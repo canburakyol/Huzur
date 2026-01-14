@@ -8,7 +8,6 @@ const LimitReachedModal = ({
   isOpen, 
   onClose, 
   feature = 'nuzul_ai',
-  usedCount = 2,
   maxCount = 2,
   onUpgrade 
 }) => {

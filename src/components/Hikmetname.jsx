@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { ArrowLeft, Share2, RefreshCw, Heart, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
+import { Share2, RefreshCw, Heart, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { HIKMET_CATEGORIES, HIKMETLER, getDailyHikmet, getHikmetByCategory, getRandomHikmet } from '../data/hikmetData';
+import IslamicBackButton from './shared/IslamicBackButton';
 
 function Hikmetname({ onClose }) {
     const { t } = useTranslation();
@@ -37,8 +38,8 @@ function Hikmetname({ onClose }) {
         if (navigator.share) {
             try {
                 await navigator.share({ text });
-            } catch (err) {
-                console.log('Share cancelled');
+            } catch {
+                // Share cancelled
             }
         } else {
             navigator.clipboard.writeText(text);
@@ -365,18 +366,7 @@ function Hikmetname({ onClose }) {
                 marginBottom: '20px',
                 paddingTop: '20px'
             }}>
-                <button
-                    onClick={goBack}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '8px',
-                        color: 'var(--primary-color)'
-                    }}
-                >
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={goBack} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',

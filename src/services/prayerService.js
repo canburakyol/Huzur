@@ -2,6 +2,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { storageService } from './storageService';
 import { STORAGE_KEYS } from '../constants';
+import { logger } from '../utils/logger';
 
 // Use coordinate-based API for accurate location-based prayer times
 const API_URL_COORDS = 'https://api.aladhan.com/v1/timings';
@@ -50,7 +51,7 @@ export const getPrayerTimes = async (latitude = null, longitude = null, city = '
         },
         timeout: 10000
       });
-      console.log('[PrayerService] Fetched times by coordinates:', latitude.toFixed(4), longitude.toFixed(4));
+      logger.log('[PrayerService] Fetched times by coordinates');
     } else {
       // Fallback to city-based endpoint
       response = await axios.get(API_URL_CITY, {
@@ -62,7 +63,7 @@ export const getPrayerTimes = async (latitude = null, longitude = null, city = '
         },
         timeout: 10000
       });
-      console.log('[PrayerService] Fetched times by city:', city);
+      logger.log('[PrayerService] Fetched times by city:', city);
     }
 
     if (response.data && response.data.data) {
@@ -99,7 +100,7 @@ export const getPrayerTimes = async (latitude = null, longitude = null, city = '
         const ageHours = (Date.now() - fallback.timestamp) / (1000 * 60 * 60);
 
         if (ageHours < CACHE_MAX_AGE_HOURS) {
-          console.log(`Using fallback cache from ${Math.round(ageHours)} hours ago`);
+          logger.log(`Using fallback cache from ${Math.round(ageHours)} hours ago`);
           return fallback.data;
         }
       } catch (e) {

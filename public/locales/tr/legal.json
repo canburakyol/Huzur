@@ -1,0 +1,109 @@
+{
+  "termsOfService": {
+    "title": "Kullanım Koşulları",
+    "lastUpdated": "Son Güncelleme: {{date}}",
+    "intro": "<strong>Huzur</strong> uygulamasını kullanarak, aşağıdaki kullanım koşullarını kabul etmiş sayılırsınız. Lütfen bu koşulları dikkatle okuyun.",
+    "sections": [
+      {
+        "title": "1. Kullanım Lisansı",
+        "content": "Bu uygulama, kişisel ve ticari olmayan kullanım için ücretsiz olarak sunulmaktadır. Uygulamayı değiştirmek, kopyalamak veya dağıtmak yasaktır."
+      },
+      {
+        "title": "2. Hizmet Açıklaması",
+        "content": "Huzur uygulaması, namaz vakitleri, Kuran-ı Kerim, dualar ve dini içerikler sağlayan bir mobil uygulamadır. Uygulama, üçüncü taraf API'ler kullanarak veri sağlar ve bu verilerin doğruluğu garanti edilmez."
+      },
+      {
+        "title": "3. Kullanıcı Sorumlulukları",
+        "content": "Kullanıcılar:",
+        "list": [
+          "Uygulamayı yasalara uygun şekilde kullanmalıdır",
+          "Uygulamanın içeriğini kötüye kullanmamalıdır",
+          "Uygulamayı başkalarının zararına kullanmamalıdır",
+          "Uygulamanın güvenliğini tehlikeye atmamalıdır"
+        ]
+      },
+      {
+        "title": "4. Sorumluluk Reddi",
+        "content": "Uygulama \"olduğu gibi\" sunulmaktadır. Namaz vakitleri ve diğer bilgilerin doğruluğu için garanti verilmez. Kullanıcılar, önemli dini uygulamalar için resmi kaynaklara başvurmalıdır."
+      },
+      {
+        "title": "5. Fikri Mülkiyet",
+        "content": "Uygulamanın tüm içeriği, tasarımı ve kodları telif hakkı ile korunmaktadır. Kuran-ı Kerim metinleri ve dualar kamu malıdır, ancak uygulamanın kendisi telif hakkı altındadır."
+      },
+      {
+        "title": "6. Hizmet Değişiklikleri",
+        "content": "Uygulama, önceden haber vermeksizin değiştirilebilir, güncellenebilir veya durdurulabilir. Kullanıcılar bu değişikliklerden haberdar olmalıdır."
+      },
+      {
+        "title": "7. İptal ve Fesih",
+        "content": "Uygulama kullanımı, herhangi bir zamanda ve herhangi bir nedenle iptal edilebilir. Kullanıcılar, uygulama koşullarını ihlal ettiklerinde erişimleri sonlandırılabilir."
+      },
+      {
+        "title": "8. Değişiklikler",
+        "content": "Bu kullanım koşulları zaman zaman güncellenebilir. Önemli değişiklikler uygulama içinde bildirilecektir."
+      },
+      {
+        "title": "9. İletişim",
+        "content": "Kullanım koşulları hakkında sorularınız için lütfen bizimle iletişime geçin."
+      }
+    ]
+  },
+  "privacyPolicy": {
+    "title": "Gizlilik Politikası",
+    "lastUpdated": "Son Güncelleme: {{date}}",
+    "intro": "<strong>Huzur</strong> uygulaması olarak, kullanıcılarımızın gizliliğine önem veriyoruz. Bu gizlilik politikası, uygulamamızın kişisel verilerinizi nasıl topladığını, kullandığını ve koruduğunu açıklamaktadır.",
+    "sections": [
+      {
+        "title": "1. Toplanan Veriler",
+        "content": "Uygulamamız aşağıdaki verileri toplayabilir:",
+        "list": [
+          "<strong>Konum Bilgisi:</strong> Namaz vakitlerini ve hava durumunu doğru göstermek için konum bilgisi kullanılır. Bu bilgi sadece cihazınızda saklanır ve sunucularımıza gönderilmez.",
+          "<strong>Cihaz Bilgileri:</strong> Uygulamanın düzgün çalışması için temel cihaz bilgileri kullanılabilir."
+        ]
+      },
+      {
+        "title": "2. Veri Kullanımı",
+        "content": "Toplanan veriler sadece aşağıdaki amaçlar için kullanılır:",
+        "list": [
+          "Namaz vakitlerini doğru göstermek",
+          "Hava durumu bilgisi sağlamak",
+          "Kıble yönünü belirlemek",
+          "Uygulama performansını iyileştirmek"
+        ]
+      },
+      {
+        "title": "3. Veri Paylaşımı",
+        "content": "Kişisel verileriniz üçüncü taraflarla paylaşılmaz. Uygulama, namaz vakitleri için <strong>Aladhan API</strong>, hava durumu için <strong>Open-Meteo API</strong> ve konum bilgisi için <strong>BigDataCloud API</strong> kullanır. Bu servislerin kendi gizlilik politikaları geçerlidir."
+      },
+      {
+        "title": "4. Veri Güvenliği",
+        "content": "Verileriniz cihazınızda güvenli bir şekilde saklanır. Uygulama, hassas bilgileri şifreleme teknolojileri ile korur."
+      },
+      {
+        "title": "5. İzinler",
+        "content": "Uygulama aşağıdaki izinleri talep edebilir:",
+        "list": [
+          "<strong>Konum:</strong> Namaz vakitleri ve hava durumu için",
+          "<strong>Bildirimler:</strong> Namaz vakitleri hatırlatmaları için",
+          "<strong>İnternet:</strong> API verilerini almak için"
+        ]
+      },
+      {
+        "title": "6. Reklam ve Analiz",
+        "content": "Uygulamamız <strong>Google AdMob</strong> reklam hizmeti ve <strong> Google Firebase Analytics</strong> kullanır. Bu hizmetler, kişiselleştirilmiş reklamlar sunmak ve uygulama kullanımını analiz etmek için cihaz tanımlayıcılarını (GAID) toplayabilir. Reklam tercihlerinizi uygulama ayarlarından veya cihaz ayarlarından yönetebilirsiniz."
+      },
+      {
+        "title": "7. Yapay Zeka Asistan",
+        "content": "Dini sorularınızı yanıtlamak için <strong>Pollinations AI</strong> servisi kullanılmaktadır. Sorularınız bu servise gönderilir ve cevaplar alınır. Lütfen bu servise kişisel bilgilerinizi girmekten kaçının."
+      },
+      {
+        "title": "8. Değişiklikler",
+        "content": "Bu gizlilik politikası zaman zaman güncellenebilir. Önemli değişiklikler uygulama içinde bildirilecektir."
+      },
+      {
+        "title": "9. İletişim",
+        "content": "Gizlilik politikamız hakkında sorularınız için: <strong> huzurapp.destek@gmail.com</strong>"
+      }
+    ]
+  }
+}

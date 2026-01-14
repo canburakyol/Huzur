@@ -1,0 +1,85 @@
+{
+  "categories": {
+    "dualar": {
+      "title": "Dualı Görseller",
+      "description": "Paylaşılabilir dua kartları"
+    },
+    "camiler": {
+      "title": "Cami Fotoğrafları",
+      "description": "Dünyanın en güzel camileri"
+    },
+    "kabe": {
+      "title": "Kabe ve Harem",
+      "description": "Kutsal topraklar"
+    },
+    "ramazan": {
+      "title": "Ramazan Görselleri",
+      "description": "Ramazan ve iftar görselleri"
+    },
+    "kuran": {
+      "title": "Kuran Görselleri",
+      "description": "Kuran-ı Kerim fotoğrafları"
+    },
+    "tesbih": {
+      "title": "Tesbih ve İbadet",
+      "description": "İbadet görselleri"
+    }
+  },
+  "dualar": {
+    "dua1": { "title": "Sabah Duası", "text": "Ya Rabbi, bugün beni hayırlı işlere muvaffak kıl." },
+    "dua2": { "title": "Şükür Duası", "text": "Elhamdülillah, her halimde şükürler olsun." },
+    "dua3": { "title": "Bereket Duası", "text": "Allah'ım evime, işime, aileme bereket ver." },
+    "dua4": { "title": "Huzur Duası", "text": "Rabbim kalbime huzur, dilime doğru söz ver." },
+    "dua5": { "title": "Af Duası", "text": "Ya Rabbi, günahlarımı affet, beni bağışla." },
+    "dua6": { "title": "Şifa Duası", "text": "Allah'ım hastalarımıza şifa, dertlilerimize deva ver." },
+    "dua7": { "title": "Sabır Duası", "text": "Rabbim bana sabır ver, sabredenlerden eyle." },
+    "dua8": { "title": "Akşam Duası", "text": "Ya Rabbi, bu geceyi hayırlı eyle, bizi koru." }
+  },
+  "images": {
+    "cami1": { "title": "Sultanahmet Camii", "location": "İstanbul, Türkiye" },
+    "cami2": { "title": "Ayasofya", "location": "İstanbul, Türkiye" },
+    "cami3": { "title": "Şeyh Zayed Camii", "location": "Abu Dhabi, BAE" },
+    "cami4": { "title": "Mescid-i Nebevi", "location": "Medine, Suudi Arabistan" },
+    "cami5": { "title": "Fas Camii", "location": "Fas" },
+    "cami6": { "title": "Selimiye Camii", "location": "Edirne, Türkiye" },
+    "cami7": { "title": "Cami İç Mekan", "location": "İslam Mimarisi" },
+    "cami8": { "title": "Kubbe Detayı", "location": "İslam Sanatı" },
+    "kabe1": { "title": "Kabe-i Muazzama", "location": "Mekke, Suudi Arabistan" },
+    "kabe2": { "title": "Mescid-i Haram", "location": "Mekke, Suudi Arabistan" },
+    "kabe3": { "title": "Tavaf", "location": "Mekke, Suudi Arabistan" },
+    "kabe4": { "title": "Gece Manzarası", "location": "Mekke, Suudi Arabistan" },
+    "kabe5": { "title": "Hac Dönemi", "location": "Mekke, Suudi Arabistan" },
+    "kabe6": { "title": "Kutsal Topraklar", "location": "Suudi Arabistan" },
+    "ramazan1": { "title": "İftar Sofrası", "description": "Ramazan bereketi" },
+    "ramazan2": { "title": "Hurma", "description": "İftar açma sünneti" },
+    "ramazan3": { "title": "Ramazan Feneri", "description": "Ramazan süsü" },
+    "ramazan4": { "title": "Hilal", "description": "Ramazan ayı" },
+    "ramazan5": { "title": "Cami Işıkları", "description": "Mahya" },
+    "ramazan6": { "title": "Dua Vakti", "description": "Teravih" },
+    "kuran1": { "title": "Kuran-ı Kerim", "description": "Mushaf-ı Şerif" },
+    "kuran2": { "title": "Kuran Tilaveti", "description": "Okuma anı" },
+    "kuran3": { "title": "Hat Sanatı", "description": "İslam kaligrafisi" },
+    "kuran4": { "title": "Rahle", "description": "Kuran standı" },
+    "kuran5": { "title": "Ayet", "description": "Kuran sayfası" },
+    "kuran6": { "title": "Tezhip", "description": "Süsleme sanatı" },
+    "tesbih1": { "title": "Tesbih", "description": "Zikir aleti" },
+    "tesbih2": { "title": "Namaz", "description": "İbadet anı" },
+    "tesbih3": { "title": "Secde", "description": "Kulluk" },
+    "tesbih4": { "title": "Dua Elleri", "description": "Yalvarış" },
+    "tesbih5": { "title": "Seccade", "description": "Namaz kıyafeti" },
+    "tesbih6": { "title": "Zikir", "description": "Allah'ı anma" }
+  },
+  "ui": {
+    "title": "Multimedya",
+    "subtitle": "Dini görseller, dualar ve paylaşılabilir içerikler",
+    "imageCount": "görsel",
+    "favorites": "Favorilerim",
+    "shareableCards": "Paylaşabileceğiniz dua kartları",
+    "appName": "Huzur Uygulaması",
+    "favorite": "Favori",
+    "share": "Paylaş",
+    "download": "İndir",
+    "shareTextCopied": "Paylaşım metni kopyalandı!",
+    "downloadHint": "Görsel yeni sekmede açılacak. Sağ tıklayıp 'Resmi Kaydet' seçeneğini kullanabilirsiniz."
+  }
+}

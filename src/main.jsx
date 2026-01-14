@@ -6,6 +6,9 @@ import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import { storageService } from './services/storageService'
 import { STORAGE_KEYS } from './constants'
+import { TimeProvider } from './context/TimeContext'
+import { FocusProvider } from './context/FocusContext'
+import { GamificationProvider } from './context/GamificationContext'
 
 // Tema ayarını uygula
 const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
@@ -16,9 +19,15 @@ document.documentElement.setAttribute('data-theme', theme);
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
-      <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0f3d2e', color: '#a3b18a' }}>Yükleniyor...</div>}>
-        <App />
-      </Suspense>
+    <TimeProvider>
+      <FocusProvider>
+        <GamificationProvider>
+          <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0f3d2e', color: '#a3b18a' }}>Yükleniyor...</div>}>
+            <App />
+          </Suspense>
+        </GamificationProvider>
+      </FocusProvider>
+    </TimeProvider>
     </ErrorBoundary>
   </StrictMode>,
 )

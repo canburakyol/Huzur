@@ -1,0 +1,223 @@
+{
+  "surahs": {
+    "1": {
+      "name": "Fatiha",
+      "meaning": "Açılış",
+      "verses": {
+        "1": {
+          "words": [
+            "adıyla",
+            "Allah'ın",
+            "Rahman olan",
+            "Rahim olan"
+          ]
+        },
+        "2": {
+          "words": [
+            "Hamd",
+            "Allah'a aittir",
+            "Rabbi",
+            "âlemlerin"
+          ]
+        },
+        "3": {
+          "words": [
+            "Rahman",
+            "Rahim"
+          ]
+        },
+        "4": {
+          "words": [
+            "Sahibi",
+            "günün",
+            "hesap/din"
+          ]
+        },
+        "5": {
+          "words": [
+            "Yalnız Sana",
+            "ibadet ederiz",
+            "ve yalnız Senden",
+            "yardım dileriz"
+          ]
+        },
+        "6": {
+          "words": [
+            "Bizi hidayet et",
+            "yola",
+            "dosdoğru"
+          ]
+        },
+        "7": {
+          "words": [
+            "Yoluna",
+            "o kimselerin",
+            "nimet verdiğin",
+            "onlara",
+            "değil",
+            "gazaba uğramışların",
+            "onların",
+            "ve değil",
+            "sapıtmışların"
+          ]
+        }
+      }
+    },
+    "112": {
+      "name": "İhlas",
+      "meaning": "Samimiyet/Arınma",
+      "verses": {
+        "1": {
+          "words": [
+            "De ki",
+            "O",
+            "Allah",
+            "birdir"
+          ]
+        },
+        "2": {
+          "words": [
+            "Allah",
+            "Samed'dir (her şey O'na muhtaç)"
+          ]
+        },
+        "3": {
+          "words": [
+            "-medi",
+            "doğurmadı",
+            "ve -medi",
+            "doğurulmadı"
+          ]
+        },
+        "4": {
+          "words": [
+            "Ve olmadı",
+            "olmak",
+            "O'nun",
+            "dengi",
+            "hiçbiri"
+          ]
+        }
+      }
+    },
+    "113": {
+      "name": "Felak",
+      "meaning": "Sabah Aydınlığı",
+      "verses": {
+        "1": {
+          "words": [
+            "De ki",
+            "sığınırım",
+            "Rabbine",
+            "sabahın"
+          ]
+        },
+        "2": {
+          "words": [
+            "-dan/-den",
+            "şerrinden",
+            "şeylerin",
+            "yarattığı"
+          ]
+        },
+        "3": {
+          "words": [
+            "Ve -dan",
+            "şerrinden",
+            "karanlığın",
+            "zaman",
+            "çöktüğü"
+          ]
+        },
+        "4": {
+          "words": [
+            "Ve -dan",
+            "şerrinden",
+            "üfürükçülerin",
+            "içinde",
+            "düğümlere"
+          ]
+        },
+        "5": {
+          "words": [
+            "Ve -dan",
+            "şerrinden",
+            "hasetçinin",
+            "zaman",
+            "haset ettiği"
+          ]
+        }
+      }
+    },
+    "114": {
+      "name": "Nas",
+      "meaning": "İnsanlar",
+      "verses": {
+        "1": {
+          "words": [
+            "De ki",
+            "sığınırım",
+            "Rabbine",
+            "insanların"
+          ]
+        },
+        "2": {
+          "words": [
+            "Melik'ine (Hükümdarına)",
+            "insanların"
+          ]
+        },
+        "3": {
+          "words": [
+            "İlahına",
+            "insanların"
+          ]
+        },
+        "4": {
+          "words": [
+            "-dan",
+            "şerrinden",
+            "vesvesecinin",
+            "sinsi sinsi geri çekilenin"
+          ]
+        },
+        "5": {
+          "words": [
+            "Ki o",
+            "vesvese verir",
+            "içinde",
+            "göğüslerinin",
+            "insanların"
+          ]
+        },
+        "6": {
+          "words": [
+            "-dan",
+            "cinlerden",
+            "ve insanlardan"
+          ]
+        }
+      }
+    }
+  },
+  "ui": {
+    "title": "Kelime Kelime Kuran",
+    "selectSurah": "Sure Seçiniz",
+    "freeSurahsBadge": "{{count}} Ücretsiz Sure",
+    "chooseSurah": "Sure Seçimi",
+    "freeSurahsInfo": "Aşağıdaki sureler ücretsiz olarak erişime açıktır.",
+    "unlockAll": "Tüm Sureleri Aç",
+    "unlockAllDesc": "Pro'ya geçerek tüm Kuran'ı kelime kelime inceleyin",
+    "ayahCount": "{{count}} Ayet",
+    "analyze": "Analiz Et",
+    "changeSurah": "Sureyi Değiştir",
+    "analyzing": "Kelime analiz ediliyor...",
+    "close": "Kapat",
+    "limitTitle": "Günlük Limit Aşıldı",
+    "limitDesc": "Günlük kelime analizi limitine ulaştınız. Sınırsız analiz için Pro'ya geçin.",
+    "goToPro": "Pro'ya Geç",
+    "analysisError": "Analiz hatası",
+    "unknownError": "Bilinmeyen hata",
+    "analysisErrorGeneric": "Analiz yapılırken bir hata oluştu."
+  }
+}

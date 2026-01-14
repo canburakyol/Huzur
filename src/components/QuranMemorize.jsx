@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { ArrowLeft, Check, BookOpen, Award, Trash2, ChevronDown, ChevronUp, Star, Crown, Clock, RefreshCw } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { Check, BookOpen, Award, Trash2, ChevronDown, ChevronUp, Star, Crown, Clock, RefreshCw, Lock, CheckCircle } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { getMemorizationData, startMemorizing, markAyahMemorized, reviewSurah, getDueReviews, getMemorizationStats } from '../services/memorizationService';
 import { canAccessMemorize, isPro } from '../services/proService';
 import { surahList } from '../data/surahList';
@@ -32,17 +33,18 @@ function QuranMemorize({ onClose, onUpgrade }) {
     const [dueReviews, setDueReviews] = useState([]);
     const userIsPro = isPro();
 
-    const loadData = () => {
+    const loadData = useCallback(() => {
         const data = getMemorizationData();
         setMemorizationData(data);
         setStats(getMemorizationStats());
         setDueReviews(getDueReviews());
-    };
+    }, []);
 
     // Verileri yükle
     useEffect(() => {
+        // eslint-disable-next-line
         loadData();
-    }, []);
+    }, [loadData]);
 
     // Ezberlemeye başla
     const handleStartMemorizing = (surahNumber) => {
@@ -77,9 +79,7 @@ function QuranMemorize({ onClose, onUpgrade }) {
         <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '100px' }}>
             {/* Header */}
             <div className="memorize-header">
-                <button className="back-button" onClick={onClose}>
-                    <ArrowLeft size={24} />
-                </button>
+                <IslamicBackButton onClick={onClose} size="medium" />
                 <div className="header-content">
                     <h1>🧠 Hafızlık Yardımcısı</h1>
                     <p>Ezberle, Tekrar Et, Pekiştir</p>

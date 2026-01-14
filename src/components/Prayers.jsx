@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { prayerCategories, prayers } from '../data/prayers';
-import { X, ChevronLeft, BookOpen } from 'lucide-react';
+import { ChevronLeft, BookOpen } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 
 function Prayers({ onClose }) {
     const { t } = useTranslation();
@@ -31,10 +32,11 @@ function Prayers({ onClose }) {
                 {/* Header */}
                 <div style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
                     alignItems: 'center',
+                    gap: '12px',
                     marginBottom: '24px'
                 }}>
+                    <IslamicBackButton onClick={onClose} size="medium" />
                     <div>
                         <h2 style={{ margin: 0, fontSize: '28px', fontWeight: '700', color: 'white' }}>
                             ☪️ {t('prayers.title')}
@@ -43,24 +45,6 @@ function Prayers({ onClose }) {
                             {prayerCategories.length} {t('prayers.categories')}, {prayers.length} {t('prayers.prayer')}
                         </p>
                     </div>
-                    <button
-                        onClick={onClose}
-                        style={{
-                            background: 'rgba(255, 255, 255, 0.15)',
-                            backdropFilter: 'blur(10px)',
-                            border: 'none',
-                            borderRadius: '50%',
-                            width: '40px',
-                            height: '40px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            color: 'white'
-                        }}
-                    >
-                        <X size={22} />
-                    </button>
                 </div>
 
                 {/* İslami Motif Banner */}

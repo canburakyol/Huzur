@@ -1,5 +1,6 @@
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
+import { logger } from '../utils/logger';
 
 const NOTIFICATION_ID = 1001;
 
@@ -37,7 +38,7 @@ export const sendNotification = async (title, body, id = null) => {
             ]
         });
     } catch (error) {
-        console.error('Bildirim gönderme hatası:', error);
+        logger.error('Bildirim gönderme hatası:', error);
     }
 };
 
@@ -46,6 +47,13 @@ export const schedulePrayerNotifications = async (prayerTimes, settings = {}) =>
     if (!Capacitor.isNativePlatform()) return;
 
     const { preAlertMinutes = 15, enablePreAlert = false } = settings;
+    
+    // Seçili müezzin sesini al
+    const savedMuezzinId = localStorage.getItem('selected_muezzin_id') || 'default';
+    // muezzinData.js'den import etmek yerine basit bir mapping veya dosya adı oluşturma
+    // Dosya adları: ezan_default.mp3, ezan_mecca.mp3 vb. (Native'de uzantısız olabilir: ezan_mecca)
+    const soundName = `ezan_${savedMuezzinId}`; 
+
     const notifications = [];
     let idCounter = 2000;
 
@@ -68,7 +76,8 @@ export const schedulePrayerNotifications = async (prayerTimes, settings = {}) =>
             title: `Ezan Vakti: ${name}`,
             body: `${name} namazı vakti girdi. Haydi namaza!`,
             schedule: { at: prayerDate },
-            // Uses default system notification sound
+            sound: soundName, // Native ses dosyası adı (res/raw/ezan_mecca.mp3)
+            channelId: 'ezan_channel', // Android için kanal
         });
 
         // 2. Vakit Öncesi Uyarı
@@ -80,7 +89,7 @@ export const schedulePrayerNotifications = async (prayerTimes, settings = {}) =>
                     title: `Vakte ${preAlertMinutes} dk Kaldı`,
                     body: `${name} namazına ${preAlertMinutes} dakika kaldı. Hazırlanabilirsiniz.`,
                     schedule: { at: preAlertDate },
-                    // Uses default system notification sound
+                    sound: 'default', // Ön bildirim için varsayılan ses
                 });
             }
         }
@@ -92,7 +101,7 @@ export const schedulePrayerNotifications = async (prayerTimes, settings = {}) =>
         await LocalNotifications.schedule({ notifications });
 
     } catch (error) {
-        console.error('Bildirim planlama hatası:', error);
+        logger.error('Bildirim planlama hatası:', error);
     }
 };
 
@@ -115,7 +124,7 @@ export const NotificationService = {
     // Kalıcı bildirim oluştur veya güncelle
     async showStickyNotification(title, body) {
         if (!Capacitor.isNativePlatform()) {
-            // console.log('Web platformunda sticky notification:', title, body);
+            // logger.log('Web platformunda sticky notification:', title, body);
             return;
         }
 
@@ -140,7 +149,7 @@ export const NotificationService = {
                 ]
             });
         } catch (error) {
-            console.error('Bildirim hatası:', error);
+            logger.error('Bildirim hatası:', error);
         }
     },
 
@@ -153,7 +162,7 @@ export const NotificationService = {
         try {
             await LocalNotifications.cancel({ notifications: [{ id: NOTIFICATION_ID }] });
         } catch (error) {
-            console.error('Bildirim iptal hatası:', error);
+            logger.error('Bildirim iptal hatası:', error);
         }
     }
 };

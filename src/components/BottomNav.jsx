@@ -1,11 +1,13 @@
+import { memo } from 'react';
 import { Home, Book, MessageCircle, Users, Menu } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 /**
  * BottomNav Component
  * Main navigation bar for the application
+ * Memoized to prevent unnecessary re-renders when parent updates
  */
-const BottomNav = ({ activeTab, setActiveTab, onShowMenu }) => {
+const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
   const { t } = useTranslation();
 
   return (
@@ -51,6 +53,9 @@ const BottomNav = ({ activeTab, setActiveTab, onShowMenu }) => {
       </div>
     </div>
   );
-};
+});
+
+BottomNav.displayName = 'BottomNav';
 
 export default BottomNav;
+

@@ -1,5 +1,6 @@
 import { Purchases, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
 import { setProStatus } from './proService';
+import { logger } from '../utils/logger';
 
 // RevenueCat API Keys
 const API_KEYS = {
@@ -14,7 +15,7 @@ export const initializeRevenueCat = async () => {
     // Platform kontrolü - daha robust
     const isNativePlatform = window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false;
     
-    console.log('[RevenueCat] Platform check:', {
+    logger.log('[RevenueCat] Platform check:', {
       capacitorExists: !!window.Capacitor,
       isNative: window.Capacitor?.isNative,
       isNativePlatform: window.Capacitor?.isNativePlatform?.(),
@@ -27,7 +28,7 @@ export const initializeRevenueCat = async () => {
         const platform = window.Capacitor.getPlatform();
         const apiKey = platform === 'ios' ? API_KEYS.ios : API_KEYS.android;
         
-        console.log('[RevenueCat] Configuring with platform:', platform, 'API Key exists:', !!apiKey);
+        logger.log('[RevenueCat] Configuring with platform:', platform, 'API Key exists:', !!apiKey);
 
         if (!apiKey) {
           console.error('[RevenueCat] API Key is missing! Check your .env file.');
@@ -44,9 +45,9 @@ export const initializeRevenueCat = async () => {
             updateProStatusFromInfo(info);
         });
         
-        console.log('[RevenueCat] Initialized successfully');
+        logger.log('[RevenueCat] Initialized successfully');
     } else {
-        console.log('[RevenueCat] Not initialized (Web Platform)');
+        logger.log('[RevenueCat] Not initialized (Web Platform)');
     }
   } catch (error) {
     console.error('[RevenueCat] Init error:', error);
@@ -69,7 +70,7 @@ export const purchasePackage = async (packageToPurchase) => {
         return updateProStatusFromInfo(customerInfo);
     } catch (error) {
         if (error.userCancelled) {
-            console.log('User cancelled purchase');
+            logger.log('User cancelled purchase');
         } else {
             console.error('Purchase error:', error);
         }
@@ -79,22 +80,22 @@ export const purchasePackage = async (packageToPurchase) => {
 
 export const getOfferings = async () => {
     try {
-        console.log('[RevenueCat] Fetching offerings...');
+        logger.log('[RevenueCat] Fetching offerings...');
         const offerings = await Purchases.getOfferings();
-        console.log('[RevenueCat] Offerings response:', JSON.stringify(offerings, null, 2));
+        logger.log('[RevenueCat] Offerings response:', offerings);
         
         // 1. Önce 'current' offering'i dene
         if (offerings.current !== null && offerings.current.availablePackages.length !== 0) {
-            console.log('[RevenueCat] Found packages in current offering');
+            logger.log('[RevenueCat] Found packages in current offering');
             return offerings.current.availablePackages;
         }
         
         // 2. Eğer current boşsa, herhangi bir offering içindeki paketleri dene (Fallback)
-        console.warn('[RevenueCat] No current offering, checking all offerings...');
+        logger.warn('[RevenueCat] No current offering, checking all offerings...');
         const allOfferings = Object.values(offerings.all);
         for (const offering of allOfferings) {
             if (offering.availablePackages.length > 0) {
-                console.log('[RevenueCat] Found packages in offering:', offering.identifier);
+                logger.log('[RevenueCat] Found packages in offering:', offering.identifier);
                 return offering.availablePackages;
             }
         }
@@ -120,14 +121,14 @@ export const restorePurchases = async () => {
 const updateProStatusFromInfo = (customerInfo) => {
     // Null/undefined güvenlik kontrolü
     if (!customerInfo?.entitlements?.active) {
-        console.warn('[RevenueCat] Invalid customerInfo received:', customerInfo);
+        logger.warn('[RevenueCat] Invalid customerInfo received:', customerInfo);
         setProStatus(false);
         return false;
     }
     
     const isPro = typeof customerInfo.entitlements.active[ENTITLEMENT_ID] !== "undefined";
     
-    console.log('[RevenueCat] Pro status check:', {
+    logger.log('[RevenueCat] Pro status check:', {
         entitlementId: ENTITLEMENT_ID,
         activeEntitlements: Object.keys(customerInfo.entitlements.active),
         result: isPro

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Type, Minus, Plus, Check } from 'lucide-react';
+import { Type, Minus, Plus, Check } from 'lucide-react';
+import IslamicBackButton from './shared/IslamicBackButton';
 
 const STORAGE_KEY = 'huzur_font_settings';
 
@@ -28,6 +29,7 @@ const FontSettings = ({ onClose }) => {
     const savedSettings = localStorage.getItem(STORAGE_KEY);
     if (savedSettings) {
       try {
+        // eslint-disable-next-line
         setSettings(JSON.parse(savedSettings));
       } catch (e) {
         console.warn('Font settings parse error:', e);
@@ -77,9 +79,7 @@ const FontSettings = ({ onClose }) => {
     <div className="font-settings-container">
       {/* Header */}
       <div className="font-settings-header">
-        <button className="back-button" onClick={onClose}>
-          <ArrowLeft size={24} />
-        </button>
+        <IslamicBackButton onClick={onClose} size="medium" />
         <div className="header-content">
           <h1>Yazı Tipi Ayarları</h1>
           <p className="subtitle">Arapça ve Türkçe metin görünümünü özelleştirin</p>

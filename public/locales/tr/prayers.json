@@ -1,0 +1,540 @@
+{
+  "prayerBook": {
+    "categories": {
+      "daily": {
+        "name": "Günlük Dualar",
+        "desc": "Her gün okunabilecek dualar"
+      },
+      "debt": {
+        "name": "Borç ve Rızık Duaları",
+        "desc": "Maddi sıkıntılar için dualar"
+      },
+      "family": {
+        "name": "Aile ve Ev Huzuru",
+        "desc": "Aile mutluluğu için dualar"
+      },
+      "protection": {
+        "name": "Korunma Duaları",
+        "desc": "Manevi koruma için dualar"
+      },
+      "wishes": {
+        "name": "İstek ve Niyaz",
+        "desc": "Dilekler için dualar"
+      },
+      "prophet": {
+        "name": "Peygamber Duaları",
+        "desc": "Hz. Muhammed'den dualar"
+      },
+      "special_days": {
+        "name": "Özel Gün Duaları",
+        "desc": "Kandil ve bayram duaları"
+      },
+      "repentance": {
+        "name": "Tövbe ve İstiğfar",
+        "desc": "Bağışlanma duaları"
+      },
+      "prayer_duas": {
+        "name": "Namaz Duaları",
+        "desc": "Namazda okunan dualar"
+      },
+      "distress": {
+        "name": "Sıkıntı Duaları",
+        "desc": "Gam ve keder için dualar"
+      }
+    },
+    "items": {
+      "1": {
+        "title": "Sabah Duası",
+        "meaning": "Sabaha kavuştuk, mülk de Allah'a ait olarak sabaha kavuştu. Hamd de Allah'a mahsustur."
+      },
+      "2": {
+        "title": "Akşam Duası",
+        "meaning": "Akşama eriştik, mülk de Allah'a ait olarak akşama erişti. Hamd de Allah'a mahsustur."
+      },
+      "3": {
+        "title": "Uyku Duası",
+        "meaning": "Allah'ım! Senin isminle ölür ve dirilirim."
+      },
+      "4": {
+        "title": "Evden Çıkış Duası",
+        "meaning": "Allah'ın adıyla çıkıyorum, Allah'a tevekkül ettim."
+      },
+      "5": {
+        "title": "Eve Giriş Duası",
+        "meaning": "Allah'ım! Senden en hayırlı girişi ve en hayırlı çıkışı istiyorum."
+      },
+      "6": {
+        "title": "Ayetel Kürsi",
+        "meaning": "Allah, O'ndan başka ilah yoktur. O, diridir, her şeyi ayakta tutandır."
+      },
+      "7": {
+        "title": "Tesbih Duası",
+        "meaning": "Allah'ı tüm eksikliklerden tenzih ederim ve O'na hamd ederim."
+      },
+      "8": {
+        "title": "Sabah-Akşam Korunma",
+        "meaning": "Allah'ın adıyla ki, O'nun adı anılınca yerde ve gökte hiçbir şey zarar veremez."
+      },
+      "9": {
+        "title": "Afiyet Duası",
+        "meaning": "Allah'ım! Bedenimde bana afiyet ver."
+      },
+      "10": {
+        "title": "İstiğfar",
+        "meaning": "Allah'tan bağışlanma diler ve O'na tövbe ederim."
+      },
+      "11": {
+        "title": "Salavat",
+        "meaning": "Allah'ım! Muhammed'e salat et."
+      },
+      "12": {
+        "title": "Rıza Duası",
+        "meaning": "Rab olarak Allah'tan razı oldum."
+      },
+      "13": {
+        "title": "Hamd Duası",
+        "meaning": "Hamd Allah'a mahsustur."
+      },
+      "14": {
+        "title": "Afiyet İsteme",
+        "meaning": "Allah'ım! Senden afiyet istiyorum."
+      },
+      "15": {
+        "title": "Şükür Duası",
+        "meaning": "Allah'ım! Hamd Sana, şükür de Sanadır."
+      },
+      "16": {
+        "title": "Helal Rızık Duası",
+        "meaning": "Allah'ım! Haramından beni helale kavuştur."
+      },
+      "17": {
+        "title": "Sıkıntıdan Korunma",
+        "meaning": "Allah'ım! Keder ve üzüntüden Sana sığınırım."
+      },
+      "18": {
+        "title": "Bereket Duası",
+        "meaning": "Allah'ım! Bize verdiğin rızıkları bereketlendir."
+      },
+      "19": {
+        "title": "Temiz Rızık Duası",
+        "meaning": "Allah'ım! Senden temiz bir rızık istiyorum."
+      },
+      "20": {
+        "title": "Rahmet Kapıları Duası",
+        "meaning": "Allah'ım! Bana rahmet kapılarını aç."
+      },
+      "21": {
+        "title": "Nimet Şükrü",
+        "meaning": "Rabbim! Bana nimetine şükretmeyi ilham et."
+      },
+      "22": {
+        "title": "Zenginlik Duası",
+        "meaning": "Allah'ım! Senden zenginlik istiyorum."
+      },
+      "23": {
+        "title": "Helal Kazanç Duası",
+        "meaning": "Allah'ım! Bana helal rızık nasip et."
+      },
+      "24": {
+        "title": "Kolaylık Duası",
+        "meaning": "Allah'ım! Senin kolaylaştırdığından başka kolay yoktur."
+      },
+      "25": {
+        "title": "Hasbünallah",
+        "meaning": "Allah bize yeter, O ne güzel vekildir."
+      },
+      "26": {
+        "title": "Rızık Genişliği",
+        "meaning": "Allah'ım! Rızkımı genişlet."
+      },
+      "27": {
+        "title": "Takva ile Çıkış Yolu",
+        "meaning": "Kim Allah'tan korkarsa, Allah ona bir çıkış yolu açar."
+      },
+      "28": {
+        "title": "Aile Mutluluğu Duası",
+        "meaning": "Rabbimiz! Bize eşlerimizden ve çocuklarımızdan gözümüzün aydınlığı olacak kimseler ihsan et."
+      },
+      "29": {
+        "title": "Evlilik Tebriği",
+        "meaning": "Allah sana bereket versin, üzerine bereket indirsin."
+      },
+      "30": {
+        "title": "Hayırlı Evlat Duası",
+        "meaning": "Rabbim! Bana katından hayırlı bir nesil ver."
+      },
+      "31": {
+        "title": "Anne-Baba Duası",
+        "meaning": "Rabbim! Onlara merhamet et, nasıl onlar beni küçükken büyüttülerse."
+      },
+      "32": {
+        "title": "Ev Bereketi Duası",
+        "meaning": "Allah'ım! Evimize bereket ver."
+      },
+      "33": {
+        "title": "Namazı Kılanlardan Olma",
+        "meaning": "Rabbim! Beni namazı dosdoğru kılanlardan eyle ve zürriyetimden de."
+      },
+      "34": {
+        "title": "Cehennemden Korunma",
+        "meaning": "Rabbimiz! Cehennem azabını bizden uzaklaştır."
+      },
+      "35": {
+        "title": "Rahmet Duası",
+        "meaning": "Rabbimiz! Bize katından rahmet ver."
+      },
+      "36": {
+        "title": "Kalp Sebatı Duası",
+        "meaning": "Rabbimiz! Kalplerimizi saptırma."
+      },
+      "37": {
+        "title": "Komşu Sulhu Duası",
+        "meaning": "Allah'ım! Bizimle komşularımızın arasını düzelt."
+      },
+      "38": {
+        "title": "Müslüman Olma Duası",
+        "meaning": "Rabbimiz! Bizi Sana teslim olanlardan kıl."
+      },
+      "39": {
+        "title": "Dünya-Ahiret Hasenesi",
+        "meaning": "Rabbimiz! Bize dünyada da, ahirette de iyilik ver."
+      },
+      "40": {
+        "title": "Şeytandan Korunma",
+        "meaning": "Kovulmuş şeytandan Allah'a sığınırım."
+      },
+      "41": {
+        "title": "Maşallah Duası",
+        "meaning": "Allah dilemiş, güç ancak Allah'tandır."
+      },
+      "42": {
+        "title": "Kelime-i Tevhid",
+        "meaning": "Allah'tan başka ilah yoktur, Muhammed O'nun elçisidir."
+      },
+      "43": {
+        "title": "Tam Kelimelerle Korunma",
+        "meaning": "Yarattığı şeylerin şerrinden Allah'ın tam kelimelerine sığınırım."
+      },
+      "44": {
+        "title": "Şifa Rukye",
+        "meaning": "Allah'ın adıyla seni okuyorum."
+      },
+      "45": {
+        "title": "Nas Suresi",
+        "meaning": "De ki: İnsanların Rabbine sığınırım."
+      },
+      "46": {
+        "title": "İslam Fıtratı Duası",
+        "meaning": "İslam fıtratı üzere sabaha kavuştuk."
+      },
+      "47": {
+        "title": "Felak Suresi",
+        "meaning": "De ki: Felakın Rabbine sığınırım."
+      },
+      "48": {
+        "title": "Nimet Kaybından Korunma",
+        "meaning": "Allah'ım! Nimetinin yok olmasından Sana sığınırım."
+      },
+      "49": {
+        "title": "La Havle Duası",
+        "meaning": "Güç ve kuvvet ancak Allah'tandır."
+      },
+      "50": {
+        "title": "Kalp Sebatı",
+        "meaning": "Ey kalpleri çeviren! Kalbimi dinin üzere sabit kıl."
+      },
+      "51": {
+        "title": "Deccal Fitnesinden Korunma",
+        "meaning": "Allah'ım! Deccal fitnesinden Sana sığınırım."
+      },
+      "52": {
+        "title": "Dünya-Ahiret İyiliği",
+        "meaning": "Rabbimiz! Bize dünyada da ahirette de güzellik ver."
+      },
+      "53": {
+        "title": "İlim Artışı Duası",
+        "meaning": "Rabbim! İlmimi artır."
+      },
+      "54": {
+        "title": "Günahların Affı",
+        "meaning": "Rabbimiz! Günahlarımızı bağışla."
+      },
+      "55": {
+        "title": "Dosdoğru Yol",
+        "meaning": "Bizi dosdoğru yola ilet."
+      },
+      "56": {
+        "title": "Merhamet Duası",
+        "meaning": "Rabbim! Bize merhamet et."
+      },
+      "57": {
+        "title": "Sabır Duası",
+        "meaning": "Rabbimiz! Üzerimize sabır yağdır."
+      },
+      "58": {
+        "title": "Kolaylaştırma Duası",
+        "meaning": "Rabbim! Kolaylaştır, zorlaştırma."
+      },
+      "59": {
+        "title": "Kabul Duası",
+        "meaning": "Rabbimiz! Bizden kabul buyur."
+      },
+      "60": {
+        "title": "Salih Kullarla Beraber Olma",
+        "meaning": "Rahmetinle beni salih kullarının arasına kat."
+      },
+      "61": {
+        "title": "Nimet Şükrü",
+        "meaning": "Rabbim! Nimetine şükretmeyi bana ilham et."
+      },
+      "62": {
+        "title": "Semi' Alim Kabul",
+        "meaning": "Rabbimiz! Bizden kabul buyur. Şüphesiz Sen işitensin, bilensin."
+      },
+      "63": {
+        "title": "Af Duası",
+        "meaning": "Allah'ım! Sen affedicisin, affı seversin, beni affet."
+      },
+      "64": {
+        "title": "Kunut Duası",
+        "meaning": "Allah'ım! Hidayet ettiğin kimselerle birlikte beni de hidayete erdir."
+      },
+      "65": {
+        "title": "Seyyidül İstiğfar",
+        "meaning": "Allah'ım! Sen benim Rabbimsin. Senden başka ilah yoktur."
+      },
+      "66": {
+        "title": "Yolculuk Duası",
+        "meaning": "Bunu bize boyun eğdiren (Allah) ne yücedir."
+      },
+      "67": {
+        "title": "Yemek Duası",
+        "meaning": "Allah'ım! Bizi rızıklandırdıklarında bize bereket ver."
+      },
+      "68": {
+        "title": "Hasta Ziyareti Duası",
+        "meaning": "Bir zararı yok, inşallah günahlarına kefaret olur."
+      },
+      "69": {
+        "title": "Şeytandan Allah'a Sığınma",
+        "meaning": "Kovulmuş şeytandan Allah'a sığınırım."
+      },
+      "70": {
+        "title": "Kabir Azabından Korunma",
+        "meaning": "Allah'ım! Kabir azabından Sana sığınırım."
+      },
+      "71": {
+        "title": "Mescide Giriş Duası",
+        "meaning": "Allah'ım! Rahmet kapılarını bana aç."
+      },
+      "72": {
+        "title": "Mescidden Çıkış Duası",
+        "meaning": "Allah'ım! Fazlından Sana isterim."
+      },
+      "73": {
+        "title": "Abdest Sonrası Şehadet",
+        "meaning": "Şehadet ederim ki Allah'tan başka ilah yoktur."
+      },
+      "74": {
+        "title": "Cenaze Duası",
+        "meaning": "Allah'ım! Onu bağışla ve ona merhamet et."
+      },
+      "75": {
+        "title": "Rahmet İsteme",
+        "meaning": "Allah'ım! Rahmetinle Senden istiyorum."
+      },
+      "76": {
+        "title": "Cuma Salâvatı",
+        "meaning": "Allah'ım! Efendimiz Muhammed'e salât et."
+      },
+      "77": {
+        "title": "Tesbihat",
+        "meaning": "Allah'ı tenzih ederim, hamd Allah'adır."
+      },
+      "78": {
+        "title": "Şefaat Duası",
+        "meaning": "Allah'ım! Peygamberinin şefaatini bize nasip et."
+      },
+      "79": {
+        "title": "Günahların Affı Duası",
+        "meaning": "Allah'ım! Günahlarımı bağışla."
+      },
+      "80": {
+        "title": "Kadir Gecesi Duası",
+        "meaning": "Allah'ım! Sen affedicisin, affı seversin, beni affet."
+      },
+      "81": {
+        "title": "Ramazana Ulaşma Duası",
+        "meaning": "Allah'ım! Bizi Ramazan'a ulaştır."
+      },
+      "82": {
+        "title": "Tevhid Zikri",
+        "meaning": "Allah'tan başka ilah yoktur, O tektir, ortağı yoktur."
+      },
+      "83": {
+        "title": "Bayram Tekbiri",
+        "meaning": "Allah en büyüktür, Allah en büyüktür, Allah'tan başka ilah yoktur."
+      },
+      "84": {
+        "title": "Telbiye",
+        "meaning": "Buyur Allah'ım buyur, emrine amadeyim."
+      },
+      "85": {
+        "title": "Hilal Görünce Dua",
+        "meaning": "Allah'ım! Onu üzerimize bereket ve imanla görünür kıl."
+      },
+      "86": {
+        "title": "Şaban Ayı Duası",
+        "meaning": "Allah'ım! Şaban ayını bize bereketli kıl."
+      },
+      "87": {
+        "title": "Mübarek Günler Duası",
+        "meaning": "Allah'ım! Bu günleri mübarek kıl."
+      },
+      "88": {
+        "title": "İstiğfar",
+        "meaning": "Allah'tan bağışlanma dilerim."
+      },
+      "89": {
+        "title": "Tövbe Duası",
+        "meaning": "Allah'a tövbe ederim."
+      },
+      "90": {
+        "title": "Bağışlanma ve Merhamet",
+        "meaning": "Rabbim! Beni bağışla ve bana merhamet et."
+      },
+      "91": {
+        "title": "Nefse Zulüm İtirafı",
+        "meaning": "Allah'ım! Ben nefsime zulmettim."
+      },
+      "92": {
+        "title": "Adem'in Tövbesi",
+        "meaning": "Rabbimiz! Biz nefislerimize zulmettik."
+      },
+      "93": {
+        "title": "En Hayırlı Affedici",
+        "meaning": "Rabbim! Bağışla, merhamet et. Sen merhametlilerin en hayırlısısın."
+      },
+      "94": {
+        "title": "Günahlardan Arınma",
+        "meaning": "Allah'ım! Beni hatalarımdan yıka."
+      },
+      "95": {
+        "title": "Hayy ve Kayyum'a İstiğfar",
+        "meaning": "Hay ve Kayyum olan Allah'tan bağışlanma dilerim."
+      },
+      "96": {
+        "title": "Afüvv-ü Kerim Duası",
+        "meaning": "Allah'ım! Sen affedici ve cömertsin."
+      },
+      "97": {
+        "title": "Unutma ve Hata Affı",
+        "meaning": "Rabbimiz! Unuttuğumuz veya hata ettiğimizde bizi sorumlu tutma."
+      },
+      "98": {
+        "title": "Günahlardan Temizlenme",
+        "meaning": "Allah'ım! Beni günahlardan temizle."
+      },
+      "99": {
+        "title": "Tövbe Ettim",
+        "meaning": "Allah'a tövbe ettim."
+      },
+      "100": {
+        "title": "Tekbir",
+        "meaning": "Allah en büyüktür."
+      },
+      "101": {
+        "title": "Sübhaneke",
+        "meaning": "Allah'ım! Sen her türlü noksandan münezzehsin, hamd Sanadır."
+      },
+      "102": {
+        "title": "Fatiha Suresi",
+        "meaning": "Hamd, âlemlerin Rabbi Allah'a mahsustur."
+      },
+      "103": {
+        "title": "Rükû Tesbihi",
+        "meaning": "Yüce Rabbimi tenzih ederim."
+      },
+      "104": {
+        "title": "Secde Tesbihi",
+        "meaning": "En yüce Rabbimi tenzih ederim."
+      },
+      "105": {
+        "title": "Tahiyyat",
+        "meaning": "Tahiyyat Allah'a mahsustur."
+      },
+      "106": {
+        "title": "Allahümme Salli",
+        "meaning": "Allah'ım! Muhammed'e salât et."
+      },
+      "107": {
+        "title": "Allahümme Barik",
+        "meaning": "Allah'ım! Muhammed'e bereket ver."
+      },
+      "108": {
+        "title": "Rabbena Duası",
+        "meaning": "Rabbimiz! Bize dünyada iyilik ver."
+      },
+      "109": {
+        "title": "Selam",
+        "meaning": "Allah'ın selamı ve rahmeti üzerinize olsun."
+      },
+      "110": {
+        "title": "Selam Sonrası Dua",
+        "meaning": "Allah'ım! Sen selamsın (selamet verensin)."
+      },
+      "111": {
+        "title": "Kunut Duası",
+        "meaning": "Allah'ım! Senden yardım dileriz."
+      },
+      "112": {
+        "title": "Yunus Duası",
+        "meaning": "Senden başka ilah yoktur. Sen yücesin, ben zalimlerden oldum."
+      },
+      "113": {
+        "title": "Keder Duası",
+        "meaning": "Allah'ım! Ben Senin kulunum."
+      },
+      "114": {
+        "title": "Tevekkül Ayeti",
+        "meaning": "Allah bana yeter. O'ndan başka ilah yoktur."
+      },
+      "115": {
+        "title": "Rahmet Ümidi",
+        "meaning": "Allah'ım! Rahmetini umuyorum."
+      },
+      "116": {
+        "title": "Hay ve Kayyum",
+        "meaning": "Ey Hay, ey Kayyum! Rahmetinle yardımını istiyorum."
+      },
+      "117": {
+        "title": "Zorluk Kolaylık Duası",
+        "meaning": "Allah'ım! Senin kolaylaştırdığından başka kolay yoktur."
+      },
+      "118": {
+        "title": "Üzüntüden Korunma",
+        "meaning": "Allah'ım! Üzüntüden Sana sığınırım."
+      },
+      "119": {
+        "title": "Musibet Duası",
+        "meaning": "Şüphesiz biz Allah'a aitiz ve O'na döneceğiz."
+      },
+      "120": {
+        "title": "Sabır Yağmuru",
+        "meaning": "Rabbimiz! Üzerimize sabır yağdır."
+      },
+      "121": {
+        "title": "Allah Benimle",
+        "meaning": "Allah benimle, Allah bana bakıyor."
+      },
+      "122": {
+        "title": "Ümit Ayeti",
+        "meaning": "Allah'ın rahmetinden ümit kesmeyin."
+      },
+      "123": {
+        "title": "Tevekkül Ayeti",
+        "meaning": "Müminler yalnız Allah'a tevekkül etsinler."
+      }
+    }
+  }
+}

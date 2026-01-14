@@ -4,6 +4,7 @@ import { schedulePrayerAlarms, createNotificationChannels, FCMService } from '..
 import { sendNotification, NotificationService, requestNotificationPermission } from '../services/notificationService';
 import { storageService } from '../services/storageService';
 import { TIMING, STORAGE_KEYS } from '../constants';
+import { logger } from '../utils/logger';
 
 /**
  * Prayer Times Management Hook
@@ -45,15 +46,15 @@ export const usePrayerTimes = () => {
 
         try {
           await schedulePrayerAlarms(data.timings, notificationSettings);
-          console.log('[usePrayerTimes] Prayer alarms scheduled');
+          logger.log('[usePrayerTimes] Prayer alarms scheduled');
         } catch (scheduleError) {
-          console.warn('[usePrayerTimes] Failed to schedule prayer alarms:', scheduleError);
+          logger.warn('[usePrayerTimes] Failed to schedule prayer alarms:', scheduleError);
         }
       } else {
         setError('Namaz vakitleri yüklenemedi. Lütfen internet bağlantınızı kontrol edin.');
       }
     } catch (err) {
-      console.error('Prayer times fetch error:', err);
+      logger.error('Prayer times fetch error:', err);
       setError('Namaz vakitleri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
     } finally {
       setLoading(false);
@@ -64,7 +65,7 @@ export const usePrayerTimes = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (loading) {
-        console.warn('[usePrayerTimes] Loading timed out, forcing completion');
+        logger.warn('[usePrayerTimes] Loading timed out, forcing completion');
         setLoading(false);
         if (!timings) {
             setError('Bağlantı zaman aşımına uğradı.');
@@ -81,9 +82,9 @@ export const usePrayerTimes = () => {
       try {
         await createNotificationChannels();
         await FCMService.initialize();
-        console.log('[usePrayerTimes] FCM and notification channels initialized');
+        logger.log('[usePrayerTimes] FCM and notification channels initialized');
       } catch (fcmError) {
-        console.warn('[usePrayerTimes] FCM initialization failed:', fcmError);
+        logger.warn('[usePrayerTimes] FCM initialization failed:', fcmError);
       }
     };
 

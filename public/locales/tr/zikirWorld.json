@@ -1,0 +1,41 @@
+{
+  "title": "Zikir Dünyam",
+  "subtitle": "Uygulamayı kullanmaya başladığından beri zikir istatistiklerin",
+  "statsTitle": "Zikir İstatistiklerim",
+  "totalDhikr": "Toplam Zikir",
+  "days": "Gün",
+  "times": "Sefer",
+  "dailyAvg": "Günlük Ort.",
+  "startDate": "Başlangıç:",
+  "typesTitle": "Zikir Çeşitleri ve Faziletleri",
+  "meaning": "Anlamı:",
+  "reward": "Fazileti:",
+  "quote": "Dikkat edin! Kalpler ancak Allah'ı anmakla huzur bulur.",
+  "quoteRef": "— Ra'd Suresi, 28. Ayet",
+  "types": {
+    "subhanallah": {
+      "meaning": "Allah eksikliklerden münezzehtir",
+      "reward": "Her biri için cennette bir ağaç dikilir"
+    },
+    "elhamdulillah": {
+      "meaning": "Hamd Allah'a mahsustur",
+      "reward": "Terazinin sevap kefesini doldurur"
+    },
+    "allahuekber": {
+      "meaning": "Allah en büyüktür",
+      "reward": "Gök ile yer arasını sevapla doldurur"
+    },
+    "lailaheillallah": {
+      "meaning": "Allah'tan başka ilah yoktur",
+      "reward": "Sözlerin en faziletlisi"
+    },
+    "estagfirullah": {
+      "meaning": "Allah'tan bağışlanma dilerim",
+      "reward": "Günahları siler, rızkı artırır"
+    },
+    "salavat": {
+      "meaning": "Allah'ım Muhammed'e salat et",
+      "reward": "On salat ile karşılık görür"
+    }
+  }
+}

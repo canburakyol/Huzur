@@ -8,6 +8,7 @@ import { VAKIT_THEMES } from '../data/vakitThemes';
 import { THEMES } from '../components/ThemeSelector';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { storageService } from '../services/storageService';
+import { logger } from '../utils/logger';
 
 /**
  * Apply theme colors to document
@@ -38,12 +39,17 @@ const getVakitTheme = (timings) => {
 
   const fajr = getMinutes(timings.Fajr);
   const dhuhr = getMinutes(timings.Dhuhr);
+  const asr = getMinutes(timings.Asr);
   const maghrib = getMinutes(timings.Maghrib);
+  const isha = getMinutes(timings.Isha);
 
   if (timeStr >= fajr && timeStr < dhuhr) return VAKIT_THEMES.FAJR;
-  if (timeStr >= dhuhr && timeStr < maghrib) return VAKIT_THEMES.DAY;
-  if (timeStr >= maghrib || timeStr < fajr) return VAKIT_THEMES.NIGHT;
-  return VAKIT_THEMES.NIGHT;
+  if (timeStr >= dhuhr && timeStr < asr) return VAKIT_THEMES.DAY;
+  if (timeStr >= asr && timeStr < maghrib) return VAKIT_THEMES.DAY; // İkindi de gündüz teması
+  if (timeStr >= maghrib && timeStr < isha) return VAKIT_THEMES.MAGHRIB;
+  if (timeStr >= isha || timeStr < fajr) return VAKIT_THEMES.ISHA;
+  
+  return VAKIT_THEMES.NIGHT; // Fallback
 };
 
 /**
@@ -76,12 +82,12 @@ export const useAppInit = (timings) => {
 
     // Detect and set device language
     detectAndSetLanguage().then((lang) => {
-      console.log('[useAppInit] Device language detected and set:', lang);
+      logger.log('[useAppInit] Device language detected and set:', lang);
     });
 
     // Pro Status Change Listener
     const handleProStatusChange = (event) => {
-      console.log('[useAppInit] Pro status changed:', event.detail);
+      logger.log('[useAppInit] Pro status changed:', event.detail);
       if (event.detail && typeof event.detail.active !== 'undefined') {
         setIsProUser(event.detail.active);
       } else {
@@ -119,7 +125,7 @@ export const useAppInit = (timings) => {
   // Initialize AdMob (skip for Pro users)
   useEffect(() => {
     if (isProUser) {
-      console.log('[useAppInit] Pro user detected - stopping all ads');
+      logger.log('[useAppInit] Pro user detected - stopping all ads');
       adMobService.stopAds();
       return;
     }
@@ -130,7 +136,7 @@ export const useAppInit = (timings) => {
     };
 
     const timeoutId = setTimeout(() => {
-      console.log('[useAppInit] Initializing AdMob (delayed)...');
+      logger.log('[useAppInit] Initializing AdMob (delayed)...');
       initAdMob();
     }, TIMING.ADMOB_DELAY_MS);
 
