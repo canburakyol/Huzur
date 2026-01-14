@@ -10,6 +10,11 @@ build_log.txt
 debug_output.txt
 java_info.txt
 lint_results*.txt
+output*.txt
+sha_output.txt
+translations_output*.json
+test_*.html
+*.mjs
 
 node_modules
 dist
