@@ -32,6 +32,15 @@ dist-ssr
 *.sln
 *.sw?
 
+# AI Agent files (not part of app)
+.agent/
+
+# Store assets & mockups (stored in Play Store Console)
+mockups/
+playstore_images/
+store_assets/
+icons/
+
 # Environment files (SECURITY: API keys, secrets)
 .env
 .env.local
