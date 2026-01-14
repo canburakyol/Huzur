@@ -45,6 +45,27 @@ android/.gradle/
 *.py
 *.cjs
 
+# Development/Debug scripts (JS) - Keep only config files
+check_*.js
+debug_*.js
+verify_*.js
+validate_*.js
+update_*.js
+download_*.js
+fetch_*.js
+scrape_*.js
+probe_*.js
+list_*.js
+compare_*.js
+scan_*.js
+generate-icons.js
+
+# Audit reports & temp files
+*_audit*.json
+*_keys.json
+*_report*.json
+*_report*.md
+
 # Documentation & Notes (not part of app)
 ONERILER.md
 PLAY_STORE_*.md
@@ -53,4 +74,8 @@ SEO_METADATA.md
 CHANGELOG.md
 localization_status_report.md
 
-# Keep README.md (important for repo)
+# Keep these files:
+# - README.md (repo documentation)
+# - vite.config.js (build config)
+# - eslint.config.js (linting config)
+# - .env.example (safe template)
