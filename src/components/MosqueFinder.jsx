@@ -92,35 +92,46 @@ const MosqueFinder = ({ onClose }) => {
         }
     }, []);
 
-    const getLocation = useCallback(() => {
+    const getLocation = useCallback(async () => {
         setLoading(true);
         setError(null);
 
-        if (!navigator.geolocation) {
-            setError('Tarayıcınız konum servisini desteklemiyor');
-            setLoading(false);
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const { latitude, longitude } = position.coords;
-                setLocation([latitude, longitude]);
-                searchMosques(latitude, longitude);
-            },
-            (err) => {
-                console.error('Konum hatası:', err);
-                setLoading(false);
-                if (err.code === 1) {
-                    setError('Konum izni reddedildi. Yakındaki camileri görmek için lütfen konum iznini verin.');
-                } else if (err.code === 2) {
-                    setError('Konum alınamadı. Lütfen GPS\'inizi kontrol edin.');
-                } else {
-                    setError('Konum alınamadı. Lütfen tekrar deneyin.');
+        try {
+            // Capacitor Geolocation ile konum al
+            const { Geolocation } = await import('@capacitor/geolocation');
+            
+            // Önce izin durumunu kontrol et
+            const permissionStatus = await Geolocation.checkPermissions();
+            
+            if (permissionStatus.location !== 'granted') {
+                const request = await Geolocation.requestPermissions();
+                if (request.location !== 'granted') {
+                    throw new Error('PERMISSION_DENIED');
                 }
-            },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
-        );
+            }
+
+            const position = await Geolocation.getCurrentPosition({
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 60000
+            });
+
+            const { latitude, longitude } = position.coords;
+            setLocation([latitude, longitude]);
+            searchMosques(latitude, longitude);
+
+        } catch (err) {
+            console.error('Konum hatası:', err);
+            setLoading(false);
+            
+            if (err.message === 'PERMISSION_DENIED' || err.code === 1) {
+                setError('Konum izni reddedildi. Yakındaki camileri görmek için lütfen konum iznini verin.');
+            } else if (err.code === 2) {
+                setError('Konum alınamadı. Lütfen GPS\'inizi kontrol edin.');
+            } else {
+                setError('Konum alınamadı. Lütfen tekrar deneyin.');
+            }
+        }
     }, [searchMosques]);
 
     useEffect(() => {

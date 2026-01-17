@@ -1,9 +1,9 @@
 import { ExternalLink, Music, Book, Globe, Code, Heart } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
-// import { useTranslation } from 'react-i18next'; // Will use when localized
+import { useTranslation } from 'react-i18next';
 
 const LicensesCredits = ({ onClose }) => {
-    // const { t } = useTranslation(); // Will use when localized
+    const { t } = useTranslation();
 
     const openLink = (url) => {
         window.open(url, '_blank', 'noopener,noreferrer');
@@ -11,7 +11,7 @@ const LicensesCredits = ({ onClose }) => {
 
     const sources = [
         {
-            category: 'Kur\'an-ı Kerim Verileri',
+            category: t('licenses.categories.quranData'),
             icon: <Book size={20} color="#27ae60" />,
             items: [
                 {
@@ -35,7 +35,7 @@ const LicensesCredits = ({ onClose }) => {
             ]
         },
         {
-            category: 'Hafız Tilavetleri',
+            category: t('licenses.categories.recitations'),
             icon: <Music size={20} color="#e67e22" />,
             items: [
                 {
@@ -71,7 +71,7 @@ const LicensesCredits = ({ onClose }) => {
             ]
         },
         {
-            category: 'Namaz Vakitleri',
+            category: t('licenses.categories.prayerTimes'),
             icon: <Globe size={20} color="#3498db" />,
             items: [
                 {
@@ -89,7 +89,7 @@ const LicensesCredits = ({ onClose }) => {
             ]
         },
         {
-            category: 'Açık Kaynak Kütüphaneler',
+            category: t('licenses.categories.openSource'),
             icon: <Code size={20} color="#9b59b6" />,
             items: [
                 {
@@ -141,7 +141,7 @@ const LicensesCredits = ({ onClose }) => {
                     color: 'var(--primary-color)',
                     fontWeight: '700'
                 }}>
-                    📜 Lisanslar ve Kaynaklar
+                    📜 {t('licenses.title')}
                 </h1>
             </div>
 
@@ -154,7 +154,7 @@ const LicensesCredits = ({ onClose }) => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
                     <Heart size={18} color="#e74c3c" />
                     <span style={{ fontWeight: '600', color: 'var(--primary-color)' }}>
-                        Teşekkürler
+                        {t('licenses.thanks')}
                     </span>
                 </div>
                 <p style={{ 
@@ -163,9 +163,7 @@ const LicensesCredits = ({ onClose }) => {
                     margin: 0,
                     lineHeight: '1.6'
                 }}>
-                    Bu uygulama, İslami içerik sağlayan açık kaynak projeler ve toplulukların katkılarıyla 
-                    mümkün olmuştur. Tüm seslendirmeler ve içerikler ilgili kaynaklardan streaming 
-                    yoluyla sunulmaktadır.
+                    {t('licenses.thanksDesc')}
                 </p>
             </div>
 
@@ -251,10 +249,8 @@ const LicensesCredits = ({ onClose }) => {
                     color: 'var(--text-color-muted)',
                     lineHeight: '1.6'
                 }}>
-                    <strong style={{ color: '#e74c3c' }}>⚠️ Yasal Uyarı:</strong> 
-                    {' '}Tüm Kur'an-ı Kerim tilavetleri ve içerikleri ilgili API sağlayıcıları üzerinden 
-                    streaming yoluyla sunulmaktadır. Bu içerikler uygulama içinde depolanmamaktadır. 
-                    Her türlü telif hakkı ilgili sahiplerine aittir.
+                    <strong style={{ color: '#e74c3c' }}>⚠️ {t('licenses.disclaimer')}</strong> 
+                    {' '}{t('licenses.disclaimerDesc')}
                 </div>
             </div>
         </div>

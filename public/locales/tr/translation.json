@@ -361,6 +361,19 @@
     "description": "Uygulama beklenmedik bir hatayla karşılaştı. Lütfen tekrar deneyin.",
     "persistentIssue": "Sorun devam ederse uygulamayı kapatıp tekrar açın."
   },
+  "licenses": {
+    "title": "Lisanslar ve Kaynaklar",
+    "thanks": "Teşekkürler",
+    "thanksDesc": "Bu uygulama, İslami içerik sağlayan açık kaynak projeler ve toplulukların katkılarıyla mümkün olmuştur. Tüm seslendirmeler ve içerikler ilgili kaynaklardan streaming yoluyla sunulmaktadır.",
+    "disclaimer": "Yasal Uyarı:",
+    "disclaimerDesc": "Tüm Kur'an-ı Kerim tilavetleri ve içerikleri ilgili API sağlayıcıları üzerinden streaming yoluyla sunulmaktadır. Bu içerikler uygulama içinde depolanmamaktadır. Her türlü telif hakkı ilgili sahiplerine aittir.",
+    "categories": {
+      "quranData": "Kur'an-ı Kerim Verileri",
+      "recitations": "Hafız Tilavetleri",
+      "prayerTimes": "Namaz Vakitleri",
+      "openSource": "Açık Kaynak Kütüphaneler"
+    }
+  },
   "ads": {
     "closeAd": "REKLAMI KAPAT"
   },
@@ -454,7 +467,7 @@
     "cancel": "İptal",
     "create": "Oluştur",
     "joinTitle": "Hatime Katıl",
-    "joinDesc": "Hatim sahibinden aldığınız 6 haneli kodu girin.",
+    "joinDesc": "Hatim sahibinden aldığınız 8 haneli kodu girin.",
     "placeholderCode": "KODU GİRİN",
     "join": "Katıl",
     "lockedTitle": "Kilitli Hatim",
@@ -471,7 +484,7 @@
     "shareTitle": "Hatim Daveti",
     "messages": {
       "createError": "Hatim oluşturulurken hata oluştu.",
-      "enter6Digit": "Lütfen 6 haneli kodu giriniz.",
+      "enter6Digit": "Lütfen 8 haneli kodu giriniz.",
       "notFound": "Bu kodla eşleşen hatim bulunamadı.",
       "error": "Bir hata oluştu.",
       "enterCode": "Lütfen kodu giriniz.",

@@ -1,7 +1,7 @@
 {
   "name": "huzur-app",
   "private": true,
-  "version": "16.0.0",
+  "version": "17.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@brandonknudsen/admob-native-advanced": "^1.1.2",
     "@capacitor-community/admob": "^7.2.0",
     "@capacitor-firebase/app-check": "^8.0.1",
     "@capacitor/app": "^8.0.0",

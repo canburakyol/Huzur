@@ -38,7 +38,7 @@ service cloud.firestore {
                     && request.resource.data.title.size() > 0
                     && request.resource.data.title.size() <= 100
                     && request.resource.data.accessCode is string
-                    && request.resource.data.accessCode.size() == 6;
+                    && request.resource.data.accessCode.size() == 8;
       
       // Güncelleme: Sadece izin verilen alanlar değiştirilebilir
       allow update: if request.resource.data.diff(resource.data).affectedKeys()

@@ -14,6 +14,11 @@ const Community = ({ onClose }) => {
     const [newDua, setNewDua] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [prayedDuas, setPrayedDuas] = useState(() => {
+        // Initialize from storage
+        const stored = storageService.getItem('prayed_duas') || [];
+        return new Set(stored);
+    });
 
     // Real-time subscription to Firestore
     useEffect(() => {
@@ -58,22 +63,30 @@ const Community = ({ onClose }) => {
     };
 
     const handlePray = async (id) => {
-        // Prevent multiple amins on same dua (per session)
-        const aminKey = `amin_${id}`;
-        if (storageService.getItem(aminKey)) {
-            // Already said amin for this dua
+        // Prevent multiple amins on same dua
+        if (prayedDuas.has(id)) {
             return;
         }
+        
+        // Immediately update UI (optimistic update)
+        const newPrayedDuas = new Set(prayedDuas);
+        newPrayedDuas.add(id);
+        setPrayedDuas(newPrayedDuas);
+        
+        // Save to persistent storage
+        storageService.setItem('prayed_duas', Array.from(newPrayedDuas));
         
         try {
             const duaRef = doc(db, 'duas', id);
             await updateDoc(duaRef, {
                 count: increment(1)
             });
-            // Mark as already prayed for this session
-            storageService.setItem(aminKey, true);
         } catch (error) {
             console.error("Error updating count:", error);
+            // Rollback on error
+            newPrayedDuas.delete(id);
+            setPrayedDuas(new Set(newPrayedDuas));
+            storageService.setItem('prayed_duas', Array.from(newPrayedDuas));
         }
     };
 
@@ -264,14 +277,14 @@ const Community = ({ onClose }) => {
                                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                         <button
                                             onClick={() => handlePray(dua.id)}
-                                            disabled={storageService.getItem(`amin_${dua.id}`)}
+                                            disabled={prayedDuas.has(dua.id)}
                                             style={{
                                                 padding: '8px 16px',
                                                 borderRadius: '20px',
-                                                background: storageService.getItem(`amin_${dua.id}`) ? '#2ecc71' : 'var(--glass-bg)',
-                                                color: storageService.getItem(`amin_${dua.id}`) ? 'white' : 'var(--primary-color)',
-                                                border: storageService.getItem(`amin_${dua.id}`) ? 'none' : '1px solid var(--primary-color)',
-                                                cursor: storageService.getItem(`amin_${dua.id}`) ? 'default' : 'pointer',
+                                                background: prayedDuas.has(dua.id) ? '#2ecc71' : 'var(--glass-bg)',
+                                                color: prayedDuas.has(dua.id) ? 'white' : 'var(--primary-color)',
+                                                border: prayedDuas.has(dua.id) ? 'none' : '1px solid var(--primary-color)',
+                                                cursor: prayedDuas.has(dua.id) ? 'default' : 'pointer',
                                                 display: 'flex', 
                                                 alignItems: 'center', 
                                                 gap: '6px',
@@ -280,8 +293,8 @@ const Community = ({ onClose }) => {
                                                 transition: 'all 0.2s ease'
                                             }}
                                         >
-                                            <Heart size={16} fill={storageService.getItem(`amin_${dua.id}`) ? "white" : "none"} />
-                                            {storageService.getItem(`amin_${dua.id}`) ? t('prayerCircle.prayed') : t('prayerCircle.pray')}
+                                            <Heart size={16} fill={prayedDuas.has(dua.id) ? "white" : "none"} />
+                                            {prayedDuas.has(dua.id) ? t('prayerCircle.prayed') : t('prayerCircle.pray')}
                                         </button>
                                     </div>
                                 </div>

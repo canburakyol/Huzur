@@ -60,18 +60,16 @@ const getVakitTheme = (timings) => {
  * @returns {Object} App state (streak, pro status, badge)
  */
 export const useAppInit = (timings) => {
-  // Calculate streak on initial render (prevents cascading render)
-  // Note: Streak is only calculated once on mount, no setter needed
-  const [streakData] = useState(() => {
+  // Calculate streak ONCE on initial render (prevents double calculation)
+  const [{ streakData, newBadge: initialBadge }] = useState(() => {
     const result = checkAndUpdateStreak();
-    return result.streakData ? getStreakDisplay() : { current: 0, isMilestone: false, emoji: '✨' };
+    return {
+      streakData: result.streakData ? getStreakDisplay() : { current: 0, isMilestone: false, emoji: '✨' },
+      newBadge: result.newBadge || null
+    };
   });
   
-  const [newBadge, setNewBadge] = useState(() => {
-    const result = checkAndUpdateStreak();
-    return result.newBadge || null;
-  });
-  
+  const [newBadge, setNewBadge] = useState(initialBadge);
   const [isProUser, setIsProUser] = useState(() => checkIsPro());
 
 

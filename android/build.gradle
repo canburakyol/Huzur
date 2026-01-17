@@ -31,36 +31,36 @@ allprojects {
         mavenCentral()
     }
 
-    // Force Java 21 for all modules (Android Studio has jbr-21)
+    // Force Java 17 for all modules (Standard for Android builds)
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
             project.android {
                 compileOptions {
-                    sourceCompatibility JavaVersion.VERSION_21
-                    targetCompatibility JavaVersion.VERSION_21
+                    sourceCompatibility JavaVersion.VERSION_17
+                    targetCompatibility JavaVersion.VERSION_17
                 }
             }
         }
 
-        // Force toolchain to 21 for all projects that use it
+        // Force toolchain to 17 for all projects that use it
         if (project.plugins.hasPlugin('org.jetbrains.kotlin.android') || project.plugins.hasPlugin('org.jetbrains.kotlin.jvm')) {
             project.kotlin {
-                jvmToolchain(21)
+                jvmToolchain(17)
             }
         }
         
         if (project.plugins.hasPlugin('java') || project.plugins.hasPlugin('java-library')) {
             project.java {
                 toolchain {
-                    languageVersion = JavaLanguageVersion.of(21)
+                    languageVersion = JavaLanguageVersion.of(17)
                 }
             }
         }
 
-        // Also set Kotlin JVM target to 21
+        // Also set Kotlin JVM target to 17
         project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
             compilerOptions {
-                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
             }
         }
     }

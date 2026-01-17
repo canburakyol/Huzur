@@ -18,6 +18,7 @@ import HomeHeader from './components/HomeHeader';
 import DailyContentGrid from './components/DailyContentGrid';
 import FeatureGrid from './components/FeatureGrid';
 import AdPopup from './components/AdPopup';
+import NativeAdCard from './components/NativeAdCard';
 import PrayerTimeBanner from './components/PrayerTimeBanner';
 
 // Lazy Load Components
@@ -229,6 +230,9 @@ function App() {
 
             {/* Daily Content Grid */}
             <DailyContentGrid dailyContent={dailyContent} />
+
+            {/* Native Advanced Ad */}
+            <NativeAdCard />
 
             {/* Feature Grid */}
             <FeatureGrid onSelectFeature={setActiveFeature} />

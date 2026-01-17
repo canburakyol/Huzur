@@ -7,13 +7,9 @@ const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/
 /**
  * Gemini AI Proxy Function
  * API anahtarını client'dan gizler
- * 
- * Kullanım:
- * const queryGemini = httpsCallable(functions, 'queryGemini');
- * queryGemini({ prompt: "Soru..." })
  */
 exports.queryGemini = functions
-  .region('europe-west1') // Türkiye'ye yakın region
+  .region('europe-west1')
   .https.onCall(async (data, context) => {
     
     // 1. Authentication kontrolü
@@ -33,15 +29,15 @@ exports.queryGemini = functions
     }
 
     try {
-      // 3. Gemini API çağrısı (API key sadece server'da environment variable olarak saklanır)
-      // Firebase config'den al: firebase functions:config:set gemini.apikey="AIza..."
+      // 3. Gemini API çağrısı
+      // Config: firebase functions:config:set gemini.apikey="AIza..."
       const apiKey = functions.config().gemini?.apikey;
       
       if (!apiKey) {
         console.error('Gemini API Key bulunamadı!');
         throw new functions.https.HttpsError(
           'internal',
-          'Sunucu yapılandırma hatası.'
+          'Sunucu yapılandırma hatası (API Key eksik).'
         );
       }
 

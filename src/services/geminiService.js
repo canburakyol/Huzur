@@ -113,67 +113,27 @@ FORMAT:
 - Kaynak belirt (varsa)
 - Kısa bir öğüt/hikmet ekle`;
 
+// NOT: callGeminiDirectly fonksiyonu güvenlik nedeniyle kaldırıldı
+// API anahtarları client-side'da güvenli değil, sadece Cloud Functions kullanılıyor
+
 /**
- * Direct API call to Gemini (Fallback method)
+ * Gemini API'ye istek gönder (Cloud Function üzerinden - güvenli)
+ * @param {string} prompt - Kullanıcı sorusu
+ * @param {string} systemPrompt - Sistem talimatları
+ * @returns {Promise<{success: boolean, content: string, error?: string}>}
  */
-const callGeminiDirectly = async (prompt, systemPrompt) => {
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-  
-  if (!apiKey) {
-    throw new Error('API anahtarı bulunamadı.');
-  }
+import axios from 'axios';
 
-  const fullPrompt = `${systemPrompt}\n\nKullanıcı Sorusu: ${prompt}`;
-  
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [{
-          parts: [{ text: fullPrompt }]
-        }],
-        generationConfig: {
-          temperature: 0.7,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 4096,
-        }
-      })
-    }
-  );
+// ... (existing imports)
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    const errorMessage = errorData.error?.message || `API Hatası: ${response.status}`;
-    
-    if (response.status === 404) {
-      throw new Error('Model bulunamadı veya API anahtarı bu model için yetkisiz (404).');
-    }
-    if (response.status === 429) {
-      throw new Error('API kotası aşıldı (429). Lütfen daha sonra tekrar deneyin.');
-    }
-    
-    throw new Error(errorMessage);
-  }
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
-  const data = await response.json();
-  
-  if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-    return {
-      success: true,
-      content: data.candidates[0].content.parts[0].text
-    };
-  }
-  
-  throw new Error('API yanıtı boş.');
-};
+// ... (throttle config and checkThrottle function remain same)
 
 /**
- * Gemini API'ye istek gönder (Cloud Function öncelikli, Fallback destekli)
+ * Gemini API'ye istek gönder (Client-side Direct Call)
+ * Cloud Functions ücretli plan gerektirdiği için doğrudan çağrı yapılıyor.
  * @param {string} prompt - Kullanıcı sorusu
  * @param {string} systemPrompt - Sistem talimatları
  * @returns {Promise<{success: boolean, content: string, error?: string}>}
@@ -193,73 +153,60 @@ export const generateContent = async (prompt, systemPrompt = NUZUL_SYSTEM_PROMPT
   recordRequest();
 
   try {
-    // 1. Yöntem: Cloud Function (Öncelikli)
-    logger.log('[GeminiService] Cloud Function deneniyor...');
-    const queryGemini = httpsCallable(functions, 'queryGemini');
-    
-    const fullPrompt = `${systemPrompt}\n\nKullanıcı Sorusu: ${prompt}`;
-    
-    const result = await queryGemini({
-      prompt: fullPrompt,
-      generationConfig: {
-        temperature: 0.7,
-        topK: 40,
-        topP: 0.95,
-        maxOutputTokens: 4096
-      }
-    });
-    
-    const data = result.data;
-    
-    if (data.success) {
-      return {
-        success: true,
-        content: data.content
-      };
-    } else {
-      throw new Error(data.error || 'Cloud Function hatası');
-    }
-    
-  } catch (error) {
-    logger.warn('[GeminiService] Cloud Function başarısız, fallback deneniyor:', error);
-    
-    // 2. Yöntem: Direct API (Fallback)
-    // Sadece API anahtarı varsa dene
-    if (import.meta.env.VITE_GEMINI_API_KEY) {
-      try {
-        logger.log('[GeminiService] Direct API fallback kullanılıyor...');
-        return await callGeminiDirectly(prompt, systemPrompt);
-      } catch (fallbackError) {
-        logger.error('[GeminiService] Fallback error:', fallbackError);
-        return {
-          success: false,
-          content: '',
-          error: 'Servis şu an kullanılamıyor. Lütfen daha sonra tekrar deneyin.'
-        };
-      }
+    if (!GEMINI_API_KEY) {
+       logger.error('[GeminiService] API Key eksik!');
+       return {
+         success: false,
+         content: '',
+         error: 'API yapılandırma hatası.'
+       };
     }
 
-    // Firebase Functions hataları (Fallback yoksa)
-    if (error.code === 'unauthenticated') {
-      return {
-        success: false,
-        content: '',
-        error: 'Bu özelliği kullanmak için giriş yapmalısınız.'
-      };
+    const fullPrompt = `${systemPrompt}\n\nKullanıcı Sorusu: ${prompt}`;
+    
+    logger.log('[GeminiService] API isteği gönderiliyor...');
+
+    const response = await axios.post(
+      `${GEMINI_API_URL}?key=${GEMINI_API_KEY}`,
+      {
+        contents: [{ parts: [{ text: fullPrompt }] }],
+        generationConfig: {
+            temperature: 0.7,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 4096
+        }
+      },
+      { timeout: 30000 }
+    );
+
+    if (response.data.candidates && response.data.candidates[0]?.content?.parts?.[0]?.text) {
+        return {
+          success: true,
+          content: response.data.candidates[0].content.parts[0].text
+        };
     }
     
-    if (error.code === 'resource-exhausted') {
-      return {
-        success: false,
-        content: '',
-        error: 'Çok fazla istek gönderildi. Lütfen biraz bekleyin.'
-      };
-    }
+    throw new Error('API yanıtı boş veya geçersiz format');
+
+  } catch (error) {
+    logger.error('[GeminiService] API Error:', error);
     
+    // Hata mesajlarını kullanıcı dostu hale getir
+    let errorMessage = 'Bir hata oluştu. Lütfen tekrar deneyin.';
+    
+    if (error.response) {
+        if (error.response.status === 429) errorMessage = 'Çok fazla istek. Lütfen bekleyin.';
+        else if (error.response.status === 403) errorMessage = 'Erişim reddedildi (API Key hatası).';
+        else if (error.response.status >= 500) errorMessage = 'Sunucu hatası. Daha sonra tekrar deneyin.';
+    } else if (error.code === 'ERR_NETWORK') {
+        errorMessage = 'İnternet bağlantınızı kontrol edin.';
+    }
+
     return {
       success: false,
       content: '',
-      error: error.message || 'Bir hata oluştu. Lütfen tekrar deneyin.'
+      error: errorMessage
     };
   }
 };

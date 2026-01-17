@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ChevronRight, ChevronDown, Book, Search, Volume2, X, Lock, Play, Pause, Crown, Sparkles } from 'lucide-react';
 import { LIBRARY_CATEGORIES, BOOKS, RELIGIOUS_TEXTS, EDUCATION, REFERENCES, FAQ, AUDIO, VIDEO, PRAYERS } from '../data/libraryData';
 import { getReciters, getAudioUrlSync } from '../services/quranService';
@@ -7,6 +8,7 @@ import { isPro } from '../services/proService';
 import IslamicBackButton from './shared/IslamicBackButton';
 
 function Library({ onClose, onShowPro }) {
+    const { t } = useTranslation();
     const [activeCategory, setActiveCategory] = useState(null);
     const [activeItem, setActiveItem] = useState(null);
     const [activeReciter, setActiveReciter] = useState(null);
@@ -218,7 +220,7 @@ function Library({ onClose, onShowPro }) {
     // Get current title for header
     const getTitle = () => {
         if (activeReciter) return activeReciter.name;
-        if (activeItem) return activeItem.title || activeItem.category;
+        if (activeItem) return activeItem.title ? t(activeItem.title, { ns: 'prayers' }) : activeItem.category;
         if (activeCategory) return LIBRARY_CATEGORIES.find(c => c.id === activeCategory)?.title;
         return 'Kütüphane';
     };
@@ -371,7 +373,7 @@ function Library({ onClose, onShowPro }) {
                             <div style={{ flex: 1 }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                     <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '16px' }}>
-                                        {item.title || item.category}
+                                        {item.title ? (item.type === 'prayer' ? t(item.title, { ns: 'prayers' }) : item.title) : item.category}
                                     </div>
                                     {item.isPro && <Lock size={14} color="var(--primary-color)" />}
                                 </div>
@@ -553,16 +555,18 @@ function Library({ onClose, onShowPro }) {
             return (
                 <div>
                     <div className="glass-card" style={{ padding: '24px', textAlign: 'center' }}>
-                        <div style={{ 
-                            fontSize: '14px', 
-                            color: 'var(--primary-color)', 
-                            fontWeight: '600',
-                            marginBottom: '8px',
-                            textTransform: 'uppercase',
-                            letterSpacing: '1px'
-                        }}>
-                            {activeItem.prophet}
-                        </div>
+                        {activeItem.prophet && (
+                            <div style={{ 
+                                fontSize: '14px', 
+                                color: 'var(--primary-color)', 
+                                fontWeight: '600',
+                                marginBottom: '8px',
+                                textTransform: 'uppercase',
+                                letterSpacing: '1px'
+                            }}>
+                                {activeItem.prophet}
+                            </div>
+                        )}
                         
                         <h2 style={{ 
                             fontSize: '24px', 
@@ -570,17 +574,19 @@ function Library({ onClose, onShowPro }) {
                             marginBottom: '16px',
                             fontWeight: '700'
                         }}>
-                            {activeItem.title}
+                            {t(activeItem.title)}
                         </h2>
 
-                        <div style={{ 
-                            fontSize: '14px', 
-                            color: 'var(--text-color-muted)',
-                            marginBottom: '24px',
-                            fontStyle: 'italic'
-                        }}>
-                            "{activeItem.situation}"
-                        </div>
+                        {activeItem.situation && (
+                            <div style={{ 
+                                fontSize: '14px', 
+                                color: 'var(--text-color-muted)',
+                                marginBottom: '24px',
+                                fontStyle: 'italic'
+                            }}>
+                                "{activeItem.situation}"
+                            </div>
+                        )}
 
                         <div style={{ 
                             background: 'rgba(212, 175, 55, 0.05)', 
@@ -605,7 +611,7 @@ function Library({ onClose, onShowPro }) {
                                 marginBottom: '16px',
                                 lineHeight: '1.6'
                             }}>
-                                {activeItem.turkish}
+                                {activeItem.transliteration || activeItem.turkish}
                             </div>
 
                             <div style={{ 
@@ -614,41 +620,15 @@ function Library({ onClose, onShowPro }) {
                                 fontWeight: '500',
                                 lineHeight: '1.6'
                             }}>
-                                {activeItem.meaning}
+                                {t(activeItem.meaning)}
                             </div>
                         </div>
 
-                        <div style={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'space-between',
-                            marginTop: '24px'
-                        }}>
-                            <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                        {activeItem.source && (
+                            <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginTop: '24px', textAlign: 'center' }}>
                                 Kaynak: {activeItem.source}
                             </div>
-
-                            <button
-                                onClick={(e) => toggleAudio(audioUrl, activeItem.id, e)}
-                                style={{
-                                    background: 'var(--primary-color)',
-                                    color: '#fff',
-                                    border: 'none',
-                                    borderRadius: '50px',
-                                    padding: '12px 24px',
-                                    fontSize: '16px',
-                                    fontWeight: '600',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    boxShadow: '0 4px 15px rgba(212, 175, 55, 0.3)'
-                                }}
-                            >
-                                {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-                                {isPlaying ? 'Durdur' : 'Dinle'}
-                            </button>
-                        </div>
+                        )}
                     </div>
                 </div>
             );

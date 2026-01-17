@@ -406,7 +406,7 @@
     "cancel": "Cancel",
     "create": "Create",
     "joinTitle": "Join Hatim",
-    "joinDesc": "Enter the 6-digit code received from the Hatim owner.",
+    "joinDesc": "Enter the 8-digit code received from the Hatim owner.",
     "placeholderCode": "ENTER CODE",
     "join": "Join",
     "lockedTitle": "Locked Hatim",
@@ -423,7 +423,7 @@
     "shareTitle": "Hatim Invitation",
     "messages": {
       "createError": "An error occurred while creating Hatim.",
-      "enter6Digit": "Please enter the 6-digit code.",
+      "enter6Digit": "Please enter the 8-digit code.",
       "notFound": "No hatim found matching this code.",
       "error": "An error occurred.",
       "enterCode": "Please enter the code.",

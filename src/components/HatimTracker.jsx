@@ -102,8 +102,8 @@ const HatimTracker = ({ onClose }) => {
     };
 
     const joinHatimWithCode = async () => {
-        if (!joinCode.trim() || joinCode.length !== 6) {
-            setJoinError(t('hatim.messages.enter6Digit'));
+        if (!joinCode.trim() || joinCode.length !== 8) {
+            setJoinError(t('hatim.messages.enterCode'));
             return;
         }
         try {
@@ -407,7 +407,7 @@ const HatimTracker = ({ onClose }) => {
         <div style={cardStyle}>
             <h3 style={{ marginTop: 0, display: 'flex', alignItems: 'center', gap: '10px', color: textDark }}><Key size={24} color={primaryColor} /> {t('hatim.joinTitle')}</h3>
             <p style={{ fontSize: '14px', color: textLight, marginBottom: '20px' }}>{t('hatim.joinDesc')}</p>
-            <input type="text" value={joinCode} onChange={(e) => { setJoinCode(e.target.value.toUpperCase()); setJoinError(''); }} placeholder={t('hatim.placeholderCode')} maxLength={6} style={{ ...inputStyle, textAlign: 'center', fontSize: '24px', letterSpacing: '8px', fontWeight: 'bold', textTransform: 'uppercase', fontFamily: 'monospace' }} />
+            <input type="text" value={joinCode} onChange={(e) => { setJoinCode(e.target.value.toUpperCase()); setJoinError(''); }} placeholder={t('hatim.placeholderCode')} maxLength={8} style={{ ...inputStyle, textAlign: 'center', fontSize: '24px', letterSpacing: '6px', fontWeight: 'bold', textTransform: 'uppercase', fontFamily: 'monospace' }} />
             {joinError && <div style={{ color: '#ef4444', fontSize: '14px', marginBottom: '15px', textAlign: 'center', background: '#fee2e2', padding: '10px', borderRadius: '8px' }}>{joinError}</div>}
             <div style={{ display: 'flex', gap: '12px' }}>
                 <button onClick={() => { setView('list'); setJoinCode(''); setJoinError(''); }} style={btnStyle(false)}>{t('hatim.cancel')}</button>
@@ -427,7 +427,7 @@ const HatimTracker = ({ onClose }) => {
                     <strong>{t('hatim.lockedDesc', { title: pendingHatim?.title })}</strong>
                 </p>
             </div>
-            <input type="text" value={joinCode} onChange={(e) => { setJoinCode(e.target.value.toUpperCase()); setJoinError(''); }} placeholder={t('hatim.placeholderShortCode')} maxLength={6} style={{ ...inputStyle, textAlign: 'center', fontSize: '24px', letterSpacing: '8px', fontWeight: 'bold', textTransform: 'uppercase', fontFamily: 'monospace' }} />
+            <input type="text" value={joinCode} onChange={(e) => { setJoinCode(e.target.value.toUpperCase()); setJoinError(''); }} placeholder={t('hatim.placeholderCode')} maxLength={8} style={{ ...inputStyle, textAlign: 'center', fontSize: '24px', letterSpacing: '6px', fontWeight: 'bold', textTransform: 'uppercase', fontFamily: 'monospace' }} />
             {joinError && <div style={{ color: '#ef4444', fontSize: '14px', marginBottom: '15px', textAlign: 'center', background: '#fee2e2', padding: '10px', borderRadius: '8px' }}>{joinError}</div>}
             <div style={{ display: 'flex', gap: '12px' }}>
                 <button onClick={() => { setView('list'); setPendingHatim(null); setJoinCode(''); setJoinError(''); }} style={btnStyle(false)}>{t('hatim.giveUp')}</button>
