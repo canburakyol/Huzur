@@ -1,16 +1,45 @@
-import { NativeAd } from '@brandonknudsen/admob-native-advanced';
+import { AdMobNativeAdvanced } from '@brandonknudsen/admob-native-advanced';
 import { Capacitor } from '@capacitor/core';
 import { isPro } from './proService';
-import { logger } from '../utils/logger';
 
-// Ad Unit IDs
+// AdMob App ID and Ad Unit IDs
+const ADMOB_APP_ID = 'ca-app-pub-3074026744164717~7167273995';
 const REAL_NATIVE_ID = 'ca-app-pub-3074026744164717/7450989229';
 const TEST_NATIVE_ID = 'ca-app-pub-3940256099942544/2247696110'; // Google Test ID
 
 const isDev = import.meta.env.DEV;
 
+let isInitialized = false;
+let currentAdId = null;
+
 export const nativeAdService = {
     adData: null,
+
+    /**
+     * Initialize AdMob SDK
+     */
+    initialize: async () => {
+        if (Capacitor.getPlatform() === 'web') {
+            console.log('NativeAdService: Web platform - skipped init');
+            return false;
+        }
+
+        if (isInitialized) {
+            console.log('NativeAdService: Already initialized');
+            return true;
+        }
+
+        try {
+            console.log('NativeAdService: Initializing with app ID:', ADMOB_APP_ID);
+            await AdMobNativeAdvanced.initialize({ appId: ADMOB_APP_ID });
+            isInitialized = true;
+            console.log('NativeAdService: Initialized successfully');
+            return true;
+        } catch (e) {
+            console.error('NativeAdService: Init Error:', e);
+            return false;
+        }
+    },
 
     /**
      * Load a Native Advanced Ad
@@ -18,25 +47,36 @@ export const nativeAdService = {
      */
     load: async () => {
         if (Capacitor.getPlatform() === 'web') {
-            logger.log('NativeAd: Web platform - skipped');
+            console.log('NativeAdService: Web platform - skipped load');
             return null;
         }
 
         if (isPro()) {
-            logger.log('NativeAd: Pro user - skipped');
+            console.log('NativeAdService: Pro user - skipped load');
             return null;
         }
 
+        // Ensure initialized
+        if (!isInitialized) {
+            const initSuccess = await nativeAdService.initialize();
+            if (!initSuccess) {
+                console.log('NativeAdService: Failed to initialize, skipping load');
+                return null;
+            }
+        }
+
         try {
-            const adId = isDev ? TEST_NATIVE_ID : REAL_NATIVE_ID;
-            logger.log('NativeAd: Loading ad...', { adId });
+            const adUnitId = isDev ? TEST_NATIVE_ID : REAL_NATIVE_ID;
+            console.log('NativeAdService: Loading ad with unit ID:', adUnitId);
             
-            const result = await NativeAd.loadAd({ adId });
+            const result = await AdMobNativeAdvanced.loadAd({ adUnitId });
+            console.log('NativeAdService: Ad loaded result:', result);
+            
             nativeAdService.adData = result;
-            logger.log('NativeAd: Ad loaded successfully');
+            currentAdId = result.adId;
             return result;
         } catch (e) {
-            logger.error('NativeAd: Load Error', e);
+            console.error('NativeAdService: Load Error:', e);
             return null;
         }
     },
@@ -45,12 +85,12 @@ export const nativeAdService = {
      * Record impression when ad is viewed
      */
     recordImpression: async () => {
-        if (nativeAdService.adData) {
+        if (currentAdId) {
             try {
-                await NativeAd.recordImpression();
-                logger.log('NativeAd: Impression recorded');
+                await AdMobNativeAdvanced.reportImpression(currentAdId);
+                console.log('NativeAdService: Impression recorded for:', currentAdId);
             } catch (e) {
-                logger.error('NativeAd: Record Impression Error', e);
+                console.error('NativeAdService: Record Impression Error:', e);
             }
         }
     },
@@ -59,12 +99,12 @@ export const nativeAdService = {
      * Handle click on ad
      */
     handleClick: async () => {
-        if (nativeAdService.adData) {
+        if (currentAdId) {
             try {
-                await NativeAd.performClick();
-                logger.log('NativeAd: Click performed');
+                await AdMobNativeAdvanced.reportClick(currentAdId);
+                console.log('NativeAdService: Click reported for:', currentAdId);
             } catch (e) {
-                logger.error('NativeAd: Click Error', e);
+                console.error('NativeAdService: Click Error:', e);
             }
         }
     }

@@ -16,6 +16,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyCeVOImKI8eh9aLCPoLCP3CxhG995WMTA8"
+        },
+        {
+          "current_key": "AIzaSyDDEMa4Qi_ST5Dh-HHpOAuM6VOdEiL23d4"
         }
       ],
       "services": {
@@ -23,7 +26,29 @@
           "other_platform_oauth_client": []
         }
       },
-      "admob_app_id": "ca-app-pub-3074026744164717~7167273995"
+      "admob_app_id": "ca-app-pub-3074026744164717~1686898368"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210354977982:android:9db6ecabaf440a1a27b2ef",
+        "android_client_info": {
+          "package_name": "com.varlik.finans.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeVOImKI8eh9aLCPoLCP3CxhG995WMTA8"
+        },
+        {
+          "current_key": "AIzaSyDDEMa4Qi_ST5Dh-HHpOAuM6VOdEiL23d4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -39,7 +40,8 @@
         <!-- AdMob App ID (Required to prevent crash) -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3074026744164717~7167273995"/>
+            android:value="ca-app-pub-3074026744164717~7167273995"
+            tools:replace="android:value"/>
     </application>
 
     <!-- Permissions -->

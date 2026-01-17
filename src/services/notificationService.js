@@ -54,23 +54,38 @@ export const schedulePrayerNotifications = async (prayerTimes, settings = {}) =>
     // Dosya adları: ezan_default.mp3, ezan_mecca.mp3 vb. (Native'de uzantısız olabilir: ezan_mecca)
     const soundName = `ezan_${savedMuezzinId}`; 
 
+    // Prayer name translations (only valid prayer times)
+    const prayerNames = {
+        Fajr: 'Sabah',
+        Sunrise: 'Güneş',
+        Dhuhr: 'Öğle',
+        Asr: 'İkindi',
+        Maghrib: 'Akşam',
+        Isha: 'Yatsı'
+    };
+
+    // Valid prayer keys (filter out API extras like Firstthird, Lastthird, Midnight, Imsak)
+    const validPrayerKeys = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+
     const notifications = [];
     let idCounter = 2000;
 
-    Object.entries(prayerTimes).forEach(([name, timeStr]) => {
-        if (!timeStr) return;
+    Object.entries(prayerTimes).forEach(([key, timeStr]) => {
+        // Skip invalid keys and empty values
+        if (!timeStr || !validPrayerKeys.includes(key)) return;
 
+        const name = prayerNames[key] || key;
+        
         // Saat stringini (HH:mm) Date objesine çevir
         const [hours, minutes] = timeStr.split(':').map(Number);
         const prayerDate = new Date();
         prayerDate.setHours(hours, minutes, 0, 0);
 
-        // Eğer vakit geçtiyse yarına planla (Basit mantık, detaylandırılabilir)
+        // Eğer vakit geçtiyse yarına planla
         if (prayerDate < new Date()) {
             prayerDate.setDate(prayerDate.getDate() + 1);
         }
 
-        // 1. Ana Vakit Bildirimi
         notifications.push({
             id: idCounter++,
             title: `Ezan Vakti: ${name}`,
