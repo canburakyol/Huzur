@@ -41,7 +41,6 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
         { id: 'missedPrayers', icon: '📝', labelKey: 'menu.missedPrayers', component: 'missedPrayers' },
         { id: 'islamicMeditation', icon: '🧘', labelKey: 'menu.islamicMeditation', component: 'islamicMeditation' },
         { id: 'seerahMap', icon: '🗺️', labelKey: 'menu.seerahMap', component: 'seerahMap' },
-        { id: 'spiritualCoach', icon: '🤖', labelKey: 'menu.spiritualCoach', component: 'spiritualCoach' },
         { id: 'pro', icon: '👑', labelKey: 'menu.goPro', component: 'pro' },
     ];
 

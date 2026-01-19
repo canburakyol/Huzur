@@ -13,10 +13,6 @@ const ProUpgrade = ({ onClose }) => {
   const [error, setError] = useState(null);
   const [restoreResult, setRestoreResult] = useState(null); // 'success' | 'not_found' | null
 
-  useEffect(() => {
-    loadOfferings();
-  }, [loadOfferings]);
-
   const loadOfferings = useCallback(async () => {
     // Platform kontrolü
     const isNativePlatform = window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false;
@@ -61,6 +57,10 @@ const ProUpgrade = ({ onClose }) => {
       setLoading(false);
     }
   }, [t]);
+
+  useEffect(() => {
+    loadOfferings();
+  }, [loadOfferings]);
 
   const handlePurchase = async (pkg) => {
     setProcessing(true);

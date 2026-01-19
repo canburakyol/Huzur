@@ -588,6 +588,45 @@ const Settings = ({ onClose }) => {
                     </div>
                 </div>
 
+                {/* Reklamları Kaldır */}
+                <div style={{
+                    marginBottom: '16px',
+                    padding: '16px',
+                    background: 'var(--card-bg)',
+                    borderRadius: '14px',
+                    border: '1px solid var(--glass-border)'
+                }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <Shield size={22} color="#f1c40f" />
+                            <div>
+                                <div style={{ fontWeight: '600', fontSize: '15px' }}>Reklamları Kaldır</div>
+                                <div style={{ fontSize: '13px', color: 'var(--text-color-light)' }}>
+                                    Reklamsız deneyim için Pro'ya geçin
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => {
+                                onClose();
+                                window.dispatchEvent(new CustomEvent('openFeature', { detail: 'pro' }));
+                            }}
+                            style={{
+                                padding: '8px 16px',
+                                background: 'linear-gradient(135deg, #f1c40f 0%, #f39c12 100%)',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '20px',
+                                fontSize: '13px',
+                                fontWeight: '600',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            İncele
+                        </button>
+                    </div>
+                </div>
+
                 {/* Yasal */}
                 <div style={{
                     padding: '16px',
