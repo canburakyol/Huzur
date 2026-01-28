@@ -33,7 +33,7 @@ dist-ssr
 *.sw?
 
 # AI Agent files (not part of app)
-.agent/
+
 
 # Store assets & mockups (stored in Play Store Console)
 mockups/

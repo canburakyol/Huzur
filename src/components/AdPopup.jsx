@@ -10,6 +10,7 @@ const AdPopup = () => {
     const popupCountRef = useRef(0);
 
     useEffect(() => {
+        let isMounted = true;
         // Skip ads for Pro users
         if (isPro()) {
             return;
@@ -25,7 +26,7 @@ const AdPopup = () => {
 
             timer = setTimeout(async () => {
                 // Double-check limit and Pro status before showing
-                if (popupCountRef.current >= MAX_POPUPS_PER_SESSION || isPro()) {
+                if (!isMounted || popupCountRef.current >= MAX_POPUPS_PER_SESSION || isPro()) {
                     return;
                 }
 
@@ -36,8 +37,10 @@ const AdPopup = () => {
                 await adMobService.showMediumRectangle();
 
                 // 3. Show overlay UI
-                setShowPopup(true);
-                popupCountRef.current += 1;
+                if (isMounted) {
+                    setShowPopup(true);
+                    popupCountRef.current += 1;
+                }
             }, POPUP_INTERVAL);
         };
 
@@ -45,6 +48,7 @@ const AdPopup = () => {
 
         // Cleanup on unmount
         return () => {
+            isMounted = false;
             if (timer) clearTimeout(timer);
         };
     }, []); // Run once on mount

@@ -81,12 +81,11 @@ const Community = ({ onClose }) => {
             await updateDoc(duaRef, {
                 count: increment(1)
             });
-        } catch (error) {
-            console.error("Error updating count:", error);
-            // Rollback on error
-            newPrayedDuas.delete(id);
-            setPrayedDuas(new Set(newPrayedDuas));
-            storageService.setItem('prayed_duas', Array.from(newPrayedDuas));
+        } catch {
+            // Rollback on error by creating a new Set without the id
+            const rollbackSet = new Set(prayedDuas);
+            setPrayedDuas(rollbackSet);
+            storageService.setItem('prayed_duas', Array.from(rollbackSet));
         }
     };
 

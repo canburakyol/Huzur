@@ -2,61 +2,29 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // ========================================
-    // DUA KARDEŞLİĞİ (duas collection)
-    // ========================================
+    // Existing rules for Huzur App
     match /duas/{duaId} {
-      // Herkes duaları okuyabilir
       allow read: if true;
-      
-      // Yeni dua oluşturma: Sadece geçerli formatta
-      allow create: if request.resource.data.keys().hasAll(['text', 'count', 'date'])
-                    && request.resource.data.text is string
-                    && request.resource.data.text.size() > 0
-                    && request.resource.data.text.size() <= 500
-                    && request.resource.data.count == 0
-                    && request.resource.data.date is string;
-      
-      // Güncelleme: Sadece 'count' alanı 1 artırılabilir
-      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['count'])
-                    && request.resource.data.count == resource.data.count + 1;
-      
-      // Silme: Kimse silemez
-      allow delete: if false;
+      allow create: if request.resource.data.keys().hasAll(['text', 'count', 'date']);
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['count']);
     }
     
-    // ========================================
-    // HATİM TAKİBİ (hatims collection)
-    // ========================================
     match /hatims/{hatimId} {
-      // Herkes hatimleri okuyabilir (erişim kodu UI'da kontrol edilir)
       allow read: if true;
-      
-      // Yeni hatim oluşturma: Geçerli format kontrolü
-      allow create: if request.resource.data.keys().hasAll(['title', 'createdAt', 'createdBy', 'participants', 'parts', 'accessCode'])
-                    && request.resource.data.title is string
-                    && request.resource.data.title.size() > 0
-                    && request.resource.data.title.size() <= 100
-                    && request.resource.data.accessCode is string
-                    && request.resource.data.accessCode.size() == 8;
-      
-      // Güncelleme: Sadece izin verilen alanlar değiştirilebilir
-      allow update: if request.resource.data.diff(resource.data).affectedKeys()
-                       .hasOnly(['participants', 'parts', 'completedParts'])
-                    // Temel alanlar değiştirilemez
-                    && request.resource.data.title == resource.data.title
-                    && request.resource.data.accessCode == resource.data.accessCode
-                    && request.resource.data.createdAt == resource.data.createdAt
-                    && request.resource.data.createdBy == resource.data.createdBy;
-      
-      // Silme: Kimse silemez
-      allow delete: if false;
+      allow create: if request.resource.data.keys().hasAll(['title', 'createdAt', 'createdBy', 'participants', 'parts', 'accessCode']);
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['participants', 'parts', 'completedParts']);
+    }
+
+    // New rules for X-Algo Viral App
+    match /viral_history/{docId} {
+      allow read, write: if true; // In production, this should be restricted to authenticated users
     }
     
-    // ========================================
-    // DİĞER TÜM COLLECTION'LAR
-    // Varsayılan olarak erişim yok
-    // ========================================
+    match /trends/{docId} {
+      allow read: if true;
+      allow write: if false; // Only admin/functions should write trends
+    }
+    
     match /{document=**} {
       allow read, write: if false;
     }

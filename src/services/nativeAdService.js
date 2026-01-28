@@ -69,12 +69,22 @@ export const nativeAdService = {
             const adUnitId = isDev ? TEST_NATIVE_ID : REAL_NATIVE_ID;
             console.log('NativeAdService: Loading ad with unit ID:', adUnitId);
             
+            if (!AdMobNativeAdvanced) {
+                console.warn('NativeAdService: Plugin not available');
+                return null;
+            }
+
             const result = await AdMobNativeAdvanced.loadAd({ adUnitId });
             console.log('NativeAdService: Ad loaded result:', result);
             
-            nativeAdService.adData = result;
-            currentAdId = result.adId;
-            return result;
+            if (result && result.adId) {
+                nativeAdService.adData = result;
+                currentAdId = result.adId;
+                return result;
+            } else {
+                console.warn('NativeAdService: Ad loaded but result is invalid');
+                return null;
+            }
         } catch (e) {
             console.error('NativeAdService: Load Error:', e);
             return null;

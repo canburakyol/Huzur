@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "huzur-app-c01b7"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }

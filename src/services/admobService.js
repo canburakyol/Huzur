@@ -73,6 +73,10 @@ export const adMobService = {
         if (Capacitor.getPlatform() === 'web') return;
 
         try {
+            if (!AdMob) {
+                logger.warn('AdMob: Plugin not available');
+                return;
+            }
             await AdMob.showBanner({
                 adId: BANNER_ID,
                 adSize: BannerAdSize.BANNER, // Standard banner (320x50)
@@ -94,6 +98,10 @@ export const adMobService = {
         if (Capacitor.getPlatform() === 'web') return;
 
         try {
+            if (!AdMob) {
+                logger.warn('AdMob: Plugin not available');
+                return;
+            }
             await AdMob.showBanner({
                 adId: BANNER_ID, // Using same ID for now (or use specific if available)
                 adSize: BannerAdSize.MEDIUM_RECTANGLE, // 300x250
