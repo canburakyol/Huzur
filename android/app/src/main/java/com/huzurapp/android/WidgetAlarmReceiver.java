@@ -163,14 +163,8 @@ public class WidgetAlarmReceiver extends BroadcastReceiver {
                         pendingIntent
                     );
                 }
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                // Android 6-11
-                alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.getTimeInMillis(),
-                    pendingIntent
-                );
             } else {
+                // Android 7-11 (minSdk is 24, so no need to check for API 23)
                 // Android 6 öncesi
                 alarmManager.setExact(
                     AlarmManager.RTC_WAKEUP,

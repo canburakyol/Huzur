@@ -4,4 +4,10 @@
     <string name="title_activity_main">Huzur</string>
     <string name="package_name">com.huzurapp.android</string>
     <string name="custom_url_scheme">com.huzurapp.android</string>
+    <!-- Widget Strings -->
+    <string name="widget_prayer_time" translatable="false">Prayer Time</string>
+    <string name="widget_default_location" translatable="false">Huzur App</string>
+    <string name="widget_time_placeholder" translatable="false">--:--</string>
+    <string name="widget_next_prayer_label" translatable="false">Vakit</string>
+    <string name="widget_app_name" translatable="false">Huzur App</string>
 </resources>

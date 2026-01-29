@@ -126,9 +126,9 @@
 -flattenpackagehierarchy
 -allowaccessmodification
 
-# String encryption for sensitive constants
--encryptstrings class com.huzurapp.android.** {
-    java.lang.String PRO_*;
-    java.lang.String SUBSCRIPTION_*;
-    java.lang.String REVENUECAT_*;
-}
+# Note: String encryption requires commercial ProGuard/DexGuard
+# R8 (Android's default shrinker) does not support -encryptstrings
+# For Pro subscription security, we rely on:
+# 1. Server-side validation (Firestore Rules)
+# 2. Obfuscation (ProGuard/R8)
+# 3. ProGuard dictionary for class name obfuscation

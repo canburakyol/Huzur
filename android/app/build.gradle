@@ -56,7 +56,7 @@ dependencies {
     implementation project(':capacitor-cordova-android-plugins')
     
     // Firebase BoM - Tüm Firebase kütüphanelerinin uyumlu versiyonlarını yönetir
-    implementation platform('com.google.firebase:firebase-bom:34.7.0')
+    implementation platform('com.google.firebase:firebase-bom:34.8.0')
     
     // Firebase Analytics - Uygulama kullanım istatistikleri
     implementation 'com.google.firebase:firebase-analytics'

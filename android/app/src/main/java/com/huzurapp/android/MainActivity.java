@@ -5,6 +5,9 @@ import com.huzurapp.android.BuildConfig;
 import android.util.Log;
 import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.Plugin;
+import com.getcapacitor.PluginCall;
+import com.getcapacitor.JSObject;
+import com.getcapacitor.annotation.CapacitorPlugin;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory;
@@ -93,49 +96,49 @@ public class MainActivity extends BridgeActivity {
     @com.getcapacitor.annotation.CapacitorPlugin(name = "AppCheck")
     public static class AppCheckPlugin extends Plugin {
         
-        @com.getcapacitor.annotation.PluginMethod
-        public void getAppCheckStatus(com.getcapacitor.PluginCall call) {
+        @com.getcapacitor.annotation.PermissionCallback
+        public void getAppCheckStatus(PluginCall call) {
             try {
                 FirebaseAppCheck.getInstance().getAppCheckToken(false)
                     .addOnSuccessListener(token -> {
-                        com.getcapacitor.JSObject ret = new com.getcapacitor.JSObject();
+                        JSObject ret = new JSObject();
                         ret.put("success", true);
                         ret.put("tokenPresent", token.getToken() != null && !token.getToken().isEmpty());
                         ret.put("expireTimeMillis", token.getExpireTimeMillis());
                         call.resolve(ret);
                     })
                     .addOnFailureListener(e -> {
-                        com.getcapacitor.JSObject ret = new com.getcapacitor.JSObject();
+                        JSObject ret = new JSObject();
                         ret.put("success", false);
                         ret.put("error", e.getMessage());
                         call.resolve(ret);
                     });
             } catch (Exception e) {
-                com.getcapacitor.JSObject ret = new com.getcapacitor.JSObject();
+                JSObject ret = new JSObject();
                 ret.put("success", false);
                 ret.put("error", e.getMessage());
                 call.resolve(ret);
             }
         }
         
-        @com.getcapacitor.annotation.PluginMethod
-        public void forceRefreshToken(com.getcapacitor.PluginCall call) {
+        @com.getcapacitor.annotation.PermissionCallback
+        public void forceRefreshToken(PluginCall call) {
             try {
                 FirebaseAppCheck.getInstance().getAppCheckToken(true)
                     .addOnSuccessListener(token -> {
-                        com.getcapacitor.JSObject ret = new com.getcapacitor.JSObject();
+                        JSObject ret = new JSObject();
                         ret.put("success", true);
                         ret.put("message", "Token refreshed successfully");
                         call.resolve(ret);
                     })
                     .addOnFailureListener(e -> {
-                        com.getcapacitor.JSObject ret = new com.getcapacitor.JSObject();
+                        JSObject ret = new JSObject();
                         ret.put("success", false);
                         ret.put("error", e.getMessage());
                         call.resolve(ret);
                     });
             } catch (Exception e) {
-                com.getcapacitor.JSObject ret = new com.getcapacitor.JSObject();
+                JSObject ret = new JSObject();
                 ret.put("success", false);
                 ret.put("error", e.getMessage());
                 call.resolve(ret);

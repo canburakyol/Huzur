@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { nativeAdService } from '../services/nativeAdService';
 import { isPro } from '../services/proService';
+import { LazyImage } from './LazyImage';
 import './NativeAdCard.css';
 
 const NativeAdCard = () => {
@@ -76,10 +77,18 @@ const NativeAdCard = () => {
                         If it's base64, use it as src.
                     */}
                     {ad.images && ad.images.length > 0 ? (
-                        <img src={ad.images[0].url || ad.images[0]} alt="Ad Media" />
+                        <LazyImage 
+                            src={ad.images[0].url || ad.images[0]} 
+                            alt="Ad Media" 
+                            className="native-ad-lazy-image"
+                        />
                     ) : ad.mediaContent ? (
                          // Fallback if mediaContent is provided directly
-                        <img src={ad.mediaContent} alt="Ad Media" />
+                        <LazyImage 
+                            src={ad.mediaContent} 
+                            alt="Ad Media" 
+                            className="native-ad-lazy-image"
+                        />
                     ) : (
                         <div style={{width: '100%', height: '100%', background: '#333'}} />
                     )}
@@ -89,7 +98,11 @@ const NativeAdCard = () => {
                 <div className="native-ad-info">
                     <div className="native-ad-header-row">
                         {ad.icon && (
-                            <img src={ad.icon.url || ad.icon} alt="" className="native-ad-icon" />
+                            <LazyImage 
+                                src={ad.icon.url || ad.icon} 
+                                alt="" 
+                                className="native-ad-icon"
+                            />
                         )}
                         <div className="native-ad-title-group">
                             <div className="native-ad-headline">{ad.headline}</div>
