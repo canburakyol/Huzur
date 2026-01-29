@@ -10,16 +10,16 @@ import { useDailyContent } from './hooks/useDailyContent';
 import { useDirection } from './hooks/useDirection';
 import { useFocus } from './context/FocusContext';
 
-// Components
+// Components - Lazy loaded for performance
 const FeatureManager = lazy(() => import('./components/FeatureManager'));
-import SplashScreen from './components/SplashScreen';
-import BottomNav from './components/BottomNav';
-import HomeHeader from './components/HomeHeader';
-import DailyContentGrid from './components/DailyContentGrid';
-import FeatureGrid from './components/FeatureGrid';
-import AdPopup from './components/AdPopup';
-import NativeAdCard from './components/NativeAdCard';
-import PrayerTimeBanner from './components/PrayerTimeBanner';
+const SplashScreen = lazy(() => import('./components/SplashScreen'));
+const BottomNav = lazy(() => import('./components/BottomNav'));
+const HomeHeader = lazy(() => import('./components/HomeHeader'));
+const DailyContentGrid = lazy(() => import('./components/DailyContentGrid'));
+const FeatureGrid = lazy(() => import('./components/FeatureGrid'));
+const AdPopup = lazy(() => import('./components/AdPopup'));
+const NativeAdCard = lazy(() => import('./components/NativeAdCard'));
+const PrayerTimeBanner = lazy(() => import('./components/PrayerTimeBanner'));
 
 // Lazy Load Components
 const Stories = lazy(() => import('./components/Stories'));
@@ -30,6 +30,13 @@ const SpiritualCoach = lazy(() => import('./components/SpiritualCoach'));
 const Community = lazy(() => import('./components/Community'));
 const HamburgerMenu = lazy(() => import('./components/HamburgerMenu'));
 const MoodSelector = lazy(() => import('./components/MoodSelector'));
+
+// Loading fallback component
+const LoadingFallback = ({ height = '100px' }) => (
+  <div style={{ height, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div className="loading-spinner" />
+  </div>
+);
 
 function App() {
   const { t } = useTranslation();
@@ -111,10 +118,12 @@ function App() {
     <>
       {/* Splash Screen */}
       {showSplash && (
-        <SplashScreen onHide={() => {
-          sessionStorage.setItem('splashShown', 'true');
-          setShowSplash(false);
-        }} />
+        <Suspense fallback={null}>
+          <SplashScreen onHide={() => {
+            sessionStorage.setItem('splashShown', 'true');
+            setShowSplash(false);
+          }} />
+        </Suspense>
       )}
 
       {/* Mood Selector Overlay */}
@@ -137,7 +146,9 @@ function App() {
       )}
 
       <div className="app-container" style={{ position: 'relative', paddingBottom: '130px' }}>
-        <AdPopup />
+        <Suspense fallback={null}>
+          <AdPopup />
+        </Suspense>
 
         {/* Error Message */}
         {error && (
@@ -164,17 +175,21 @@ function App() {
         {activeTab === 'home' && !loading && !error && (
           <>
             {/* Prayer Time Banner */}
-            <PrayerTimeBanner timings={timings} nextPrayer={nextPrayer} />
+            <Suspense fallback={<LoadingFallback height="80px" />}>
+              <PrayerTimeBanner timings={timings} nextPrayer={nextPrayer} />
+            </Suspense>
 
             {/* Header: Location, Weather & Streak */}
-            <HomeHeader 
-              locationName={locationName} 
-              weather={weather} 
-              streakData={streakData} 
-            />
+            <Suspense fallback={<LoadingFallback height="60px" />}>
+              <HomeHeader 
+                locationName={locationName} 
+                weather={weather} 
+                streakData={streakData} 
+              />
+            </Suspense>
 
             {/* Stories Section */}
-            <Suspense fallback={<div style={{ height: '100px' }}></div>}>
+            <Suspense fallback={<LoadingFallback height="100px" />}>
               <Stories />
             </Suspense>
 
@@ -223,40 +238,46 @@ function App() {
 
             {/* Prayer Countdown */}
             {timings && nextPrayer && (
-              <Suspense fallback={<div></div>}>
+              <Suspense fallback={<LoadingFallback height="120px" />}>
                 <PrayerCountdown timings={timings} nextPrayer={nextPrayer} />
               </Suspense>
             )}
 
             {/* Daily Content Grid */}
-            <DailyContentGrid dailyContent={dailyContent} />
+            <Suspense fallback={<LoadingFallback height="200px" />}>
+              <DailyContentGrid dailyContent={dailyContent} />
+            </Suspense>
 
             {/* Native Advanced Ad */}
-            <NativeAdCard />
+            <Suspense fallback={<LoadingFallback height="150px" />}>
+              <NativeAdCard />
+            </Suspense>
 
             {/* Feature Grid */}
-            <FeatureGrid onSelectFeature={setActiveFeature} />
+            <Suspense fallback={<LoadingFallback height="300px" />}>
+              <FeatureGrid onSelectFeature={setActiveFeature} />
+            </Suspense>
           </>
         )}
 
         {/* Tab Contents */}
         {activeTab === 'prayers' && (
-          <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center' }}>{t('common.loading')}</div>}>
+          <Suspense fallback={<LoadingFallback height="100vh" />}>
             <Prayers onClose={() => setActiveTab('home')} />
           </Suspense>
         )}
         {activeTab === 'quran' && (
-          <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center' }}>{t('common.loading')}</div>}>
+          <Suspense fallback={<LoadingFallback height="100vh" />}>
             <Quran onClose={() => setActiveTab('home')} />
           </Suspense>
         )}
         {activeTab === 'community' && (
-          <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center' }}>{t('common.loading')}</div>}>
+          <Suspense fallback={<LoadingFallback height="100vh" />}>
             <Community onClose={() => setActiveTab('home')} />
           </Suspense>
         )}
         {activeTab === 'assistant' && (
-          <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center' }}>{t('common.loading')}</div>}>
+          <Suspense fallback={<LoadingFallback height="100vh" />}>
             <SpiritualCoach onClose={() => setActiveTab('home')} />
           </Suspense>
         )}
@@ -274,11 +295,13 @@ function App() {
 
         {/* Bottom Navigation Bar */}
         {!isFocusMode && (
-          <BottomNav 
-            activeTab={activeTab} 
-            setActiveTab={setActiveTab} 
-            onShowMenu={() => setShowHamburgerMenu(true)} 
-          />
+          <Suspense fallback={null}>
+            <BottomNav 
+              activeTab={activeTab} 
+              setActiveTab={setActiveTab} 
+              onShowMenu={() => setShowHamburgerMenu(true)} 
+            />
+          </Suspense>
         )}
       </div>
     </>

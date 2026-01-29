@@ -16,6 +16,18 @@
 -dontwarn com.google.firebase.**
 -dontwarn com.google.android.gms.**
 
+# Firebase App Check
+-keep class com.google.firebase.appcheck.** { *; }
+-keep class com.google.firebase.appcheck.playintegrity.** { *; }
+-keep class com.google.firebase.appcheck.debug.** { *; }
+-dontwarn com.google.firebase.appcheck.**
+
+# Play Integrity API (for App Check)
+-keep class com.google.android.play.core.integrity.** { *; }
+-keep class com.google.android.play.core.tasks.** { *; }
+-dontwarn com.google.android.play.core.integrity.**
+-dontwarn com.google.android.play.core.tasks.**
+
 # Firebase Crashlytics
 -keepattributes SourceFile,LineNumberTable
 -keep public class * extends java.lang.Exception
@@ -73,4 +85,50 @@
     public static int d(...);
     public static int i(...);
     public static int w(...);
+    public static int e(...);
+}
+
+# ==================================================
+# Pro Subscription Security - Obfuscation
+# ==================================================
+
+# Obfuscate storage keys
+-obfuscationdictionary proguard-dictionary.txt
+-classobfuscationdictionary proguard-dictionary.txt
+-packageobfuscationdictionary proguard-dictionary.txt
+
+# Keep Pro status related classes but obfuscate method names
+-keepclassmembers class * {
+    private static final java.lang.String PRO_STATUS_KEY;
+    private static final java.lang.String SUBSCRIPTION_KEY;
+    private static final java.lang.String REVENUECAT_KEY;
+}
+
+# Obfuscate SharedPreferences access
+-keepclassmembers class android.content.SharedPreferences {
+    public ** get*(...);
+    public ** edit();
+}
+
+# Keep RevenueCat callbacks but obfuscate implementation
+-keep interface com.revenuecat.purchases.interfaces.* { *; }
+-keepclassmembers class * implements com.revenuecat.purchases.interfaces.* {
+    public void on*(...);
+}
+
+# Obfuscate local storage keys (JavaScript bridge)
+-keepclassmembers class com.getcapacitor.Bridge {
+    public void eval*(...);
+}
+
+# Prevent reverse engineering of Pro validation logic
+-repackageclasses 'a'
+-flattenpackagehierarchy
+-allowaccessmodification
+
+# String encryption for sensitive constants
+-encryptstrings class com.huzurapp.android.** {
+    java.lang.String PRO_*;
+    java.lang.String SUBSCRIPTION_*;
+    java.lang.String REVENUECAT_*;
 }

@@ -154,3 +154,58 @@ export const adMobService = {
     }
 };
 
+// Rewarded Ad IDs
+const TEST_REWARDED_ID = 'ca-app-pub-3940256099942544/5224354917';
+const REAL_REWARDED_ID = 'ca-app-pub-3074026744164717/7167273995'; // Rewarded ad ID
+const REWARDED_ID = isDev ? TEST_REWARDED_ID : REAL_REWARDED_ID;
+
+/**
+ * Show Rewarded Ad for Streak Recovery
+ * @returns {Promise<{success: boolean, reward?: object, error?: string}>}
+ */
+export const showRewardedAd = async () => {
+    if (Capacitor.getPlatform() === 'web') {
+        // Web'de simülasyon
+        logger.log('AdMob: Web platform - rewarded ad simulated');
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return { success: true, reward: { amount: 1, type: 'streak_recovery' } };
+    }
+
+    try {
+        if (!AdMob) {
+            logger.warn('AdMob: Plugin not available');
+            return { success: false, error: 'Plugin not available' };
+        }
+
+        // Rewarded ad'i yükle ve göster
+        const reward = await new Promise((resolve, reject) => {
+            let rewarded = false;
+            
+            // Show rewarded ad
+            AdMob.showRewardedAd({
+                adId: REWARDED_ID,
+                isTesting: isDev
+            }).then(() => {
+                logger.log('AdMob: Rewarded ad shown');
+                // Basit implementasyon - ad gösterildikten sonra başarılı kabul et
+                rewarded = true;
+                resolve({ success: true, reward: { type: 'streak_recovery', amount: 1 } });
+            }).catch((error) => {
+                reject(error);
+            });
+
+            // Set timeout
+            setTimeout(() => {
+                if (!rewarded) {
+                    reject(new Error('Ad timeout'));
+                }
+            }, 60000); // 60 saniye timeout
+        });
+
+        return reward;
+    } catch (error) {
+        console.error('AdMob: Rewarded Ad Error -', error);
+        return { success: false, error: error.message };
+    }
+};
+

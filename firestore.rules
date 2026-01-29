@@ -2,31 +2,35 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Existing rules for Huzur App
-    match /duas/{duaId} {
-      allow read: if true;
-      allow create: if request.resource.data.keys().hasAll(['text', 'count', 'date']);
-      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['count']);
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
     }
     
-    match /hatims/{hatimId} {
-      allow read: if true;
-      allow create: if request.resource.data.keys().hasAll(['title', 'createdAt', 'createdBy', 'participants', 'parts', 'accessCode']);
-      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['participants', 'parts', 'completedParts']);
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
     }
 
-    // New rules for X-Algo Viral App
-    match /viral_history/{docId} {
-      allow read, write: if true; // In production, this should be restricted to authenticated users
+    // Users collection
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+      
+      // Subscription subcollection - only server can write
+      match /subscription/{docId} {
+        allow read: if isOwner(userId);
+        allow write: if false; // Only server-side functions can write
+      }
+      
+      // User data subcollection
+      match /data/{docId} {
+        allow read, write: if isOwner(userId);
+      }
     }
-    
-    match /trends/{docId} {
+
+    // Public data (read-only)
+    match /public/{document=**} {
       allow read: if true;
-      allow write: if false; // Only admin/functions should write trends
-    }
-    
-    match /{document=**} {
-      allow read, write: if false;
+      allow write: if false;
     }
   }
 }

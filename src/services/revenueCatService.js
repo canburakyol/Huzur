@@ -2,6 +2,9 @@ import { Purchases, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
 import { setProStatus } from './proService';
 import { logger } from '../utils/logger';
 
+// Environment check for log level
+const isDev = import.meta.env.DEV;
+
 // RevenueCat API Keys
 const API_KEYS = {
   android: import.meta.env.VITE_REVENUECAT_ANDROID_KEY,
@@ -23,7 +26,8 @@ export const initializeRevenueCat = async () => {
     });
 
     if (isNativePlatform) {
-        await Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
+        // Only enable DEBUG logging in development
+        await Purchases.setLogLevel({ level: isDev ? LOG_LEVEL.DEBUG : LOG_LEVEL.INFO });
         
         const platform = window.Capacitor.getPlatform();
         const apiKey = platform === 'ios' ? API_KEYS.ios : API_KEYS.android;

@@ -1,0 +1,310 @@
+/* Nafile Prayers - Green & Gold Theme */
+
+.nafile-prayers-container {
+  padding: 20px;
+  background: linear-gradient(135deg, var(--bg-gradient-start, #0f3d2e) 0%, var(--bg-gradient-end, #1a5c45) 100%);
+  min-height: 100vh;
+  color: var(--text-color, #f0e68c);
+}
+
+/* Header */
+.nafile-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.nafile-header .back-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color, #d4af37);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.nafile-header .back-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+}
+
+.header-content h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color, #d4af37);
+  margin: 0;
+}
+
+.header-content p {
+  font-size: 0.9rem;
+  color: var(--text-color-muted, #a3b18a);
+  margin: 5px 0 0 0;
+}
+
+/* Stats Overview */
+.nafile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: var(--glass-bg, rgba(15, 61, 46, 0.7));
+  border: 1px solid var(--glass-border, rgba(212, 175, 55, 0.3));
+  border-radius: 16px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-color, #d4af37);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-color-muted, #a3b18a);
+}
+
+/* Date Selector */
+.date-selector {
+  margin-bottom: 20px;
+}
+
+.date-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--glass-bg, rgba(15, 61, 46, 0.7));
+  border: 1px solid var(--glass-border, rgba(212, 175, 55, 0.3));
+  border-radius: 12px;
+  color: var(--text-color, #f0e68c);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: var(--primary-color, #d4af37);
+}
+
+/* Prayer List */
+.nafile-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.nafile-card {
+  background: var(--glass-bg, rgba(15, 61, 46, 0.7));
+  border: 1px solid var(--glass-border, rgba(212, 175, 55, 0.3));
+  border-radius: 20px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.nafile-card.completed {
+  border-color: rgba(34, 197, 94, 0.5);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.nafile-header-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.nafile-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.nafile-info {
+  flex: 1;
+}
+
+.nafile-info h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color, #f0e68c);
+  margin: 0 0 5px 0;
+}
+
+.nafile-info p {
+  font-size: 0.85rem;
+  color: var(--text-color-muted, #a3b18a);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.completion-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--glass-border, rgba(212, 175, 55, 0.3));
+  background: transparent;
+  color: var(--text-color-muted, #a3b18a);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.completion-btn:hover {
+  border-color: var(--primary-color, #d4af37);
+  color: var(--primary-color, #d4af37);
+}
+
+.completion-btn.completed {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: white;
+}
+
+/* Progress Section */
+.progress-section {
+  margin-top: 15px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: var(--text-color, #f0e68c);
+}
+
+.progress-percentage {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-color, #d4af37);
+}
+
+.progress-bar-container {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* Rekat Controls */
+.rekat-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.rekat-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border, rgba(212, 175, 55, 0.3));
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-color, #f0e68c);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.rekat-btn:hover:not(:disabled) {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--primary-color, #d4af37);
+}
+
+.rekat-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rekat-count {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-color, #d4af37);
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Info Section */
+.nafile-info-section {
+  background: var(--glass-bg, rgba(15, 61, 46, 0.7));
+  border: 1px solid var(--glass-border, rgba(212, 175, 55, 0.3));
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.nafile-info-section h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-color, #d4af37);
+  margin: 0 0 15px 0;
+}
+
+.nafile-info-section ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text-color-muted, #a3b18a);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.nafile-info-section li {
+  margin-bottom: 8px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .nafile-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .nafile-header-row {
+    flex-wrap: wrap;
+  }
+  
+  .completion-btn {
+    margin-left: auto;
+  }
+}

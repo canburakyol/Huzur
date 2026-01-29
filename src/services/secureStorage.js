@@ -6,7 +6,16 @@ import { Preferences } from '@capacitor/preferences';
  * - Android: EncryptedSharedPreferences
  * - iOS: Keychain
  * - Web: localStorage (fallback)
+ * 
+ * SECURITY: Use for sensitive data like Pro status, auth tokens
  */
+
+// Storage keys for sensitive data
+const SECURE_STORAGE_KEYS = {
+  PRO_STATUS: 'huzur_pro_status_secure',
+  AUTH_TOKEN: 'huzur_auth_token',
+  USER_ID: 'huzur_user_id'
+};
 
 export const secureStorage = {
   /**
@@ -145,7 +154,96 @@ export const secureStorage = {
       console.error('[SecureStorage] keys error:', error);
       return [];
     }
+  },
+
+  // ============================================================
+  // PRO STATUS SPECIFIC METHODS (Enhanced Security)
+  // ============================================================
+
+  /**
+   * Pro status kaydet (güvenli)
+   * @param {boolean} active - Pro aktif mi
+   * @param {string|null} expiresAt - ISO tarih veya null
+   * @param {string|null} verifiedBy - Doğrulama kaynağı (revenuecat, manual)
+   */
+  async setProStatus(active, expiresAt = null, verifiedBy = 'revenuecat') {
+    try {
+      const status = {
+        active,
+        expiresAt,
+        verifiedBy,
+        updatedAt: new Date().toISOString(),
+        // Integrity check için hash (basit)
+        _integrity: this._generateIntegrityHash(active, expiresAt, verifiedBy)
+      };
+      await this.setItem(SECURE_STORAGE_KEYS.PRO_STATUS, status);
+      return true;
+    } catch (error) {
+      console.error('[SecureStorage] setProStatus error:', error);
+      return false;
+    }
+  },
+
+  /**
+   * Pro status oku (güvenli)
+   * @returns {{active: boolean, expiresAt: string|null, isValid: boolean}|null}
+   */
+  async getProStatus() {
+    try {
+      const status = await this.getItem(SECURE_STORAGE_KEYS.PRO_STATUS);
+      if (!status) return null;
+
+      // Expiry kontrolü
+      if (status.expiresAt && new Date(status.expiresAt) < new Date()) {
+        await this.removeItem(SECURE_STORAGE_KEYS.PRO_STATUS);
+        return { active: false, expiresAt: null, isValid: false };
+      }
+
+      // Integrity check
+      const expectedHash = this._generateIntegrityHash(
+        status.active, 
+        status.expiresAt, 
+        status.verifiedBy
+      );
+      const isValid = status._integrity === expectedHash;
+
+      return {
+        active: status.active === true && isValid,
+        expiresAt: status.expiresAt,
+        verifiedBy: status.verifiedBy,
+        isValid
+      };
+    } catch (error) {
+      console.error('[SecureStorage] getProStatus error:', error);
+      return null;
+    }
+  },
+
+  /**
+   * Pro status sil
+   */
+  async clearProStatus() {
+    return await this.removeItem(SECURE_STORAGE_KEYS.PRO_STATUS);
+  },
+
+  /**
+   * Basit integrity hash (temper detection)
+   * Not: Bu client-side güvenlik, tam güvenlik için server-side validation gerekir
+   */
+  _generateIntegrityHash(active, expiresAt, verifiedBy) {
+    // Basit string concatenation hash
+    const str = `${active}-${expiresAt}-${verifiedBy}-${import.meta.env.VITE_APP_SECRET || 'huzur-default'}`;
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    return hash.toString(16);
   }
 };
+
+// Export keys for external use
+export { SECURE_STORAGE_KEYS };
 
 export default secureStorage;

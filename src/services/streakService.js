@@ -163,9 +163,96 @@ export const getStreakDisplay = () => {
   };
 };
 
+/**
+ * Streak kurtarma durumunu kontrol et
+ * @returns {{ canRecover: boolean, daysMissed: number, recoveryDeadline: string|null }}
+ */
+export const getRecoveryStatus = () => {
+  const data = getStreakData();
+  const today = getTodayString();
+  
+  if (!data.lastVisitDate || data.lastVisitDate === today) {
+    return { canRecover: false, daysMissed: 0, recoveryDeadline: null };
+  }
+  
+  const daysDiff = getDaysDifference(data.lastVisitDate, today);
+  
+  // Sadece 1 gün kaçırıldıysa ve 24 saat içindeyse kurtarma mümkün
+  if (daysDiff === 2) {
+    const lastVisit = new Date(data.lastVisitDate);
+    const recoveryDeadline = new Date(lastVisit);
+    recoveryDeadline.setDate(recoveryDeadline.getDate() + 2); // 48 saat süre
+    
+    const now = new Date();
+    const canRecover = now < recoveryDeadline;
+    
+    return {
+      canRecover,
+      daysMissed: 1,
+      recoveryDeadline: recoveryDeadline.toISOString()
+    };
+  }
+  
+  return { canRecover: false, daysMissed: daysDiff - 1, recoveryDeadline: null };
+};
+
+/**
+ * Streak'i kurtar (reklam izledikten sonra)
+ * @returns {{ success: boolean, newStreak: number, message: string }}
+ */
+export const recoverStreak = () => {
+  const status = getRecoveryStatus();
+  
+  if (!status.canRecover) {
+    return { 
+      success: false, 
+      newStreak: 0, 
+      message: 'Kurtarma süresi dolmuş veya kurtarma mümkün değil' 
+    };
+  }
+  
+  const data = getStreakData();
+  const today = getTodayString();
+  
+  // Streak'i kurtar - dünü de say
+  data.lastVisitDate = today;
+  data.totalDays += 1;
+  // currentStreak değişmez, seri devam etmiş gibi
+  
+  saveStreakData(data);
+  
+  return {
+    success: true,
+    newStreak: data.currentStreak,
+    message: `Tebrikler! ${data.currentStreak} günlük seriniz kurtarıldı! 🔥`
+  };
+};
+
+/**
+ * Kurtarma hakkı kullanıldı mı kontrol et
+ */
+export const hasUsedRecovery = () => {
+  const data = getStreakData();
+  return data.recoveryUsed || false;
+};
+
+/**
+ * Kurtarma hakkını işaretle
+ */
+export const markRecoveryUsed = () => {
+  const data = getStreakData();
+  data.recoveryUsed = true;
+  data.recoveryUsedDate = getTodayString();
+  saveStreakData(data);
+};
+
 export default {
   getStreakData,
   checkAndUpdateStreak,
   getEarnedBadges,
-  getStreakDisplay
+  getStreakDisplay,
+  getRecoveryStatus,
+  recoverStreak,
+  hasUsedRecovery,
+  markRecoveryUsed
 };

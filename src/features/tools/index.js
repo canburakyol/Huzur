@@ -11,6 +11,7 @@ export const ReligiousDays = lazy(() => import(/* webpackChunkName: "feature-too
 export const Imsakiye = lazy(() => import(/* webpackChunkName: "feature-tools" */ '../../components/Imsakiye'));
 export const ZakatCalculator = lazy(() => import(/* webpackChunkName: "feature-tools" */ '../../components/ZakatCalculator'));
 export const Agenda = lazy(() => import(/* webpackChunkName: "feature-tools" */ '../../components/Agenda'));
+export const SpecialDaysCalendar = lazy(() => import(/* webpackChunkName: "feature-tools" */ '../../components/SpecialDaysCalendar'));
 
 // Feature configuration for this module
 export const toolsFeatures = {
@@ -48,6 +49,13 @@ export const toolsFeatures = {
     module: 'tools',
     name: 'Gündem',
     icon: '📰'
+  },
+  specialDays: {
+    component: SpecialDaysCalendar,
+    category: 'TOOLS',
+    module: 'tools',
+    name: 'Özel Günler',
+    icon: '📅'
   }
 };
 

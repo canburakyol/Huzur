@@ -2,9 +2,6 @@ package com.huzurapp.android;
 
 import android.content.Intent;
 import android.provider.Settings;
-import android.net.Uri;
-import android.os.PowerManager;
-import android.content.Context;
 
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;

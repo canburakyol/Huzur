@@ -5,14 +5,19 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import com.getcapacitor.JSObject;
+
+import org.json.JSONObject;
 
 @CapacitorPlugin(name = "Widget")
 public class WidgetPlugin extends Plugin {
+    private static final String TAG = "WidgetPlugin";
 
     @PluginMethod
     public void updateWidget(PluginCall call) {
@@ -42,5 +47,55 @@ public class WidgetPlugin extends Plugin {
         context.sendBroadcast(intent);
 
         call.resolve();
+    }
+
+    /**
+     * Namaz vakitlerini widget alarm receiver'a ilet
+     * @param call prayerTimes JSON objesi içermeli
+     */
+    @PluginMethod
+    public void scheduleWidgetAlarms(PluginCall call) {
+        try {
+            JSObject prayerTimes = call.getObject("prayerTimes");
+            if (prayerTimes == null) {
+                call.reject("Prayer times object is required");
+                return;
+            }
+
+            // Namaz vakitlerini kaydet ve alarmları kur
+            Context context = getContext();
+            WidgetAlarmReceiver.updatePrayerTimes(context, prayerTimes.toString());
+
+            JSObject result = new JSObject();
+            result.put("success", true);
+            result.put("message", "Widget alarms scheduled successfully");
+            call.resolve(result);
+
+            Log.d(TAG, "Widget alarms scheduled with prayer times");
+        } catch (Exception e) {
+            Log.e(TAG, "Error scheduling widget alarms", e);
+            call.reject("Error scheduling alarms: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Widget alarmlarını iptal et
+     */
+    @PluginMethod
+    public void cancelWidgetAlarms(PluginCall call) {
+        try {
+            Context context = getContext();
+            WidgetAlarmReceiver.cancelAllAlarms(context);
+
+            JSObject result = new JSObject();
+            result.put("success", true);
+            result.put("message", "Widget alarms cancelled");
+            call.resolve(result);
+
+            Log.d(TAG, "Widget alarms cancelled");
+        } catch (Exception e) {
+            Log.e(TAG, "Error cancelling widget alarms", e);
+            call.reject("Error cancelling alarms: " + e.getMessage());
+        }
     }
 }

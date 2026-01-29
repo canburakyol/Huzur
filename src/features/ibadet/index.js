@@ -15,6 +15,8 @@ export const HatimTracker = lazy(() => import(/* webpackChunkName: "feature-ibad
 export const HatimCoach = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/HatimCoach'));
 export const MissedPrayers = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/MissedPrayers'));
 export const DeedJournal = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/DeedJournal'));
+export const NafilePrayers = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/NafilePrayers'));
+export const DuaTracker = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/DuaTracker')); // Added DuaTracker component
 
 // Feature configuration for this module
 export const ibadatFeatures = {
@@ -80,6 +82,20 @@ export const ibadatFeatures = {
     module: 'ibadet',
     name: 'İyilik Günlüğü',
     icon: '📝'
+  },
+  nafilePrayers: {
+    component: NafilePrayers,
+    category: 'IBADET',
+    module: 'ibadet',
+    name: 'Nafile Namazlar',
+    icon: '🌙'
+  },
+  duaTracker: {
+    component: DuaTracker,
+    category: 'IBADET',
+    module: 'ibadet',
+    name: 'Dua Takipçisi',
+    icon: '🤲'
   }
 };
 

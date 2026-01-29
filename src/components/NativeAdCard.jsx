@@ -9,22 +9,15 @@ const NativeAdCard = () => {
     const impressionRecorded = useRef(false);
 
     useEffect(() => {
-        console.log('NativeAdCard: Component mounted'); // DEBUG LOG
-        
         // Skip for Pro users
         if (isPro()) {
-            console.log('NativeAdCard: User is Pro, skipping'); // DEBUG LOG
             return;
         }
 
         const loadAd = async () => {
-            console.log('NativeAdCard: Calling nativeAdService.load()'); // DEBUG LOG
             const adData = await nativeAdService.load();
             if (adData) {
-                console.log('NativeAdCard: Ad data received, setting state'); // DEBUG LOG
                 setAd(adData);
-            } else {
-                console.log('NativeAdCard: No ad data received'); // DEBUG LOG
             }
         };
 

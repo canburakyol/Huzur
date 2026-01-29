@@ -29,6 +29,18 @@
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/prayer_widget_info" />
         </receiver>
 
+        <!-- Widget Alarm Receiver - Namaz vakitlerinde widget'ı günceller -->
+        <receiver 
+            android:name=".WidgetAlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huzurapp.android.UPDATE_WIDGET" />
+                <action android:name="com.huzurapp.android.SCHEDULE_ALARMS" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
