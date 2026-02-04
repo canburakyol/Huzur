@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense, lazy, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import ErrorBoundary from './components/ErrorBoundary';
 import { ensureAuthenticated } from './services/authService';
-import crashlyticsReporter from './utils/crashlyticsReporter';
+import crashlyticsReporter, { initCrashlyticsTestHook } from './utils/crashlyticsReporter';
 
 // Custom Hooks
 import { useBackButton } from './hooks/useBackButton';
@@ -122,9 +122,13 @@ function App() {
   useEffect(() => {
     try {
       crashlyticsReporter?.logCrash?.('App mounted - startup');
-    } catch (e) {
+    } catch {
       // ignore in case Crashlytics bridge isn't ready yet
     }
+  }, []);
+  // Initialize Crashlytics test hook to allow quick in-app test from console/UI
+  useEffect(() => {
+    try { initCrashlyticsTestHook(); } catch { /* ignore */ }
   }, []);
 
   // Global error handling for production observability
@@ -134,7 +138,7 @@ function App() {
       console.error('[GlobalError]', event.message, 'at', event.filename, 'line', event.lineno);
       try {
         crashlyticsReporter?.logException?.(event?.error || new Error(event.message || 'Error'));
-      } catch (e) {
+      } catch {
         // ignore
       }
     };
@@ -142,7 +146,7 @@ function App() {
       console.error('[UnhandledRejection]', event.reason);
       try {
         crashlyticsReporter?.logException?.(event?.reason instanceof Error ? event.reason : new Error(String(event.reason)));
-      } catch (e) {
+      } catch {
         // ignore
       }
     };

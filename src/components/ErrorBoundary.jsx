@@ -7,7 +7,7 @@ class ErrorBoundary extends React.Component {
     this.state = { hasError: false, errorInfo: null }
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true }
   }
 
@@ -15,7 +15,7 @@ class ErrorBoundary extends React.Component {
     // Log to Crashlytics for production observability
     try {
       crashlyticsReporter?.logException?.(error || new Error('Unknown error'));
-    } catch (e) {
+    } catch {
       // ignore logging failures to avoid breaking UI
     }
     // Fallback console error for local debugging

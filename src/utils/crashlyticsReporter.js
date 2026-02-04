@@ -26,4 +26,18 @@ export async function logException(error) {
   }
 }
 
-export default { logCrash, logException };
+export async function initCrashlyticsTestHook() {
+  if (typeof window !== 'undefined') {
+    // Expose a simple global test function to trigger Crashlytics messages from the UI/console
+    window.__CRASHLYTICS_TEST__ = async () => {
+      await logCrash('CRASHLYTICS TEST START');
+      try {
+        throw new Error('Crashlytics test exception');
+      } catch (err) {
+        await logException(err);
+      }
+    };
+  }
+}
+
+export default { logCrash, logException, initCrashlyticsTestHook };

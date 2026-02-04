@@ -26,6 +26,7 @@ public class MainActivity extends BridgeActivity {
 
         registerPlugin(WidgetPlugin.class);
         registerPlugin(AppCheckPlugin.class);
+        registerPlugin(CrashlyticsPlugin.class);
     }
     
     /**
