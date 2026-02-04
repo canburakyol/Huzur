@@ -1,5 +1,8 @@
 import { useState, useEffect, Suspense, lazy, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import ErrorBoundary from './components/ErrorBoundary';
+import { ensureAuthenticated } from './services/authService';
+import crashlyticsReporter from './utils/crashlyticsReporter';
 
 // Custom Hooks
 import { useBackButton } from './hooks/useBackButton';
@@ -9,6 +12,7 @@ import { useAppInit } from './hooks/useAppInit';
 import { useDailyContent } from './hooks/useDailyContent';
 import { useDirection } from './hooks/useDirection';
 import { useFocus } from './context/FocusContext';
+import { NotificationService } from './services/notificationService';
 
 // Components - Lazy loaded for performance
 const FeatureManager = lazy(() => import('./components/FeatureManager'));
@@ -20,6 +24,7 @@ const FeatureGrid = lazy(() => import('./components/FeatureGrid'));
 const AdPopup = lazy(() => import('./components/AdPopup'));
 const NativeAdCard = lazy(() => import('./components/NativeAdCard'));
 const PrayerTimeBanner = lazy(() => import('./components/PrayerTimeBanner'));
+const DailyQuests = lazy(() => import('./components/DailyQuests'));
 
 // Lazy Load Components
 const Stories = lazy(() => import('./components/Stories'));
@@ -27,7 +32,7 @@ const Prayers = lazy(() => import('./components/Prayers'));
 const Quran = lazy(() => import('./components/Quran'));
 const PrayerCountdown = lazy(() => import('./components/PrayerCountdown'));
 const SpiritualCoach = lazy(() => import('./components/SpiritualCoach'));
-const Community = lazy(() => import('./components/Community'));
+const SocialDashboard = lazy(() => import('./components/social/SocialDashboard'));
 const HamburgerMenu = lazy(() => import('./components/HamburgerMenu'));
 const MoodSelector = lazy(() => import('./components/MoodSelector'));
 
@@ -96,6 +101,59 @@ function App() {
   useStickyNotification(timings, nextPrayer);
   useAndroidWidget(timings, nextPrayer, locationName);
 
+
+  // Initialize Firebase Auth on mount
+  useEffect(() => {
+    const initAuth = async () => {
+       try {
+         const uid = await ensureAuthenticated();
+         if (uid) {
+            // Initialize Push Notifications listener (and sync token)
+            NotificationService.initPush(uid);
+         }
+       } catch (e) {
+         console.error("Auth init error", e);
+       }
+    };
+    initAuth();
+  }, []);
+
+  // Crashlytics test beacon on app mount (will be ignored if native plugin not available)
+  useEffect(() => {
+    try {
+      crashlyticsReporter?.logCrash?.('App mounted - startup');
+    } catch (e) {
+      // ignore in case Crashlytics bridge isn't ready yet
+    }
+  }, []);
+
+  // Global error handling for production observability
+  useEffect(() => {
+    const onError = (event) => {
+      // Basic log; hook with Crashlytics later
+      console.error('[GlobalError]', event.message, 'at', event.filename, 'line', event.lineno);
+      try {
+        crashlyticsReporter?.logException?.(event?.error || new Error(event.message || 'Error'));
+      } catch (e) {
+        // ignore
+      }
+    };
+    const onUnhandledRejection = (event) => {
+      console.error('[UnhandledRejection]', event.reason);
+      try {
+        crashlyticsReporter?.logException?.(event?.reason instanceof Error ? event.reason : new Error(String(event.reason)));
+      } catch (e) {
+        // ignore
+      }
+    };
+    window.addEventListener('error', onError);
+    window.addEventListener('unhandledrejection', onUnhandledRejection);
+    return () => {
+      window.removeEventListener('error', onError);
+      window.removeEventListener('unhandledrejection', onUnhandledRejection);
+    };
+  }, []);
+
   // Listen for custom feature open events (e.g. from Settings)
   useEffect(() => {
     const handleOpenFeature = (e) => {
@@ -115,6 +173,7 @@ function App() {
   }
 
   return (
+    <ErrorBoundary>
     <>
       {/* Splash Screen */}
       {showSplash && (
@@ -243,6 +302,11 @@ function App() {
               </Suspense>
             )}
 
+            {/* Daily Quests - Gamification */}
+            <Suspense fallback={<LoadingFallback height="180px" />}>
+              <DailyQuests />
+            </Suspense>
+
             {/* Daily Content Grid */}
             <Suspense fallback={<LoadingFallback height="200px" />}>
               <DailyContentGrid dailyContent={dailyContent} />
@@ -273,7 +337,7 @@ function App() {
         )}
         {activeTab === 'community' && (
           <Suspense fallback={<LoadingFallback height="100vh" />}>
-            <Community onClose={() => setActiveTab('home')} />
+            <SocialDashboard onClose={() => setActiveTab('home')} />
           </Suspense>
         )}
         {activeTab === 'assistant' && (
@@ -305,6 +369,7 @@ function App() {
         )}
       </div>
     </>
+    </ErrorBoundary>
   );
 }
 
