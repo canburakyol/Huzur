@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import Lottie from 'lottie-react';
 import { useFocus } from '../context/FocusContext';
+import { useGamification } from '../context/GamificationContext';
 
 // Önceden tanımlı zikir listesi
 const DHIKR_LIST = [
@@ -21,6 +22,8 @@ const DHIKR_LIST = [
 const Zikirmatik = ({ onClose }) => {
     const { t } = useTranslation();
     const { isFocusMode, toggleFocusMode } = useFocus();
+    const { checkQuestProgress } = useGamification();
+    
     // Görünüm modu: 'list' veya 'counter'
     const [view, setView] = useState('list');
     const [selectedDhikr, setSelectedDhikr] = useState(null);
@@ -93,6 +96,9 @@ const Zikirmatik = ({ onClose }) => {
         const newCount = currentCount + 1;
         saveCount(selectedDhikr.id, newCount);
         updateStats(1);
+        
+        // Quest Progress Check - Gamification entegrasyonu
+        checkQuestProgress('zikir', selectedDhikr.id, 1);
 
         // Titreşim
         if (vibrateEnabled && navigator.vibrate) {
@@ -242,8 +248,8 @@ const Zikirmatik = ({ onClose }) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '30px 20px'
+            padding: '30px 20px',
+            paddingBottom: '40px'
         }}>
             {/* Header */}
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -259,8 +265,8 @@ const Zikirmatik = ({ onClose }) => {
                 </button>
             </div>
 
-            {/* Zikir Bilgisi */}
-            <div style={{ marginBottom: '10px', width: '100%' }}>
+            {/* Zikir Bilgisi - Yukarıda sabit */}
+            <div style={{ marginTop: '20px', marginBottom: '10px', width: '100%' }}>
                 {selectedDhikr?.id === 'free' ? (
                     <input
                         type="text"
@@ -287,7 +293,10 @@ const Zikirmatik = ({ onClose }) => {
                 <div style={{ fontSize: '13px', color: 'var(--text-color-muted)', marginTop: '8px', fontStyle: 'italic' }}>{selectedDhikr?.meaning}</div>
             </div>
 
-            {/* Ana Sayaç Butonu */}
+            {/* Spacer - Butonu aşağıya itmek için */}
+            <div style={{ flex: 1, minHeight: '20px' }}></div>
+
+            {/* Ana Sayaç Butonu - Aşağıda, ergonomik konumda */}
             <div
                 onClick={handleIncrement}
                 style={{

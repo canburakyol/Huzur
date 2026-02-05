@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Flame, Clock, PlayCircle, X, Shield, AlertTriangle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getRecoveryStatus, recoverStreak, markRecoveryUsed } from '../services/streakService';
@@ -13,20 +13,7 @@ const StreakRecoveryModal = ({ streakData, onClose, onRecovered }) => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    const status = getRecoveryStatus();
-    setRecoveryStatus(status);
-    
-    if (status.canRecover && status.recoveryDeadline) {
-      const interval = setInterval(() => {
-        updateTimeLeft(status.recoveryDeadline);
-      }, 1000);
-      updateTimeLeft(status.recoveryDeadline);
-      return () => clearInterval(interval);
-    }
-  }, []);
-
-  const updateTimeLeft = (deadline) => {
+  const updateTimeLeft = useCallback((deadline) => {
     const now = new Date();
     const end = new Date(deadline);
     const diff = end - now;
@@ -42,7 +29,20 @@ const StreakRecoveryModal = ({ streakData, onClose, onRecovered }) => {
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
     
     setTimeLeft(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
-  };
+  }, [t]);
+
+  useEffect(() => {
+    const status = getRecoveryStatus();
+    setRecoveryStatus(status);
+    
+    if (status.canRecover && status.recoveryDeadline) {
+      const interval = setInterval(() => {
+        updateTimeLeft(status.recoveryDeadline);
+      }, 1000);
+      updateTimeLeft(status.recoveryDeadline);
+      return () => clearInterval(interval);
+    }
+  }, [updateTimeLeft]);
 
   const handleWatchAd = async () => {
     setIsLoading(true);

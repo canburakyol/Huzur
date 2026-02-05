@@ -19,8 +19,28 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const functions = getFunctions(app, 'europe-west1'); // Region önemli
 
-// NOT: App Check, Native Android katmanında (MainActivity.java) başlatılıyor.
-// JS tarafında tekrar başlatmak çakışmaya neden oluyordu ve kaldırıldı.
-// Play Integrity token'ları otomatik olarak Firebase isteklerine eklenir.
+// Local Development için App Check Debug Modu
+/*
+if (import.meta.env.DEV) {
+    // Debug token'ı konsola yazdırır, bunu Firebase Console'a eklemek gerekir
+    self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+    
+    import('firebase/app-check').then(({ initializeAppCheck, ReCaptchaEnterpriseProvider }) => {
+        try {
+            // ReCaptcha key yoksa bile DebugProvider devreye girer (self.FIREBASE... sayesinde)
+            initializeAppCheck(app, {
+                provider: new ReCaptchaEnterpriseProvider('debug-key'), 
+                isTokenAutoRefreshEnabled: true
+            });
+            console.log('[Firebase] Local App Check initialized with Debug Token');
+        } catch (e) {
+            console.warn('[Firebase] App Check init failed:', e);
+        }
+    });
+}
+*/
+
+// NOT: Production'da App Check, Native Android katmanında (MainActivity.java) başlatılıyor.
+// JS tarafında tekrar başlatmak çakışmaya neden oluyordu.
 
 export { app, db, auth, functions };

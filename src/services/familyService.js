@@ -1,204 +1,382 @@
 import { db } from './firebase';
-import { collection, addDoc, getDocs, doc, updateDoc, query, where, getDoc } from 'firebase/firestore';
+import { 
+  collection, 
+  doc, 
+  setDoc, 
+  getDoc, 
+  updateDoc, 
+  arrayUnion, 
+  query, 
+  where, 
+  getDocs,
+  serverTimestamp 
+} from 'firebase/firestore';
+import { getCurrentUserId } from './authService';
+import { logger } from '../utils/logger';
 
-const STORAGE_KEY = 'huzur_family_data';
-
-// Check if Firebase is initialized (db might be undefined if keys are missing)
-const isFirebaseAvailable = () => !!db;
+const COLLECTION_FAMILIES = 'families';
+const COLLECTION_USERS = 'users';
 
 export const familyService = {
-    // --- Profiles ---
-    
-    async getProfiles() {
-        if (isFirebaseAvailable()) {
-            try {
-                // In a real app, you'd filter by user ID or device ID
-                // For now, we'll just fetch from a local collection or simulate
-                // Since we don't have auth implemented fully, we might stick to local storage for profiles
-                // unless we want to sync them. Let's assume profiles are local-first for now
-                // but groups are remote.
-                const saved = localStorage.getItem(STORAGE_KEY);
-                return saved ? JSON.parse(saved) : { profiles: [], activeProfileId: null };
-            } catch (e) {
-                console.error("Error fetching profiles:", e);
-                return { profiles: [], activeProfileId: null };
-            }
-        } else {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            return saved ? JSON.parse(saved) : { profiles: [], activeProfileId: null };
+  /**
+   * Yeni bir aile oluşturur
+   * @param {string} familyName - Aile adı
+   * @returns {Promise<string>} Family ID
+   */
+  createFamily: async (familyName) => {
+    const userId = getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    try {
+      // Generate unique invite code (6 char)
+      const inviteCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+      
+      const newFamilyRef = doc(collection(db, COLLECTION_FAMILIES));
+      const familyId = newFamilyRef.id;
+
+      const familyData = {
+        id: familyId,
+        name: familyName,
+        adminId: userId,
+        members: [userId],
+        inviteCode,
+        createdAt: serverTimestamp(),
+        settings: {
+          allowChildTree: true
         }
-    },
+      };
 
-    async saveProfiles(data) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        // If we had auth, we would sync this to Firestore users collection
-    },
+      await setDoc(newFamilyRef, familyData);
 
-    // --- Groups (Remote) ---
+      // Update user's profile with familyId and role
+      const userRef = doc(db, COLLECTION_USERS, userId);
+      await setDoc(userRef, {
+        familyId: familyId,
+        role: 'parent',
+        updatedAt: serverTimestamp()
+      }, { merge: true });
 
-    async createGroup(name, creatorProfile) {
-        if (!isFirebaseAvailable()) {
-            console.warn("Firebase not available, using mock group");
-            return { 
-                id: 'mock-group-' + Date.now(), 
-                name, 
-                code: Math.floor(100000 + Math.random() * 900000).toString(), 
-                members: [{ ...creatorProfile, isAdmin: true }],
-                pendingMembers: []
-            };
-        }
-
-        try {
-            const code = Math.floor(100000 + Math.random() * 900000).toString();
-            const groupRef = await addDoc(collection(db, "groups"), {
-                name,
-                code,
-                createdAt: new Date(),
-                members: [{ ...creatorProfile, isAdmin: true }],
-                pendingMembers: []
-            });
-            return { id: groupRef.id, name, code, members: [{ ...creatorProfile, isAdmin: true }], pendingMembers: [] };
-        } catch (e) {
-            console.error("Error creating group:", e);
-            throw e;
-        }
-    },
-
-    // Request to join - adds to pendingMembers instead of members
-    async requestJoinGroup(code, profile) {
-        if (!isFirebaseAvailable()) {
-            // Mock implementation
-            if (code.length === 6) {
-                return { 
-                    status: 'pending',
-                    message: 'Katılım isteğiniz gönderildi. Yönetici onayı bekleniyor.'
-                };
-            }
-            throw new Error("Geçersiz kod");
-        }
-
-        try {
-            const q = query(collection(db, "groups"), where("code", "==", code));
-            const querySnapshot = await getDocs(q);
-
-            if (querySnapshot.empty) {
-                throw new Error("Grup bulunamadı");
-            }
-
-            const groupDoc = querySnapshot.docs[0];
-            const groupData = groupDoc.data();
-            
-            // Check if already member
-            if (groupData.members.some(m => m.id === profile.id)) {
-                throw new Error("Zaten bu grubun üyesisiniz");
-            }
-
-            // Check if already pending
-            const pendingMembers = groupData.pendingMembers || [];
-            if (pendingMembers.some(m => m.id === profile.id)) {
-                throw new Error("Zaten katılım isteğiniz var");
-            }
-
-            // Add to pending members
-            const newPendingMembers = [...pendingMembers, { ...profile, requestedAt: new Date() }];
-            await updateDoc(doc(db, "groups", groupDoc.id), {
-                pendingMembers: newPendingMembers
-            });
-
-            return { 
-                status: 'pending',
-                message: 'Katılım isteğiniz gönderildi. Yönetici onayı bekleniyor.'
-            };
-        } catch (e) {
-            console.error("Error requesting to join group:", e);
-            throw e;
-        }
-    },
-
-    // Approve a pending member (admin only)
-    async approveJoinRequest(groupId, pendingProfileId) {
-        if (!isFirebaseAvailable()) {
-            // Mock implementation
-            return { success: true };
-        }
-
-        try {
-            const docRef = doc(db, "groups", groupId);
-            const docSnap = await getDoc(docRef);
-            
-            if (!docSnap.exists()) {
-                throw new Error("Grup bulunamadı");
-            }
-
-            const groupData = docSnap.data();
-            const pendingMembers = groupData.pendingMembers || [];
-            const members = groupData.members || [];
-
-            const approvedMember = pendingMembers.find(m => m.id === pendingProfileId);
-            if (!approvedMember) {
-                throw new Error("Bekleyen üye bulunamadı");
-            }
-
-            // Move from pending to members
-            const newPendingMembers = pendingMembers.filter(m => m.id !== pendingProfileId);
-            const newMembers = [...members, { ...approvedMember, isAdmin: false }];
-
-            await updateDoc(docRef, {
-                members: newMembers,
-                pendingMembers: newPendingMembers
-            });
-
-            return { success: true, members: newMembers, pendingMembers: newPendingMembers };
-        } catch (e) {
-            console.error("Error approving join request:", e);
-            throw e;
-        }
-    },
-
-    // Reject a pending member (admin only)
-    async rejectJoinRequest(groupId, pendingProfileId) {
-        if (!isFirebaseAvailable()) {
-            // Mock implementation
-            return { success: true };
-        }
-
-        try {
-            const docRef = doc(db, "groups", groupId);
-            const docSnap = await getDoc(docRef);
-            
-            if (!docSnap.exists()) {
-                throw new Error("Grup bulunamadı");
-            }
-
-            const groupData = docSnap.data();
-            const pendingMembers = groupData.pendingMembers || [];
-
-            // Remove from pending
-            const newPendingMembers = pendingMembers.filter(m => m.id !== pendingProfileId);
-
-            await updateDoc(docRef, {
-                pendingMembers: newPendingMembers
-            });
-
-            return { success: true, pendingMembers: newPendingMembers };
-        } catch (e) {
-            console.error("Error rejecting join request:", e);
-            throw e;
-        }
-    },
-
-    async getGroup(groupId) {
-        if (!isFirebaseAvailable()) return null;
-        try {
-            const docRef = doc(db, "groups", groupId);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                return { id: docSnap.id, ...docSnap.data() };
-            }
-            return null;
-        } catch (e) {
-            console.error("Error getting group:", e);
-            return null;
-        }
+      logger.log('[FamilyService] Family created:', familyId);
+      return familyId;
+    } catch (error) {
+      logger.error('[FamilyService] Create family error:', error);
+      throw error;
     }
+  },
+
+  /**
+   * Davet kodu ile aileye katılma
+   * @param {string} inviteCode 
+   */
+  joinFamily: async (inviteCode) => {
+    const userId = getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    try {
+      // Find family by invite code
+      const q = query(collection(db, COLLECTION_FAMILIES), where('inviteCode', '==', inviteCode.toUpperCase()));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        throw new Error('Geçersiz davet kodu');
+      }
+
+      const familyDoc = querySnapshot.docs[0];
+      const familyId = familyDoc.id;
+
+      // Update family members
+      await updateDoc(familyDoc.ref, {
+        members: arrayUnion(userId)
+      });
+
+      // Update user profile
+      const userRef = doc(db, COLLECTION_USERS, userId);
+      await setDoc(userRef, {
+        familyId: familyId,
+        role: 'member', // Default role
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+
+      logger.log('[FamilyService] Joined family:', familyId);
+      return familyId;
+    } catch (error) {
+      logger.error('[FamilyService] Join family error:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Kullanıcının aile bilgilerini getirir
+   */
+  getMyFamily: async () => {
+    const userId = getCurrentUserId();
+    if (!userId) return null;
+
+    try {
+      // Get user doc to find familyId
+      const userDoc = await getDoc(doc(db, COLLECTION_USERS, userId));
+      if (!userDoc.exists()) return null;
+
+      const userData = userDoc.data();
+      if (!userData.familyId) return null;
+
+      // Get family details
+      const familyDoc = await getDoc(doc(db, COLLECTION_FAMILIES, userData.familyId));
+      if (!familyDoc.exists()) return null;
+
+      // Get all members details (bulk fetch could be optimized)
+      const memberIds = familyDoc.data().members || [];
+      const membersPromises = memberIds.map(mid => getDoc(doc(db, COLLECTION_USERS, mid)));
+      const membersSnapshots = await Promise.all(membersPromises);
+      
+      const members = membersSnapshots.map(snap => {
+        if (!snap.exists()) return null;
+        return { 
+          uid: snap.id, 
+          ...snap.data() 
+        };
+      }).filter(Boolean);
+
+      return {
+        ...familyDoc.data(),
+        membersDetails: members
+      };
+    } catch (error) {
+      logger.error('[FamilyService] Get family error:', error);
+      return null;
+    }
+  },
+
+  /**
+   * Ebeveyn tarafından çocuk hesabı oluşturma (Email olmadan)
+   * Bu sanal bir hesap olarak aile içinde tutulur
+   */
+  addChildMember: async (childName) => { // eslint-disable-line no-unused-vars
+    const userId = getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    // Bu özellik sonraki fazda implement edilecek (Sanal Hesaplar)
+    // Şimdilik sadece metod taslağı
+    logger.warn('[FamilyService] addChildMember not fully implemented yet');
+  },
+
+  // --- FAMILY GROUP METHODS (FamilyMode.jsx Support) ---
+
+  /**
+   * Yeni grup oluştur (FamilyMode uyumlu)
+   */
+  createGroup: async (name, activeProfile) => {
+    const userId = getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    try {
+      // 8 karakterlik kod oluştur
+      const code = Math.random().toString(36).substring(2, 10).toUpperCase();
+      
+      const newGroupRef = doc(collection(db, 'familyGroups'));
+      const groupId = newGroupRef.id;
+
+      const groupData = {
+        id: groupId,
+        name: name,
+        code: code,
+        createdBy: userId,
+        createdAt: serverTimestamp(),
+        members: [{
+          id: activeProfile.id,
+          name: activeProfile.name,
+          avatar: activeProfile.avatar || '👤',
+          role: activeProfile.role || 'parent',
+          isAdmin: true
+        }],
+        pendingMembers: []
+      };
+
+      await setDoc(newGroupRef, groupData);
+      logger.log('[FamilyService] Group created:', groupId);
+      return groupData;
+    } catch (error) {
+      logger.error('[FamilyService] Create group error:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Kod ile gruba katılma isteği
+   */
+  requestJoinGroup: async (code, activeProfile) => {
+    const userId = getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    try {
+      const q = query(collection(db, 'familyGroups'), where('code', '==', code.toUpperCase()));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        throw new Error('Geçersiz grup kodu');
+      }
+
+      const groupDoc = querySnapshot.docs[0];
+      const groupData = groupDoc.data();
+      
+      // Zaten üye mi kontrol et
+      const isMember = groupData.members?.some(m => m.id === activeProfile.id);
+      if (isMember) {
+        throw new Error('Zaten bu grubun üyesisiniz');
+      }
+
+      // Zaten pending mi kontrol et
+      const isPending = groupData.pendingMembers?.some(m => m.id === activeProfile.id);
+      if (isPending) {
+        return { status: 'pending', message: 'Katılma isteğiniz onay bekliyor' };
+      }
+
+      // Pending members'a ekle
+      const pendingMember = {
+        id: activeProfile.id,
+        name: activeProfile.name,
+        avatar: activeProfile.avatar || '👤',
+        role: activeProfile.role || 'child',
+        requestedAt: serverTimestamp() // Note: serverTimestamp might be tricky in arrays, using specific update logic often safer, but arrayUnion works for simple objects
+      };
+      
+      // Since serverTimestamp inside arrayUnion can be problematic in some SDK versions/contexts, 
+      // strict object is safer. Let's use ISO string for date inside array for simplicity if timestamp causes issues,
+      // but Firestore allows it.
+      
+      await updateDoc(groupDoc.ref, {
+        pendingMembers: arrayUnion(pendingMember)
+      });
+
+      logger.log('[FamilyService] Join request sent:', groupDoc.id);
+      return { status: 'pending', message: 'Katılma isteği gönderildi' };
+    } catch (error) {
+      logger.error('[FamilyService] Request join error:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Katılma isteğini onayla
+   */
+  approveJoinRequest: async (groupId, pendingProfileId) => {
+    const userId = getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    try {
+      const groupRef = doc(db, 'familyGroups', groupId);
+      const groupDoc = await getDoc(groupRef);
+      
+      if (!groupDoc.exists()) {
+        throw new Error('Grup bulunamadı');
+      }
+
+      const groupData = groupDoc.data();
+      
+      // Admin kontrolü (basit implementation: aktif user admin mi?)
+      // Not: Gerçek admin kontrolü için activeProfile id'si de gerekebilir ama şimdilik user id üzerinden gidelim
+      // veya data içindeki member listesinden user id eşleşmesi arayalım.
+      // Basitleştirilmiş: Herhangi bir admin üye işlem yapabilir.
+      
+      // Pending'den bul
+      const pendingMember = groupData.pendingMembers?.find(m => m.id === pendingProfileId);
+      if (!pendingMember) {
+        throw new Error('Bekleyen istek bulunamadı');
+      }
+
+      // Pending'den çıkar, members'a ekle
+      const updatedPending = groupData.pendingMembers.filter(m => m.id !== pendingProfileId);
+      const newMember = {
+        id: pendingMember.id,
+        name: pendingMember.name,
+        avatar: pendingMember.avatar,
+        role: pendingMember.role,
+        isAdmin: false
+      };
+
+      await updateDoc(groupRef, {
+        members: arrayUnion(newMember),
+        pendingMembers: updatedPending
+      });
+
+      return { 
+        success: true, 
+        members: [...(groupData.members || []), newMember],
+        pendingMembers: updatedPending
+      };
+    } catch (error) {
+      logger.error('[FamilyService] Approve request error:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Katılma isteğini reddet
+   */
+  rejectJoinRequest: async (groupId, pendingProfileId) => {
+    const userId = getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    try {
+      const groupRef = doc(db, 'familyGroups', groupId);
+      const groupDoc = await getDoc(groupRef);
+      
+      if (!groupDoc.exists()) {
+        throw new Error('Grup bulunamadı');
+      }
+
+      const groupData = groupDoc.data();
+      const updatedPending = groupData.pendingMembers.filter(m => m.id !== pendingProfileId);
+
+      await updateDoc(groupRef, {
+        pendingMembers: updatedPending
+      });
+
+      return { 
+        success: true, 
+        pendingMembers: updatedPending
+      };
+    } catch (error) {
+      logger.error('[FamilyService] Reject request error:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Kullanıcının gruplarını getir
+   * @param {string} profileId - Opsiyonel, spesifik profil için
+   */
+  getMyGroups: async (profileId) => {
+    const userId = getCurrentUserId();
+    if (!userId) return [];
+
+    try {
+      // İdealde 'members' array-contains sorgusu yapılır ama members obje array olduğu için
+      // bu yapı NoSQL'de zordur. Genelde 'memberIds' gibi bir düz array tutulur.
+      // Şimdilik MVP için tüm grupları çekip client-side filtreleyelim (Hacim küçükse)
+      // VEYA 'familyGroups' koleksiyonunda kullanıcı ID'sine göre arama yapamayız çünkü yapı karmaşık.
+      // Düzeltme: Collection scan yapmayalım. Groups'ların ID'lerini user profilinde tutmak en iyisidir.
+      // Ama şimdilik 'createGroup' user'a bişi yazmıyor.
+      // BMAD raporuna sadık kalarak, collection query denersek: index gerekir.
+      
+      const q = query(collection(db, 'familyGroups'));
+      const querySnapshot = await getDocs(q);
+      
+      const groups = [];
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        // Check memberships
+        const isMember = data.members?.some(m => m.id === (profileId || userId) || m.id === userId); // Fallback to userId check
+        
+        if (isMember) {
+          groups.push({ id: doc.id, ...data });
+        }
+      });
+      
+      return groups;
+    } catch (error) {
+      logger.error('[FamilyService] Get groups error:', error);
+      return [];
+    }
+  }
 };

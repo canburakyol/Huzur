@@ -16,6 +16,7 @@ const FeatureGrid = memo(({ onSelectFeature }) => {
     { id: 'adhkar', icon: '☀️', labelKey: 'features.tasbih' },
     { id: 'hatimCoach', icon: '🧠', labelKey: 'features.smartKhatm' },
     { id: 'family', icon: '👨‍👩‍👧', labelKey: 'features.family' },
+    { id: 'social', icon: '🤲', labelKey: 'social.title' }, // New Social Feature
     { id: 'imsakiye', icon: '🌙', labelKey: 'features.imsakiye' },
     { id: 'hadiths', icon: '📖', labelKey: 'features.hadith' },
     { id: 'radio', icon: '📻', labelKey: 'features.radio' },

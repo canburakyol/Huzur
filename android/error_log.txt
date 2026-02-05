@@ -1,0 +1,781 @@
+﻿
+> Configure project :app
+WARNING: Using flatDir should be avoided because it doesn't support any meta-data formats.
+
+> Configure project :capacitor-cordova-android-plugins
+WARNING: Using flatDir should be avoided because it doesn't support any meta-data formats.
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:preBuild UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:preDebugBuild UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-android:preBuild UP-TO-DATE
+> Task :capacitor-android:preDebugBuild UP-TO-DATE
+> Task :capacitor-android:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-app:preBuild UP-TO-DATE
+> Task :capacitor-app:preDebugBuild UP-TO-DATE
+> Task :capacitor-app:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-browser:preBuild UP-TO-DATE
+> Task :capacitor-browser:preDebugBuild UP-TO-DATE
+> Task :capacitor-browser:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-community-admob:preBuild UP-TO-DATE
+> Task :capacitor-community-admob:preDebugBuild UP-TO-DATE
+> Task :capacitor-community-admob:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:preBuild UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:preDebugBuild UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-device:preBuild UP-TO-DATE
+> Task :capacitor-device:preDebugBuild UP-TO-DATE
+> Task :capacitor-device:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-filesystem:preBuild UP-TO-DATE
+> Task :capacitor-filesystem:preDebugBuild UP-TO-DATE
+> Task :capacitor-filesystem:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-firebase-app-check:preBuild UP-TO-DATE
+> Task :capacitor-firebase-app-check:preDebugBuild UP-TO-DATE
+> Task :capacitor-firebase-app-check:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-geolocation:preBuild UP-TO-DATE
+> Task :capacitor-geolocation:preDebugBuild UP-TO-DATE
+> Task :capacitor-geolocation:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-haptics:preBuild UP-TO-DATE
+> Task :capacitor-haptics:preDebugBuild UP-TO-DATE
+> Task :capacitor-haptics:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-local-notifications:preBuild UP-TO-DATE
+> Task :capacitor-local-notifications:preDebugBuild UP-TO-DATE
+> Task :capacitor-local-notifications:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-network:preBuild UP-TO-DATE
+> Task :capacitor-network:preDebugBuild UP-TO-DATE
+> Task :capacitor-network:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-preferences:preBuild UP-TO-DATE
+> Task :capacitor-preferences:preDebugBuild UP-TO-DATE
+> Task :capacitor-preferences:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-push-notifications:preBuild UP-TO-DATE
+> Task :capacitor-push-notifications:preDebugBuild UP-TO-DATE
+> Task :capacitor-push-notifications:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-screen-orientation:preBuild UP-TO-DATE
+> Task :capacitor-screen-orientation:preDebugBuild UP-TO-DATE
+> Task :capacitor-screen-orientation:writeDebugAarMetadata UP-TO-DATE
+> Task :capacitor-share:preBuild UP-TO-DATE
+> Task :capacitor-share:preDebugBuild UP-TO-DATE
+> Task :capacitor-share:writeDebugAarMetadata UP-TO-DATE
+> Task :capawesome-capacitor-app-update:preBuild UP-TO-DATE
+> Task :capawesome-capacitor-app-update:preDebugBuild UP-TO-DATE
+> Task :capawesome-capacitor-app-update:writeDebugAarMetadata UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:preBuild UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:preDebugBuild UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-android:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-app:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-browser:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-community-admob:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-device:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-filesystem:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-firebase-app-check:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-geolocation:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-haptics:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-local-notifications:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-network:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-preferences:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-push-notifications:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-screen-orientation:processDebugNavigationResources UP-TO-DATE
+> Task :capacitor-share:processDebugNavigationResources UP-TO-DATE
+> Task :capawesome-capacitor-app-update:processDebugNavigationResources UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:processDebugNavigationResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:injectCrashlyticsMappingFileIdDebug UP-TO-DATE
+> Task :app:processDebugGoogleServices UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:generateDebugResValues UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:generateDebugResources UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:packageDebugResources UP-TO-DATE
+> Task :capacitor-android:generateDebugResValues UP-TO-DATE
+> Task :capacitor-android:generateDebugResources UP-TO-DATE
+> Task :capacitor-android:packageDebugResources UP-TO-DATE
+> Task :capacitor-app:generateDebugResValues UP-TO-DATE
+> Task :capacitor-app:generateDebugResources UP-TO-DATE
+> Task :capacitor-app:packageDebugResources UP-TO-DATE
+> Task :capacitor-browser:generateDebugResValues UP-TO-DATE
+> Task :capacitor-browser:generateDebugResources UP-TO-DATE
+> Task :capacitor-browser:packageDebugResources UP-TO-DATE
+> Task :capacitor-community-admob:generateDebugResValues UP-TO-DATE
+> Task :capacitor-community-admob:generateDebugResources UP-TO-DATE
+> Task :capacitor-community-admob:packageDebugResources UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:generateDebugResValues UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:generateDebugResources UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:packageDebugResources UP-TO-DATE
+> Task :capacitor-device:generateDebugResValues UP-TO-DATE
+> Task :capacitor-device:generateDebugResources UP-TO-DATE
+> Task :capacitor-device:packageDebugResources UP-TO-DATE
+> Task :capacitor-filesystem:generateDebugResValues UP-TO-DATE
+> Task :capacitor-filesystem:generateDebugResources UP-TO-DATE
+> Task :capacitor-filesystem:packageDebugResources UP-TO-DATE
+> Task :capacitor-firebase-app-check:generateDebugResValues UP-TO-DATE
+> Task :capacitor-firebase-app-check:generateDebugResources UP-TO-DATE
+> Task :capacitor-firebase-app-check:packageDebugResources UP-TO-DATE
+> Task :capacitor-geolocation:generateDebugResValues UP-TO-DATE
+> Task :capacitor-geolocation:generateDebugResources UP-TO-DATE
+> Task :capacitor-geolocation:packageDebugResources UP-TO-DATE
+> Task :capacitor-haptics:generateDebugResValues UP-TO-DATE
+> Task :capacitor-haptics:generateDebugResources UP-TO-DATE
+> Task :capacitor-haptics:packageDebugResources UP-TO-DATE
+> Task :capacitor-local-notifications:generateDebugResValues UP-TO-DATE
+> Task :capacitor-local-notifications:generateDebugResources UP-TO-DATE
+> Task :capacitor-local-notifications:packageDebugResources UP-TO-DATE
+> Task :capacitor-network:generateDebugResValues UP-TO-DATE
+> Task :capacitor-network:generateDebugResources UP-TO-DATE
+> Task :capacitor-network:packageDebugResources UP-TO-DATE
+> Task :capacitor-preferences:generateDebugResValues UP-TO-DATE
+> Task :capacitor-preferences:generateDebugResources UP-TO-DATE
+> Task :capacitor-preferences:packageDebugResources UP-TO-DATE
+> Task :capacitor-push-notifications:generateDebugResValues UP-TO-DATE
+> Task :capacitor-push-notifications:generateDebugResources UP-TO-DATE
+> Task :capacitor-push-notifications:packageDebugResources UP-TO-DATE
+> Task :capacitor-screen-orientation:generateDebugResValues UP-TO-DATE
+> Task :capacitor-screen-orientation:generateDebugResources UP-TO-DATE
+> Task :capacitor-screen-orientation:packageDebugResources UP-TO-DATE
+> Task :capacitor-share:generateDebugResValues UP-TO-DATE
+> Task :capacitor-share:generateDebugResources UP-TO-DATE
+> Task :capacitor-share:packageDebugResources UP-TO-DATE
+> Task :capawesome-capacitor-app-update:generateDebugResValues UP-TO-DATE
+> Task :capawesome-capacitor-app-update:generateDebugResources UP-TO-DATE
+> Task :capawesome-capacitor-app-update:packageDebugResources UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:generateDebugResValues UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:generateDebugResources UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:extractDeepLinksDebug UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:processDebugManifest UP-TO-DATE
+> Task :capacitor-android:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-android:processDebugManifest UP-TO-DATE
+> Task :capacitor-app:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-app:processDebugManifest UP-TO-DATE
+> Task :capacitor-browser:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-browser:processDebugManifest UP-TO-DATE
+> Task :capacitor-community-admob:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-community-admob:processDebugManifest UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:processDebugManifest UP-TO-DATE
+> Task :capacitor-device:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-device:processDebugManifest UP-TO-DATE
+> Task :capacitor-filesystem:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-filesystem:processDebugManifest UP-TO-DATE
+> Task :capacitor-firebase-app-check:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-firebase-app-check:processDebugManifest UP-TO-DATE
+> Task :capacitor-geolocation:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-geolocation:processDebugManifest UP-TO-DATE
+> Task :capacitor-haptics:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-haptics:processDebugManifest UP-TO-DATE
+> Task :capacitor-local-notifications:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-local-notifications:processDebugManifest UP-TO-DATE
+> Task :capacitor-network:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-network:processDebugManifest UP-TO-DATE
+> Task :capacitor-preferences:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-preferences:processDebugManifest UP-TO-DATE
+> Task :capacitor-push-notifications:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-push-notifications:processDebugManifest UP-TO-DATE
+> Task :capacitor-screen-orientation:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-screen-orientation:processDebugManifest UP-TO-DATE
+> Task :capacitor-share:extractDeepLinksDebug UP-TO-DATE
+> Task :capacitor-share:processDebugManifest UP-TO-DATE
+> Task :capawesome-capacitor-app-update:extractDeepLinksDebug UP-TO-DATE
+> Task :capawesome-capacitor-app-update:processDebugManifest UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:extractDeepLinksDebug UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:compileDebugLibraryResources UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:parseDebugLocalResources UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:generateDebugRFile UP-TO-DATE
+> Task :capacitor-android:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-android:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-android:generateDebugRFile UP-TO-DATE
+> Task :capacitor-app:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-app:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-app:generateDebugRFile UP-TO-DATE
+> Task :capacitor-browser:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-browser:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-browser:generateDebugRFile UP-TO-DATE
+> Task :capacitor-community-admob:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-community-admob:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-community-admob:generateDebugRFile UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:generateDebugRFile UP-TO-DATE
+> Task :capacitor-device:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-device:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-device:generateDebugRFile UP-TO-DATE
+> Task :capacitor-filesystem:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-filesystem:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-filesystem:generateDebugRFile UP-TO-DATE
+> Task :capacitor-firebase-app-check:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-firebase-app-check:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-firebase-app-check:generateDebugRFile UP-TO-DATE
+> Task :capacitor-geolocation:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-geolocation:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-geolocation:generateDebugRFile UP-TO-DATE
+> Task :capacitor-haptics:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-haptics:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-haptics:generateDebugRFile UP-TO-DATE
+> Task :capacitor-local-notifications:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-local-notifications:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-local-notifications:generateDebugRFile UP-TO-DATE
+> Task :capacitor-network:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-network:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-network:generateDebugRFile UP-TO-DATE
+> Task :capacitor-preferences:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-preferences:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-preferences:generateDebugRFile UP-TO-DATE
+> Task :capacitor-push-notifications:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-push-notifications:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-push-notifications:generateDebugRFile UP-TO-DATE
+> Task :capacitor-screen-orientation:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-screen-orientation:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-screen-orientation:generateDebugRFile UP-TO-DATE
+> Task :capacitor-share:compileDebugLibraryResources UP-TO-DATE
+> Task :capacitor-share:parseDebugLocalResources UP-TO-DATE
+> Task :capacitor-share:generateDebugRFile UP-TO-DATE
+> Task :capawesome-capacitor-app-update:compileDebugLibraryResources UP-TO-DATE
+> Task :capawesome-capacitor-app-update:parseDebugLocalResources UP-TO-DATE
+> Task :capawesome-capacitor-app-update:generateDebugRFile UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:compileDebugLibraryResources UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:parseDebugLocalResources UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-android:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-android:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-android:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:compileDebugJavaWithJavac UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-app:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-app:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-browser:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-browser:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-browser:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-community-admob:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :capacitor-community-admob:compileDebugKotlin UP-TO-DATE
+> Task :capacitor-community-admob:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-community-admob:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-community-admob:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:compileDebugJavaWithJavac NO-SOURCE
+> Task :capacitor-cordova-android-plugins:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-device:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-device:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-device:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-filesystem:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :capacitor-filesystem:compileDebugKotlin UP-TO-DATE
+> Task :capacitor-filesystem:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-filesystem:compileDebugJavaWithJavac NO-SOURCE
+> Task :capacitor-filesystem:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-firebase-app-check:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-firebase-app-check:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-firebase-app-check:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-geolocation:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :capacitor-geolocation:compileDebugKotlin UP-TO-DATE
+> Task :capacitor-geolocation:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-geolocation:compileDebugJavaWithJavac NO-SOURCE
+> Task :capacitor-geolocation:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-haptics:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-haptics:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-haptics:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-local-notifications:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-local-notifications:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-local-notifications:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-network:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-network:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-network:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-preferences:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-preferences:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-preferences:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-push-notifications:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-push-notifications:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-push-notifications:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-screen-orientation:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-screen-orientation:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-screen-orientation:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capacitor-share:javaPreCompileDebug UP-TO-DATE
+> Task :capacitor-share:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capacitor-share:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :capawesome-capacitor-app-update:javaPreCompileDebug UP-TO-DATE
+> Task :capawesome-capacitor-app-update:compileDebugJavaWithJavac UP-TO-DATE
+> Task :capawesome-capacitor-app-update:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :revenuecat-purchases-capacitor:compileDebugKotlin UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:javaPreCompileDebug UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:compileDebugJavaWithJavac NO-SOURCE
+> Task :revenuecat-purchases-capacitor:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:mergeDebugShaders UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:compileDebugShaders NO-SOURCE
+> Task :brandonknudsen-admob-native-advanced:generateDebugAssets UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-android:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-android:compileDebugShaders NO-SOURCE
+> Task :capacitor-android:generateDebugAssets UP-TO-DATE
+> Task :capacitor-android:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-app:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-app:compileDebugShaders NO-SOURCE
+> Task :capacitor-app:generateDebugAssets UP-TO-DATE
+> Task :capacitor-app:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-browser:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-browser:compileDebugShaders NO-SOURCE
+> Task :capacitor-browser:generateDebugAssets UP-TO-DATE
+> Task :capacitor-browser:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-community-admob:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-community-admob:compileDebugShaders NO-SOURCE
+> Task :capacitor-community-admob:generateDebugAssets UP-TO-DATE
+> Task :capacitor-community-admob:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:compileDebugShaders NO-SOURCE
+> Task :capacitor-cordova-android-plugins:generateDebugAssets UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-device:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-device:compileDebugShaders NO-SOURCE
+> Task :capacitor-device:generateDebugAssets UP-TO-DATE
+> Task :capacitor-device:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-filesystem:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-filesystem:compileDebugShaders NO-SOURCE
+> Task :capacitor-filesystem:generateDebugAssets UP-TO-DATE
+> Task :capacitor-filesystem:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-firebase-app-check:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-firebase-app-check:compileDebugShaders NO-SOURCE
+> Task :capacitor-firebase-app-check:generateDebugAssets UP-TO-DATE
+> Task :capacitor-firebase-app-check:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-geolocation:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-geolocation:compileDebugShaders NO-SOURCE
+> Task :capacitor-geolocation:generateDebugAssets UP-TO-DATE
+> Task :capacitor-geolocation:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-haptics:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-haptics:compileDebugShaders NO-SOURCE
+> Task :capacitor-haptics:generateDebugAssets UP-TO-DATE
+> Task :capacitor-haptics:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-local-notifications:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-local-notifications:compileDebugShaders NO-SOURCE
+> Task :capacitor-local-notifications:generateDebugAssets UP-TO-DATE
+> Task :capacitor-local-notifications:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-network:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-network:compileDebugShaders NO-SOURCE
+> Task :capacitor-network:generateDebugAssets UP-TO-DATE
+> Task :capacitor-network:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-preferences:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-preferences:compileDebugShaders NO-SOURCE
+> Task :capacitor-preferences:generateDebugAssets UP-TO-DATE
+> Task :capacitor-preferences:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-push-notifications:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-push-notifications:compileDebugShaders NO-SOURCE
+> Task :capacitor-push-notifications:generateDebugAssets UP-TO-DATE
+> Task :capacitor-push-notifications:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-screen-orientation:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-screen-orientation:compileDebugShaders NO-SOURCE
+> Task :capacitor-screen-orientation:generateDebugAssets UP-TO-DATE
+> Task :capacitor-screen-orientation:mergeDebugAssets UP-TO-DATE
+> Task :capacitor-share:mergeDebugShaders UP-TO-DATE
+> Task :capacitor-share:compileDebugShaders NO-SOURCE
+> Task :capacitor-share:generateDebugAssets UP-TO-DATE
+> Task :capacitor-share:mergeDebugAssets UP-TO-DATE
+> Task :capawesome-capacitor-app-update:mergeDebugShaders UP-TO-DATE
+> Task :capawesome-capacitor-app-update:compileDebugShaders NO-SOURCE
+> Task :capawesome-capacitor-app-update:generateDebugAssets UP-TO-DATE
+> Task :capawesome-capacitor-app-update:mergeDebugAssets UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:mergeDebugShaders UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:compileDebugShaders NO-SOURCE
+> Task :revenuecat-purchases-capacitor:generateDebugAssets UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:mergeDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-community-admob:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-firebase-app-check:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-app:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-browser:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-device:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-filesystem:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-geolocation:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-haptics:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-local-notifications:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-network:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-preferences:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-push-notifications:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-screen-orientation:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-share:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capawesome-capacitor-app-update:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-android:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:mergeDebugGlobalSynthetics UP-TO-DATE
+> Task :app:processDebugJavaRes NO-SOURCE
+> Task :brandonknudsen-admob-native-advanced:processDebugJavaRes NO-SOURCE
+> Task :capacitor-android:processDebugJavaRes NO-SOURCE
+> Task :capacitor-app:processDebugJavaRes NO-SOURCE
+> Task :capacitor-browser:processDebugJavaRes NO-SOURCE
+> Task :capacitor-community-admob:processDebugJavaRes UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:processDebugJavaRes NO-SOURCE
+> Task :capacitor-device:processDebugJavaRes NO-SOURCE
+> Task :capacitor-filesystem:processDebugJavaRes UP-TO-DATE
+> Task :capacitor-firebase-app-check:processDebugJavaRes NO-SOURCE
+> Task :capacitor-geolocation:processDebugJavaRes UP-TO-DATE
+> Task :capacitor-haptics:processDebugJavaRes NO-SOURCE
+> Task :capacitor-local-notifications:processDebugJavaRes NO-SOURCE
+> Task :capacitor-network:processDebugJavaRes NO-SOURCE
+> Task :capacitor-preferences:processDebugJavaRes NO-SOURCE
+> Task :capacitor-push-notifications:processDebugJavaRes NO-SOURCE
+> Task :capacitor-screen-orientation:processDebugJavaRes NO-SOURCE
+> Task :capacitor-share:processDebugJavaRes NO-SOURCE
+> Task :capawesome-capacitor-app-update:processDebugJavaRes NO-SOURCE
+> Task :revenuecat-purchases-capacitor:processDebugJavaRes UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-community-admob:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-firebase-app-check:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-app:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-browser:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-device:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-filesystem:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-geolocation:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-haptics:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-local-notifications:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-network:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-preferences:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-push-notifications:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-screen-orientation:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-share:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capawesome-capacitor-app-update:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-android:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:mergeDebugNativeLibs NO-SOURCE
+> Task :brandonknudsen-admob-native-advanced:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-android:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-android:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-android:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-app:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-app:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-browser:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-browser:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-browser:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-community-admob:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-community-admob:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-community-admob:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-cordova-android-plugins:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-cordova-android-plugins:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-device:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-device:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-device:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-filesystem:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-filesystem:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-filesystem:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-firebase-app-check:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-firebase-app-check:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-firebase-app-check:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-geolocation:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-geolocation:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-geolocation:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-haptics:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-haptics:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-haptics:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-local-notifications:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-local-notifications:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-local-notifications:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-network:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-network:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-network:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-preferences:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-preferences:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-preferences:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-push-notifications:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-push-notifications:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-push-notifications:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-screen-orientation:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-screen-orientation:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-screen-orientation:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capacitor-share:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capacitor-share:mergeDebugNativeLibs NO-SOURCE
+> Task :capacitor-share:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :capawesome-capacitor-app-update:mergeDebugJniLibFolders UP-TO-DATE
+> Task :capawesome-capacitor-app-update:mergeDebugNativeLibs NO-SOURCE
+> Task :capawesome-capacitor-app-update:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:mergeDebugJniLibFolders UP-TO-DATE
+> Task :revenuecat-purchases-capacitor:mergeDebugNativeLibs NO-SOURCE
+> Task :revenuecat-purchases-capacitor:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:packageDebug UP-TO-DATE
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:stripDebugDebugSymbols NO-SOURCE
+> Task :brandonknudsen-admob-native-advanced:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :brandonknudsen-admob-native-advanced:checkDebugAarMetadata FAILED
+> Task :brandonknudsen-admob-native-advanced:extractDebugAnnotations
+
+[Incubating] Problems report is available at: file:///D:/Projem/android/build/reports/problems/problems-report.html
+.\gradlew : 
+At line:1 char:1
++ .\gradlew assembleDebug 2>&1 | Out-File -FilePath error_log.tx
+t -Enco ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], Remot 
+   eException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':brandonknudsen-admob-native-advanced
+:checkDebugAarMetadata'.
+> A failure occurred while executing com.android.build.gradle.in
+ternal.tasks.CheckAarMetadataWorkAction
+   > 9 issues were found when checking AAR metadata:
+     
+       1.  Dependency 'androidx.appcompat:appcompat-resources:1.
+7.1' requires libraries and applications that
+           depend on it to compile against version 34 or later o
+f the
+           Android APIs.
+     
+           :brandonknudsen-admob-native-advanced is currently co
+mpiled against android-33.
+     
+           Recommended action: Update this project to use a newe
+r compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compile
+Sdk (which
+           allows newer APIs to be used) can be done separately 
+from updating
+           targetSdk (which opts the app in to new runtime behav
+ior) and
+           minSdk (which determines which devices the app can be
+ installed
+           on).
+     
+       2.  Dependency 'androidx.appcompat:appcompat:1.7.1' requi
+res libraries and applications that
+           depend on it to compile against version 34 or later o
+f the
+           Android APIs.
+     
+           :brandonknudsen-admob-native-advanced is currently co
+mpiled against android-33.
+     
+           Recommended action: Update this project to use a newe
+r compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compile
+Sdk (which
+           allows newer APIs to be used) can be done separately 
+from updating
+           targetSdk (which opts the app in to new runtime behav
+ior) and
+           minSdk (which determines which devices the app can be
+ installed
+           on).
+     
+       3.  Dependency 'androidx.fragment:fragment:1.8.4' require
+s libraries and applications that
+           depend on it to compile against version 34 or later o
+f the
+           Android APIs.
+     
+           :brandonknudsen-admob-native-advanced is currently co
+mpiled against android-33.
+     
+           Recommended action: Update this project to use a newe
+r compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compile
+Sdk (which
+           allows newer APIs to be used) can be done separately 
+from updating
+           targetSdk (which opts the app in to new runtime behav
+ior) and
+           minSdk (which determines which devices the app can be
+ installed
+           on).
+     
+       4.  Dependency 'androidx.activity:activity:1.9.2' require
+s libraries and applications that
+           depend on it to compile against version 34 or later o
+f the
+           Android APIs.
+     
+           :brandonknudsen-admob-native-advanced is currently co
+mpiled against android-33.
+     
+           Recommended action: Update this project to use a newe
+r compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compile
+Sdk (which
+           allows newer APIs to be used) can be done separately 
+from updating
+           targetSdk (which opts the app in to new runtime behav
+ior) and
+           minSdk (which determines which devices the app can be
+ installed
+           on).
+     
+       5.  Dependency 'androidx.coordinatorlayout:coordinatorlay
+out:1.3.0' requires libraries and applications that
+           depend on it to compile against version 34 or later o
+f the
+           Android APIs.
+     
+           :brandonknudsen-admob-native-advanced is currently co
+mpiled against android-33.
+     
+           Recommended action: Update this project to use a newe
+r compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compile
+Sdk (which
+           allows newer APIs to be used) can be done separately 
+from updating
+           targetSdk (which opts the app in to new runtime behav
+ior) and
+           minSdk (which determines which devices the app can be
+ installed
+           on).
+     
+       6.  Dependency 'androidx.webkit:webkit:1.12.1' requires l
+ibraries and applications that
+           depend on it to compile against version 34 or later o
+f the
+           Android APIs.
+     
+           :brandonknudsen-admob-native-advanced is currently co
+mpiled against android-33.
+     
+           Recommended action: Update this project to use a newe
+r compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compile
+Sdk (which
+           allows newer APIs to be used) can be done separately 
+from updating
+           targetSdk (which opts the app in to new runtime behav
+ior) and
+           minSdk (which determines which devices the app can be
+ installed
+           on).
+     
+       7.  Dependency 'androidx.core:core-ktx:1.15.0' requires l
+ibraries and applications that
+           depend on it to compile against version 35 or later o
+f the
+           Android APIs.
+     
+           :brandonknudsen-admob-native-advanced is currently co
+mpiled against android-33.
+     
+           Recommended action: Update this project to use a newe
+r compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compile
+Sdk (which
+           allows newer APIs to be used) can be done separately 
+from updating
+           targetSdk (which opts the app in to new runtime behav
+ior) and
+           minSdk (which determines which devices the app can be
+ installed
+           on).
+     
+       8.  Dependency 'androidx.core:core:1.15.0' requires libra
+ries and applications that
+           depend on it to compile against version 35 or later o
+f the
+           Android APIs.
+     
+           :brandonknudsen-admob-native-advanced is currently co
+mpiled against android-33.
+     
+           Recommended action: Update this project to use a newe
+r compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compile
+Sdk (which
+           allows newer APIs to be used) can be done separately 
+from updating
+           targetSdk (which opts the app in to new runtime behav
+ior) and
+           minSdk (which determines which devices the app can be
+ installed
+           on).
+     
+       9.  Dependency 'androidx.annotation:annotation-experiment
+al:1.4.1' requires libraries and applications that
+           depend on it to compile against version 34 or later o
+f the
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+407 actionable tasks: 2 executed, 405 up-to-date
+           Android APIs.
+     
+           :brandonknudsen-admob-native-advanced is currently co
+mpiled against android-33.
+     
+           Recommended action: Update this project to use a newe
+r compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compile
+Sdk (which
+           allows newer APIs to be used) can be done separately 
+from updating
+           targetSdk (which opts the app in to new runtime behav
+ior) and
+           minSdk (which determines which devices the app can be
+ installed
+           on).
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 3s

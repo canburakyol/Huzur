@@ -260,7 +260,6 @@ exports.syncProStatus = functions
           isPro: false
         };
       }
-
     } catch (error) {
       console.error('Sync Pro Status Error:', error);
       throw new functions.https.HttpsError(
@@ -269,3 +268,128 @@ exports.syncProStatus = functions
       );
     }
   });
+
+/**
+ * ============================================================
+ * SOCIAL NOTIFICATIONS (Hatim & Dua)
+ * ============================================================
+ */
+
+/**
+ * Trigger: When a user says "Amin" to a Dua
+ * Watch for changes in 'duas/{duaId}'
+ */
+exports.onDuaUpdate = functions
+  .region('europe-west1')
+  .firestore
+  .document('duas/{duaId}')
+  .onUpdate(async (change, context) => {
+    const newData = change.after.data();
+    const previousData = change.before.data();
+
+    // Check if aminCount increased
+    if (newData.aminCount > previousData.aminCount) {
+      const authorId = newData.userId;
+      
+      // Don't notify if author says amin to themselves (unlikely but possible)
+      // We don't have the 'who' in this simple check, but usually acceptable.
+      
+      return sendPushToUser(authorId, {
+        title: 'Bir Mümin Duana Amin Dedi! 🤲',
+        body: `"${newData.text.substring(0, 30)}..." duan için yeni bir amin var.`,
+        data: { type: 'dua_amin', duaId: context.params.duaId }
+      });
+    }
+    
+    return null;
+  });
+
+/**
+ * Trigger: When a Hatim member joins or status changes
+ * Watch for changes in 'hatims/{hatimId}'
+ */
+exports.onHatimUpdate = functions
+  .region('europe-west1')
+  .firestore
+  .document('hatims/{hatimId}')
+  .onUpdate(async (change, context) => {
+    const newData = change.after.data();
+    const previousData = change.before.data();
+    
+    // Case 1: New participant joined (readers array changed)
+    // Arrays comparison is tricky, but let's check length
+    if (newData.readers && previousData.readers && newData.readers.length > previousData.readers.length) {
+      const adminId = newData.adminId; // Notify admin
+      
+      // Find who joined? We can't easily tell from array diff without loop, 
+      // but we can just notify admin.
+      return sendPushToUser(adminId, {
+        title: 'Grubuna Yeni Bir Hafız Katıldı! 📖',
+        body: `${newData.title} hatmi için okumaya başlayanlar var.`,
+        data: { type: 'hatim_join', hatimId: context.params.hatimId }
+      });
+    }
+
+    // Case 2: A part was completed (parts array changed)
+    // This requires deep checking part status, might be too noisy.
+    // Let's stick to Join notifications for now to save quota.
+    
+    return null;
+  });
+
+/**
+ * Helper: Send Push Notification to User
+ */
+async function sendPushToUser(userId, notification) {
+  if (!userId) return null;
+
+  try {
+    // 1. Get User's FCM Tokens
+    const userDoc = await db.collection('users').doc(userId).get();
+    if (!userDoc.exists) return null;
+
+    const userData = userDoc.data();
+    const tokens = userData.fcmTokens;
+
+    if (!tokens || tokens.length === 0) {
+      console.log(`User ${userId} has no FCM tokens.`);
+      return null;
+    }
+
+    // 2. Prepare Payload
+    const message = {
+      notification: {
+        title: notification.title,
+        body: notification.body,
+      },
+      data: notification.data || {},
+      tokens: tokens, // Multicast to all user devices
+    };
+
+    // 3. Send using Admin SDK
+    const response = await admin.messaging().sendMulticast(message);
+    
+    // 4. Cleanup invalid tokens
+    if (response.failureCount > 0) {
+      const failedTokens = [];
+      response.responses.forEach((resp, idx) => {
+        if (!resp.success) {
+          failedTokens.push(tokens[idx]);
+        }
+      });
+      
+      if (failedTokens.length > 0) {
+        await db.collection('users').doc(userId).update({
+          fcmTokens: admin.firestore.FieldValue.arrayRemove(...failedTokens)
+        });
+        console.log(`Cleaned up ${failedTokens.length} invalid tokens.`);
+      }
+    }
+
+    return response;
+
+  } catch (error) {
+    console.error('Error sending push:', error);
+    return null;
+  }
+}

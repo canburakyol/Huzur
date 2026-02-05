@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { 
   X, 
   ChevronLeft, 
@@ -54,17 +54,12 @@ const STORAGE_KEY = 'huzur_special_days_notifications';
 export function SpecialDaysCalendar({ onClose }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDay, setSelectedDay] = useState(null);
-  const [notifications, setNotifications] = useState({});
-
-  // Load notification preferences
-  useEffect(() => {
-    let mounted = true;
+  
+  // Load notification preferences from localStorage with initial state
+  const [notifications, setNotifications] = useState(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && mounted) {
-      setNotifications(JSON.parse(stored));
-    }
-    return () => { mounted = false; };
-  }, []);
+    return stored ? JSON.parse(stored) : {};
+  });
 
   // Save notification preferences
   const toggleNotification = (dayId) => {

@@ -14,6 +14,10 @@ import { useDirection } from './hooks/useDirection';
 import { useFocus } from './context/FocusContext';
 import { NotificationService } from './services/notificationService';
 
+// Services
+import streakService from './services/streakService';
+import { checkAndNotifyStreakRisk } from './services/streakProtectionService';
+
 // Components - Lazy loaded for performance
 const FeatureManager = lazy(() => import('./components/FeatureManager'));
 const SplashScreen = lazy(() => import('./components/SplashScreen'));
@@ -25,8 +29,6 @@ const AdPopup = lazy(() => import('./components/AdPopup'));
 const NativeAdCard = lazy(() => import('./components/NativeAdCard'));
 const PrayerTimeBanner = lazy(() => import('./components/PrayerTimeBanner'));
 const DailyQuests = lazy(() => import('./components/DailyQuests'));
-
-// Lazy Load Components
 const Stories = lazy(() => import('./components/Stories'));
 const Prayers = lazy(() => import('./components/Prayers'));
 const Quran = lazy(() => import('./components/Quran'));
@@ -35,6 +37,8 @@ const SpiritualCoach = lazy(() => import('./components/SpiritualCoach'));
 const SocialDashboard = lazy(() => import('./components/social/SocialDashboard'));
 const HamburgerMenu = lazy(() => import('./components/HamburgerMenu'));
 const MoodSelector = lazy(() => import('./components/MoodSelector'));
+const StreakProtectionModal = lazy(() => import('./components/StreakProtectionModal'));
+const LevelUpConfetti = lazy(() => import('./components/LevelUpConfetti'));
 
 // Loading fallback component
 const LoadingFallback = ({ height = '100px' }) => (
@@ -46,12 +50,14 @@ const LoadingFallback = ({ height = '100px' }) => (
 function App() {
   const { t } = useTranslation();
   const { isFocusMode } = useFocus();
+  
   // UI State
   const [activeFeature, setActiveFeature] = useState(null);
   const [activeTab, setActiveTab] = useState('home');
   const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
   const [showMoodSelector, setShowMoodSelector] = useState(false);
   const [showSplash, setShowSplash] = useState(() => !sessionStorage.getItem('splashShown'));
+  const [protectionTarget, setProtectionTarget] = useState(null); // { category, data }
 
   // Prayer Times Hook
   const {
@@ -108,7 +114,6 @@ function App() {
        try {
          const uid = await ensureAuthenticated();
          if (uid) {
-            // Initialize Push Notifications listener (and sync token)
             NotificationService.initPush(uid);
          }
        } catch (e) {
@@ -118,37 +123,23 @@ function App() {
     initAuth();
   }, []);
 
-  // Crashlytics test beacon on app mount (will be ignored if native plugin not available)
+  // Crashlytics
   useEffect(() => {
     try {
       crashlyticsReporter?.logCrash?.('App mounted - startup');
-    } catch {
-      // ignore in case Crashlytics bridge isn't ready yet
-    }
-  }, []);
-  // Initialize Crashlytics test hook to allow quick in-app test from console/UI
-  useEffect(() => {
-    try { initCrashlyticsTestHook(); } catch { /* ignore */ }
+      initCrashlyticsTestHook();
+    } catch { /* ignore */ }
   }, []);
 
-  // Global error handling for production observability
+  // Global error handling
   useEffect(() => {
     const onError = (event) => {
-      // Basic log; hook with Crashlytics later
-      console.error('[GlobalError]', event.message, 'at', event.filename, 'line', event.lineno);
-      try {
-        crashlyticsReporter?.logException?.(event?.error || new Error(event.message || 'Error'));
-      } catch {
-        // ignore
-      }
+      console.error('[GlobalError]', event.message);
+      try { crashlyticsReporter?.logException?.(event?.error || new Error(event.message)); } catch { /* silently ignore logging errors */ }
     };
     const onUnhandledRejection = (event) => {
       console.error('[UnhandledRejection]', event.reason);
-      try {
-        crashlyticsReporter?.logException?.(event?.reason instanceof Error ? event.reason : new Error(String(event.reason)));
-      } catch {
-        // ignore
-      }
+      try { crashlyticsReporter?.logException?.(event?.reason instanceof Error ? event.reason : new Error(String(event.reason))); } catch { /* silently ignore logging errors */ }
     };
     window.addEventListener('error', onError);
     window.addEventListener('unhandledrejection', onUnhandledRejection);
@@ -158,11 +149,35 @@ function App() {
     };
   }, []);
 
-  // Listen for custom feature open events (e.g. from Settings)
+  // Streak Protection Check
   useEffect(() => {
-    const handleOpenFeature = (e) => {
-      setActiveFeature(e.detail);
+    const checkProtection = async () => {
+      setTimeout(async () => {
+        await checkAndNotifyStreakRisk();
+        const data = streakService.getStreakData();
+        const today = new Date().toISOString().split('T')[0];
+        
+        const prayerStreak = data.streaks?.prayer;
+        if (prayerStreak && prayerStreak.count > 0 && 
+            prayerStreak.lastDate && prayerStreak.lastDate !== today &&
+            prayerStreak.freezeTokens > 0) {
+          
+          const lastDate = new Date(prayerStreak.lastDate);
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          
+          if (lastDate < yesterday.setHours(0,0,0,0)) {
+            setProtectionTarget({ category: 'prayer', data: prayerStreak });
+          }
+        }
+      }, 3000);
     };
+    checkProtection();
+  }, []);
+
+  // Listen for custom feature open events
+  useEffect(() => {
+    const handleOpenFeature = (e) => setActiveFeature(e.detail);
     window.addEventListener('openFeature', handleOpenFeature);
     return () => window.removeEventListener('openFeature', handleOpenFeature);
   }, []);
@@ -178,7 +193,6 @@ function App() {
 
   return (
     <ErrorBoundary>
-    <>
       {/* Splash Screen */}
       {showSplash && (
         <Suspense fallback={null}>
@@ -208,6 +222,27 @@ function App() {
         </div>
       )}
 
+      {/* Streak Protection Modal */}
+      {protectionTarget && (
+        <Suspense fallback={null}>
+          <StreakProtectionModal
+            isOpen={!!protectionTarget}
+            onClose={() => setProtectionTarget(null)}
+            categoryName={protectionTarget.category === 'prayer' ? 'Namaz' : protectionTarget.category}
+            categoryData={protectionTarget.data}
+            onUseToken={() => {
+              streakService.useFreezeToken(protectionTarget.category);
+              setProtectionTarget(null);
+            }}
+          />
+        </Suspense>
+      )}
+
+      {/* Level Up Confetti */}
+      <Suspense fallback={null}>
+        <LevelUpConfetti />
+      </Suspense>
+
       <div className="app-container" style={{ position: 'relative', paddingBottom: '130px' }}>
         <Suspense fallback={null}>
           <AdPopup />
@@ -234,15 +269,14 @@ function App() {
             <p style={{ color: '#666' }}>{t('prayer.loading')}</p>
           </div>
         )}
+
         {/* Home Tab Content */}
         {activeTab === 'home' && !loading && !error && (
           <>
-            {/* Prayer Time Banner */}
             <Suspense fallback={<LoadingFallback height="80px" />}>
               <PrayerTimeBanner timings={timings} nextPrayer={nextPrayer} />
             </Suspense>
 
-            {/* Header: Location, Weather & Streak */}
             <Suspense fallback={<LoadingFallback height="60px" />}>
               <HomeHeader 
                 locationName={locationName} 
@@ -251,12 +285,10 @@ function App() {
               />
             </Suspense>
 
-            {/* Stories Section */}
             <Suspense fallback={<LoadingFallback height="100px" />}>
               <Stories />
             </Suspense>
 
-            {/* Welcome / Permission Prompt */}
             {showWelcome && (
               <div className="glass-card" style={{ backgroundColor: 'rgba(255, 243, 205, 0.95)', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 100, width: '90%', maxWidth: '400px' }}>
                 <h3 style={{ color: '#856404' }}>{t('home.welcome')}</h3>
@@ -268,7 +300,6 @@ function App() {
               </div>
             )}
 
-            {/* Location Consent Prompt */}
             {showLocationPrompt && !locationConsentGiven && (
               <div style={{
                 position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
@@ -279,18 +310,13 @@ function App() {
                 <div className="glass-card" style={{ backgroundColor: 'rgba(255, 255, 255, 0.98)', maxWidth: '400px', width: '100%', textAlign: 'center' }}>
                   <div style={{ fontSize: '48px', marginBottom: '16px' }}>📍</div>
                   <h3 style={{ color: 'var(--primary-color)', marginBottom: '12px' }}>{t('home.locationRequired')}</h3>
-                  <p style={{ marginBottom: '16px', color: '#555', lineHeight: 1.6 }}>
-                    {t('home.locationReasonIntro')}
-                  </p>
+                  <p style={{ marginBottom: '16px', color: '#555', lineHeight: 1.6 }}>{t('home.locationReasonIntro')}</p>
                   <ul style={{ textAlign: 'left', margin: '0 auto 20px', maxWidth: '280px', color: '#444', fontSize: '14px', lineHeight: 1.8 }}>
                     <li>🕌 {t('home.locationPrayer')}</li>
                     <li>🧭 {t('home.locationQibla')}</li>
                     <li>📍 {t('home.locationMosque')}</li>
                     <li>🌤️ {t('home.locationWeather')}</li>
                   </ul>
-                  <p style={{ fontSize: '12px', color: '#888', marginBottom: '20px' }}>
-                    {t('home.locationPrivacy')}
-                  </p>
                   <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
                     <button className="btn btn-primary" onClick={() => handleLocationConsent(true)} style={{ flex: 1 }}>{t('home.allowLocation')}</button>
                     <button className="btn" onClick={() => handleLocationConsent(false)} style={{ background: 'rgba(0,0,0,0.1)', flex: 1 }}>{t('home.notNow')}</button>
@@ -299,36 +325,31 @@ function App() {
               </div>
             )}
 
-            {/* Prayer Countdown */}
             {timings && nextPrayer && (
               <Suspense fallback={<LoadingFallback height="120px" />}>
                 <PrayerCountdown timings={timings} nextPrayer={nextPrayer} />
               </Suspense>
             )}
 
-            {/* Daily Quests - Gamification */}
             <Suspense fallback={<LoadingFallback height="180px" />}>
               <DailyQuests />
             </Suspense>
 
-            {/* Daily Content Grid */}
             <Suspense fallback={<LoadingFallback height="200px" />}>
               <DailyContentGrid dailyContent={dailyContent} />
             </Suspense>
 
-            {/* Native Advanced Ad */}
             <Suspense fallback={<LoadingFallback height="150px" />}>
               <NativeAdCard />
             </Suspense>
 
-            {/* Feature Grid */}
             <Suspense fallback={<LoadingFallback height="300px" />}>
               <FeatureGrid onSelectFeature={setActiveFeature} />
             </Suspense>
           </>
         )}
 
-        {/* Tab Contents */}
+        {/* Tabs */}
         {activeTab === 'prayers' && (
           <Suspense fallback={<LoadingFallback height="100vh" />}>
             <Prayers onClose={() => setActiveTab('home')} />
@@ -350,7 +371,6 @@ function App() {
           </Suspense>
         )}
 
-        {/* Hamburger Menu */}
         <Suspense fallback={null}>
           <HamburgerMenu
             onSelectFeature={setActiveFeature}
@@ -361,7 +381,6 @@ function App() {
           />
         </Suspense>
 
-        {/* Bottom Navigation Bar */}
         {!isFocusMode && (
           <Suspense fallback={null}>
             <BottomNav 
@@ -372,7 +391,6 @@ function App() {
           </Suspense>
         )}
       </div>
-    </>
     </ErrorBoundary>
   );
 }

@@ -9,6 +9,7 @@ import { STORAGE_KEYS } from './constants'
 import { TimeProvider } from './context/TimeContext'
 import { FocusProvider } from './context/FocusContext'
 import { GamificationProvider } from './context/GamificationContext'
+import { FamilyProvider } from './context/FamilyContext'
 
 // Tema ayarını uygula
 const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
@@ -22,9 +23,11 @@ createRoot(document.getElementById('root')).render(
     <TimeProvider>
       <FocusProvider>
         <GamificationProvider>
-          <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0f3d2e', color: '#a3b18a' }}>Yükleniyor...</div>}>
-            <App />
-          </Suspense>
+          <FamilyProvider>
+            <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0f3d2e', color: '#a3b18a' }}>Yükleniyor...</div>}>
+              <App />
+            </Suspense>
+          </FamilyProvider>
         </GamificationProvider>
       </FocusProvider>
     </TimeProvider>

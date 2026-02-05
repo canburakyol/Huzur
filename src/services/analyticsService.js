@@ -2,6 +2,7 @@
  * Analytics Service
  * Tracks user events and app metrics for Firebase Analytics
  */
+import { logger } from '../utils/logger';
 
 // Event names
 export const ANALYTICS_EVENTS = {
@@ -82,7 +83,7 @@ class AnalyticsService {
     // Process queued events
     this.processQueue();
     
-    console.log('[Analytics] Initialized');
+    logger.log('[Analytics] Initialized');
   }
 
   /**
@@ -90,7 +91,7 @@ class AnalyticsService {
    */
   setEnabled(enabled) {
     this.enabled = enabled;
-    console.log('[Analytics]', enabled ? 'Enabled' : 'Disabled');
+    logger.log('[Analytics]', enabled ? 'Enabled' : 'Disabled');
   }
 
   /**
@@ -220,7 +221,7 @@ class AnalyticsService {
     properties[name] = value;
     localStorage.setItem('analytics_user_properties', JSON.stringify(properties));
     
-    console.log('[Analytics] User Property:', name, value);
+    logger.log('[Analytics] User Property:', name, value);
   }
 
   /**
@@ -229,7 +230,7 @@ class AnalyticsService {
   setUserId(userId) {
     if (!this.enabled) return;
     localStorage.setItem('analytics_user_id', userId);
-    console.log('[Analytics] User ID set');
+    logger.log('[Analytics] User ID set');
   }
 
   /**
@@ -291,7 +292,7 @@ class AnalyticsService {
    */
   sendEvent(event) {
     // Log to console in development
-    console.log('[Analytics]', event.name, event.params);
+    logger.log('[Analytics]', event.name, event.params);
 
     // TODO: Integrate with Firebase Analytics when available
     // Example: firebase.analytics().logEvent(event.name, event.params);
@@ -325,7 +326,7 @@ class AnalyticsService {
   getStoredEvents() {
     try {
       return JSON.parse(localStorage.getItem('analytics_events') || '[]');
-    } catch (e) {
+    } catch {
       return [];
     }
   }

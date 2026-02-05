@@ -14,8 +14,17 @@ export const ThemeSelector = lazy(() => import(/* webpackChunkName: "feature-lif
 export const FontSettings = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/FontSettings'));
 export const MuezzinSelector = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/MuezzinSelector'));
 
+export const StreakFeature = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ './StreakFeature'));
+
 // Feature configuration for this module
 export const lifestyleFeatures = {
+  streak: {
+    component: StreakFeature,
+    category: 'LIFESTYLE',
+    module: 'lifestyle',
+    name: 'Seri Takvimi',
+    icon: '🔥'
+  },
   huzurMode: {
     component: HuzurMode,
     category: 'LIFESTYLE',

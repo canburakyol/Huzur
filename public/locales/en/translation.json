@@ -2792,6 +2792,35 @@
     "family": "Huzur Family",
     "seerah": "Seerah Map"
   },
+  "social": {
+    "title": "Social",
+    "subtitle": "Worship Together",
+    "hatim": {
+      "title": "Group Khatm",
+      "create": "Start New Khatm",
+      "join": "Join Khatm",
+      "myHatims": "My Khatms",
+      "noHatims": "You haven't joined any khatm yet.",
+      "progress": "Progress",
+      "readers": "Readers",
+      "parts": "Juz",
+      "takePart": "Take Juz",
+      "completePart": "Complete",
+      "releasePart": "Release",
+      "joinCode": "Join Code"
+    },
+    "dua": {
+      "title": "Prayer Requests",
+      "create": "Request Prayer",
+      "myDuas": "My Prayers",
+      "noDuas": "No prayer requests yet. Be the first!",
+      "amin": "Ameen",
+      "aminCount": "Ameen Count",
+      "pray": "Pray",
+      "prayed": "Prayed",
+      "anonymous": "Share Anonymously"
+    }
+  },
   "family": {
     "title": "Huzur Family",
     "createProfile": "Create Profile",

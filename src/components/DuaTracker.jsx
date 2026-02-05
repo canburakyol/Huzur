@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { 
   X, 
   Plus, 
@@ -45,23 +45,30 @@ const STORAGE_KEY = 'huzur_dua_tracker';
 
 export function DuaTracker({ onClose }) {
   const { addXP } = useGamification();
-  const [duas, setDuas] = useState([]);
   const [newDua, setNewDua] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('general');
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingDua, setEditingDua] = useState(null);
   const [filter, setFilter] = useState('all');
-  const [stats, setStats] = useState({ total: 0, completed: 0, streak: 0 });
-
-  // Load duas from storage
-  useEffect(() => {
+  
+  // Load duas from storage - using initial state instead of useEffect setState
+  const [data] = useState(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      const data = JSON.parse(stored);
-      setDuas(data.duas || []);
-      setStats(data.stats || { total: 0, completed: 0, streak: 0 });
+      const parsed = JSON.parse(stored);
+      return {
+        duas: parsed.duas || [],
+        stats: parsed.stats || { total: 0, completed: 0, streak: 0 }
+      };
     }
-  }, []);
+    return {
+      duas: [],
+      stats: { total: 0, completed: 0, streak: 0 }
+    };
+  });
+  
+  const [duas, setDuas] = useState(data.duas);
+  const [stats, setStats] = useState(data.stats);
 
   // Save duas to storage
   const saveDuas = (newDuas, newStats) => {

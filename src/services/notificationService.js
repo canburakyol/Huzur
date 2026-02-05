@@ -1,124 +1,29 @@
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import { logger } from '../utils/logger';
+import smartNotificationService from './smartNotificationService';
 
 const NOTIFICATION_ID = 1001;
 
 // Tekil fonksiyonlar (App.jsx uyumluluğu için)
 export const requestNotificationPermission = async () => {
-    if (!Capacitor.isNativePlatform()) {
-
-        return true;
-    }
-    const result = await LocalNotifications.requestPermissions();
-    return result.display === 'granted';
+    return smartNotificationService.requestNotificationPermission();
 };
 
 export const sendNotification = async (title, body, id = null) => {
-    if (!Capacitor.isNativePlatform()) {
-
-        if (Notification.permission === 'granted') {
-            new Notification(title, { body });
-        }
-        return;
-    }
-
-    try {
-        await LocalNotifications.schedule({
-            notifications: [
-                {
-                    title,
-                    body,
-                    id: id || Math.floor(Math.random() * 100000),
-                    schedule: { at: new Date(Date.now() + 100) },
-                    // Uses default system notification sound
-                    actionTypeId: "",
-                    extra: null
-                }
-            ]
-        });
-    } catch (error) {
-        logger.error('Bildirim gönderme hatası:', error);
-    }
+    return smartNotificationService.showInstantNotification(title, body, { id });
 };
 
-// Gelişmiş Bildirim Planlayıcı
-export const schedulePrayerNotifications = async (prayerTimes, settings = {}) => {
-    if (!Capacitor.isNativePlatform()) return;
-
-    const { preAlertMinutes = 15, enablePreAlert = false } = settings;
+// Gelişmiş Bildirim Planlayıcı (DEPRECATED - Redirects to SmartNotificationService)
+export const schedulePrayerNotifications = async (prayerTimes) => {
+    console.warn('Deprecated: notificationService.schedulePrayerNotifications is using SmartNotificationService underneath.');
     
-    // Seçili müezzin sesini al
-    const savedMuezzinId = localStorage.getItem('selected_muezzin_id') || 'default';
-    // muezzinData.js'den import etmek yerine basit bir mapping veya dosya adı oluşturma
-    // Dosya adları: ezan_default.mp3, ezan_mecca.mp3 vb. (Native'de uzantısız olabilir: ezan_mecca)
-    const soundName = `ezan_${savedMuezzinId}`; 
-
-    // Prayer name translations (only valid prayer times)
-    const prayerNames = {
-        Fajr: 'Sabah',
-        Sunrise: 'Güneş',
-        Dhuhr: 'Öğle',
-        Asr: 'İkindi',
-        Maghrib: 'Akşam',
-        Isha: 'Yatsı'
-    };
-
-    // Valid prayer keys (filter out API extras like Firstthird, Lastthird, Midnight, Imsak)
-    const validPrayerKeys = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
-
-    const notifications = [];
-    let idCounter = 2000;
-
-    Object.entries(prayerTimes).forEach(([key, timeStr]) => {
-        // Skip invalid keys and empty values
-        if (!timeStr || !validPrayerKeys.includes(key)) return;
-
-        const name = prayerNames[key] || key;
-        
-        // Saat stringini (HH:mm) Date objesine çevir
-        const [hours, minutes] = timeStr.split(':').map(Number);
-        const prayerDate = new Date();
-        prayerDate.setHours(hours, minutes, 0, 0);
-
-        // Eğer vakit geçtiyse yarına planla
-        if (prayerDate < new Date()) {
-            prayerDate.setDate(prayerDate.getDate() + 1);
-        }
-
-        notifications.push({
-            id: idCounter++,
-            title: `Ezan Vakti: ${name}`,
-            body: `${name} namazı vakti girdi. Haydi namaza!`,
-            schedule: { at: prayerDate },
-            sound: soundName, // Native ses dosyası adı (res/raw/ezan_mecca.mp3)
-            channelId: 'ezan_channel', // Android için kanal
-        });
-
-        // 2. Vakit Öncesi Uyarı
-        if (enablePreAlert) {
-            const preAlertDate = new Date(prayerDate.getTime() - (preAlertMinutes * 60000));
-            if (preAlertDate > new Date()) {
-                notifications.push({
-                    id: idCounter++,
-                    title: `Vakte ${preAlertMinutes} dk Kaldı`,
-                    body: `${name} namazına ${preAlertMinutes} dakika kaldı. Hazırlanabilirsiniz.`,
-                    schedule: { at: preAlertDate },
-                    sound: 'default', // Ön bildirim için varsayılan ses
-                });
-            }
-        }
-    });
-
-    try {
-        // Önce eski planları temizle (ID aralığına göre)
-        // Not: Gerçek uygulamada ID yönetimi daha hassas yapılmalı
-        await LocalNotifications.schedule({ notifications });
-
-    } catch (error) {
-        logger.error('Bildirim planlama hatası:', error);
-    }
+    // Eski settings parametrelerini yeni yapıya uygun hale getirme gerekirse burada yapılabilir
+    // Ancak SmartNotificationService kendi ayarlarını storage'dan okuyor, bu yüzden sadece times'ı paslıyoruz.
+    
+    return smartNotificationService.schedulePrayerNotifications(prayerTimes);
 };
+
 
 // Servis Objesi (Sticky Notification için)
 export const NotificationService = {

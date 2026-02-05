@@ -10,7 +10,6 @@ export function LazyImage({
   src, 
   alt, 
   className = '', 
-  placeholder = '/images/placeholder.jpg',
   threshold = 0.1,
   rootMargin = '50px'
 }) {
@@ -19,6 +18,7 @@ export function LazyImage({
   const imgRef = useRef(null);
 
   useEffect(() => {
+    const currentRef = imgRef.current;
     // Intersection Observer ile görselin görünürlüğünü takip et
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -33,13 +33,13 @@ export function LazyImage({
       }
     );
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (imgRef.current) {
-        observer.unobserve(imgRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [threshold, rootMargin]);

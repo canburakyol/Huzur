@@ -17,6 +17,7 @@ const HatimTracker = ({ onClose }) => {
     const [newHatimTitle, setNewHatimTitle] = useState('');
     const [joinCode, setJoinCode] = useState('');
     const [joinError, setJoinError] = useState('');
+    const [globalError, setGlobalError] = useState(null); // New global error state
     const [createdCode, setCreatedCode] = useState(null);
     const [pendingHatim, setPendingHatim] = useState(null);
 
@@ -57,12 +58,18 @@ const HatimTracker = ({ onClose }) => {
             }));
             setHatims(list);
             setLoading(false);
+            setGlobalError(null); // Clear error on success
         }, (error) => {
-            console.error("Error fetching hatims:", error);
+            logger.error("[HatimTracker] Firestore error:", error);
             setLoading(false);
+            if (error.code === 'permission-denied') {
+                setGlobalError(t('hatim.messages.authRequired') || 'Yetki hatası: Lütfen giriş yapın.');
+            } else {
+                setGlobalError('Veriler yüklenirken bir hata oluştu.');
+            }
         });
         return () => unsubscribe();
-    }, []);
+    }, [t]);
 
     const createHatim = async () => {
         if (!newHatimTitle.trim()) return;
@@ -259,6 +266,14 @@ const HatimTracker = ({ onClose }) => {
                 <IslamicBackButton onClick={onClose} size="medium" />
                 <h2 style={{ margin: 0, fontSize: '20px', color: textDark, fontWeight: '700' }}>{t('hatim.title')}</h2>
             </div>
+
+            {/* Global Error Display */}
+            {globalError && (
+                <div style={{ padding: '12px', background: '#fee2e2', color: '#ef4444', borderRadius: '8px', fontSize: '14px', marginBottom: '10px', border: '1px solid #fecaca' }}>
+                    ⚠️ {globalError}
+                </div>
+            )}
+
             <div style={{ display: 'flex', gap: '12px' }}>
                 <button onClick={() => setView('create')} style={btnStyle(true)}>
                     <Plus size={20} /> {t('hatim.newHatim')}

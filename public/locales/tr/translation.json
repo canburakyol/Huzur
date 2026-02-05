@@ -490,7 +490,8 @@
       "enterCode": "Lütfen kodu giriniz.",
       "wrongCode": "Yanlış kod. Lütfen doğru kodu giriniz.",
       "codeCopied": "Kod kopyalandı!",
-      "inviteCopied": "Davet metni kopyalandı!"
+      "inviteCopied": "Davet metni kopyalandı!",
+      "authRequired": "Sunucu ile bağlantı kuruluyor..."
     }
   },
   "deedJournal": {
@@ -1045,6 +1046,35 @@
     "smartKhatm": "Akıllı Hatim Koçu",
     "family": "Huzur Aile",
     "seerah": "Siyer Haritası"
+  },
+  "social": {
+    "title": "Sosyal",
+    "subtitle": "Birlikte İbadet",
+    "hatim": {
+      "title": "Grup Hatmi",
+      "create": "Yeni Hatim Başlat",
+      "join": "Hatime Katıl",
+      "myHatims": "Hatimlerim",
+      "noHatims": "Henüz katıldığınız bir hatim yok.",
+      "progress": "İlerleme",
+      "readers": "Okuyucu",
+      "parts": "Cüz",
+      "takePart": "Cüz Al",
+      "completePart": "Tamamla",
+      "releasePart": "Bırak",
+      "joinCode": "Davet Kodu"
+    },
+    "dua": {
+      "title": "Dua İstekleri",
+      "create": "Dua İste",
+      "myDuas": "Dualarım",
+      "noDuas": "Henüz hiç dua isteği yok. İlk isteyen siz olun.",
+      "amin": "Amin",
+      "aminCount": "Amin Sayısı",
+      "pray": "Dua Et",
+      "prayed": "Amin Denildi",
+      "anonymous": "Anonim Paylaş"
+    }
   },
   "hikmet": {
     "title": "Hikmetname",
@@ -3299,5 +3329,39 @@
         "ref": "Taha Suresi, 114"
       }
     }
+  },
+  "family": {
+    "title": "Huzurlu Aile",
+    "intro": "Ailenizi ekleyerek manevi gelişiminizi birlikte takip edin.",
+    "createAction": "Aile Oluştur",
+    "joinAction": "Aileye Katıl",
+    "familyNamePlaceholder": "Aile Adı (Örn: Yılmaz Ailesi)",
+    "codePlaceholder": "6 Haneli Davet Kodu",
+    "membersCount": "{{count}} Üye",
+    "members": "Aile Üyeleri",
+    "inviteTip": "Bu kodu ailenizle paylaşarak onları davet edebilirsiniz.",
+    "child": "Çocuk",
+    "prayerTreeTitle": "Namaz Ağacı",
+    "prayerTreeDesc": "Her namaz bir damla su gibidir. Namaz kıldıkça ağacını büyüt!",
+    "waterDrops": "Damla Su",
+    "waterTreeAction": "Ağacı Sula",
+    "watering": "Sulanıyor...",
+    "treeTip": "Ağacın her gün namazla büyüyor!"
+  },
+  "streak": {
+    "fajr": "Sabah",
+    "quran": "Kuran",
+    "dhikr": "Zikir"
+  },
+  "badges": {
+    "early_bird": "Sabah Bülbülü",
+    "quran_lover": "Kuran Aşığı",
+    "dhikr_master": "Zikir Ehli",
+    "family_first": "Huzurlu Aile"
+  },
+  "gamification": {
+    "badgesTitle": "Rozet Koleksiyonu",
+    "streakTitle": "Zincirlerim",
+    "streakTip": "Zincirini korumak için ibadetlerini her gün vaktinde yapmaya çalış!"
   }
 }

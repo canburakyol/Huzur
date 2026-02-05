@@ -1,10 +1,10 @@
 /**
- * Streak Service - Günlük uygulama kullanım serisi takibi
+ * Streak Service - Günlük uygulama kullanım serisi ve ibadet takibi
  * LocalStorage'da streak verilerini yönetir
  */
 
 import { storageService } from './storageService';
-import { STORAGE_KEYS } from '../constants';
+import { analyticsService } from './analyticsService';
 
 // Rozet tanımlamaları
 const BADGES = {
@@ -12,6 +12,23 @@ const BADGES = {
   DAY_15: { id: '15_days', days: 15, emoji: '🔥', title: '15 Gün Serisi', message: 'Harika! 2 haftayı aştınız, devam edin!' },
   DAY_30: { id: '30_days', days: 30, emoji: '🏆', title: '30 Gün Serisi', message: 'Muhteşem! 1 aylık seri başarısı!' },
   DAY_100: { id: '100_days', days: 100, emoji: '👑', title: '100 Gün Serisi', message: 'Efsanevi! 100 gün kesintisiz kullanım!' }
+};
+
+const STREAK_DATA_KEY = 'huzur_streak_data';
+
+const DEFAULT_STREAK_DATA = {
+  currentStreak: 0,
+  longestStreak: 0,
+  lastVisitDate: null,
+  totalDays: 0,
+  earnedBadges: [],
+  recoveryUsed: false,
+  // New: Categorized streaks
+  streaks: {
+    prayer: { count: 0, lastDate: null, freezeTokens: 1, history: [] },
+    quran: { count: 0, lastDate: null, freezeTokens: 0, history: [] },
+    zikir: { count: 0, lastDate: null, freezeTokens: 0, history: [] }
+  }
 };
 
 /**
@@ -26,6 +43,7 @@ const getTodayString = () => {
  * İki tarih arasındaki gün farkını hesaplar
  */
 const getDaysDifference = (date1Str, date2Str) => {
+  if (!date1Str || !date2Str) return 0;
   const date1 = new Date(date1Str);
   const date2 = new Date(date2Str);
   const diffTime = Math.abs(date2 - date1);
@@ -36,51 +54,28 @@ const getDaysDifference = (date1Str, date2Str) => {
  * Mevcut streak verilerini localStorage'dan al
  */
 export const getStreakData = () => {
-  try {
-    const data = storageService.getItem('huzur_streak_data');
-    if (data) {
-      return data;
-    }
-  } catch (error) {
-    console.warn('[StreakService] Error reading streak data:', error);
-  }
-  
-  // Varsayılan değerler
-  return {
-    currentStreak: 0,
-    longestStreak: 0,
-    lastVisitDate: null,
-    totalDays: 0,
-    earnedBadges: []
-  };
+  return storageService.getItem(STREAK_DATA_KEY, DEFAULT_STREAK_DATA);
 };
 
 /**
  * Streak verilerini localStorage'a kaydet
  */
 const saveStreakData = (data) => {
-  try {
-    storageService.setItem('huzur_streak_data', data);
-  } catch (error) {
-    console.warn('[StreakService] Error saving streak data:', error);
-  }
+  storageService.setItem(STREAK_DATA_KEY, data);
 };
 
 /**
- * Streak'i kontrol et ve güncelle
- * @returns {{ streakData: object, newBadge: object|null }}
+ * Streak'i kontrol et ve güncelle (App Init için)
  */
 export const checkAndUpdateStreak = () => {
   const today = getTodayString();
   const data = getStreakData();
   let newBadge = null;
 
-  // Bugün zaten ziyaret edilmiş mi?
   if (data.lastVisitDate === today) {
     return { streakData: data, newBadge: null };
   }
 
-  // İlk ziyaret
   if (!data.lastVisitDate) {
     data.currentStreak = 1;
     data.totalDays = 1;
@@ -90,33 +85,23 @@ export const checkAndUpdateStreak = () => {
     return { streakData: data, newBadge: null };
   }
 
-  // Gün farkını hesapla
   const daysDiff = getDaysDifference(data.lastVisitDate, today);
 
   if (daysDiff === 1) {
-    // Ardışık gün - streak devam ediyor
     data.currentStreak += 1;
     data.totalDays += 1;
+    if (data.currentStreak > data.longestStreak) data.longestStreak = data.currentStreak;
     
-    // En uzun seri güncelle
-    if (data.currentStreak > data.longestStreak) {
-      data.longestStreak = data.currentStreak;
-    }
-
-    // Yeni rozet kazanıldı mı kontrol et
     newBadge = checkForNewBadge(data.currentStreak, data.earnedBadges);
-    if (newBadge) {
-      data.earnedBadges.push(newBadge.id);
-    }
+    if (newBadge) data.earnedBadges.push(newBadge.id);
   } else {
-    // Seri kırıldı
+    // Note: Here we might eventually auto-trigger the protection modal
     data.currentStreak = 1;
     data.totalDays += 1;
   }
 
   data.lastVisitDate = today;
   saveStreakData(data);
-
   return { streakData: data, newBadge };
 };
 
@@ -125,32 +110,92 @@ export const checkAndUpdateStreak = () => {
  */
 const checkForNewBadge = (currentStreak, earnedBadges) => {
   const badgesList = Object.values(BADGES);
-  
   for (const badge of badgesList) {
     if (currentStreak === badge.days && !earnedBadges.includes(badge.id)) {
       return badge;
     }
   }
-  
   return null;
 };
 
 /**
- * Kazanılan tüm rozetleri döndür
+ * Kategori bazlı aktivite kaydet
  */
-export const getEarnedBadges = () => {
+export const recordActivity = (category) => {
   const data = getStreakData();
-  const badgesList = Object.values(BADGES);
+  if (!data.streaks[category]) {
+     data.streaks[category] = { count: 0, lastDate: null, freezeTokens: 0, history: [] };
+  }
   
-  return badgesList.filter(badge => data.earnedBadges.includes(badge.id));
+  const categoryData = data.streaks[category];
+  const today = getTodayString();
+  
+  if (categoryData.lastDate === today) {
+    return { success: true, message: 'Already recorded today' };
+  }
+
+  const daysDiff = getDaysDifference(categoryData.lastDate, today);
+
+  if (daysDiff === 1) {
+    categoryData.count += 1;
+  } else if (!categoryData.lastDate) {
+    categoryData.count = 1;
+  } else {
+     // Streak broken, start again
+     categoryData.count = 1;
+  }
+
+  categoryData.lastDate = today;
+  if (!categoryData.history) categoryData.history = [];
+  categoryData.history.push({ date: today, type: 'activity' });
+
+  // 7 günde 1 dondurma hakkı kazan
+  if (categoryData.count > 0 && categoryData.count % 7 === 0) {
+    categoryData.freezeTokens += 1;
+    analyticsService.logEvent('streak_reward_token', { category, count: categoryData.count });
+  }
+
+  saveStreakData(data);
+  analyticsService.logEvent('streak_increment', { category, count: categoryData.count });
+  
+  // Dispatch event for Gamification
+  window.dispatchEvent(new CustomEvent('streak:activity', { 
+    detail: { 
+      category, 
+      count: categoryData.count 
+    } 
+  }));
+  
+  return { success: true, count: categoryData.count };
 };
 
 /**
- * Streak bilgisini UI için formatla
+ * Dondurma hakkı kullan (Seriyi kurtar)
  */
+export const useFreezeToken = (category) => {
+  const data = getStreakData();
+  const categoryData = data.streaks[category];
+
+  if (categoryData && categoryData.freezeTokens > 0) {
+    categoryData.freezeTokens -= 1;
+    
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
+    
+    categoryData.lastDate = yesterdayStr;
+    categoryData.history.push({ date: yesterdayStr, type: 'frozen' });
+
+    saveStreakData(data);
+    analyticsService.logEvent('streak_freeze_used', { category });
+    return { success: true, tokensRemaining: categoryData.freezeTokens };
+  }
+
+  return { success: false, message: 'No tokens available' };
+};
+
 export const getStreakDisplay = () => {
   const data = getStreakData();
-  
   return {
     current: data.currentStreak,
     longest: data.longestStreak,
@@ -163,9 +208,13 @@ export const getStreakDisplay = () => {
   };
 };
 
+export const getEarnedBadges = () => {
+  const data = getStreakData();
+  return Object.values(BADGES).filter(badge => data.earnedBadges.includes(badge.id));
+};
+
 /**
- * Streak kurtarma durumunu kontrol et
- * @returns {{ canRecover: boolean, daysMissed: number, recoveryDeadline: string|null }}
+ * Streak kurtarma durumunu kontrol et (Legacy Ad-based recovery)
  */
 export const getRecoveryStatus = () => {
   const data = getStreakData();
@@ -177,11 +226,10 @@ export const getRecoveryStatus = () => {
   
   const daysDiff = getDaysDifference(data.lastVisitDate, today);
   
-  // Sadece 1 gün kaçırıldıysa ve 24 saat içindeyse kurtarma mümkün
   if (daysDiff === 2) {
     const lastVisit = new Date(data.lastVisitDate);
     const recoveryDeadline = new Date(lastVisit);
-    recoveryDeadline.setDate(recoveryDeadline.getDate() + 2); // 48 saat süre
+    recoveryDeadline.setDate(recoveryDeadline.getDate() + 2);
     
     const now = new Date();
     const canRecover = now < recoveryDeadline;
@@ -197,48 +245,21 @@ export const getRecoveryStatus = () => {
 };
 
 /**
- * Streak'i kurtar (reklam izledikten sonra)
- * @returns {{ success: boolean, newStreak: number, message: string }}
+ * Streak'i kurtar (Legacy Ad-based recovery)
  */
 export const recoverStreak = () => {
   const status = getRecoveryStatus();
-  
-  if (!status.canRecover) {
-    return { 
-      success: false, 
-      newStreak: 0, 
-      message: 'Kurtarma süresi dolmuş veya kurtarma mümkün değil' 
-    };
-  }
+  if (!status.canRecover) return { success: false, newStreak: 0, message: 'Recovery not possible' };
   
   const data = getStreakData();
   const today = getTodayString();
-  
-  // Streak'i kurtar - dünü de say
   data.lastVisitDate = today;
   data.totalDays += 1;
-  // currentStreak değişmez, seri devam etmiş gibi
-  
   saveStreakData(data);
-  
-  return {
-    success: true,
-    newStreak: data.currentStreak,
-    message: `Tebrikler! ${data.currentStreak} günlük seriniz kurtarıldı! 🔥`
-  };
+  return { success: true, newStreak: data.currentStreak, message: 'Streak recovered!' };
 };
 
-/**
- * Kurtarma hakkı kullanıldı mı kontrol et
- */
-export const hasUsedRecovery = () => {
-  const data = getStreakData();
-  return data.recoveryUsed || false;
-};
-
-/**
- * Kurtarma hakkını işaretle
- */
+export const hasUsedRecovery = () => getStreakData().recoveryUsed || false;
 export const markRecoveryUsed = () => {
   const data = getStreakData();
   data.recoveryUsed = true;
@@ -251,6 +272,8 @@ export default {
   checkAndUpdateStreak,
   getEarnedBadges,
   getStreakDisplay,
+  recordActivity,
+  useFreezeToken,
   getRecoveryStatus,
   recoverStreak,
   hasUsedRecovery,

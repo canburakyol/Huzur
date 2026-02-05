@@ -1,31 +1,30 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { requestNotificationPermission } from '../services/notificationService';
-import { schedulePrayerAlarms } from '../services/fcmService';
-import { getPrayerTimes } from '../services/prayerService';
 import { changeLanguage, getSupportedLanguages } from '../services/languageService';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import LicensesCredits from './LicensesCredits';
 import IslamicBackButton from './shared/IslamicBackButton';
-import { Sun, Moon, Bell, BellOff, Info, FileText, Shield, Clock, AlertCircle, Globe, Sunrise, Sunset } from 'lucide-react';
+import { Sun, Moon, Bell, Info, FileText, Shield, Clock, Globe, History } from 'lucide-react';
 import { storageService } from '../services/storageService';
 import { STORAGE_KEYS, APP_VERSION } from '../constants';
-import { scheduleDailyReminders } from '../services/reminderService';
+import NotificationSettings from './NotificationSettings';
+import NotificationHistory from './NotificationHistory';
 
 const Settings = ({ onClose }) => {
     const { t, i18n } = useTranslation();
-    const [permissionStatus, setPermissionStatus] = useState(() => {
-        return (typeof Notification !== 'undefined') ? Notification.permission : 'default';
-    });
     const [showPrivacy, setShowPrivacy] = useState(false);
     const [showTerms, setShowTerms] = useState(false);
     const [showLicenses, setShowLicenses] = useState(false);
+    const [showHistory, setShowHistory] = useState(false);
+    
     const [darkMode, setDarkMode] = useState(() => {
         const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         return savedTheme === 'dark' || (!savedTheme && prefersDark);
     });
+    
     const [stickyNotification, setStickyNotification] = useState(() => {
         return storageService.getBoolean(STORAGE_KEYS.STICKY_NOTIFICATION);
     });
@@ -33,22 +32,6 @@ const Settings = ({ onClose }) => {
     // Derive current language directly from i18n
     const currentLang = i18n.language?.split('-')[0] || 'tr';
     
-    // Pre-alert settings
-    const [enablePreAlert, setEnablePreAlert] = useState(() => {
-        return storageService.getBoolean(STORAGE_KEYS.ENABLE_PRE_ALERT, true);
-    });
-    const [preAlertMinutes, setPreAlertMinutes] = useState(() => {
-        return storageService.getNumber(STORAGE_KEYS.PRE_ALERT_MINUTES, 15);
-    });
-    
-    // Daily reminder settings
-    const [morningReminder, setMorningReminder] = useState(() => {
-        return storageService.getBoolean(STORAGE_KEYS.MORNING_REMINDER, false);
-    });
-    const [eveningReminder, setEveningReminder] = useState(() => {
-        return storageService.getBoolean(STORAGE_KEYS.EVENING_REMINDER, false);
-    });
-
     const supportedLanguages = getSupportedLanguages();
 
     useEffect(() => {
@@ -63,11 +46,6 @@ const Settings = ({ onClose }) => {
         storageService.setString(STORAGE_KEYS.THEME, newMode ? 'dark' : 'light');
     };
 
-    const handleEnableNotifications = async () => {
-        const granted = await requestNotificationPermission();
-        setPermissionStatus(granted ? 'granted' : 'denied');
-    };
-
     const toggleStickyNotification = async () => {
         const newState = !stickyNotification;
         setStickyNotification(newState);
@@ -78,65 +56,13 @@ const Settings = ({ onClose }) => {
 
         if (newState) {
             // Eğer açıldıysa ve izin yoksa izin iste
-            const granted = await requestNotificationPermission();
-            if (granted) setPermissionStatus('granted');
+            await requestNotificationPermission();
         }
     };
 
     // Handler for language change
     const handleLanguageChange = async (langCode) => {
         await changeLanguage(langCode);
-    };
-
-    // Handler for pre-alert toggle
-    const togglePreAlert = async () => {
-        const newState = !enablePreAlert;
-        setEnablePreAlert(newState);
-        storageService.setBoolean(STORAGE_KEYS.ENABLE_PRE_ALERT, newState);
-        
-        // Reschedule notifications with new settings
-        await rescheduleNotifications();
-    };
-
-    // Handler for pre-alert minutes change
-    const handlePreAlertMinutesChange = async (minutes) => {
-        setPreAlertMinutes(minutes);
-        storageService.setNumber(STORAGE_KEYS.PRE_ALERT_MINUTES, minutes);
-        
-        // Reschedule notifications with new settings
-        await rescheduleNotifications();
-    };
-
-    // Reschedule all prayer notifications
-    const rescheduleNotifications = async () => {
-        try {
-            const data = await getPrayerTimes();
-            if (data && data.timings) {
-                await schedulePrayerAlarms(data.timings, {
-                    preAlertMinutes: storageService.getNumber(STORAGE_KEYS.PRE_ALERT_MINUTES, 15),
-                    enablePreAlert: storageService.getBoolean(STORAGE_KEYS.ENABLE_PRE_ALERT, true),
-                    enableMainAlert: true
-                });
-            }
-        } catch (error) {
-            console.error('[Settings] Failed to reschedule:', error);
-        }
-    };
-
-    // Toggle morning reminder
-    const toggleMorningReminder = async () => {
-        const newState = !morningReminder;
-        setMorningReminder(newState);
-        storageService.setBoolean(STORAGE_KEYS.MORNING_REMINDER, newState);
-        await scheduleDailyReminders({ morningEnabled: newState, eveningEnabled: eveningReminder });
-    };
-
-    // Toggle evening reminder
-    const toggleEveningReminder = async () => {
-        const newState = !eveningReminder;
-        setEveningReminder(newState);
-        storageService.setBoolean(STORAGE_KEYS.EVENING_REMINDER, newState);
-        await scheduleDailyReminders({ morningEnabled: morningReminder, eveningEnabled: newState });
     };
 
     if (showPrivacy) {
@@ -149,6 +75,23 @@ const Settings = ({ onClose }) => {
 
     if (showLicenses) {
         return <LicensesCredits onClose={() => setShowLicenses(false)} />;
+    }
+
+    if (showHistory) {
+      return (
+        <div className="fixed inset-0 bg-gray-50 dark:bg-gray-900 z-50 overflow-y-auto">
+             <div className="p-4 bg-white dark:bg-gray-800 shadow-md mb-4 sticky top-0 z-10 flex items-center">
+                <button 
+                  onClick={() => setShowHistory(false)}
+                  className="mr-3 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <h2 className="text-xl font-bold">Bildirim Geçmişi</h2>
+            </div>
+            <NotificationHistory />
+        </div>
+      );
     }
 
     return (
@@ -266,50 +209,30 @@ const Settings = ({ onClose }) => {
                     </div>
                 </div>
 
-                {/* Bildirimler */}
+                {/* YENİ: Bildirim Ayarları (Enhanced) */}
+                <NotificationSettings />
+
+                {/* Bildirim Geçmişi Butonu */}
                 <div style={{
+                    marginTop: '16px',
                     marginBottom: '16px',
                     padding: '16px',
                     background: 'var(--card-bg)',
                     borderRadius: '14px',
-                    border: '1px solid var(--glass-border)'
-                }}>
+                    border: '1px solid var(--glass-border)',
+                    cursor: 'pointer'
+                }} onClick={() => setShowHistory(true)}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            {permissionStatus === 'granted' ? <Bell size={22} color="#27ae60" /> : <BellOff size={22} color="#999" />}
+                            <History size={22} color="#8e44ad" />
                             <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px' }}>{t('settings.notifications')}</div>
+                                <div style={{ fontWeight: '600', fontSize: '15px' }}>Bildirim Geçmişi</div>
                                 <div style={{ fontSize: '13px', color: 'var(--text-color-light)' }}>
-                                    {t('settings.notificationsDesc')}
+                                    Gelen son bildirimleri görüntüleyin
                                 </div>
                             </div>
                         </div>
-                        {permissionStatus === 'granted' ? (
-                            <span style={{
-                                padding: '6px 12px',
-                                background: 'rgba(39, 174, 96, 0.1)',
-                                color: '#27ae60',
-                                borderRadius: '20px',
-                                fontSize: '13px',
-                                fontWeight: '600'
-                            }}>✓ {t('settings.enabled')}</span>
-                        ) : (
-                            <button
-                                onClick={handleEnableNotifications}
-                                style={{
-                                    padding: '8px 16px',
-                                    background: 'var(--primary-color)',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '20px',
-                                    fontSize: '13px',
-                                    fontWeight: '600',
-                                    cursor: 'pointer'
-                                }}
-                            >
-                                {t('settings.enable')}
-                            </button>
-                        )}
+                        <div className="text-gray-400">›</div>
                     </div>
                 </div>
 
@@ -334,10 +257,6 @@ const Settings = ({ onClose }) => {
                         <button
                             onClick={() => {
                                 onClose(); // Settings'i kapat
-                                // MuezzinSelector'ı açmak için bir yol bulmalıyız. 
-                                // Settings içinde setActiveFeature prop'u yok.
-                                // Bu yüzden window event dispatch edebiliriz veya App.jsx'ten prop geçmeliyiz.
-                                // Şimdilik window event kullanalım.
                                 window.dispatchEvent(new CustomEvent('openFeature', { detail: 'muezzinSelector' }));
                             }}
                             style={{
@@ -400,174 +319,6 @@ const Settings = ({ onClose }) => {
                             }}></div>
                         </button>
                     </div>
-                </div>
-
-                {/* Günlük Hatırlatmalar */}
-                <div style={{
-                    marginBottom: '16px',
-                    padding: '16px',
-                    background: 'var(--card-bg)',
-                    borderRadius: '14px',
-                    border: '1px solid var(--glass-border)'
-                }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                        <Bell size={22} color="#27ae60" />
-                        <div>
-                            <div style={{ fontWeight: '600', fontSize: '15px' }}>Günlük Hatırlatmalar</div>
-                            <div style={{ fontSize: '13px', color: 'var(--text-color-light)' }}>
-                                Namaz takibi için bildirim alın
-                            </div>
-                        </div>
-                    </div>
-                    
-                    {/* Morning Reminder */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', padding: '10px', background: 'rgba(0,0,0,0.03)', borderRadius: '10px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <Sunrise size={18} color="#f39c12" />
-                            <div>
-                                <div style={{ fontSize: '14px', fontWeight: '500' }}>Sabah Hatırlatması</div>
-                                <div style={{ fontSize: '12px', color: 'var(--text-color-light)' }}>Her gün 08:00</div>
-                            </div>
-                        </div>
-                        <button
-                            onClick={toggleMorningReminder}
-                            style={{
-                                width: '50px',
-                                height: '28px',
-                                borderRadius: '14px',
-                                border: 'none',
-                                background: morningReminder ? 'linear-gradient(135deg, #27ae60, #2ecc71)' : '#ddd',
-                                cursor: 'pointer',
-                                position: 'relative',
-                                transition: 'background 0.3s ease'
-                            }}
-                        >
-                            <div style={{
-                                width: '22px',
-                                height: '22px',
-                                borderRadius: '50%',
-                                background: 'white',
-                                position: 'absolute',
-                                top: '3px',
-                                left: morningReminder ? '25px' : '3px',
-                                transition: 'left 0.3s ease',
-                                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                            }}></div>
-                        </button>
-                    </div>
-                    
-                    {/* Evening Reminder */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', background: 'rgba(0,0,0,0.03)', borderRadius: '10px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <Sunset size={18} color="#9b59b6" />
-                            <div>
-                                <div style={{ fontSize: '14px', fontWeight: '500' }}>Akşam Özeti</div>
-                                <div style={{ fontSize: '12px', color: 'var(--text-color-light)' }}>Her gün 21:00</div>
-                            </div>
-                        </div>
-                        <button
-                            onClick={toggleEveningReminder}
-                            style={{
-                                width: '50px',
-                                height: '28px',
-                                borderRadius: '14px',
-                                border: 'none',
-                                background: eveningReminder ? 'linear-gradient(135deg, #9b59b6, #8e44ad)' : '#ddd',
-                                cursor: 'pointer',
-                                position: 'relative',
-                                transition: 'background 0.3s ease'
-                            }}
-                        >
-                            <div style={{
-                                width: '22px',
-                                height: '22px',
-                                borderRadius: '50%',
-                                background: 'white',
-                                position: 'absolute',
-                                top: '3px',
-                                left: eveningReminder ? '25px' : '3px',
-                                transition: 'left 0.3s ease',
-                                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                            }}></div>
-                        </button>
-                    </div>
-                </div>
-
-                {/* Vakit Öncesi Hatırlatma */}
-                <div style={{
-                    marginBottom: '16px',
-                    padding: '16px',
-                    background: 'var(--card-bg)',
-                    borderRadius: '14px',
-                    border: '1px solid var(--glass-border)'
-                }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <AlertCircle size={22} color="#9b59b6" />
-                            <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px' }}>{t('settings.earlyWarning')}</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-light)' }}>
-                                    {t('settings.earlyWarningDesc')}
-                                </div>
-                            </div>
-                        </div>
-                        <button
-                            onClick={togglePreAlert}
-                            style={{
-                                width: '56px',
-                                height: '30px',
-                                borderRadius: '15px',
-                                border: 'none',
-                                background: enablePreAlert ? 'linear-gradient(135deg, #9b59b6, #8e44ad)' : '#ddd',
-                                cursor: 'pointer',
-                                position: 'relative',
-                                transition: 'background 0.3s ease'
-                            }}
-                        >
-                            <div style={{
-                                width: '24px',
-                                height: '24px',
-                                borderRadius: '50%',
-                                background: 'white',
-                                position: 'absolute',
-                                top: '3px',
-                                left: enablePreAlert ? '29px' : '3px',
-                                transition: 'left 0.3s ease',
-                                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                            }}></div>
-                        </button>
-                    </div>
-                    
-                    {/* Time Selection */}
-                    {enablePreAlert && (
-                        <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
-                            {[10, 15, 30, 60].map((minutes) => (
-                                <button
-                                    key={minutes}
-                                    onClick={() => handlePreAlertMinutesChange(minutes)}
-                                    style={{
-                                        flex: 1,
-                                        padding: '10px 8px',
-                                        borderRadius: '10px',
-                                        border: preAlertMinutes === minutes 
-                                            ? '2px solid var(--primary-color)' 
-                                            : '1px solid var(--glass-border)',
-                                        background: preAlertMinutes === minutes 
-                                            ? 'rgba(155, 89, 182, 0.1)' 
-                                            : 'transparent',
-                                        cursor: 'pointer',
-                                        fontSize: '13px',
-                                        fontWeight: preAlertMinutes === minutes ? '600' : '400',
-                                        color: preAlertMinutes === minutes 
-                                            ? 'var(--primary-color)' 
-                                            : 'var(--text-color)'
-                                    }}
-                                >
-                                    {minutes} {t('settings.minutes')}
-                                </button>
-                            ))}
-                        </div>
-                    )}
                 </div>
 
                 {/* Hakkında */}

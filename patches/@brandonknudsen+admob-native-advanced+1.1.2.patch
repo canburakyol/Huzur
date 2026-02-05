@@ -1,0 +1,243 @@
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build.gradle b/node_modules/@brandonknudsen/admob-native-advanced/android/build.gradle
+index 3b0555b..1e435a2 100644
+--- a/node_modules/@brandonknudsen/admob-native-advanced/android/build.gradle
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build.gradle
+@@ -1,6 +1,7 @@
+ apply plugin: 'com.android.library'
+ 
+ android {
++    namespace 'com.capacitorjs.plugins.admobnativeadvanced'
+     compileSdkVersion 33
+     defaultConfig {
+         minSdkVersion 21
+@@ -31,6 +32,7 @@ repositories {
+ 
+ dependencies {
+     implementation fileTree(dir: 'libs', include: ['*.jar'])
++    implementation project(':capacitor-android')
+     implementation 'androidx.appcompat:appcompat:1.6.1'
+     implementation 'com.google.android.gms:play-services-ads:22.2.0'
+     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
+new file mode 100644
+index 0000000..1674e5c
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.capacitorjs.plugins.admobnativeadvanced" >
++
++    <uses-sdk android:minSdkVersion="21" />
++
++    <!-- Required permissions for AdMob -->
++    <uses-permission android:name="android.permission.INTERNET" />
++    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
++
++    <application>
++
++        <!-- AdMob app ID metadata -->
++        <meta-data
++            android:name="com.google.android.gms.ads.APPLICATION_ID"
++            android:value="ca-app-pub-3940256099942544~3347511713" />
++    </application>
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json
+new file mode 100644
+index 0000000..6c2c4ee
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json
+@@ -0,0 +1,18 @@
++{
++  "version": 3,
++  "artifactType": {
++    "type": "AAPT_FRIENDLY_MERGED_MANIFESTS",
++    "kind": "Directory"
++  },
++  "applicationId": "com.capacitorjs.plugins.admobnativeadvanced",
++  "variantName": "debug",
++  "elements": [
++    {
++      "type": "SINGLE",
++      "filters": [],
++      "attributes": [],
++      "outputFile": "AndroidManifest.xml"
++    }
++  ],
++  "elementType": "File"
++}
+\ No newline at end of file
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties
+new file mode 100644
+index 0000000..1211b1e
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties
+@@ -0,0 +1,6 @@
++aarFormatVersion=1.0
++aarMetadataVersion=1.0
++minCompileSdk=1
++minCompileSdkExtension=0
++minAndroidGradlePluginVersion=1.0.0
++coreLibraryDesugaringEnabled=false
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
+new file mode 100644
+index 0000000..9e26dfe
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
+@@ -0,0 +1 @@
++{}
+\ No newline at end of file
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar
+new file mode 100644
+index 0000000..75f0a1c
+Binary files /dev/null and b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar differ
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+new file mode 100644
+index 0000000..1b2065c
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+@@ -0,0 +1 @@
++#Fri Jan 30 14:00:26 TRT 2026
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+new file mode 100644
+index 0000000..2e493d2
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~:!&lt;dir>navigation"><source path="D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~:!&lt;dir>navigation"><source path="D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~:!&lt;dir>navigation"><source path="D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\build\generated\res\resValues\debug"/></dataSet><mergedItems/></merger>
+\ No newline at end of file
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
+new file mode 100644
+index 0000000..78ac5b8
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
+@@ -0,0 +1,2 @@
++R_DEF: Internal format may change without notice
++local
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt
+new file mode 100644
+index 0000000..946df10
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt
+@@ -0,0 +1,27 @@
++1<?xml version="1.0" encoding="utf-8"?>
++2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++3    package="com.capacitorjs.plugins.admobnativeadvanced" >
++4
++5    <uses-sdk android:minSdkVersion="21" />
++6
++7    <!-- Required permissions for AdMob -->
++8    <uses-permission android:name="android.permission.INTERNET" />
++8-->D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:6:5-67
++8-->D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:6:22-64
++9    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
++9-->D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:7:5-79
++9-->D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:7:22-76
++10
++11    <application>
++11-->D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:9:5-14:19
++12
++13        <!-- AdMob app ID metadata -->
++14        <meta-data
++14-->D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:11:9-13:70
++15            android:name="com.google.android.gms.ads.APPLICATION_ID"
++15-->D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:12:13-69
++16            android:value="ca-app-pub-3940256099942544~3347511713" />
++16-->D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:13:13-67
++17    </application>
++18
++19</manifest>
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
+new file mode 100644
+index 0000000..1674e5c
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.capacitorjs.plugins.admobnativeadvanced" >
++
++    <uses-sdk android:minSdkVersion="21" />
++
++    <!-- Required permissions for AdMob -->
++    <uses-permission android:name="android.permission.INTERNET" />
++    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
++
++    <application>
++
++        <!-- AdMob app ID metadata -->
++        <meta-data
++            android:name="com.google.android.gms.ads.APPLICATION_ID"
++            android:value="ca-app-pub-3940256099942544~3347511713" />
++    </application>
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json
+new file mode 100644
+index 0000000..0637a08
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json
+@@ -0,0 +1 @@
++[]
+\ No newline at end of file
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
+new file mode 100644
+index 0000000..08f4ebe
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
+@@ -0,0 +1 @@
++0 Warning/Error
+\ No newline at end of file
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
+new file mode 100644
+index 0000000..a24a4bf
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
+@@ -0,0 +1 @@
++com.capacitorjs.plugins.admobnativeadvanced
+diff --git a/node_modules/@brandonknudsen/admob-native-advanced/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/@brandonknudsen/admob-native-advanced/android/build/outputs/logs/manifest-merger-debug-report.txt
+new file mode 100644
+index 0000000..082d288
+--- /dev/null
++++ b/node_modules/@brandonknudsen/admob-native-advanced/android/build/outputs/logs/manifest-merger-debug-report.txt
+@@ -0,0 +1,33 @@
++-- Merging decision tree log ---
++manifest
++ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:2:1-16:12
++INJECTED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:2:1-16:12
++	package
++		ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:3:5-58
++		INJECTED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml
++	xmlns:android
++		ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:2:11-69
++uses-permission#android.permission.INTERNET
++ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:6:5-67
++	android:name
++		ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:6:22-64
++uses-permission#android.permission.ACCESS_NETWORK_STATE
++ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:7:5-79
++	android:name
++		ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:7:22-76
++application
++ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:9:5-14:19
++meta-data#com.google.android.gms.ads.APPLICATION_ID
++ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:11:9-13:70
++	android:value
++		ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:13:13-67
++	android:name
++		ADDED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml:12:13-69
++uses-sdk
++INJECTED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml
++INJECTED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml
++	android:targetSdkVersion
++		INJECTED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml
++	android:minSdkVersion
++		INJECTED from D:\Projem\node_modules\@brandonknudsen\admob-native-advanced\android\src\main\AndroidManifest.xml

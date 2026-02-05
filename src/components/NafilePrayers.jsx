@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import { 
   X, 
@@ -113,23 +113,36 @@ const STORAGE_KEY = 'huzur_nafile_prayers';
 
 export function NafilePrayers({ onClose }) {
   const { addXP } = useGamification();
-  const [records, setRecords] = useState({});
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-  const [streak, setStreak] = useState(0);
-  const [totalCompleted, setTotalCompleted] = useState(0);
-
-  // Load records from storage
-  useEffect(() => {
-    let mounted = true;
+  
+  // Lazy initialization: load from storage once on mount
+  const [records, setRecords] = useState(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && mounted) {
+    if (stored) {
       const data = JSON.parse(stored);
-      setRecords(data.records || {});
-      setStreak(data.streak || 0);
-      setTotalCompleted(data.totalCompleted || 0);
+      return data.records || {};
     }
-    return () => { mounted = false; };
-  }, []);
+    return {};
+  });
+  
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  
+  const [streak, setStreak] = useState(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const data = JSON.parse(stored);
+      return data.streak || 0;
+    }
+    return 0;
+  });
+  
+  const [totalCompleted, setTotalCompleted] = useState(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const data = JSON.parse(stored);
+      return data.totalCompleted || 0;
+    }
+    return 0;
+  });
 
   // Save records to storage
   const saveRecords = useCallback((newRecords, newStreak, newTotal) => {
@@ -192,7 +205,7 @@ export function NafilePrayers({ onClose }) {
     setStreak(newStreak);
     setTotalCompleted(newTotal);
     saveRecords(newRecords, newStreak, newTotal);
-  }, [records, getTodayRecords, streak, totalCompleted, addXP, saveRecords]);
+  }, [records, selectedDate, getTodayRecords, streak, totalCompleted, addXP, saveRecords]);
 
   // Increment/Decrement rekat
   const adjustRekat = useCallback((prayerId, delta) => {

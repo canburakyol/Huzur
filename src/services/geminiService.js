@@ -7,8 +7,6 @@
  * API anahtarı client-side'da saklanmıyor.
  */
 
-import { httpsCallable } from 'firebase/functions';
-import { functions } from './firebase';
 import { logger } from '../utils/logger';
 
 // ============================================

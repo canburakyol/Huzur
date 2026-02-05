@@ -251,43 +251,35 @@ export const useAndroidWidget = (timings, nextPrayer, locationName) => {
   useEffect(() => {
     if (!timings || !nextPrayer) return;
 
-    let widgetInterval;
+    // Dynamically import Capacitor to avoid build issues on Web
+    const updateWidget = async () => {
+       const { Plugins } = await import('@capacitor/core');
+       const { Widget } = Plugins;
+       
+       if (!Widget) return;
 
-    const updateAndroidWidget = () => {
-      const update = () => {
-        const now = new Date();
-        const prayerTime = timings[nextPrayer.key];
-        if (!prayerTime) return;
+       const prayerTime = timings[nextPrayer.key];
+       if (!prayerTime) return;
 
-        const [h, m] = prayerTime.split(':').map(Number);
-        const prayerDate = new Date();
-        prayerDate.setHours(h, m, 0);
+       // Calculate time remaining (optional, mainly for app usage but good to have)
+       const now = new Date();
+       const [h, m] = prayerTime.split(':').map(Number);
+       const prayerDate = new Date();
+       prayerDate.setHours(h, m, 0);
+       if (prayerDate < now) prayerDate.setDate(prayerDate.getDate() + 1);
 
-        if (prayerDate < now) {
-          prayerDate.setDate(prayerDate.getDate() + 1);
-        }
-
-        const diff = prayerDate - now;
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-        const timeLeft = `${hours}sa ${minutes}dk`;
-
-        import('../services/widgetService').then(({ updateWidget }) => {
-          updateWidget(nextPrayer.name, timeLeft, locationName);
-        });
-      };
-
-      update();
-      if (widgetInterval) clearInterval(widgetInterval);
-      widgetInterval = setInterval(update, TIMING.REFRESH_INTERVAL_MS);
+       try {
+           await Widget.updateWidget({
+               name: nextPrayer.name,
+               time: prayerTime,
+               location: locationName || 'Huzur'
+           });
+       } catch (e) {
+           console.error('Widget update failed:', e);
+       }
     };
 
-    updateAndroidWidget();
-
-    return () => {
-      if (widgetInterval) clearInterval(widgetInterval);
-    };
+    updateWidget();
   }, [timings, nextPrayer, locationName]);
 };
 

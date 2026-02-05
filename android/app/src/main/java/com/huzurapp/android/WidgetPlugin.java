@@ -21,21 +21,15 @@ public class WidgetPlugin extends Plugin {
 
     @PluginMethod
     public void updateWidget(PluginCall call) {
-        String nextPrayer = call.getString("nextPrayer");
-        String timeRemaining = call.getString("timeRemaining");
-        String location = call.getString("location");
-
+        JSObject data = call.getData();
         Context context = getContext();
-        SharedPreferences prefs = context.getSharedPreferences(WidgetConstants.PREFS_NAME, Context.MODE_PRIVATE);
+
+        // Use standard Capacitor Storage to share data with Widget
+        SharedPreferences prefs = context.getSharedPreferences("CapacitorStorage", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        if (nextPrayer != null)
-            editor.putString(WidgetConstants.KEY_NEXT_PRAYER, nextPrayer);
-        if (timeRemaining != null)
-            editor.putString(WidgetConstants.KEY_TIME_REMAINING, timeRemaining);
-        if (location != null)
-            editor.putString(WidgetConstants.KEY_LOCATION, location);
-
+        // Store entire data object as JSON string
+        editor.putString("prayer_widget_data", data.toString());
         editor.apply();
 
         // Trigger widget update
@@ -43,6 +37,29 @@ public class WidgetPlugin extends Plugin {
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         int[] ids = AppWidgetManager.getInstance(context)
                 .getAppWidgetIds(new ComponentName(context, PrayerWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        context.sendBroadcast(intent);
+
+        call.resolve();
+    }
+
+    @PluginMethod
+    public void updateZikirWidget(PluginCall call) {
+        JSObject data = call.getData();
+        Context context = getContext();
+
+        SharedPreferences prefs = context.getSharedPreferences("CapacitorStorage", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        // Store zikir data
+        editor.putString("zikir_widget_data", data.toString());
+        editor.apply();
+
+        // Trigger widget update
+        Intent intent = new Intent(context, ZikirWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] ids = AppWidgetManager.getInstance(context)
+                .getAppWidgetIds(new ComponentName(context, ZikirWidget.class));
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         context.sendBroadcast(intent);
 

@@ -549,8 +549,6 @@ function Library({ onClose, onShowPro }) {
 
         // Prophet Prayers
         if (activeItem.type === 'prayer') {
-            const audioUrl = getAudioUrlSync(activeItem.surahNumber, activeItem.ayahNumber);
-            const isPlaying = currentAudioUrl === audioUrl && audioPlayer && !audioPlayer.paused;
 
             return (
                 <div>

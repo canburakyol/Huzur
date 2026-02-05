@@ -65,7 +65,11 @@ const HomeHeader = ({ locationName, weather, streakData }) => {
         </h2>
 
         {streakData.current > 0 && (
-          <div className={`streak-badge ${streakData.isMilestone ? 'milestone' : ''}`} style={{ margin: 0 }}>
+          <div 
+            className={`streak-badge ${streakData.isMilestone ? 'milestone' : ''} clickable`} 
+            style={{ margin: 0 }}
+            onClick={() => window.dispatchEvent(new CustomEvent('openFeature', { detail: 'streak' }))}
+          >
             <span className="streak-emoji">{streakData.emoji}</span>
             <span className="streak-count">{streakData.current}</span>
             <span>{t('common.day')}</span>

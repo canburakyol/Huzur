@@ -15,6 +15,7 @@ export * from './social';
 export * from './lifestyle';
 export * from './ai';
 export * from './system';
+export * from './family';
 
 // Import all feature configurations
 import { coreFeatures, moduleInfo as coreInfo } from './core';
@@ -26,6 +27,7 @@ import { socialFeatures, moduleInfo as socialInfo } from './social';
 import { lifestyleFeatures, moduleInfo as lifestyleInfo } from './lifestyle';
 import { aiFeatures, moduleInfo as aiInfo } from './ai';
 import { systemFeatures, moduleInfo as systemInfo } from './system';
+import { familyFeatures, moduleInfo as familyInfo } from './family';
 
 // Combined feature configuration
 export const allFeatures = {
@@ -37,7 +39,8 @@ export const allFeatures = {
   ...socialFeatures,
   ...lifestyleFeatures,
   ...aiFeatures,
-  ...systemFeatures
+  ...systemFeatures,
+  ...familyFeatures
 };
 
 // Module registry with metadata
@@ -77,6 +80,10 @@ export const moduleRegistry = {
   system: {
     features: systemFeatures,
     info: systemInfo
+  },
+  family: {
+    features: familyFeatures,
+    info: familyInfo
   }
 };
 

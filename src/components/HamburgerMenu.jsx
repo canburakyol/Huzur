@@ -10,6 +10,7 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
     // Menu items configuration with icons - using translation keys
     const MENU_ITEMS = [
         { id: 'huzurMode', icon: '🌙', labelKey: 'menu.huzurMode', component: 'huzurMode' },
+        { id: 'family', icon: '🏡', labelKey: 'family.title', component: 'family' },
         { id: 'dailyTasks', icon: '🎯', labelKey: 'menu.dailyTasks', component: 'dailyTasks' },
         { id: 'nuzulExplorer', icon: '📜', labelKey: 'menu.nuzulExplorer', component: 'nuzulExplorer' },
         { id: 'wordByWord', icon: '📝', labelKey: 'menu.wordByWord', component: 'wordByWord' },

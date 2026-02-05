@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Heart, MessageCircle, Send, User, X, BookOpen, Users } from 'lucide-react';
+import { Heart, MessageCircle, Send, User, X, BookOpen, Users, AlertCircle } from 'lucide-react';
 import { db } from '../services/firebase';
 import { collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc, increment } from 'firebase/firestore';
 import HatimTracker from './HatimTracker';
 import { useTranslation } from 'react-i18next';
 import { checkRateLimit } from '../utils/rateLimiter';
 import { storageService } from '../services/storageService';
+import { ensureAuthenticated } from '../services/authService';
+import { logger } from '../utils/logger';
 
 const Community = ({ onClose }) => {
     const { t, i18n } = useTranslation();
@@ -19,28 +21,71 @@ const Community = ({ onClose }) => {
         const stored = storageService.getItem('prayed_duas') || [];
         return new Set(stored);
     });
+    const [userId, setUserId] = useState(null);
+    const [authLoading, setAuthLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Real-time subscription to Firestore
+    // Auth initialization - Firebase Auth tamamlanmadan Firestore sorgusu başlamaz
     useEffect(() => {
+        const initAuth = async () => {
+            try {
+                const uid = await ensureAuthenticated();
+                setUserId(uid);
+                logger.log('[Community] Auth initialized, userId:', uid);
+            } catch (err) {
+                logger.error('[Community] Auth error:', err);
+                setError(t('community.messages.authError') || 'Kimlik doğrulama hatası');
+            } finally {
+                setAuthLoading(false);
+            }
+        };
+        initAuth();
+    }, [t]);
+
+    // Real-time subscription to Firestore - Auth tamamlandıktan sonra başlar
+    useEffect(() => {
+        // Auth henüz tamamlanmadıysa bekle
+        if (authLoading || !userId) {
+            return;
+        }
+
+        setError(null); // Önceki hataları temizle
         const q = query(collection(db, 'duas'), orderBy('date', 'desc'));
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            const duaList = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
+            const duaList = snapshot.docs.map(docSnap => ({
+                id: docSnap.id,
+                ...docSnap.data()
             }));
             setDuas(duaList);
             setLoading(false);
-        }, (error) => {
-            console.error("Error fetching duas:", error);
+            setError(null);
+        }, (err) => {
+            logger.error('[Community] Firestore error:', err);
             setLoading(false);
+            if (err.code === 'permission-denied') {
+                setError(t('community.messages.authRequired') || 'Erişim izni hatası. Lütfen uygulamayı yeniden başlatın.');
+            } else {
+                setError(t('community.messages.loadError') || 'Dualar yüklenirken bir hata oluştu.');
+            }
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [authLoading, userId, t]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!newDua.trim()) return;
+        
+        logger.log('[Community] handleSubmit started');
+        logger.log('[Community] Current userId:', userId);
+        logger.log('[Community] Auth loading:', authLoading);
+        
+        // Check if user is authenticated
+        if (!userId) {
+            logger.error('[Community] No userId - auth not complete');
+            alert('Kimlik doğrulaması tamamlanmadı. Lütfen bekleyin ve tekrar deneyin.');
+            return;
+        }
         
         // Rate limiting: max 5 duas per hour
         if (!checkRateLimit('dua_submit', 5, 3600000)) {
@@ -49,16 +94,25 @@ const Community = ({ onClose }) => {
         }
 
         try {
-            await addDoc(collection(db, 'duas'), {
+            logger.log('[Community] Adding dua to Firestore...');
+            const docRef = await addDoc(collection(db, 'duas'), {
                 text: newDua,
                 count: 0,
                 date: new Date().toISOString()
             });
+            logger.log('[Community] Dua added successfully, ID:', docRef.id);
             setNewDua('');
             setShowForm(false);
-        } catch (error) {
-            console.error("Error adding dua:", error);
-            alert(t('community.messages.errorSending'));
+        } catch (err) {
+            logger.error('[Community] Error adding dua:', err);
+            logger.error('[Community] Error code:', err.code);
+            logger.error('[Community] Error message:', err.message);
+            
+            if (err.code === 'permission-denied') {
+                alert('Erişim izni hatası. Firebase kuralları kontrol edilmeli.');
+            } else {
+                alert(t('community.messages.errorSending') + ' - ' + err.message);
+            }
         }
     };
 
@@ -228,14 +282,31 @@ const Community = ({ onClose }) => {
                         </form>
                     )}
 
+                    {/* Error Display */}
+                    {error && (
+                        <div style={{ 
+                            padding: '15px', 
+                            background: 'rgba(239, 68, 68, 0.1)', 
+                            border: '1px solid rgba(239, 68, 68, 0.3)', 
+                            borderRadius: '12px', 
+                            marginBottom: '20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px'
+                        }}>
+                            <AlertCircle size={20} color="#ef4444" />
+                            <span style={{ color: '#ef4444', fontSize: '14px' }}>{error}</span>
+                        </div>
+                    )}
+
                     {/* List */}
-                    {loading ? (
+                    {(loading || authLoading) ? (
                         <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-color-muted)' }}>
                             {t('community.messages.loading')}
                         </div>
                     ) : (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                            {duas.length === 0 && (
+                            {duas.length === 0 && !error && (
                                 <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-color-muted)' }}>
                                     {t('community.messages.noDuas')}
                                 </div>

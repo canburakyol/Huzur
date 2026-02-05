@@ -1,30 +1,54 @@
 package com.huzurapp.android;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 
-/**
- * Implementation of App Widget functionality.
- */
+import com.huzurapp.android.R;
+
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class PrayerWidget extends AppWidgetProvider {
 
-    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-            int appWidgetId) {
+    private static final String PREFS_NAME = "CapacitorStorage"; // Default Capacitor Storage
+    private static final String DATA_KEY = "prayer_widget_data";
 
-        // Read data from SharedPreferences
-        SharedPreferences prefs = context.getSharedPreferences(WidgetConstants.PREFS_NAME, Context.MODE_PRIVATE);
-        String nextPrayer = prefs.getString(WidgetConstants.KEY_NEXT_PRAYER, "Vakit");
-        String timeRemaining = prefs.getString(WidgetConstants.KEY_TIME_REMAINING, "--:--");
-        String location = prefs.getString(WidgetConstants.KEY_LOCATION, "Huzur App");
-
+    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_prayer_times);
-        views.setTextViewText(R.id.widget_next_prayer_name, nextPrayer);
-        views.setTextViewText(R.id.widget_time_remaining, timeRemaining);
-        views.setTextViewText(R.id.widget_location, location);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.prayer_widget);
+
+        // Fetch data from SharedPreferences
+        try {
+            SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            String jsonStr = prefs.getString(DATA_KEY, "{}");
+            JSONObject data = new JSONObject(jsonStr);
+
+            String prayerName = data.optString("name", "Vakit");
+            String prayerTime = data.optString("time", "--:--");
+            String location = data.optString("location", "Huzur");
+
+            views.setTextViewText(R.id.widget_prayer_name, prayerName);
+            views.setTextViewText(R.id.widget_time, prayerTime);
+            views.setTextViewText(R.id.widget_location, location);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            views.setTextViewText(R.id.widget_prayer_name, "Hata");
+        }
+
+        // Click to open app
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        views.setOnClickPendingIntent(R.id.widget_prayer_name, pendingIntent);
+        views.setOnClickPendingIntent(R.id.widget_time, pendingIntent);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
