@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
  * Displays a premium banner with current prayer time
  * Matches mockup: Dark green-gold gradient, gold calligraphy, thin elegant design
  */
-const PrayerTimeBanner = ({ timings, nextPrayer }) => {
+const PrayerTimeBanner = memo(({ timings, nextPrayer }) => {
     const { t } = useTranslation();
 
     // Calculate current prayer based on next prayer
@@ -79,6 +79,6 @@ const PrayerTimeBanner = ({ timings, nextPrayer }) => {
             </div>
         </div>
     );
-};
+});
 
 export default PrayerTimeBanner;

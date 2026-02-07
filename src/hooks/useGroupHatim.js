@@ -25,13 +25,13 @@ export const useGroupHatim = (hatimId = null) => {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const uid = await ensureAuthenticated();
+        const uid = await ensureAuthenticated({ requireFirebaseUser: true });
         setUserId(uid);
         setAuthReady(true);
         logger.log('[useGroupHatim] Auth initialized, userId:', uid);
       } catch (err) {
         logger.error('[useGroupHatim] Auth error:', err);
-        setError('Kimlik doğrulama hatası');
+        setError('Firebase kimlik doğrulaması başarısız. İnternetinizi kontrol edip tekrar deneyin.');
         setAuthReady(true); // Set true even on error to stop loading
       }
     };
@@ -41,14 +41,14 @@ export const useGroupHatim = (hatimId = null) => {
   // 1. Fetch User's Active Hatims (List View)
   const fetchMyHatims = useCallback(async () => {
     // Ensure auth first
-    const uid = await ensureAuthenticated();
+    const uid = await ensureAuthenticated({ requireFirebaseUser: true });
     if (!uid) return;
     
     setLoading(true);
     try {
       const q = query(
         collection(db, 'hatims'),
-        where('readers', 'array-contains', userId),
+        where('readers', 'array-contains', uid),
         limit(20) // Performance: Limit to 20 hatims
       );
       const snapshot = await getDocs(q);
@@ -62,7 +62,7 @@ export const useGroupHatim = (hatimId = null) => {
     } finally {
       setLoading(false);
     }
-  }, [userId]);
+  }, []);
 
   // 2. Real-time Subscription to Specific Hatim (Detail View)
   useEffect(() => {

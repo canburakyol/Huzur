@@ -1,10 +1,10 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, memo } from 'react';
 import { nativeAdService } from '../services/nativeAdService';
 import { isPro } from '../services/proService';
 import { LazyImage } from './LazyImage';
 import './NativeAdCard.css';
 
-const NativeAdCard = () => {
+const NativeAdCard = memo(() => {
     const [ad, setAd] = useState(null);
     const cardRef = useRef(null);
     const impressionRecorded = useRef(false);
@@ -132,6 +132,6 @@ const NativeAdCard = () => {
             </button>
         </div>
     );
-};
+});
 
 export default NativeAdCard;

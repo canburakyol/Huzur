@@ -67,7 +67,8 @@ initAuthListener();
  * Anonim olarak giriş yap (hesap yoksa oluşturur)
  * @returns {Promise<string|null>} User ID veya null
  */
-export const ensureAuthenticated = async () => {
+export const ensureAuthenticated = async (options = {}) => {
+  const { requireFirebaseUser = false } = options;
   try {
     // Eğer zaten giriş yapılmışsa, mevcut kullanıcıyı döndür
     if (currentUser) {
@@ -103,8 +104,15 @@ export const ensureAuthenticated = async () => {
       logger.warn('[AuthService] Network error, using fallback');
     }
     
+    // Firebase Auth zorunlu ise fallback'e düşme, hatayı yukarı taşı
+    if (requireFirebaseUser) {
+      const authError = new Error('Firebase Auth kullanılamıyor. Lütfen internet bağlantısını ve Anonymous Auth ayarını kontrol edin.');
+      authError.code = error?.code || 'auth/firebase-unavailable';
+      throw authError;
+    }
+
     // Fallback: Eğer Firebase Auth çalışmazsa, güvenli random ID oluştur
-    // Bu sadece son çare olarak kullanılmalı
+    // Bu sadece Firestore bağımlı olmayan akışlar için son çare olarak kullanılmalı
     return await generateSecureFallbackId();
   }
 };

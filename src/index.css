@@ -20,6 +20,7 @@
   /* Dark Gold */
   --accent-color: #f1c40f;
   /* Bright Gold */
+  --secondary-color: #ffc107;
 
   --glass-bg: rgba(15, 61, 46, 0.7);
   /* Dark Green Glass */
@@ -44,6 +45,12 @@
   --font-size-base: 1.125rem; /* 18px */
   --font-size-large: 1.5rem; /* 24px */
   --font-size-xl: 2.625rem; /* 42px */
+
+  /* New Semantic Tokens */
+  --accent-vibrant: #ffc107; /* Vibrant Amber */
+  --error-color: #ef4444; /* Standard Error Red */
+  --notification-dot: #e74c3c;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Scoped Original Theme for Quran Section */
@@ -204,7 +211,7 @@ h1 {
   box-shadow: var(--glass-shadow);
   padding: 24px;
   margin-bottom: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: var(--transition-smooth);
 }
 
 .glass-card:hover {
@@ -224,7 +231,7 @@ h1 {
   cursor: pointer;
   border: none;
   width: 100%;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition-smooth);
   background: rgba(255, 255, 255, 0.5);
   color: var(--text-color);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -421,7 +428,7 @@ h1 {
   gap: 4px;
   padding: 8px 12px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition-smooth);
   color: #2c3e50;
   /* Tam koyu lacivert (En net görünüm) */
   border-radius: 12px;
@@ -435,7 +442,7 @@ h1 {
 }
 
 .nav-item svg {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition-smooth);
   fill: none !important;
   /* Dolguyu kapat */
   stroke: currentColor !important;
@@ -449,27 +456,58 @@ h1 {
   font-size: 0.6875rem; /* 11px */
   font-weight: 700;
   /* Daha kalın yazı */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition-smooth);
   opacity: 1 !important;
   /* Metin saydamlığını engelle */
 }
 
 /* Aktif Navigasyon Öğesi */
 .nav-item.active {
-  color: var(--primary-color) !important;
+  color: var(--accent-vibrant) !important;
   /* Tema rengi (Turuncu) - Zorla uygula */
-  background: rgba(211, 84, 0, 0.1);
+  background: color-mix(in srgb, var(--accent-vibrant) 15%, transparent);
 }
 
 .nav-item.active svg {
   transform: translateY(-2px);
   stroke-width: 2.5px;
   /* İkonu biraz kalınlaştır */
+  animation: navIconSoftBounce 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .nav-item:hover:not(.active) {
   color: var(--primary-dark);
   background: rgba(0, 0, 0, 0.05);
+}
+
+.assistant-icon-wrapper {
+  position: relative;
+}
+
+.notification-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--notification-dot);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85);
+}
+
+@keyframes navIconSoftBounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  45% {
+    transform: translateY(-5px) scale(1.05);
+  }
+  75% {
+    transform: translateY(-2px) scale(1.01);
+  }
+  100% {
+    transform: translateY(-2px) scale(1);
+  }
 }
 
 /* ==================== HAMBURGER MENU STYLES ==================== */

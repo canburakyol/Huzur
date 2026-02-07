@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 // calculateTimeLeft fonksiyonunu component seviyesinde tanımlıyoruz
@@ -25,7 +25,7 @@ const calculateTimeLeft = (timings, nextPrayer) => {
     return { hours, minutes, seconds };
 };
 
-const PrayerCountdown = ({ timings, nextPrayer }) => {
+const PrayerCountdown = memo(({ timings, nextPrayer }) => {
     const { t } = useTranslation();
     const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft(timings, nextPrayer));
 
@@ -204,6 +204,6 @@ const PrayerCountdown = ({ timings, nextPrayer }) => {
             </div>
         </>
     );
-};
+});
 
 export default PrayerCountdown;

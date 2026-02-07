@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { GamificationContext } from '../context/GamificationContext';
+import { GamificationContext } from '../context/GamificationContext.js';
 
 /**
  * useGamification Hook

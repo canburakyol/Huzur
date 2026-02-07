@@ -12,7 +12,7 @@ import { useAppInit } from './hooks/useAppInit';
 import { useDailyContent } from './hooks/useDailyContent';
 import { useDirection } from './hooks/useDirection';
 import { useFocus } from './context/FocusContext';
-import { NotificationService } from './services/notificationService';
+
 
 // Services
 import streakService from './services/streakService';
@@ -114,7 +114,7 @@ function App() {
        try {
          const uid = await ensureAuthenticated();
          if (uid) {
-            NotificationService.initPush(uid);
+            // NotificationService.initPush(uid); // Removed: Method does not exist
          }
        } catch (e) {
          console.error("Auth init error", e);
@@ -178,8 +178,18 @@ function App() {
   // Listen for custom feature open events
   useEffect(() => {
     const handleOpenFeature = (e) => setActiveFeature(e.detail);
+    const handleSetActiveTab = (e) => {
+      const tab = e?.detail;
+      if (typeof tab === 'string' && tab.length > 0) {
+        setActiveTab(tab);
+      }
+    };
     window.addEventListener('openFeature', handleOpenFeature);
-    return () => window.removeEventListener('openFeature', handleOpenFeature);
+    window.addEventListener('setActiveTab', handleSetActiveTab);
+    return () => {
+      window.removeEventListener('openFeature', handleOpenFeature);
+      window.removeEventListener('setActiveTab', handleSetActiveTab);
+    };
   }, []);
 
   // Render Active Feature Overlay

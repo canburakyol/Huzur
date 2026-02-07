@@ -6,11 +6,10 @@ import HatimCard from './HatimCard';
 
 const HatimList = ({ onSelectHatim }) => {
   const { t } = useTranslation();
-  const { activeHatims, fetchMyHatims, loading, error } = useGroupHatim();
+  const { activeHatims, fetchMyHatims, loading, error, joinHatim } = useGroupHatim();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showJoinInput, setShowJoinInput] = useState(false);
   const [joinCode, setJoinCode] = useState('');
-  const { joinHatim } = useGroupHatim();
 
   useEffect(() => {
     fetchMyHatims();
@@ -44,18 +43,26 @@ const HatimList = ({ onSelectHatim }) => {
   return (
     <div className="hatim-list">
       {/* Actions */}
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-        <button 
+      <div style={{ display: 'flex', gap: '12px', marginBottom: '24px' }}>
+        <button
           className="btn btn-primary"
           onClick={() => setShowCreateModal(true)}
-          style={{ flex: 1, fontSize: '14px' }}
+          style={{ flex: 1, padding: '14px', borderRadius: '12px', fontSize: '14px' }}
         >
           + {t('hatim.create', 'Yeni Hatim')}
         </button>
-        <button 
+        <button
           className="btn"
           onClick={() => setShowJoinInput(!showJoinInput)}
-          style={{ flex: 1, fontSize: '14px', background: 'rgba(255,255,255,0.2)' }}
+          style={{ 
+            flex: 1, 
+            padding: '14px', 
+            borderRadius: '12px', 
+            fontSize: '14px', 
+            background: 'var(--glass-bg)',
+            border: '1px solid var(--glass-border)',
+            color: 'var(--text-color)'
+          }}
         >
           {t('hatim.join', 'Koda Katıl')}
         </button>
@@ -63,7 +70,7 @@ const HatimList = ({ onSelectHatim }) => {
 
       {/* Join Input */}
       {showJoinInput && (
-        <div className="glass-card" style={{ padding: '15px' }}>
+        <div className="glass-card" style={{ padding: '20px', marginBottom: '24px', border: '1px solid var(--primary-color)' }}>
           <input
             type="text"
             placeholder="Davet kodu (Örn: X8K2L9)"
@@ -71,15 +78,19 @@ const HatimList = ({ onSelectHatim }) => {
             onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
             style={{
               width: '100%',
-              padding: '12px',
-              borderRadius: '8px',
+              padding: '14px',
+              borderRadius: '10px',
               border: '1px solid var(--glass-border)',
-              background: 'rgba(255,255,255,0.1)',
+              background: 'rgba(0,0,0,0.2)',
               color: 'var(--text-color)',
-              marginBottom: '10px'
+              marginBottom: '12px',
+              textAlign: 'center',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              letterSpacing: '2px'
             }}
           />
-          <button className="btn btn-primary" onClick={handleJoin}>
+          <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleJoin}>
              Katıl
           </button>
         </div>
@@ -96,8 +107,15 @@ const HatimList = ({ onSelectHatim }) => {
         ))}
 
         {activeHatims.length === 0 && !loading && (
-           <div style={{ textAlign: 'center', color: 'var(--text-color-muted)', padding: '20px' }}>
-             Henüz katıldığınız bir hatim yok.
+           <div style={{ 
+             textAlign: 'center', 
+             color: 'var(--text-color-muted)', 
+             padding: '40px 20px',
+             background: 'var(--glass-bg)',
+             borderRadius: '12px',
+             border: '1px solid var(--glass-border)'
+           }}>
+              Henüz katıldığınız bir hatim yok.
            </div>
         )}
       </div>

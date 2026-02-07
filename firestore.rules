@@ -1,99 +1,133 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // ============================================
-    // HELPER FUNCTIONS
-    // ============================================
-    
-    /**
-     * Authentication kontrolü
-     * Kullanıcının giriş yapmış olması gerekir
-     */
+
+    // --------------------------------------------
+    // Helpers
+    // --------------------------------------------
     function isAuthenticated() {
       return request.auth != null;
     }
-    
-    /**
-     * App Check kontrolü (GÜVENLİK KATMANI)
-     * HOTFIX: Auth Fallback sorununu çözmek için TÜM kısıtlamalar kaldırıldı.
-     * Artık Auth fail olsa bile (fallback ID ile) erişim mümkün.
-     */
-    function hasValidAppCheck() {
-      // return request.auth != null && request.app != null; // Original
-      // return request.auth != null; // Previous fix
-      return true; // ULTIMATE FIX
-    }
-    
-    /**
-     * Ownership kontrolü
-     * Kullanıcının sadece kendi verilerine erişmesini sağlar
-     */
+
     function isOwner(userId) {
-      return hasValidAppCheck() && request.auth.uid == userId;
+      return isAuthenticated() && request.auth.uid == userId;
     }
 
-    // ============================================
-    // USERS COLLECTION
-    // ============================================
+    // join/read erişimi için ortak üyelik kontrolü
+    function isInStringArray(fieldName) {
+      return isAuthenticated()
+        && (fieldName in resource.data)
+        && (request.auth.uid in resource.data[fieldName]);
+    }
+
+    function isHatimMember() {
+      return isAuthenticated()
+        && (
+          (resource.data.createdBy == request.auth.uid)
+          || isInStringArray('participants')
+          || isInStringArray('readers')
+        );
+    }
+
+    // --------------------------------------------
+    // USERS
+    // --------------------------------------------
     match /users/{userId} {
-      allow read: if hasValidAppCheck();
-      allow write: if isOwner(userId);
-      
-      // Subscription subcollection (Server-side only)
+      // Aile/hatim üyelerini görüntüleme için authenticated read açık
+      allow read: if isAuthenticated();
+
+      // Kullanıcı sadece kendi dokümanını yazabilir
+      allow create, update, delete: if isOwner(userId);
+
+      // Subscription: client write kapalı (Cloud Functions)
       match /subscription/{docId} {
         allow read: if isOwner(userId);
-        allow write: if false; // Sadece Cloud Functions yazabilir
+        allow write: if false;
       }
-      
-      // User data subcollection
+
+      // Kişisel alt veriler: sadece owner
       match /data/{docId} {
         allow read, write: if isOwner(userId);
       }
     }
 
-    // ============================================
-    // FAMILY COLLECTIONS
-    // ============================================
-    
-    // Families collection (Legacy/Simple)
+    // --------------------------------------------
+    // FAMILIES (legacy)
+    // --------------------------------------------
     match /families/{familyId} {
-      allow read, write: if hasValidAppCheck();
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update, delete: if isAuthenticated();
     }
 
-    // Family Groups collection (New FamilyMode)
+    // --------------------------------------------
+    // FAMILY GROUPS
+    // --------------------------------------------
     match /familyGroups/{groupId} {
-      allow read: if hasValidAppCheck();
-      allow create: if hasValidAppCheck();
-      allow update: if hasValidAppCheck();
-      allow delete: if hasValidAppCheck();
+      allow read: if isAuthenticated();
+
+      // Grup oluşturan kullanıcı createdBy olarak kendi uid'ini yazmalı
+      allow create: if isAuthenticated()
+        && request.resource.data.createdBy == request.auth.uid;
+
+      // Güncelleme: authenticated (uygulama akışında join request/members güncelleniyor)
+      allow update: if isAuthenticated();
+
+      // Silme: sadece grup sahibi
+      allow delete: if isAuthenticated()
+        && resource.data.createdBy == request.auth.uid;
     }
 
-    // ============================================
-    // HATIMS COLLECTION
-    // ============================================
+    // --------------------------------------------
+    // HATIMS
+    // --------------------------------------------
     match /hatims/{hatimId} {
-      allow read: if hasValidAppCheck();
-      allow create: if hasValidAppCheck();
-      allow update: if hasValidAppCheck();
-      allow delete: if hasValidAppCheck();
+      // Listeleme, kodla katılım ve detay akışı için authenticated read
+      allow read: if isAuthenticated();
+
+      // Oluşturma: createdBy zorunlu ve auth uid ile eşleşmeli
+      allow create: if isAuthenticated()
+        && request.resource.data.createdBy == request.auth.uid;
+
+      // Güncelleme: oluşturucu veya katılımcı/okuyucu
+      // (mevcut uygulamada hem participants hem readers kullanılıyor)
+      allow update: if isHatimMember();
+
+      // Silme: yalnızca oluşturan kullanıcı
+      allow delete: if isAuthenticated()
+        && resource.data.createdBy == request.auth.uid;
     }
 
-    // ============================================
-    // DUAS COLLECTION
-    // ============================================
+    // --------------------------------------------
+    // DUAS
+    // --------------------------------------------
     match /duas/{duaId} {
-      allow read: if hasValidAppCheck();
-      allow create: if hasValidAppCheck();
-      allow update: if hasValidAppCheck();
-      allow delete: if hasValidAppCheck();
+      allow read: if isAuthenticated();
+
+      // Oluşturma:
+      // - text zorunlu
+      // - authorId varsa auth uid ile aynı olmalı
+      // (legacy Community akışındaki authorId'siz yazımla da uyumlu)
+      allow create: if isAuthenticated()
+        && ('text' in request.resource.data)
+        && (!( 'authorId' in request.resource.data )
+            || request.resource.data.authorId == request.auth.uid);
+
+      // Güncelleme: amin artırımı vb. için authenticated kullanıcıya izin
+      allow update: if isAuthenticated();
+
+      // Silme: authorId alanı varsa sadece sahibi; yoksa silme kapalı
+      allow delete: if isAuthenticated()
+        && ('authorId' in resource.data)
+        && resource.data.authorId == request.auth.uid;
     }
 
-    // ============================================
-    // PUBLIC DATA (Read-only)
-    // ============================================
+    // --------------------------------------------
+    // PUBLIC DATA
+    // --------------------------------------------
     match /public/{document=**} {
-      allow read: if true; // Herkes okuyabilir
-      allow write: if false; // Kimse yazamaz (sadece admin)
+      allow read: if true;
+      allow write: if false;
     }
   }
 }

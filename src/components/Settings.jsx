@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { requestNotificationPermission } from '../services/notificationService';
+import { requestNotificationPermission } from '../services/smartNotificationService';
 import { changeLanguage, getSupportedLanguages } from '../services/languageService';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';

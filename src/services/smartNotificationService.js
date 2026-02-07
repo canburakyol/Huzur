@@ -444,6 +444,47 @@ export const cancelNotificationsByType = async (type) => {
 };
 
 /**
+ * Kalıcı bildirim göster (Vakit sayacı için)
+ */
+export const showStickyNotification = async (title, body) => {
+  if (Capacitor.getPlatform() === 'web') return;
+
+  try {
+     const hasPermission = await requestNotificationPermission();
+     if (!hasPermission) return;
+
+     await LocalNotifications.schedule({
+        notifications: [
+            {
+                title: title,
+                body: body,
+                id: 1001, // Sticky Notification ID
+                ongoing: true, // Kalıcı
+                autoCancel: false,
+                silent: true,
+                smallIcon: 'ic_stat_icon',
+                channelId: NOTIFICATION_CHANNELS.REMINDER.id // Use existing channel
+            }
+        ]
+     });
+  } catch (error) {
+    logger.error('Notifications: Sticky error', error);
+  }
+};
+
+/**
+ * Kalıcı bildirimi iptal et
+ */
+export const cancelStickyNotification = async () => {
+    if (Capacitor.getPlatform() === 'web') return;
+    try {
+        await LocalNotifications.cancel({ notifications: [{ id: 1001 }] });
+    } catch (error) {
+        logger.error('Notifications: Sticky cancel error', error);
+    }
+};
+
+/**
  * Tüm bildirimleri iptal et
  */
 export const cancelAllNotifications = async () => {
@@ -584,6 +625,8 @@ export default {
   scheduleStreakNotifications,
   scheduleDailyReminders,
   showInstantNotification,
+  showStickyNotification,
+  cancelStickyNotification,
   cancelNotificationsByType,
   cancelAllNotifications,
   addNotificationClickListener,

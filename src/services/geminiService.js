@@ -152,7 +152,7 @@ export const generateContent = async (prompt, systemPrompt = NUZUL_SYSTEM_PROMPT
 
   try {
     if (!GEMINI_API_KEY) {
-       logger.error('[GeminiService] API Key eksik!');
+       logger.error('[GeminiService] API Key eksik! VITE_GEMINI_API_KEY check your .env file.');
        return {
          success: false,
          content: '',
@@ -188,7 +188,12 @@ export const generateContent = async (prompt, systemPrompt = NUZUL_SYSTEM_PROMPT
     throw new Error('API yanıtı boş veya geçersiz format');
 
   } catch (error) {
-    logger.error('[GeminiService] API Error:', error);
+    logger.error('[GeminiService] API Error:', {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data,
+      config: { url: error.config?.url?.replace(/key=.*/, 'key=HIDDEN') }
+    });
     
     // Hata mesajlarını kullanıcı dostu hale getir
     let errorMessage = 'Bir hata oluştu. Lütfen tekrar deneyin.';

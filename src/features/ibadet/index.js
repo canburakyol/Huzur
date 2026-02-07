@@ -11,12 +11,11 @@ export const Adhkar = lazy(() => import(/* webpackChunkName: "feature-ibadet" */
 export const Tespihat = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/Tespihat'));
 export const EsmaUlHusna = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/EsmaUlHusna'));
 export const FastingTracker = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/FastingTracker'));
-export const HatimTracker = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/HatimTracker'));
 export const HatimCoach = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/HatimCoach'));
 export const MissedPrayers = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/MissedPrayers'));
 export const DeedJournal = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/DeedJournal'));
 export const NafilePrayers = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/NafilePrayers'));
-export const DuaTracker = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/DuaTracker')); // Added DuaTracker component
+export const DuaTracker = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../components/DuaTracker'));
 
 // Feature configuration for this module
 export const ibadatFeatures = {
@@ -54,13 +53,6 @@ export const ibadatFeatures = {
     module: 'ibadet',
     name: 'Oruç Takibi',
     icon: '🌙'
-  },
-  hatim: {
-    component: HatimTracker,
-    category: 'IBADET',
-    module: 'ibadet',
-    name: 'Hatim Takibi',
-    icon: '📚'
   },
   hatimCoach: {
     component: HatimCoach,

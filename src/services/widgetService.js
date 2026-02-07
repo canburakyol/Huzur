@@ -8,11 +8,19 @@ import { logger } from '../utils/logger';
 
 const PLUGIN_NAME = 'Widget';
 
+const isWidgetAvailableOnDevice = () => {
+  try {
+    return Capacitor.getPlatform() !== 'web' && Capacitor.isPluginAvailable(PLUGIN_NAME);
+  } catch {
+    return false;
+  }
+};
+
 /**
  * Widget plugin referansını al
  */
 const getWidgetPlugin = async () => {
-  if (Capacitor.getPlatform() === 'web') {
+  if (!isWidgetAvailableOnDevice()) {
     return null;
   }
   
@@ -33,9 +41,9 @@ const getWidgetPlugin = async () => {
  * @param {string} data.location - Konum
  */
 export const updateWidget = async (data) => {
-  if (Capacitor.getPlatform() === 'web') {
+  if (!isWidgetAvailableOnDevice()) {
     logger.log('Widget: Web platform - skipped');
-    return { success: false, platform: 'web' };
+    return { success: false, platform: Capacitor.getPlatform() };
   }
 
   try {
@@ -64,9 +72,9 @@ export const updateWidget = async (data) => {
  * @param {string} prayerTimes.Isha - Yatsı
  */
 export const scheduleWidgetAlarms = async (prayerTimes) => {
-  if (Capacitor.getPlatform() === 'web') {
+  if (!isWidgetAvailableOnDevice()) {
     logger.log('Widget: Web platform - alarms skipped');
-    return { success: false, platform: 'web' };
+    return { success: false, platform: Capacitor.getPlatform() };
   }
 
   try {
@@ -88,8 +96,8 @@ export const scheduleWidgetAlarms = async (prayerTimes) => {
  * Widget alarmlarını iptal et
  */
 export const cancelWidgetAlarms = async () => {
-  if (Capacitor.getPlatform() === 'web') {
-    return { success: false, platform: 'web' };
+  if (!isWidgetAvailableOnDevice()) {
+    return { success: false, platform: Capacitor.getPlatform() };
   }
 
   try {

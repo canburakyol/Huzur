@@ -14,6 +14,7 @@ import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderF
 import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory;
 import com.huzurapp.android.WidgetPlugin;
 import com.huzurapp.android.CrashlyticsPlugin;
+import com.huzurapp.android.NativeAdBridgePlugin;
 
 public class MainActivity extends BridgeActivity {
     private static final String TAG = "HuzurAppCheck";
@@ -29,6 +30,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(WidgetPlugin.class);
         registerPlugin(AppCheckPlugin.class);
         registerPlugin(CrashlyticsPlugin.class);
+        registerPlugin(NativeAdBridgePlugin.class);
     }
     
     /**

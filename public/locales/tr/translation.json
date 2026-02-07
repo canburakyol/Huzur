@@ -34,8 +34,18 @@
     "copy_failed": "Kopyalama başarısız.",
     "view": "Görüntüle",
     "add": "Ekle",
-    "areYouSure": "Emin misiniz?"
+    "areYouSure": "Emin misiniz?",
+    "user": "Kullanıcı"
   },
+  "notifications": {
+    "prayer": {
+      "mainTitle": "🕌 {{prayer}} Namazı Vakti",
+      "mainBody": "{{prayer}} namazı vakti girdi. Haydi namaza!",
+      "preTitle": "⏰ {{prayer}} Vaktine {{minutes}} dk",
+      "preBody": "{{prayer}} namazına {{minutes}} dakika kaldı. Hazırlanabilirsiniz."
+    }
+  },
+
   "menu": {
     "huzurMode": "Huzur Modu",
     "spiritualJourney": "Manevi Yolculuk",
@@ -430,8 +440,8 @@
   "community": {
     "title": "Cemaat",
     "tabs": {
-      "duas": "Dua Kardeşliği",
-      "hatims": "Online Hatim"
+      "duas": "Dualar",
+      "hatims": "Hatimler"
     },
     "buttons": {
       "cancel": "Vazgeç",

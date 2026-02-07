@@ -18,6 +18,14 @@
     "no": "لا",
     "day": "يوم"
   },
+  "notifications": {
+    "prayer": {
+      "mainTitle": "🕌 حان وقت صلاة {{prayer}}",
+      "mainBody": "دخل وقت صلاة {{prayer}}.",
+      "preTitle": "⏰ متبقٍ {{minutes}} دقيقة على {{prayer}}",
+      "preBody": "تبقى {{minutes}} دقيقة على صلاة {{prayer}}."
+    }
+  },
   "huzurMode": {
     "minutes": "د",
     "natureSounds": "أصوات الطبيعة",

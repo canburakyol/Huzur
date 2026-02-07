@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { checkRateLimit } from '../../utils/rateLimiter';
 import { useGroupHatim } from '../../hooks/useGroupHatim';
 
 const CreateHatimModal = ({ onClose, onSuccess }) => {
-  const { createHatim } = useGroupHatim();
+  const { createHatim, error } = useGroupHatim();
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
   const [loading, setLoading] = useState(false);
+  const isAuthBlocked = useMemo(() => Boolean(error), [error]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,6 +16,11 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
     // Rate limiting: max 3 hatims per hour
     if (!checkRateLimit('hatim_create', 3, 3600000)) {
       alert('Çok fazla hatim oluşturdunuz. Lütfen daha sonra tekrar deneyin.');
+      return;
+    }
+
+    if (isAuthBlocked) {
+      alert('Firebase kimlik doğrulaması hazır değil. Lütfen internetinizi kontrol edip tekrar deneyin.');
       return;
     }
 
@@ -101,11 +107,17 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
             <button 
               type="submit" 
               className="btn btn-primary"
-              disabled={loading}
+              disabled={loading || isAuthBlocked}
             >
               {loading ? 'Oluşturuluyor...' : 'Oluştur'}
             </button>
           </div>
+
+          {isAuthBlocked && (
+            <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '10px', marginBottom: 0 }}>
+              {error}
+            </p>
+          )}
         </form>
       </div>
     </div>

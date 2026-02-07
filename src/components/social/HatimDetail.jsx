@@ -28,7 +28,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
         // Only owner can act
         if (partData.takenBy?.uid === currentUserId) {
            const action = window.prompt(
-             `Bu cüz sizin tarafınızdan alındı action.\n'okudum' yazarak tamamlayın\n'iptal' yazarak bırakın`
+             `Bu cüz sizin tarafınızdan alındı.\n'okudum' yazarak tamamlayın\n'iptal' yazarak bırakın`
            );
            
            if (action?.toLowerCase() === 'okudum') {
@@ -137,6 +137,13 @@ const HatimDetail = ({ hatimId, onBack }) => {
         onClick={() => {
           navigator.clipboard.writeText(hatimDetails.joinCode);
           alert('Davet kodu kopyalandı!');
+        }}
+        style={{ 
+          width: '100%', 
+          marginTop: '20px', 
+          padding: '14px', 
+          borderRadius: '12px',
+          fontWeight: 'bold'
         }}
       >
         Davet Kodunu Kopyala

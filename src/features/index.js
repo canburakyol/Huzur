@@ -5,17 +5,17 @@
  * Import features from here for a clean, organized codebase.
  */
 
-// Module exports
-export * from './core';
-export * from './ibadet';
-export * from './education';
-export * from './content';
-export * from './tools';
-export * from './social';
-export * from './lifestyle';
-export * from './ai';
-export * from './system';
-export * from './family';
+// Module exports - explicit exports to avoid namespace conflicts
+export { coreFeatures, moduleInfo as coreInfo } from './core';
+export { ibadatFeatures, moduleInfo as ibadatInfo } from './ibadet';
+export { educationFeatures, moduleInfo as educationInfo } from './education';
+export { contentFeatures, moduleInfo as contentInfo } from './content';
+export { toolsFeatures, moduleInfo as toolsInfo } from './tools';
+export { socialFeatures, moduleInfo as socialInfo } from './social';
+export { lifestyleFeatures, moduleInfo as lifestyleInfo } from './lifestyle';
+export { aiFeatures, moduleInfo as aiInfo } from './ai';
+export { systemFeatures, moduleInfo as systemInfo } from './system';
+export { familyFeatures, moduleInfo as familyInfo } from './family';
 
 // Import all feature configurations
 import { coreFeatures, moduleInfo as coreInfo } from './core';

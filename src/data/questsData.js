@@ -22,8 +22,8 @@ export const QUESTS_POOL = [
 
     // SOSYAL / DİĞER
     { id: 'q_share_dua', text: 'Bir arkadaşınla dua paylaş', xp: 40, target: 1, type: 'social', action: '/dua-share' },
-    { id: 'q_check_kaaba', text: 'Kıble yönünü kontrol et', xp: 15, target: 1, type: 'utility', action: '/kible' },
-    { id: 'q_check_times', text: 'Namaz vakitlerini kontrol et', xp: 10, target: 1, type: 'utility', action: '/' }
+    { id: 'q_check_kaaba', text: 'Kıble yönünü kontrol et', xp: 15, target: 1, type: 'utility', subType: 'qibla', action: '/kible' },
+    { id: 'q_check_times', text: 'Namaz vakitlerini kontrol et', xp: 10, target: 1, type: 'utility', subType: 'prayer_times', action: '/' }
 ];
 
 /**

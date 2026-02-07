@@ -22,12 +22,12 @@ export const useDua = () => {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const uid = await ensureAuthenticated();
+        const uid = await ensureAuthenticated({ requireFirebaseUser: true });
         setUserId(uid);
         logger.log('[useDua] Auth initialized, userId:', uid);
       } catch (err) {
         logger.error('[useDua] Auth error:', err);
-        setError('Kimlik doğrulama hatası');
+        setError('Firebase kimlik doğrulaması başarısız. İnternetinizi kontrol edip tekrar deneyin.');
       } finally {
         setAuthLoading(false);
       }

@@ -7,12 +7,48 @@
 import { PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import i18n from '../i18n';
 import { storageService } from './storageService';
 import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 
 // FCM Token storage key
 const FCM_TOKEN_KEY = 'fcm_token';
+
+const SUPPORTED_PRAYER_KEYS = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+
+const getLocalizedPrayerName = (key) => {
+    const map = {
+        Fajr: i18n.t('prayer.fajr', { defaultValue: 'Fajr' }),
+        Dhuhr: i18n.t('prayer.dhuhr', { defaultValue: 'Dhuhr' }),
+        Asr: i18n.t('prayer.asr', { defaultValue: 'Asr' }),
+        Maghrib: i18n.t('prayer.maghrib', { defaultValue: 'Maghrib' }),
+        Isha: i18n.t('prayer.isha', { defaultValue: 'Isha' })
+    };
+
+    return map[key] || key;
+};
+
+const getNotificationText = (name, preAlertMinutes) => ({
+    mainTitle: i18n.t('notifications.prayer.mainTitle', {
+        prayer: name,
+        defaultValue: `🕌 ${name} Prayer Time`
+    }),
+    mainBody: i18n.t('notifications.prayer.mainBody', {
+        prayer: name,
+        defaultValue: `It's time for ${name} prayer.`
+    }),
+    preTitle: i18n.t('notifications.prayer.preTitle', {
+        prayer: name,
+        minutes: preAlertMinutes,
+        defaultValue: `⏰ ${name} in ${preAlertMinutes} min`
+    }),
+    preBody: i18n.t('notifications.prayer.preBody', {
+        prayer: name,
+        minutes: preAlertMinutes,
+        defaultValue: `${preAlertMinutes} minutes left until ${name} prayer.`
+    })
+});
 
 /**
  * FCM Service Object
@@ -137,6 +173,7 @@ export const FCMService = {
         if (!Capacitor.isNativePlatform()) return;
         try {
             await PushNotifications.removeAllListeners();
+            this.listenersSetup = false;
         } catch (error) {
             logger.warn('[FCM] Failed to remove listeners:', error);
         }
@@ -162,16 +199,6 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
     const notifications = [];
     let idCounter = 3000; // Different range from other notifications
 
-    // Prayer name translations
-    const prayerNames = {
-        Fajr: 'Sabah',
-        Sunrise: 'Güneş',
-        Dhuhr: 'Öğle',
-        Asr: 'İkindi',
-        Maghrib: 'Akşam',
-        Isha: 'Yatsı'
-    };
-
     // Cancel existing scheduled notifications first
     try {
         const pending = await LocalNotifications.getPending();
@@ -187,10 +214,11 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
     }
 
     Object.entries(prayerTimes).forEach(([key, timeStr]) => {
-        if (!timeStr || key === 'Sunrise') return; // Skip invalid and sunrise
+        if (!timeStr || !SUPPORTED_PRAYER_KEYS.includes(key)) return;
 
-        const name = prayerNames[key] || key;
+        const name = getLocalizedPrayerName(key);
         const [hours, minutes] = timeStr.split(':').map(Number);
+        const texts = getNotificationText(name, preAlertMinutes);
         
         // Schedule for today and tomorrow
         for (let dayOffset = 0; dayOffset <= 1; dayOffset++) {
@@ -205,8 +233,8 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
             if (enableMainAlert) {
                 notifications.push({
                     id: idCounter++,
-                    title: `🕌 ${name} Namazı Vakti`,
-                    body: `${name} namazı vakti girdi. Haydi namaza!`,
+                    title: texts.mainTitle,
+                    body: texts.mainBody,
                     schedule: { 
                         at: prayerDate,
                         allowWhileIdle: true // Critical for Doze Mode
@@ -225,8 +253,8 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
                 if (preAlertDate > new Date()) {
                     notifications.push({
                         id: idCounter++,
-                        title: `⏰ ${name} Vaktine ${preAlertMinutes} dk`,
-                        body: `${name} namazına ${preAlertMinutes} dakika kaldı. Hazırlanabilirsiniz.`,
+                        title: texts.preTitle,
+                        body: texts.preBody,
                         schedule: { 
                             at: preAlertDate,
                             allowWhileIdle: true

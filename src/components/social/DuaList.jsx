@@ -8,7 +8,7 @@ import { logger } from '../../utils/logger';
 
 const DuaList = () => {
   const { t } = useTranslation();
-  const { duas, loading, prayForDua } = useDua();
+  const { duas, loading, error, prayForDua } = useDua();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const currentUserId = getCurrentUserId();
 
@@ -31,13 +31,23 @@ const DuaList = () => {
     return <div style={{ color: 'var(--text-color)', textAlign: 'center', marginTop: '20px' }}>Yükleniyor...</div>;
   }
 
+  if (error) {
+    return (
+      <div className="glass-card" style={{ padding: '20px', textAlign: 'center', color: '#ef4444' }}>
+        <p style={{ margin: '0 0 8px' }}>⚠️ Firebase bağlantı/izin hatası</p>
+        <p style={{ fontSize: '12px', margin: 0 }}>{error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="dua-list">
       {/* Actions */}
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{ marginBottom: '24px' }}>
         <button 
           className="btn btn-primary"
           onClick={() => setShowCreateModal(true)}
+          style={{ width: '100%', padding: '14px', borderRadius: '12px' }}
         >
           ✍️ {t('dua.create', 'Dua İste')}
         </button>
@@ -55,7 +65,14 @@ const DuaList = () => {
         ))}
 
         {duas.length === 0 && !loading && (
-           <div style={{ textAlign: 'center', color: 'var(--text-color-muted)', padding: '20px' }}>
+           <div style={{ 
+             textAlign: 'center', 
+             color: 'var(--text-color-muted)', 
+             padding: '40px 20px',
+             background: 'var(--glass-bg)',
+             borderRadius: '12px',
+             border: '1px solid var(--glass-border)'
+           }}>
              Henüz hiç dua isteği yok. İlk isteyen siz olun.
            </div>
         )}

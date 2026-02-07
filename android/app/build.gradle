@@ -26,8 +26,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_21
-        targetCompatibility JavaVersion.VERSION_21
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     lint {
         checkReleaseBuilds false
@@ -70,6 +70,9 @@ dependencies {
     // Firebase App Check - Play Integrity
     implementation 'com.google.firebase:firebase-appcheck-playintegrity'
     implementation 'com.google.firebase:firebase-appcheck-debug'
+
+    // Google Mobile Ads SDK (Native Ad dahil)
+    implementation 'com.google.android.gms:play-services-ads:23.6.0'
 }
 
 apply from: 'capacitor.build.gradle'

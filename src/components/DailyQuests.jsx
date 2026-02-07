@@ -1,12 +1,55 @@
-import { useGamification } from '../context/GamificationContext';
+import { useGamification } from '../hooks/useGamification';
 import { Check, Gift, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { memo } from 'react';
 
-const DailyQuests = () => {
+const FALLBACK_ROUTE_MAP = {
+    '/zikirmatik': { tab: 'home', feature: 'zikirmatik' },
+    '/esma': { tab: 'library', feature: 'esma' },
+    '/hadis': { tab: 'library', feature: 'hadiths' },
+    '/ayet': { tab: 'quran', feature: null },
+    '/dua-share': { tab: 'community', feature: null },
+    '/kible': { tab: 'home', feature: 'qibla' },
+    '/': { tab: 'home', feature: null }
+};
+
+const DailyQuests = memo(() => {
     const { dailyQuests, claimQuestReward } = useGamification();
     const { t } = useTranslation();
-    const navigate = useNavigate();
+
+    const emitQuestProgressForAction = (action) => {
+        if (action === '/kible') {
+            window.dispatchEvent(new CustomEvent('quest:progress', {
+                detail: { type: 'utility', subType: 'qibla', amount: 1 }
+            }));
+        }
+
+        if (action === '/') {
+            window.dispatchEvent(new CustomEvent('quest:progress', {
+                detail: { type: 'utility', subType: 'prayer_times', amount: 1 }
+            }));
+        }
+    };
+
+    const openQuestAction = (action) => {
+        if (!action) return;
+
+        try {
+            emitQuestProgressForAction(action);
+            window.history.pushState({}, '', action);
+            window.dispatchEvent(new PopStateEvent('popstate'));
+            return;
+        } catch {
+            // no-op, fallback below
+        }
+
+        const mapped = FALLBACK_ROUTE_MAP[action] || FALLBACK_ROUTE_MAP['/'];
+        if (mapped.feature) {
+            window.dispatchEvent(new CustomEvent('openFeature', { detail: mapped.feature }));
+        }
+        emitQuestProgressForAction(action);
+        window.dispatchEvent(new CustomEvent('setActiveTab', { detail: mapped.tab }));
+    };
 
     if (!dailyQuests || !dailyQuests.quests) return null;
 
@@ -16,27 +59,23 @@ const DailyQuests = () => {
     return (
         <div className="glass-card" style={{
             margin: '15px 20px',
-            padding: '16px',
-            borderRadius: '16px',
-            background: 'linear-gradient(145deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6))',
-            border: '1px solid rgba(255,255,255,0.4)',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.05)'
+            padding: '20px',
+            borderRadius: '20px'
         }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '700', color: '#1f2937', display: 'flex', items: 'center', gap: '8px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '700', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                     📅 {t('quests.dailyTitle', 'Günün Görevleri')}
                     {claimableCount > 0 && (
                         <span style={{ 
-                            background: '#ef4444', color: 'white', fontSize: '10px', 
-                            padding: '2px 8px', borderRadius: '10px', animation: 'bounce 1s infinite' 
+                            background: 'var(--notification-dot)', color: 'white', fontSize: '10px', 
+                            padding: '2px 8px', borderRadius: '10px', animation: 'bounce 1s infinite',
+                            boxShadow: '0 0 10px rgba(231, 76, 60, 0.4)'
                         }}>{claimableCount}</span>
                     )}
                 </h3>
-                {/* Debug için yenileme butonu - Production'da kaldırılabilir */}
-                {/* <button onClick={refreshQuests} style={{ background: 'none', border: 'none', cursor: 'pointer' }}><RefreshCw size={14} /></button> */}
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {dailyQuests.quests.map(quest => {
                     const isCompleted = quest.completed;
                     const isClaimed = quest.isClaimed;
@@ -44,33 +83,37 @@ const DailyQuests = () => {
 
                     return (
                         <div key={quest.id} style={{
-                            background: isClaimed ? 'rgba(16, 185, 129, 0.1)' : 'white',
-                            borderRadius: '12px',
-                            padding: '10px',
-                            border: isClaimed ? '1px solid #10b981' : '1px solid #f3f4f6',
+                            background: isClaimed ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.1)',
+                            borderRadius: '16px',
+                            padding: '12px',
+                            border: isClaimed ? '1px solid var(--glass-border)' : '1px solid var(--glass-border)',
                             position: 'relative',
-                            transition: 'all 0.2s'
+                            transition: 'var(--transition-smooth)',
+                            opacity: isClaimed ? 0.7 : 1
                         }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                                <div style={{ fontSize: '14px', fontWeight: '600', color: '#374151', textDecoration: isClaimed ? 'line-through' : 'none' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                                <div style={{ fontSize: '15px', fontWeight: '600', color: 'var(--text-color)', textDecoration: isClaimed ? 'line-through' : 'none' }}>
                                     {quest.text}
                                 </div>
-                                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#d97706' }}>
-                                    {isClaimed ? <Check size={16} color="#10b981" /> : `+${quest.xp} XP`}
+                                <div style={{ fontSize: '13px', fontWeight: 'bold', color: 'var(--secondary-color)' }}>
+                                    {isClaimed ? <Check size={18} color="var(--success-color)" /> : `+${quest.xp} XP`}
                                 </div>
                             </div>
 
                             {!isClaimed ? (
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                    <div style={{ flex: 1, height: '6px', background: '#e5e7eb', borderRadius: '3px', overflow: 'hidden' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                    <div style={{ flex: 1, height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
                                         <div style={{ 
                                             height: '100%', 
                                             width: `${progressPercent}%`, 
-                                            background: isCompleted ? '#10b981' : '#3b82f6',
-                                            transition: 'width 0.5s ease'
+                                            background: isCompleted 
+                                                ? 'linear-gradient(90deg, #2ecc71, #27ae60)' 
+                                                : 'linear-gradient(90deg, var(--primary-color), var(--secondary-color))',
+                                            transition: 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                                            boxShadow: isCompleted ? '0 0 8px rgba(46, 204, 113, 0.4)' : 'none'
                                         }}></div>
                                     </div>
-                                    <div style={{ fontSize: '11px', color: '#6b7280', minWidth: '40px', textAlign: 'right' }}>
+                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', minWidth: '40px', textAlign: 'right', fontWeight: 'bold' }}>
                                         {quest.progress}/{quest.target}
                                     </div>
                                     
@@ -78,23 +121,25 @@ const DailyQuests = () => {
                                         <button 
                                             onClick={() => claimQuestReward(quest.id)}
                                             style={{
-                                                background: '#10b981', color: 'white', border: 'none',
-                                                borderRadius: '20px', padding: '4px 12px', fontSize: '11px',
+                                                background: 'var(--primary-color)', color: 'white', border: 'none',
+                                                borderRadius: '20px', padding: '6px 14px', fontSize: '12px',
                                                 fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px',
-                                                animation: 'pulse 2s infinite'
+                                                animation: 'pulse 2s infinite',
+                                                boxShadow: '0 4px 10px rgba(212, 175, 55, 0.3)'
                                             }}
                                         >
-                                            <Gift size={12} /> {t('quests.claim', 'Al')}
+                                            <Gift size={14} /> {t('quests.claim', 'Al')}
                                         </button>
                                     )}
                                     
                                     {!isCompleted && quest.action && (
                                         <button 
-                                            onClick={() => navigate(quest.action)} 
+                                            onClick={() => openQuestAction(quest.action)} 
                                             style={{
-                                                background: '#f3f4f6', color: '#4b5563', border: 'none',
-                                                borderRadius: '20px', padding: '4px 10px', fontSize: '11px',
-                                                cursor: 'pointer'
+                                                background: 'rgba(255,255,255,0.15)', color: 'var(--text-color)', border: '1px solid var(--glass-border)',
+                                                borderRadius: '20px', padding: '6px 12px', fontSize: '12px',
+                                                fontWeight: '600', cursor: 'pointer',
+                                                transition: 'var(--transition-smooth)'
                                             }}
                                         >
                                             {t('quests.go', 'Git')}
@@ -102,8 +147,8 @@ const DailyQuests = () => {
                                     )}
                                 </div>
                             ) : (
-                                <div style={{ fontSize: '11px', color: '#10b981', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                    <Check size={12} /> Ödül alındı
+                                <div style={{ fontSize: '12px', color: 'var(--success-color)', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '600' }}>
+                                    <Check size={14} /> {t('quests.claimed', 'Ödül alındı')}
                                 </div>
                             )}
                         </div>
@@ -113,9 +158,9 @@ const DailyQuests = () => {
             
              <style>{`
                 @keyframes pulse {
-                    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-                    70% { transform: scale(1.05); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-                    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+                    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6); }
+                    70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+                    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
                 }
                 @keyframes bounce {
                     0%, 100% { transform: translateY(0); }
@@ -124,6 +169,6 @@ const DailyQuests = () => {
             `}</style>
         </div>
     );
-};
+});
 
 export default DailyQuests;

@@ -9,7 +9,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.1'
+        classpath 'com.android.tools.build:gradle:8.6.1'
         classpath 'com.google.gms:google-services:4.4.4'
         
         // Firebase Crashlytics Gradle Plugin
@@ -31,7 +31,7 @@ allprojects {
         mavenCentral()
     }
 
-    // Force Java 17 for all modules (Standard for Android builds)
+    // Force Java 17 for all modules (Stable for AGP 8.2.1)
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
             project.android {

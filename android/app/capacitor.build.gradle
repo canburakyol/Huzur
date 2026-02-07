@@ -9,17 +9,20 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
-    implementation project(':brandonknudsen-admob-native-advanced')
     implementation project(':capacitor-community-admob')
     implementation project(':capacitor-firebase-app-check')
     implementation project(':capacitor-app')
     implementation project(':capacitor-device')
     implementation project(':capacitor-filesystem')
     implementation project(':capacitor-geolocation')
+    implementation project(':capacitor-haptics')
     implementation project(':capacitor-local-notifications')
+    implementation project(':capacitor-network')
     implementation project(':capacitor-preferences')
     implementation project(':capacitor-push-notifications')
+    implementation project(':capacitor-screen-orientation')
     implementation project(':capacitor-share')
+    implementation project(':capawesome-capacitor-app-update')
     implementation project(':revenuecat-purchases-capacitor')
 
 }

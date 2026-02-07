@@ -30,13 +30,9 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
         className={`nav-item ${activeTab === 'assistant' ? 'active' : ''}`} 
         onClick={() => setActiveTab('assistant')}
       >
-        <div style={{ position: 'relative' }}>
+        <div className="assistant-icon-wrapper">
           <MessageCircle size={24} />
-          <span style={{ 
-            position: 'absolute', top: -2, right: -2, 
-            width: '8px', height: '8px', background: '#e74c3c', 
-            borderRadius: '50%' 
-          }}></span>
+          <span className="notification-dot"></span>
         </div>
         <span>{t('nav.assistant')}</span>
       </div>

@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { checkRateLimit } from '../../utils/rateLimiter';
 import { useDua } from '../../hooks/useDua';
 
 const CreateDuaModal = ({ onClose }) => {
-  const { createDua } = useDua();
+  const { createDua, error } = useDua();
   const [text, setText] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [loading, setLoading] = useState(false);
+  const isAuthBlocked = useMemo(() => Boolean(error), [error]);
 
 
 
@@ -17,6 +18,11 @@ const CreateDuaModal = ({ onClose }) => {
     // Rate limiting: max 5 duas per hour
     if (!checkRateLimit('dua_submit', 5, 3600000)) {
       alert('Çok fazla dua isteği gönderdiniz. Lütfen daha sonra tekrar deneyin.');
+      return;
+    }
+
+    if (isAuthBlocked) {
+      alert('Firebase kimlik doğrulaması hazır değil. Lütfen internetinizi kontrol edip tekrar deneyin.');
       return;
     }
 
@@ -100,11 +106,17 @@ const CreateDuaModal = ({ onClose }) => {
             <button 
               type="submit" 
               className="btn btn-primary"
-              disabled={loading}
+              disabled={loading || isAuthBlocked}
             >
               {loading ? 'Paylaşılıyor...' : 'Paylaş'}
             </button>
           </div>
+
+          {isAuthBlocked && (
+            <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '10px', marginBottom: 0 }}>
+              {error}
+            </p>
+          )}
         </form>
       </div>
     </div>

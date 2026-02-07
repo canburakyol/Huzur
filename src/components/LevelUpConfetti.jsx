@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { useGamification } from '../context/GamificationContext';
+import { useGamification } from '../hooks/useGamification';
 import './LevelUpConfetti.css';
 
 const LevelUpConfetti = () => {

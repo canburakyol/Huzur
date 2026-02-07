@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import Lottie from 'lottie-react';
 import { useFocus } from '../context/FocusContext';
-import { useGamification } from '../context/GamificationContext';
+import { useGamification } from '../hooks/useGamification';
 
 // Önceden tanımlı zikir listesi
 const DHIKR_LIST = [

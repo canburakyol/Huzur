@@ -1,5 +1,5 @@
-import { AdMobNativeAdvanced } from '@brandonknudsen/admob-native-advanced';
 import { Capacitor } from '@capacitor/core';
+import NativeAdBridge from '../plugins/NativeAdBridgePlugin';
 import { isPro } from './proService';
 
 // AdMob App ID and Ad Unit IDs
@@ -29,8 +29,8 @@ export const nativeAdService = {
         }
 
         try {
-            console.log('NativeAdService: Initializing...');
-            await AdMobNativeAdvanced.initialize({ appId: ADMOB_APP_ID });
+            console.log('NativeAdService: Initializing NativeAdBridge...');
+            await NativeAdBridge.initialize();
             isInitialized = true;
             return true;
         } catch (e) {
@@ -56,13 +56,7 @@ export const nativeAdService = {
 
         try {
             const adUnitId = isDev ? TEST_NATIVE_ID : REAL_NATIVE_ID;
-            
-            if (!AdMobNativeAdvanced) {
-                console.warn('NativeAdService: Plugin not available');
-                return null;
-            }
-
-            const result = await AdMobNativeAdvanced.loadAd({ adUnitId });
+            const result = await NativeAdBridge.loadAd({ adUnitId });
             
             if (result && result.adId) {
                 nativeAdService.adData = result;
@@ -80,12 +74,12 @@ export const nativeAdService = {
      * Record impression when ad is viewed
      */
     recordImpression: async () => {
-        if (currentAdId && AdMobNativeAdvanced) {
-            try {
-                await AdMobNativeAdvanced.reportImpression({ adId: currentAdId });
-            } catch (e) {
-                console.error('NativeAdService: Impression Error:', e);
-            }
+        if (!currentAdId) return;
+
+        try {
+            await NativeAdBridge.reportImpression({ adId: currentAdId });
+        } catch (e) {
+            console.error('NativeAdService: Impression Error:', e);
         }
     },
 
@@ -93,12 +87,12 @@ export const nativeAdService = {
      * Handle click on ad
      */
     handleClick: async () => {
-        if (currentAdId && AdMobNativeAdvanced) {
-            try {
-                await AdMobNativeAdvanced.reportClick({ adId: currentAdId });
-            } catch (e) {
-                console.error('NativeAdService: Click Error:', e);
-            }
+        if (!currentAdId) return;
+
+        try {
+            await NativeAdBridge.reportClick({ adId: currentAdId });
+        } catch (e) {
+            console.error('NativeAdService: Click Error:', e);
         }
     }
 };

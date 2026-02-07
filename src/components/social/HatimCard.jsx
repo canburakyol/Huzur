@@ -19,22 +19,29 @@ const HatimCard = memo(({ hatim, onClick }) => {
     <div 
       className="glass-card clickable"
       onClick={() => onClick(hatim.id)}
-      style={{ padding: '15px', position: 'relative', overflow: 'hidden' }}
+      style={{ 
+        padding: '18px', 
+        position: 'relative', 
+        overflow: 'hidden',
+        border: '1px solid var(--glass-border)',
+        transition: 'transform 0.2s ease'
+      }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
         <div>
-          <h4 style={{ margin: 0, color: 'var(--primary-color)' }}>{hatim.name}</h4>
-          <p style={{ margin: '5px 0 0', fontSize: '12px', color: 'var(--text-color-muted)' }}>
+          <h4 style={{ margin: 0, color: 'var(--primary-color)', fontSize: '16px', fontWeight: '700' }}>{hatim.name}</h4>
+          <p style={{ margin: '4px 0 0', fontSize: '13px', color: 'var(--text-color-muted)' }}>
             {hatim.description || 'Grup Hatimi'}
           </p>
         </div>
         <div style={{ 
-          background: 'rgba(212, 175, 55, 0.2)', 
-          padding: '4px 8px', 
-          borderRadius: '6px', 
-          fontSize: '11px',
+          background: 'rgba(212, 175, 55, 0.15)', 
+          padding: '4px 10px', 
+          borderRadius: '8px', 
+          fontSize: '12px',
           fontWeight: 'bold',
-          color: 'var(--primary-color)'
+          color: 'var(--secondary-color)',
+          border: '1px solid rgba(212, 175, 55, 0.3)'
         }}>
           %{progress}
         </div>
@@ -42,22 +49,37 @@ const HatimCard = memo(({ hatim, onClick }) => {
 
       {/* Progress Bar */}
       <div style={{ 
-        height: '6px', 
-        background: 'rgba(0,0,0,0.1)', 
-        borderRadius: '3px',
-        overflow: 'hidden'
+        height: '8px', 
+        background: 'rgba(0,0,0,0.2)', 
+        borderRadius: '4px',
+        overflow: 'hidden',
+        marginBottom: '12px'
       }}>
         <div style={{ 
           height: '100%', 
           width: `${progress}%`, 
-          background: 'linear-gradient(90deg, var(--primary-color), var(--accent-color))',
-          transition: 'width 0.5s ease'
+          background: 'linear-gradient(90deg, var(--secondary-color), #fcd34d)',
+          boxShadow: '0 0 10px rgba(212, 175, 55, 0.4)',
+          transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
         }}></div>
       </div>
       
-      <div style={{ marginTop: '10px', fontSize: '11px', color: 'var(--text-color-muted)', display: 'flex', justifyContent: 'space-between' }}>
-        <span>👥 {hatim.readers?.length || 1} Okuyucu</span>
-        <span>Kod: {hatim.joinCode}</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <span>👥</span>
+          <span>{hatim.readers?.length || 1} Okuyucu</span>
+        </div>
+        <div style={{ 
+          fontSize: '11px', 
+          color: 'var(--primary-color)', 
+          background: 'rgba(16, 185, 129, 0.1)', 
+          padding: '2px 8px', 
+          borderRadius: '4px',
+          fontFamily: 'monospace',
+          fontWeight: 'bold'
+        }}>
+          {hatim.joinCode}
+        </div>
       </div>
     </div>
   );

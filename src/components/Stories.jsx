@@ -1,13 +1,14 @@
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, memo } from 'react';
 import { Share2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getDailyContent } from '../services/contentService';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
 import { Filesystem, Directory } from '@capacitor/filesystem';
+import { LazyImage } from './LazyImage';
 // html2canvas is dynamically imported when needed to reduce initial bundle size
 
-const Stories = () => {
+const Stories = memo(() => {
     const { t, ready } = useTranslation(['translation', 'prayers']);
     const [activeStory, setActiveStory] = useState(null);
     const [isSharing, setIsSharing] = useState(false);
@@ -226,12 +227,11 @@ const Stories = () => {
                                 overflow: 'hidden',
                                 background: story.color || '#8e44ad'
                             }}>
-                                <img
+                                <LazyImage
                                     src={story.image}
                                     alt={t(story.titleKey)}
-                                    loading="lazy"
+                                    className="bubble-image"
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                    onError={(e) => { e.target.style.display = 'none'; }}
                                 />
                             </div>
                         </div>
@@ -297,11 +297,15 @@ const Stories = () => {
                             left: 0,
                             width: '100%',
                             height: '100%',
-                            backgroundImage: `url(${activeStory.image})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundColor: activeStory.color
-                        }}></div>
+                            backgroundColor: activeStory.color,
+                            overflow: 'hidden'
+                        }}>
+                             <LazyImage
+                                src={activeStory.image}
+                                alt=""
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                        </div>
 
                         {/* Gradient Overlay for text readability */}
                         <div style={{
@@ -413,6 +417,6 @@ const Stories = () => {
             )}
         </>
     );
-};
+});
 
 export default Stories;

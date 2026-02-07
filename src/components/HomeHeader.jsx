@@ -1,5 +1,6 @@
 import { MapPin, Sun, Cloud, CloudRain, CloudSnow } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { memo } from 'react';
 
 // Weather Icon Helper
 const getWeatherIcon = (code) => {
@@ -17,7 +18,7 @@ import { useTime } from '../context/TimeContext';
  * HomeHeader Component
  * Displays location, weather, user streak and dynamic greeting
  */
-const HomeHeader = ({ locationName, weather, streakData }) => {
+const HomeHeader = memo(({ locationName, weather, streakData }) => {
     const { t } = useTranslation();
     const { greetingKey, timeOfDay } = useTime();
 
@@ -78,6 +79,6 @@ const HomeHeader = ({ locationName, weather, streakData }) => {
       </div>
     </div>
   );
-};
+});
 
 export default HomeHeader;

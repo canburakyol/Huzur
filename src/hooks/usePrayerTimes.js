@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getPrayerTimes, getNextPrayer } from '../services/prayerService';
 import { schedulePrayerAlarms, createNotificationChannels, FCMService } from '../services/fcmService';
-import { sendNotification, NotificationService, requestNotificationPermission } from '../services/notificationService';
+import smartNotificationService, { showStickyNotification, cancelStickyNotification, requestNotificationPermission } from '../services/smartNotificationService';
+import { updateWidget as updateAndroidWidget } from '../services/widgetService';
 import { storageService } from '../services/storageService';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
@@ -149,7 +150,7 @@ export const usePrayerTimes = () => {
         const checkTime = `${String(targetH).padStart(2, '0')}:${String(targetM).padStart(2, '0')}`;
 
         if (timeStr === checkTime) {
-          sendNotification("Vakit Yaklaşıyor", `${name} vaktine 10 dakika kaldı.`);
+          smartNotificationService.showInstantNotification("Vakit Yaklaşıyor", `${name} vaktine 10 dakika kaldı.`);
         }
       });
     };
@@ -199,7 +200,7 @@ export const useStickyNotification = (timings, nextPrayer) => {
       const isStickyEnabled = storageService.getBoolean(STORAGE_KEYS.STICKY_NOTIFICATION);
 
       if (!isStickyEnabled) {
-        NotificationService.cancelNotification();
+        cancelStickyNotification();
         if (stickyInterval) clearInterval(stickyInterval);
         return;
       }
@@ -225,7 +226,7 @@ export const useStickyNotification = (timings, nextPrayer) => {
         const title = `${nextPrayer.name} Vaktine Kalan`;
         const body = `${timeLeft} kaldı.`;
 
-        NotificationService.showStickyNotification(title, body);
+        showStickyNotification(title, body);
       };
 
       update();
@@ -251,32 +252,20 @@ export const useAndroidWidget = (timings, nextPrayer, locationName) => {
   useEffect(() => {
     if (!timings || !nextPrayer) return;
 
-    // Dynamically import Capacitor to avoid build issues on Web
+    // Widget update (native-safe wrapper)
     const updateWidget = async () => {
-       const { Plugins } = await import('@capacitor/core');
-       const { Widget } = Plugins;
-       
-       if (!Widget) return;
+      try {
+        const prayerTime = timings[nextPrayer.key];
+        if (!prayerTime) return;
 
-       const prayerTime = timings[nextPrayer.key];
-       if (!prayerTime) return;
-
-       // Calculate time remaining (optional, mainly for app usage but good to have)
-       const now = new Date();
-       const [h, m] = prayerTime.split(':').map(Number);
-       const prayerDate = new Date();
-       prayerDate.setHours(h, m, 0);
-       if (prayerDate < now) prayerDate.setDate(prayerDate.getDate() + 1);
-
-       try {
-           await Widget.updateWidget({
-               name: nextPrayer.name,
-               time: prayerTime,
-               location: locationName || 'Huzur'
-           });
-       } catch (e) {
-           console.error('Widget update failed:', e);
-       }
+        await updateAndroidWidget({
+          name: nextPrayer.name,
+          time: prayerTime,
+          location: locationName || 'Huzur'
+        });
+      } catch (e) {
+        logger.warn('[usePrayerTimes] Widget update failed:', e);
+      }
     };
 
     updateWidget();

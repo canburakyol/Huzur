@@ -11,7 +11,7 @@ import {
     ACHIEVEMENTS,
     MOTIVATION_MESSAGES
 } from '../data/deedJournalData';
-import { useGamification } from '../context/GamificationContext';
+import { useGamification } from '../hooks/useGamification';
 
 function DeedJournal({ onClose }) {
     const { t } = useTranslation();

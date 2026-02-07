@@ -99,9 +99,9 @@ function Tespihat({ onClose }) {
                     <div style={{
                         width: `${totalProgress()}%`,
                         height: '100%',
-                        background: 'linear-gradient(90deg, var(--primary-color), var(--secondary-color))',
+                        background: 'linear-gradient(90deg, var(--primary-color), var(--accent-vibrant))',
                         borderRadius: '4px',
-                        transition: 'width 0.3s'
+                        transition: 'var(--transition-smooth)'
                     }} />
                 </div>
                 <button
@@ -117,7 +117,8 @@ function Tespihat({ onClose }) {
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '6px'
+                        gap: '6px',
+                        transition: 'var(--transition-smooth)'
                     }}
                 >
                     <RotateCcw size={14} />
@@ -212,7 +213,8 @@ function Tespihat({ onClose }) {
                                     justifyContent: 'center',
                                     cursor: 'pointer',
                                     border: `2px solid ${tesbih.color}`,
-                                    transition: 'transform 0.1s'
+                                    transition: 'var(--transition-smooth)',
+                                    boxShadow: `0 4px 12px ${tesbih.color}33`
                                 }}
                             >
                                 <span style={{
@@ -239,7 +241,8 @@ function Tespihat({ onClose }) {
                                         color: 'var(--text-color-muted)',
                                         fontSize: '11px',
                                         cursor: 'pointer',
-                                        marginTop: '4px'
+                                        marginTop: '4px',
+                                        transition: 'var(--transition-smooth)'
                                     }}
                                 >
                                     Sıfırla
