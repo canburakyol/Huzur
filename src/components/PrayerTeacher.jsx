@@ -184,7 +184,7 @@ function PrayerTeacher({ onClose }) {
                                 {expandedRecitation === rec.id && (
                                     <div style={{ marginTop: '16px' }}>
                                         <div style={{
-                                            fontFamily: "'Amiri', serif",
+                                            fontFamily: "var(--arabic-font-family)",
                                             fontSize: '22px',
                                             textAlign: 'right',
                                             direction: 'rtl',

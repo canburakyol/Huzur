@@ -64,4 +64,22 @@ test.describe('Navigation Tests', () => {
     // Check for location indicator
     await expect(page.locator('text=Istanbul')).toBeVisible();
   });
+
+  test('quran arabic glyphs render without tofu squares', async ({ page }) => {
+    // Navigate to Quran tab
+    await page.locator('.nav-item').filter({ hasText: /Quran|Kuran/i }).first().click();
+
+    // Wait for ayah text container
+    const arabicAyah = page.locator('.ayah-arabic').first();
+    await expect(arabicAyah).toBeVisible({ timeout: 10000 });
+
+    const text = (await arabicAyah.textContent()) || '';
+
+    // Tofu replacement character / white-square style artifacts should not exist
+    expect(text).not.toContain('□');
+    expect(text).not.toContain('�');
+
+    // Ensure contains Arabic script range
+    expect(/\p{Script=Arabic}/u.test(text)).toBeTruthy();
+  });
 });

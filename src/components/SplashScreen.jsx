@@ -56,8 +56,8 @@ const SplashScreen = ({ onHide }) => {
       ref={containerRef}
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-        background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
+        background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(var(--surface-blur))',
+        WebkitBackdropFilter: 'blur(var(--surface-blur))',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         zIndex: 9999, cursor: 'pointer', padding: '20px',
         touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none',
@@ -71,10 +71,10 @@ const SplashScreen = ({ onHide }) => {
         border: '1px solid rgba(255,255,255,0.2)', pointerEvents: 'none'
       }}>
         <div style={{ fontSize: '48px', marginBottom: '16px' }}>🕌</div>
-        <div style={{ fontFamily: "'Amiri', serif", fontSize: '24px', color: '#fff', marginBottom: '16px' }}>
+        <div style={{ fontFamily: "var(--arabic-font-family)", fontSize: '24px', color: '#fff', marginBottom: '16px' }}>
           بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ
         </div>
-        <div style={{ fontFamily: "'Amiri', serif", fontSize: '20px', color: '#fff', marginBottom: '12px', lineHeight: '1.5' }}>
+        <div style={{ fontFamily: "var(--arabic-font-family)", fontSize: '20px', color: '#fff', marginBottom: '12px', lineHeight: '1.5' }}>
           رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي
         </div>
         <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.9)', marginBottom: '20px', fontStyle: 'italic' }}>

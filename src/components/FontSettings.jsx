@@ -53,7 +53,7 @@ const FontSettings = ({ onClose }) => {
   const applyFontSettings = (s) => {
     document.documentElement.style.setProperty('--arabic-font-size', `${s.arabicFontSize}px`);
     document.documentElement.style.setProperty('--turkish-font-size', `${s.turkishFontSize}px`);
-    document.documentElement.style.setProperty('--arabic-font-family', `'${s.arabicFontFamily}', serif`);
+    document.documentElement.style.setProperty('--arabic-font-family', `'${s.arabicFontFamily}', 'Noto Naskh Arabic', 'Scheherazade New', 'Noto Sans Arabic', 'Droid Arabic Naskh', 'Geeza Pro', 'Tahoma', 'Arial', serif`);
     document.documentElement.style.setProperty('--quran-line-height', s.lineHeight);
   };
 
@@ -98,7 +98,7 @@ const FontSettings = ({ onClose }) => {
         <div 
           className="preview-arabic"
           style={{ 
-            fontFamily: `'${settings.arabicFontFamily}', serif`,
+            fontFamily: `var(--arabic-font-family)`,
             fontSize: `${settings.arabicFontSize}px`,
             lineHeight: settings.lineHeight
           }}

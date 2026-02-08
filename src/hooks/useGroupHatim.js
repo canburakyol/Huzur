@@ -49,15 +49,36 @@ export const useGroupHatim = (hatimId = null) => {
       const q = query(
         collection(db, 'hatims'),
         where('readers', 'array-contains', uid),
-        limit(20) // Performance: Limit to 20 hatims
+        limit(20)
       );
       const snapshot = await getDocs(q);
       const hatims = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      // Sort by creation date locally if needed
       hatims.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
       setActiveHatims(hatims);
     } catch (err) {
       logger.error('Error fetching my hatims:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // 1b. Fetch All Public Group Hatims (Discovery View)
+  const fetchAllPublicHatims = useCallback(async () => {
+    setLoading(true);
+    try {
+      const q = query(
+        collection(db, 'hatims'),
+        where('type', '==', 'group'),
+        limit(50)
+      );
+      const snapshot = await getDocs(q);
+      const hatims = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      // Sort by creation date
+      hatims.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      setActiveHatims(hatims);
+    } catch (err) {
+      logger.error('Error fetching all hatims:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -146,6 +167,7 @@ export const useGroupHatim = (hatimId = null) => {
     activeHatims,
     hatimDetails,
     fetchMyHatims,
+    fetchAllPublicHatims,
     createHatim,
     joinHatim,
     takePart,

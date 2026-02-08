@@ -42,7 +42,7 @@ const PrayerTimeBanner = memo(({ timings, nextPrayer }) => {
         }}>
             {/* Left Arabic Calligraphy - Gold Color */}
             <div style={{ 
-                fontFamily: "'Amiri', 'Scheherazade', serif", 
+                fontFamily: "var(--arabic-font-family)", 
                 fontSize: '16px', 
                 color: '#d4af37',
                 textShadow: '0 1px 3px rgba(0,0,0,0.5)',
@@ -57,7 +57,7 @@ const PrayerTimeBanner = memo(({ timings, nextPrayer }) => {
                 color: '#f5e6c8'
             }}>
                 <div style={{ 
-                    fontFamily: "'Amiri', serif", 
+                    fontFamily: "var(--arabic-font-family)", 
                     fontSize: '20px', 
                     fontWeight: '600',
                     textShadow: '0 2px 6px rgba(0,0,0,0.4)',
@@ -69,7 +69,7 @@ const PrayerTimeBanner = memo(({ timings, nextPrayer }) => {
 
             {/* Right Arabic Calligraphy - Gold Color */}
             <div style={{ 
-                fontFamily: "'Amiri', 'Scheherazade', serif", 
+                fontFamily: "var(--arabic-font-family)", 
                 fontSize: '16px', 
                 color: '#d4af37',
                 textShadow: '0 1px 3px rgba(0,0,0,0.5)',

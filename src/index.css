@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap');
+
 :root {
   /* Green & Gold Theme (Main App) */
   --bg-gradient-start: #0f3d2e;
@@ -38,7 +40,7 @@
   /* Font Settings Defaults */
   --arabic-font-size: 1.5rem; /* 24px */
   --turkish-font-size: 1rem; /* 16px */
-  --arabic-font-family: 'Amiri', serif;
+  --arabic-font-family: 'Amiri', 'Noto Naskh Arabic', 'Scheherazade New', 'Noto Sans Arabic', 'Droid Arabic Naskh', 'Geeza Pro', 'Tahoma', 'Arial', serif;
   --quran-line-height: 1.8;
 
   --font-main: 'Segoe UI', Roboto, 'system-ui', sans-serif;
@@ -51,6 +53,18 @@
   --error-color: #ef4444; /* Standard Error Red */
   --notification-dot: #e74c3c;
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Crisp UI Tokens */
+  --surface-blur: 12px;
+  --surface-blur-strong: 20px;
+  --surface-saturate: 145%;
+  --surface-opacity: 0.82;
+  --surface-opacity-strong: 0.95;
+  --surface-border-opacity: 0.32;
+  --text-contrast-boost: 1;
+  --icon-stroke-width: 2px;
+  --elevation-soft: 0 4px 14px rgba(0, 0, 0, 0.12);
+  --elevation-medium: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
 /* Scoped Original Theme for Quran Section */
@@ -162,6 +176,61 @@ body {
   position: relative;
 }
 
+/* Android WebView netlik optimizasyonları */
+html.android-webview body,
+body.android-webview {
+  /* WebView'de fixed arka plan + blur kombinasyonu metni yumuşatabiliyor */
+  background-attachment: scroll, scroll;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+html.android-webview,
+body.android-webview {
+  --surface-blur: 1.5px;
+  --surface-blur-strong: 2px;
+  --surface-saturate: 112%;
+  --surface-opacity: 0.9;
+  --surface-opacity-strong: 0.96;
+  --surface-border-opacity: 0.5;
+  --icon-stroke-width: 2.25px;
+  --elevation-soft: 0 3px 10px rgba(0, 0, 0, 0.12);
+  --elevation-medium: 0 5px 14px rgba(0, 0, 0, 0.14);
+}
+
+.crisp-surface {
+  background: rgba(255, 255, 255, var(--surface-opacity));
+  border: 1px solid rgba(255, 255, 255, var(--surface-border-opacity));
+  backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturate));
+  -webkit-backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturate));
+  box-shadow: var(--elevation-soft);
+}
+
+.crisp-surface-strong {
+  background: rgba(255, 255, 255, var(--surface-opacity-strong));
+  border: 1px solid rgba(255, 255, 255, calc(var(--surface-border-opacity) + 0.1));
+  backdrop-filter: blur(var(--surface-blur-strong)) saturate(var(--surface-saturate));
+  -webkit-backdrop-filter: blur(var(--surface-blur-strong)) saturate(var(--surface-saturate));
+  box-shadow: var(--elevation-medium);
+}
+
+.crisp-text {
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  filter: contrast(var(--text-contrast-boost));
+}
+
+.crisp-icon {
+  stroke-width: var(--icon-stroke-width);
+  shape-rendering: geometricPrecision;
+}
+
+.crisp-overlay {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(var(--surface-blur));
+  -webkit-backdrop-filter: blur(var(--surface-blur));
+}
+
 /* Arka plan deseni kaldırıldı */
 body::after {
   display: none;
@@ -204,14 +273,22 @@ h1 {
 /* Glassmorphism Card */
 .glass-card {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturate));
+  -webkit-backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturate));
   border-radius: 20px;
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
   padding: 24px;
   margin-bottom: 20px;
   transition: var(--transition-smooth);
+}
+
+/* Android WebView'de cam efekti daha düşük blur ile daha net görünür */
+html.android-webview .glass-card,
+body.android-webview .glass-card {
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  background: rgba(15, 61, 46, 0.86);
 }
 
 .glass-card:hover {
@@ -394,11 +471,11 @@ h1 {
   inset-inline-start: 0;
   inset-inline-end: 0;
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--surface-blur-strong)) saturate(var(--surface-saturate));
+  -webkit-backdrop-filter: blur(var(--surface-blur-strong)) saturate(var(--surface-saturate));
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   /* Daha belirgin sınır */
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--elevation-medium);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -447,9 +524,15 @@ h1 {
   /* Dolguyu kapat */
   stroke: currentColor !important;
   /* Çizgi rengini metin renginden al */
-  stroke-width: 2px;
+  stroke-width: var(--icon-stroke-width);
   opacity: 1 !important;
   /* İkon saydamlığını engelle */
+}
+
+html.android-webview .bottom-nav,
+body.android-webview .bottom-nav {
+  background: rgba(255, 255, 255, 0.97);
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
 }
 
 .nav-item span {
@@ -1350,6 +1433,8 @@ h1 {
 [lang="ar"] {
   font-family: 'Amiri', 'Scheherazade New', 'Noto Naskh Arabic', 'Segoe UI', Tahoma, sans-serif;
 }
+
+/* Fallback removed as it was disruptive */
 
 /* RTL specific text alignments */
 [dir="rtl"] .text-left {

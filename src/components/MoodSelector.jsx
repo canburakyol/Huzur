@@ -142,7 +142,7 @@ const MoodSelector = ({ onClose }) => {
           right: 0;
           bottom: 0;
           background: rgba(0,0,0,0.7);
-          backdrop-filter: blur(8px);
+          backdrop-filter: blur(var(--surface-blur));
           display: flex;
           align-items: center;
           justify-content: center;
@@ -264,7 +264,7 @@ const MoodSelector = ({ onClose }) => {
         }
 
         .ayah-arabic {
-          font-family: 'Amiri', serif;
+          font-family: var(--arabic-font-family);
           font-size: 24px;
           color: var(--primary-color);
           margin-bottom: 15px;

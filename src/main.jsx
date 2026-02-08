@@ -1,5 +1,9 @@
 import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
+import '@fontsource/noto-naskh-arabic/400.css'
+import '@fontsource/noto-naskh-arabic/700.css'
+import '@fontsource/scheherazade-new/400.css'
+import '@fontsource/scheherazade-new/700.css'
 import './index.css'
 import './i18n' // i18next initialization
 import App from './App.jsx'
@@ -11,6 +15,28 @@ import { TimeProvider } from './context/TimeContext'
 import { FocusProvider } from './context/FocusContext'
 import { GamificationProvider } from './context/GamificationProvider'
 import { FamilyProvider } from './context/FamilyProvider.jsx'
+
+// Android WebView için netlik optimizasyon sınıfı
+const applyAndroidWebViewClass = () => {
+  try {
+    const capacitor = window?.Capacitor;
+    const platform = capacitor?.getPlatform?.();
+    const isNative = capacitor?.isNativePlatform?.() ?? capacitor?.isNative ?? false;
+    const isAndroidWebView = Boolean(isNative && platform === 'android');
+
+    if (isAndroidWebView) {
+      document.documentElement.classList.add('android-webview');
+      document.body?.classList.add('android-webview');
+    }
+  } catch {
+    // no-op
+  }
+};
+
+applyAndroidWebViewClass();
+
+// ensureArabicFontHealth is removed to prevent aggressive fallback to system fonts
+// which may lack support for advanced Quranic characters.
 
 // Startup crash debug overlay (Android/WebView dahil erken hataları görünür yapar)
 const mountStartupDebugOverlay = (label, errorLike) => {

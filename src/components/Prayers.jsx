@@ -372,7 +372,7 @@ function Prayers({ onClose }) {
                         <p style={{
                             margin: 0,
                             fontSize: '24px',
-                            fontFamily: "'Amiri', serif",
+                            fontFamily: "var(--arabic-font-family)",
                             color: '#1f2937',
                             lineHeight: '2',
                             fontWeight: '500',

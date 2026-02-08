@@ -6,14 +6,15 @@ import HatimCard from './HatimCard';
 
 const HatimList = ({ onSelectHatim }) => {
   const { t } = useTranslation();
-  const { activeHatims, fetchMyHatims, loading, error, joinHatim } = useGroupHatim();
+  const { activeHatims, fetchAllPublicHatims, loading, error, joinHatim, userId } = useGroupHatim();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showJoinInput, setShowJoinInput] = useState(false);
   const [joinCode, setJoinCode] = useState('');
+  const [targetHatimId, setTargetHatimId] = useState(null);
 
   useEffect(() => {
-    fetchMyHatims();
-  }, [fetchMyHatims]);
+    fetchAllPublicHatims();
+  }, [fetchAllPublicHatims]);
 
   const handleJoin = async () => {
     if (!joinCode) return;
@@ -21,8 +22,23 @@ const HatimList = ({ onSelectHatim }) => {
       await joinHatim(joinCode);
       setShowJoinInput(false);
       setJoinCode('');
+      setTargetHatimId(null);
+      fetchAllPublicHatims(); // Refresh list to show as joined
     } catch (error) {
       alert(t('common.error', 'Hata oluştu') + ': ' + error.message);
+    }
+  };
+
+  const handleHatimClick = (hatim) => {
+    const isMember = hatim.readers?.includes(userId);
+    if (isMember) {
+      onSelectHatim(hatim.id);
+    } else {
+      setTargetHatimId(hatim.id);
+      setJoinCode('');
+      setShowJoinInput(true);
+      // Scroll to join input
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -35,7 +51,7 @@ const HatimList = ({ onSelectHatim }) => {
       <div className="glass-card" style={{ padding: '20px', textAlign: 'center', color: 'var(--warning-color)' }}>
         <p>⚠️ Bir sorun oluştu</p>
         <p style={{ fontSize: '12px', marginTop: '5px' }}>{error}</p>
-        <button className="btn" onClick={fetchMyHatims} style={{ marginTop: '10px' }}>Tekrar Dene</button>
+        <button className="btn" onClick={fetchAllPublicHatims} style={{ marginTop: '10px' }}>Tekrar Dene</button>
       </div>
     );
   }
@@ -53,7 +69,10 @@ const HatimList = ({ onSelectHatim }) => {
         </button>
         <button
           className="btn"
-          onClick={() => setShowJoinInput(!showJoinInput)}
+          onClick={() => {
+            setShowJoinInput(!showJoinInput);
+            setTargetHatimId(null);
+          }}
           style={{ 
             flex: 1, 
             padding: '14px', 
@@ -70,7 +89,12 @@ const HatimList = ({ onSelectHatim }) => {
 
       {/* Join Input */}
       {showJoinInput && (
-        <div className="glass-card" style={{ padding: '20px', marginBottom: '24px', border: '1px solid var(--primary-color)' }}>
+        <div className="glass-card" style={{ padding: '20px', marginBottom: '24px', border: `2px solid ${targetHatimId ? 'var(--secondary-color)' : 'var(--primary-color)'}` }}>
+          {targetHatimId && (
+            <p style={{ color: 'var(--secondary-color)', fontSize: '14px', marginBottom: '12px', fontWeight: 'bold' }}>
+              ℹ️ Bu hatime katılmak için davet kodunu girmelisiniz:
+            </p>
+          )}
           <input
             type="text"
             placeholder="Davet kodu (Örn: X8K2L9)"
@@ -102,7 +126,8 @@ const HatimList = ({ onSelectHatim }) => {
           <HatimCard 
             key={hatim.id}
             hatim={hatim}
-            onClick={onSelectHatim}
+            onClick={() => handleHatimClick(hatim)}
+            isMember={hatim.readers?.includes(userId)}
           />
         ))}
 
@@ -126,7 +151,7 @@ const HatimList = ({ onSelectHatim }) => {
           onClose={() => setShowCreateModal(false)} 
           onSuccess={() => {
             setShowCreateModal(false);
-            fetchMyHatims();
+            fetchAllPublicHatims();
           }}
         />
       )}

@@ -97,7 +97,7 @@ const LimitReachedModal = ({
           right: 0;
           bottom: 0;
           background: rgba(0, 0, 0, 0.8);
-          backdrop-filter: blur(10px);
+          backdrop-filter: blur(var(--surface-blur));
           display: flex;
           align-items: center;
           justify-content: center;

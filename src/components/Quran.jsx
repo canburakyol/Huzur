@@ -721,7 +721,7 @@ function Quran({ onClose }) {
                 }
 
                 .surah-title-ar {
-                    font-family: 'Amiri', serif;
+                    font-family: var(--arabic-font-family);
                     font-size: 2.8rem;
                     line-height: 1.2;
                     margin-bottom: 15px;
@@ -770,7 +770,7 @@ function Quran({ onClose }) {
                 }
 
                 .basmala-text {
-                    font-family: 'Amiri', serif;
+                    font-family: var(--arabic-font-family);
                     font-size: 1.4rem;
                     color: var(--emerald);
                     margin: 0 15px;
@@ -821,7 +821,7 @@ function Quran({ onClose }) {
                     font-size: 0.75rem;
                     font-weight: bold;
                     color: var(--emerald);
-                    font-family: 'Amiri', serif;
+                    font-family: var(--arabic-font-family);
                 }
 
                 .ayah-actions {
@@ -843,7 +843,7 @@ function Quran({ onClose }) {
 
                 .ayah-arabic {
                     text-align: right;
-                    font-family: 'Amiri', serif;
+                    font-family: var(--arabic-font-family);
                     font-size: 1.6rem;
                     line-height: 2;
                     color: black;
@@ -1053,7 +1053,7 @@ function Quran({ onClose }) {
                 .list-item .info { flex: 1; display: flex; flex-direction: column; }
                 .list-item .name { font-weight: 600; color: #333; }
                 .list-item .meaning { font-size: 12px; color: #777; }
-                .list-item .arabic { font-family: 'Amiri', serif; font-size: 18px; }
+                .list-item .arabic { font-family: var(--arabic-font-family); font-size: 18px; }
                 
                 .fihrist-category { border-bottom: 1px solid #eee; }
                 .category-header { padding: 15px; background: #f8f9fa; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }

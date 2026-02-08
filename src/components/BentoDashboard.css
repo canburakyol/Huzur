@@ -1,0 +1,101 @@
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(80px, auto);
+  gap: 12px;
+  padding: 4px;
+}
+
+.bento-item {
+  background: rgba(255, 255, 255, 0.65); /* Daha şeffaf */
+  backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturate)); /* Buzlu cam etkisi */
+  -webkit-backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturate));
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* İnce beyaz sınır */
+  box-shadow: var(--elevation-soft); /* Yumuşak gölge */
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Android WebView: kartlarda blur azalt, içerik netliğini artır */
+html.android-webview .bento-item,
+body.android-webview .bento-item {
+  backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturate));
+  -webkit-backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturate));
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+html.android-webview .bento-content,
+html.android-webview .bento-title,
+html.android-webview .bento-tag,
+html.android-webview .bento-icon,
+body.android-webview .bento-content,
+body.android-webview .bento-title,
+body.android-webview .bento-tag,
+body.android-webview .bento-icon {
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+}
+
+.bento-item:active {
+  transform: scale(0.98);
+}
+
+/* Bento Sizes */
+.bento-1x1 {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.bento-2x1 {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.bento-2x2 {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.bento-4x2 {
+  grid-column: span 4;
+  grid-row: span 2;
+}
+
+/* Contextual Highlights */
+.bento-highlight {
+  border: 2px solid var(--primary-color);
+  background: linear-gradient(135deg, var(--glass-bg) 0%, var(--glass-highlight) 100%);
+}
+
+.bento-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  margin-bottom: 12px;
+}
+
+.bento-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.bento-tag {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-color-muted);
+  letter-spacing: 0.5px;
+}

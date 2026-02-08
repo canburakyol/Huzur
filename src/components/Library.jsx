@@ -593,7 +593,7 @@ function Library({ onClose, onShowPro }) {
                             marginBottom: '24px'
                         }}>
                             <div style={{ 
-                                fontFamily: 'Amiri, serif', 
+                                fontFamily: 'var(--arabic-font-family)', 
                                 fontSize: '28px', 
                                 color: 'var(--text-color)', 
                                 lineHeight: '2',
@@ -957,7 +957,7 @@ function Library({ onClose, onShowPro }) {
                                     </div>
                                     {item.arabic && (
                                         <div style={{
-                                            fontFamily: "'Amiri', serif",
+                                            fontFamily: "var(--arabic-font-family)",
                                             fontSize: '18px',
                                             textAlign: 'right',
                                             direction: 'rtl',
@@ -1010,7 +1010,7 @@ function Library({ onClose, onShowPro }) {
                                     {topic.letter && (
                                         <span style={{
                                             fontSize: '28px',
-                                            fontFamily: "'Amiri', serif",
+                                            fontFamily: "var(--arabic-font-family)",
                                             color: 'var(--primary-color)',
                                             width: '40px',
                                             textAlign: 'center'
@@ -1145,7 +1145,7 @@ function Library({ onClose, onShowPro }) {
                     right: 0,
                     bottom: 0,
                     background: 'rgba(0, 0, 0, 0.8)',
-                    backdropFilter: 'blur(8px)',
+                    backdropFilter: 'blur(var(--surface-blur))',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',

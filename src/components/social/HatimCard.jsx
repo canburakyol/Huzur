@@ -4,7 +4,7 @@ import { memo } from 'react';
  * Memoized Hatim Card Component
  * Prevents unnecessary re-renders when parent list updates
  */
-const HatimCard = memo(({ hatim, onClick }) => {
+const HatimCard = memo(({ hatim, onClick, isMember }) => {
   // Calculate progress
   const getProgress = () => {
     if (!hatim.parts) return 0;
@@ -34,16 +34,29 @@ const HatimCard = memo(({ hatim, onClick }) => {
             {hatim.description || 'Grup Hatimi'}
           </p>
         </div>
-        <div style={{ 
-          background: 'rgba(212, 175, 55, 0.15)', 
-          padding: '4px 10px', 
-          borderRadius: '8px', 
-          fontSize: '12px',
-          fontWeight: 'bold',
-          color: 'var(--secondary-color)',
-          border: '1px solid rgba(212, 175, 55, 0.3)'
-        }}>
-          %{progress}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+          <div style={{ 
+            background: 'rgba(212, 175, 55, 0.15)', 
+            padding: '4px 10px', 
+            borderRadius: '8px', 
+            fontSize: '12px',
+            fontWeight: 'bold',
+            color: 'var(--secondary-color)',
+            border: '1px solid rgba(212, 175, 55, 0.3)'
+          }}>
+            %{progress}
+          </div>
+          <div style={{ 
+            fontSize: '10px', 
+            padding: '2px 8px', 
+            borderRadius: '4px',
+            background: isMember ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255, 255, 255, 0.1)',
+            color: isMember ? 'var(--success-color)' : 'var(--text-color-muted)',
+            border: `1px solid ${isMember ? 'var(--success-color)' : 'var(--glass-border)'}`,
+            fontWeight: 'bold'
+          }}>
+            {isMember ? '✓ Katıldınız' : '🔒 Kod Gerekli'}
+          </div>
         </div>
       </div>
 
@@ -69,17 +82,23 @@ const HatimCard = memo(({ hatim, onClick }) => {
           <span>👥</span>
           <span>{hatim.readers?.length || 1} Okuyucu</span>
         </div>
-        <div style={{ 
-          fontSize: '11px', 
-          color: 'var(--primary-color)', 
-          background: 'rgba(16, 185, 129, 0.1)', 
-          padding: '2px 8px', 
-          borderRadius: '4px',
-          fontFamily: 'monospace',
-          fontWeight: 'bold'
-        }}>
-          {hatim.joinCode}
-        </div>
+        {isMember ? (
+          <div style={{ 
+            fontSize: '11px', 
+            color: 'var(--primary-color)', 
+            background: 'rgba(16, 185, 129, 0.1)', 
+            padding: '2px 8px', 
+            borderRadius: '4px',
+            fontFamily: 'monospace',
+            fontWeight: 'bold'
+          }}>
+            {hatim.joinCode}
+          </div>
+        ) : (
+          <div style={{ fontSize: '11px', color: 'var(--text-color-muted)', fontStyle: 'italic' }}>
+            Katılmak için dokunun
+          </div>
+        )}
       </div>
     </div>
   );

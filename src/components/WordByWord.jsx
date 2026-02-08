@@ -378,7 +378,7 @@ const WordByWord = ({ onClose, onUpgrade, initialSurah = null }) => {
           display: block;
           font-size: 11px;
           color: var(--text-secondary);
-          font-family: 'Amiri', serif;
+          font-family: var(--arabic-font-family);
         }
 
         .lock-icon {
@@ -430,7 +430,7 @@ const WordByWord = ({ onClose, onUpgrade, initialSurah = null }) => {
 
         .surah-title-arabic {
           font-size: 32px;
-          font-family: 'Amiri', serif;
+          font-family: var(--arabic-font-family);
           color: var(--primary-color);
           margin-bottom: 8px;
         }
@@ -484,7 +484,7 @@ const WordByWord = ({ onClose, onUpgrade, initialSurah = null }) => {
         .verse-arabic {
           flex: 1;
           font-size: 18px;
-          font-family: var(--arabic-font-family, 'Amiri'), serif;
+          font-family: var(--arabic-font-family);
           line-height: 1.8;
           text-align: right;
           direction: rtl;
@@ -514,7 +514,7 @@ const WordByWord = ({ onClose, onUpgrade, initialSurah = null }) => {
 
         .word-arabic {
           font-size: 20px;
-          font-family: var(--arabic-font-family, 'Amiri'), serif;
+          font-family: var(--arabic-font-family);
           color: var(--primary-color);
           margin-bottom: 6px;
         }
@@ -599,7 +599,7 @@ const WordByWord = ({ onClose, onUpgrade, initialSurah = null }) => {
         .word-modal-arabic {
           display: block;
           font-size: 32px;
-          font-family: var(--arabic-font-family, 'Amiri'), serif;
+          font-family: var(--arabic-font-family);
           color: var(--primary-color);
           margin-bottom: 8px;
         }

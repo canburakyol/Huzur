@@ -290,7 +290,7 @@ const TajweedTutor = ({ onClose }) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          font-family: 'Amiri', serif;
+          font-family: var(--arabic-font-family);
           font-size: 18px;
           color: var(--text-primary);
         }

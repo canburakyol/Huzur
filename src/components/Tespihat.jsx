@@ -184,7 +184,7 @@ function Tespihat({ onClose }) {
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div>
                             <div style={{
-                                fontFamily: "'Amiri', serif",
+                                fontFamily: "var(--arabic-font-family)",
                                 fontSize: '24px',
                                 color: tesbih.color,
                                 marginBottom: '4px'
@@ -296,7 +296,7 @@ function Tespihat({ onClose }) {
                 {expandedItem === 'tevhid' && (
                     <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid var(--glass-border)' }}>
                         <div style={{
-                            fontFamily: "'Amiri', serif",
+                            fontFamily: "var(--arabic-font-family)",
                             fontSize: '22px',
                             textAlign: 'right',
                             direction: 'rtl',
@@ -336,7 +336,7 @@ function Tespihat({ onClose }) {
                     {expandedItem === dua.id && (
                         <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid var(--glass-border)' }}>
                             <div style={{
-                                fontFamily: "'Amiri', serif",
+                                fontFamily: "var(--arabic-font-family)",
                                 fontSize: '20px',
                                 textAlign: 'right',
                                 direction: 'rtl',
@@ -388,7 +388,7 @@ function Tespihat({ onClose }) {
 
                     {/* Arabic Text */}
                     <div style={{
-                        fontFamily: "'Amiri', serif",
+                        fontFamily: "var(--arabic-font-family)",
                         fontSize: '26px',
                         textAlign: 'center',
                         direction: 'rtl',

@@ -13,6 +13,17 @@ const HatimDetail = ({ hatimId, onBack }) => {
   if (error) return <div style={{ color: 'red', padding: '20px' }}>Hata: {error}</div>;
   if (!hatimDetails) return null;
 
+  // Extra security: If user somehow got here without being a member
+  const isMember = hatimDetails.readers?.includes(currentUserId);
+  if (!isMember) {
+    return (
+      <div style={{ padding: '40px 20px', textAlign: 'center', color: 'var(--text-color)' }}>
+        <p>⚠️ Bu hatimin detaylarını görmek için önce katılmalısınız.</p>
+        <button onClick={onBack} className="btn btn-primary" style={{ marginTop: '20px' }}>Geri Dön</button>
+      </div>
+    );
+  }
+
   const handlePartClick = async (partNum, partData) => {
     if (processingPart) return; // Prevent double clicks
     setProcessingPart(partNum);

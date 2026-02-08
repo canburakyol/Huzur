@@ -392,7 +392,7 @@ function QuranMemorize({ onClose, onUpgrade }) {
                 }
 
                 .surah-arabic {
-                    font-family: 'Amiri', serif;
+                    font-family: var(--arabic-font-family);
                     color: var(--text-secondary);
                     font-size: 14px;
                 }
