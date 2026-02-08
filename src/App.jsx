@@ -25,7 +25,6 @@ const BottomNav = lazy(() => import('./components/BottomNav'));
 const HomeHeader = lazy(() => import('./components/HomeHeader'));
 const DailyContentGrid = lazy(() => import('./components/DailyContentGrid'));
 const FeatureGrid = lazy(() => import('./components/FeatureGrid'));
-const AdPopup = lazy(() => import('./components/AdPopup'));
 const NativeAdCard = lazy(() => import('./components/NativeAdCard'));
 const PrayerTimeBanner = lazy(() => import('./components/PrayerTimeBanner'));
 const DailyQuests = lazy(() => import('./components/DailyQuests'));
@@ -254,9 +253,7 @@ function App() {
       </Suspense>
 
       <div className="app-container" style={{ position: 'relative', paddingBottom: '130px' }}>
-        <Suspense fallback={null}>
-          <AdPopup />
-        </Suspense>
+
 
         {/* Error Message */}
         {error && (

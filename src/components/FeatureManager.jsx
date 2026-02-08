@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import AdPopup from './AdPopup';
+
 import { featureConfig } from '../data/featureConfig';
 
 /**
@@ -27,7 +27,7 @@ const FeatureManager = ({ activeFeature, setActiveFeature }) => {
 
   return (
     <div className="app-container">
-      <AdPopup />
+
       <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>Yükleniyor...</div>}>
         <FeatureComponent onClose={closeFeature} {...extraProps} />
       </Suspense>

@@ -3,7 +3,7 @@ import { Suspense, lazy } from 'react';
 // Lazy Load Components
 const SplashScreen = lazy(() => import('../SplashScreen'));
 const MoodSelector = lazy(() => import('../MoodSelector'));
-const AdPopup = lazy(() => import('../AdPopup'));
+
 
 const GlobalOverlays = ({ 
   showSplash, 
@@ -44,10 +44,7 @@ const GlobalOverlays = ({
         </div>
       )}
 
-      {/* Global Ad Popup */}
-      <Suspense fallback={null}>
-        <AdPopup />
-      </Suspense>
+
     </>
   );
 };
