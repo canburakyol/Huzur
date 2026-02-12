@@ -1,5 +1,6 @@
 import React from 'react'
 import crashlyticsReporter from '../utils/crashlyticsReporter'
+import i18n from '../i18n'
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -32,17 +33,20 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      const detail = [
-        this.state.errorMessage ? `Message: ${this.state.errorMessage}` : null,
-        this.state.errorInfo?.componentStack ? `Component Stack:${this.state.errorInfo.componentStack}` : null
-      ].filter(Boolean).join('\n\n')
+      const isDev = import.meta.env.DEV
+      const detail = isDev
+        ? [
+            this.state.errorMessage ? `Message: ${this.state.errorMessage}` : null,
+            this.state.errorInfo?.componentStack ? `Component Stack:${this.state.errorInfo.componentStack}` : null
+          ].filter(Boolean).join('\n\n')
+        : ''
 
       // Fallback UI
       return (
         <div style={{ padding: 20, textAlign: 'center' }}>
-          <h2>Bir hata oluştu</h2>
-          <p>Uygulamanın bazı bölümleri düzgün çalışmıyor. Lütfen sayfayı tekrar yükleyin veya uygulamayı yeniden başlatın.</p>
-          {detail ? (
+          <h2>{i18n.t('errorBoundary.title', 'An error occurred')}</h2>
+          <p>{i18n.t('errorBoundary.description', 'Some parts of the application are not working correctly. Please reload the page or restart the app.')}</p>
+          {isDev && detail ? (
             <pre style={{
               marginTop: 12,
               textAlign: 'left',

@@ -5,18 +5,30 @@
     "version": "الإصدار"
   },
   "common": {
-    "loading": "جاري التحميل...",
+    "loading": "جار التحميل...",
     "error": "حدث خطأ",
-    "retry": "أعد المحاولة",
+    "retry": "إعادة المحاولة",
     "cancel": "إلغاء",
     "save": "حفظ",
     "close": "إغلاق",
     "confirm": "تأكيد",
-    "back": "رجوع",
+    "back": "عودة",
     "next": "التالي",
     "yes": "نعم",
     "no": "لا",
-    "day": "يوم"
+    "day": "أيام",
+    "clear": "مسح",
+    "user": "مستخدم",
+    "favorites": "المفضلة",
+    "my_favorites": "مفضلتي",
+    "favorite": "مفضل",
+    "share": "مشاركة",
+    "copied": "تم النسخ!",
+    "no_results": "لم يتم العثور على نتائج",
+    "copy_failed": "فشل النسخ",
+    "view": "عرض",
+    "add": "إضافة",
+    "areYouSure": "هل أنت متأكد؟"
   },
   "notifications": {
     "prayer": {
@@ -24,6 +36,24 @@
       "mainBody": "دخل وقت صلاة {{prayer}}.",
       "preTitle": "⏰ متبقٍ {{minutes}} دقيقة على {{prayer}}",
       "preBody": "تبقى {{minutes}} دقيقة على صلاة {{prayer}}."
+    },
+    "channels": {
+      "prayer": {
+        "name": "مواقيت الصلاة",
+        "description": "تذكيرات أوقات الصلاة"
+      },
+      "reminder": {
+        "name": "تذكيرات يومية",
+        "description": "تذكيرات الذكر والمهام اليومية"
+      },
+      "streak": {
+        "name": "تنبيهات السلسلة",
+        "description": "تذكيرات للحفاظ على السلسلة"
+      },
+      "updates": {
+        "name": "تحديثات التطبيق",
+        "description": "ميزات جديدة وإعلانات"
+      }
     }
   },
   "huzurMode": {
@@ -31,7 +61,15 @@
     "natureSounds": "أصوات الطبيعة",
     "rain": "المطر",
     "forest": "الغابة",
-    "ocean": "المحيط"
+    "ocean": "المحيط",
+    "title": "وضع السكينة",
+    "zikirSubhan": "سبحان الله",
+    "ney": "تقاسيم الناي",
+    "rahman": "سورة الرحمن",
+    "catNature": "طبيعة",
+    "catDhikr": "ذكر",
+    "catMusic": "آلات موسيقية",
+    "catQuran": "قرآن"
   },
   "dailyTasks": {
     "task": "مهمة",
@@ -220,7 +258,15 @@
     "goPro": "الترقية للبرو",
     "proMember": "عضو برو",
     "proMembership": "عضوية برو",
-    "version": "الإصدار"
+    "version": "الإصدار",
+    "spiritualJourney": "الرحلة الروحانية",
+    "tafsirLibrary": "مكتبة التفسير",
+    "missedPrayers": "متتبع الصلوات الفائتة",
+    "islamicMeditation": "التأمل",
+    "seerahMap": "خريطة السيرة",
+    "spiritualCoach": "المرشد الروحاني",
+    "prayerCircle": "حلقة الدعاء",
+    "dailyFiqh": "فقه اليوم"
   },
   "settings": {
     "title": "الإعدادات",
@@ -243,7 +289,29 @@
     "appDescription": "تطبيق للصلاة والقرآن والأدعية",
     "legal": "قانوني",
     "privacyPolicy": "سياسة الخصوصية",
-    "termsOfService": "شروط الخدمة"
+    "termsOfService": "شروط الخدمة",
+    "historyTitle": "سجل الإشعارات",
+    "historyDesc": "عرض أحدث الإشعارات",
+    "muezzinTitle": "اختيار المؤذن",
+    "muezzinDesc": "تخصيص صوت إشعار الأذان",
+    "select": "اختيار",
+    "removeAdsTitle": "إزالة الإعلانات",
+    "removeAdsDesc": "قم بالترقية إلى Pro لتجربة بدون إعلانات",
+    "review": "عرض",
+    "licensesAndCredits": "التراخيص والمصادر",
+    "notificationSettingsTitle": "إعدادات الإشعارات",
+    "notificationPermissionRequiredTitle": "مطلوب إذن الإشعارات",
+    "notificationPermissionRequiredDesc": "يرجى السماح بالإشعارات لتلقي التذكيرات.",
+    "allowPermission": "السماح",
+    "preAlertMinutes": "تنبيه مسبق (دقيقة):",
+    "off": "إيقاف",
+    "minutesValue": "{{count}} د",
+    "quietHoursTitle": "ساعات الهدوء",
+    "quietHoursDesc": "لا يتم إرسال إشعارات خلال هذه الفترة",
+    "start": "البداية",
+    "end": "النهاية",
+    "historyClearConfirm": "هل أنت متأكد من مسح سجل الإشعارات؟",
+    "historyEmpty": "لا توجد إشعارات بعد."
   },
   "pro": {
     "title": "الترقية إلى هُدوء برو",
@@ -429,6 +497,19 @@
       "q4": "كيفية الوضوء؟",
       "q5": "فضل قراءة القرآن",
       "q6": "حياة النبي"
+    },
+    "betaWelcomeHint": "وضع بيتا: يمكنك الضغط على الأسئلة الجاهزة أو كتابة سؤال مشابه.",
+    "betaUnknownQuestion": "هذا السؤال غير موجود حالياً في قائمة إجابات بيتا الجاهزة. الرجاء اختيار أحد الأسئلة المقترحة أدناه.",
+    "betaLabel": "بيتا",
+    "readyQaMode": "وضع أسئلة وأجوبة جاهز",
+    "betaInputPlaceholder": "بيتا: اكتب سؤالاً جاهزاً أو اختر من الأسفل",
+    "answers": {
+      "q1": "لبناء عادة الصلاة المنتظمة، ابدأ بخطوات صغيرة: ثبّت روتيناً قصيراً في نفس الوقت يومياً، فعّل التذكير، وإن فاتتك صلاة فارجع مباشرة في الصلاة التالية.",
+      "q2": "لعادة قراءة القرآن، خصص 5 إلى 10 دقائق يومياً في وقت ثابت. ركّز على الاستمرارية أكثر من طول المدة.",
+      "q3": "لهدف الذكر، اتبع منهج «قليل دائم خير من كثير منقطع». ابدأ بعدد صغير ثم زد تدريجياً كل أسبوع.",
+      "q4": "عند صعوبة التركيز، خذ استراحة قصيرة، تنفّس بعمق، ثم عد لهدف واحد واضح. العمل على مهمة واحدة أكثر فاعلية من تعدد المهام.",
+      "q5": "لرفع الدافعية الإيمانية، يفيدك دعاء يومي قصير، وملاحظة شكر، ومراجعة بسيطة في نهاية اليوم.",
+      "q6": "هذا القسم يعمل حالياً كمساعد أسئلة وأجوبة جاهز في نسخة بيتا. سيتم قريباً إضافة دعم محادثة مباشرة أكثر تطوراً."
     }
   },
   "hatim": {
@@ -472,8 +553,10 @@
       "enterCode": "يرجى إدخال الرمز.",
       "wrongCode": "رمز خاطئ. يرجى إدخال الرمز الصحيح.",
       "codeCopied": "تم نسخ الرمز!",
-      "inviteCopied": "تم نسخ نص الدعوة!"
-    }
+      "inviteCopied": "تم نسخ نص الدعوة!",
+      "authRequired": "Connecting to server..."
+    },
+    "title": "Khatm Tracker"
   },
   "deedJournal": {
     "title": "دفتر الأعمال",
@@ -1005,18 +1088,62 @@
     "dailyVerse": "آية اليوم"
   },
   "features": {
-    "qibla": "القبلة",
+    "qibla": "Qibla",
     "dhikr": "الذكر",
-    "radio": "الراديو",
-    "mosque": "المسجد",
+    "radio": "Quran Radio",
+    "mosque": "Find Mosque",
     "days": "الأيام",
-    "imsakiye": "الإمساكية",
+    "imsakiye": "Imsakiyya",
     "qada": "القضاء",
-    "fasting": "الصيام",
+    "fasting": "Fasting Tracker",
     "hadith": "الحديث",
     "tasbih": "التسبيح",
-    "zakat": "الزكاة",
-    "khatm": "الختمة"
+    "zakat": "Zakat Calculator",
+    "khatm": "الختمة",
+    "prayers": "Prayer Times",
+    "quran": "Holy Quran",
+    "tracker": "Prayer Tracker",
+    "settings": "Settings",
+    "zikirmatik": "Dhikr Counter",
+    "adhkar": "Supplications",
+    "tespihat": "Tasbih",
+    "esmaUlHusna": "99 Names",
+    "hatimCoach": "Khatm Coach",
+    "missedPrayers": "Missed Prayers",
+    "deedJournal": "Deed Journal",
+    "nafilePrayers": "Nafl Prayers",
+    "duaTracker": "Dua Tracker",
+    "prayerTeacher": "Prayer Teacher",
+    "quranMemorize": "Quran Memorization",
+    "tajweedTutor": "Tajweed Tutor",
+    "nuzulExplorer": "Revelation Order",
+    "wordByWord": "Word by Word",
+    "seerahMap": "Seerah Map",
+    "hadiths": "Hadiths",
+    "hikmetname": "Wisdom Collection",
+    "weeklySermon": "Weekly Sermon",
+    "library": "Library",
+    "multimedia": "Multimedia",
+    "liveBroadcast": "Live Broadcast",
+    "calendar": "Religious Days",
+    "agenda": "Agenda",
+    "specialDays": "Special Days",
+    "social": "Prayer Circle",
+    "huzurMode": "Serenity Mode",
+    "dailyTasks": "Daily Tasks",
+    "family": "Family Mode",
+    "islamicMeditation": "Islamic Meditation",
+    "theme": "Theme",
+    "fontSettings": "Font Settings",
+    "muezzinSelector": "Muezzin Selector",
+    "streak": "Streak Calendar",
+    "assistant": "Islamic Assistant",
+    "spiritualCoach": "Spiritual Coach",
+    "support": "Support",
+    "pro": "Upgrade to Pro",
+    "familyDashboard": "Family Dashboard",
+    "smartKhatm": "Smart Khatm Coach",
+    "seerah": "Seerah Map"
   },
   "hikmet": {
     "title": "كتاب الحكمة",
@@ -1196,6 +1323,156 @@
         "text": "من تاب وعمل صالحاً فإن الله يتوب عليه.",
         "source": "القرآن الكريم",
         "ref": "الفرقان، 71"
+      },
+      "31": {
+        "text": "The best charity is to learn knowledge and to teach it.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Ibn Majah"
+      },
+      "32": {
+        "text": "Paradise lies under the feet of mothers.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Nasa'i"
+      },
+      "33": {
+        "text": "Cleanliness is half of faith.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Muslim"
+      },
+      "34": {
+        "text": "Greeting with a smiling face is charity.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Tirmidhi"
+      },
+      "35": {
+        "text": "Whoever plants a tree earns reward for each person who eats from its fruit.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Muslim"
+      },
+      "36": {
+        "text": "A grateful heart, a patient body, a tongue that remembers.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Tirmidhi"
+      },
+      "37": {
+        "text": "The intention of the believer is better than their deed.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Tabarani"
+      },
+      "38": {
+        "text": "There are two blessings which many people lose: health and free time.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Bukhari"
+      },
+      "39": {
+        "text": "Intellect is knowledge without practice; knowledge is intellect without application.",
+        "source": "Imam Ghazali",
+        "ref": ""
+      },
+      "40": {
+        "text": "The world is the farm of the hereafter.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": ""
+      },
+      "41": {
+        "text": "True wealth is the richness of the soul.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Bukhari, Riqaq 15"
+      },
+      "42": {
+        "text": "A believer is the mirror of a believer.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Abu Dawud"
+      },
+      "43": {
+        "text": "Death is sufficient as an adviser.",
+        "source": "Umar ibn al-Khattab (RA)",
+        "ref": ""
+      },
+      "44": {
+        "text": "He who does not give thanks for blessings prepares for their increase in calamity.",
+        "source": "Ali ibn Abi Talib (RA)",
+        "ref": ""
+      },
+      "45": {
+        "text": "A person's worth is measured by the height of their aspiration.",
+        "source": "Ali ibn Abi Talib (RA)",
+        "ref": ""
+      },
+      "46": {
+        "text": "Generosity is a tree whose roots are in Paradise.",
+        "source": "Ali ibn Abi Talib (RA)",
+        "ref": ""
+      },
+      "47": {
+        "text": "Silence is the gate of wisdom.",
+        "source": "Ali ibn Abi Talib (RA)",
+        "ref": ""
+      },
+      "48": {
+        "text": "A person is hidden beneath their tongue.",
+        "source": "Ali ibn Abi Talib (RA)",
+        "ref": ""
+      },
+      "49": {
+        "text": "Knowledge is for action; without action, knowledge becomes a burden.",
+        "source": "Sufyan al-Thawri",
+        "ref": ""
+      },
+      "50": {
+        "text": "Food eaten together is blessed.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Abu Dawud"
+      },
+      "51": {
+        "text": "Supplication is the essence of worship.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Tirmidhi"
+      },
+      "52": {
+        "text": "Whoever guides someone to do good earns the same reward as the one who does it.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Muslim"
+      },
+      "53": {
+        "text": "Lawful sustenance is the essence of worship.",
+        "source": "Bayazid Bastami",
+        "ref": ""
+      },
+      "54": {
+        "text": "A true friend speaks bitter truths.",
+        "source": "Umar ibn al-Khattab (RA)",
+        "ref": ""
+      },
+      "55": {
+        "text": "Think of those before you and be patient; think of those after you and be content.",
+        "source": "Ahmad ar-Rifa'i",
+        "ref": ""
+      },
+      "56": {
+        "text": "Hardness of the heart comes from excessive laughter and eating.",
+        "source": "Fudayl ibn Iyad",
+        "ref": ""
+      },
+      "57": {
+        "text": "The most disliked permissible thing in the sight of Allah is divorce.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Abu Dawud"
+      },
+      "58": {
+        "text": "He who sleeps full while his neighbor is hungry does not truly believe.",
+        "source": "Prophet Muhammad (PBUH)",
+        "ref": "Bukhari"
+      },
+      "59": {
+        "text": "Whoever puts their trust in Allah, He is sufficient for them.",
+        "source": "The Holy Quran",
+        "ref": "Surah At-Talaq, 3"
+      },
+      "60": {
+        "text": "Say: My Lord, increase me in knowledge.",
+        "source": "The Holy Quran",
+        "ref": "Surah Ta-Ha, 114"
       }
     }
   },
@@ -1436,6 +1713,18 @@
         "ayet": {
           "title": "من القرآن",
           "desc": "آيات حكيمة"
+        },
+        "hadis": {
+          "title": "Hadith Sharif",
+          "desc": "Sayings of our Prophet"
+        },
+        "alim": {
+          "title": "Scholars",
+          "desc": "Wisdom from Islamic scholars"
+        },
+        "sufi": {
+          "title": "Sufism",
+          "desc": "From Sufi masters"
         }
       },
       "items": {
@@ -1589,7 +1878,15 @@
           "source": "القرآن الكريم",
           "ref": "البقرة، 216"
         }
-      }
+      },
+      "favorite": "Favorite",
+      "share": "Share",
+      "new": "New",
+      "categoriesTitle": "Categories",
+      "favorites": "My Favorites",
+      "copied": "Wisdom copied!",
+      "shareText": "\"{{text}}\"\n\n— {{source}}{{ref}}\n\n📜 {{appName}}",
+      "title": "Book of Wisdom"
     },
     "tajweed": {
       "title": "معلم التجويد",
@@ -2223,8 +2520,50 @@
         "123": {
           "title": "Güven Duası",
           "meaning": "Müminler Allah'a tevekkül etsinler."
-        }
+        },
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+      },
+      "days": {
+        "sunday": "Sunday",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday"
       }
+    },
+    "tafsir": {
+      "title": "Tafsir",
+      "selectSource": "Select Tafsir Source",
+      "loading": "Loading tafsir...",
+      "error": "Error loading tafsir",
+      "free": "Free",
+      "source": "Source",
+      "sources": {
+        "elmalili": "Elmalili Hamdi Yazir",
+        "elmalili_sadece": "Elmalili (Simplified)",
+        "ibnkathir_tr": "Ibn Kathir",
+        "ibnkathir_ar": "تفسير ابن كثير",
+        "ibnkathir_en": "Tafsir Ibn Kathir",
+        "tabari": "تفسير الطبري",
+        "diyanet": "Diyanet Affairs",
+        "okuyan": "Mehmet Okuyan"
+      },
+      "proRequired": "Pro membership is required to read the full tafsir",
+      "upgradeToPro": "Upgrade to Pro",
+      "libraryTitle": "Tafsir Library",
+      "searchSurah": "Search surah..."
     }
   },
   "calendar": {
@@ -2830,6 +3169,661 @@
         "title": "آية التوكل",
         "meaning": "وعلى الله فليتوكل المؤمنون"
       }
+    }
+  },
+  "agenda": {
+    "weekdays": {
+      "mon": "الإث",
+      "tue": "الث",
+      "wed": "الأر",
+      "thu": "الخ",
+      "fri": "الجم",
+      "sat": "السب",
+      "sun": "الأحد"
+    },
+    "hijriLabel": "هجري",
+    "today": "اليوم",
+    "noEventsYet": "لا توجد فعاليات بعد.",
+    "addNew": "إضافة جديد",
+    "titlePlaceholder": "العنوان (مثال: دعوة إفطار)",
+    "notesPlaceholder": "ملاحظات...",
+    "eventsAndNotes": "الفعاليات والملاحظات"
+  },
+  "streakFeature": {
+    "title": "تقويم السلسلة",
+    "appCategory": "التطبيق",
+    "prayerCategory": "الصلاة",
+    "tipTitle": "نصيحة",
+    "tipText": "يمكنك كسب فرصة تجميد واحدة عبر تتبع عباداتك يوميًا لمدة 7 أيام!"
+  },
+  "streakCalendar": {
+    "weekdays": {
+      "mon": "الإث",
+      "tue": "الث",
+      "wed": "الأر",
+      "thu": "الخ",
+      "fri": "الجم",
+      "sat": "السب",
+      "sun": "الأحد"
+    },
+    "seriesTitle": "سلسلة {{category}}",
+    "days": "أيام",
+    "freeze": "تجميد",
+    "legend": {
+      "completed": "مكتمل",
+      "frozen": "مجمّد",
+      "missed": "فائت"
+    }
+  },
+  "weeklyGoal": {
+    "title": "الهدف الأسبوعي",
+    "description": "كم يومًا في الأسبوع تريد تتبع عبادتك؟",
+    "daysValue": "{{count}} يوم"
+  },
+  "zakatCalculator": {
+    "title": "حاسبة الزكاة",
+    "whatIsZakatTitle": "ما هي الزكاة؟",
+    "whatIsZakatBody": "الزكاة هي إخراج 2.5% من المال الذي بلغ النصاب ومضى عليه حول قمري كامل. والنصاب يساوي قيمة 80.18 غرام ذهب أو 561.2 غرام فضة.",
+    "goldPriceLabel": "سعر الذهب (ليرة/غرام)",
+    "assetsTitle": "الأصول",
+    "assetCash": "النقد (ليرة)",
+    "assetGold": "الذهب (غرام)",
+    "assetSilver": "الفضة (غرام)",
+    "assetStocks": "الأسهم/الاستثمارات (ليرة)",
+    "assetReceivables": "الذمم المدينة (ليرة)",
+    "assetBusiness": "البضاعة التجارية (ليرة)",
+    "debtsTitle": "الديون",
+    "reset": "إعادة تعيين",
+    "nisabReached": "✅ تم بلوغ النصاب",
+    "nisabNotReached": "❌ لم يتم بلوغ النصاب",
+    "nisabLabel": "النصاب",
+    "netWealth": "صافي الثروة",
+    "zakatLabel": "الزكاة",
+    "noZakatRequired": "لا تجب الزكاة",
+    "percentNote": "(2.5% من صافي الثروة)"
+  },
+  "weeklySermon": {
+    "title": "خطبة الأسبوع",
+    "description": "المنشورات الرسمية للخطب من رئاسة الشؤون الدينية",
+    "lastFriday": "خطبة الجمعة الأخيرة",
+    "sourcesTitle": "مصادر الخطبة",
+    "note": "تُنشر الخطب كل يوم جمعة من قبل رئاسة الشؤون الدينية. يمكنك الوصول إلى أحدث خطبة من المصادر أعلاه.",
+    "sources": {
+      "diyanetTv": {
+        "title": "Diyanet TV - خطبة الجمعة",
+        "description": "البث الرسمي للخطب من ديانت"
+      },
+      "diyanetGov": {
+        "title": "Diyanet.gov.tr - الخطب",
+        "description": "نصوص الخطب الأسبوعية (PDF/Word)"
+      },
+      "edevlet": {
+        "title": "صفحة الخطبة في الحكومة الإلكترونية",
+        "description": "تنزيل PDF خطبة الجمعة"
+      },
+      "audio": {
+        "title": "خطبة صوتية",
+        "description": "تابع بالاستماع"
+      }
+    }
+  },
+  "themeSelector": {
+    "title": "اختيار السمة",
+    "description": "غيّر ألوان التطبيق",
+    "tipLabel": "نصيحة",
+    "tipText": "يتم حفظ تفضيل السمة وتطبيقه تلقائياً عند فتح التطبيق."
+  },
+  "support": {
+    "title": "الدعم",
+    "description": "أرسل لنا مشاكلك أو اقتراحاتك",
+    "typeLabel": "نوع الإشعار",
+    "emailLabel": "البريد الإلكتروني (اختياري)",
+    "emailPlaceholder": "example@email.com",
+    "emailHint": "اكتب بريدك إذا كنت تريد أن نرد عليك",
+    "messageLabel": "رسالتك",
+    "messagePlaceholder": "اكتب مشكلتك أو اقتراحك بالتفصيل...",
+    "send": "إرسال",
+    "sending": "جارٍ الإرسال...",
+    "successTitle": "تم إرسال طلبك!",
+    "successBodyLine1": "شكرًا لملاحظاتك.",
+    "successBodyLine2": "سيتم مراجعتها في أقرب وقت ممكن.",
+    "directContact": "للتواصل المباشر",
+    "errors": {
+      "messageRequired": "يرجى كتابة رسالة.",
+      "generic": "حدث خطأ. يرجى المحاولة مرة أخرى."
+    },
+    "types": {
+      "problem": "مشكلة",
+      "feature": "طلب ميزة",
+      "other": "أخرى"
+    },
+    "mail": {
+      "subjectProblem": "Huzur App - بلاغ مشكلة",
+      "subjectFeature": "Huzur App - طلب ميزة",
+      "subjectFeedback": "Huzur App - ملاحظات",
+      "typeLabel": "النوع",
+      "userEmailLabel": "بريد المستخدم",
+      "notSpecified": "غير محدد",
+      "messageLabel": "الرسالة",
+      "submittedAtLabel": "وقت الإرسال",
+      "deviceLabel": "الجهاز"
+    }
+  },
+  "muezzinSelector": {
+    "title": "اختيار المؤذن",
+    "description": "اختر المقام المفضل لديك لإشعارات الأذان",
+    "noteLabel": "ملاحظة",
+    "noteText": "سيتم استخدام المقام الذي اخترته كنغمة إشعار في وقت الأذان التالي. قد يلزم توفر ملفات الصوت على جهازك."
+  },
+  "limitModal": {
+    "title": "تم الوصول للحد اليومي",
+    "usagePrefix": "لقد استخدمت",
+    "usageSuffix": "استخداماتك المجانية لليوم!",
+    "tomorrowOption": "سيكون لديك غدًا استخدامان جديدان",
+    "or": "أو",
+    "proOptionPrefix": "قم بالترقية إلى برو واستخدم",
+    "unlimited": "بلا حدود",
+    "upgradeButton": "الترقية إلى برو",
+    "laterButton": "حسنًا، فهمت",
+    "proWith": "مع برو:",
+    "benefits": {
+      "unlimitedAi": "استعلامات AI غير محدودة",
+      "allSurahs": "جميع السور",
+      "noAds": "بدون إعلانات"
+    },
+    "features": {
+      "nuzul_ai": "استعلام سبب النزول",
+      "tajweed_ai": "فحص التجويد",
+      "word_by_word": "معنى كلمة بكلمة",
+      "memorize": "مساعد الحفظ"
+    }
+  },
+  "weeklyChallenges": {
+    "title": "التحديات الأسبوعية",
+    "subtitle": "أكمل أهداف هذا الأسبوع واجمع المكافآت!",
+    "stats": {
+      "completed": "المكتمل",
+      "success": "النجاح",
+      "weekStreak": "سلسلة الأسابيع"
+    },
+    "newChallenges": "تحديات جديدة",
+    "rewardXp": "+{{xp}} نقطة خبرة",
+    "completedLabel": "تم الإنجاز!",
+    "progressText": "{{progress}} / {{target}} {{unit}}",
+    "completeAction": "إكمال",
+    "congratsShort": "تهانينا!",
+    "timer": {
+      "zero": "00:00:00",
+      "daysHours": "{{days}}ي {{hours}}س"
+    },
+    "modal": {
+      "title": "تم إكمال التحدي!",
+      "reward": "لقد ربحت +{{xp}} نقطة خبرة!",
+      "cta": "رائع!"
+    },
+    "units": {
+      "juz": "جزء",
+      "rakat": "ركعة",
+      "tasbih": "تسبيحة",
+      "day": "يوم",
+      "khatm": "ختمة"
+    },
+    "challengeTitles": {
+      "quran_week": "أسبوع القرآن",
+      "namaz_week": "أسبوع الصلاة",
+      "zikir_week": "أسبوع الذكر",
+      "sabah_week": "صلاة الفجر",
+      "tespihat_week": "أسبوع التسبيحات",
+      "hatim_week": "أسبوع الختمة",
+      "fasting_week": "أسبوع الصيام",
+      "charity_week": "أسبوع الصدقة"
+    },
+    "challengeDescriptions": {
+      "quran_week": "اقرأ 7 أجزاء من القرآن هذا الأسبوع",
+      "namaz_week": "صلِّ 40 ركعة نافلة هذا الأسبوع",
+      "zikir_week": "قم بـ 1000 تسبيحة هذا الأسبوع",
+      "sabah_week": "صلِّ الفجر في وقته لمدة 7 أيام هذا الأسبوع",
+      "tespihat_week": "أكمل التسبيحات (صباح/مساء) لمدة 7 أيام هذا الأسبوع",
+      "hatim_week": "أكمل ختمة واحدة هذا الأسبوع",
+      "fasting_week": "صم يومين نافلة هذا الأسبوع",
+      "charity_week": "تصدق لمدة 7 أيام هذا الأسبوع"
+    }
+  },
+  "streakProtection": {
+    "title": "سلسلتك في خطر!",
+    "defaultCategory": "عام",
+    "description": "لأنك لم تستخدم التطبيق أمس، فإن سلسلة {{category}} لمدة {{count}} يومًا على وشك إعادة التعيين.",
+    "useTokenLabel": "استخدم حق التجميد",
+    "tokensAvailable": "{{count}} متاح",
+    "applyAndProtect": "طبّق واحمِ السلسلة",
+    "cancelAndReset": "إلغاء (ستتم إعادة تعيين السلسلة)"
+  },
+  "streak24h": {
+    "title": "استدراك خلال 24 ساعة",
+    "defaultCategory": "الصلاة",
+    "description": "يبدو أن سلسلة {{category}} لديك فاتتها يوم واحد. استدرك خلال 24 ساعة للحفاظ عليها.",
+    "deadline": "آخر موعد للاستدراك: {{value}}",
+    "recoverAction": "استدرك الآن",
+    "laterAction": "لاحقًا"
+  },
+  "streakRecovery": {
+    "expired": "انتهت المهلة",
+    "adError": "تعذر تحميل الإعلان. يرجى المحاولة مرة أخرى.",
+    "genericError": "حدث خطأ. يرجى المحاولة مرة أخرى.",
+    "title": "استرجع سلسلتك",
+    "successTitle": "تم استرجاع السلسلة!",
+    "successMessage": "تهانينا! تم الحفاظ على سلسلتك لمدة {{count}} يومًا.",
+    "days": "يوم",
+    "daysAtRisk": "أيام في خطر",
+    "description": "يمكنك الحفاظ على سلسلتك خلال 24 ساعة عبر مشاهدة إعلان.",
+    "timeLeft": "الوقت المتبقي",
+    "oneTimeUse": "يمكن استخدام هذه الميزة مرة واحدة أسبوعيًا.",
+    "watchAd": "شاهد الإعلان للاسترجاع",
+    "footerText": "بعد مشاهدة الإعلان كاملًا، سيتم الحفاظ على سلسلتك تلقائيًا."
+  },
+  "tajweedQuiz": {
+    "resultTitle": "تهانينا!",
+    "resultSubtitle": "لقد أكملت اختبار التجويد.",
+    "feedback": {
+      "excellent": "ممتاز! أنت متقن لقواعد التجويد.",
+      "good": "بداية جيدة! بالمزيد من التدريب ستتقن أكثر.",
+      "retry": "ما رأيك بمراجعة الدروس مرة أخرى؟"
+    },
+    "actions": {
+      "restart": "إعادة البدء",
+      "backToMenu": "العودة إلى القائمة الرئيسية",
+      "nextQuestion": "السؤال التالي",
+      "showResults": "عرض النتائج"
+    },
+    "questionLabel": "السؤال {{number}}",
+    "explanation": "الشرح"
+  },
+  "tespihat": {
+    "ui": {
+      "title": "التسابيح",
+      "progressToday": "تقدم اليوم",
+      "reset": "إعادة ضبط",
+      "postPrayerDhikr": "أذكار بعد الصلاة",
+      "tasbih33": "تسبيح 33 مرة",
+      "tawhid": "التوحيد",
+      "postPrayerDuas": "أدعية بعد الصلاة",
+      "complete": "إتمام",
+      "completed": "تم ✓"
+    }
+  },
+  "quranMemorize": {
+    "title": "مساعد الحفظ",
+    "subtitle": "احفظ، راجع، ثبّت",
+    "stats": {
+      "memorized": "المحفوظ",
+      "learning": "قيد التعلم",
+      "review": "مراجعة"
+    },
+    "tabs": {
+      "surahs": "السور",
+      "reviews": "المراجعات"
+    },
+    "ayahCount": "{{count}} آية",
+    "start": "ابدأ",
+    "empty": {
+      "title": "أحسنت!",
+      "description": "لا توجد سورة للمراجعة اليوم."
+    },
+    "level": "المستوى {{level}}",
+    "reviewQuestion": "ما مدى تذكرك لهذه السورة؟",
+    "reviewActions": {
+      "hard": "صعب",
+      "medium": "متوسط",
+      "easy": "سهل"
+    }
+  },
+  "prayerTeacher": {
+    "title": "معلم الصلاة",
+    "stepsDescription": "اضغط على البطاقات أدناه لتعلّم خطوات الصلاة.",
+    "recitationsDescription": "الأدعية والسور التي تُقرأ في الصلاة.",
+    "typesDescription": "عدد الركعات وتفاصيل الصلوات الخمس.",
+    "termsDescription": "الأحكام الشرعية ومعانيها.",
+    "invalidatorsDescription": "قائمة ما يبطل الصلاة.",
+    "labels": {
+      "pronunciation": "النطق",
+      "meaning": "المعنى",
+      "examples": "أمثلة"
+    },
+    "totalRakat": "المجموع: {{count}} ركعات",
+    "quiz": {
+      "title": "اختبار معلومات الصلاة",
+      "intro": "اختبر معلوماتك عبر {{count}} أسئلة!",
+      "start": "ابدأ",
+      "finished": "اكتمل الاختبار!",
+      "retry": "إعادة المحاولة",
+      "questionCounter": "السؤال {{current}}/{{total}}",
+      "score": "النتيجة: {{score}}",
+      "nextQuestion": "السؤال التالي",
+      "showResults": "عرض النتائج",
+      "feedback": {
+        "excellent": "رائع! معلوماتك ممتازة!",
+        "good": "جيد! يمكنك التحسن بمزيد من التدريب.",
+        "retry": "يُنصح بإعادة المراجعة."
+      }
+    }
+  },
+  "nafilePrayers": {
+    "title": "الصلوات النافلة",
+    "subtitle": "تابع عباداتك من السنن والنوافل",
+    "stats": {
+      "completedToday": "المكتمل اليوم",
+      "total": "الإجمالي",
+      "dayStreak": "سلسلة الأيام"
+    },
+    "progress": {
+      "completed": "مكتمل!",
+      "count": "{{current}} / {{max}} ركعة"
+    },
+    "info": {
+      "title": "حول صلوات النافلة",
+      "item1": "صلوات النافلة صلوات مستحبة تؤدى بجانب الصلوات المفروضة.",
+      "item2": "يلزم نية مستقلة لكل صلاة نافلة.",
+      "item3": "صلوات النافلة سبب لمغفرة الذنوب.",
+      "item4": "المداومة على النافلة تبني العادات الصالحة."
+    }
+  },
+  "greeting": {
+    "generic": "يوم مبارk",
+    "morning": "صباح الخير",
+    "noon": "طاب يومكم",
+    "afternoon": "طاب عصركم",
+    "evening": "مساء الخير",
+    "night": "ليلة سعيدة"
+  },
+  "prayerCircle": {
+    "title": "حلقة الدعاء",
+    "intro": "دعاء المسلم لأخيه بظهر الغيب مستجاب. لندعو لبعضنا البعض.",
+    "placeholder": "اكتب طلب دعائك هنا...",
+    "submit": "اطلب الدعاء",
+    "me": "أنا",
+    "prayers": "أدعية",
+    "pray": "ادعُ",
+    "prayed": "تم الدعاء"
+  },
+  "dailyFiqh": {
+    "title": "معلومة فقهية يومية",
+    "answer": "الجواب",
+    "seeAll": "عرض الكل"
+  },
+  "meditation": {
+    "title": "التأمل الإسلامي",
+    "description": "اعثر على السكينة الداخلية من خلال تمارين التنفس والتأمل.",
+    "minutes": "دقائق",
+    "breathe": "تنفس بعمق... أطلق... ركّز على ربّك...",
+    "sessions": {
+      "morning": "تأمل الصباح",
+      "calm": "الهدوء",
+      "night": "سكينة الليل",
+      "gratitude": "تأمل الشكر"
+    }
+  },
+  "seerah": {
+    "title": "خريطة السيرة",
+    "allPeriods": "جميع الفترات",
+    "details": "التفاصيل"
+  },
+  "licenses": {
+    "title": "التراخيص والمصادر",
+    "thanks": "شكر وتقدير",
+    "thanksDesc": "هذا التطبيق أصبح ممكناً بفضل مساهمات مشاريع المصدر المفتوح والمجتمعات التي توفر المحتوى الإسلامي.",
+    "disclaimer": "إشعار قانوني:",
+    "disclaimerDesc": "جميع تلاوات القرآن الكريم والمحتويات تُبث عبر مزودي خدمة API المعنيين. لا يتم تخزين هذا المحتوى داخل التطبيق.",
+    "categories": {
+      "quranData": "بيانات القرآن",
+      "recitations": "تلاوات القرآن",
+      "prayerTimes": "مواقيت الصلاة",
+      "openSource": "مكتبات مفتوحة المصدر"
+    }
+  },
+  "tafsir": {
+    "title": "Tafsir",
+    "selectSource": "Select Tafsir Source",
+    "loading": "Loading tafsir...",
+    "error": "Error loading tafsir",
+    "free": "Free",
+    "source": "Source",
+    "sources": {
+      "elmalili": "Elmalili Hamdi Yazir",
+      "elmalili_sadece": "Elmalili (Simplified)",
+      "ibnkathir_tr": "Ibn Kathir",
+      "ibnkathir_ar": "تفسير ابن كثير",
+      "ibnkathir_en": "Tafsir Ibn Kathir",
+      "tabari": "تفسير الطبري",
+      "diyanet": "Diyanet Affairs",
+      "okuyan": "Mehmet Okuyan"
+    },
+    "proRequired": "Pro membership is required to read the full tafsir",
+    "upgradeToPro": "Upgrade to Pro",
+    "libraryTitle": "Tafsir Library",
+    "searchSurah": "Search surah...",
+    "externalSource": "This source is displayed from the Diyanet website.",
+    "openInBrowser": "Open in Browser"
+  },
+  "family": {
+    "intro": "Add your family members to track spiritual growth together.",
+    "createAction": "Create Family",
+    "joinAction": "Join Family",
+    "familyNamePlaceholder": "Family Name (e.g., Smith Family)",
+    "codePlaceholder": "6-Digit Invitation Code",
+    "membersCount": "{{count}} Members",
+    "members": "Family Members",
+    "inviteTip": "Share this code with your family to invite them.",
+    "prayerTreeTitle": "Prayer Tree",
+    "prayerTreeDesc": "Each prayer is like a drop of water. Grow your tree by praying!",
+    "waterDrops": "Water Drops",
+    "waterTreeAction": "Water the Tree",
+    "watering": "Watering...",
+    "treeTip": "Your tree grows with daily prayer!",
+    "title": "Huzur Family",
+    "child": "Child",
+    "createProfile": "Create Profile",
+    "namePlaceholder": "Enter Name",
+    "parent": "Parent",
+    "activeProfile": "Active Profile",
+    "leaderboard": "Family Leaderboard",
+    "noProfiles": "No profiles created yet.",
+    "points": "Points",
+    "tabs": {
+      "overview": "Overview",
+      "leaderboard": "Leaderboard",
+      "activities": "Activities",
+      "groups": "Groups"
+    },
+    "welcomeBack": "Welcome Back",
+    "sharedGoals": "Shared Goals",
+    "goals": {
+      "familyHatim": "Family Khatm",
+      "desc": "To be completed by end of Ramadan"
+    },
+    "chat": "Chat",
+    "invite": "Invite",
+    "recentActivity": "Recent Activity",
+    "activities": {
+      "action1": "read Surah Yasin",
+      "action2": "prayed Fajr",
+      "action3": "did 33 tasbih"
+    },
+    "minutesAgo": "minutes ago",
+    "groups": {
+      "title": "Family Groups",
+      "create": "Create Group",
+      "join": "Join Group",
+      "code": "Group Code",
+      "enterCode": "Enter Code",
+      "createBtn": "Create",
+      "joinBtn": "Join",
+      "noGroups": "You are not a member of any group yet.",
+      "members": "Members",
+      "leave": "Leave",
+      "pendingRequests": "Pending Requests",
+      "requestSent": "Your request has been sent. Waiting for admin approval.",
+      "errorCreating": "Error creating group.",
+      "errorJoining": "Error joining group."
+    }
+  },
+  "missedPrayers": {
+    "title": "Missed Prayers Tracker",
+    "calculatorTitle": "Missed Prayer Calculator",
+    "birthDate": "Date of Birth",
+    "pubertyAge": "Puberty Age",
+    "calculate": "Calculate",
+    "trackerTitle": "Missed Prayer Tracking",
+    "recalculate": "Recalculate",
+    "confirmRecalculate": "Existing data will be deleted. Do you want to continue?",
+    "note": "When you make up a missed prayer, press '-' to decrease the count."
+  },
+  "streak": {
+    "fajr": "Fajr",
+    "quran": "Quran",
+    "dhikr": "Dhikr"
+  },
+  "badges": {
+    "early_bird": "Early Bird",
+    "quran_lover": "Quran Lover",
+    "dhikr_master": "Dhikr Master",
+    "family_first": "Family First"
+  },
+  "gamification": {
+    "badgesTitle": "Badge Collection",
+    "streakTitle": "My Streaks",
+    "streakTip": "Try to keep your streak by performing your worship on time every day!"
+  },
+  "modules": {
+    "core": "Core Features",
+    "ibadet": "Worship & Dhikr",
+    "education": "Education",
+    "content": "Content & Media",
+    "tools": "Tools",
+    "social": "Social",
+    "lifestyle": "Lifestyle",
+    "ai": "Artificial Intelligence",
+    "system": "System",
+    "family": "Family & Kids"
+  },
+  "hadith": {
+    "title": "Hadiths",
+    "daily": "Hadith of the Day",
+    "categories": "Categories",
+    "count_suffix": "hadiths"
+  },
+  "qibla": {
+    "title": "Qibla Compass",
+    "instructions": "Hold your phone parallel to the ground and calibrate by drawing figure 8.",
+    "found": "QIBLA FOUND",
+    "permissionDenied": "Compass permission denied. Please enable in settings.",
+    "notSupported": "Compass feature is not supported on this device."
+  },
+  "social": {
+    "title": "Social",
+    "subtitle": "Worship Together",
+    "hatim": {
+      "title": "Group Khatm",
+      "create": "Start New Khatm",
+      "join": "Join Khatm",
+      "myHatims": "My Khatms",
+      "noHatims": "You haven't joined any khatm yet.",
+      "progress": "Progress",
+      "readers": "Readers",
+      "parts": "Juz",
+      "takePart": "Take Juz",
+      "completePart": "Complete",
+      "releasePart": "Release",
+      "joinCode": "Join Code"
+    },
+    "dua": {
+      "title": "Prayer Requests",
+      "create": "Request Prayer",
+      "myDuas": "My Prayers",
+      "noDuas": "No prayer requests yet. Be the first!",
+      "amin": "Ameen",
+      "aminCount": "Ameen Count",
+      "pray": "Pray",
+      "prayed": "Prayed",
+      "anonymous": "Share Anonymously"
+    }
+  },
+  "hatimCoach": {
+    "title": "Smart Khatm Coach",
+    "welcomeTitle": "Welcome to Khatm Journey",
+    "welcomeDesc": "Let's create a personalized plan for you to reach your goal. You can plan by target date or daily page limit.",
+    "startSetup": "Create Plan",
+    "setupTitle": "Create Khatm Plan",
+    "setupDesc": "When do you want to finish your Khatm? Select your target date and we'll calculate your daily reading goal.",
+    "selectTarget": "Select Target Date",
+    "targetDateLabel": "End Date",
+    "targetDate": "Target Date",
+    "startJourney": "Start Journey",
+    "dailyGoal": "Daily Goal",
+    "pages": "Pages",
+    "days": "Days",
+    "pagesTotal": "Total Pages",
+    "daysLeft": "Days Left",
+    "pagesLeft": "Pages Left",
+    "summary": "Plan Summary",
+    "confirmStart": "Start Plan",
+    "progress": "Progress",
+    "juz": "Juz",
+    "currentPage": "Current Page",
+    "avgSpeed": "Avg Speed",
+    "pagesDay": "Pages/Day",
+    "streak": "Streak",
+    "resetPlan": "Reset Plan"
+  },
+  "growth": {
+    "onboarding": {
+      "languageTitle": "اختر لغتك",
+      "languageDescription": "أينما كنت، نرافق رحلتك الروحية بلغتك.",
+      "continue": "متابعة",
+      "locationTitle": "لنضبط موقعك",
+      "locationDescription": "اسمح بالوصول إلى الموقع للحصول على مواقيت صلاة واتجاه قبلة دقيقين في مدينتك.",
+      "enableLocation": "تفعيل الموقع",
+      "notificationTitle": "ابقَ متصلاً بالعبادة",
+      "notificationDescription": "فعّل الإشعارات حتى لا تفوتك تذكيرات الصلاة والذكر.",
+      "enableNotifications": "تفعيل الإشعارات",
+      "firstActionTitle": "لنبدأ ببسم الله",
+      "firstActionDescription": "خذ أول خطوة في رحلتك الروحية اليوم.",
+      "startNow": "ابدأ الآن",
+      "stepCounter": "الخطوة {{current}} / {{total}}"
+    },
+    "funnel": {
+      "title": "ملخص قمع النمو",
+      "metrics": {
+        "onboardingCompletion": "إكمال الإعداد الأولي",
+        "shareConversion": "تحويل المشاركة",
+        "inviteAcceptance": "قبول الدعوات",
+        "referralRewards": "مكافآت الإحالة"
+      },
+      "events": {
+        "onboardingStarted": "onboarding_started",
+        "onboardingCompleted": "onboarding_completed",
+        "inviteCreated": "invite_created",
+        "inviteAccepted": "invite_accepted"
+      }
+    }
+  },
+  "invite": {
+    "modalTitle": "Undang Teman",
+    "modalDescription": "Buat dan bagikan tautan undangan. Pantau progres referral Anda di bawah.",
+    "statusTitle": "Status Referral",
+    "inviterReward": "Hadiah pengundang",
+    "inviteeReward": "Hadiah yang diundang",
+    "unlocked": "Terbuka",
+    "pending": "Menunggu",
+    "createLink": "Buat Tautan Undangan",
+    "code": "Kode Undangan",
+    "shareLink": "Bagikan Tautan",
+    "shareText": "Bergabunglah dengan aplikasi Huzur 🌙\n\nKode undangan saya: {{code}}\n{{url}}"
+  },
+  "referral": {
+    "inviteButton": {
+      "default": "Undang",
+      "variantB": "Undang Teman",
+      "variantC": "Mari Mulai Bersama"
     }
   }
 }

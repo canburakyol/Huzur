@@ -1,10 +1,13 @@
 /**
  * Pro Service - Premium özellikler ve günlük limit yönetimi
- * LocalStorage'da pro durumu ve günlük limitleri yönetir
+ * SecureStorage (Capacitor Preferences) üzerinden Pro durumunu yönetir
+ * Sync cache: storageService (fast reads), Source of truth: secureStorage
  */
 
 import { storageService } from './storageService';
+import { secureStorage } from './secureStorage';
 import { STORAGE_KEYS } from '../constants';
+import { logger } from '../utils/logger';
 
 // Günlük limit tanımları (Ücretsiz kullanıcılar için)
 const FREE_LIMITS = {
@@ -30,7 +33,7 @@ const getTodayString = () => {
 };
 
 /**
- * Pro durumunu kontrol et
+ * Pro durumunu kontrol et (sync cache ile hızlı okuma)
  * @returns {boolean}
  */
 export const isPro = () => {
@@ -44,7 +47,43 @@ export const isPro = () => {
       return false;
     }
     
-    return status.active === true;
+    // Integrity check (sync cache has _verified flag set by setProStatus)
+    return status.active === true && status._verified === true;
+  } catch {
+    return false;
+  }
+};
+
+/**
+ * Pro durumunu async olarak doğrula (secureStorage integrity hash ile)
+ * Uygulama açılışında ve kritik işlemlerde çağrılmalı
+ * @returns {Promise<boolean>}
+ */
+export const verifyProStatus = async () => {
+  try {
+    const secureStatus = await secureStorage.getProStatus();
+    if (!secureStatus) {
+      // secureStorage'da yok, sync cache'i de temizle
+      storageService.removeItem(STORAGE_KEYS.PRO_STATUS);
+      return false;
+    }
+    
+    // Integrity check failed = tamper detected
+    if (!secureStatus.isValid) {
+      logger.warn('[ProService] Integrity check failed – possible tamper');
+      storageService.removeItem(STORAGE_KEYS.PRO_STATUS);
+      return false;
+    }
+    
+    // Sync cache'i güncelle
+    storageService.setItem(STORAGE_KEYS.PRO_STATUS, {
+      active: secureStatus.active,
+      expiresAt: secureStatus.expiresAt,
+      updatedAt: new Date().toISOString(),
+      _verified: true
+    });
+    
+    return secureStatus.active;
   } catch {
     return false;
   }
@@ -52,29 +91,35 @@ export const isPro = () => {
 
 /**
  * Pro durumunu ayarla (RevenueCat callback'ten çağrılır)
+ * Hem secureStorage (integrity hash ile) hem sync cache'e yazar
  */
-export const setProStatus = (active, expiresAt = null) => {
+export const setProStatus = async (active, expiresAt = null) => {
   try {
+    // Primary: secureStorage with integrity hash
+    await secureStorage.setProStatus(active, expiresAt, 'revenuecat');
+    
+    // Sync cache: fast reads for isPro()
     storageService.setItem(STORAGE_KEYS.PRO_STATUS, {
       active,
       expiresAt,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
+      _verified: true
     });
     
     // Notify listeners (App.jsx) about Pro status change
     window.dispatchEvent(new CustomEvent('proStatusChanged', { detail: { active } }));
   } catch {
-    console.warn('[ProService] Error setting pro status');
+    logger.warn('[ProService] Error setting pro status');
   }
 };
 
 /**
- * Günlük limitleri getir
+ * Günlük limitleri getir (async - secureStorage)
  */
-const getDailyLimits = () => {
+const getDailyLimits = async () => {
   try {
     const today = getTodayString();
-    const data = storageService.getItem(STORAGE_KEYS.DAILY_LIMITS);
+    const data = await secureStorage.getItem('huzur_daily_limits');
     
     if (data && data.date === today) {
       return data;
@@ -93,13 +138,13 @@ const getDailyLimits = () => {
 };
 
 /**
- * Günlük limitleri kaydet
+ * Günlük limitleri kaydet (async - secureStorage)
  */
-const saveDailyLimits = (limits) => {
+const saveDailyLimits = async (limits) => {
   try {
-    storageService.setItem(STORAGE_KEYS.DAILY_LIMITS, limits);
-  } catch (e) {
-    console.warn('[ProService] Error saving daily limits:', e);
+    await secureStorage.setItem('huzur_daily_limits', limits);
+  } catch {
+    logger.warn('[ProService] Error saving daily limits');
   }
 };
 
@@ -108,7 +153,7 @@ const saveDailyLimits = (limits) => {
  * @param {string} feature - Özellik adı (nuzul_ai, tajweed_ai, vb.)
  * @returns {{ allowed: boolean, remaining: number, max: number, isPro: boolean }}
  */
-export const checkLimit = (feature) => {
+export const checkLimit = async (feature) => {
   // Pro kullanıcılar için sınırsız
   if (isPro()) {
     return {
@@ -119,7 +164,7 @@ export const checkLimit = (feature) => {
     };
   }
   
-  const limits = getDailyLimits();
+  const limits = await getDailyLimits();
   const used = limits[feature] || 0;
   const max = FREE_LIMITS[feature] || 0;
   const remaining = Math.max(0, max - used);
@@ -137,20 +182,20 @@ export const checkLimit = (feature) => {
  * @param {string} feature - Özellik adı
  * @returns {boolean} - Başarılı mı
  */
-export const consumeLimit = (feature) => {
+export const consumeLimit = async (feature) => {
   // Pro kullanıcılar için limit yok
   if (isPro()) {
     return true;
   }
   
-  const check = checkLimit(feature);
+  const check = await checkLimit(feature);
   if (!check.allowed) {
     return false;
   }
   
-  const limits = getDailyLimits();
+  const limits = await getDailyLimits();
   limits[feature] = (limits[feature] || 0) + 1;
-  saveDailyLimits(limits);
+  await saveDailyLimits(limits);
   
   return true;
 };
@@ -192,8 +237,8 @@ export const PRO_FEATURES = [
 /**
  * Günlük limit durumunu UI formatında döndür
  */
-export const getDailyLimitStatus = () => {
-  const limits = getDailyLimits();
+export const getDailyLimitStatus = async () => {
+  const limits = await getDailyLimits();
   const pro = isPro();
   
   return {
@@ -213,6 +258,7 @@ export const getDailyLimitStatus = () => {
 
 export default {
   isPro,
+  verifyProStatus,
   setProStatus,
   checkLimit,
   consumeLimit,

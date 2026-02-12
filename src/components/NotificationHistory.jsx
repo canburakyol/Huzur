@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { getNotificationHistory, clearNotificationHistory } from '../services/smartNotificationService';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
+import { useTranslation } from 'react-i18next';
 
 const NotificationHistory = () => {
+    const { t } = useTranslation();
     const [history, setHistory] = useState([]);
 
     useEffect(() => {
@@ -15,7 +17,7 @@ const NotificationHistory = () => {
     }, []);
 
     const handleClear = () => {
-        if (window.confirm('Tüm bildirim geçmişini silmek istediğinize emin misiniz?')) {
+        if (window.confirm(t('settings.historyClearConfirm', 'Tüm bildirim geçmişini silmek istediğinize emin misiniz?'))) {
             clearNotificationHistory();
             setHistory([]);
         }
@@ -43,14 +45,14 @@ const NotificationHistory = () => {
         <div className="notification-history-container p-4">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold flex items-center">
-                    <span className="text-2xl mr-2">📜</span> Bildirim Geçmişi
+                    <span className="text-2xl mr-2">📜</span> {t('settings.historyTitle', 'Bildirim Geçmişi')}
                 </h2>
                 {history.length > 0 && (
                     <button 
                         onClick={handleClear}
                         className="text-red-500 text-sm hover:text-red-700 underline"
                     >
-                        Temizle
+                        {t('common.clear', 'Temizle')}
                     </button>
                 )}
             </div>
@@ -58,7 +60,7 @@ const NotificationHistory = () => {
             {history.length === 0 ? (
                 <div className="text-center text-gray-500 py-10 bg-gray-50 dark:bg-gray-800 rounded-lg">
                     <span className="text-4xl block mb-2">📭</span>
-                    <p>Henüz bildirim yok.</p>
+                    <p>{t('settings.historyEmpty', 'Henüz bildirim yok.')}</p>
                 </div>
             ) : (
                 <div className="space-y-3">

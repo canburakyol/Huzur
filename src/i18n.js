@@ -2,10 +2,38 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpBackend from 'i18next-http-backend';
+import {
+  DEFAULT_LANGUAGE_CODE,
+  FALLBACK_BASE_LANGUAGE,
+  I18N_NAMESPACES,
+  SUPPORTED_LANGUAGE_CODES
+} from './config/i18nConfig';
+
+const buildFallbackChain = (languageCode) => {
+  if (languageCode === FALLBACK_BASE_LANGUAGE) {
+    return [FALLBACK_BASE_LANGUAGE, DEFAULT_LANGUAGE_CODE];
+  }
+
+  if (languageCode === DEFAULT_LANGUAGE_CODE) {
+    return [DEFAULT_LANGUAGE_CODE, FALLBACK_BASE_LANGUAGE];
+  }
+
+  return [languageCode, FALLBACK_BASE_LANGUAGE];
+};
+
+const fallbackLng = SUPPORTED_LANGUAGE_CODES.reduce(
+  (acc, languageCode) => ({
+    ...acc,
+    [languageCode]: buildFallbackChain(languageCode)
+  }),
+  {
+    default: [FALLBACK_BASE_LANGUAGE, DEFAULT_LANGUAGE_CODE]
+  }
+);
 
 /**
  * i18next Configuration
- * Supports: English (en), Turkish (tr), Arabic (ar)
+ * Supports: Turkish (tr), English (en), Arabic (ar), Indonesian (id), Spanish (es), French (fr), German (de)
  * 
  * Translation files are loaded from public/locales/{language}/translation.json
  */
@@ -19,13 +47,13 @@ i18n
   // Initialize i18next
   .init({
     // Supported languages
-    supportedLngs: ['en', 'tr', 'ar'],
+    supportedLngs: SUPPORTED_LANGUAGE_CODES,
     
     // Fallback language when translation is not found
-    fallbackLng: 'tr',
+    fallbackLng,
     
     // Default namespace
-    ns: ['translation', 'surahs', 'tajweed', 'wordByWord', 'prayers', 'zikirWorld'],
+    ns: I18N_NAMESPACES,
     defaultNS: 'translation',
     
     // Debug mode (disable in production)

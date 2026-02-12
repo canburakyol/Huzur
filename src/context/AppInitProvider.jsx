@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { usePrayerTimes, useStickyNotification, useAndroidWidget } from '../hooks/usePrayerTimes';
 import { useLocationConsent } from '../hooks/useLocationConsent';
 import { useAppInit } from '../hooks/useAppInit';
@@ -51,12 +51,12 @@ export const AppInitProvider = ({ children }) => {
   useStickyNotification(timings, nextPrayer);
   useAndroidWidget(timings, nextPrayer, locationName);
 
-  const onHideSplash = () => {
+  const onHideSplash = useCallback(() => {
     sessionStorage.setItem('splashShown', 'true');
     setShowSplash(false);
-  };
+  }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     // UI State managed by init logic
     showSplash,
     onHideSplash,
@@ -87,7 +87,13 @@ export const AppInitProvider = ({ children }) => {
     
     // Mobile Features
     triggerRatePrompt
-  };
+  }), [
+    showSplash, onHideSplash, timings, nextPrayer, loading, error, 
+    dailyContent, streakData, weather, locationName, isProUser, newBadge,
+    fetchPrayerTimes, clearBadge, showWelcome, handleEnableNotifications,
+    handleCloseWelcome, showLocationPrompt, locationConsentGiven, 
+    handleLocationConsent, triggerRatePrompt
+  ]);
 
   return (
     <AppInitContext.Provider value={value}>

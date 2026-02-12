@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Check, Play, Pause, Volume2 } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
@@ -7,6 +8,7 @@ import { MUEZZINS } from '../data/muezzinData';
 const STORAGE_KEY_MUEZZIN = 'selected_muezzin_id';
 
 function MuezzinSelector({ onClose }) {
+    const { t } = useTranslation();
     const [selectedMuezzinId, setSelectedMuezzinId] = useState(() => {
         return storageService.getString(STORAGE_KEY_MUEZZIN) || 'default';
     });
@@ -65,13 +67,13 @@ function MuezzinSelector({ onClose }) {
                     color: 'var(--primary-color)',
                     fontWeight: '700'
                 }}>
-                    📢 Müezzin Seçimi
+                    📢 {t('muezzinSelector.title', 'Muezzin Selection')}
                 </h1>
             </div>
 
             {/* Description */}
             <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '20px' }}>
-                Ezan bildirimleri için tercih ettiğiniz makamı seçin
+                {t('muezzinSelector.description', 'Choose your preferred maqam for adhan notifications')}
             </p>
 
             {/* Muezzin List */}
@@ -177,8 +179,7 @@ function MuezzinSelector({ onClose }) {
                 }}>
                     <Volume2 size={20} style={{ flexShrink: 0, color: 'var(--primary-color)' }} />
                     <span>
-                        <strong>Not:</strong> Seçtiğiniz makam, bir sonraki ezan vaktinde bildirim sesi olarak kullanılacaktır.
-                        Ses dosyalarının cihazınızda yüklü olması gerekebilir.
+                        <strong>{t('muezzinSelector.noteLabel', 'Note')}:</strong> {t('muezzinSelector.noteText', 'Your selected maqam will be used as the notification sound at the next adhan time. Audio files may need to be available on your device.')}
                     </span>
                 </div>
             </div>

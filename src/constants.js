@@ -178,6 +178,17 @@ export const STORAGE_KEYS = {
   LOCATION_CONSENT: 'locationConsentGiven',
   HAS_SEEN_WELCOME: 'hasSeenWelcome',
   STICKY_NOTIFICATION: 'stickyNotification',
+  ONBOARDING_COMPLETED: 'growthOnboardingCompleted',
+  ONBOARDING_STARTED: 'growthOnboardingStarted',
+  FIRST_IBADAH_ACTION_DONE: 'firstIbadahActionDone',
+  APP_LANGUAGE: 'app_language',
+  WEEKLY_GOAL: 'weeklyGoalPreference',
+  USER_INTENT_SEGMENT: 'userIntentSegment',
+  REFERRAL_OWN_CODE: 'huzur_referral_code',
+  REFERRAL_STATE: 'huzur_referral_state',
+  EXPERIMENT_ASSIGNMENTS: 'huzur_experiment_assignments',
+  EXPERIMENT_UNIT_SEED: 'huzur_experiment_unit_seed',
+  CAMPAIGN_OVERRIDE: 'huzur_campaign_override',
   
   // Prayer Settings
   PRE_ALERT_MINUTES: 'preAlertMinutes',
@@ -195,12 +206,13 @@ export const STORAGE_KEYS = {
   
   // FCM
   FCM_TOKEN: 'fcm_token',
+
+  // Server sync
+  PRO_SERVER_SYNC: 'huzur_pro_server_sync',
   
   // Theme
   THEME: 'app_theme',
   
-  // Gemini
-  GEMINI_API_KEY: 'gemini_api_key'
 };
 
 export default {

@@ -18,43 +18,43 @@ export const coreFeatures = {
     component: Prayers,
     category: 'CORE',
     module: 'core',
-    name: 'Namaz Vakitleri',
+    nameKey: 'features.prayers',
     icon: '🕌'
   },
   qibla: {
     component: QiblaCompass,
     category: 'CORE',
     module: 'core',
-    name: 'Kıble',
+    nameKey: 'features.qibla',
     icon: '🧭'
   },
   quran: {
     component: Quran,
     category: 'CORE',
     module: 'core',
-    name: 'Kuran-ı Kerim',
+    nameKey: 'features.quran',
     icon: '📖'
   },
   tracker: {
     component: PrayerTracker,
     category: 'CORE',
     module: 'core',
-    name: 'Namaz Takibi',
+    nameKey: 'features.tracker',
     icon: '✓'
   },
   settings: {
     component: Settings,
     category: 'CORE',
     module: 'core',
-    name: 'Ayarlar',
+    nameKey: 'features.settings',
     icon: '⚙️'
   }
 };
 
 // Module metadata
 export const moduleInfo = {
-  name: 'Temel Özellikler',
-  description: 'En sık kullanılan temel İslami özellikler',
+  nameKey: 'modules.core',
+  descriptionKey: 'modules.coreDesc',
   icon: '🏠',
   priority: 1,
   chunkName: 'feature-core'

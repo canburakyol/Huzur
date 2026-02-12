@@ -25,7 +25,7 @@ export const useGroupHatim = (hatimId = null) => {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const uid = await ensureAuthenticated({ requireFirebaseUser: true });
+        const uid = await ensureAuthenticated();
         setUserId(uid);
         setAuthReady(true);
         logger.log('[useGroupHatim] Auth initialized, userId:', uid);

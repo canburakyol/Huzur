@@ -1,0 +1,41 @@
+{
+  "title": "My Dhikr World",
+  "subtitle": "Your dhikr statistics since you started using the app",
+  "statsTitle": "My Dhikr Statistics",
+  "totalDhikr": "Total Dhikr",
+  "days": "Days",
+  "times": "Times",
+  "dailyAvg": "Daily Avg.",
+  "startDate": "Start Date:",
+  "typesTitle": "Dhikr Types and Virtues",
+  "meaning": "Meaning:",
+  "reward": "Virtue:",
+  "quote": "Unquestionably, by the remembrance of Allah hearts are assured.",
+  "quoteRef": "— Surah Ar-Ra'd, Verse 28",
+  "types": {
+    "subhanallah": {
+      "meaning": "Allah is free from imperfection",
+      "reward": "A tree is planted in Paradise for each one"
+    },
+    "elhamdulillah": {
+      "meaning": "All praise is due to Allah",
+      "reward": "Fills the scale of good deeds"
+    },
+    "allahuekber": {
+      "meaning": "Allah is the Greatest",
+      "reward": "Fills what is between the heavens and the earth"
+    },
+    "lailaheillallah": {
+      "meaning": "There is no deity but Allah",
+      "reward": "The best of words"
+    },
+    "estagfirullah": {
+      "meaning": "I seek forgiveness from Allah",
+      "reward": "Erases sins, increases provision"
+    },
+    "salavat": {
+      "meaning": "O Allah, send blessings upon Muhammad",
+      "reward": "Rewarded with ten blessings"
+    }
+  }
+}

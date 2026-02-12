@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 
 function Support({ onClose }) {
+    const { t, i18n } = useTranslation();
     const [formData, setFormData] = useState({
         type: 'problem', // problem, feature, other
         message: '',
@@ -16,7 +18,7 @@ function Support({ onClose }) {
         e.preventDefault();
 
         if (!formData.message.trim()) {
-            setError('Lütfen bir mesaj yazın.');
+            setError(t('support.errors.messageRequired', 'Please write a message.'));
             return;
         }
 
@@ -27,21 +29,36 @@ function Support({ onClose }) {
             // Send email using mailto (simple approach)
             // Or use EmailJS/similar service for better experience
             const subject = formData.type === 'problem'
-                ? 'Huzur App - Sorun Bildirimi'
+                ? t('support.mail.subjectProblem', 'Huzur App - Problem Report')
                 : formData.type === 'feature'
-                    ? 'Huzur App - Özellik İsteği'
-                    : 'Huzur App - Geri Bildirim';
+                    ? t('support.mail.subjectFeature', 'Huzur App - Feature Request')
+                    : t('support.mail.subjectFeedback', 'Huzur App - Feedback');
+
+            const localeMap = {
+                tr: 'tr-TR',
+                en: 'en-US',
+                ar: 'ar-SA',
+                id: 'id-ID',
+                es: 'es-ES',
+                fr: 'fr-FR',
+                de: 'de-DE'
+            };
+            const dateLocale = localeMap[i18n.language?.split('-')?.[0]] || 'en-US';
 
             const body = `
-Tip: ${formData.type === 'problem' ? 'Sorun' : formData.type === 'feature' ? 'Özellik İsteği' : 'Diğer'}
-Kullanıcı Email: ${formData.email || 'Belirtilmedi'}
+${t('support.mail.typeLabel', 'Type')}: ${formData.type === 'problem'
+                    ? t('support.types.problem', 'Problem')
+                    : formData.type === 'feature'
+                        ? t('support.types.feature', 'Feature Request')
+                        : t('support.types.other', 'Other')}
+${t('support.mail.userEmailLabel', 'User Email')}: ${formData.email || t('support.mail.notSpecified', 'Not specified')}
 
-Mesaj:
+${t('support.mail.messageLabel', 'Message')}:
 ${formData.message}
 
 ---
-Gönderilme Tarihi: ${new Date().toLocaleString('tr-TR')}
-Cihaz: ${navigator.userAgent}
+${t('support.mail.submittedAtLabel', 'Submitted At')}: ${new Date().toLocaleString(dateLocale)}
+${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
             `;
 
             // Use mailto for now (works on all platforms)
@@ -54,7 +71,7 @@ Cihaz: ${navigator.userAgent}
             setSubmitted(true);
 
         } catch {
-            setError('Bir hata oluştu. Lütfen tekrar deneyin.');
+            setError(t('support.errors.generic', 'An error occurred. Please try again.'));
         } finally {
             setIsSubmitting(false);
         }
@@ -89,7 +106,7 @@ Cihaz: ${navigator.userAgent}
                     marginBottom: '12px',
                     fontSize: '22px'
                 }}>
-                    Talebiniz İletildi!
+                    {t('support.successTitle', 'Your request has been submitted!')}
                 </h2>
                 <p style={{
                     color: 'var(--text-color-muted)',
@@ -97,8 +114,8 @@ Cihaz: ${navigator.userAgent}
                     lineHeight: '1.6',
                     marginBottom: '32px'
                 }}>
-                    Geri bildiriminiz için teşekkür ederiz.<br />
-                    En kısa sürede incelenecektir.
+                    {t('support.successBodyLine1', 'Thank you for your feedback.')}<br />
+                    {t('support.successBodyLine2', 'It will be reviewed as soon as possible.')}
                 </p>
                 <button
                     onClick={onClose}
@@ -112,7 +129,7 @@ Cihaz: ${navigator.userAgent}
                         cursor: 'pointer'
                     }}
                 >
-                    Tamam
+                    {t('common.ok', 'OK')}
                 </button>
             </div>
         );
@@ -135,12 +152,12 @@ Cihaz: ${navigator.userAgent}
                     color: 'var(--primary-color)',
                     fontWeight: '700'
                 }}>
-                    💬 Destek
+                    💬 {t('support.title', 'Support')}
                 </h1>
             </div>
 
             <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '20px' }}>
-                Sorunlarınızı veya önerilerinizi bize iletin
+                {t('support.description', 'Send us your problems or suggestions')}
             </p>
 
             {/* Form */}
@@ -154,13 +171,13 @@ Cihaz: ${navigator.userAgent}
                         fontSize: '14px',
                         fontWeight: '600'
                     }}>
-                        Bildirim Tipi
+                        {t('support.typeLabel', 'Notification Type')}
                     </label>
                     <div style={{ display: 'flex', gap: '8px' }}>
                         {[
-                            { id: 'problem', label: '🐛 Sorun' },
-                            { id: 'feature', label: '💡 Öneri' },
-                            { id: 'other', label: '📝 Diğer' }
+                            { id: 'problem', label: `🐛 ${t('support.types.problem', 'Problem')}` },
+                            { id: 'feature', label: `💡 ${t('support.types.feature', 'Feature Request')}` },
+                            { id: 'other', label: `📝 ${t('support.types.other', 'Other')}` }
                         ].map(type => (
                             <button
                                 key={type.id}
@@ -192,11 +209,11 @@ Cihaz: ${navigator.userAgent}
                         fontSize: '14px',
                         fontWeight: '600'
                     }}>
-                        E-posta (Opsiyonel)
+                        {t('support.emailLabel', 'Email (Optional)')}
                     </label>
                     <input
                         type="email"
-                        placeholder="ornek@email.com"
+                        placeholder={t('support.emailPlaceholder', 'example@email.com')}
                         value={formData.email}
                         onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                         style={{
@@ -211,7 +228,7 @@ Cihaz: ${navigator.userAgent}
                         }}
                     />
                     <span style={{ fontSize: '11px', color: 'var(--text-color-muted)' }}>
-                        Size geri dönüş yapmamızı istiyorsanız e-postanızı yazın
+                        {t('support.emailHint', 'Write your email if you want us to get back to you')}
                     </span>
                 </div>
 
@@ -224,10 +241,10 @@ Cihaz: ${navigator.userAgent}
                         fontSize: '14px',
                         fontWeight: '600'
                     }}>
-                        Mesajınız *
+                        {t('support.messageLabel', 'Your Message')} *
                     </label>
                     <textarea
-                        placeholder="Sorununuzu veya önerinizi detaylı bir şekilde yazın..."
+                        placeholder={t('support.messagePlaceholder', 'Write your issue or suggestion in detail...')}
                         value={formData.message}
                         onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
                         rows={6}
@@ -285,7 +302,9 @@ Cihaz: ${navigator.userAgent}
                     }}
                 >
                     <Send size={20} />
-                    {isSubmitting ? 'Gönderiliyor...' : 'Gönder'}
+                    {isSubmitting
+                        ? t('support.sending', 'Sending...')
+                        : t('support.send', 'Send')}
                 </button>
             </form>
 
@@ -303,7 +322,7 @@ Cihaz: ${navigator.userAgent}
                     fontSize: '12px',
                     color: 'var(--text-color-muted)'
                 }}>
-                    Doğrudan iletişim için: biyokimya58@gmail.com
+                    {t('support.directContact', 'For direct contact')}: biyokimya58@gmail.com
                 </div>
             </div>
         </div>

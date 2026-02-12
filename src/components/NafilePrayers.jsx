@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { 
   X, 
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useGamification } from '../hooks/useGamification';
 import './NafilePrayers.css';
+import { storageService } from '../services/storageService';
 
 // Nafile namaz tipleri
 const NAFILE_PRAYERS = [
@@ -112,13 +114,15 @@ const NAFILE_PRAYERS = [
 const STORAGE_KEY = 'huzur_nafile_prayers';
 
 export function NafilePrayers({ onClose }) {
+  const { t } = useTranslation();
   const { addXP } = useGamification();
+
+  const storageData = storageService.getItem(STORAGE_KEY, null);
   
   // Lazy initialization: load from storage once on mount
   const [records, setRecords] = useState(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const data = JSON.parse(stored);
+    if (storageData) {
+      const data = storageData;
       return data.records || {};
     }
     return {};
@@ -127,18 +131,16 @@ export function NafilePrayers({ onClose }) {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   
   const [streak, setStreak] = useState(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const data = JSON.parse(stored);
+    if (storageData) {
+      const data = storageData;
       return data.streak || 0;
     }
     return 0;
   });
   
   const [totalCompleted, setTotalCompleted] = useState(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const data = JSON.parse(stored);
+    if (storageData) {
+      const data = storageData;
       return data.totalCompleted || 0;
     }
     return 0;
@@ -152,7 +154,7 @@ export function NafilePrayers({ onClose }) {
       totalCompleted: newTotal,
       lastUpdated: new Date().toISOString()
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    storageService.setItem(STORAGE_KEY, data);
   }, []);
 
   // Get today's records
@@ -267,8 +269,8 @@ export function NafilePrayers({ onClose }) {
           <X size={24} />
         </button>
         <div className="header-content">
-          <h1>Nafile Namazlar</h1>
-          <p>Sünnet ve nafile ibadetlerinizi takip edin</p>
+          <h1>{t('nafilePrayers.title', 'Nafile Namazlar')}</h1>
+          <p>{t('nafilePrayers.subtitle', 'Sünnet ve nafile ibadetlerinizi takip edin')}</p>
         </div>
       </div>
 
@@ -280,7 +282,7 @@ export function NafilePrayers({ onClose }) {
           </div>
           <div className="stat-info">
             <span className="stat-value">{todayStats.completed}</span>
-            <span className="stat-label">Bugün Tamamlanan</span>
+            <span className="stat-label">{t('nafilePrayers.stats.completedToday', 'Bugün Tamamlanan')}</span>
           </div>
         </div>
         
@@ -290,7 +292,7 @@ export function NafilePrayers({ onClose }) {
           </div>
           <div className="stat-info">
             <span className="stat-value">{totalCompleted}</span>
-            <span className="stat-label">Toplam</span>
+            <span className="stat-label">{t('nafilePrayers.stats.total', 'Toplam')}</span>
           </div>
         </div>
         
@@ -300,7 +302,7 @@ export function NafilePrayers({ onClose }) {
           </div>
           <div className="stat-info">
             <span className="stat-value">{streak}</span>
-            <span className="stat-label">Gün Serisi</span>
+            <span className="stat-label">{t('nafilePrayers.stats.dayStreak', 'Gün Serisi')}</span>
           </div>
         </div>
       </div>
@@ -350,7 +352,13 @@ export function NafilePrayers({ onClose }) {
               <div className="progress-section">
                 <div className="progress-header">
                   <span className="progress-text">
-                    {progress.completed ? 'Tamamlandı!' : `${progress.current} / ${progress.max} rekat`}
+                    {progress.completed
+                      ? t('nafilePrayers.progress.completed', 'Tamamlandı!')
+                      : t('nafilePrayers.progress.count', {
+                          current: progress.current,
+                          max: progress.max,
+                          defaultValue: '{{current}} / {{max}} rekat'
+                        })}
                   </span>
                   <span className="progress-percentage">
                     {Math.round(progress.percentage)}%
@@ -397,12 +405,12 @@ export function NafilePrayers({ onClose }) {
 
       {/* Info Section */}
       <div className="nafile-info-section">
-        <h3>💡 Nafile Namazlar Hakkında</h3>
+        <h3>💡 {t('nafilePrayers.info.title', 'Nafile Namazlar Hakkında')}</h3>
         <ul>
-          <li>Nafile namazlar farz namazların dışında kılınan sünnet ve müstehap namazlardır.</li>
-          <li>Her nafile namaz için ayrı niyet etmek gerekir.</li>
-          <li>Nafile namazlar günahların affına vesile olur.</li>
-          <li>Düzenli nafile namaz kılmak alışkanlık kazandırır.</li>
+          <li>{t('nafilePrayers.info.item1', 'Nafile namazlar farz namazların dışında kılınan sünnet ve müstehap namazlardır.')}</li>
+          <li>{t('nafilePrayers.info.item2', 'Her nafile namaz için ayrı niyet etmek gerekir.')}</li>
+          <li>{t('nafilePrayers.info.item3', 'Nafile namazlar günahların affına vesile olur.')}</li>
+          <li>{t('nafilePrayers.info.item4', 'Düzenli nafile namaz kılmak alışkanlık kazandırır.')}</li>
         </ul>
       </div>
     </div>

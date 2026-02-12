@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Check, Palette } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
@@ -103,6 +104,7 @@ const THEMES = [
 ];
 
 function ThemeSelector({ onClose }) {
+    const { t } = useTranslation();
     const [currentTheme, setCurrentTheme] = useState(() => {
         return storageService.getString(STORAGE_KEYS.APP_THEME) || 'green-gold';
     });
@@ -150,13 +152,13 @@ function ThemeSelector({ onClose }) {
                     color: 'var(--primary-color)',
                     fontWeight: '700'
                 }}>
-                    🎨 Tema Seçimi
+                    🎨 {t('themeSelector.title', 'Theme Selection')}
                 </h1>
             </div>
 
             {/* Description */}
             <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '20px' }}>
-                Uygulamanın renklerini değiştirin
+                {t('themeSelector.description', 'Change the app colors')}
             </p>
 
             {/* Theme Cards */}
@@ -276,7 +278,7 @@ function ThemeSelector({ onClose }) {
                     color: 'var(--text-color-muted)',
                     lineHeight: '1.6'
                 }}>
-                    💡 <strong>İpucu:</strong> Tema tercihiniz kaydedilir ve uygulama her açıldığında otomatik uygulanır.
+                    💡 <strong>{t('themeSelector.tipLabel', 'Tip')}:</strong> {t('themeSelector.tipText', 'Your theme preference is saved and applied automatically whenever the app opens.')}
                 </div>
             </div>
         </div>

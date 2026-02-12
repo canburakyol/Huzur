@@ -53,7 +53,7 @@ export const adMobService = {
             });
             logger.log('AdMob: Initialized successfully');
         } catch (e) {
-            console.error('AdMob: Init Error -', e);
+            logger.error('AdMob: Init Error -', e);
             // Fallback: Try to initialize anyway in case consent API fails
             try {
                 await AdMob.initialize({
@@ -61,7 +61,7 @@ export const adMobService = {
                     initializeForTesting: isDev,
                 });
             } catch (fallbackError) {
-                console.error('AdMob: Fallback init also failed -', fallbackError);
+                logger.error('AdMob: Fallback init also failed -', fallbackError);
             }
         }
     },
@@ -86,7 +86,7 @@ export const adMobService = {
             });
             logger.log('AdMob: Bottom banner shown');
         } catch (e) {
-            console.error('AdMob: Show Banner Error -', e);
+            logger.error('AdMob: Show Banner Error -', e);
         }
     },
 
@@ -111,7 +111,7 @@ export const adMobService = {
             });
             logger.log('AdMob: Medium Rectangle shown');
         } catch (e) {
-            console.error('AdMob: Show Medium Rect Error -', e);
+            logger.error('AdMob: Show Medium Rect Error -', e);
         }
     },
 
@@ -128,7 +128,7 @@ export const adMobService = {
             await AdMob.removeBanner();
             logger.log('AdMob: Banner hidden/removed');
         } catch (e) {
-            console.error('AdMob: Hide Banner Error -', e);
+            logger.error('AdMob: Hide Banner Error -', e);
         }
     },
 
@@ -204,7 +204,7 @@ export const showRewardedAd = async () => {
 
         return reward;
     } catch (error) {
-        console.error('AdMob: Rewarded Ad Error -', error);
+        logger.error('AdMob: Rewarded Ad Error -', error);
         return { success: false, error: error.message };
     }
 };

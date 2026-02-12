@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getFunctions } from "firebase/functions";
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -17,30 +16,50 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
-const functions = getFunctions(app, 'europe-west1'); // Region önemli
 
-// Local Development için App Check Debug Modu
-/*
-if (import.meta.env.DEV) {
-    // Debug token'ı konsola yazdırır, bunu Firebase Console'a eklemek gerekir
-    self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-    
-    import('firebase/app-check').then(({ initializeAppCheck, ReCaptchaEnterpriseProvider }) => {
-        try {
-            // ReCaptcha key yoksa bile DebugProvider devreye girer (self.FIREBASE... sayesinde)
-            initializeAppCheck(app, {
-                provider: new ReCaptchaEnterpriseProvider('debug-key'), 
-                isTokenAutoRefreshEnabled: true
-            });
-            console.log('[Firebase] Local App Check initialized with Debug Token');
-        } catch (e) {
-            console.warn('[Firebase] App Check init failed:', e);
+// Lazy initialized functions instance
+let _functions = null;
+let _analytics = null;
+let _analyticsLogEvent = null;
+
+/**
+ * Get Firebase Functions instance (Lazy loaded)
+ * @returns {Promise<Functions>}
+ */
+export const getFunctionsInstance = async () => {
+    if (!_functions) {
+        const { getFunctions } = await import("firebase/functions");
+        _functions = getFunctions(app, 'europe-west1');
+    }
+    return _functions;
+};
+
+/**
+ * Get Firebase Analytics instance lazily
+ * Works only when analytics is supported (native/web runtime dependent)
+ * @returns {Promise<{ analytics: any|null, logEvent: Function|null }>}
+ */
+export const getAnalyticsInstance = async () => {
+    if (_analytics && _analyticsLogEvent) {
+        return { analytics: _analytics, logEvent: _analyticsLogEvent };
+    }
+
+    try {
+        const { isSupported, getAnalytics, logEvent } = await import("firebase/analytics");
+        const supported = await isSupported();
+        if (!supported) {
+            return { analytics: null, logEvent: null };
         }
-    });
-}
-*/
+
+        _analytics = getAnalytics(app);
+        _analyticsLogEvent = logEvent;
+        return { analytics: _analytics, logEvent: _analyticsLogEvent };
+    } catch {
+        return { analytics: null, logEvent: null };
+    }
+};
 
 // NOT: Production'da App Check, Native Android katmanında (MainActivity.java) başlatılıyor.
 // JS tarafında tekrar başlatmak çakışmaya neden oluyordu.
 
-export { app, db, auth, functions };
+export { app, db, auth };

@@ -3,6 +3,9 @@ import { ChevronLeft, Heart, Share2, BookOpen } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { contentService } from '../services/contentService';
+import { storageService } from '../services/storageService';
+
+const HADITH_FAVORITES_KEY = 'hadithFavorites';
 
 const Hadiths = ({ onClose }) => {
     const { t, i18n } = useTranslation();
@@ -17,8 +20,7 @@ const Hadiths = ({ onClose }) => {
     const [loading, setLoading] = useState(true);
 
     const [favorites, setFavorites] = useState(() => {
-        const saved = localStorage.getItem('hadithFavorites');
-        return saved ? JSON.parse(saved) : [];
+        return storageService.getItem(HADITH_FAVORITES_KEY, []);
     });
 
     // Fetch data when language changes
@@ -50,7 +52,7 @@ const Hadiths = ({ onClose }) => {
             newFavorites = [...favorites, hadithId];
         }
         setFavorites(newFavorites);
-        localStorage.setItem('hadithFavorites', JSON.stringify(newFavorites));
+        storageService.setItem(HADITH_FAVORITES_KEY, newFavorites);
     };
 
     const handleShare = async (hadith) => {

@@ -1,10 +1,8 @@
-import { useTranslation } from 'react-i18next';
+import { memo } from 'react';
 import { PlayCircle, ArrowRight, MessageCircle } from 'lucide-react';
 import './ModernHomeFeed.css';
 
-const DiscoverFeed = () => {
-    const { t } = useTranslation();
-
+const DiscoverFeed = memo(() => {
     const feedItems = [
         {
             id: 1,
@@ -64,6 +62,6 @@ const DiscoverFeed = () => {
             <div style={{ height: '80px' }}></div>
         </div>
     );
-};
+});
 
 export default DiscoverFeed;

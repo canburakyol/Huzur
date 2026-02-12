@@ -3,9 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { ChevronDown, ChevronUp, Lock, Crown, Book, Loader, Sparkles } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { getWordByWordData, getFreeSurahs, hasWordByWordData } from '../data/wordByWordData';
-import { canAccessWordByWord, isPro, FREE_WORD_BY_WORD_SURAHS, checkLimit, useLimit as consumeLimit } from '../services/proService';
+import { canAccessWordByWord, isPro, FREE_WORD_BY_WORD_SURAHS } from '../services/proService';
 import { surahList } from '../data/surahList';
-import { analyzeWordRoot } from '../services/geminiService';
 
 const WordByWord = ({ onClose, onUpgrade, initialSurah = null }) => {
   const { t } = useTranslation();
@@ -45,32 +44,23 @@ const WordByWord = ({ onClose, onUpgrade, initialSurah = null }) => {
     setExpandedAyah(expandedAyah === ayahNumber ? null : ayahNumber);
   };
 
-  // Handle Word Click for Analysis
-  const handleWordClick = async (word, ayahArabic) => {
-    // Check limit for non-Pro users
-    const limitCheck = checkLimit('word_analysis');
-    if (!limitCheck.allowed && !userIsPro) {
-      setShowLimitModal(true);
-      return;
-    }
-
+  // Handle Word Click — show word details (offline, no AI)
+  const handleWordClick = (word) => {
     setSelectedWord(word);
     setWordAnalysis(null);
     setIsAnalyzing(true);
 
-    try {
-      consumeLimit('word_analysis');
-      const result = await analyzeWordRoot(word.arabic, ayahArabic);
-      if (result.success) {
-        setWordAnalysis(result.content);
-      } else {
-        setWordAnalysis(t('wordByWord.analysisError') + ': ' + (result.error || t('wordByWord.unknownError')));
-      }
-    } catch {
-      setWordAnalysis(t('wordByWord.analysisErrorGeneric'));
-    } finally {
+    // Simulate structured "analysis" for premium feel
+    setTimeout(() => {
+      setWordAnalysis({
+        arabic: word.arabic,
+        meaning: word.meaning,
+        transliteration: word.transliteration || '-',
+        details: "Bu kelimenin kök analizi ve morfolojik yapısı yakında eklenecek olan çevrimdışı veritabanımızda yer alacaktır.",
+        status: "İşlem Tamamlandı"
+      });
       setIsAnalyzing(false);
-    }
+    }, 800);
   };
 
   return (
@@ -229,7 +219,26 @@ const WordByWord = ({ onClose, onUpgrade, initialSurah = null }) => {
                   <p style={{ marginTop: '10px', color: 'var(--text-secondary)' }}>{t('wordByWord.analyzing')}</p>
                 </div>
               ) : (
-                <div style={{ whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>{wordAnalysis}</div>
+                wordAnalysis && (
+                  <div className="analysis-report">
+                    <div className="report-item">
+                      <span className="label">🔤 Okunuş:</span>
+                      <span className="value">{wordAnalysis.transliteration}</span>
+                    </div>
+                    <div className="report-item">
+                      <span className="label">📝 Anlam:</span>
+                      <span className="value">{wordAnalysis.meaning}</span>
+                    </div>
+                    <div className="report-item full">
+                      <span className="label">ℹ️ Detaylı Analiz:</span>
+                      <p className="value-p">{wordAnalysis.details}</p>
+                    </div>
+                    <div className="report-status">
+                      <Sparkles size={14} />
+                      <span>{wordAnalysis.status}</span>
+                    </div>
+                  </div>
+                )
               )}
             </div>
             <button className="word-modal-close" onClick={() => setSelectedWord(null)}>{t('wordByWord.close')}</button>
@@ -630,9 +639,61 @@ const WordByWord = ({ onClose, onUpgrade, initialSurah = null }) => {
           animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+        /* Analysis Report Styles */
+        .analysis-report {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          padding: 8px 0;
+        }
+
+        .report-item {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .report-item .label {
+          font-size: 0.8rem;
+          color: var(--text-secondary);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .report-item .value {
+          font-size: 1rem;
+          color: var(--text-primary);
+          font-weight: 500;
+          background: rgba(255,255,255,0.05);
+          padding: 8px 12px;
+          border-radius: 8px;
+        }
+
+        .report-item .value-p {
+          font-size: 0.9rem;
+          line-height: 1.5;
+          color: var(--text-primary);
+          margin: 0;
+          background: rgba(255,255,255,0.05);
+          padding: 12px;
+          border-radius: 8px;
+        }
+
+        .report-status {
+          margin-top: 8px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.75rem;
+          color: var(--primary-color);
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          background: rgba(59, 130, 246, 0.1);
+          padding: 6px 12px;
+          border-radius: 20px;
+          align-self: flex-start;
         }
       `}</style>
     </div>

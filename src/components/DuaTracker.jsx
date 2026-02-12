@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { 
+import {
   X, 
   Plus, 
   CheckCircle2,
@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useGamification } from '../hooks/useGamification';
 import './DuaTracker.css';
+import { storageService } from '../services/storageService';
 
 // Dua kategorileri
 const DUA_CATEGORIES = [
@@ -45,6 +46,7 @@ const STORAGE_KEY = 'huzur_dua_tracker';
 
 export function DuaTracker({ onClose }) {
   const { addXP } = useGamification();
+  const initialData = storageService.getItem(STORAGE_KEY, null);
   const [newDua, setNewDua] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('general');
   const [showAddForm, setShowAddForm] = useState(false);
@@ -53,9 +55,8 @@ export function DuaTracker({ onClose }) {
   
   // Load duas from storage - using initial state instead of useEffect setState
   const [data] = useState(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored);
+    if (initialData) {
+      const parsed = initialData;
       return {
         duas: parsed.duas || [],
         stats: parsed.stats || { total: 0, completed: 0, streak: 0 }
@@ -77,7 +78,7 @@ export function DuaTracker({ onClose }) {
       stats: newStats,
       lastUpdated: new Date().toISOString()
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    storageService.setItem(STORAGE_KEY, data);
   };
 
   // Add new dua

@@ -12,12 +12,16 @@ import {
     MOTIVATION_MESSAGES
 } from '../data/deedJournalData';
 import { useGamification } from '../hooks/useGamification';
+import { storageService } from '../services/storageService';
+
+const DEED_STATS_KEY = 'deed_stats';
 
 function DeedJournal({ onClose }) {
     const { t } = useTranslation();
     const { addPoints } = useGamification();
     const [activeTab, setActiveTab] = useState('today'); // today, stats, achievements
     const [todayDate] = useState(new Date().toDateString());
+    const todayDeedKey = `deeds_${todayDate}`;
     
     // Use useMemo to calculate motivation message once (avoiding impure Math.random during render)
     const motivation = useMemo(() => {
@@ -26,19 +30,17 @@ function DeedJournal({ onClose }) {
 
     // Load data from localStorage
     const [todayDeeds, setTodayDeeds] = useState(() => {
-        const saved = localStorage.getItem(`deeds_${todayDate}`);
-        return saved ? JSON.parse(saved) : {};
+        return storageService.getItem(todayDeedKey, {});
     });
 
     const [allTimeStats, setAllTimeStats] = useState(() => {
-        const saved = localStorage.getItem('deed_stats');
-        return saved ? JSON.parse(saved) : {
+        return storageService.getItem(DEED_STATS_KEY, {
             totalPoints: 0,
             totalDays: 0,
             currentStreak: 0,
             longestStreak: 0,
             lastRecordDate: null
-        };
+        });
     });
 
     // Helper function - defined before useEffect that uses it
@@ -65,7 +67,7 @@ function DeedJournal({ onClose }) {
 
     // Save deeds when changed
     useEffect(() => {
-        localStorage.setItem(`deeds_${todayDate}`, JSON.stringify(todayDeeds));
+        storageService.setItem(todayDeedKey, todayDeeds);
 
         // Update stats
         const points = calculateTodayPoints();
@@ -83,7 +85,7 @@ function DeedJournal({ onClose }) {
                     longestStreak: Math.max(prev.longestStreak, newStreak),
                     lastRecordDate: todayDate
                 };
-                localStorage.setItem('deed_stats', JSON.stringify(updated));
+                storageService.setItem(DEED_STATS_KEY, updated);
                 return updated;
             });
         }
@@ -130,7 +132,7 @@ function DeedJournal({ onClose }) {
     const resetToday = () => {
         if (confirm(t('deedJournal.today.resetConfirm'))) {
             setTodayDeeds({});
-            localStorage.removeItem(`deeds_${todayDate}`);
+            storageService.removeItem(todayDeedKey);
         }
     };
 

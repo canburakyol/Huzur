@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { getPrayerTimes, getNextPrayer } from '../services/prayerService';
 import { schedulePrayerAlarms, createNotificationChannels, FCMService } from '../services/fcmService';
 import smartNotificationService, { showStickyNotification, cancelStickyNotification, requestNotificationPermission } from '../services/smartNotificationService';
-import { updateWidget as updateAndroidWidget } from '../services/widgetService';
+import { updateWidget as updateAndroidWidget, scheduleWidgetAlarms } from '../services/widgetService';
 import { storageService } from '../services/storageService';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
@@ -47,6 +47,7 @@ export const usePrayerTimes = () => {
 
         try {
           await schedulePrayerAlarms(data.timings, notificationSettings);
+          await scheduleWidgetAlarms(data.timings);
           logger.log('[usePrayerTimes] Prayer alarms scheduled');
         } catch (scheduleError) {
           logger.warn('[usePrayerTimes] Failed to schedule prayer alarms:', scheduleError);

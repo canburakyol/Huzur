@@ -11,6 +11,7 @@
  */
 
 import { STORAGE_KEYS } from '../constants';
+import { logger } from '../utils/logger';
 
 /**
  * Get item from storage with JSON parsing and error handling
@@ -23,8 +24,8 @@ export const getItem = (key, defaultValue = null) => {
     const item = localStorage.getItem(key);
     if (item === null) return defaultValue;
     return JSON.parse(item);
-  } catch (error) {
-    console.warn(`[StorageService] Error reading ${key}:`, error);
+  } catch {
+    logger.warn(`[StorageService] Error reading ${key}`);
     return defaultValue;
   }
 };
@@ -39,8 +40,8 @@ export const setItem = (key, value) => {
   try {
     localStorage.setItem(key, JSON.stringify(value));
     return true;
-  } catch (error) {
-    console.error(`[StorageService] Error writing ${key}:`, error);
+  } catch {
+    logger.warn('[StorageService] Error writing key');
     return false;
   }
 };
@@ -54,8 +55,8 @@ export const removeItem = (key) => {
   try {
     localStorage.removeItem(key);
     return true;
-  } catch (error) {
-    console.error(`[StorageService] Error removing ${key}:`, error);
+  } catch {
+    logger.warn('[StorageService] Error removing key');
     return false;
   }
 };
@@ -69,8 +70,8 @@ export const removeItem = (key) => {
 export const getString = (key, defaultValue = '') => {
   try {
     return localStorage.getItem(key) || defaultValue;
-  } catch (error) {
-    console.warn(`[StorageService] Error reading string ${key}:`, error);
+  } catch {
+    logger.warn(`[StorageService] Error reading string ${key}`);
     return defaultValue;
   }
 };
@@ -85,8 +86,8 @@ export const setString = (key, value) => {
   try {
     localStorage.setItem(key, value);
     return true;
-  } catch (error) {
-    console.error(`[StorageService] Error writing string ${key}:`, error);
+  } catch {
+    logger.warn('[StorageService] Error writing string key');
     return false;
   }
 };
@@ -146,8 +147,8 @@ export const clearAll = () => {
       localStorage.removeItem(key);
     });
     return true;
-  } catch (error) {
-    console.error('[StorageService] Error clearing storage:', error);
+  } catch {
+    logger.warn('[StorageService] Error clearing storage');
     return false;
   }
 };

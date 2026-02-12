@@ -2,10 +2,17 @@ import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { LEVELS, BADGES } from '../data/gamificationData';
 import { getRandomDailyQuests } from '../data/questsData';
 import { GamificationContext } from './GamificationContext';
+import { storageService } from '../services/storageService';
+
+const GAMIFICATION_KEYS = {
+  USER_POINTS: 'userPoints',
+  USER_BADGES: 'userBadges',
+  DAILY_QUESTS: 'dailyQuests'
+};
 
 export const GamificationProvider = ({ children }) => {
-  const [points, setPoints] = useState(() => parseInt(localStorage.getItem('userPoints') || '0'));
-  const [earnedBadges, setEarnedBadges] = useState(() => JSON.parse(localStorage.getItem('userBadges') || '[]'));
+  const [points, setPoints] = useState(() => parseInt(storageService.getString(GAMIFICATION_KEYS.USER_POINTS, '0'), 10) || 0);
+  const [earnedBadges, setEarnedBadges] = useState(() => storageService.getItem(GAMIFICATION_KEYS.USER_BADGES, []));
   
   // Derived Level State
   const level = useMemo(() => LEVELS.slice().reverse().find(l => points >= l.minPoints) || LEVELS[0], [points]);
@@ -14,7 +21,7 @@ export const GamificationProvider = ({ children }) => {
 
   // Daily Quests State
   const [dailyQuests, setDailyQuests] = useState(() => {
-    const saved = JSON.parse(localStorage.getItem('dailyQuests') || '{}');
+    const saved = storageService.getItem(GAMIFICATION_KEYS.DAILY_QUESTS, {});
     const today = new Date().toDateString();
     if (saved.date !== today) {
         return { date: today, quests: getRandomDailyQuests() };
@@ -23,7 +30,7 @@ export const GamificationProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem('userPoints', points.toString());
+    storageService.setString(GAMIFICATION_KEYS.USER_POINTS, points.toString());
     
     // Check for Level Up
     let levelUpTimer;
@@ -39,11 +46,11 @@ export const GamificationProvider = ({ children }) => {
   }, [points, level]);
 
   useEffect(() => {
-    localStorage.setItem('userBadges', JSON.stringify(earnedBadges));
+    storageService.setItem(GAMIFICATION_KEYS.USER_BADGES, earnedBadges);
   }, [earnedBadges]);
 
   useEffect(() => {
-    localStorage.setItem('dailyQuests', JSON.stringify(dailyQuests));
+    storageService.setItem(GAMIFICATION_KEYS.DAILY_QUESTS, dailyQuests);
   }, [dailyQuests]);
 
 
@@ -122,7 +129,7 @@ export const GamificationProvider = ({ children }) => {
   useEffect(() => {
     const handleStreakActivity = async (event) => {
       const { category, count } = event.detail;
-      console.log('XP Awarded via Streak:', category, count);
+      
       
       // Award XP
       addPoints(50); // Base XP for any activity

@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Users, Heart, Plus, MessageCircle, ThumbsUp } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
+import { storageService } from '../services/storageService';
+
+const PRAYER_REQUESTS_KEY = 'myPrayerRequests';
 
 const MOCK_REQUESTS = [
   { id: 1, user: 'Ahmet Y.', text: 'Hayırlı bir iş için dua bekliyorum.', count: 12, prayed: false },
@@ -13,7 +16,7 @@ const MOCK_REQUESTS = [
 const PrayerCircle = ({ onClose }) => {
   const { t } = useTranslation();
   const [requests, setRequests] = useState(() => {
-    const savedMyRequests = JSON.parse(localStorage.getItem('myPrayerRequests') || '[]');
+    const savedMyRequests = storageService.getItem(PRAYER_REQUESTS_KEY, []);
     return [...savedMyRequests, ...MOCK_REQUESTS];
   });
   const [newRequest, setNewRequest] = useState('');
@@ -47,7 +50,7 @@ const PrayerCircle = ({ onClose }) => {
     
     // Save my requests
     const myRequests = updatedRequests.filter(r => r.isMine);
-    localStorage.setItem('myPrayerRequests', JSON.stringify(myRequests));
+    storageService.setItem(PRAYER_REQUESTS_KEY, myRequests);
     
     setNewRequest('');
     setShowForm(false);

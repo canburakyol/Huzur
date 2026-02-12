@@ -1,0 +1,405 @@
+{
+  "1": {
+    "meaning": "Sonsuz merhamet sahibi",
+    "detail": "Dünya ve ahirette bütün yaratıklara merhamet eden"
+  },
+  "2": {
+    "meaning": "Çok merhametli",
+    "detail": "Ahirette yalnız müminlere merhamet eden"
+  },
+  "3": {
+    "meaning": "Mülkün sahibi",
+    "detail": "Bütün kainatın tek sahibi ve hükümdarı"
+  },
+  "4": {
+    "meaning": "Tertemiz, mukaddes",
+    "detail": "Her türlü eksiklik ve noksandan uzak"
+  },
+  "5": {
+    "meaning": "Selamet veren",
+    "detail": "Her türlü tehlikelerden selamete çıkaran"
+  },
+  "6": {
+    "meaning": "Güven veren",
+    "detail": "Kalplere iman bağışlayan, güven veren"
+  },
+  "7": {
+    "meaning": "Koruyup gözeten",
+    "detail": "Her şeyi gözetip muhafaza eden"
+  },
+  "8": {
+    "meaning": "Mutlak galip",
+    "detail": "İzzet sahibi, mağlup edilmesi imkansız"
+  },
+  "9": {
+    "meaning": "Dilediğini zorla yaptıran",
+    "detail": "Kırıkları onaran, eksiklikleri tamamlayan"
+  },
+  "10": {
+    "meaning": "Büyüklükte eşsiz",
+    "detail": "Her şeyde büyüklüğünü gösteren"
+  },
+  "11": {
+    "meaning": "Yaratan",
+    "detail": "Her şeyi yoktan yaratan"
+  },
+  "12": {
+    "meaning": "Kusursuz yaratan",
+    "detail": "Her şeyi bir düzen içinde yaratan"
+  },
+  "13": {
+    "meaning": "Şekil veren",
+    "detail": "Her şeye şekil ve suret veren"
+  },
+  "14": {
+    "meaning": "Çok bağışlayan",
+    "detail": "Günahları tekrar tekrar bağışlayan"
+  },
+  "15": {
+    "meaning": "Kahredici",
+    "detail": "Her şeye galip ve hakim olan"
+  },
+  "16": {
+    "meaning": "Karşılıksız veren",
+    "detail": "Hiçbir karşılık beklemeden veren"
+  },
+  "17": {
+    "meaning": "Rızık veren",
+    "detail": "Bütün canlıların rızkını veren"
+  },
+  "18": {
+    "meaning": "Açan, ferahlatan",
+    "detail": "Her türlü güçlüğü açan ve kolaylaştıran"
+  },
+  "19": {
+    "meaning": "Her şeyi bilen",
+    "detail": "Gizli açık her şeyi bilen"
+  },
+  "20": {
+    "meaning": "Sıkan, daraltan",
+    "detail": "Rızkı daraltan, canları alan"
+  },
+  "21": {
+    "meaning": "Açan, genişleten",
+    "detail": "Rızkı açan, genişleten"
+  },
+  "22": {
+    "meaning": "Alçaltan",
+    "detail": "Kafirleri ve zalimleri alçaltan"
+  },
+  "23": {
+    "meaning": "Yükselten",
+    "detail": "İyileri ve müminleri yükselten"
+  },
+  "24": {
+    "meaning": "İzzet veren",
+    "detail": "Dilediğini aziz kılan"
+  },
+  "25": {
+    "meaning": "Zillete düşüren",
+    "detail": "Dilediğini zelil kılan"
+  },
+  "26": {
+    "meaning": "Her şeyi işiten",
+    "detail": "Gizli açık her sesi işiten"
+  },
+  "27": {
+    "meaning": "Her şeyi gören",
+    "detail": "Gizli açık her şeyi gören"
+  },
+  "28": {
+    "meaning": "Hükmeden",
+    "detail": "Hükmü verici, haklıyı haksızı ayıran"
+  },
+  "29": {
+    "meaning": "Adaletli",
+    "detail": "Mutlak adalet sahibi"
+  },
+  "30": {
+    "meaning": "Lütfeden",
+    "detail": "En ince işleri bilen, lütufla muamele eden"
+  },
+  "31": {
+    "meaning": "Her şeyden haberdar",
+    "detail": "Olmuş olacak her şeyden haberdar"
+  },
+  "32": {
+    "meaning": "Yumuşak davranan",
+    "detail": "Ceza vermede acele etmeyen"
+  },
+  "33": {
+    "meaning": "Sonsuz büyük",
+    "detail": "Azameti sonsuz"
+  },
+  "34": {
+    "meaning": "Affedici",
+    "detail": "Çok bağışlayıcı"
+  },
+  "35": {
+    "meaning": "Şükreden kullarını sever",
+    "detail": "Azıcık iyiliğe çok karşılık veren"
+  },
+  "36": {
+    "meaning": "Yüce",
+    "detail": "Yücelik ve ululukta en üstün"
+  },
+  "37": {
+    "meaning": "Büyük",
+    "detail": "Zat, sıfat ve kudretinde büyük"
+  },
+  "38": {
+    "meaning": "Koruyucu",
+    "detail": "Her şeyi koruyup muhafaza eden"
+  },
+  "39": {
+    "meaning": "Gıda veren",
+    "detail": "Her şeyin gıdasını veren"
+  },
+  "40": {
+    "meaning": "Hesap soran",
+    "detail": "Herkesin hesabını gören"
+  },
+  "41": {
+    "meaning": "Celal sahibi",
+    "detail": "Ululuk ve azamet sahibi"
+  },
+  "42": {
+    "meaning": "Cömert",
+    "detail": "Keremi bol, iyiliği çok"
+  },
+  "43": {
+    "meaning": "Gözetleyici",
+    "detail": "Her şeyi gözetleyen"
+  },
+  "44": {
+    "meaning": "Duaları kabul eden",
+    "detail": "Dua edenlerin duasını kabul eden"
+  },
+  "45": {
+    "meaning": "Geniş",
+    "detail": "Rahmeti, ilmi, lütfu geniş"
+  },
+  "46": {
+    "meaning": "Hikmet sahibi",
+    "detail": "Her işinde hikmet sahibi"
+  },
+  "47": {
+    "meaning": "Seven",
+    "detail": "Çok seven, sevilen"
+  },
+  "48": {
+    "meaning": "Şan ve şeref sahibi",
+    "detail": "Şanı yüce, keremi bol"
+  },
+  "49": {
+    "meaning": "Dirilten",
+    "detail": "Ölümden sonra dirilten"
+  },
+  "50": {
+    "meaning": "Şahit",
+    "detail": "Her şeye şahit, her şeyi bilen"
+  },
+  "51": {
+    "meaning": "Hak",
+    "detail": "Varlığı kesin, hakkı temsil eden"
+  },
+  "52": {
+    "meaning": "Vekil",
+    "detail": "Güvenilip dayanılan"
+  },
+  "53": {
+    "meaning": "Kuvvetli",
+    "detail": "Sonsuz kuvvet sahibi"
+  },
+  "54": {
+    "meaning": "Sağlam",
+    "detail": "Kuvveti sarsılmaz, metin"
+  },
+  "55": {
+    "meaning": "Dost",
+    "detail": "Müminlerin dostu"
+  },
+  "56": {
+    "meaning": "Övülen",
+    "detail": "Her türlü övgüye layık"
+  },
+  "57": {
+    "meaning": "Sayan",
+    "detail": "Sayıyla her şeyi bilen"
+  },
+  "58": {
+    "meaning": "İlk yaratan",
+    "detail": "Yoktan var eden"
+  },
+  "59": {
+    "meaning": "Tekrar yaratan",
+    "detail": "Öldükten sonra tekrar yaratan"
+  },
+  "60": {
+    "meaning": "Dirilten",
+    "detail": "Can veren, hayat bağışlayan"
+  },
+  "61": {
+    "meaning": "Öldüren",
+    "detail": "Canları alan"
+  },
+  "62": {
+    "meaning": "Diri",
+    "detail": "Ezeli ve ebedi hayat sahibi"
+  },
+  "63": {
+    "meaning": "Kendi kendine kaim",
+    "detail": "Her şeyi ayakta tutan"
+  },
+  "64": {
+    "meaning": "Bulan",
+    "detail": "İstediğini bulan, zengin"
+  },
+  "65": {
+    "meaning": "Şerefli",
+    "detail": "Şan ve şeref sahibi"
+  },
+  "66": {
+    "meaning": "Bir",
+    "detail": "Tek olan, eşsiz"
+  },
+  "67": {
+    "meaning": "Hiçbir şeye muhtaç olmayan",
+    "detail": "Herkes ona muhtaç, o kimseye muhtaç değil"
+  },
+  "68": {
+    "meaning": "Güç sahibi",
+    "detail": "İstediğini yapmaya gücü yeten"
+  },
+  "69": {
+    "meaning": "Kudretli",
+    "detail": "Her şeye gücü yeten"
+  },
+  "70": {
+    "meaning": "Öne alan",
+    "detail": "Dilediğini öne geçiren"
+  },
+  "71": {
+    "meaning": "Geri bırakan",
+    "detail": "Dilediğini geri bırakan"
+  },
+  "72": {
+    "meaning": "İlk",
+    "detail": "Varlığının başlangıcı olmayan"
+  },
+  "73": {
+    "meaning": "Son",
+    "detail": "Varlığının sonu olmayan"
+  },
+  "74": {
+    "meaning": "Açık",
+    "detail": "Varlığı açık, delillerle bilinir"
+  },
+  "75": {
+    "meaning": "Gizli",
+    "detail": "Zatı gizli, akılla kavranamaz"
+  },
+  "76": {
+    "meaning": "Yöneten",
+    "detail": "Kainatı yöneten"
+  },
+  "77": {
+    "meaning": "Çok yüce",
+    "detail": "Aşkın ve yüce"
+  },
+  "78": {
+    "meaning": "İyilik yapan",
+    "detail": "İyiliği çok, kullarına lütufkar"
+  },
+  "79": {
+    "meaning": "Tövbeleri kabul eden",
+    "detail": "Tövbeleri kabul eden"
+  },
+  "80": {
+    "meaning": "İntikam alan",
+    "detail": "Hak edenleri cezalandıran"
+  },
+  "81": {
+    "meaning": "Affeden",
+    "detail": "Günahları affeden"
+  },
+  "82": {
+    "meaning": "Şefkatli",
+    "detail": "Çok şefkatli"
+  },
+  "83": {
+    "meaning": "Mülkün sahibi",
+    "detail": "Mülkün gerçek sahibi"
+  },
+  "84": {
+    "meaning": "Celal ve ikram sahibi",
+    "detail": "Büyüklük ve lütuf sahibi"
+  },
+  "85": {
+    "meaning": "Adaletli",
+    "detail": "Adaletle hükmeden"
+  },
+  "86": {
+    "meaning": "Toplayan",
+    "detail": "Kıyamette herkesi toplayan"
+  },
+  "87": {
+    "meaning": "Zengin",
+    "detail": "Hiçbir şeye muhtaç olmayan"
+  },
+  "88": {
+    "meaning": "Zenginleştiren",
+    "detail": "Dilediğini zengin eden"
+  },
+  "89": {
+    "meaning": "Engelleyen",
+    "detail": "İstemediği şeyi engelleyen"
+  },
+  "90": {
+    "meaning": "Zarar veren",
+    "detail": "Hak edene zarar veren"
+  },
+  "91": {
+    "meaning": "Fayda veren",
+    "detail": "Dilediğine fayda veren"
+  },
+  "92": {
+    "meaning": "Nur",
+    "detail": "Alemleri nurlandıran"
+  },
+  "93": {
+    "meaning": "Hidayet veren",
+    "detail": "Doğru yola ileten"
+  },
+  "94": {
+    "meaning": "Eşsiz yaratan",
+    "detail": "Benzersiz, eşsiz yaratan"
+  },
+  "95": {
+    "meaning": "Sonsuz",
+    "detail": "Varlığı daim, sonu olmayan"
+  },
+  "96": {
+    "meaning": "Mirasçı",
+    "detail": "Her şeyin son sahibi"
+  },
+  "97": {
+    "meaning": "Doğru yola ileten",
+    "detail": "İrşad eden, doğruya götüren"
+  },
+  "98": {
+    "meaning": "Çok sabırlı",
+    "detail": "Cezalandırmada acele etmeyen"
+  },
+  "99": {
+    "meaning": "Allah",
+    "detail": "Tüm isimleri kendinde toplayan, ibadete layık tek varlık"
+  },
+  "ui": {
+    "title": "Asmaul Husna",
+    "subtitle": "99 Beautiful Names of Allah",
+    "daily": "Name of the Day",
+    "search_placeholder": "Search name...",
+    "count_suffix": "names"
+  }
+}

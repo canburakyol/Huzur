@@ -13,7 +13,7 @@
   /* Cream/Gold Text */
   --text-color-light: #d4af37;
   /* Gold Text */
-  --text-color-muted: #a3b18a;
+  --text-color-muted: #c5d1b1;
   /* Muted Green/Grey */
 
   --primary-color: #d4af37;
@@ -67,34 +67,6 @@
   --elevation-medium: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
-/* Scoped Original Theme for Quran Section */
-.quran-theme {
-  /* Yavruağzı (Peach) Theme - Original Concept */
-  --bg-gradient-start: #ffecd2;
-  --bg-gradient-end: #fcb69f;
-  --bg-gradient-accent: #ff9966;
-
-  --text-color: #2c3e50;
-  --text-color-light: #5d6d7e;
-  --text-color-muted: #7f8c8d;
-
-  --primary-color: #d35400;
-  --primary-dark: #a04000;
-  --accent-color: #e67e22;
-
-  --glass-bg: rgba(255, 255, 255, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --glass-shadow: 0 8px 32px 0 rgba(211, 84, 0, 0.1);
-
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --input-bg: #ffffff;
-  --input-border: #fcb69f;
-
-  /* Override body/global styles for this container */
-  background-color: var(--bg-gradient-start);
-  background-image: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-  color: var(--text-color);
-}
 
 /* Dark Mode - Otomatik uyum */
 [data-theme='dark'] {
@@ -367,16 +339,6 @@ body.android-webview .glass-card {
   font-weight: bold;
 }
 
-/* Horizontal Prayer Times */
-.prayer-times-horizontal {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 5px;
-  margin-bottom: 20px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
 
 .prayer-times-horizontal::-webkit-scrollbar {
   display: none;

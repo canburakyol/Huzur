@@ -1,3 +1,5 @@
+import { storageService } from '../services/storageService';
+
 export const LEVELS = [
   { level: 1, minPoints: 0, title: 'Başlangıç' },
   { level: 2, minPoints: 100, title: 'Gayretli' },
@@ -131,8 +133,7 @@ export function getWeeklyChallenges() {
  * Update challenge progress
  */
 export function updateChallengeProgress(challengeId, progress) {
-  const stored = localStorage.getItem(CHALLENGES_STORAGE_KEY);
-  const data = stored ? JSON.parse(stored) : {};
+  const data = storageService.getItem(CHALLENGES_STORAGE_KEY, {});
   
   if (!data[challengeId]) {
     data[challengeId] = { progress: 0, completed: false };
@@ -141,7 +142,7 @@ export function updateChallengeProgress(challengeId, progress) {
   data[challengeId].progress = progress;
   data[challengeId].lastUpdated = new Date().toISOString();
   
-  localStorage.setItem(CHALLENGES_STORAGE_KEY, JSON.stringify(data));
+  storageService.setItem(CHALLENGES_STORAGE_KEY, data);
   return data[challengeId];
 }
 
@@ -149,8 +150,7 @@ export function updateChallengeProgress(challengeId, progress) {
  * Complete a challenge
  */
 export function completeChallenge(challengeId) {
-  const stored = localStorage.getItem(CHALLENGES_STORAGE_KEY);
-  const data = stored ? JSON.parse(stored) : {};
+  const data = storageService.getItem(CHALLENGES_STORAGE_KEY, {});
   
   const challenge = WEEKLY_CHALLENGES.find(c => c.id === challengeId);
   
@@ -160,7 +160,7 @@ export function completeChallenge(challengeId) {
     completedAt: new Date().toISOString()
   };
   
-  localStorage.setItem(CHALLENGES_STORAGE_KEY, JSON.stringify(data));
+  storageService.setItem(CHALLENGES_STORAGE_KEY, data);
   return data[challengeId];
 }
 

@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import { RotateCcw, Check, ChevronRight, ChevronDown, Volume2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { TESPIHAT_SECTIONS, TESBIHLER, TEVHID, NAMAZSONRASI_DUALAR } from '../data/tespihatData';
 import IslamicBackButton from './shared/IslamicBackButton';
+import { storageService } from '../services/storageService';
+
+const TESPIHAT_PROGRESS_KEY = 'tespihat_progress';
 
 function Tespihat({ onClose }) {
+    const { t } = useTranslation();
     const [activeSection, setActiveSection] = useState(null);
     const [expandedItem, setExpandedItem] = useState(null);
     const [tesbihCounts, setTesbihCounts] = useState({
@@ -15,9 +20,9 @@ function Tespihat({ onClose }) {
 
     // Load saved progress
     useEffect(() => {
-        const saved = localStorage.getItem('tespihat_progress');
+        const saved = storageService.getItem(TESPIHAT_PROGRESS_KEY, null);
         if (saved) {
-            const data = JSON.parse(saved);
+            const data = saved;
             setTesbihCounts(data.counts || { subhanallah: 0, elhamdulillah: 0, allahuekber: 0 }); // eslint-disable-line
             setCompletedSections(data.completed || []);
         }
@@ -25,10 +30,10 @@ function Tespihat({ onClose }) {
 
     // Save progress
     useEffect(() => {
-        localStorage.setItem('tespihat_progress', JSON.stringify({
+        storageService.setItem(TESPIHAT_PROGRESS_KEY, {
             counts: tesbihCounts,
             completed: completedSections
-        }));
+        });
     }, [tesbihCounts, completedSections]);
 
     // Increment tesbih counter
@@ -87,7 +92,7 @@ function Tespihat({ onClose }) {
                 border: '1px solid var(--glass-border)'
             }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span style={{ fontSize: '14px', color: 'var(--text-color)' }}>Bugünkü İlerleme</span>
+                    <span style={{ fontSize: '14px', color: 'var(--text-color)' }}>{t('tespihat.ui.progressToday', 'Bugünkü İlerleme')}</span>
                     <span style={{ fontSize: '14px', fontWeight: '700', color: 'var(--primary-color)' }}>{totalProgress()}%</span>
                 </div>
                 <div style={{
@@ -122,13 +127,13 @@ function Tespihat({ onClose }) {
                     }}
                 >
                     <RotateCcw size={14} />
-                    Sıfırla
+                    {t('tespihat.ui.reset', 'Sıfırla')}
                 </button>
             </div>
 
             {/* Tespihat Sections */}
             <h3 style={{ color: 'var(--primary-color)', fontSize: '16px', marginBottom: '12px' }}>
-                📿 Namaz Sonrası Zikirler
+                📿 {t('tespihat.ui.postPrayerDhikr', 'Namaz Sonrası Zikirler')}
             </h3>
 
             {TESPIHAT_SECTIONS.map(section => (
@@ -166,7 +171,7 @@ function Tespihat({ onClose }) {
 
             {/* 33'lük Tesbihler */}
             <h3 style={{ color: 'var(--primary-color)', fontSize: '16px', marginTop: '24px', marginBottom: '12px' }}>
-                📿 33'lük Tesbihler
+                📿 {t('tespihat.ui.tasbih33', "33'lük Tesbihler")}
             </h3>
 
             {TESBIHLER.map(tesbih => (
@@ -245,7 +250,7 @@ function Tespihat({ onClose }) {
                                         transition: 'var(--transition-smooth)'
                                     }}
                                 >
-                                    Sıfırla
+                                    {t('tespihat.ui.reset', 'Sıfırla')}
                                 </button>
                             )}
                         </div>
@@ -255,7 +260,7 @@ function Tespihat({ onClose }) {
 
             {/* Tevhid */}
             <h3 style={{ color: 'var(--primary-color)', fontSize: '16px', marginTop: '24px', marginBottom: '12px' }}>
-                🌟 Tevhid
+                🌟 {t('tespihat.ui.tawhid', 'Tevhid')}
             </h3>
             <div
                 className="glass-card"
@@ -318,7 +323,7 @@ function Tespihat({ onClose }) {
 
             {/* Dualar */}
             <h3 style={{ color: 'var(--primary-color)', fontSize: '16px', marginTop: '24px', marginBottom: '12px' }}>
-                🤲 Namaz Sonrası Dualar
+                🤲 {t('tespihat.ui.postPrayerDuas', 'Namaz Sonrası Dualar')}
             </h3>
             {NAMAZSONRASI_DUALAR.map(dua => (
                 <div
@@ -452,7 +457,9 @@ function Tespihat({ onClose }) {
                     }}
                 >
                     <Check size={20} />
-                    {completedSections.includes(activeSection.id) ? 'Tamamlandı ✓' : 'Tamamla'}
+                    {completedSections.includes(activeSection.id)
+                        ? t('tespihat.ui.completed', 'Tamamlandı ✓')
+                        : t('tespihat.ui.complete', 'Tamamla')}
                 </button>
             </div>
         );
@@ -475,7 +482,7 @@ function Tespihat({ onClose }) {
                     color: 'var(--primary-color)',
                     fontWeight: '700'
                 }}>
-                    🤲 {activeSection ? activeSection.title : 'Tespihat'}
+                    🤲 {activeSection ? activeSection.title : t('tespihat.ui.title', 'Tespihat')}
                 </h1>
             </div>
 

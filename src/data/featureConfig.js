@@ -36,7 +36,8 @@ export const getFeaturesByCategory = (categoryName) => {
 // Module definitions for backward compatibility
 export const moduleDefinitions = Object.entries(moduleRegistry).reduce((acc, [key, { info }]) => {
   acc[key] = {
-    name: info.name,
+    nameKey: info.nameKey,
+    descriptionKey: info.descriptionKey,
     icon: info.icon,
     priority: info.priority,
     chunkName: info.chunkName

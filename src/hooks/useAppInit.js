@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { checkAndUpdateStreak, getStreakDisplay } from '../services/streakService';
-import { isPro as checkIsPro } from '../services/proService';
+import { isPro as checkIsPro, verifyProStatus } from '../services/proService';
 import { initializeRevenueCat } from '../services/revenueCatService';
 import { detectAndSetLanguage } from '../services/languageService';
 import { adMobService } from '../services/admobService';
+import { syncProStatusFromServer } from '../services/subscriptionSyncService';
 import { VAKIT_THEMES } from '../data/vakitThemes';
 import { THEMES } from '../components/ThemeSelector';
 import { TIMING, STORAGE_KEYS } from '../constants';
@@ -75,8 +76,19 @@ export const useAppInit = (timings) => {
 
   // Initialize on mount: RevenueCat, Language Detection, Event listeners
   useEffect(() => {
-    // Initialize RevenueCat
-    initializeRevenueCat();
+    // Initialize RevenueCat, then verify Pro integrity
+    initializeRevenueCat().then(() => {
+      verifyProStatus().then(isValid => {
+        if (isValid) setIsProUser(true);
+      });
+
+      // Server-authoritative sync (best-effort)
+      syncProStatusFromServer().then((serverState) => {
+        if (serverState && typeof serverState.isPro === 'boolean') {
+          setIsProUser(serverState.isPro);
+        }
+      });
+    });
 
     // Detect and set device language
     detectAndSetLanguage().then((lang) => {

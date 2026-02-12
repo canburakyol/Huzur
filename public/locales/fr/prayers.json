@@ -1,0 +1,540 @@
+{
+  "prayerBook": {
+    "categories": {
+      "daily": {
+        "name": "Daily Prayers",
+        "desc": "Prayers for everyday recitation"
+      },
+      "debt": {
+        "name": "Debt & Sustenance",
+        "desc": "Prayers for financial relief"
+      },
+      "family": {
+        "name": "Family & Home",
+        "desc": "Prayers for family happiness"
+      },
+      "protection": {
+        "name": "Protection Prayers",
+        "desc": "Prayers for spiritual protection"
+      },
+      "wishes": {
+        "name": "Wishes & Supplications",
+        "desc": "Prayers for requests"
+      },
+      "prophet": {
+        "name": "Prophet's Prayers",
+        "desc": "Prayers from Prophet Muhammad (PBUH)"
+      },
+      "special_days": {
+        "name": "Special Day Prayers",
+        "desc": "Prayers for holy nights and festivals"
+      },
+      "repentance": {
+        "name": "Repentance & Forgiveness",
+        "desc": "Prayers for seeking forgiveness"
+      },
+      "prayer_duas": {
+        "name": "Salah Prayers",
+        "desc": "Prayers recited during Salah"
+      },
+      "distress": {
+        "name": "Distress Prayers",
+        "desc": "Prayers for hardship and grief"
+      }
+    },
+    "items": {
+      "1": {
+        "title": "Morning Prayer",
+        "meaning": "We have entered the morning and so has the kingdom of Allah. Praise belongs to Allah."
+      },
+      "2": {
+        "title": "Evening Prayer",
+        "meaning": "We have entered the evening and so has the kingdom of Allah. Praise belongs to Allah."
+      },
+      "3": {
+        "title": "Sleep Prayer",
+        "meaning": "O Allah! In Your name I die and live."
+      },
+      "4": {
+        "title": "Leaving Home Prayer",
+        "meaning": "In the name of Allah, I put my trust in Allah."
+      },
+      "5": {
+        "title": "Entering Home Prayer",
+        "meaning": "O Allah! I ask You for the best entry and the best exit."
+      },
+      "6": {
+        "title": "Ayatul Kursi",
+        "meaning": "Allah, there is no deity except Him, the Ever-Living, the Sustainer of existence."
+      },
+      "7": {
+        "title": "Glorification Prayer",
+        "meaning": "Glory be to Allah and His is the praise."
+      },
+      "8": {
+        "title": "Morning-Evening Protection",
+        "meaning": "In the name of Allah with whose name nothing on earth or in heaven can cause harm."
+      },
+      "9": {
+        "title": "Health Prayer",
+        "meaning": "O Allah! Grant me health in my body."
+      },
+      "10": {
+        "title": "Seeking Forgiveness",
+        "meaning": "I seek forgiveness from Allah and I repent to Him."
+      },
+      "11": {
+        "title": "Salawat",
+        "meaning": "O Allah! Send blessings upon Muhammad."
+      },
+      "12": {
+        "title": "Contentment Prayer",
+        "meaning": "I am pleased with Allah as my Lord."
+      },
+      "13": {
+        "title": "Praise Prayer",
+        "meaning": "All praise is due to Allah."
+      },
+      "14": {
+        "title": "Seeking Wellbeing",
+        "meaning": "O Allah! I ask You for wellbeing."
+      },
+      "15": {
+        "title": "Gratitude Prayer",
+        "meaning": "O Allah! All praise and thanks are Yours."
+      },
+      "16": {
+        "title": "Halal Sustenance Prayer",
+        "meaning": "O Allah! Suffice me with what is lawful against what is unlawful."
+      },
+      "17": {
+        "title": "Anxiety Protection",
+        "meaning": "O Allah! I seek refuge in You from worry and grief."
+      },
+      "18": {
+        "title": "Blessing Prayer",
+        "meaning": "O Allah! Bless what You have provided us."
+      },
+      "19": {
+        "title": "Pure Sustenance Prayer",
+        "meaning": "O Allah! I ask You for pure sustenance."
+      },
+      "20": {
+        "title": "Doors of Mercy Prayer",
+        "meaning": "O Allah! Open for me the doors of Your mercy."
+      },
+      "21": {
+        "title": "Gratitude for Blessings",
+        "meaning": "My Lord! Inspire me to be grateful for Your blessings."
+      },
+      "22": {
+        "title": "Wealth Prayer",
+        "meaning": "O Allah! I ask You for sufficiency."
+      },
+      "23": {
+        "title": "Lawful Earnings Prayer",
+        "meaning": "O Allah! Provide me with lawful sustenance."
+      },
+      "24": {
+        "title": "Ease Prayer",
+        "meaning": "O Allah! There is no ease except what You make easy."
+      },
+      "25": {
+        "title": "Hasbunallah",
+        "meaning": "Allah is sufficient for us, and He is the best Disposer of affairs."
+      },
+      "26": {
+        "title": "Abundance in Provision",
+        "meaning": "O Allah! Expand my provision."
+      },
+      "27": {
+        "title": "Taqwa and Solution",
+        "meaning": "Whoever fears Allah, He will make a way out for him."
+      },
+      "28": {
+        "title": "Family Happiness Prayer",
+        "meaning": "Our Lord! Grant us from our spouses and offspring comfort to our eyes."
+      },
+      "29": {
+        "title": "Marriage Blessing",
+        "meaning": "May Allah bless you and send blessings upon you."
+      },
+      "30": {
+        "title": "Righteous Offspring Prayer",
+        "meaning": "My Lord! Grant me righteous offspring from Your presence."
+      },
+      "31": {
+        "title": "Parents Prayer",
+        "meaning": "My Lord! Have mercy on them as they raised me when I was small."
+      },
+      "32": {
+        "title": "Home Blessing Prayer",
+        "meaning": "O Allah! Bless our home."
+      },
+      "33": {
+        "title": "Prayer Establishment",
+        "meaning": "My Lord! Make me an establisher of prayer, and from my descendants."
+      },
+      "34": {
+        "title": "Hellfire Protection",
+        "meaning": "Our Lord! Avert from us the punishment of Hell."
+      },
+      "35": {
+        "title": "Mercy Prayer",
+        "meaning": "Our Lord! Grant us mercy from Yourself."
+      },
+      "36": {
+        "title": "Heart Steadfastness",
+        "meaning": "Our Lord! Do not let our hearts deviate."
+      },
+      "37": {
+        "title": "Neighbor Reconciliation",
+        "meaning": "O Allah! Reconcile between us and our neighbors."
+      },
+      "38": {
+        "title": "Submission Prayer",
+        "meaning": "Our Lord! Make us submissive to You."
+      },
+      "39": {
+        "title": "Good in Both Worlds",
+        "meaning": "Our Lord! Give us good in this world and in the Hereafter."
+      },
+      "40": {
+        "title": "Satan Protection",
+        "meaning": "I seek refuge in Allah from the accursed Satan."
+      },
+      "41": {
+        "title": "Mashallah Prayer",
+        "meaning": "What Allah has willed, there is no power except with Allah."
+      },
+      "42": {
+        "title": "Declaration of Faith",
+        "meaning": "There is no deity except Allah, Muhammad is the Messenger of Allah."
+      },
+      "43": {
+        "title": "Complete Words Protection",
+        "meaning": "I seek refuge in Allah's perfect words from the evil of what He has created."
+      },
+      "44": {
+        "title": "Healing Ruqyah",
+        "meaning": "In the name of Allah, I perform ruqyah on you."
+      },
+      "45": {
+        "title": "Surah An-Nas",
+        "meaning": "Say: I seek refuge in the Lord of mankind."
+      },
+      "46": {
+        "title": "Islamic Nature Prayer",
+        "meaning": "We have entered the morning upon the natural way of Islam."
+      },
+      "47": {
+        "title": "Surah Al-Falaq",
+        "meaning": "Say: I seek refuge in the Lord of daybreak."
+      },
+      "48": {
+        "title": "Blessing Loss Protection",
+        "meaning": "O Allah! I seek refuge in You from the loss of Your blessings."
+      },
+      "49": {
+        "title": "La Hawla Prayer",
+        "meaning": "There is no power nor strength except with Allah."
+      },
+      "50": {
+        "title": "Heart Firmness",
+        "meaning": "O Turner of hearts! Keep my heart firm upon Your religion."
+      },
+      "51": {
+        "title": "Dajjal Fitnah Protection",
+        "meaning": "O Allah! I seek refuge in You from the trial of the Dajjal."
+      },
+      "52": {
+        "title": "Goodness in Both Worlds",
+        "meaning": "Our Lord! Give us good in this world and good in the Hereafter."
+      },
+      "53": {
+        "title": "Increase in Knowledge",
+        "meaning": "My Lord! Increase me in knowledge."
+      },
+      "54": {
+        "title": "Forgiveness of Sins",
+        "meaning": "Our Lord! Forgive us our sins."
+      },
+      "55": {
+        "title": "Straight Path",
+        "meaning": "Guide us to the straight path."
+      },
+      "56": {
+        "title": "Mercy Prayer",
+        "meaning": "My Lord! Have mercy on us."
+      },
+      "57": {
+        "title": "Patience Prayer",
+        "meaning": "Our Lord! Pour upon us patience."
+      },
+      "58": {
+        "title": "Ease Not Difficulty",
+        "meaning": "My Lord! Make it easy, not difficult."
+      },
+      "59": {
+        "title": "Acceptance Prayer",
+        "meaning": "Our Lord! Accept from us."
+      },
+      "60": {
+        "title": "Among Righteous",
+        "meaning": "Admit me by Your mercy among Your righteous servants."
+      },
+      "61": {
+        "title": "Blessing Gratitude",
+        "meaning": "My Lord! Inspire me to be grateful for Your blessings."
+      },
+      "62": {
+        "title": "Hearing and Knowing",
+        "meaning": "Our Lord! Accept from us. Indeed You are the Hearing, the Knowing."
+      },
+      "63": {
+        "title": "Pardon Prayer",
+        "meaning": "O Allah! You are Pardoning and love to pardon, so pardon me."
+      },
+      "64": {
+        "title": "Qunut Prayer",
+        "meaning": "O Allah! Guide me among those You have guided."
+      },
+      "65": {
+        "title": "Master of Forgiveness",
+        "meaning": "O Allah! You are my Lord. There is no deity except You."
+      },
+      "66": {
+        "title": "Travel Prayer",
+        "meaning": "Glory be to Him who has subjected this to us."
+      },
+      "67": {
+        "title": "Meal Prayer",
+        "meaning": "O Allah! Bless us in what You have provided."
+      },
+      "68": {
+        "title": "Visiting the Sick",
+        "meaning": "No harm, it will be a purification, if Allah wills."
+      },
+      "69": {
+        "title": "Refuge from Satan",
+        "meaning": "I seek refuge in Allah from the accursed Satan."
+      },
+      "70": {
+        "title": "Grave Torment Protection",
+        "meaning": "O Allah! I seek refuge in You from the punishment of the grave."
+      },
+      "71": {
+        "title": "Mosque Entry Prayer",
+        "meaning": "O Allah! Open the gates of Your mercy for me."
+      },
+      "72": {
+        "title": "Mosque Exit Prayer",
+        "meaning": "O Allah! I ask You from Your bounty."
+      },
+      "73": {
+        "title": "Post-Ablution Testimony",
+        "meaning": "I bear witness there is no deity except Allah."
+      },
+      "74": {
+        "title": "Funeral Prayer",
+        "meaning": "O Allah! Forgive him and have mercy on him."
+      },
+      "75": {
+        "title": "Seeking Mercy",
+        "meaning": "O Allah! I ask You by Your mercy."
+      },
+      "76": {
+        "title": "Friday Salawat",
+        "meaning": "O Allah! Send blessings upon our master Muhammad."
+      },
+      "77": {
+        "title": "Tasbeeh",
+        "meaning": "Glory be to Allah and praise be to Allah."
+      },
+      "78": {
+        "title": "Intercession Prayer",
+        "meaning": "O Allah! Grant us the intercession of Your Prophet."
+      },
+      "79": {
+        "title": "Sin Forgiveness",
+        "meaning": "O Allah! Forgive my sins."
+      },
+      "80": {
+        "title": "Night of Power Prayer",
+        "meaning": "O Allah! You are Pardoning and love to pardon, so pardon me."
+      },
+      "81": {
+        "title": "Reaching Ramadan",
+        "meaning": "O Allah! Let us reach Ramadan."
+      },
+      "82": {
+        "title": "Tawheed Dhikr",
+        "meaning": "There is no deity except Allah, alone without partner."
+      },
+      "83": {
+        "title": "Eid Takbir",
+        "meaning": "Allah is the Greatest, Allah is the Greatest, there is no deity except Allah."
+      },
+      "84": {
+        "title": "Talbiyah",
+        "meaning": "Here I am, O Allah, here I am at Your service."
+      },
+      "85": {
+        "title": "New Moon Prayer",
+        "meaning": "O Allah! Let it appear over us with blessing and faith."
+      },
+      "86": {
+        "title": "Sha'ban Prayer",
+        "meaning": "O Allah! Bless us in Sha'ban."
+      },
+      "87": {
+        "title": "Blessed Days Prayer",
+        "meaning": "O Allah! Make these days blessed for us."
+      },
+      "88": {
+        "title": "Istighfar",
+        "meaning": "I seek forgiveness from Allah."
+      },
+      "89": {
+        "title": "Repentance Prayer",
+        "meaning": "I repent to Allah."
+      },
+      "90": {
+        "title": "Forgiveness and Mercy",
+        "meaning": "My Lord! Forgive me and have mercy on me."
+      },
+      "91": {
+        "title": "Self-Wrong Confession",
+        "meaning": "O Allah! I have wronged myself."
+      },
+      "92": {
+        "title": "Adam's Repentance",
+        "meaning": "Our Lord! We have wronged ourselves."
+      },
+      "93": {
+        "title": "Best of Forgivers",
+        "meaning": "My Lord! Forgive and have mercy. You are the best of those who show mercy."
+      },
+      "94": {
+        "title": "Purification from Sins",
+        "meaning": "O Allah! Wash me from my sins."
+      },
+      "95": {
+        "title": "Living and Sustaining",
+        "meaning": "I seek forgiveness from Allah, the Ever-Living, the Sustainer."
+      },
+      "96": {
+        "title": "Pardoning and Generous",
+        "meaning": "O Allah! You are Pardoning and Generous."
+      },
+      "97": {
+        "title": "Forgetting and Mistakes",
+        "meaning": "Our Lord! Do not blame us if we forget or make mistakes."
+      },
+      "98": {
+        "title": "Cleansing from Sins",
+        "meaning": "O Allah! Cleanse me from sins."
+      },
+      "99": {
+        "title": "I Have Repented",
+        "meaning": "I have repented to Allah."
+      },
+      "100": {
+        "title": "Takbir",
+        "meaning": "Allah is the Greatest."
+      },
+      "101": {
+        "title": "Subhanaka",
+        "meaning": "Glory be to You, O Allah! Praise be to You."
+      },
+      "102": {
+        "title": "Surah Al-Fatiha",
+        "meaning": "All praise is due to Allah, Lord of the worlds."
+      },
+      "103": {
+        "title": "Ruku Tasbeeh",
+        "meaning": "Glory be to my Lord, the Magnificent."
+      },
+      "104": {
+        "title": "Sujood Tasbeeh",
+        "meaning": "Glory be to my Lord, the Most High."
+      },
+      "105": {
+        "title": "Tahiyyat",
+        "meaning": "All greetings are for Allah."
+      },
+      "106": {
+        "title": "Allahumma Salli",
+        "meaning": "O Allah! Send blessings upon Muhammad."
+      },
+      "107": {
+        "title": "Allahumma Barik",
+        "meaning": "O Allah! Bestow blessings upon Muhammad."
+      },
+      "108": {
+        "title": "Rabbana Prayer",
+        "meaning": "Our Lord! Give us good in this world."
+      },
+      "109": {
+        "title": "Salam",
+        "meaning": "Peace and mercy of Allah be upon you."
+      },
+      "110": {
+        "title": "Post-Salam Prayer",
+        "meaning": "O Allah! You are Peace (the Source of Peace)."
+      },
+      "111": {
+        "title": "Qunut Prayer",
+        "meaning": "O Allah! We seek Your help."
+      },
+      "112": {
+        "title": "Prophet Yunus Prayer",
+        "meaning": "There is no deity except You. Glory be to You. Indeed I have been of the wrongdoers."
+      },
+      "113": {
+        "title": "Grief Prayer",
+        "meaning": "O Allah! I am Your servant."
+      },
+      "114": {
+        "title": "Sufficiency Verse",
+        "meaning": "Allah is sufficient for me. There is no deity except Him."
+      },
+      "115": {
+        "title": "Hope for Mercy",
+        "meaning": "O Allah! I hope for Your mercy."
+      },
+      "116": {
+        "title": "Living and Sustaining",
+        "meaning": "O Ever-Living, O Sustainer! I seek help through Your mercy."
+      },
+      "117": {
+        "title": "Difficulty to Ease",
+        "meaning": "O Allah! Nothing is easy except what You make easy."
+      },
+      "118": {
+        "title": "Grief Protection",
+        "meaning": "O Allah! I seek refuge in You from grief."
+      },
+      "119": {
+        "title": "Calamity Prayer",
+        "meaning": "Indeed we belong to Allah and to Him we shall return."
+      },
+      "120": {
+        "title": "Rain of Patience",
+        "meaning": "Our Lord! Pour upon us patience."
+      },
+      "121": {
+        "title": "Allah is With Me",
+        "meaning": "Allah is with me, Allah is watching over me."
+      },
+      "122": {
+        "title": "Hope Verse",
+        "meaning": "Do not despair of the mercy of Allah."
+      },
+      "123": {
+        "title": "Tawakkul Verse",
+        "meaning": "And upon Allah let the believers rely."
+      }
+    }
+  }
+}

@@ -20,27 +20,27 @@ const Assistant = ({ onClose }) => {
     const FAQ_ITEMS = [
         {
             key: 'assistant.questions.q1',
-            answer: 'Namazı düzenli kılmak için küçük başlayın: her gün aynı vakitte kısa bir hazırlık rutini yapın, hatırlatıcı açın ve bir vakti kaçırırsanız ertesi vakitte yeniden başlayın.'
+            answerKey: 'assistant.answers.q1'
         },
         {
             key: 'assistant.questions.q2',
-            answer: 'Kur’an okuma alışkanlığı için günlük 5-10 dakika sabit zaman ayırın. Süreyi değil sürekliliği hedefleyin.'
+            answerKey: 'assistant.answers.q2'
         },
         {
             key: 'assistant.questions.q3',
-            answer: 'Zikir hedefi için “az ama devamlı” yöntemi önerilir. Güne küçük bir sayı ile başlayıp haftalık olarak artırabilirsiniz.'
+            answerKey: 'assistant.answers.q3'
         },
         {
             key: 'assistant.questions.q4',
-            answer: 'Odaklanmak zor olduğunda kısa bir mola verin, derin nefes alın ve tek bir hedefe dönün. Çoklu görev yerine tek görev daha verimli olur.'
+            answerKey: 'assistant.answers.q4'
         },
         {
             key: 'assistant.questions.q5',
-            answer: 'Manevi motivasyon için günlük kısa bir dua, şükür notu ve gün sonu değerlendirmesi yapmanız etkili olur.'
+            answerKey: 'assistant.answers.q5'
         },
         {
             key: 'assistant.questions.q6',
-            answer: 'Bu bölüm şu an Beta sürümde hazır soru-cevap asistanı olarak çalışıyor. Yakında daha gelişmiş canlı sohbet desteği eklenecek.'
+            answerKey: 'assistant.answers.q6'
         }
     ];
 
@@ -49,7 +49,7 @@ const Assistant = ({ onClose }) => {
             {
                 id: getNextMessageId(),
                 type: 'bot',
-                text: `${t('assistant.welcomeMessage')}\n\nBeta mod: Hazır sorulara tıklayabilir veya benzer bir soru yazabilirsiniz.`
+                text: `${t('assistant.welcomeMessage')}\n\n${t('assistant.betaWelcomeHint', 'Beta mode: Tap a suggested question or type a similar one.')}`
             }
         ]);
     }, [t]);
@@ -66,16 +66,16 @@ const Assistant = ({ onClose }) => {
         const normalized = query.toLowerCase().trim();
 
         const directMatch = FAQ_ITEMS.find((item) => t(item.key).toLowerCase() === normalized);
-        if (directMatch) return directMatch.answer;
+        if (directMatch) return t(directMatch.answerKey);
 
         const fuzzyMatch = FAQ_ITEMS.find((item) => {
             const q = t(item.key).toLowerCase();
             return q.includes(normalized) || normalized.includes(q.split(' ').slice(0, 3).join(' '));
         });
 
-        if (fuzzyMatch) return fuzzyMatch.answer;
+        if (fuzzyMatch) return t(fuzzyMatch.answerKey);
 
-        return 'Bu soru şu an Beta hazır cevap listesinde yok. Alttaki örnek sorulardan birine tıklayabilirsiniz.';
+        return t('assistant.betaUnknownQuestion', 'This question is not in the beta preset answers list yet. Please tap one of the suggested questions below.');
     };
 
     const handleSend = async (text) => {
@@ -130,10 +130,10 @@ const Assistant = ({ onClose }) => {
                     <Bot size={24} color="white" />
                 </div>
                 <div style={{ flex: 1 }}>
-                    <h3 style={{ margin: 0, color: 'var(--text-color)' }}>{t('assistant.title')} (Beta)</h3>
+                    <h3 style={{ margin: 0, color: 'var(--text-color)' }}>{t('assistant.title')} ({t('assistant.betaLabel', 'Beta')})</h3>
                     <span style={{ fontSize: '12px', color: '#27ae60', display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <span style={{ width: '8px', height: '8px', background: '#27ae60', borderRadius: '50%' }}></span>
-                        Hazır soru-cevap modu
+                        {t('assistant.readyQaMode', 'Preset Q&A mode')}
                     </span>
                 </div>
             </div>
@@ -198,7 +198,7 @@ const Assistant = ({ onClose }) => {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Beta: hazır sorulardan birini yazın veya alttan seçin"
+                    placeholder={t('assistant.betaInputPlaceholder', 'Beta: Type one of the preset questions or choose below')}
                     style={{
                         flex: 1,
                         padding: '12px 20px',

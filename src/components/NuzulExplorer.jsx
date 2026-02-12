@@ -1,10 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, BookOpen, AlertCircle, Loader } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
-import { queryNuzulSebebi, hasApiKey } from '../services/geminiService';
 import { searchNuzul } from '../data/nuzulData';
-import { checkLimit, consumeLimit, getDailyLimitStatus } from '../services/proService';
-import LimitReachedModal from './LimitReachedModal';
 import { useErrorHandler } from '../hooks/useErrorHandler';
 import ToastNotification from './ToastNotification';
 
@@ -12,9 +9,7 @@ const NuzulExplorer = ({ onClose }) => {
   const [query, setQuery] = useState('');
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [limitStatus, setLimitStatus] = useState(getDailyLimitStatus());
-  const [, setShowLimitModal] = useState(false);
-  const { error, handleError, clearError } = useErrorHandler();
+  const { error, clearError } = useErrorHandler();
   const messagesEndRef = useRef(null);
 
   // Örnek sorular
@@ -31,19 +26,21 @@ const NuzulExplorer = ({ onClose }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSend = async (text = query) => {
+  const handleSend = (text = query) => {
     if (!text.trim() || isLoading) return;
 
-    // 1. Önce Yerel Veritabanında Ara (Hızlı & Limitsiz)
+    setQuery('');
+    setIsLoading(true);
+
+    // Kullanıcı mesajı
+    setMessages(prev => [...prev, { role: 'user', content: text, timestamp: new Date() }]);
+
+    // Yerel Veritabanında Ara
     const localResult = searchNuzul(text);
-    
-    if (localResult) {
-      setQuery('');
-      // Kullanıcı mesajı
-      setMessages(prev => [...prev, { role: 'user', content: text, timestamp: new Date() }]);
-      
-      // Yapay gecikme (doğallık için)
-      setTimeout(() => {
+
+    // Simulate brief loading for natural feel
+    setTimeout(() => {
+      if (localResult) {
         setMessages(prev => [...prev, { 
           role: 'assistant', 
           content: localResult.content,
@@ -51,62 +48,15 @@ const NuzulExplorer = ({ onClose }) => {
           title: localResult.title,
           timestamp: new Date() 
         }]);
-      }, 400);
-      return;
-    }
-
-    // 2. Yerelde Yoksa API'ye Sor (Limitli & Yavaş)
-    
-    // API key kontrolü
-    if (!hasApiKey()) {
-      handleError(
-        new Error('API key missing'),
-        'NuzulExplorer: API Key Check'
-      );
-      return;
-    }
-
-    // Limit kontrolü
-    const limitCheck = checkLimit('nuzul_ai');
-    if (!limitCheck.allowed) {
-      setShowLimitModal(true);
-      return;
-    }
-
-    clearError();
-    setQuery('');
-    setIsLoading(true);
-
-    // Kullanıcı mesajını ekle
-    const userMessage = { role: 'user', content: text, timestamp: new Date() };
-    setMessages(prev => [...prev, userMessage]);
-
-    try {
-      // Limit kullan
-      consumeLimit('nuzul_ai');
-      setLimitStatus(getDailyLimitStatus());
-
-      // AI sorgusu
-      const result = await queryNuzulSebebi(text);
-
-      if (result.success) {
-        const aiMessage = { 
-          role: 'assistant', 
-          content: result.content, 
-          timestamp: new Date() 
-        };
-        setMessages(prev => [...prev, aiMessage]);
       } else {
-        handleError(
-          new Error(result.error || 'Query failed'),
-          'NuzulExplorer: AI Query Failed'
-        );
+        setMessages(prev => [...prev, { 
+          role: 'assistant', 
+          content: 'Bu ayet/sure hakkında veritabanımızda henüz detaylı nüzul bilgisi bulunamadı. Lütfen "Alaq Suresi", "Fatiha" veya "Ayetel Kürsi" gibi daha genel başlıkları denemeyi unutma.',
+          timestamp: new Date() 
+        }]);
       }
-    } catch (err) {
-      handleError(err, 'NuzulExplorer: Network Error');
-    } finally {
       setIsLoading(false);
-    }
+    }, 500);
   };
 
 
@@ -126,19 +76,6 @@ const NuzulExplorer = ({ onClose }) => {
         <div className="header-content">
           <h1>📖 Nüzul Sebebi</h1>
           <p className="subtitle">Ayetlerin iniş sebeplerini öğrenin</p>
-        </div>
-        
-        {/* Limit Badge */}
-        <div className={`limit-badge ${limitStatus.nuzul_ai.remaining === 0 ? 'empty' : ''}`}>
-          {limitStatus.isPro ? (
-            <span className="pro-badge-mini">⭐ PRO</span>
-          ) : (
-            <>
-              <span>{limitStatus.nuzul_ai.remaining}</span>
-              <span className="limit-separator">/</span>
-              <span>{limitStatus.nuzul_ai.max}</span>
-            </>
-          )}
         </div>
       </div>
 
@@ -163,13 +100,6 @@ const NuzulExplorer = ({ onClose }) => {
                 </button>
               ))}
             </div>
-
-            {!limitStatus.isPro && (
-              <div className="free-limit-info">
-                <AlertCircle size={16} />
-                <span>Günlük {limitStatus.nuzul_ai.max} ücretsiz sorgu hakkınız var</span>
-              </div>
-            )}
           </div>
         ) : (
           <>
@@ -238,12 +168,6 @@ const NuzulExplorer = ({ onClose }) => {
             {isLoading ? <Loader className="spin" size={20} /> : <Send size={20} />}
           </button>
         </div>
-        
-        {!limitStatus.isPro && limitStatus.nuzul_ai.remaining > 0 && (
-          <div className="remaining-hint">
-            {limitStatus.nuzul_ai.remaining} sorgu hakkınız kaldı
-          </div>
-        )}
       </div>
 
       <style>{`

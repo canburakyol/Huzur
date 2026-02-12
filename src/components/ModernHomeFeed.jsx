@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import StoryBar from './StoryBar';
 import HeroPrayerCard from './HeroPrayerCard';
@@ -5,7 +6,7 @@ import FeatureSlider from './FeatureSlider';
 import DiscoverFeed from './DiscoverFeed';
 import './ModernHomeFeed.css';
 
-const ModernHomeFeed = ({ onSelectFeature, timings, nextPrayer, onShowPrayers, children }) => {
+const ModernHomeFeed = memo(({ onSelectFeature, timings, nextPrayer, onShowPrayers, children }) => {
     const { t } = useTranslation();
 
     return (
@@ -43,6 +44,6 @@ const ModernHomeFeed = ({ onSelectFeature, timings, nextPrayer, onShowPrayers, c
             <DiscoverFeed />
         </div>
     );
-};
+});
 
 export default ModernHomeFeed;

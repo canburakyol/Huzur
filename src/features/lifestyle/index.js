@@ -22,64 +22,64 @@ export const lifestyleFeatures = {
     component: StreakFeature,
     category: 'LIFESTYLE',
     module: 'lifestyle',
-    name: 'Seri Takvimi',
+    nameKey: 'features.streak',
     icon: '🔥'
   },
   huzurMode: {
     component: HuzurMode,
     category: 'LIFESTYLE',
     module: 'lifestyle',
-    name: 'Huzur Modu',
+    nameKey: 'features.huzurMode',
     icon: '🌙'
   },
   dailyTasks: {
     component: DailyTasks,
     category: 'LIFESTYLE',
     module: 'lifestyle',
-    name: 'Günlük Görevler',
+    nameKey: 'features.dailyTasks',
     icon: '✅'
   },
   family: {
     component: FamilyMode,
     category: 'LIFESTYLE',
     module: 'lifestyle',
-    name: 'Aile Modu',
+    nameKey: 'features.family',
     icon: '👨‍👩‍👧‍👦'
   },
   islamicMeditation: {
     component: IslamicMeditation,
     category: 'LIFESTYLE',
     module: 'lifestyle',
-    name: 'İslami Meditasyon',
+    nameKey: 'features.islamicMeditation',
     icon: '🧘'
   },
   theme: {
     component: ThemeSelector,
     category: 'LIFESTYLE',
     module: 'lifestyle',
-    name: 'Tema',
+    nameKey: 'features.theme',
     icon: '🎨'
   },
   fontSettings: {
     component: FontSettings,
     category: 'LIFESTYLE',
     module: 'lifestyle',
-    name: 'Yazı Tipi',
+    nameKey: 'features.fontSettings',
     icon: '🔤'
   },
   muezzinSelector: {
     component: MuezzinSelector,
     category: 'LIFESTYLE',
     module: 'lifestyle',
-    name: 'Müezzin Seç',
+    nameKey: 'features.muezzinSelector',
     icon: '🔊'
   }
 };
 
 // Module metadata
 export const moduleInfo = {
-  name: 'Yaşam Tarzı',
-  description: 'Kişisel yaşam ve wellness özellikleri',
+  nameKey: 'modules.lifestyle',
+  descriptionKey: 'modules.lifestyleDesc',
   icon: '🌙',
   priority: 7,
   chunkName: 'feature-lifestyle'

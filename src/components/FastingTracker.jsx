@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { X, Check, Plus, Moon, Sun } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getHijriToday, checkFastingDay } from '../services/hijriService';
+import { storageService } from '../services/storageService';
+
+const FASTING_LOG_KEY = 'fastingLog';
 
 const FastingTracker = ({ onClose }) => {
     const { t } = useTranslation();
@@ -20,7 +23,7 @@ const FastingTracker = ({ onClose }) => {
         setTodayFasting(fasting);
 
         // Kayıtlı oruçları yükle
-        const saved = JSON.parse(localStorage.getItem('fastingLog') || '{}');
+        const saved = storageService.getItem(FASTING_LOG_KEY, {});
         setFastingLog(saved);
 
         // İstatistikleri hesapla
@@ -60,7 +63,7 @@ const FastingTracker = ({ onClose }) => {
         }
 
         setFastingLog(newLog);
-        localStorage.setItem('fastingLog', JSON.stringify(newLog));
+        storageService.setItem(FASTING_LOG_KEY, newLog);
         calculateStats(newLog);
     };
 

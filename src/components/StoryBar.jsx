@@ -1,9 +1,9 @@
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Sparkles, BookOpen, Heart, Quote } from 'lucide-react';
 import './ModernHomeFeed.css';
 
-const StoryBar = ({ onSelectFeature }) => {
+const StoryBar = memo(({ onSelectFeature }) => {
     const { t } = useTranslation();
     const scrollRef = useRef(null);
 
@@ -30,6 +30,6 @@ const StoryBar = ({ onSelectFeature }) => {
             ))}
         </div>
     );
-};
+});
 
 export default StoryBar;

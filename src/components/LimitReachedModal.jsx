@@ -1,4 +1,5 @@
 import { Crown, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Günlük limit aşımı modalı
@@ -11,13 +12,14 @@ const LimitReachedModal = ({
   maxCount = 2,
   onUpgrade 
 }) => {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   const featureNames = {
-    nuzul_ai: 'Nüzul Sebebi Sorgusu',
-    tajweed_ai: 'Tecvid Kontrolü',
-    word_by_word: 'Kelime Kelime Anlam',
-    memorize: 'Hafızlık Yardımcısı'
+    nuzul_ai: t('limitModal.features.nuzul_ai', 'Revelation Reason Query'),
+    tajweed_ai: t('limitModal.features.tajweed_ai', 'Tajweed Check'),
+    word_by_word: t('limitModal.features.word_by_word', 'Word by Word Meaning'),
+    memorize: t('limitModal.features.memorize', 'Memorization Assistant')
   };
 
   const featureIcons = {
@@ -41,7 +43,7 @@ const LimitReachedModal = ({
         </div>
 
         {/* Title */}
-        <h2>Günlük Limit Doldu</h2>
+        <h2>{t('limitModal.title', 'Daily Limit Reached')}</h2>
 
         {/* Feature Info */}
         <div className="limit-feature-info">
@@ -51,19 +53,19 @@ const LimitReachedModal = ({
 
         {/* Usage Info */}
         <p className="limit-usage-text">
-          Bugünkü <strong>{maxCount}</strong> ücretsiz hakkını kullandın!
+          {t('limitModal.usagePrefix', 'You have used your')} <strong>{maxCount}</strong> {t('limitModal.usageSuffix', 'free uses for today!')}
         </p>
 
         {/* Options */}
         <div className="limit-options">
           <div className="limit-option">
             <span className="option-icon">⏰</span>
-            <span>Yarın 2 yeni hakkın olacak</span>
+            <span>{t('limitModal.tomorrowOption', 'You will have 2 new uses tomorrow')}</span>
           </div>
-          <div className="limit-option-divider">veya</div>
+          <div className="limit-option-divider">{t('limitModal.or', 'or')}</div>
           <div className="limit-option pro">
             <span className="option-icon">⭐</span>
-            <span>Pro'ya geç, <strong>sınırsız</strong> kullan!</span>
+            <span>{t('limitModal.proOptionPrefix', 'Upgrade to Pro and use')} <strong>{t('limitModal.unlimited', 'unlimited')}</strong>!</span>
           </div>
         </div>
 
@@ -71,20 +73,20 @@ const LimitReachedModal = ({
         <div className="limit-modal-buttons">
           <button className="limit-upgrade-btn" onClick={onUpgrade}>
             <Crown size={18} />
-            Pro'ya Geç
+            {t('limitModal.upgradeButton', 'Upgrade to Pro')}
           </button>
           <button className="limit-later-btn" onClick={onClose}>
-            Tamam, Anladım
+            {t('limitModal.laterButton', 'Okay, Got it')}
           </button>
         </div>
 
         {/* Pro Benefits Preview */}
         <div className="pro-benefits-mini">
-          <span>Pro ile:</span>
+          <span>{t('limitModal.proWith', 'With Pro:')}</span>
           <ul>
-            <li>🤖 Sınırsız AI sorgu</li>
-            <li>📖 Tüm sureler</li>
-            <li>🚫 Reklamsız</li>
+            <li>🤖 {t('limitModal.benefits.unlimitedAi', 'Unlimited AI queries')}</li>
+            <li>📖 {t('limitModal.benefits.allSurahs', 'All surahs')}</li>
+            <li>🚫 {t('limitModal.benefits.noAds', 'Ad-free')}</li>
           </ul>
         </div>
       </div>

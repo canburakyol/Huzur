@@ -1,0 +1,77 @@
+{
+  "sections": {
+    "istigfar": {
+      "title": "Istighfar",
+      "subtitle": "3 times",
+      "meaning": "I seek forgiveness from Allah the Almighty.",
+      "longMeaning": "I seek forgiveness from Allah the Almighty, the Generous, there is no god but He, the Ever-Living, the Self-Subsisting, and I turn to Him in repentance."
+    },
+    "entes-selam": {
+      "title": "Allahumma Antas-Salam",
+      "subtitle": "Post-prayer dua",
+      "meaning": "O Allah, You are Peace and from You comes peace. Blessed are You, O Owner of Majesty and Honor."
+    },
+    "salavat": {
+      "title": "Salawat",
+      "subtitle": "Blessings upon the Prophet",
+      "meaning": "O Allah, send peace and blessings upon our Master Muhammad and upon the family of our Master Muhammad."
+    },
+    "subhanallahi": {
+      "title": "Subhanallahi wal-Hamdulillah",
+      "subtitle": "Tasbih, Hamd and Takbir",
+      "meaning": "Glory be to Allah, and praise be to Allah, and there is no god but Allah, and Allah is the Greatest. And there is no power and no strength except with Allah, the Most High, the Most Great."
+    },
+    "ayetel-kursi": {
+      "title": "Ayatul Kursi",
+      "subtitle": "Baqarah 255",
+      "meaning": "In the name of Allah, the Beneficent, the Merciful. Allah! There is no god but He, the Living, the Self-subsisting, Eternal. No slumber can seize Him nor sleep. His are all things in the heavens and on earth. Who is there can intercede in His presence except as He permitteth? He knoweth what (appearth to His creatures as) before or after or behind them. Nor shall they compass aught of His knowledge except as He willeth. His Throne doth extend over the heavens and the earth, and He feeleth no fatigue in guarding and preserving them for He is the Most High, the Supreme (in glory)."
+    }
+  },
+  "tesbihler": {
+    "subhanallah": {
+      "title": "Subhanallah",
+      "meaning": "Glory be to Allah."
+    },
+    "elhamdulillah": {
+      "title": "Alhamdulillah",
+      "meaning": "All praise is due to Allah."
+    },
+    "allahuekber": {
+      "title": "Allahu Akbar",
+      "meaning": "Allah is the Greatest."
+    }
+  },
+  "tevhid": {
+    "title": "Tawhid",
+    "subtitle": "After tasbihs",
+    "meaning": "There is no god but Allah, alone, without partner. His is the sovereignty, and His is the praise, and He has power over all things."
+  },
+  "dualar": {
+    "rabbena1": {
+      "title": "Rabbana Atina",
+      "meaning": "Our Lord! Give us in this world that which is good and in the Hereafter that which is good, and save us from the torment of the Fire."
+    },
+    "rabbena2": {
+      "title": "Rabbanaighfirli",
+      "meaning": "Our Lord! Forgive me and my parents, and (all) the believers on the Day when the reckoning will be established."
+    },
+    "rabbi-inni": {
+      "title": "Rabbi Inni",
+      "meaning": "My Lord! I am truly in need of whatever good You bestow on me."
+    },
+    "rabbi-habli": {
+      "title": "Rabbi Habli",
+      "meaning": "My Lord! Grant me from Yourself a good offspring. Indeed, You are the Hearer of supplication."
+    }
+  },
+  "ui": {
+    "title": "Tespihat",
+    "postPrayerDhikr": "Post-Prayer Dhikr",
+    "tesbihs33": "33x Tasbihs",
+    "postPrayerDuas": "Post-Prayer Duas",
+    "todayProgress": "Today's Progress",
+    "reset": "Reset",
+    "complete": "Complete",
+    "completed": "Completed ✓"
+  }
+}

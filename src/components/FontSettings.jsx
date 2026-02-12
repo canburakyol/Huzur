@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Type, Minus, Plus, Check } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
+import { storageService } from '../services/storageService';
 
 const STORAGE_KEY = 'huzur_font_settings';
 
@@ -26,7 +27,7 @@ const FontSettings = ({ onClose }) => {
 
   useEffect(() => {
     // Kayıtlı ayarları yükle
-    const savedSettings = localStorage.getItem(STORAGE_KEY);
+    const savedSettings = storageService.getString(STORAGE_KEY, '');
     if (savedSettings) {
       try {
         // eslint-disable-next-line
@@ -40,7 +41,7 @@ const FontSettings = ({ onClose }) => {
   const updateSetting = (key, value) => {
     const newSettings = { ...settings, [key]: value };
     setSettings(newSettings);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newSettings));
+    storageService.setItem(STORAGE_KEY, newSettings);
     
     // CSS değişkenlerini güncelle
     applyFontSettings(newSettings);
@@ -262,7 +263,7 @@ const FontSettings = ({ onClose }) => {
         className="reset-btn"
         onClick={() => {
           setSettings(DEFAULT_SETTINGS);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_SETTINGS));
+          storageService.setItem(STORAGE_KEY, DEFAULT_SETTINGS);
           applyFontSettings(DEFAULT_SETTINGS);
           setSaved(true);
           setTimeout(() => setSaved(false), 1500);
@@ -275,7 +276,7 @@ const FontSettings = ({ onClose }) => {
         .font-settings-container {
           min-height: 100vh;
           padding: 0 0 100px 0;
-          background: var(--bg-primary);
+          background: var(--bg-gradient-start);
         }
 
         .font-settings-header {
@@ -283,21 +284,22 @@ const FontSettings = ({ onClose }) => {
           align-items: center;
           gap: 16px;
           padding: 20px;
-          background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 100%);
+          background: rgba(0,0,0,0.1);
+          backdrop-filter: blur(10px);
           position: sticky;
           top: 0;
           z-index: 10;
         }
 
         .header-content h1 {
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           margin: 0;
-          color: var(--text-primary);
+          color: var(--text-color);
         }
 
         .subtitle {
           font-size: 0.85rem;
-          color: var(--text-secondary);
+          color: var(--text-color-muted);
           margin: 4px 0 0 0;
         }
 
@@ -306,8 +308,8 @@ const FontSettings = ({ onClose }) => {
           align-items: center;
           gap: 6px;
           padding: 6px 12px;
-          background: rgba(34, 197, 94, 0.2);
-          color: #22c55e;
+          background: rgba(16, 185, 129, 0.2);
+          color: #10b981;
           border-radius: 20px;
           font-size: 12px;
           font-weight: 600;
@@ -317,28 +319,32 @@ const FontSettings = ({ onClose }) => {
         .preview-card {
           margin: 16px;
           text-align: center;
+          background: var(--card-bg);
+          border: 1px solid var(--glass-border);
         }
 
         .preview-card h3 {
           font-size: 14px;
-          color: var(--text-secondary);
+          color: var(--text-color-muted);
           margin-bottom: 16px;
         }
 
         .preview-arabic {
-          color: var(--text-primary);
+          color: var(--text-color);
           margin-bottom: 12px;
           direction: rtl;
         }
 
         .preview-turkish {
-          color: var(--text-secondary);
+          color: var(--text-color-muted);
           font-style: italic;
         }
 
         .setting-card {
           margin: 0 16px 12px;
           padding: 16px;
+          background: var(--card-bg);
+          border: 1px solid var(--glass-border);
         }
 
         .setting-header {
@@ -349,18 +355,18 @@ const FontSettings = ({ onClose }) => {
         }
 
         .setting-header svg, .setting-header span:first-child {
-          color: var(--accent);
+          color: var(--primary-color);
         }
 
         .setting-header h4 {
           margin: 0;
           font-size: 15px;
-          color: var(--text-primary);
+          color: var(--text-color);
         }
 
         .setting-value {
           font-size: 12px;
-          color: var(--accent);
+          color: var(--primary-color);
           font-weight: 600;
         }
 
@@ -375,8 +381,8 @@ const FontSettings = ({ onClose }) => {
           height: 40px;
           border-radius: 50%;
           border: 1px solid var(--glass-border);
-          background: rgba(255,255,255,0.1);
-          color: var(--text-primary);
+          background: rgba(255,255,255,0.05);
+          color: var(--text-color);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -391,7 +397,7 @@ const FontSettings = ({ onClose }) => {
 
         .size-btn:not(:disabled):active {
           transform: scale(0.9);
-          background: var(--accent);
+          background: var(--primary-color);
         }
 
         .size-slider {
@@ -402,7 +408,7 @@ const FontSettings = ({ onClose }) => {
           width: 100%;
           height: 6px;
           border-radius: 3px;
-          background: rgba(255,255,255,0.2);
+          background: rgba(255,255,255,0.1);
           outline: none;
           -webkit-appearance: none;
         }
@@ -412,7 +418,7 @@ const FontSettings = ({ onClose }) => {
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: var(--accent);
+          background: var(--primary-color);
           cursor: pointer;
           box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
@@ -420,12 +426,14 @@ const FontSettings = ({ onClose }) => {
         .font-family-card {
           margin: 0 16px 12px;
           padding: 16px;
+          background: var(--card-bg);
+          border: 1px solid var(--glass-border);
         }
 
         .font-family-card h4 {
           margin: 0 0 16px 0;
           font-size: 15px;
-          color: var(--text-primary);
+          color: var(--text-color);
         }
 
         .font-options {
@@ -439,8 +447,8 @@ const FontSettings = ({ onClose }) => {
           align-items: center;
           gap: 12px;
           padding: 12px;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.1);
+          background: rgba(255,255,255,0.03);
+          border: 1px solid var(--glass-border);
           border-radius: 12px;
           cursor: pointer;
           transition: all 0.2s ease;
@@ -451,13 +459,13 @@ const FontSettings = ({ onClose }) => {
         }
 
         .font-option.selected {
-          background: rgba(212, 175, 55, 0.15);
-          border-color: var(--accent);
+          background: rgba(212, 175, 55, 0.1);
+          border-color: var(--primary-color);
         }
 
         .font-preview {
           font-size: 20px;
-          color: var(--text-primary);
+          color: var(--text-color);
           width: 80px;
           text-align: right;
           direction: rtl;
@@ -473,16 +481,16 @@ const FontSettings = ({ onClose }) => {
         .font-name {
           font-size: 14px;
           font-weight: 600;
-          color: var(--text-primary);
+          color: var(--text-color);
         }
 
-        .font-desc {
+        .font-description {
           font-size: 11px;
-          color: var(--text-secondary);
+          color: var(--text-color-muted);
         }
 
         .selected-indicator {
-          color: var(--accent);
+          color: var(--primary-color);
         }
 
         .reset-btn {
@@ -490,8 +498,8 @@ const FontSettings = ({ onClose }) => {
           margin: 24px auto;
           padding: 12px 24px;
           background: transparent;
-          border: 1px solid rgba(255,255,255,0.3);
-          color: var(--text-secondary);
+          border: 1px solid var(--glass-border);
+          color: var(--text-color-muted);
           border-radius: 20px;
           font-size: 14px;
           cursor: pointer;
@@ -500,9 +508,10 @@ const FontSettings = ({ onClose }) => {
 
         .reset-btn:active {
           transform: scale(0.95);
-          background: rgba(255,255,255,0.1);
+          background: rgba(255,255,255,0.05);
         }
       `}</style>
+
     </div>
   );
 };

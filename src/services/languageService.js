@@ -1,15 +1,45 @@
 import { Device } from '@capacitor/device';
 import i18n from '../i18n';
 import { logger } from '../utils/logger';
+import {
+  DEFAULT_LANGUAGE_CODE,
+  RTL_LANGUAGE_CODES,
+  SUPPORTED_LANGUAGE_CODES,
+  SUPPORTED_LANGUAGE_OPTIONS,
+  isSupportedLanguage
+} from '../config/i18nConfig';
+import { storageService } from './storageService';
+import { STORAGE_KEYS } from '../constants';
 
 /**
  * Language Service
  * Handles device language detection and i18next language synchronization
  */
 
-// Supported languages in the app
-const SUPPORTED_LANGUAGES = ['tr', 'en', 'ar'];
-const DEFAULT_LANGUAGE = 'tr';
+const REGION_LANGUAGE_MAP = {
+  TR: 'tr',
+  ID: 'id',
+  US: 'en',
+  DE: 'de',
+  FR: 'fr',
+  ES: 'es'
+};
+
+const detectCountryCode = () => {
+  try {
+    const locale = navigator.language || 'tr-TR';
+    const normalized = String(locale).replace('_', '-');
+    const country = normalized.split('-')[1];
+    return (country || 'TR').toUpperCase();
+  } catch {
+    return 'TR';
+  }
+};
+
+const resolveRegionalDefaultLanguage = () => {
+  const country = detectCountryCode();
+  return REGION_LANGUAGE_MAP[country] || 'en';
+};
 
 /**
  * Detects the device's system language and sets i18next accordingly
@@ -22,7 +52,7 @@ export const detectAndSetLanguage = async () => {
     // Check if running on native platform
     const isNativePlatform = window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false;
     
-    let languageCode = DEFAULT_LANGUAGE;
+    let languageCode = resolveRegionalDefaultLanguage();
     
     if (isNativePlatform) {
       // Get device language info using Capacitor
@@ -35,10 +65,10 @@ export const detectAndSetLanguage = async () => {
       
       logger.log('[LanguageService] Device language detected:', deviceLang, '-> Primary:', primaryLang);
       
-      if (SUPPORTED_LANGUAGES.includes(primaryLang)) {
+      if (isSupportedLanguage(primaryLang)) {
         languageCode = primaryLang;
       } else {
-        logger.log('[LanguageService] Device language not supported, using default:', DEFAULT_LANGUAGE);
+        logger.log('[LanguageService] Device language not supported, using regional fallback:', languageCode);
       }
     } else {
       // Web/browser environment - use browser language
@@ -47,14 +77,14 @@ export const detectAndSetLanguage = async () => {
       
       logger.log('[LanguageService] Browser language detected:', browserLang, '-> Primary:', primaryLang);
       
-      if (SUPPORTED_LANGUAGES.includes(primaryLang)) {
+      if (isSupportedLanguage(primaryLang)) {
         languageCode = primaryLang;
       }
     }
     
-    // Check if user has manually set a language preference (stored in localStorage)
-    const savedLanguage = localStorage.getItem('app_language');
-    if (savedLanguage && SUPPORTED_LANGUAGES.includes(savedLanguage)) {
+    // Check if user has manually set a language preference
+    const savedLanguage = storageService.getString(STORAGE_KEYS.APP_LANGUAGE, '');
+    if (savedLanguage && isSupportedLanguage(savedLanguage)) {
       logger.log('[LanguageService] Using saved language preference:', savedLanguage);
       languageCode = savedLanguage;
     }
@@ -64,9 +94,9 @@ export const detectAndSetLanguage = async () => {
     logger.log('[LanguageService] Language set to:', languageCode);
     
     // Set document direction for RTL languages (Arabic)
-    if (languageCode === 'ar') {
+    if (RTL_LANGUAGE_CODES.includes(languageCode)) {
       document.documentElement.setAttribute('dir', 'rtl');
-      document.documentElement.setAttribute('lang', 'ar');
+      document.documentElement.setAttribute('lang', languageCode);
     } else {
       document.documentElement.setAttribute('dir', 'ltr');
       document.documentElement.setAttribute('lang', languageCode);
@@ -74,10 +104,10 @@ export const detectAndSetLanguage = async () => {
     
     return languageCode;
   } catch (error) {
-    console.error('[LanguageService] Error detecting language:', error);
+    logger.error('[LanguageService] Error detecting language:', error);
     // Fallback to default language
-    await i18n.changeLanguage(DEFAULT_LANGUAGE);
-    return DEFAULT_LANGUAGE;
+    await i18n.changeLanguage(DEFAULT_LANGUAGE_CODE);
+    return DEFAULT_LANGUAGE_CODE;
   }
 };
 
@@ -89,22 +119,22 @@ export const detectAndSetLanguage = async () => {
  * @returns {Promise<boolean>} True if successful
  */
 export const changeLanguage = async (languageCode) => {
-  if (!SUPPORTED_LANGUAGES.includes(languageCode)) {
+  if (!isSupportedLanguage(languageCode)) {
     logger.warn('[LanguageService] Unsupported language:', languageCode);
     return false;
   }
   
   try {
-    // Save preference to localStorage
-    localStorage.setItem('app_language', languageCode);
+    // Save preference to centralized storage
+    storageService.setString(STORAGE_KEYS.APP_LANGUAGE, languageCode);
     
     // Change i18next language
     await i18n.changeLanguage(languageCode);
     
     // Set document direction for RTL languages
-    if (languageCode === 'ar') {
+    if (RTL_LANGUAGE_CODES.includes(languageCode)) {
       document.documentElement.setAttribute('dir', 'rtl');
-      document.documentElement.setAttribute('lang', 'ar');
+      document.documentElement.setAttribute('lang', languageCode);
     } else {
       document.documentElement.setAttribute('dir', 'ltr');
       document.documentElement.setAttribute('lang', languageCode);
@@ -113,7 +143,7 @@ export const changeLanguage = async (languageCode) => {
     logger.log('[LanguageService] Language changed to:', languageCode);
     return true;
   } catch (error) {
-    console.error('[LanguageService] Error changing language:', error);
+    logger.error('[LanguageService] Error changing language:', error);
     return false;
   }
 };
@@ -123,7 +153,7 @@ export const changeLanguage = async (languageCode) => {
  * @returns {string} Current language code
  */
 export const getCurrentLanguage = () => {
-  return i18n.language || DEFAULT_LANGUAGE;
+  return i18n.language || DEFAULT_LANGUAGE_CODE;
 };
 
 /**
@@ -131,16 +161,17 @@ export const getCurrentLanguage = () => {
  * @returns {Array<{code: string, name: string, nativeName: string}>}
  */
 export const getSupportedLanguages = () => {
-  return [
-    { code: 'tr', name: 'Turkish', nativeName: 'Türkçe' },
-    { code: 'en', name: 'English', nativeName: 'English' },
-    { code: 'ar', name: 'Arabic', nativeName: 'العربية' }
-  ];
+  return SUPPORTED_LANGUAGE_OPTIONS;
+};
+
+export const getSupportedLanguageCodes = () => {
+  return SUPPORTED_LANGUAGE_CODES;
 };
 
 export default {
   detectAndSetLanguage,
   changeLanguage,
   getCurrentLanguage,
-  getSupportedLanguages
+  getSupportedLanguages,
+  getSupportedLanguageCodes
 };

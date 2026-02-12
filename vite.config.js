@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { VitePWA } from 'vite-plugin-pwa'
 import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vite.dev/config/
@@ -16,11 +15,38 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-i18next', 'i18next'],
-          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/functions'],
-          ui: ['lucide-react', 'lottie-react'],
-          maps: ['leaflet', 'react-leaflet']
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return;
+
+          if (id.includes('/node_modules/firebase/')) return 'vendor-firebase';
+          if (id.includes('/@revenuecat/')) return 'vendor-revenuecat';
+          if (id.includes('/@capacitor/')) return 'vendor-capacitor';
+
+          if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) {
+            return 'vendor-react';
+          }
+
+          if (id.includes('/react-i18next/') || id.includes('/i18next/')) {
+            return 'vendor-i18n';
+          }
+
+          if (id.includes('/leaflet/') || id.includes('/react-leaflet/')) {
+            return 'vendor-maps';
+          }
+
+          if (id.includes('/html2canvas/')) {
+            return 'vendor-html2canvas';
+          }
+
+          if (id.includes('/lottie-react/') || id.includes('/lottie-web/')) {
+            return 'vendor-lottie';
+          }
+
+          if (id.includes('/lucide-react/')) {
+            return 'vendor-icons';
+          }
+
+          if (id.includes('/date-fns/')) return 'vendor-date';
         }
       }
     }

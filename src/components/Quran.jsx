@@ -1,21 +1,59 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { surahList, reciters } from '../data/surahList';
 import { getSurahComplete, getAyahAudioUrl, getAvailableTranslations } from '../services/quranService';
-import { detailedFihrist } from '../data/detailedFihrist';
 import { ChevronLeft, Play, Pause, Volume2, VolumeX, BookOpen, Loader, Menu, X, SkipBack, SkipForward, Heart, Share2, Headphones, List, FileText, Settings, Bookmark, Info, Globe, Maximize, Minimize } from 'lucide-react';
 import { useFocus } from '../context/FocusContext';
+import { storageService } from '../services/storageService';
+
+const QURAN_STORAGE_KEYS = {
+    FAVORITES: 'quranFavorites',
+    LAST_READ: 'quranLastRead'
+};
+
+const EMPTY_ARRAY = [];
 
 function Quran({ onClose }) {
     const { t, i18n } = useTranslation();
     const { isFocusMode, toggleFocusMode } = useFocus();
+    const [quranMeta, setQuranMeta] = useState(null);
+    const [isQuranMetaLoading, setIsQuranMetaLoading] = useState(false);
+
+    const loadQuranMeta = useCallback(async () => {
+        if (quranMeta || isQuranMetaLoading) return;
+
+        setIsQuranMetaLoading(true);
+        try {
+            const [surahModule, fihristModule] = await Promise.all([
+                import('../data/surahList'),
+                import('../data/detailedFihrist')
+            ]);
+
+            setQuranMeta({
+                surahList: surahModule.surahList || EMPTY_ARRAY,
+                reciters: surahModule.reciters || EMPTY_ARRAY,
+                detailedFihrist: fihristModule.detailedFihrist || EMPTY_ARRAY
+            });
+        } catch (error) {
+            console.error('Quran metadata load error:', error);
+        } finally {
+            setIsQuranMetaLoading(false);
+        }
+    }, [quranMeta, isQuranMetaLoading]);
+
+    useEffect(() => {
+        loadQuranMeta();
+    }, [loadQuranMeta]);
+
+    const surahList = useMemo(() => quranMeta?.surahList || EMPTY_ARRAY, [quranMeta]);
+    const reciters = useMemo(() => quranMeta?.reciters || EMPTY_ARRAY, [quranMeta]);
+    const detailedFihrist = useMemo(() => quranMeta?.detailedFihrist || EMPTY_ARRAY, [quranMeta]);
     // Core State
     const [selectedSurah, setSelectedSurah] = useState(null);
     const [surahContent, setSurahContent] = useState(null);
 
     // Audio State
     const [isPlaying, setIsPlaying] = useState(false);
-    const [selectedReciter, setSelectedReciter] = useState(reciters[0]);
+    const [selectedReciter, setSelectedReciter] = useState(null);
     const [volume, setVolume] = useState(1); // 0 to 1
 
     // UI State
@@ -31,6 +69,12 @@ function Quran({ onClose }) {
 
     // Data State
     const [translations, setTranslations] = useState([]);
+
+    useEffect(() => {
+        if (!selectedReciter && reciters.length > 0) {
+            setSelectedReciter(reciters[0]);
+        }
+    }, [selectedReciter, reciters]);
     
     // Initialize translation based on current language
     const getInitialTranslation = useCallback(() => {
@@ -58,7 +102,7 @@ function Quran({ onClose }) {
         setPlayingAyah(null);
         
         try {
-            const surahInfo = surahList.find(s => s.number === surahId);
+                const surahInfo = surahList.find(s => s.number === surahId);
             // Use override if provided, otherwise state
             const transId = translationIdOverride || selectedTranslation;
             const content = await getSurahComplete(surahId, transId);
@@ -83,7 +127,7 @@ function Quran({ onClose }) {
         } finally {
             setLoading(false);
         }
-    }, [selectedTranslation]);
+    }, [selectedTranslation, surahList]);
 
     // Sync translation with language change
     useEffect(() => {
@@ -103,15 +147,20 @@ function Quran({ onClose }) {
             setLoading(true);
             try {
                 // Load favorites and last read
-                const storedFavorites = JSON.parse(localStorage.getItem('quranFavorites') || '[]');
+                const storedFavorites = storageService.getItem(QURAN_STORAGE_KEYS.FAVORITES, []);
                 setFavorites(storedFavorites);
 
-                const storedLastRead = JSON.parse(localStorage.getItem('quranLastRead'));
+                const storedLastRead = storageService.getItem(QURAN_STORAGE_KEYS.LAST_READ, null);
                 setLastRead(storedLastRead);
 
                 // Load available translations
                 const availTranslations = await getAvailableTranslations();
                 setTranslations(availTranslations);
+
+                // Metadata yoksa surah yüklemeyi beklet
+                if (surahList.length === 0) {
+                    return;
+                }
 
                 // Determine start Surah and Ayah
                 let startSurahId = 1;
@@ -136,7 +185,7 @@ function Quran({ onClose }) {
                 ayahAudioRef.current = null;
             }
         };
-    }, [loadSurah]);
+    }, [loadSurah, surahList]);
 
     const handleTranslationChange = async (translationId) => {
         setSelectedTranslation(translationId);
@@ -165,7 +214,7 @@ function Quran({ onClose }) {
         }
 
         setFavorites(newFavorites);
-        localStorage.setItem('quranFavorites', JSON.stringify(newFavorites));
+        storageService.setItem(QURAN_STORAGE_KEYS.FAVORITES, newFavorites);
     };
 
     // Audio Handlers
@@ -177,7 +226,7 @@ function Quran({ onClose }) {
 
         const playAudio = async () => {
             try {
-                if (playingAyah && selectedSurah) {
+                if (playingAyah && selectedSurah && selectedReciter) {
                     const url = getAyahAudioUrl(selectedSurah.number, playingAyah, selectedReciter.id);
                     
                     // Only update src if it's different to avoid reloading
@@ -258,7 +307,7 @@ function Quran({ onClose }) {
                 ayahId: playingAyah,
                 timestamp: Date.now()
             };
-            localStorage.setItem('quranLastRead', JSON.stringify(lastRead));
+            storageService.setItem(QURAN_STORAGE_KEYS.LAST_READ, lastRead);
         }
     }, [selectedSurah, playingAyah]);
 
@@ -284,7 +333,7 @@ function Quran({ onClose }) {
 
     // Media Session API Integration (Lock Screen Controls)
     useEffect(() => {
-        if ('mediaSession' in navigator && selectedSurah && playingAyah) {
+        if ('mediaSession' in navigator && selectedSurah && playingAyah && selectedReciter) {
             // Update Metadata
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: `${selectedSurah.nameTranslation} - ${playingAyah}. Ayet`,
@@ -458,7 +507,7 @@ function Quran({ onClose }) {
         </div>
     );
 
-    if (!selectedSurah || !surahContent) {
+    if (!selectedSurah || !surahContent || !selectedReciter || isQuranMetaLoading) {
         return (
             <div className="quran-container loading">
                 <Loader className="spinner" size={40} />

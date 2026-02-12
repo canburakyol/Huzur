@@ -3,7 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Share2, Heart, ChevronRight, X, Edit3, Check, Download, Image } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { GREETING_CATEGORIES, getCardsByCategory } from '../data/greetingCardsData';
+import { storageService } from '../services/storageService';
 // html2canvas is dynamically imported when needed to reduce initial bundle size
+
+const GREETING_FAVORITES_KEY = 'greeting_favorites';
 
 function GreetingCards({ onClose }) {
     const { t } = useTranslation();
@@ -14,7 +17,7 @@ function GreetingCards({ onClose }) {
     const [recipientName, setRecipientName] = useState('');
     const [isSharing, setIsSharing] = useState(false);
     const [favorites, setFavorites] = useState(() => {
-        return JSON.parse(localStorage.getItem('greeting_favorites') || '[]');
+        return storageService.getItem(GREETING_FAVORITES_KEY, []);
     });
     const cardRef = useRef(null);
 
@@ -24,7 +27,7 @@ function GreetingCards({ onClose }) {
             ? favorites.filter(id => id !== cardId)
             : [...favorites, cardId];
         setFavorites(newFavorites);
-        localStorage.setItem('greeting_favorites', JSON.stringify(newFavorites));
+        storageService.setItem(GREETING_FAVORITES_KEY, newFavorites);
     };
 
     // Share card as image

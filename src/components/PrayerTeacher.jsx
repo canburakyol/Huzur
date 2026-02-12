@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BookOpen, Volume2, Clock, Award, AlertTriangle, HelpCircle, ChevronRight, ChevronDown, Check, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import {
     PRAYER_STEPS,
@@ -21,6 +22,7 @@ const TABS = [
 ];
 
 function PrayerTeacher({ onClose }) {
+    const { t } = useTranslation();
     const [activeTab, setActiveTab] = useState('steps');
     const [expandedStep, setExpandedStep] = useState(null);
     const [expandedRecitation, setExpandedRecitation] = useState(null);
@@ -79,7 +81,7 @@ function PrayerTeacher({ onClose }) {
                     color: 'var(--primary-color)',
                     fontWeight: '700'
                 }}>
-                    📿 Namaz Hocası
+                    📿 {t('prayerTeacher.title', 'Namaz Hocası')}
                 </h1>
             </div>
 
@@ -124,7 +126,7 @@ function PrayerTeacher({ onClose }) {
                 {activeTab === 'steps' && (
                     <div>
                         <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
-                            Namazın adımlarını öğrenmek için aşağıdaki kartlara tıklayın.
+                            {t('prayerTeacher.stepsDescription', 'Namazın adımlarını öğrenmek için aşağıdaki kartlara tıklayın.')}
                         </p>
                         {PRAYER_STEPS.map(step => (
                             <div
@@ -166,7 +168,7 @@ function PrayerTeacher({ onClose }) {
                 {activeTab === 'recitations' && (
                     <div>
                         <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
-                            Namazda okunan dualar ve sureler.
+                            {t('prayerTeacher.recitationsDescription', 'Namazda okunan dualar ve sureler.')}
                         </p>
                         {RECITATIONS.map(rec => (
                             <div
@@ -206,14 +208,14 @@ function PrayerTeacher({ onClose }) {
                                             background: 'rgba(255,255,255,0.1)',
                                             borderRadius: '8px'
                                         }}>
-                                            <strong>Okunuşu:</strong> {rec.latin}
+                                            <strong>{t('prayerTeacher.labels.pronunciation', 'Okunuşu')}:</strong> {rec.latin}
                                         </div>
                                         <div style={{
                                             fontSize: '13px',
                                             color: 'var(--text-color-muted)',
                                             lineHeight: '1.6'
                                         }}>
-                                            <strong>Anlamı:</strong> {rec.meaning}
+                                            <strong>{t('prayerTeacher.labels.meaning', 'Anlamı')}:</strong> {rec.meaning}
                                         </div>
                                     </div>
                                 )}
@@ -226,7 +228,7 @@ function PrayerTeacher({ onClose }) {
                 {activeTab === 'types' && (
                     <div>
                         <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
-                            5 vakit namazın rekat sayıları ve detayları.
+                            {t('prayerTeacher.typesDescription', '5 vakit namazın rekat sayıları ve detayları.')}
                         </p>
                         {PRAYER_TYPES.map(prayer => (
                             <div
@@ -242,7 +244,10 @@ function PrayerTeacher({ onClose }) {
                                             {prayer.name}
                                         </div>
                                         <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
-                                            Toplam: {prayer.totalRakat} rekat
+                                            {t('prayerTeacher.totalRakat', {
+                                                count: prayer.totalRakat,
+                                                defaultValue: 'Toplam: {{count}} rekat'
+                                            })}
                                         </div>
                                     </div>
                                     {expandedPrayer === prayer.id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
@@ -304,7 +309,7 @@ function PrayerTeacher({ onClose }) {
                 {activeTab === 'terms' && (
                     <div>
                         <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
-                            Dini hükümler ve anlamları.
+                            {t('prayerTeacher.termsDescription', 'Dini hükümler ve anlamları.')}
                         </p>
                         {RELIGIOUS_TERMS.map(term => (
                             <div
@@ -328,7 +333,7 @@ function PrayerTeacher({ onClose }) {
                                             {term.description}
                                         </p>
                                         <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
-                                            <strong>Örnekler:</strong>
+                                            <strong>{t('prayerTeacher.labels.examples', 'Örnekler')}:</strong>
                                             <ul style={{ paddingLeft: '20px', marginTop: '8px' }}>
                                                 {term.examples.map((ex, i) => (
                                                     <li key={i} style={{ marginBottom: '4px' }}>{ex}</li>
@@ -346,7 +351,7 @@ function PrayerTeacher({ onClose }) {
                 {activeTab === 'invalidators' && (
                     <div>
                         <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
-                            Namazı bozan durumlar listesi.
+                            {t('prayerTeacher.invalidatorsDescription', 'Namazı bozan durumlar listesi.')}
                         </p>
                         <div className="glass-card" style={{ padding: '16px' }}>
                             {PRAYER_INVALIDATORS.map((item, i) => (
@@ -375,16 +380,19 @@ function PrayerTeacher({ onClose }) {
                         {!quizStarted ? (
                             <div className="glass-card" style={{ textAlign: 'center', padding: '40px 20px' }}>
                                 <div style={{ fontSize: '64px', marginBottom: '16px' }}>🎓</div>
-                                <h2 style={{ color: 'var(--primary-color)', marginBottom: '12px' }}>Namaz Bilgi Yarışması</h2>
+                                <h2 style={{ color: 'var(--primary-color)', marginBottom: '12px' }}>{t('prayerTeacher.quiz.title', 'Namaz Bilgi Yarışması')}</h2>
                                 <p style={{ color: 'var(--text-color-muted)', marginBottom: '24px', fontSize: '14px' }}>
-                                    {QUIZ_QUESTIONS.length} soru ile bilginizi test edin!
+                                    {t('prayerTeacher.quiz.intro', {
+                                        count: QUIZ_QUESTIONS.length,
+                                        defaultValue: '{{count}} soru ile bilginizi test edin!'
+                                    })}
                                 </p>
                                 <button
                                     className="btn btn-primary"
                                     onClick={() => setQuizStarted(true)}
                                     style={{ maxWidth: '200px' }}
                                 >
-                                    Başla
+                                    {t('prayerTeacher.quiz.start', 'Başla')}
                                 </button>
                             </div>
                         ) : quizFinished ? (
@@ -392,31 +400,40 @@ function PrayerTeacher({ onClose }) {
                                 <div style={{ fontSize: '64px', marginBottom: '16px' }}>
                                     {score >= QUIZ_QUESTIONS.length * 0.7 ? '🏆' : score >= QUIZ_QUESTIONS.length * 0.5 ? '👍' : '📚'}
                                 </div>
-                                <h2 style={{ color: 'var(--primary-color)', marginBottom: '12px' }}>Quiz Tamamlandı!</h2>
+                                <h2 style={{ color: 'var(--primary-color)', marginBottom: '12px' }}>{t('prayerTeacher.quiz.finished', 'Quiz Tamamlandı!')}</h2>
                                 <div style={{ fontSize: '36px', fontWeight: '700', color: 'var(--primary-color)', marginBottom: '8px' }}>
                                     {score} / {QUIZ_QUESTIONS.length}
                                 </div>
                                 <p style={{ color: 'var(--text-color-muted)', marginBottom: '24px', fontSize: '14px' }}>
-                                    {score >= QUIZ_QUESTIONS.length * 0.7 ? 'Harika! Çok iyi biliyorsunuz!' :
-                                        score >= QUIZ_QUESTIONS.length * 0.5 ? 'İyi! Biraz daha çalışabilirsiniz.' :
-                                            'Tekrar çalışmanız önerilir.'}
+                                    {score >= QUIZ_QUESTIONS.length * 0.7
+                                        ? t('prayerTeacher.quiz.feedback.excellent', 'Harika! Çok iyi biliyorsunuz!')
+                                        : score >= QUIZ_QUESTIONS.length * 0.5
+                                            ? t('prayerTeacher.quiz.feedback.good', 'İyi! Biraz daha çalışabilirsiniz.')
+                                            : t('prayerTeacher.quiz.feedback.retry', 'Tekrar çalışmanız önerilir.')}
                                 </p>
                                 <button
                                     className="btn btn-primary"
                                     onClick={resetQuiz}
                                     style={{ maxWidth: '200px' }}
                                 >
-                                    Tekrar Dene
+                                    {t('prayerTeacher.quiz.retry', 'Tekrar Dene')}
                                 </button>
                             </div>
                         ) : (
                             <div className="glass-card" style={{ padding: '20px' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
                                     <span style={{ color: 'var(--text-color-muted)', fontSize: '14px' }}>
-                                        Soru {currentQuestion + 1}/{QUIZ_QUESTIONS.length}
+                                        {t('prayerTeacher.quiz.questionCounter', {
+                                            current: currentQuestion + 1,
+                                            total: QUIZ_QUESTIONS.length,
+                                            defaultValue: 'Soru {{current}}/{{total}}'
+                                        })}
                                     </span>
                                     <span style={{ color: 'var(--primary-color)', fontWeight: '600' }}>
-                                        Puan: {score}
+                                        {t('prayerTeacher.quiz.score', {
+                                            score,
+                                            defaultValue: 'Puan: {{score}}'
+                                        })}
                                     </span>
                                 </div>
                                 <h3 style={{ color: 'var(--text-color)', marginBottom: '20px', fontSize: '16px', lineHeight: '1.5' }}>
@@ -470,7 +487,9 @@ function PrayerTeacher({ onClose }) {
                                         onClick={nextQuestion}
                                         style={{ marginTop: '20px' }}
                                     >
-                                        {currentQuestion < QUIZ_QUESTIONS.length - 1 ? 'Sonraki Soru' : 'Sonuçları Gör'}
+                                        {currentQuestion < QUIZ_QUESTIONS.length - 1
+                                            ? t('prayerTeacher.quiz.nextQuestion', 'Sonraki Soru')
+                                            : t('prayerTeacher.quiz.showResults', 'Sonuçları Gör')}
                                     </button>
                                 )}
                             </div>

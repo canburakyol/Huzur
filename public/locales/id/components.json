@@ -1,0 +1,6 @@
+{
+  "errorBoundary": {
+    "title": "Terjadi kesalahan",
+    "description": "Beberapa bagian aplikasi tidak berfungsi dengan benar. Silakan muat ulang halaman atau mulai ulang aplikasi."
+  }
+}

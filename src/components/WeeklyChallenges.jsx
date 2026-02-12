@@ -9,6 +9,7 @@ import {
   Minus,
   ChevronLeft
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { challengesService } from '../services/challengesService';
 import { useGamification } from '../hooks/useGamification';
 import './WeeklyChallenges.css';
@@ -23,22 +24,37 @@ const CHALLENGE_CATEGORIES = {
   community: { icon: '👥', color: '#ec4899' }
 };
 
+const UNIT_KEY_MAP = {
+  'cüz': 'juz',
+  rekat: 'rakat',
+  tesbih: 'tasbih',
+  gün: 'day',
+  hatim: 'khatm'
+};
+
 // Format time remaining
-const formatTimeRemaining = (targetDate) => {
+const formatTimeRemaining = (targetDate, t) => {
   const now = new Date();
   const diff = targetDate - now;
   
-  if (diff <= 0) return '00:00:00';
+  if (diff <= 0) return t('weeklyChallenges.timer.zero', '00:00:00');
   
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   
-  if (days > 0) return `${days}g ${hours}s`;
+  if (days > 0) {
+    return t('weeklyChallenges.timer.daysHours', {
+      days,
+      hours,
+      defaultValue: '{{days}}d {{hours}}h'
+    });
+  }
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
 };
 
 export function WeeklyChallenges({ onBack }) {
+  const { t } = useTranslation();
   const [challenges, setChallenges] = useState([]);
   const [stats, setStats] = useState({ completed: 0, total: 0, streak: 0 });
   const [timeRemaining, setTimeRemaining] = useState('');
@@ -68,14 +84,14 @@ export function WeeklyChallenges({ onBack }) {
   useEffect(() => {
     const updateTimer = () => {
       const nextMonday = challengesService.getNextMonday();
-      setTimeRemaining(formatTimeRemaining(nextMonday));
+      setTimeRemaining(formatTimeRemaining(nextMonday, t));
     };
 
     updateTimer();
     const interval = setInterval(updateTimer, 60000); // Update every minute
 
     return () => clearInterval(interval);
-  }, []);
+  }, [t]);
 
   // Handle progress update
   const handleProgress = useCallback(async (challengeId, increment) => {
@@ -151,6 +167,24 @@ export function WeeklyChallenges({ onBack }) {
     });
   }, [challenges]);
 
+  const mapChallenge = useCallback((challenge) => {
+    const title = t(`weeklyChallenges.challengeTitles.${challenge.id}`, challenge.title);
+    const description = t(`weeklyChallenges.challengeDescriptions.${challenge.id}`, challenge.description);
+    const unitKey = UNIT_KEY_MAP[challenge.unit] || challenge.unit;
+    const unit = t(`weeklyChallenges.units.${unitKey}`, challenge.unit);
+    return {
+      ...challenge,
+      title,
+      description,
+      unit
+    };
+  }, [t]);
+
+  const localizedChallenges = useMemo(
+    () => sortedChallenges.map(mapChallenge),
+    [sortedChallenges, mapChallenge]
+  );
+
   return (
     <div className="weekly-challenges-container">
       {/* Header */}
@@ -159,8 +193,8 @@ export function WeeklyChallenges({ onBack }) {
           <ChevronLeft size={24} />
         </button>
         <div className="header-content">
-          <h1>Haftalık Meydan Okumalar</h1>
-          <p>Bu haftaki hedeflerini tamamla, ödülleri topla!</p>
+          <h1>{t('weeklyChallenges.title', 'Haftalık Meydan Okumalar')}</h1>
+          <p>{t('weeklyChallenges.subtitle', 'Bu haftaki hedeflerini tamamla, ödülleri topla!')}</p>
         </div>
       </div>
 
@@ -172,7 +206,7 @@ export function WeeklyChallenges({ onBack }) {
           </div>
           <div className="stat-info">
             <span className="stat-value">{stats.completed}/{stats.total}</span>
-            <span className="stat-label">Tamamlanan</span>
+            <span className="stat-label">{t('weeklyChallenges.stats.completed', 'Tamamlanan')}</span>
           </div>
         </div>
         
@@ -182,7 +216,7 @@ export function WeeklyChallenges({ onBack }) {
           </div>
           <div className="stat-info">
             <span className="stat-value">{Math.round((stats.completed / Math.max(1, stats.total)) * 100)}%</span>
-            <span className="stat-label">Başarı</span>
+            <span className="stat-label">{t('weeklyChallenges.stats.success', 'Başarı')}</span>
           </div>
         </div>
         
@@ -192,7 +226,7 @@ export function WeeklyChallenges({ onBack }) {
           </div>
           <div className="stat-info">
             <span className="stat-value">{stats.streak}</span>
-            <span className="stat-label">Hafta Serisi</span>
+            <span className="stat-label">{t('weeklyChallenges.stats.weekStreak', 'Hafta Serisi')}</span>
           </div>
         </div>
       </div>
@@ -201,14 +235,14 @@ export function WeeklyChallenges({ onBack }) {
       <div className="challenges-countdown">
         <Clock size={20} />
         <div className="countdown-info">
-          <span className="countdown-label">Yeni Meydan Okumalar</span>
+          <span className="countdown-label">{t('weeklyChallenges.newChallenges', 'Yeni Meydan Okumalar')}</span>
           <span className="countdown-value">{timeRemaining}</span>
         </div>
       </div>
 
       {/* Challenges List */}
       <div className="challenges-list">
-        {sortedChallenges.map((challenge) => (
+        {localizedChallenges.map((challenge) => (
           <div 
             key={challenge.id}
             className={`challenge-card ${challenge.completed ? 'completed' : ''}`}
@@ -231,7 +265,7 @@ export function WeeklyChallenges({ onBack }) {
 
               <div className="challenge-reward">
                 <Trophy size={14} />
-                +{challenge.reward.xp} XP
+                {t('weeklyChallenges.rewardXp', { xp: challenge.reward.xp, defaultValue: '+{{xp}} XP' })}
               </div>
             </div>
 
@@ -239,7 +273,14 @@ export function WeeklyChallenges({ onBack }) {
             <div className="challenge-progress">
               <div className="progress-header">
                 <span className="progress-text">
-                  {challenge.completed ? 'Tamamlandı!' : `${challenge.progress} / ${challenge.target} ${challenge.unit}`}
+                  {challenge.completed
+                    ? t('weeklyChallenges.completedLabel', 'Tamamlandı!')
+                    : t('weeklyChallenges.progressText', {
+                        progress: challenge.progress,
+                        target: challenge.target,
+                        unit: challenge.unit,
+                        defaultValue: '{{progress}} / {{target}} {{unit}}'
+                      })}
                 </span>
                 <span className="progress-percentage">
                   {Math.round(getProgressPercentage(challenge))}%
@@ -280,13 +321,13 @@ export function WeeklyChallenges({ onBack }) {
                     onClick={() => handleComplete(challenge.id)}
                   >
                     <CheckCircle2 size={16} />
-                    Tamamla
+                    {t('weeklyChallenges.completeAction', 'Tamamla')}
                   </button>
                 </div>
               ) : (
                 <div className="completed-badge">
                   <CheckCircle2 size={16} />
-                  Tebrikler!
+                  {t('weeklyChallenges.congratsShort', 'Tebrikler!')}
                 </div>
               )}
             </div>
@@ -299,19 +340,19 @@ export function WeeklyChallenges({ onBack }) {
         <div className="challenge-completed-modal">
           <div className="modal-content">
             <div className="modal-icon">🎉</div>
-            <h2>Meydan Okuma Tamamlandı!</h2>
-            <p>{completedChallenge.title}</p>
+            <h2>{t('weeklyChallenges.modal.title', 'Meydan Okuma Tamamlandı!')}</h2>
+            <p>{t(`weeklyChallenges.challengeTitles.${completedChallenge.id}`, completedChallenge.title)}</p>
             
             <div className="reward-display">
               <Trophy size={24} />
-              <span>+{completedChallenge.reward.xp} XP Kazandın!</span>
+              <span>{t('weeklyChallenges.modal.reward', { xp: completedChallenge.reward.xp, defaultValue: '+{{xp}} XP Kazandın!' })}</span>
             </div>
 
             <button 
               className="modal-close-btn"
               onClick={() => setCompletedChallenge(null)}
             >
-              Harika!
+              {t('weeklyChallenges.modal.cta', 'Harika!')}
             </button>
           </div>
         </div>

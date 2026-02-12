@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, Sun, Moon, ChevronRight, Check, RefreshCw } from 'lucide-react';
+import { storageService } from '../services/storageService';
 
 // Sabah Tesbihatı
 // Sabah Tesbihatı
@@ -105,8 +106,7 @@ const Adhkar = ({ onClose }) => {
     // Initialize progress from localStorage based on active tab
     const getInitialProgress = (tab) => {
         const key = `adhkar_${tab}_${new Date().toDateString()}`;
-        const saved = localStorage.getItem(key);
-        return saved ? JSON.parse(saved) : {};
+        return storageService.getItem(key, {});
     };
 
     // Separate state for each tab to avoid setState in useEffect
@@ -124,7 +124,7 @@ const Adhkar = ({ onClose }) => {
         if (current < adhkar.count) {
             const newProgress = { ...progress, [id]: current + 1 };
             setProgress(newProgress);
-            localStorage.setItem(storageKey, JSON.stringify(newProgress));
+            storageService.setItem(storageKey, newProgress);
 
             // Titreşim
             if (navigator.vibrate) {
@@ -135,7 +135,7 @@ const Adhkar = ({ onClose }) => {
 
     const resetProgress = () => {
         setProgress({});
-        localStorage.setItem(storageKey, '{}');
+        storageService.setItem(storageKey, {});
     };
 
     const totalItems = adhkarList.length;

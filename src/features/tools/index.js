@@ -19,50 +19,50 @@ export const toolsFeatures = {
     component: MosqueFinder,
     category: 'TOOLS',
     module: 'tools',
-    name: 'Cami Bul',
+    nameKey: 'features.mosque',
     icon: '🕌'
   },
   calendar: {
     component: ReligiousDays,
     category: 'TOOLS',
     module: 'tools',
-    name: 'Dini Günler',
+    nameKey: 'features.calendar',
     icon: '📅'
   },
   imsakiye: {
     component: Imsakiye,
     category: 'TOOLS',
     module: 'tools',
-    name: 'İmsakiye',
+    nameKey: 'features.imsakiye',
     icon: '🌅'
   },
   zakat: {
     component: ZakatCalculator,
     category: 'TOOLS',
     module: 'tools',
-    name: 'Zekat Hesapla',
+    nameKey: 'features.zakat',
     icon: '💰'
   },
   agenda: {
     component: Agenda,
     category: 'TOOLS',
     module: 'tools',
-    name: 'Gündem',
+    nameKey: 'features.agenda',
     icon: '📰'
   },
   specialDays: {
     component: SpecialDaysCalendar,
     category: 'TOOLS',
     module: 'tools',
-    name: 'Özel Günler',
+    nameKey: 'features.specialDays',
     icon: '📅'
   }
 };
 
 // Module metadata
 export const moduleInfo = {
-  name: 'Araçlar',
-  description: 'Yardımcı araçlar ve hesaplayıcılar',
+  nameKey: 'modules.tools',
+  descriptionKey: 'modules.toolsDesc',
   icon: '🛠️',
   priority: 5,
   chunkName: 'feature-tools'

@@ -35,7 +35,8 @@
     "view": "Görüntüle",
     "add": "Ekle",
     "areYouSure": "Emin misiniz?",
-    "user": "Kullanıcı"
+    "user": "Kullanıcı",
+    "clear": "Temizle"
   },
   "notifications": {
     "prayer": {
@@ -43,9 +44,26 @@
       "mainBody": "{{prayer}} namazı vakti girdi. Haydi namaza!",
       "preTitle": "⏰ {{prayer}} Vaktine {{minutes}} dk",
       "preBody": "{{prayer}} namazına {{minutes}} dakika kaldı. Hazırlanabilirsiniz."
+    },
+    "channels": {
+      "prayer": {
+        "name": "Ezan Vakitleri",
+        "description": "Namaz vakti hatırlatmaları"
+      },
+      "reminder": {
+        "name": "Günlük Hatırlatıcılar",
+        "description": "Zikir ve günlük görev hatırlatmaları"
+      },
+      "streak": {
+        "name": "Seri Uyarıları",
+        "description": "Seri koruma hatırlatmaları"
+      },
+      "updates": {
+        "name": "Uygulama Güncellemeleri",
+        "description": "Yeni özellikler ve duyurular"
+      }
     }
   },
-
   "menu": {
     "huzurMode": "Huzur Modu",
     "spiritualJourney": "Manevi Yolculuk",
@@ -316,7 +334,29 @@
     "appDescription": "Namaz, Kuran ve dua uygulaması",
     "legal": "Yasal",
     "privacyPolicy": "Gizlilik Politikası",
-    "termsOfService": "Kullanım Koşulları"
+    "termsOfService": "Kullanım Koşulları",
+    "historyTitle": "Bildirim Geçmişi",
+    "historyDesc": "Gelen son bildirimleri görüntüleyin",
+    "muezzinTitle": "Müezzin Seçimi",
+    "muezzinDesc": "Ezan bildirim sesini özelleştirin",
+    "select": "Seç",
+    "removeAdsTitle": "Reklamları Kaldır",
+    "removeAdsDesc": "Reklamsız deneyim için Pro'ya geçin",
+    "review": "İncele",
+    "licensesAndCredits": "Lisanslar ve Kaynaklar",
+    "notificationSettingsTitle": "Bildirim Ayarları",
+    "notificationPermissionRequiredTitle": "Bildirim İzni Gerekli",
+    "notificationPermissionRequiredDesc": "Bildirimleri alabilmek için lütfen izin verin.",
+    "allowPermission": "İzin Ver",
+    "preAlertMinutes": "Vakit Öncesi Uyarı (dk):",
+    "off": "Kapalı",
+    "minutesValue": "{{count}} dk",
+    "quietHoursTitle": "Sessiz Saatler",
+    "quietHoursDesc": "Bu aralıkta push bildirim gönderilmez",
+    "start": "Başlangıç",
+    "end": "Bitiş",
+    "historyClearConfirm": "Tüm bildirim geçmişini silmek istediğinize emin misiniz?",
+    "historyEmpty": "Henüz bildirim yok."
   },
   "pro": {
     "title": "Huzur Pro'ya Geçin",
@@ -435,6 +475,99 @@
       "q4": "Abdest nasıl alınır?",
       "q5": "Kuran okumanın fazileti",
       "q6": "Peygamberimizin hayatı"
+    },
+    "betaWelcomeHint": "Beta mod: Hazır sorulara tıklayabilir veya benzer bir soru yazabilirsiniz.",
+    "betaUnknownQuestion": "Bu soru şu an Beta hazır cevap listesinde yok. Alttaki örnek sorulardan birine tıklayabilirsiniz.",
+    "betaLabel": "Beta",
+    "readyQaMode": "Hazır soru-cevap modu",
+    "betaInputPlaceholder": "Beta: hazır sorulardan birini yazın veya alttan seçin",
+    "answers": {
+      "q1": "Namazı düzenli kılmak için küçük başlayın: her gün aynı vakitte kısa bir hazırlık rutini yapın, hatırlatıcı açın ve bir vakti kaçırırsanız ertesi vakitte yeniden başlayın.",
+      "q2": "Kur’an okuma alışkanlığı için günlük 5-10 dakika sabit zaman ayırın. Süreyi değil sürekliliği hedefleyin.",
+      "q3": "Zikir hedefi için “az ama devamlı” yöntemi önerilir. Güne küçük bir sayı ile başlayıp haftalık olarak artırabilirsiniz.",
+      "q4": "Odaklanmak zor olduğunda kısa bir mola verin, derin nefes alın ve tek bir hedefe dönün. Çoklu görev yerine tek görev daha verimli olur.",
+      "q5": "Manevi motivasyon için günlük kısa bir dua, şükür notu ve gün sonu değerlendirmesi yapmanız etkili olur.",
+      "q6": "Bu bölüm şu an Beta sürümde hazır soru-cevap asistanı olarak çalışıyor. Yakında daha gelişmiş canlı sohbet desteği eklenecek."
+    },
+    "evening": "المساء",
+    "progress": "التقدم",
+    "times": "مرات",
+    "completed": "مكتمل",
+    "read": "اقرأ",
+    "benefit1": "حماية حتى المساء لقارئ الصباح",
+    "benefit2": "حماية من كل شر",
+    "benefit3": "حماية من السحر والأذى",
+    "benefit4": "حماية من الوسوسة والشر",
+    "benefit5": "بركة اليوم",
+    "benefit6": "الكفاية في أمور الدنيا والآخرة",
+    "benefit7": "غفران الذنوب",
+    "benefitEvening1": "حماية حتى الصباح",
+    "benefitEvening3": "حماية من شرور الليل",
+    "benefitEvening4": "حماية من الأحلام السيئة والوسوسة",
+    "benefitEvening5": "بركة الليل",
+    "benefitEvening6": "نوم هانئ",
+    "benefitEvening7": "غفران ذنوب اليوم",
+    "items": {
+      "ayetel_kursi": {
+        "title": "آية الكرسي",
+        "arabic": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...",
+        "transliteration": "Allahu la ilahe illa huvel hayyul kayyum...",
+        "meaning": "الله لا إله إلا هو الحي القيوم..."
+      },
+      "ihlas": {
+        "title": "سورة الإخلاص",
+        "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ...",
+        "transliteration": "Kul huvallahu ehad...",
+        "meaning": "قل هو الله أحد..."
+      },
+      "felak": {
+        "title": "سورة الفلق",
+        "arabic": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ...",
+        "transliteration": "Kul euzu birabbil felak...",
+        "meaning": "قل أعوذ برب الفلق..."
+      },
+      "nas": {
+        "title": "سورة الناس",
+        "arabic": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ...",
+        "transliteration": "Kul euzu birabbin nas...",
+        "meaning": "قل أعوذ برب الناس..."
+      },
+      "sabah_duasi": {
+        "title": "دعاء الصباح",
+        "arabic": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ",
+        "transliteration": "Esbahna ve esbahal mülkü lillah",
+        "meaning": "أصبحنا وأصبح الملك لله"
+      },
+      "tevekkul_duasi": {
+        "title": "دعاء التوكل",
+        "arabic": "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ",
+        "transliteration": "Hasbiyallahu la ilahe illa hu aleyhi tevekkeltü",
+        "meaning": "حسبي الله لا إله إلا هو عليه توكلت"
+      },
+      "subhanallah": {
+        "title": "سبحان الله وبحمده",
+        "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+        "transliteration": "Sübhanallahi ve bihamdihi",
+        "meaning": "سبحان الله وبحمده"
+      },
+      "aksam_duasi": {
+        "title": "دعاء المساء",
+        "arabic": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ",
+        "transliteration": "Emseyna ve emsel mülkü lillah",
+        "meaning": "أمسينا وأمسى الملك لله"
+      },
+      "uyku_oncesi": {
+        "title": "دعاء قبل النوم",
+        "arabic": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
+        "transliteration": "Bismikellahümme emutü ve ahya",
+        "meaning": "باسمك اللهم أموت وأحيا"
+      },
+      "estagfirullah": {
+        "title": "الاستغفار",
+        "arabic": "أَسْتَغْفِرُ اللَّهَ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ",
+        "transliteration": "Estağfirullahellezi la ilahe illa hu",
+        "meaning": "أستغفر الله الذي لا إله إلا هو"
+      }
     }
   },
   "community": {
@@ -1043,19 +1176,60 @@
   "features": {
     "qibla": "Kıble",
     "dhikr": "Zikir",
-    "radio": "Radyo",
-    "mosque": "Cami",
+    "radio": "Kuran Radyo",
+    "mosque": "Cami Bul",
     "days": "Günler",
     "imsakiye": "İmsakiye",
     "qada": "Kaza",
-    "fasting": "Oruç",
+    "fasting": "Oruç Takibi",
     "hadith": "Hadis",
     "tasbih": "Tesbih",
-    "zakat": "Zekat",
+    "zakat": "Zekat Hesapla",
     "khatm": "Hatim",
     "smartKhatm": "Akıllı Hatim Koçu",
-    "family": "Huzur Aile",
-    "seerah": "Siyer Haritası"
+    "family": "Aile Modu",
+    "seerah": "Siyer Haritası",
+    "prayers": "Namaz Vakitleri",
+    "quran": "Kuran-ı Kerim",
+    "tracker": "Namaz Takibi",
+    "settings": "Ayarlar",
+    "zikirmatik": "Zikirmatik",
+    "adhkar": "Dualar",
+    "tespihat": "Tesbihat",
+    "esmaUlHusna": "99 Esma",
+    "hatimCoach": "Hatim Koçu",
+    "missedPrayers": "Kaza Namazları",
+    "deedJournal": "İyilik Günlüğü",
+    "nafilePrayers": "Nafile Namazlar",
+    "duaTracker": "Dua Takipçisi",
+    "prayerTeacher": "Namaz Öğretici",
+    "quranMemorize": "Kuran Ezberleme",
+    "tajweedTutor": "Tecvid Eğitimi",
+    "nuzulExplorer": "Nüzul Sırası",
+    "wordByWord": "Kelime Kelime",
+    "seerahMap": "Siyer Haritası",
+    "hadiths": "Hadisler",
+    "hikmetname": "Hikmetname",
+    "weeklySermon": "Haftalık Hutbe",
+    "library": "Kütüphane",
+    "multimedia": "Multimedya",
+    "liveBroadcast": "Canlı Yayın",
+    "calendar": "Dini Günler",
+    "agenda": "Gündem",
+    "specialDays": "Özel Günler",
+    "social": "Dua Kardeşliği",
+    "huzurMode": "Huzur Modu",
+    "dailyTasks": "Günlük Görevler",
+    "islamicMeditation": "İslami Meditasyon",
+    "theme": "Tema",
+    "fontSettings": "Yazı Tipi",
+    "muezzinSelector": "Müezzin Seç",
+    "streak": "Seri Takvimi",
+    "assistant": "İslami Asistan",
+    "spiritualCoach": "Manevi Koç",
+    "support": "Destek",
+    "pro": "Pro Yükselt",
+    "familyDashboard": "Huzurlu Aile"
   },
   "social": {
     "title": "Sosyal",
@@ -1089,181 +1263,331 @@
   "hikmet": {
     "title": "Hikmetname",
     "daily": "Günün Hikmeti",
-    "copied": "Kopyalandı!",
     "favorite": "Favori",
     "share": "Paylaş",
     "new": "Yeni",
+    "copied": "Hikmet panoya kopyalandı!",
+    "favorites": "Favorilerim",
     "categoriesTitle": "Kategoriler",
-    "favorites": "Favoriler",
-    "shareText": "\"{{text}}\" - {{source}} (Huzur Uygulaması)",
+    "shareText": "\"{{text}}\"\n\n— {{source}}{{ref}}\n\n{{appName}} uygulamasından",
     "categories": {
       "hadis": {
         "title": "Hadis-i Şerifler",
         "desc": "Peygamber Efendimiz'in mübarek sözleri"
       },
       "alim": {
-        "title": "Âlimlerden",
-        "desc": "İslam âlimlerinden hikmetli sözler"
+        "title": "Alimlerin Sözleri",
+        "desc": "İslam alimlerinden hikmetli sözler"
       },
       "sufi": {
-        "title": "Tasavvuf",
-        "desc": "Sufi büyüklerinden hikmetler"
+        "title": "Tasavvuf Büyükleri",
+        "desc": "Sufi büyüklerinden nasihatler"
       },
       "ayet": {
-        "title": "Kur'an'dan",
-        "desc": "Kur'an-ı Kerim'den hikmetli ayetler"
+        "title": "Kuran'dan Hikmetler",
+        "desc": "Ayetlerden öğütler ve hikmetler"
       }
     },
     "items": {
       "1": {
-        "text": "Dua, ibadetin özüdür.",
+        "text": "Kolaylaştırın, zorlaştırmayın. Müjdeleyin, nefret ettirmeyin.",
         "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Tirmizi"
+        "ref": "Buhari, İlim 11"
       },
       "2": {
-        "text": "Kolaylaştırınız, zorlaştırmayınız.",
+        "text": "Sizden biriniz kendisi için istediğini kardeşi için de istemedikçe gerçek mümin olamaz.",
         "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Buhari"
+        "ref": "Buhari, İman 7"
       },
       "3": {
-        "text": "İnsanların en hayırlısı, insanlara faydalı olandır.",
+        "text": "İnsanların en hayırlısı, insanlara en faydalı olanıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Taberani"
+      },
+      "4": {
+        "text": "Güzel ahlak, günahları eritir; suyun buzu erittiği gibi.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Taberani"
+      },
+      "5": {
+        "text": "Öfkelendiğinde kendine hakim olan kişi, gerçek kahramandır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari, Edeb 76"
+      },
+      "6": {
+        "text": "Her kim Allah için alçakgönüllü olursa, Allah onu yükseltir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Müslim"
+      },
+      "7": {
+        "text": "Hikmetin başı Allah korkusudur.",
         "source": "Hz. Muhammed (s.a.v.)",
         "ref": "Beyhaki"
       },
-      "4": {
-        "text": "Güzel ahlak, dinin yarısıdır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Hakim"
-      },
-      "5": {
-        "text": "Müslüman, elinden ve dilinden emin olunan kimsedir.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Buhari"
-      },
-      "6": {
-        "text": "Hikmet, müminin yitik malıdır; onu nerede bulursa alır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Tirmizi"
-      },
-      "7": {
-        "text": "Sabır, imanın yarısıdır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Ebu Nuaym"
-      },
       "8": {
-        "text": "Tefekkür etmek, bir sene nafile ibadetten hayırlıdır.",
+        "text": "Dilini hayır için kullan ya da sus.",
         "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Deylemi"
+        "ref": "Buhari, Edeb 31"
       },
       "9": {
-        "text": "İlim öğrenmek, her Müslümana farzdır.",
+        "text": "İlim, isteyenin değil, arayanın hakkıdır.",
         "source": "İmam Gazali",
-        "ref": "İhya"
+        "ref": "İhya'u Ulumi'd-din"
       },
       "10": {
-        "text": "Kalp, Allah'ın evidir.",
-        "source": "İbn Arabi",
-        "ref": "Fusus"
+        "text": "Kalp, Allah'ı zikretmedikçe huzur bulamaz.",
+        "source": "İmam Gazali",
+        "ref": "İhya'u Ulumi'd-din"
       },
       "11": {
-        "text": "Nefs, en büyük düşmandır.",
-        "source": "İmam Rabbani",
-        "ref": "Mektubat"
+        "text": "Nefsini bilen Rabbini bilir.",
+        "source": "İmam Şafi",
+        "ref": ""
       },
       "12": {
-        "text": "Edep, aklın sureti ve lisanıdır.",
-        "source": "Mevlana",
-        "ref": "Mesnevi"
+        "text": "İlmin en üstün mertebesi, Allah'tan korkmaktır.",
+        "source": "İmam Malik",
+        "ref": ""
       },
       "13": {
-        "text": "Allah'ı seven, her şeyi sever.",
-        "source": "Yunus Emre",
-        "ref": "Divan"
+        "text": "Sabır, kalbin gözüdür.",
+        "source": "İbn-i Ataullah",
+        "ref": "el-Hikemü'l-Ataiyye"
       },
       "14": {
-        "text": "Sabır, acı bir ağaç olsa da meyvesi tatlıdır.",
-        "source": "İmam Şafii",
+        "text": "Bir an için bile kalbi Allah'tan gafil etmek, büyük bir kayıptır.",
+        "source": "Hasan-ı Basri",
         "ref": ""
       },
       "15": {
-        "text": "Tevazu kapıları açar, kibir kapatır.",
-        "source": "Hasan Basri",
+        "text": "Tefekkür ibadettir.",
+        "source": "İmam Ebu Hanife",
         "ref": ""
       },
       "16": {
-        "text": "Ben, benden gidince bende sen kaldın.",
-        "source": "Mevlana",
-        "ref": "Divan-ı Kebir"
-      },
-      "17": {
-        "text": "Gel, ne olursan ol, yine gel.",
-        "source": "Mevlana",
+        "text": "Aşk bir denizdir, kıyısı yoktur.",
+        "source": "Mevlana Celaleddin Rumi",
         "ref": "Mesnevi"
       },
+      "17": {
+        "text": "Yaratılanı severiz, Yaratandan ötürü.",
+        "source": "Yunus Emre",
+        "ref": ""
+      },
       "18": {
-        "text": "Aşk, suskunluğun dilidir.",
-        "source": "Şems-i Tebrizi",
-        "ref": ""
-      },
-      "19": {
-        "text": "Gönül bir aynadır, onu temiz tut.",
-        "source": "Hacı Bektaş Veli",
-        "ref": ""
-      },
-      "20": {
-        "text": "Bir olan Allah'a yönel, çoklukta boğulma.",
-        "source": "İbn Arabi",
-        "ref": "Fusus"
-      },
-      "21": {
-        "text": "Kalbin kapısı, zikir ile açılır.",
+        "text": "Kendi nefsini ıslah etmeden başkasını ıslah edemezsin.",
         "source": "Abdulkadir Geylani",
         "ref": ""
       },
-      "22": {
-        "text": "Dünya bir köprüdür, üzerinde mesken tutma.",
+      "19": {
+        "text": "Dünya bir köprüdür. Üzerinden geç, ama üzerine ev yapma.",
         "source": "Hz. İsa (a.s.)",
         "ref": ""
       },
+      "20": {
+        "text": "Allah sevgisi, kalbin hayatıdır.",
+        "source": "İbn-i Arabi",
+        "ref": ""
+      },
+      "21": {
+        "text": "Edep, akıldan öncedir.",
+        "source": "Beyazıd-ı Bestami",
+        "ref": ""
+      },
+      "22": {
+        "text": "İnsanların en acizi, dua edemeyendir.",
+        "source": "Ahmed bin Hanbel",
+        "ref": ""
+      },
       "23": {
-        "text": "Sufi, vaktinin oğludur.",
-        "source": "Cüneyd-i Bağdadi",
+        "text": "Kalbinde merhamet olmayanın, imanı zayıftır.",
+        "source": "Şah-ı Nakşibend",
         "ref": ""
       },
       "24": {
-        "text": "Onlar, Allah'ı anmakla kalpleri mutmain olanlardır.",
-        "source": "Kur'an-ı Kerim",
-        "ref": "Ra'd, 28"
+        "text": "Şüphesiz güçlükle beraber kolaylık vardır.",
+        "source": "Kuran-ı Kerim",
+        "ref": "İnşirah Suresi, 5-6"
       },
       "25": {
-        "text": "Muhakkak ki zorlukla beraber kolaylık vardır.",
-        "source": "Kur'an-ı Kerim",
-        "ref": "İnşirah, 6"
+        "text": "Allah sabredenleri sever.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Al-i İmran, 146"
       },
       "26": {
-        "text": "Allah, sabredenlerle beraberdir.",
-        "source": "Kur'an-ı Kerim",
-        "ref": "Bakara, 153"
+        "text": "Rabbinizden bağışlanma dileyin. O, çok bağışlayıcıdır.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Nuh Suresi, 10"
       },
       "27": {
         "text": "Kim Allah'a tevekkül ederse, O ona yeter.",
-        "source": "Kur'an-ı Kerim",
-        "ref": "Talak, 3"
+        "source": "Kuran-ı Kerim",
+        "ref": "Talak Suresi, 3"
       },
       "28": {
-        "text": "Rabbiniz size dua edin, size icabet edeyim dedi.",
-        "source": "Kur'an-ı Kerim",
-        "ref": "Mü'min, 60"
+        "text": "Bilesiniz ki kalpler ancak Allah'ı anmakla huzur bulur.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Ra'd Suresi, 28"
       },
       "29": {
-        "text": "İyi amel işleyenlerin mükafatı, yaptıklarının en güzeli olacaktır.",
-        "source": "Kur'an-ı Kerim",
-        "ref": "Zümer, 35"
+        "text": "İyiliğin karşılığı ancak iyiliktir.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Rahman Suresi, 60"
       },
       "30": {
-        "text": "Kim tövbe edip salih amel işlerse, şüphesiz Allah onun tövbesini kabul eder.",
-        "source": "Kur'an-ı Kerim",
-        "ref": "Furkan, 71"
+        "text": "Allah her şeye kadirdir.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Bakara Suresi, 20"
+      },
+      "31": {
+        "text": "En hayırlı sadaka, ilim öğrenmek ve öğretmektir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "İbn Mace"
+      },
+      "32": {
+        "text": "Cennet, annelerin ayakları altındadır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Nesai"
+      },
+      "33": {
+        "text": "Temizlik imanın yarısıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Müslim"
+      },
+      "34": {
+        "text": "Güleryüzle karşılamak sadakadır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Tirmizi"
+      },
+      "35": {
+        "text": "Kim bir ağaç dikerse, onun meyvesinden yiyenler kadar sevap alır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Müslim"
+      },
+      "36": {
+        "text": "Şükreden kalp, sabreden beden, zikreden dil.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Tirmizi"
+      },
+      "37": {
+        "text": "Müminin niyeti amelinden hayırlıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Taberani"
+      },
+      "38": {
+        "text": "İki nimet vardır ki insanların çoğu bunlarda aldanmıştır: Sağlık ve boş vakit.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari"
+      },
+      "39": {
+        "text": "Akıl, üzerine pratik uygulanmayan bilgidir; bilgi ise uygulanmayan akıldır.",
+        "source": "İmam Gazali",
+        "ref": ""
+      },
+      "40": {
+        "text": "Dünya ahiretin tarlasıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": ""
+      },
+      "41": {
+        "text": "Gerçek zenginlik, gönül zenginliğidir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari, Rikak 15"
+      },
+      "42": {
+        "text": "Mümin, müminin aynasıdır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Ebu Davud"
+      },
+      "43": {
+        "text": "Ölüm yeter öğütçü olarak.",
+        "source": "Hz. Ömer (r.a.)",
+        "ref": ""
+      },
+      "44": {
+        "text": "Nimete şükretmeyen, belanın artmasına hazırlanır.",
+        "source": "Hz. Ali (r.a.)",
+        "ref": ""
+      },
+      "45": {
+        "text": "Bir kimsenin değeri, himmetinin yüksekliği kadardır.",
+        "source": "Hz. Ali (r.a.)",
+        "ref": ""
+      },
+      "46": {
+        "text": "Cömertlik öyle bir ağaçtır ki kökleri cennettedir.",
+        "source": "Hz. Ali (r.a.)",
+        "ref": ""
+      },
+      "47": {
+        "text": "Sükut, hikmetin kapısıdır.",
+        "source": "Hz. Ali (r.a.)",
+        "ref": ""
+      },
+      "48": {
+        "text": "İnsan, dilinin altında gizlidir.",
+        "source": "Hz. Ali (r.a.)",
+        "ref": ""
+      },
+      "49": {
+        "text": "İlim, amel içindir; amel olmazsa ilim yük olur.",
+        "source": "Süfyan-ı Sevri",
+        "ref": ""
+      },
+      "50": {
+        "text": "Birlikte yenilen yemek bereketlidir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Ebu Davud"
+      },
+      "51": {
+        "text": "Dua ibadetin özüdür.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Tirmizi"
+      },
+      "52": {
+        "text": "Her kim bir hayır yolunu gösterirse, o hayrı yapanın sevabı kadar sevap alır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Müslim"
+      },
+      "53": {
+        "text": "Helal lokma, ibadetin özüdür.",
+        "source": "Bayezid-i Bestami",
+        "ref": ""
+      },
+      "54": {
+        "text": "Dost acı söyler.",
+        "source": "Hz. Ömer (r.a.)",
+        "ref": ""
+      },
+      "55": {
+        "text": "Senden öncekileri düşün de sabret, senden sonrakileri düşün de kanaat et.",
+        "source": "Ahmed er-Rufai",
+        "ref": ""
+      },
+      "56": {
+        "text": "Kalbin katılığı, çok gülmekten ve çok yemekten gelir.",
+        "source": "Fudayl bin İyaz",
+        "ref": ""
+      },
+      "57": {
+        "text": "Allah katında en sevimsiz helal, boşanmadır.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Ebu Davud"
+      },
+      "58": {
+        "text": "Komşusu açken tok yatan bizden değildir.",
+        "source": "Hz. Muhammed (s.a.v.)",
+        "ref": "Buhari"
+      },
+      "59": {
+        "text": "Kim Allah'a güvenirse Allah ona kâfidir.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Talak Suresi, 3"
+      },
+      "60": {
+        "text": "De ki: Rabbim! İlmimi artır.",
+        "source": "Kuran-ı Kerim",
+        "ref": "Taha Suresi, 114"
       }
     }
   },
@@ -2264,6 +2588,54 @@
           "title": "Vitir Kannet",
           "meaning": "Allah'ım! Senden yardım dileriz."
         },
+        "112": {
+          "title": "Üzüntü Duası",
+          "meaning": "Senden başka ilah yoktur. Seni tesbih ederim. Ben zalimlerden oldum."
+        },
+        "113": {
+          "title": "Keder Giderme",
+          "meaning": "Allah'ım! Ben senin kulunum."
+        },
+        "114": {
+          "title": "Sıkıntı Anında",
+          "meaning": "Allah bana yeter, O'ndan başka ilah yoktur."
+        },
+        "115": {
+          "title": "Ferahlama Duası",
+          "meaning": "Allah'ım! Rahmetini umarım."
+        },
+        "116": {
+          "title": "Zor Zamanlarda",
+          "meaning": "Ey diri olan, ey kaim olan! Rahmetinle yardım dilerim."
+        },
+        "117": {
+          "title": "Elem Giderme",
+          "meaning": "Allah'ım! Kolaylaştırmadıkça hiçbir şey kolay olmaz."
+        },
+        "118": {
+          "title": "Hüzün Giderme",
+          "meaning": "Allah'ım! Kaygıdan sana sığınırım."
+        },
+        "119": {
+          "title": "Teselli Duası",
+          "meaning": "Biz Allah'a aitiz ve O'na döneceğiz."
+        },
+        "120": {
+          "title": "Sabır Dileme",
+          "meaning": "Rabbimiz! Üzerimize sabır yağdır."
+        },
+        "121": {
+          "title": "Yalnızlık Anında",
+          "meaning": "Allah benimle, Allah beni görüyor."
+        },
+        "122": {
+          "title": "Umut Duası",
+          "meaning": "Allah'ın rahmetinden ümit kesmeyin."
+        },
+        "123": {
+          "title": "Güven Duası",
+          "meaning": "Müminler Allah'a tevekkül etsinler."
+        },
         "february": "Şubat",
         "march": "Mart",
         "april": "Nisan",
@@ -2309,7 +2681,6 @@
       "searchSurah": "Sure ara..."
     }
   },
-
   "countdown": {
     "timeUntil": "{{prayer}} Vaktine",
     "remaining": "Kalan Süre",
@@ -2919,56 +3290,68 @@
       }
     }
   },
-
   "family": {
-    "title": "Huzur Aile",
-    "createProfile": "Profil Oluştur",
-    "namePlaceholder": "İsim Girin",
+    "title": "Huzurlu Aile",
+    "intro": "Ailenizi ekleyerek manevi gelişiminizi birlikte takip edin.",
+    "createAction": "Aile Oluştur",
+    "joinAction": "Aileye Katıl",
+    "familyNamePlaceholder": "Aile Adı (Örn: Yılmaz Ailesi)",
+    "codePlaceholder": "6 Haneli Davet Kodu",
+    "membersCount": "{{count}} Üye",
+    "members": "Aile Üyeleri",
+    "inviteTip": "Bu kodu ailenizle paylaşarak onları davet edebilirsiniz.",
     "child": "Çocuk",
-    "parent": "Ebeveyn",
-    "activeProfile": "Aktif Profil",
-    "leaderboard": "Aile Sıralaması",
-    "noProfiles": "Henüz profil oluşturulmadı.",
-    "points": "Puan",
+    "prayerTreeTitle": "Namaz Ağacı",
+    "prayerTreeDesc": "Her namaz bir damla su gibidir. Namaz kıldıkça ağacını büyüt!",
+    "waterDrops": "Damla Su",
+    "waterTreeAction": "Ağacı Sula",
+    "watering": "Sulanıyor...",
+    "treeTip": "Ağacın her gün namazla büyüyor!",
+    "createProfile": "Create Profile",
+    "namePlaceholder": "Enter Name",
+    "parent": "Parent",
+    "activeProfile": "Active Profile",
+    "leaderboard": "Family Leaderboard",
+    "noProfiles": "No profiles created yet.",
+    "points": "Points",
     "tabs": {
-      "overview": "Özet",
-      "leaderboard": "Sıralama",
-      "activities": "Aktiviteler",
-      "groups": "Gruplar"
+      "overview": "Overview",
+      "leaderboard": "Leaderboard",
+      "activities": "Activities",
+      "groups": "Groups"
     },
-    "welcomeBack": "Tekrar Hoş Geldin",
-    "sharedGoals": "Ortak Hedefler",
+    "welcomeBack": "Welcome Back",
+    "sharedGoals": "Shared Goals",
     "goals": {
-      "familyHatim": "Aile Hatmi",
-      "desc": "Ramazan sonuna kadar tamamlanacak"
+      "familyHatim": "Family Khatm",
+      "desc": "To be completed by end of Ramadan"
     },
-    "chat": "Sohbet",
-    "invite": "Davet Et",
-    "recentActivity": "Son Aktiviteler",
+    "chat": "Chat",
+    "invite": "Invite",
+    "recentActivity": "Recent Activity",
     "activities": {
-      "action1": "Yasin Suresini okudu",
-      "action2": "Sabah namazını kıldı",
-      "action3": "33 tesbih çekti"
+      "action1": "read Surah Yasin",
+      "action2": "prayed Fajr",
+      "action3": "did 33 tasbih"
     },
-    "minutesAgo": "dakika önce",
+    "minutesAgo": "minutes ago",
     "groups": {
-      "title": "Aile Grupları",
-      "create": "Grup Oluştur",
-      "join": "Gruba Katıl",
-      "code": "Grup Kodu",
-      "enterCode": "Kodu Girin",
-      "createBtn": "Oluştur",
-      "joinBtn": "Katıl",
-      "noGroups": "Henüz bir gruba üye değilsiniz.",
-      "members": "Üyeler",
-      "leave": "Ayrıl",
-      "pendingRequests": "Bekleyen İstekler",
-      "requestSent": "Katılım isteğiniz gönderildi. Yönetici onayı bekleniyor.",
-      "errorCreating": "Grup oluşturulurken hata oluştu.",
-      "errorJoining": "Gruba katılırken hata oluştu."
+      "title": "Family Groups",
+      "create": "Create Group",
+      "join": "Join Group",
+      "code": "Group Code",
+      "enterCode": "Enter Code",
+      "createBtn": "Create",
+      "joinBtn": "Join",
+      "noGroups": "You are not a member of any group yet.",
+      "members": "Members",
+      "leave": "Leave",
+      "pendingRequests": "Pending Requests",
+      "requestSent": "Your request has been sent. Waiting for admin approval.",
+      "errorCreating": "Error creating group.",
+      "errorJoining": "Error joining group."
     }
   },
-
   "hatimCoach": {
     "title": "Akıllı Hatim Koçu",
     "welcomeTitle": "Hatim Yolculuğuna Hoş Geldin",
@@ -2996,7 +3379,6 @@
     "streak": "Okuma Serisi",
     "resetPlan": "Planı Sıfırla"
   },
-
   "missedPrayers": {
     "title": "Kaza Takipçisi",
     "calculatorTitle": "Kaza Namazı Hesaplayıcı",
@@ -3007,356 +3389,6 @@
     "recalculate": "Yeniden Hesapla",
     "confirmRecalculate": "Mevcut veriler silinecek. Devam etmek istiyor musunuz?",
     "note": "Kaza namazı kıldığınızda '-' butonuna basarak sayıyı azaltın."
-  },
-
-  "hikmet": {
-    "title": "Hikmetname",
-    "daily": "Günün Hikmeti",
-    "favorite": "Favori",
-    "share": "Paylaş",
-    "new": "Yeni",
-    "copied": "Hikmet panoya kopyalandı!",
-    "favorites": "Favorilerim",
-    "categoriesTitle": "Kategoriler",
-    "shareText": "\"{{text}}\"\n\n— {{source}}{{ref}}\n\n{{appName}} uygulamasından",
-    "categories": {
-      "hadis": {
-        "title": "Hadis-i Şerifler",
-        "desc": "Peygamber Efendimiz'in mübarek sözleri"
-      },
-      "alim": {
-        "title": "Alimlerin Sözleri",
-        "desc": "İslam alimlerinden hikmetli sözler"
-      },
-      "sufi": {
-        "title": "Tasavvuf Büyükleri",
-        "desc": "Sufi büyüklerinden nasihatler"
-      },
-      "ayet": {
-        "title": "Kuran'dan Hikmetler",
-        "desc": "Ayetlerden öğütler ve hikmetler"
-      }
-    },
-    "items": {
-      "1": {
-        "text": "Kolaylaştırın, zorlaştırmayın. Müjdeleyin, nefret ettirmeyin.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Buhari, İlim 11"
-      },
-      "2": {
-        "text": "Sizden biriniz kendisi için istediğini kardeşi için de istemedikçe gerçek mümin olamaz.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Buhari, İman 7"
-      },
-      "3": {
-        "text": "İnsanların en hayırlısı, insanlara en faydalı olanıdır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Taberani"
-      },
-      "4": {
-        "text": "Güzel ahlak, günahları eritir; suyun buzu erittiği gibi.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Taberani"
-      },
-      "5": {
-        "text": "Öfkelendiğinde kendine hakim olan kişi, gerçek kahramandır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Buhari, Edeb 76"
-      },
-      "6": {
-        "text": "Her kim Allah için alçakgönüllü olursa, Allah onu yükseltir.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Müslim"
-      },
-      "7": {
-        "text": "Hikmetin başı Allah korkusudur.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Beyhaki"
-      },
-      "8": {
-        "text": "Dilini hayır için kullan ya da sus.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Buhari, Edeb 31"
-      },
-      "9": {
-        "text": "İlim, isteyenin değil, arayanın hakkıdır.",
-        "source": "İmam Gazali",
-        "ref": "İhya'u Ulumi'd-din"
-      },
-      "10": {
-        "text": "Kalp, Allah'ı zikretmedikçe huzur bulamaz.",
-        "source": "İmam Gazali",
-        "ref": "İhya'u Ulumi'd-din"
-      },
-      "11": {
-        "text": "Nefsini bilen Rabbini bilir.",
-        "source": "İmam Şafi",
-        "ref": ""
-      },
-      "12": {
-        "text": "İlmin en üstün mertebesi, Allah'tan korkmaktır.",
-        "source": "İmam Malik",
-        "ref": ""
-      },
-      "13": {
-        "text": "Sabır, kalbin gözüdür.",
-        "source": "İbn-i Ataullah",
-        "ref": "el-Hikemü'l-Ataiyye"
-      },
-      "14": {
-        "text": "Bir an için bile kalbi Allah'tan gafil etmek, büyük bir kayıptır.",
-        "source": "Hasan-ı Basri",
-        "ref": ""
-      },
-      "15": {
-        "text": "Tefekkür ibadettir.",
-        "source": "İmam Ebu Hanife",
-        "ref": ""
-      },
-      "16": {
-        "text": "Aşk bir denizdir, kıyısı yoktur.",
-        "source": "Mevlana Celaleddin Rumi",
-        "ref": "Mesnevi"
-      },
-      "17": {
-        "text": "Yaratılanı severiz, Yaratandan ötürü.",
-        "source": "Yunus Emre",
-        "ref": ""
-      },
-      "18": {
-        "text": "Kendi nefsini ıslah etmeden başkasını ıslah edemezsin.",
-        "source": "Abdulkadir Geylani",
-        "ref": ""
-      },
-      "19": {
-        "text": "Dünya bir köprüdür. Üzerinden geç, ama üzerine ev yapma.",
-        "source": "Hz. İsa (a.s.)",
-        "ref": ""
-      },
-      "20": {
-        "text": "Allah sevgisi, kalbin hayatıdır.",
-        "source": "İbn-i Arabi",
-        "ref": ""
-      },
-      "21": {
-        "text": "Edep, akıldan öncedir.",
-        "source": "Beyazıd-ı Bestami",
-        "ref": ""
-      },
-      "22": {
-        "text": "İnsanların en acizi, dua edemeyendir.",
-        "source": "Ahmed bin Hanbel",
-        "ref": ""
-      },
-      "23": {
-        "text": "Kalbinde merhamet olmayanın, imanı zayıftır.",
-        "source": "Şah-ı Nakşibend",
-        "ref": ""
-      },
-      "24": {
-        "text": "Şüphesiz güçlükle beraber kolaylık vardır.",
-        "source": "Kuran-ı Kerim",
-        "ref": "İnşirah Suresi, 5-6"
-      },
-      "25": {
-        "text": "Allah sabredenleri sever.",
-        "source": "Kuran-ı Kerim",
-        "ref": "Al-i İmran, 146"
-      },
-      "26": {
-        "text": "Rabbinizden bağışlanma dileyin. O, çok bağışlayıcıdır.",
-        "source": "Kuran-ı Kerim",
-        "ref": "Nuh Suresi, 10"
-      },
-      "27": {
-        "text": "Kim Allah'a tevekkül ederse, O ona yeter.",
-        "source": "Kuran-ı Kerim",
-        "ref": "Talak Suresi, 3"
-      },
-      "28": {
-        "text": "Bilesiniz ki kalpler ancak Allah'ı anmakla huzur bulur.",
-        "source": "Kuran-ı Kerim",
-        "ref": "Ra'd Suresi, 28"
-      },
-      "29": {
-        "text": "İyiliğin karşılığı ancak iyiliktir.",
-        "source": "Kuran-ı Kerim",
-        "ref": "Rahman Suresi, 60"
-      },
-      "30": {
-        "text": "Allah her şeye kadirdir.",
-        "source": "Kuran-ı Kerim",
-        "ref": "Bakara Suresi, 20"
-      },
-      "31": {
-        "text": "En hayırlı sadaka, ilim öğrenmek ve öğretmektir.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "İbn Mace"
-      },
-      "32": {
-        "text": "Cennet, annelerin ayakları altındadır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Nesai"
-      },
-      "33": {
-        "text": "Temizlik imanın yarısıdır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Müslim"
-      },
-      "34": {
-        "text": "Güleryüzle karşılamak sadakadır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Tirmizi"
-      },
-      "35": {
-        "text": "Kim bir ağaç dikerse, onun meyvesinden yiyenler kadar sevap alır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Müslim"
-      },
-      "36": {
-        "text": "Şükreden kalp, sabreden beden, zikreden dil.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Tirmizi"
-      },
-      "37": {
-        "text": "Müminin niyeti amelinden hayırlıdır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Taberani"
-      },
-      "38": {
-        "text": "İki nimet vardır ki insanların çoğu bunlarda aldanmıştır: Sağlık ve boş vakit.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Buhari"
-      },
-      "39": {
-        "text": "Akıl, üzerine pratik uygulanmayan bilgidir; bilgi ise uygulanmayan akıldır.",
-        "source": "İmam Gazali",
-        "ref": ""
-      },
-      "40": {
-        "text": "Dünya ahiretin tarlasıdır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": ""
-      },
-      "41": {
-        "text": "Gerçek zenginlik, gönül zenginliğidir.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Buhari, Rikak 15"
-      },
-      "42": {
-        "text": "Mümin, müminin aynasıdır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Ebu Davud"
-      },
-      "43": {
-        "text": "Ölüm yeter öğütçü olarak.",
-        "source": "Hz. Ömer (r.a.)",
-        "ref": ""
-      },
-      "44": {
-        "text": "Nimete şükretmeyen, belanın artmasına hazırlanır.",
-        "source": "Hz. Ali (r.a.)",
-        "ref": ""
-      },
-      "45": {
-        "text": "Bir kimsenin değeri, himmetinin yüksekliği kadardır.",
-        "source": "Hz. Ali (r.a.)",
-        "ref": ""
-      },
-      "46": {
-        "text": "Cömertlik öyle bir ağaçtır ki kökleri cennettedir.",
-        "source": "Hz. Ali (r.a.)",
-        "ref": ""
-      },
-      "47": {
-        "text": "Sükut, hikmetin kapısıdır.",
-        "source": "Hz. Ali (r.a.)",
-        "ref": ""
-      },
-      "48": {
-        "text": "İnsan, dilinin altında gizlidir.",
-        "source": "Hz. Ali (r.a.)",
-        "ref": ""
-      },
-      "49": {
-        "text": "İlim, amel içindir; amel olmazsa ilim yük olur.",
-        "source": "Süfyan-ı Sevri",
-        "ref": ""
-      },
-      "50": {
-        "text": "Birlikte yenilen yemek bereketlidir.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Ebu Davud"
-      },
-      "51": {
-        "text": "Dua ibadetin özüdür.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Tirmizi"
-      },
-      "52": {
-        "text": "Her kim bir hayır yolunu gösterirse, o hayrı yapanın sevabı kadar sevap alır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Müslim"
-      },
-      "53": {
-        "text": "Helal lokma, ibadetin özüdür.",
-        "source": "Bayezid-i Bestami",
-        "ref": ""
-      },
-      "54": {
-        "text": "Dost acı söyler.",
-        "source": "Hz. Ömer (r.a.)",
-        "ref": ""
-      },
-      "55": {
-        "text": "Senden öncekileri düşün de sabret, senden sonrakileri düşün de kanaat et.",
-        "source": "Ahmed er-Rufai",
-        "ref": ""
-      },
-      "56": {
-        "text": "Kalbin katılığı, çok gülmekten ve çok yemekten gelir.",
-        "source": "Fudayl bin İyaz",
-        "ref": ""
-      },
-      "57": {
-        "text": "Allah katında en sevimsiz helal, boşanmadır.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Ebu Davud"
-      },
-      "58": {
-        "text": "Komşusu açken tok yatan bizden değildir.",
-        "source": "Hz. Muhammed (s.a.v.)",
-        "ref": "Buhari"
-      },
-      "59": {
-        "text": "Kim Allah'a güvenirse Allah ona kâfidir.",
-        "source": "Kuran-ı Kerim",
-        "ref": "Talak Suresi, 3"
-      },
-      "60": {
-        "text": "De ki: Rabbim! İlmimi artır.",
-        "source": "Kuran-ı Kerim",
-        "ref": "Taha Suresi, 114"
-      }
-    }
-  },
-  "family": {
-    "title": "Huzurlu Aile",
-    "intro": "Ailenizi ekleyerek manevi gelişiminizi birlikte takip edin.",
-    "createAction": "Aile Oluştur",
-    "joinAction": "Aileye Katıl",
-    "familyNamePlaceholder": "Aile Adı (Örn: Yılmaz Ailesi)",
-    "codePlaceholder": "6 Haneli Davet Kodu",
-    "membersCount": "{{count}} Üye",
-    "members": "Aile Üyeleri",
-    "inviteTip": "Bu kodu ailenizle paylaşarak onları davet edebilirsiniz.",
-    "child": "Çocuk",
-    "prayerTreeTitle": "Namaz Ağacı",
-    "prayerTreeDesc": "Her namaz bir damla su gibidir. Namaz kıldıkça ağacını büyüt!",
-    "waterDrops": "Damla Su",
-    "waterTreeAction": "Ağacı Sula",
-    "watering": "Sulanıyor...",
-    "treeTip": "Ağacın her gün namazla büyüyor!"
   },
   "streak": {
     "fajr": "Sabah",
@@ -3373,5 +3405,425 @@
     "badgesTitle": "Rozet Koleksiyonu",
     "streakTitle": "Zincirlerim",
     "streakTip": "Zincirini korumak için ibadetlerini her gün vaktinde yapmaya çalış!"
+  },
+  "agenda": {
+    "weekdays": {
+      "mon": "Pzt",
+      "tue": "Sal",
+      "wed": "Çar",
+      "thu": "Per",
+      "fri": "Cum",
+      "sat": "Cmt",
+      "sun": "Paz"
+    },
+    "hijriLabel": "Hicri",
+    "today": "Bugün",
+    "noEventsYet": "Henüz etkinlik yok.",
+    "addNew": "Yeni Ekle",
+    "titlePlaceholder": "Başlık (Örn: İftar Daveti)",
+    "notesPlaceholder": "Notlar...",
+    "eventsAndNotes": "Etkinlikler & Notlar"
+  },
+  "streakFeature": {
+    "title": "Seri Takvimi",
+    "appCategory": "Uygulama",
+    "prayerCategory": "Namaz",
+    "tipTitle": "İpucu",
+    "tipText": "7 gün boyunca her gün ibadetlerinizi kaydederek 1 adet Dondurma Hakkı kazanabilirsiniz!"
+  },
+  "streakCalendar": {
+    "weekdays": {
+      "mon": "Pzt",
+      "tue": "Sal",
+      "wed": "Çar",
+      "thu": "Per",
+      "fri": "Cum",
+      "sat": "Cmt",
+      "sun": "Paz"
+    },
+    "seriesTitle": "{{category}} Serisi",
+    "days": "Gün",
+    "freeze": "Dondurma",
+    "legend": {
+      "completed": "Tamamlandı",
+      "frozen": "Donduruldu",
+      "missed": "Eksik"
+    }
+  },
+  "weeklyGoal": {
+    "title": "Haftalık Hedef",
+    "description": "Haftada kaç gün ibadet takibini hedefliyorsun?",
+    "daysValue": "{{count}} gün"
+  },
+  "zakatCalculator": {
+    "title": "Zekat Hesaplayıcı",
+    "whatIsZakatTitle": "Zekat Nedir?",
+    "whatIsZakatBody": "Zekat, nisab miktarına ulaşan ve üzerinden bir yıl geçen malların %2.5’inin verilmesidir. Nisab, 80.18 gram altın veya 561.2 gram gümüş değeridir.",
+    "goldPriceLabel": "Altın Fiyatı (TL/gram)",
+    "assetsTitle": "Varlıklar",
+    "assetCash": "Nakit Para (TL)",
+    "assetGold": "Altın (gram)",
+    "assetSilver": "Gümüş (gram)",
+    "assetStocks": "Hisse/Yatırım (TL)",
+    "assetReceivables": "Alacaklar (TL)",
+    "assetBusiness": "Ticari Mal (TL)",
+    "debtsTitle": "Borçlar",
+    "reset": "Sıfırla",
+    "nisabReached": "✅ Nisab’a ulaştınız",
+    "nisabNotReached": "❌ Nisab’a ulaşılmadı",
+    "nisabLabel": "Nisab",
+    "netWealth": "Net Servet",
+    "zakatLabel": "Zekat",
+    "noZakatRequired": "Zekat Gerekmez",
+    "percentNote": "(Net servetin %2.5’i)"
+  },
+  "weeklySermon": {
+    "title": "Haftanın Hutbesi",
+    "description": "Diyanet İşleri Başkanlığı'nın resmi hutbe yayınları",
+    "lastFriday": "Son Cuma Hutbesi",
+    "sourcesTitle": "Hutbe Kaynakları",
+    "note": "Hutbeler her Cuma günü Diyanet İşleri Başkanlığı tarafından yayınlanmaktadır. Yukarıdaki kaynaklardan güncel hutbeye ulaşabilirsiniz.",
+    "sources": {
+      "diyanetTv": {
+        "title": "Diyanet TV - Cuma Hutbesi",
+        "description": "Diyanet'in resmi hutbe yayınları"
+      },
+      "diyanetGov": {
+        "title": "Diyanet.gov.tr - Hutbeler",
+        "description": "Haftalık hutbe metinleri (PDF/Word)"
+      },
+      "edevlet": {
+        "title": "e-Devlet Hutbe Sayfası",
+        "description": "Cuma hutbesi PDF indirme"
+      },
+      "audio": {
+        "title": "Sesli Hutbe",
+        "description": "Dinleyerek takip edin"
+      }
+    }
+  },
+  "themeSelector": {
+    "title": "Tema Seçimi",
+    "description": "Uygulamanın renklerini değiştirin",
+    "tipLabel": "İpucu",
+    "tipText": "Tema tercihiniz kaydedilir ve uygulama her açıldığında otomatik uygulanır."
+  },
+  "support": {
+    "title": "Destek",
+    "description": "Sorunlarınızı veya önerilerinizi bize iletin",
+    "typeLabel": "Bildirim Tipi",
+    "emailLabel": "E-posta (Opsiyonel)",
+    "emailPlaceholder": "ornek@email.com",
+    "emailHint": "Size geri dönüş yapmamızı istiyorsanız e-postanızı yazın",
+    "messageLabel": "Mesajınız",
+    "messagePlaceholder": "Sorununuzu veya önerinizi detaylı bir şekilde yazın...",
+    "send": "Gönder",
+    "sending": "Gönderiliyor...",
+    "successTitle": "Talebiniz İletildi!",
+    "successBodyLine1": "Geri bildiriminiz için teşekkür ederiz.",
+    "successBodyLine2": "En kısa sürede incelenecektir.",
+    "directContact": "Doğrudan iletişim için",
+    "errors": {
+      "messageRequired": "Lütfen bir mesaj yazın.",
+      "generic": "Bir hata oluştu. Lütfen tekrar deneyin."
+    },
+    "types": {
+      "problem": "Sorun",
+      "feature": "Özellik İsteği",
+      "other": "Diğer"
+    },
+    "mail": {
+      "subjectProblem": "Huzur App - Sorun Bildirimi",
+      "subjectFeature": "Huzur App - Özellik İsteği",
+      "subjectFeedback": "Huzur App - Geri Bildirim",
+      "typeLabel": "Tip",
+      "userEmailLabel": "Kullanıcı Email",
+      "notSpecified": "Belirtilmedi",
+      "messageLabel": "Mesaj",
+      "submittedAtLabel": "Gönderilme Tarihi",
+      "deviceLabel": "Cihaz"
+    }
+  },
+  "muezzinSelector": {
+    "title": "Müezzin Seçimi",
+    "description": "Ezan bildirimleri için tercih ettiğiniz makamı seçin",
+    "noteLabel": "Not",
+    "noteText": "Seçtiğiniz makam, bir sonraki ezan vaktinde bildirim sesi olarak kullanılacaktır. Ses dosyalarının cihazınızda yüklü olması gerekebilir."
+  },
+  "limitModal": {
+    "title": "Günlük Limit Doldu",
+    "usagePrefix": "Bugünkü",
+    "usageSuffix": "ücretsiz hakkını kullandın!",
+    "tomorrowOption": "Yarın 2 yeni hakkın olacak",
+    "or": "veya",
+    "proOptionPrefix": "Pro'ya geç,",
+    "unlimited": "sınırsız",
+    "upgradeButton": "Pro'ya Geç",
+    "laterButton": "Tamam, Anladım",
+    "proWith": "Pro ile:",
+    "benefits": {
+      "unlimitedAi": "Sınırsız AI sorgu",
+      "allSurahs": "Tüm sureler",
+      "noAds": "Reklamsız"
+    },
+    "features": {
+      "nuzul_ai": "Nüzul Sebebi Sorgusu",
+      "tajweed_ai": "Tecvid Kontrolü",
+      "word_by_word": "Kelime Kelime Anlam",
+      "memorize": "Hafızlık Yardımcısı"
+    }
+  },
+  "weeklyChallenges": {
+    "title": "Haftalık Meydan Okumalar",
+    "subtitle": "Bu haftaki hedeflerini tamamla, ödülleri topla!",
+    "stats": {
+      "completed": "Tamamlanan",
+      "success": "Başarı",
+      "weekStreak": "Hafta Serisi"
+    },
+    "newChallenges": "Yeni Meydan Okumalar",
+    "rewardXp": "+{{xp}} XP",
+    "completedLabel": "Tamamlandı!",
+    "progressText": "{{progress}} / {{target}} {{unit}}",
+    "completeAction": "Tamamla",
+    "congratsShort": "Tebrikler!",
+    "timer": {
+      "zero": "00:00:00",
+      "daysHours": "{{days}}g {{hours}}s"
+    },
+    "modal": {
+      "title": "Meydan Okuma Tamamlandı!",
+      "reward": "+{{xp}} XP Kazandın!",
+      "cta": "Harika!"
+    },
+    "units": {
+      "juz": "cüz",
+      "rakat": "rekat",
+      "tasbih": "tesbih",
+      "day": "gün",
+      "khatm": "hatim"
+    },
+    "challengeTitles": {
+      "quran_week": "Kuran Haftası",
+      "namaz_week": "Namaz Haftası",
+      "zikir_week": "Zikir Haftası",
+      "sabah_week": "Sabah Namazı",
+      "tespihat_week": "Tespihat Haftası",
+      "hatim_week": "Hatim Haftası",
+      "fasting_week": "Oruç Haftası",
+      "charity_week": "Sadaka Haftası"
+    },
+    "challengeDescriptions": {
+      "quran_week": "Bu hafta 7 cüz Kuran oku",
+      "namaz_week": "Bu hafta 40 rekat nafile namaz kıl",
+      "zikir_week": "Bu hafta 1000 tesbih çek",
+      "sabah_week": "Bu hafta 7 gün sabah namazını vaktinde kıl",
+      "tespihat_week": "Bu hafta 7 gün tespihat (sabah/akşam) tamamla",
+      "hatim_week": "Bu hafta 1 hatim tamamla",
+      "fasting_week": "Bu hafta 2 gün nafile oruç tut",
+      "charity_week": "Bu hafta 7 gün sadaka ver"
+    }
+  },
+  "streakProtection": {
+    "title": "Seriniz Tehlikede!",
+    "defaultCategory": "Genel",
+    "description": "Dün uygulamayı kullanamadığınız için {{count}} günlük {{category}} seriniz sıfırlanmak üzere.",
+    "useTokenLabel": "Dondurma Hakkı Kullan",
+    "tokensAvailable": "{{count}} adet mevcut",
+    "applyAndProtect": "Uygula ve Seriyi Koru",
+    "cancelAndReset": "Vazgeç (Seri Sıfırlanır)"
+  },
+  "streak24h": {
+    "title": "24 Saat Telafi",
+    "defaultCategory": "Namaz",
+    "description": "{{category}} serin bir gün kaçırılmış görünüyor. 24 saatlik pencerede telafi ederek serini koruyabilirsin.",
+    "deadline": "Son telafi zamanı: {{value}}",
+    "recoverAction": "Telafi Et",
+    "laterAction": "Daha Sonra"
+  },
+  "streakRecovery": {
+    "expired": "Süre doldu",
+    "adError": "Reklam yüklenemedi. Lütfen tekrar dene.",
+    "genericError": "Bir hata oluştu. Lütfen tekrar dene.",
+    "title": "Serini Kurtar",
+    "successTitle": "Seri Kurtarıldı!",
+    "successMessage": "Tebrikler! {{count}} günlük serin başarıyla korundu.",
+    "days": "gün",
+    "daysAtRisk": "Günlük Seri Riskte",
+    "description": "Son 24 saat içinde reklam izleyerek serini koruyabilirsin.",
+    "timeLeft": "Kalan Süre",
+    "oneTimeUse": "Bu hak haftada 1 kez kullanılabilir.",
+    "watchAd": "Reklam İzle ve Kurtar",
+    "footerText": "Reklamı tam izledikten sonra serin otomatik olarak korunur."
+  },
+  "tajweedQuiz": {
+    "resultTitle": "Tebrikler!",
+    "resultSubtitle": "Tecvid Quiz'ini tamamladınız.",
+    "feedback": {
+      "excellent": "Harika! Tecvid kurallarına hakimsin.",
+      "good": "Güzel bir başlangıç, biraz daha pratikle mükemmelleşebilirsin.",
+      "retry": "Dersleri tekrar gözden geçirmeye ne dersin?"
+    },
+    "actions": {
+      "restart": "Yeniden Başla",
+      "backToMenu": "Ana Menüye Dön",
+      "nextQuestion": "Sıradaki Soru",
+      "showResults": "Sonuçları Gör"
+    },
+    "questionLabel": "Soru {{number}}",
+    "explanation": "Açıklama"
+  },
+  "tespihat": {
+    "ui": {
+      "title": "Tespihat",
+      "progressToday": "Bugünkü İlerleme",
+      "reset": "Sıfırla",
+      "postPrayerDhikr": "Namaz Sonrası Zikirler",
+      "tasbih33": "33'lük Tesbihler",
+      "tawhid": "Tevhid",
+      "postPrayerDuas": "Namaz Sonrası Dualar",
+      "complete": "Tamamla",
+      "completed": "Tamamlandı ✓"
+    }
+  },
+  "quranMemorize": {
+    "title": "Hafızlık Yardımcısı",
+    "subtitle": "Ezberle, Tekrar Et, Pekiştir",
+    "stats": {
+      "memorized": "Ezberlenen",
+      "learning": "Çalışılan",
+      "review": "Tekrar"
+    },
+    "tabs": {
+      "surahs": "Sureler",
+      "reviews": "Tekrarlar"
+    },
+    "ayahCount": "{{count}} Ayet",
+    "start": "Başla",
+    "empty": {
+      "title": "Tebrikler!",
+      "description": "Bugün tekrar edilecek sure kalmadı."
+    },
+    "level": "Seviye {{level}}",
+    "reviewQuestion": "Bu sureyi ne kadar iyi hatırlıyorsun?",
+    "reviewActions": {
+      "hard": "Zorlandım",
+      "medium": "İdare Eder",
+      "easy": "Kolaydı"
+    }
+  },
+  "prayerTeacher": {
+    "title": "Namaz Hocası",
+    "stepsDescription": "Namazın adımlarını öğrenmek için aşağıdaki kartlara tıklayın.",
+    "recitationsDescription": "Namazda okunan dualar ve sureler.",
+    "typesDescription": "5 vakit namazın rekat sayıları ve detayları.",
+    "termsDescription": "Dini hükümler ve anlamları.",
+    "invalidatorsDescription": "Namazı bozan durumlar listesi.",
+    "labels": {
+      "pronunciation": "Okunuşu",
+      "meaning": "Anlamı",
+      "examples": "Örnekler"
+    },
+    "totalRakat": "Toplam: {{count}} rekat",
+    "quiz": {
+      "title": "Namaz Bilgi Yarışması",
+      "intro": "{{count}} soru ile bilginizi test edin!",
+      "start": "Başla",
+      "finished": "Quiz Tamamlandı!",
+      "retry": "Tekrar Dene",
+      "questionCounter": "Soru {{current}}/{{total}}",
+      "score": "Puan: {{score}}",
+      "nextQuestion": "Sonraki Soru",
+      "showResults": "Sonuçları Gör",
+      "feedback": {
+        "excellent": "Harika! Çok iyi biliyorsunuz!",
+        "good": "İyi! Biraz daha çalışabilirsiniz.",
+        "retry": "Tekrar çalışmanız önerilir."
+      }
+    }
+  },
+  "nafilePrayers": {
+    "title": "Nafile Namazlar",
+    "subtitle": "Sünnet ve nafile ibadetlerinizi takip edin",
+    "stats": {
+      "completedToday": "Bugün Tamamlanan",
+      "total": "Toplam",
+      "dayStreak": "Gün Serisi"
+    },
+    "progress": {
+      "completed": "Tamamlandı!",
+      "count": "{{current}} / {{max}} rekat"
+    },
+    "info": {
+      "title": "Nafile Namazlar Hakkında",
+      "item1": "Nafile namazlar farz namazların dışında kılınan sünnet ve müstehap namazlardır.",
+      "item2": "Her nafile namaz için ayrı niyet etmek gerekir.",
+      "item3": "Nafile namazlar günahların affına vesile olur.",
+      "item4": "Düzenli nafile namaz kılmak alışkanlık kazandırır."
+    }
+  },
+  "modules": {
+    "core": "Temel Özellikler",
+    "ibadet": "İbadet & Zikir",
+    "education": "Eğitim & Öğretim",
+    "content": "İçerik & Medya",
+    "tools": "Araçlar",
+    "social": "Sosyal",
+    "lifestyle": "Yaşam Tarzı",
+    "ai": "Yapay Zeka",
+    "system": "Sistem",
+    "family": "Aile & Çocuk"
+  },
+  "growth": {
+    "onboarding": {
+      "languageTitle": "Dilini Seç",
+      "languageDescription": "Nerede olursan ol, ibadet yolculuğunda kendi dilinle yanındayız.",
+      "continue": "Devam Et",
+      "locationTitle": "Konumunu Ayarlayalım",
+      "locationDescription": "Şehrin için doğru namaz vakitleri ve kıble yönü için konum izni ver.",
+      "enableLocation": "Konumu Etkinleştir",
+      "notificationTitle": "İbadetle Bağını Güçlendir",
+      "notificationDescription": "Namaz ve zikir hatırlatmalarını kaçırmamak için bildirimleri aç.",
+      "enableNotifications": "Bildirimleri Aç",
+      "firstActionTitle": "Bismillah Diyerek Başlayalım",
+      "firstActionDescription": "Manevi yolculuğuna bugün ilk adımı at.",
+      "startNow": "Şimdi Başla",
+      "stepCounter": "Adım {{current}} / {{total}}"
+    },
+    "funnel": {
+      "title": "Growth Funnel Özeti",
+      "metrics": {
+        "onboardingCompletion": "Onboarding Tamamlama",
+        "shareConversion": "Paylaşım Dönüşümü",
+        "inviteAcceptance": "Davet Kabul Oranı",
+        "referralRewards": "Referral Ödülleri"
+      },
+      "events": {
+        "onboardingStarted": "onboarding_started",
+        "onboardingCompleted": "onboarding_completed",
+        "inviteCreated": "invite_created",
+        "inviteAccepted": "invite_accepted"
+      }
+    }
+  },
+  "invite": {
+    "modalTitle": "Undang Teman",
+    "modalDescription": "Buat dan bagikan tautan undangan. Pantau progres referral Anda di bawah.",
+    "statusTitle": "Status Referral",
+    "inviterReward": "Hadiah pengundang",
+    "inviteeReward": "Hadiah yang diundang",
+    "unlocked": "Terbuka",
+    "pending": "Menunggu",
+    "createLink": "Buat Tautan Undangan",
+    "code": "Kode Undangan",
+    "shareLink": "Bagikan Tautan",
+    "shareText": "Bergabunglah dengan aplikasi Huzur 🌙\n\nKode undangan saya: {{code}}\n{{url}}"
+  },
+  "referral": {
+    "inviteButton": {
+      "default": "Undang",
+      "variantB": "Undang Teman",
+      "variantC": "Mari Mulai Bersama"
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { Capacitor } from '@capacitor/core';
 import NativeAdBridge from '../plugins/NativeAdBridgePlugin';
 import { isPro } from './proService';
@@ -20,7 +21,7 @@ export const nativeAdService = {
      */
     initialize: async () => {
         if (Capacitor.getPlatform() === 'web') {
-            console.log('NativeAdService: Web platform - skipped init');
+            
             return false;
         }
 
@@ -29,12 +30,12 @@ export const nativeAdService = {
         }
 
         try {
-            console.log('NativeAdService: Initializing NativeAdBridge...');
+            
             await NativeAdBridge.initialize();
             isInitialized = true;
             return true;
         } catch (e) {
-            console.error('NativeAdService: Init Error:', e);
+            logger.error('NativeAdService: Init Error:', e);
             return false;
         }
     },
@@ -65,7 +66,7 @@ export const nativeAdService = {
             }
             return null;
         } catch (e) {
-            console.error('NativeAdService: Load Error:', e);
+            logger.error('NativeAdService: Load Error:', e);
             return null;
         }
     },
@@ -79,7 +80,7 @@ export const nativeAdService = {
         try {
             await NativeAdBridge.reportImpression({ adId: currentAdId });
         } catch (e) {
-            console.error('NativeAdService: Impression Error:', e);
+            logger.error('NativeAdService: Impression Error:', e);
         }
     },
 
@@ -92,7 +93,7 @@ export const nativeAdService = {
         try {
             await NativeAdBridge.reportClick({ adId: currentAdId });
         } catch (e) {
-            console.error('NativeAdService: Click Error:', e);
+            logger.error('NativeAdService: Click Error:', e);
         }
     }
 };

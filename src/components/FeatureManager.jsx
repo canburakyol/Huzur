@@ -6,7 +6,7 @@ import { featureConfig } from '../data/featureConfig';
  * FeatureManager Component
  * Handles rendering of active features as an overlay
  */
-const FeatureManager = ({ activeFeature, setActiveFeature }) => {
+const FeatureManager = ({ activeFeature, setActiveFeature, locationName }) => {
   if (!activeFeature) return null;
 
   const closeFeature = () => setActiveFeature(null);
@@ -28,8 +28,8 @@ const FeatureManager = ({ activeFeature, setActiveFeature }) => {
   return (
     <div className="app-container">
 
-      <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>Yükleniyor...</div>}>
-        <FeatureComponent onClose={closeFeature} {...extraProps} />
+      <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>⏳</div>}>
+        <FeatureComponent onClose={closeFeature} locationName={locationName} {...extraProps} />
       </Suspense>
     </div>
   );

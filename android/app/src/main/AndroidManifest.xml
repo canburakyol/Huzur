@@ -43,6 +43,24 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="huzur" android:host="invite" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" android:host="huzur.app" android:pathPrefix="/invite" />
+            </intent-filter>
         </activity>
 
         <receiver android:name=".PrayerWidget" android:exported="true">
@@ -56,7 +74,8 @@
         <receiver
             android:name=".WidgetAlarmReceiver"
             android:enabled="true"
-            android:exported="false">
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="com.huzurapp.android.UPDATE_WIDGET" />
                 <action android:name="com.huzurapp.android.SCHEDULE_ALARMS" />

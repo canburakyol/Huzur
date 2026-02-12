@@ -15,22 +15,22 @@ export const aiFeatures = {
     component: Assistant,
     category: 'AI',
     module: 'ai',
-    name: 'İslami Asistan',
+    nameKey: 'features.assistant',
     icon: '🤖'
   },
   spiritualCoach: {
     component: SpiritualCoach,
     category: 'AI',
     module: 'ai',
-    name: 'Manevi Koç',
+    nameKey: 'features.spiritualCoach',
     icon: '🧠'
   }
 };
 
 // Module metadata
 export const moduleInfo = {
-  name: 'Yapay Zeka',
-  description: 'AI destekli özellikler',
+  nameKey: 'modules.ai',
+  descriptionKey: 'modules.aiDesc',
   icon: '🤖',
   priority: 8,
   chunkName: 'feature-ai'

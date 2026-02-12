@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { X, TrendingDown, Calendar, BarChart3, AlertCircle, CheckCircle } from 'lucide-react';
+import { storageService } from '../services/storageService';
+
+const PRAYER_TRACKER_KEY = 'prayerTracker';
+const PRAYER_TRACKER_HISTORY_KEY = 'prayerTrackerHistory';
 
 const PrayerTracker = ({ onClose }) => {
     const [counts, setCounts] = useState(() => {
-        const saved = localStorage.getItem('prayerTracker');
-        return saved ? JSON.parse(saved) : {
+        return storageService.getItem(PRAYER_TRACKER_KEY, {
             sabah: 0,
             ogle: 0,
             ikindi: 0,
@@ -12,12 +15,11 @@ const PrayerTracker = ({ onClose }) => {
             yatsi: 0,
             vitir: 0,
             oruc: 0
-        };
+        });
     });
 
     const [history, setHistory] = useState(() => {
-        const savedHistory = localStorage.getItem('prayerTrackerHistory');
-        return savedHistory ? JSON.parse(savedHistory) : [];
+        return storageService.getItem(PRAYER_TRACKER_HISTORY_KEY, []);
     });
 
     const [showInfo, setShowInfo] = useState(false);
@@ -25,7 +27,7 @@ const PrayerTracker = ({ onClose }) => {
     const updateCount = (key, delta) => {
         const newCounts = { ...counts, [key]: Math.max(0, counts[key] + delta) };
         setCounts(newCounts);
-        localStorage.setItem('prayerTracker', JSON.stringify(newCounts));
+        storageService.setItem(PRAYER_TRACKER_KEY, newCounts);
 
         // Geçmişe kaydet
         if (delta < 0) {
@@ -36,7 +38,7 @@ const PrayerTracker = ({ onClose }) => {
             };
             const newHistory = [...history, log].slice(-50); // Son 50 kayıt
             setHistory(newHistory);
-            localStorage.setItem('prayerTrackerHistory', JSON.stringify(newHistory));
+            storageService.setItem(PRAYER_TRACKER_HISTORY_KEY, newHistory);
         }
     };
 

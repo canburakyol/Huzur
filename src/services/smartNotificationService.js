@@ -9,77 +9,52 @@ import { Capacitor } from '@capacitor/core';
 import { storageService } from './storageService';
 import { logger } from '../utils/logger';
 import { analyticsService, ANALYTICS_EVENTS } from './analyticsService';
+import { getExperimentVariant } from './experimentService';
+import { getActiveCampaign, resolveCampaignCopy } from './campaignService';
+import {
+  NOTIFICATION_CHANNELS,
+  requestNotificationPermission,
+  createNotificationChannels,
+  STICKY_NOTIFICATION_ID
+} from './notificationPlatformService';
+
+export { requestNotificationPermission };
+export { NOTIFICATION_CHANNELS };
 
 const NOTIFICATION_STORAGE_KEY = 'huzur_scheduled_notifications';
 const NOTIFICATION_HISTORY_KEY = 'huzur_notification_history';
 const NOTIFICATION_PREFS_KEY = 'huzur_notification_prefs';
 
-// Notification Categories & Channels
-export const NOTIFICATION_CHANNELS = {
-  PRAYER: {
-    id: 'prayer_channel',
-    name: 'Ezan Vakitleri',
-    description: 'Namaz vakti hatırlatmaları',
-    importance: 5, // High
-    sound: 'ezan_default.mp3',
-    visibility: 1
-  },
-  STREAK: {
-    id: 'streak_channel',
-    name: 'Seri Uyarıları',
-    description: 'Seri koruma hatırlatmaları',
-    importance: 4,
-    sound: 'streak_alert.wav',
-    visibility: 1
-  },
-  REMINDER: {
-    id: 'reminder_channel',
-    name: 'Günlük Hatırlatıcılar',
-    description: 'Zikir ve günlük görev hatırlatmaları',
-    importance: 3,
-    sound: 'gentle_reminder.wav',
-    visibility: 1
-  },
-  UPDATES: {
-    id: 'updates_channel',
-    name: 'Uygulama Güncellemeleri',
-    description: 'Yeni özellikler ve duyurular',
-    importance: 2,
-    sound: 'default',
-    visibility: 1
-  }
-};
-
 // Namaz vakitleri bildirim mesajları
 const PRAYER_NOTIFICATIONS = {
   Fajr: {
-    title: '🌅 Sabah Namazı Vakti',
-    body: 'Günün bereketini sabah namazı ile başlatın. Vakit yaklaşıyor!',
+    title: '🌅 Fajr Prayer Time',
+    body: 'Start your day with blessing. Fajr time is approaching!',
     minutesBefore: 15
   },
   Sunrise: { // Güneş (İşrak)
-    title: '☀️ Güneş Doğuyor',
-    body: 'Güneş doğdu, sabah namazı vakti çıkıyor. İshrak namazı için hazır olun.',
+    title: '☀️ Sunrise',
+    body: 'The sun has risen. Prepare for Ishraq prayer.',
     minutesBefore: 5
   },
   Dhuhr: {
-    title: '🕌 Öğle Namazı Vakti',
-    body: 'Öğle namazı vakti yaklaşıyor. Mola verip namazınızı kılın.',
+    title: '🕌 Dhuhr Prayer Time',
+    body: 'Dhuhr prayer time is approaching. Take a short break for prayer.',
     minutesBefore: 15
   },
   Asr: {
-    title: '🌤️ İkindi Namazı Vakti',
-    body: 'İkindi namazı vakti geliyor. Günlük işlerinize ara verin.',
+    title: '🌤️ Asr Prayer Time',
+    body: 'Asr prayer time is coming. Pause your daily work for prayer.',
     minutesBefore: 15
   },
   Maghrib: {
-    title: '🌇 Akşam Namazı Vakti',
-    body: 'Gün batıyor, akşam namazı vakti yaklaşıyor. Oruçlarınızı açmaya hazırlanın.',
+    title: '🌇 Maghrib Prayer Time',
+    body: 'Sunset is near, Maghrib prayer time is approaching.',
     minutesBefore: 10
   },
   Isha: {
-    title: '🌙 Yatsı Namazı Vakti',
-    body: 'Yatsı namazı vakti geliyor. Günü namazla tamamlayın.',
+    title: '🌙 Isha Prayer Time',
+    body: 'Isha prayer time is coming. End your day with prayer.',
     minutesBefore: 15
   }
 };
@@ -87,14 +62,14 @@ const PRAYER_NOTIFICATIONS = {
 // Streak bildirim mesajları
 const STREAK_NOTIFICATIONS = [
   {
-    title: '🔥 Seriniz Kırılmak Üzere!',
-    body: 'Bugün uygulamayı açmadınız. {days} günlük serinizi korumak için hemen açın!',
+    title: '🔥 Your Streak Is at Risk!',
+    body: 'You have not opened the app today. Open now to protect your {days}-day streak!',
     hour: 20,
     minute: 0
   },
   {
-    title: '⏰ Son 4 Saat!',
-    body: 'Serinizi kurtarmak için son 4 saatiniz kaldı. Hemen uygulamayı açın!',
+    title: '⏰ Last 4 Hours!',
+    body: 'Only 4 hours left to save your streak. Open the app now!',
     hour: 23,
     minute: 0
   }
@@ -104,75 +79,26 @@ const STREAK_NOTIFICATIONS = [
 const DAILY_REMINDERS = [
   {
     id: 'zikir_morning',
-    title: '📿 Günlük Zikir Hatırlatması',
-    body: 'Bugün zikirlerinizi tamamladınız mı? Sebvha, tekbir ve tesbihat vakitleri...',
+    title: '📿 Daily Dhikr Reminder',
+    body: 'Have you completed your dhikr today?',
     hour: 10,
     minute: 0
   },
   {
     id: 'quran_afternoon',
-    title: '📖 Kuran Okuma Vakti',
-    body: 'Günlük Kuran okuma hedefinizi tamamlamak için harika bir zaman!',
+    title: '📖 Quran Reading Time',
+    body: 'A great time to complete your daily Quran reading goal!',
     hour: 14,
     minute: 0
   },
   {
     id: 'tasks_evening',
-    title: '✅ Günlük Görevler',
-    body: 'Bugünkü ibadet görevlerinizi tamamladınız mı? Kontrol edin!',
+    title: '✅ Daily Tasks',
+    body: 'Have you completed today’s worship tasks?',
     hour: 18,
     minute: 0
   }
 ];
-
-/**
- * Bildirim izni kontrol et ve iste
- */
-export const requestNotificationPermission = async () => {
-  if (Capacitor.getPlatform() === 'web') {
-    logger.log('Notifications: Web platform - using web notifications');
-    if ('Notification' in window) {
-      if (Notification.permission === 'granted') return true;
-      const permission = await Notification.requestPermission();
-      return permission === 'granted';
-    }
-    return false;
-  }
-
-  try {
-    const result = await LocalNotifications.requestPermissions();
-    return result.display === 'granted';
-  } catch (error) {
-    logger.error('Notifications: Permission error', error);
-    return false;
-  }
-};
-
-/**
- * Android Bildirim Kanallarını Oluştur
- */
-const createNotificationChannels = async () => {
-  if (Capacitor.getPlatform() !== 'android') return;
-
-  try {
-    const channels = Object.values(NOTIFICATION_CHANNELS).map(channel => ({
-      id: channel.id,
-      name: channel.name,
-      description: channel.description,
-      importance: channel.importance,
-      visibility: channel.visibility,
-      sound: channel.sound
-    }));
-
-    await LocalNotifications.createChannel
-      ? Promise.all(channels.map(c => LocalNotifications.createChannel(c)))
-      : null; // Some plugin versions might use a different method or list
-      
-    logger.log('Notifications: Channels created');
-  } catch (error) {
-    logger.error('Notifications: Channel creation error', error);
-  }
-};
 
 /**
  * Kullanıcı tercihlerini al
@@ -183,9 +109,68 @@ export const getNotificationPreferences = () => {
     streak: true,
     reminder: true,
     updates: true,
-    preAlertMinutes: 15
+    preAlertMinutes: 15,
+    quietHoursEnabled: false,
+    quietHoursStart: '22:00',
+    quietHoursEnd: '07:00'
   };
   return storageService.getItem(NOTIFICATION_PREFS_KEY) || defaults;
+};
+
+const parseHourMinute = (timeValue, fallbackHour, fallbackMinute) => {
+  const [h, m] = String(timeValue || '').split(':').map((v) => Number(v));
+  if (Number.isInteger(h) && Number.isInteger(m) && h >= 0 && h <= 23 && m >= 0 && m <= 59) {
+    return { hour: h, minute: m };
+  }
+  return { hour: fallbackHour, minute: fallbackMinute };
+};
+
+const isInQuietHours = (date, prefs) => {
+  if (!prefs?.quietHoursEnabled) return false;
+
+  const { hour: startHour, minute: startMinute } = parseHourMinute(prefs.quietHoursStart, 22, 0);
+  const { hour: endHour, minute: endMinute } = parseHourMinute(prefs.quietHoursEnd, 7, 0);
+
+  const nowMinutes = date.getHours() * 60 + date.getMinutes();
+  const startMinutes = startHour * 60 + startMinute;
+  const endMinutes = endHour * 60 + endMinute;
+
+  if (startMinutes === endMinutes) return true;
+  if (startMinutes < endMinutes) {
+    return nowMinutes >= startMinutes && nowMinutes < endMinutes;
+  }
+
+  return nowMinutes >= startMinutes || nowMinutes < endMinutes;
+};
+
+const shouldScheduleAt = (date, prefs, type) => {
+  if (!date || !(date instanceof Date)) return false;
+  if (!isInQuietHours(date, prefs)) return true;
+
+  analyticsService.logQuietHoursSkipped(type, date.getHours(), date.getMinutes());
+  return false;
+};
+
+const getPushCopyVariantText = ({ variant, campaign, baseTitle, baseBody }) => {
+  const id = campaign?.id || 'evergreen';
+  const group = {
+    A: {
+      title: `${baseTitle}`,
+      body: `${baseBody}`
+    },
+    B: {
+      title: id === 'ramadan' ? '🌙 Ramazan Vakti Yaklaşıyor' : `⏰ ${baseTitle}`,
+      body: id === 'friday'
+        ? 'Cuma gününün bereketi için kısa bir hazırlık yap.'
+        : `${baseBody} Şimdi niyetlenmek için güzel bir an.`
+    },
+    C: {
+      title: id === 'kandil' ? '🕯️ Manevi Hatırlatma' : `✨ ${baseTitle}`,
+      body: `${baseBody} Huzur için küçük bir mola ver.`
+    }
+  };
+
+  return group[variant] || group.A;
 };
 
 /**
@@ -218,6 +203,10 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
 
   const notifications = [];
   const baseId = date.getDate() * 100; // Günlük benzersiz ID base
+  const campaign = getActiveCampaign(date);
+  analyticsService.logCampaignResolved(campaign.id, campaign.region, campaign.variant);
+  const pushVariant = getExperimentVariant('push_copy_v1');
+  analyticsService.logExperimentAssigned('push_copy_v1', pushVariant, 'schedule_prayer_notifications');
 
   // Vakit adları mapping
   const prayerNames = {
@@ -241,17 +230,41 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
 
     // Geçmişte değilse planla
     if (prayerTime > new Date()) {
+      if (!shouldScheduleAt(prayerTime, prefs, 'prayer_main')) return;
+
+      const campaignCopy = resolveCampaignCopy({
+        campaign,
+        type: 'reminder',
+        fallbackTitle: `Ezan Vakti: ${prayerNames[prayer] || prayer}`,
+        fallbackBody: 'Vakit girdi. Haydi namaza!'
+      });
+      const variantCopy = getPushCopyVariantText({
+        variant: pushVariant,
+        campaign,
+        baseTitle: campaignCopy.title,
+        baseBody: campaignCopy.body
+      });
+
       notifications.push({
         id: baseId + index,
-        title: `Ezan Vakti: ${prayerNames[prayer] || prayer}`,
-        body: `Vakit girdi. Haydi namaza!`,
+        title: variantCopy.title,
+        body: variantCopy.body,
         schedule: { at: prayerTime },
         sound: NOTIFICATION_CHANNELS.PRAYER.sound,
         channelId: NOTIFICATION_CHANNELS.PRAYER.id,
         smallIcon: 'ic_notification',
         actionTypeId: 'PRAYER_ACTION',
-        extra: { type: 'prayer', prayer: prayer, action: 'now' }
+        extra: {
+          type: 'prayer',
+          prayer: prayer,
+          action: 'now',
+          campaign: campaign.id,
+          campaign_variant: campaign.variant,
+          push_variant: pushVariant
+        }
       });
+
+      analyticsService.logPushVariantDelivered(pushVariant, campaign.id, 'prayer_main');
     }
 
     // 2. Vakit Öncesi Hatırlatma
@@ -259,16 +272,39 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
       const preTime = new Date(prayerTime.getTime() - (config.minutesBefore * 60000));
       
       if (preTime > new Date()) {
+        if (!shouldScheduleAt(preTime, prefs, 'prayer_pre')) return;
+
+        const campaignCopy = resolveCampaignCopy({
+          campaign,
+          type: 'reminder',
+          fallbackTitle: config.title,
+          fallbackBody: config.body
+        });
+        const variantCopy = getPushCopyVariantText({
+          variant: pushVariant,
+          campaign,
+          baseTitle: campaignCopy.title,
+          baseBody: campaignCopy.body
+        });
+
         notifications.push({
           id: baseId + 50 + index, // Farklı ID aralığı
-          title: config.title,
-          body: config.body,
+          title: variantCopy.title,
+          body: variantCopy.body,
           schedule: { at: preTime },
           sound: 'default',
           channelId: NOTIFICATION_CHANNELS.PRAYER.id,
           smallIcon: 'ic_notification',
-          extra: { type: 'prayer_pre', prayer: prayer }
+          extra: {
+            type: 'prayer_pre',
+            prayer: prayer,
+            campaign: campaign.id,
+            campaign_variant: campaign.variant,
+            push_variant: pushVariant
+          }
         });
+
+        analyticsService.logPushVariantDelivered(pushVariant, campaign.id, 'prayer_pre');
       }
     }
   });
@@ -309,6 +345,8 @@ export const scheduleStreakNotifications = async (currentStreak) => {
   STREAK_NOTIFICATIONS.forEach((config, index) => {
     const scheduleTime = new Date(tomorrow);
     scheduleTime.setHours(config.hour, config.minute, 0, 0);
+
+    if (!shouldScheduleAt(scheduleTime, prefs, 'streak')) return;
 
     notifications.push({
       id: 1000 + index,
@@ -359,10 +397,31 @@ export const scheduleDailyReminders = async () => {
       scheduleTime.setDate(scheduleTime.getDate() + 1);
     }
 
+    if (!shouldScheduleAt(scheduleTime, prefs, 'reminder')) return;
+
+    const campaign = getActiveCampaign(scheduleTime);
+    const pushVariant = getExperimentVariant('push_copy_v1');
+    const campaignCopy = resolveCampaignCopy({
+      campaign,
+      type: 'reminder',
+      fallbackTitle: config.title,
+      fallbackBody: config.body
+    });
+    const variantCopy = getPushCopyVariantText({
+      variant: pushVariant,
+      campaign,
+      baseTitle: campaignCopy.title,
+      baseBody: campaignCopy.body
+    });
+
+    analyticsService.logCampaignResolved(campaign.id, campaign.region, campaign.variant);
+    analyticsService.logExperimentAssigned('push_copy_v1', pushVariant, 'schedule_daily_reminders');
+    analyticsService.logPushVariantDelivered(pushVariant, campaign.id, 'daily_reminder');
+
     notifications.push({
       id: 2000 + index,
-      title: config.title,
-      body: config.body,
+      title: variantCopy.title,
+      body: variantCopy.body,
       schedule: { 
         at: scheduleTime,
         repeats: true, 
@@ -371,11 +430,19 @@ export const scheduleDailyReminders = async () => {
       sound: NOTIFICATION_CHANNELS.REMINDER.sound,
       channelId: NOTIFICATION_CHANNELS.REMINDER.id,
       smallIcon: 'ic_notification',
-      extra: { type: 'reminder', reminderId: config.id }
+      extra: {
+        type: 'reminder',
+        reminderId: config.id,
+        campaign: campaign.id,
+        campaign_variant: campaign.variant,
+        push_variant: pushVariant
+      }
     });
   });
 
   try {
+    if (notifications.length === 0) return;
+
     if (Capacitor.getPlatform() !== 'web') {
       await LocalNotifications.schedule({ notifications });
     }
@@ -393,6 +460,12 @@ export const scheduleDailyReminders = async () => {
 export const showInstantNotification = async (title, body, extra = {}) => {
   const hasPermission = await requestNotificationPermission();
   if (!hasPermission) return;
+
+  const prefs = getNotificationPreferences();
+  if (isInQuietHours(new Date(), prefs)) {
+    analyticsService.logQuietHoursSkipped(extra.type || 'instant', new Date().getHours(), new Date().getMinutes());
+    return;
+  }
 
   const id = Math.floor(Date.now() / 1000); // Integer ID required by some plugins
 
@@ -458,12 +531,12 @@ export const showStickyNotification = async (title, body) => {
             {
                 title: title,
                 body: body,
-                id: 1001, // Sticky Notification ID
+                id: STICKY_NOTIFICATION_ID,
                 ongoing: true, // Kalıcı
                 autoCancel: false,
                 silent: true,
                 smallIcon: 'ic_stat_icon',
-                channelId: NOTIFICATION_CHANNELS.REMINDER.id // Use existing channel
+                channelId: NOTIFICATION_CHANNELS.STICKY_COUNTER.id
             }
         ]
      });
@@ -478,7 +551,7 @@ export const showStickyNotification = async (title, body) => {
 export const cancelStickyNotification = async () => {
     if (Capacitor.getPlatform() === 'web') return;
     try {
-        await LocalNotifications.cancel({ notifications: [{ id: 1001 }] });
+        await LocalNotifications.cancel({ notifications: [{ id: STICKY_NOTIFICATION_ID }] });
     } catch (error) {
         logger.error('Notifications: Sticky cancel error', error);
     }
@@ -538,7 +611,7 @@ const saveToHistory = (notification) => {
     
     storageService.setItem(NOTIFICATION_HISTORY_KEY, history);
   } catch (e) {
-    console.error('Save history error', e);
+    logger.error('Save history error', e);
   }
 };
 
@@ -579,7 +652,7 @@ export const addNotificationClickListener = (callback) => {
   
   LocalNotifications.addListener('localNotificationReceived', (notification) => {
       // Analytics for foreground receipt
-      console.log('Notification received in foreground:', notification);
+      logger.log('Notification received in foreground:', notification);
   });
 };
 

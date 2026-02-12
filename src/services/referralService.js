@@ -230,11 +230,11 @@ const markBlocked = (state, nowMs) => {
 };
 
 export const getOrCreateReferralCode = () => {
-  const existing = localStorage.getItem(REFERRAL_CODE_KEY);
+  const existing = storageService.getString(REFERRAL_CODE_KEY, '');
   if (existing) return existing;
 
   const code = generateReferralCode();
-  localStorage.setItem(REFERRAL_CODE_KEY, code);
+  storageService.setString(REFERRAL_CODE_KEY, code);
 
   const state = getReferralState();
   saveReferralState({
@@ -291,7 +291,7 @@ export const captureInviteAcceptanceFromUrl = ({ source = 'deep_link' } = {}) =>
   const referralCode = normalizeReferralCode(readReferralCodeFromLocation());
   if (!referralCode) return null;
 
-  const ownCode = localStorage.getItem(REFERRAL_CODE_KEY);
+  const ownCode = storageService.getString(REFERRAL_CODE_KEY, '');
   if (normalizeReferralCode(ownCode) === referralCode) {
     return {
       status: 'ignored',

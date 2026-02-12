@@ -3,6 +3,9 @@
  * Tüm hataları yakalar, loglar ve kullanıcıya uygun mesaj gösterir
  */
 
+import { logger } from '../utils/logger';
+import { logExceptionWithContext, buildCrashContext } from '../utils/crashlyticsReporter';
+
 export class AppError extends Error {
   constructor(message, code, userMessage) {
     super(message);
@@ -22,11 +25,24 @@ export const ERROR_CODES = {
 };
 
 export const errorHandler = {
+  sanitizeContext(additionalInfo = {}) {
+    const safe = { ...additionalInfo };
+    const sensitiveKeys = ['token', 'authToken', 'password', 'secret', 'authorization', 'apiKey'];
+
+    sensitiveKeys.forEach((key) => {
+      if (key in safe) {
+        safe[key] = '[REDACTED]';
+      }
+    });
+
+    return safe;
+  },
+
   /**
    * Hatayı işle ve kullanıcıya gösterilecek mesajı döndür
    */
   handle(error, context = '') {
-    console.error(`[ErrorHandler] ${context}:`, error);
+    logger.error(`[ErrorHandler] ${context}:`, error);
 
     // Network hatası
     if (!navigator.onLine) {
@@ -129,20 +145,30 @@ export const errorHandler = {
    * Hatayı log'la (production'da analytics'e gönderebilir)
    */
   log(error, context, additionalInfo = {}) {
+    const sanitizedInfo = this.sanitizeContext(additionalInfo);
+
     const errorLog = {
       message: error.message,
       stack: error.stack,
       context,
       timestamp: new Date().toISOString(),
-      ...additionalInfo
+      ...sanitizedInfo
     };
 
-    console.error('[ErrorLog]', errorLog);
+    logger.error('[ErrorLog]', errorLog);
 
-    // Production'da Firebase Analytics veya Sentry'ye gönder
-    // if (isProduction) {
-    //   analytics.logEvent('error', errorLog);
-    // }
+    // Production: Send to Crashlytics
+    try {
+      logExceptionWithContext(
+        error,
+        buildCrashContext(context, {
+          code: error?.code,
+          ...sanitizedInfo
+        })
+      );
+    } catch {
+      // Silently fail if Crashlytics is unavailable
+    }
 
     return errorLog;
   }

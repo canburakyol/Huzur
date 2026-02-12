@@ -1,17 +1,11 @@
-import { useMemo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Clock, Navigation, MapPin, ChevronRight } from 'lucide-react';
 import './ModernHomeFeed.css';
 
-const HeroPrayerCard = ({ timings, nextPrayer, onShowPrayers }) => {
+const HeroPrayerCard = memo(({ timings, nextPrayer, onShowPrayers }) => {
     const { t } = useTranslation();
 
-    const timeRemaining = useMemo(() => {
-        if (!timings || !nextPrayer) return '';
-        // Note: Real countdown logic should be passed or handled here better in full impl
-        // For now, static structure
-        return "--:--:--"; 
-    }, [timings, nextPrayer]);
 
     if (!timings || !nextPrayer) return (
         <div className="hero-prayer-card" style={{ justifyContent: 'center' }}>
@@ -70,6 +64,6 @@ const HeroPrayerCard = ({ timings, nextPrayer, onShowPrayers }) => {
             </div>
         </div>
     );
-};
+});
 
 export default HeroPrayerCard;

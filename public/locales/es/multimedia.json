@@ -1,0 +1,85 @@
+{
+  "categories": {
+    "dualar": {
+      "title": "Dua Images",
+      "description": "Shareable prayer cards"
+    },
+    "camiler": {
+      "title": "Mosque Photos",
+      "description": "Most beautiful mosques of the world"
+    },
+    "kabe": {
+      "title": "Kaaba and Haram",
+      "description": "Holy lands"
+    },
+    "ramazan": {
+      "title": "Ramadan Images",
+      "description": "Ramadan and Iftar images"
+    },
+    "kuran": {
+      "title": "Quran Images",
+      "description": "Quran photos"
+    },
+    "tesbih": {
+      "title": "Tasbih and Worship",
+      "description": "Worship images"
+    }
+  },
+  "dualar": {
+    "dua1": { "title": "Morning Dua", "text": "O Lord, make me successful in good deeds today." },
+    "dua2": { "title": "Gratitude Dua", "text": "Alhamdulillah, thanks be to Allah in every state." },
+    "dua3": { "title": "Barakah Dua", "text": "O Allah, give blessings to my home, my work, and my family." },
+    "dua4": { "title": "Peace Dua", "text": "My Lord, give peace to my heart and truth to my tongue." },
+    "dua5": { "title": "Forgiveness Dua", "text": "O Lord, forgive my sins and pardon me." },
+    "dua6": { "title": "Healing Dua", "text": "O Allah, give healing to our sick and remedy to our troubled." },
+    "dua7": { "title": "Patience Dua", "text": "My Lord, give me patience and make me among the patient." },
+    "dua8": { "title": "Evening Dua", "text": "O Lord, make this night blessed and protect us." }
+  },
+  "images": {
+    "cami1": { "title": "Blue Mosque", "location": "Istanbul, Turkey" },
+    "cami2": { "title": "Hagia Sophia", "location": "Istanbul, Turkey" },
+    "cami3": { "title": "Sheikh Zayed Mosque", "location": "Abu Dhabi, UAE" },
+    "cami4": { "title": "Masjid an-Nabawi", "location": "Medina, Saudi Arabia" },
+    "cami5": { "title": "Morocco Mosque", "location": "Morocco" },
+    "cami6": { "title": "Selimiye Mosque", "location": "Edirne, Turkey" },
+    "cami7": { "title": "Mosque Interior", "location": "Islamic Architecture" },
+    "cami8": { "title": "Dome Detail", "location": "Islamic Art" },
+    "kabe1": { "title": "Kaaba", "location": "Mecca, Saudi Arabia" },
+    "kabe2": { "title": "Masjid al-Haram", "location": "Mecca, Saudi Arabia" },
+    "kabe3": { "title": "Tawaf", "location": "Mecca, Saudi Arabia" },
+    "kabe4": { "title": "Night View", "location": "Mecca, Saudi Arabia" },
+    "kabe5": { "title": "Hajj Period", "location": "Mecca, Saudi Arabia" },
+    "kabe6": { "title": "Holy Lands", "location": "Saudi Arabia" },
+    "ramazan1": { "title": "Iftar Table", "description": "Ramadan blessings" },
+    "ramazan2": { "title": "Dates", "description": "Sunnah of breaking fast" },
+    "ramazan3": { "title": "Ramadan Lantern", "description": "Ramadan decoration" },
+    "ramazan4": { "title": "Crescent", "description": "Month of Ramadan" },
+    "ramazan5": { "title": "Mosque Lights", "description": "Mahya" },
+    "ramazan6": { "title": "Prayer Time", "description": "Taraweeh" },
+    "kuran1": { "title": "Holy Quran", "description": "Mushaf" },
+    "kuran2": { "title": "Quran Recitation", "description": "Reading moment" },
+    "kuran3": { "title": "Calligraphy", "description": "Islamic calligraphy" },
+    "kuran4": { "title": "Rehal", "description": "Quran stand" },
+    "kuran5": { "title": "Ayah", "description": "Quran page" },
+    "kuran6": { "title": "Illumination", "description": "Decoration art" },
+    "tesbih1": { "title": "Tasbih", "description": "Dhikr tool" },
+    "tesbih2": { "title": "Salah", "description": "Worship moment" },
+    "tesbih3": { "title": "Sujood", "description": "Servitude" },
+    "tesbih4": { "title": "Prayer Hands", "description": "Supplication" },
+    "tesbih5": { "title": "Prayer Rug", "description": "Prayer clothes" },
+    "tesbih6": { "title": "Dhikr", "description": "Remembrance of Allah" }
+  },
+  "ui": {
+    "title": "Multimedia",
+    "subtitle": "Religious images, duas and shareable content",
+    "imageCount": "images",
+    "favorites": "Favorites",
+    "shareableCards": "Shareable prayer cards",
+    "appName": "Huzur App",
+    "favorite": "Favorite",
+    "share": "Share",
+    "download": "Download",
+    "shareTextCopied": "Share text copied!",
+    "downloadHint": "Image will open in a new tab. You can use 'Save Image' by right clicking."
+  }
+}

@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight, Plus, Trash2, Calendar as CalendarIcon, X } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { getMonthDays, getMonthName, getHijriDate } from '../data/agendaData';
+import { storageService } from '../services/storageService';
+
+const AGENDA_EVENTS_KEY = 'agenda_events';
 
 const Agenda = ({ onClose }) => {
     const { t } = useTranslation();
@@ -10,8 +13,7 @@ const Agenda = ({ onClose }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [events, setEvents] = useState(() => {
         // Load events from localStorage on initial render
-        const savedEvents = localStorage.getItem('agenda_events');
-        return savedEvents ? JSON.parse(savedEvents) : {};
+        return storageService.getItem(AGENDA_EVENTS_KEY, {});
     }); // { "YYYY-MM-DD": [{id, title, time, desc}] }
     const [showEventModal, setShowEventModal] = useState(false);
 
@@ -23,7 +25,7 @@ const Agenda = ({ onClose }) => {
     // Save events to localStorage
     const saveEvents = (updatedEvents) => {
         setEvents(updatedEvents);
-        localStorage.setItem('agenda_events', JSON.stringify(updatedEvents));
+        storageService.setItem(AGENDA_EVENTS_KEY, updatedEvents);
     };
 
     const handlePrevMonth = () => {
@@ -86,7 +88,15 @@ const Agenda = ({ onClose }) => {
     const hijriDate = getHijriDate(currentDate);
 
     // Weekday headers
-    const weekDays = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+    const weekDays = [
+        t('agenda.weekdays.mon', 'Mon'),
+        t('agenda.weekdays.tue', 'Tue'),
+        t('agenda.weekdays.wed', 'Wed'),
+        t('agenda.weekdays.thu', 'Thu'),
+        t('agenda.weekdays.fri', 'Fri'),
+        t('agenda.weekdays.sat', 'Sat'),
+        t('agenda.weekdays.sun', 'Sun')
+    ];
 
     return (
         <div style={{ paddingBottom: '80px', height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -105,7 +115,7 @@ const Agenda = ({ onClose }) => {
                         {t(getMonthName(currentDate.getMonth()))} {currentDate.getFullYear()}
                     </h2>
                     <p style={{ margin: '5px 0 0', fontSize: '14px', color: 'var(--text-color)', opacity: 0.8 }}>
-                        {t(hijriDate.monthName)} {hijriDate.year} (Hicri)
+                        {t(hijriDate.monthName)} {hijriDate.year} ({t('agenda.hijriLabel', 'Hijri')})
                     </p>
                 </div>
             </div>
@@ -116,7 +126,7 @@ const Agenda = ({ onClose }) => {
                     <ChevronLeft size={24} />
                 </button>
                 <button onClick={() => setCurrentDate(new Date())} style={{ background: 'none', border: 'none', color: 'var(--primary-color)', fontWeight: 'bold' }}>
-                    Bugün
+                    {t('agenda.today', 'Today')}
                 </button>
                 <button onClick={handleNextMonth} className="btn-icon" style={{ background: 'rgba(255,255,255,0.1)', padding: '8px', borderRadius: '8px', color: 'var(--text-color)' }}>
                     <ChevronRight size={24} />
@@ -259,9 +269,11 @@ const Agenda = ({ onClose }) => {
 
                         {/* Events List */}
                         <div style={{ marginBottom: '20px' }}>
-                            <h4 style={{ margin: '0 0 10px 0', color: 'var(--text-color)' }}>Etkinlikler & Notlar</h4>
+                            <h4 style={{ margin: '0 0 10px 0', color: 'var(--text-color)' }}>
+                                {t('agenda.eventsAndNotes', 'Events & Notes')}
+                            </h4>
                             {(!events[selectedDate.dateStr] || events[selectedDate.dateStr].length === 0) ? (
-                                <p style={{ color: 'var(--text-color)', opacity: 0.5, fontStyle: 'italic' }}>Henüz etkinlik yok.</p>
+                                <p style={{ color: 'var(--text-color)', opacity: 0.5, fontStyle: 'italic' }}>{t('agenda.noEventsYet', 'No events yet.')}</p>
                             ) : (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                     {events[selectedDate.dateStr].map(event => (
@@ -296,11 +308,11 @@ const Agenda = ({ onClose }) => {
 
                         {/* Add Event Form */}
                         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px' }}>
-                            <h4 style={{ margin: '0 0 15px 0', color: 'var(--text-color)' }}>Yeni Ekle</h4>
+                            <h4 style={{ margin: '0 0 15px 0', color: 'var(--text-color)' }}>{t('agenda.addNew', 'Add New')}</h4>
                             <form onSubmit={handleAddEvent}>
                                 <input
                                     type="text"
-                                    placeholder="Başlık (Örn: İftar Daveti)"
+                                    placeholder={t('agenda.titlePlaceholder', 'Title (e.g., Iftar Invitation)')}
                                     value={newEventTitle}
                                     onChange={e => setNewEventTitle(e.target.value)}
                                     style={{
@@ -329,7 +341,7 @@ const Agenda = ({ onClose }) => {
                                     />
                                 </div>
                                 <textarea
-                                    placeholder="Notlar..."
+                                    placeholder={t('agenda.notesPlaceholder', 'Notes...')}
                                     value={newEventDesc}
                                     onChange={e => setNewEventDesc(e.target.value)}
                                     style={{
@@ -351,7 +363,7 @@ const Agenda = ({ onClose }) => {
                                     disabled={!newEventTitle.trim()}
                                 >
                                     <Plus size={20} />
-                                    Ekle
+                                    {t('common.add', 'Add')}
                                 </button>
                             </form>
                         </div>

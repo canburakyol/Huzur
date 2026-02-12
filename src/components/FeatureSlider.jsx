@@ -1,9 +1,9 @@
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Compass, Calculator, Users, Calendar, Radio, Map } from 'lucide-react';
 import './ModernHomeFeed.css';
 
-const FeatureSlider = ({ onSelectFeature }) => {
+const FeatureSlider = memo(({ onSelectFeature }) => {
     const { t } = useTranslation();
     const scrollRef = useRef(null);
 
@@ -30,6 +30,6 @@ const FeatureSlider = ({ onSelectFeature }) => {
             ))}
         </div>
     );
-};
+});
 
 export default FeatureSlider;

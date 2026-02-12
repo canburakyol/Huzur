@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Check, BookOpen, Award, Trash2, ChevronDown, ChevronUp, Star, Crown, Clock, RefreshCw, Lock, CheckCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { getMemorizationData, startMemorizing, markAyahMemorized, reviewSurah, getDueReviews, getMemorizationStats } from '../services/memorizationService';
 import { canAccessMemorize, isPro } from '../services/proService';
@@ -25,6 +26,7 @@ const getDifficultyColor = (difficulty) => {
 };
 
 function QuranMemorize({ onClose, onUpgrade }) {
+    const { t } = useTranslation();
     const [activeTab, setActiveTab] = useState('list'); // list, reviews
     const [expandedSurah, setExpandedSurah] = useState(null);
     const [memorizationData, setMemorizationData] = useState(getMemorizationData());
@@ -81,8 +83,8 @@ function QuranMemorize({ onClose, onUpgrade }) {
             <div className="memorize-header">
                 <IslamicBackButton onClick={onClose} size="medium" />
                 <div className="header-content">
-                    <h1>🧠 Hafızlık Yardımcısı</h1>
-                    <p>Ezberle, Tekrar Et, Pekiştir</p>
+                    <h1>🧠 {t('quranMemorize.title', 'Hafızlık Yardımcısı')}</h1>
+                    <p>{t('quranMemorize.subtitle', 'Ezberle, Tekrar Et, Pekiştir')}</p>
                 </div>
                 {!userIsPro && (
                     <div className="pro-badge-mini" onClick={() => setShowLimitModal(true)}>
@@ -96,15 +98,15 @@ function QuranMemorize({ onClose, onUpgrade }) {
             <div className="stats-grid">
                 <div className="stat-card glass-card">
                     <div className="stat-value">{stats.memorizedSurahs}</div>
-                    <div className="stat-label">Ezberlenen</div>
+                    <div className="stat-label">{t('quranMemorize.stats.memorized', 'Ezberlenen')}</div>
                 </div>
                 <div className="stat-card glass-card">
                     <div className="stat-value">{stats.learningCount}</div>
-                    <div className="stat-label">Çalışılan</div>
+                    <div className="stat-label">{t('quranMemorize.stats.learning', 'Çalışılan')}</div>
                 </div>
                 <div className="stat-card glass-card warning">
                     <div className="stat-value">{stats.reviewCount}</div>
-                    <div className="stat-label">Tekrar</div>
+                    <div className="stat-label">{t('quranMemorize.stats.review', 'Tekrar')}</div>
                 </div>
             </div>
 
@@ -115,14 +117,14 @@ function QuranMemorize({ onClose, onUpgrade }) {
                     onClick={() => setActiveTab('list')}
                 >
                     <BookOpen size={18} />
-                    Sureler
+                    {t('quranMemorize.tabs.surahs', 'Sureler')}
                 </button>
                 <button 
                     className={`tab-btn ${activeTab === 'reviews' ? 'active' : ''}`}
                     onClick={() => setActiveTab('reviews')}
                 >
                     <RefreshCw size={18} />
-                    Tekrarlar
+                    {t('quranMemorize.tabs.reviews', 'Tekrarlar')}
                     {dueReviews.length > 0 && <span className="badge">{dueReviews.length}</span>}
                 </button>
             </div>
@@ -151,7 +153,7 @@ function QuranMemorize({ onClose, onUpgrade }) {
                                             <span className="surah-arabic">{surah.arabicName}</span>
                                         </div>
                                         <div className="surah-meta">
-                                            <span>{surah.ayahCount} Ayet</span>
+                                            <span>{t('quranMemorize.ayahCount', { count: surah.ayahCount, defaultValue: '{{count}} Ayet' })}</span>
                                             <span className="dot">•</span>
                                             <span style={{ color: getDifficultyColor(difficulty) }}>{difficulty}</span>
                                         </div>
@@ -176,7 +178,7 @@ function QuranMemorize({ onClose, onUpgrade }) {
                                             <span className="progress-text">{status.progress}%</span>
                                         </div>
                                     ) : (
-                                        <button className="start-btn">Başla</button>
+                                        <button className="start-btn">{t('quranMemorize.start', 'Başla')}</button>
                                     )}
                                 </div>
 
@@ -207,8 +209,8 @@ function QuranMemorize({ onClose, onUpgrade }) {
                     {dueReviews.length === 0 ? (
                         <div className="empty-state">
                             <CheckCircle size={48} color="#27ae60" />
-                            <h3>Tebrikler!</h3>
-                            <p>Bugün tekrar edilecek sure kalmadı.</p>
+                            <h3>{t('quranMemorize.empty.title', 'Tebrikler!')}</h3>
+                            <p>{t('quranMemorize.empty.description', 'Bugün tekrar edilecek sure kalmadı.')}</p>
                         </div>
                     ) : (
                         dueReviews.map(review => {
@@ -217,18 +219,23 @@ function QuranMemorize({ onClose, onUpgrade }) {
                                 <div key={review.number} className="review-card glass-card">
                                     <div className="review-header">
                                         <h3>{surah.name}</h3>
-                                        <span className="level-badge">Seviye {review.level}</span>
+                                        <span className="level-badge">
+                                            {t('quranMemorize.level', {
+                                                level: review.level,
+                                                defaultValue: 'Seviye {{level}}'
+                                            })}
+                                        </span>
                                     </div>
-                                    <p>Bu sureyi ne kadar iyi hatırlıyorsun?</p>
+                                    <p>{t('quranMemorize.reviewQuestion', 'Bu sureyi ne kadar iyi hatırlıyorsun?')}</p>
                                     <div className="review-actions">
                                         <button className="review-btn hard" onClick={() => handleReview(review.number, 1)}>
-                                            Zorlandım
+                                            {t('quranMemorize.reviewActions.hard', 'Zorlandım')}
                                         </button>
                                         <button className="review-btn medium" onClick={() => handleReview(review.number, 2)}>
-                                            İdare Eder
+                                            {t('quranMemorize.reviewActions.medium', 'İdare Eder')}
                                         </button>
                                         <button className="review-btn easy" onClick={() => handleReview(review.number, 3)}>
-                                            Kolaydı
+                                            {t('quranMemorize.reviewActions.easy', 'Kolaydı')}
                                         </button>
                                     </div>
                                 </div>

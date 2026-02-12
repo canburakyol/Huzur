@@ -15,22 +15,22 @@ export const systemFeatures = {
     component: Support,
     category: 'SYSTEM',
     module: 'system',
-    name: 'Destek',
+    nameKey: 'features.support',
     icon: '💬'
   },
   pro: {
     component: ProUpgrade,
     category: 'SYSTEM',
     module: 'system',
-    name: 'Pro Yükselt',
+    nameKey: 'features.pro',
     icon: '⭐'
   }
 };
 
 // Module metadata
 export const moduleInfo = {
-  name: 'Sistem',
-  description: 'Uygulama yönetimi ve destek',
+  nameKey: 'modules.system',
+  descriptionKey: 'modules.systemDesc',
   icon: '⚙️',
   priority: 9,
   chunkName: 'feature-system'

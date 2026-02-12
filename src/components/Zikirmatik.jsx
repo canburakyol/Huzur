@@ -5,6 +5,14 @@ import IslamicBackButton from './shared/IslamicBackButton';
 import Lottie from 'lottie-react';
 import { useFocus } from '../context/FocusContext';
 import { useGamification } from '../hooks/useGamification';
+import { storageService } from '../services/storageService';
+
+const ZIKIRMATIK_KEYS = {
+    FREE_NAME: 'freeDhikrName',
+    COUNTS: 'zikirCounts',
+    TARGETS: 'zikirTargets',
+    STATS: 'zikirStats'
+};
 
 // Önceden tanımlı zikir listesi
 const DHIKR_LIST = [
@@ -28,15 +36,15 @@ const Zikirmatik = ({ onClose }) => {
     const [view, setView] = useState('list');
     const [selectedDhikr, setSelectedDhikr] = useState(null);
     const [freeDhikrName, setFreeDhikrName] = useState(() => {
-        return localStorage.getItem('freeDhikrName') || 'Serbest Zikir';
+        return storageService.getString(ZIKIRMATIK_KEYS.FREE_NAME, 'Serbest Zikir');
     });
 
     // Sayaç durumları
     const [counts, setCounts] = useState(() => {
-        return JSON.parse(localStorage.getItem('zikirCounts') || '{}');
+        return storageService.getItem(ZIKIRMATIK_KEYS.COUNTS, {});
     });
     const [targets, setTargets] = useState(() => {
-        const savedTargets = JSON.parse(localStorage.getItem('zikirTargets') || '{}');
+        const savedTargets = storageService.getItem(ZIKIRMATIK_KEYS.TARGETS, {});
         const defaultTargets = {};
         DHIKR_LIST.forEach(d => {
             defaultTargets[d.id] = savedTargets[d.id] || d.defaultTarget;
@@ -48,7 +56,7 @@ const Zikirmatik = ({ onClose }) => {
 
     // İstatistikler
     const [stats, setStats] = useState(() => {
-        const savedStats = JSON.parse(localStorage.getItem('zikirStats') || '{"today":0,"total":0,"history":[]}');
+        const savedStats = storageService.getItem(ZIKIRMATIK_KEYS.STATS, { today: 0, total: 0, history: [] });
         const today = new Date().toDateString();
         if (savedStats.lastDate !== today) {
             savedStats.today = 0;
@@ -63,14 +71,14 @@ const Zikirmatik = ({ onClose }) => {
     const handleFreeNameChange = (e) => {
         const name = e.target.value;
         setFreeDhikrName(name);
-        localStorage.setItem('freeDhikrName', name);
+        storageService.setString(ZIKIRMATIK_KEYS.FREE_NAME, name);
     };
 
     // Sayacı kaydet
     const saveCount = (dhikrId, newCount) => {
         const newCounts = { ...counts, [dhikrId]: newCount };
         setCounts(newCounts);
-        localStorage.setItem('zikirCounts', JSON.stringify(newCounts));
+        storageService.setItem(ZIKIRMATIK_KEYS.COUNTS, newCounts);
     };
 
     // İstatistikleri güncelle
@@ -83,7 +91,7 @@ const Zikirmatik = ({ onClose }) => {
             lastDate: today
         };
         setStats(newStats);
-        localStorage.setItem('zikirStats', JSON.stringify(newStats));
+        storageService.setItem(ZIKIRMATIK_KEYS.STATS, newStats);
     };
 
     const handleIncrement = () => {
@@ -358,7 +366,7 @@ const Zikirmatik = ({ onClose }) => {
                         onClick={() => {
                             const newTargets = { ...targets, [selectedDhikr.id]: val };
                             setTargets(newTargets);
-                            localStorage.setItem('zikirTargets', JSON.stringify(newTargets));
+                            storageService.setItem(ZIKIRMATIK_KEYS.TARGETS, newTargets);
                         }}
                         style={{
                             padding: '8px 16px',

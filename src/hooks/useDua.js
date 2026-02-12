@@ -22,7 +22,7 @@ export const useDua = () => {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const uid = await ensureAuthenticated({ requireFirebaseUser: true });
+        const uid = await ensureAuthenticated();
         setUserId(uid);
         logger.log('[useDua] Auth initialized, userId:', uid);
       } catch (err) {

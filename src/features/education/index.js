@@ -19,28 +19,28 @@ export const educationFeatures = {
     component: PrayerTeacher,
     category: 'EDUCATION',
     module: 'education',
-    name: 'Namaz Öğretici',
+    nameKey: 'features.prayerTeacher',
     icon: '🎓'
   },
   quranMemorize: {
     component: QuranMemorize,
     category: 'EDUCATION',
     module: 'education',
-    name: 'Kuran Ezberleme',
+    nameKey: 'features.quranMemorize',
     icon: '🧠'
   },
   tajweedTutor: {
     component: TajweedTutor,
     category: 'EDUCATION',
     module: 'education',
-    name: 'Tecvid Eğitimi',
+    nameKey: 'features.tajweedTutor',
     icon: '🔊'
   },
   nuzulExplorer: {
     component: NuzulExplorer,
     category: 'EDUCATION',
     module: 'education',
-    name: 'Nüzul Sırası',
+    nameKey: 'features.nuzulExplorer',
     icon: '📜',
     hasUpgrade: true
   },
@@ -48,7 +48,7 @@ export const educationFeatures = {
     component: WordByWord,
     category: 'EDUCATION',
     module: 'education',
-    name: 'Kelime Kelime',
+    nameKey: 'features.wordByWord',
     icon: '🔤',
     hasUpgrade: true
   },
@@ -56,15 +56,15 @@ export const educationFeatures = {
     component: SeerahMap,
     category: 'EDUCATION',
     module: 'education',
-    name: 'Siyer Haritası',
+    nameKey: 'features.seerahMap',
     icon: '🗺️'
   }
 };
 
 // Module metadata
 export const moduleInfo = {
-  name: 'Eğitim & Öğretim',
-  description: 'İslami eğitim ve öğrenme araçları',
+  nameKey: 'modules.education',
+  descriptionKey: 'modules.educationDesc',
   icon: '📚',
   priority: 3,
   chunkName: 'feature-education'

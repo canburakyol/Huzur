@@ -1,4 +1,5 @@
 import { getWeeklyChallenges, updateChallengeProgress, completeChallenge } from '../data/gamificationData';
+import { storageService } from './storageService';
 
 // Storage keys
 const STORAGE_KEYS = {
@@ -23,7 +24,7 @@ class ChallengesService {
   async initialize() {
     if (this.initialized) return;
 
-    const lastReset = localStorage.getItem(STORAGE_KEYS.LAST_RESET);
+    const lastReset = storageService.getString(STORAGE_KEYS.LAST_RESET, '');
     const currentWeekStart = this.getWeekStart();
 
     // Check if we need to reset for a new week
@@ -70,16 +71,16 @@ class ChallengesService {
 
     // Update streak
     if (allCompleted) {
-      const currentStreak = parseInt(localStorage.getItem(STORAGE_KEYS.WEEKLY_STREAK) || '0');
-      localStorage.setItem(STORAGE_KEYS.WEEKLY_STREAK, (currentStreak + 1).toString());
+      const currentStreak = parseInt(storageService.getString(STORAGE_KEYS.WEEKLY_STREAK, '0'), 10) || 0;
+      storageService.setString(STORAGE_KEYS.WEEKLY_STREAK, (currentStreak + 1).toString());
       
       // Track completed weeks
-      const completedWeeks = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPLETED_WEEKS) || '[]');
+      const completedWeeks = storageService.getItem(STORAGE_KEYS.COMPLETED_WEEKS, []);
       completedWeeks.push(new Date().toISOString());
-      localStorage.setItem(STORAGE_KEYS.COMPLETED_WEEKS, JSON.stringify(completedWeeks));
+      storageService.setItem(STORAGE_KEYS.COMPLETED_WEEKS, completedWeeks);
     } else if (lastWeekChallenges.length > 0) {
       // Reset streak if not all completed
-      localStorage.setItem(STORAGE_KEYS.WEEKLY_STREAK, '0');
+      storageService.setString(STORAGE_KEYS.WEEKLY_STREAK, '0');
     }
 
     // Generate new challenges
@@ -93,8 +94,8 @@ class ChallengesService {
       createdAt: new Date().toISOString()
     }));
 
-    localStorage.setItem(STORAGE_KEYS.CHALLENGES, JSON.stringify(challengesWithMeta));
-    localStorage.setItem(STORAGE_KEYS.LAST_RESET, new Date().toISOString());
+    storageService.setItem(STORAGE_KEYS.CHALLENGES, challengesWithMeta);
+    storageService.setString(STORAGE_KEYS.LAST_RESET, new Date().toISOString());
 
     return challengesWithMeta;
   }
@@ -104,8 +105,7 @@ class ChallengesService {
    */
   async getStoredChallenges() {
     await this.initialize();
-    const stored = localStorage.getItem(STORAGE_KEYS.CHALLENGES);
-    return stored ? JSON.parse(stored) : [];
+    return storageService.getItem(STORAGE_KEYS.CHALLENGES, []);
   }
 
   /**
@@ -132,7 +132,7 @@ class ChallengesService {
       challenge.completedAt = new Date().toISOString();
     }
 
-    localStorage.setItem(STORAGE_KEYS.CHALLENGES, JSON.stringify(challenges));
+    storageService.setItem(STORAGE_KEYS.CHALLENGES, challenges);
     
     // Also update in gamification data
     updateChallengeProgress(challengeId, challenge.progress);
@@ -153,7 +153,7 @@ class ChallengesService {
     challenge.completed = true;
     challenge.completedAt = new Date().toISOString();
 
-    localStorage.setItem(STORAGE_KEYS.CHALLENGES, JSON.stringify(challenges));
+    storageService.setItem(STORAGE_KEYS.CHALLENGES, challenges);
     
     // Update in gamification data
     completeChallenge(challengeId);
@@ -170,7 +170,7 @@ class ChallengesService {
     
     const completed = challenges.filter(c => c.completed).length;
     const total = challenges.length;
-    const streak = parseInt(localStorage.getItem(STORAGE_KEYS.WEEKLY_STREAK) || '0');
+    const streak = parseInt(storageService.getString(STORAGE_KEYS.WEEKLY_STREAK, '0'), 10) || 0;
 
     return {
       completed,
@@ -210,8 +210,8 @@ class ChallengesService {
    * Force reset challenges (for testing)
    */
   async forceReset() {
-    localStorage.removeItem(STORAGE_KEYS.LAST_RESET);
-    localStorage.removeItem(STORAGE_KEYS.CHALLENGES);
+    storageService.removeItem(STORAGE_KEYS.LAST_RESET);
+    storageService.removeItem(STORAGE_KEYS.CHALLENGES);
     this.initialized = false;
     return this.resetWeeklyChallenges();
   }
@@ -220,7 +220,7 @@ class ChallengesService {
    * Get challenge history
    */
   async getHistory() {
-    const completedWeeks = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPLETED_WEEKS) || '[]');
+    const completedWeeks = storageService.getItem(STORAGE_KEYS.COMPLETED_WEEKS, []);
     return completedWeeks.map(date => new Date(date));
   }
 }

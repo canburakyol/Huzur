@@ -1,5 +1,7 @@
-import { AppUpdate } from '@capawesome/capacitor-app-update';
+import { logger } from '../utils/logger';
 import { Capacitor } from '@capacitor/core';
+import { AppUpdate } from '@capawesome/capacitor-app-update';
+import { openBatteryOptimizationSettings } from './androidReliabilityService';
 
 class UpdateService {
   constructor() {
@@ -23,7 +25,7 @@ class UpdateService {
     try {
       await AppUpdate.startFlexibleUpdate();
     } catch (error) {
-      console.error('Flexible update failed:', error);
+      logger.error('Flexible update failed:', error);
     }
   }
 
@@ -32,7 +34,7 @@ class UpdateService {
     try {
       await AppUpdate.performImmediateUpdate();
     } catch (error) {
-      console.error('Immediate update failed:', error);
+      logger.error('Immediate update failed:', error);
     }
   }
 
@@ -41,8 +43,12 @@ class UpdateService {
     try {
       await AppUpdate.completeFlexibleUpdate();
     } catch (error) {
-      console.error('Complete update failed:', error);
+      logger.error('Complete update failed:', error);
     }
+  }
+
+  async openAndroidBatteryOptimizationSettings() {
+    return openBatteryOptimizationSettings();
   }
 }
 

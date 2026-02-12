@@ -4,14 +4,17 @@ import { MapPin, ChevronLeft, ChevronRight, Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 
-const Imsakiye = ({ onClose }) => {
+const Imsakiye = ({ onClose, locationName }) => {
     const { t } = useTranslation();
     const [days, setDays] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-    const [location] = useState({ city: 'Istanbul', country: 'Turkey' });
+    
+    // Fallback to Istanbul if locationName is missing
+    const city = locationName || 'Istanbul';
+    const country = 'Turkey';
 
     const monthNames = [
         'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
@@ -29,8 +32,8 @@ const Imsakiye = ({ onClose }) => {
                     `https://api.aladhan.com/v1/calendarByCity/${currentYear}/${currentMonth + 1}`,
                     {
                         params: {
-                            city: location.city,
-                            country: location.country,
+                            city: city,
+                            country: country,
                             method: 13, // Diyanet İşleri Başkanlığı
                         },
                         timeout: 15000
@@ -58,7 +61,7 @@ const Imsakiye = ({ onClose }) => {
         };
 
         fetchMonthlyPrayerTimes();
-    }, [currentMonth, currentYear, location]);
+    }, [currentMonth, currentYear, city, country]);
 
     const goToPreviousMonth = () => {
         if (currentMonth === 0) {
@@ -113,7 +116,7 @@ const Imsakiye = ({ onClose }) => {
                         justifyContent: 'center'
                     }}>
                         <MapPin size={12} />
-                        <span>{location.city}, {location.country}</span>
+                        <span>{city}, {country}</span>
                     </div>
                 </div>
 

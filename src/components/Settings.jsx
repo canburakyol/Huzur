@@ -87,7 +87,7 @@ const Settings = ({ onClose }) => {
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                 </button>
-                <h2 className="text-xl font-bold">Bildirim Geçmişi</h2>
+                <h2 className="text-xl font-bold">{t('settings.historyTitle', 'Bildirim Geçmişi')}</h2>
             </div>
             <NotificationHistory />
         </div>
@@ -117,10 +117,10 @@ const Settings = ({ onClose }) => {
                     border: '1px solid var(--glass-border)'
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                        <Globe size={22} color="#3498db" />
+                        <Globe size={22} color="var(--primary-color)" />
                         <div>
-                            <div style={{ fontWeight: '600', fontSize: '15px' }}>{t('settings.language')}</div>
-                            <div style={{ fontSize: '13px', color: 'var(--text-color-light)' }}>
+                            <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.language')}</div>
+                            <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
                                 {t('settings.languageDesc')}
                             </div>
                         </div>
@@ -139,14 +139,12 @@ const Settings = ({ onClose }) => {
                                         ? '2px solid var(--primary-color)' 
                                         : '1px solid var(--glass-border)',
                                     background: currentLang === lang.code 
-                                        ? 'rgba(52, 152, 219, 0.15)' 
-                                        : 'transparent',
+                                        ? 'rgba(212, 175, 55, 0.15)' 
+                                        : 'rgba(255, 255, 255, 0.05)',
                                     cursor: 'pointer',
                                     fontSize: '14px',
                                     fontWeight: currentLang === lang.code ? '700' : '500',
-                                    color: currentLang === lang.code 
-                                        ? 'var(--primary-color)' 
-                                        : 'var(--text-color)',
+                                    color: 'var(--text-color)',
                                     transition: 'all 0.2s ease',
                                     display: 'flex',
                                     flexDirection: 'column',
@@ -155,7 +153,21 @@ const Settings = ({ onClose }) => {
                                 }}
                             >
                                 <span style={{ fontSize: '20px' }}>
-                                    {lang.code === 'tr' ? '🇹🇷' : lang.code === 'en' ? '🇬🇧' : '🇸🇦'}
+                                    {lang.code === 'tr'
+                                        ? '🇹🇷'
+                                        : lang.code === 'en'
+                                            ? '🇺🇸'
+                                            : lang.code === 'ar'
+                                                ? '🇸🇦'
+                                                : lang.code === 'id'
+                                                    ? '🇮🇩'
+                                                    : lang.code === 'es'
+                                                        ? '🇪🇸'
+                                                        : lang.code === 'fr'
+                                                            ? '🇫🇷'
+                                                            : lang.code === 'de'
+                                                                ? '🇩🇪'
+                                                                : '🌐'}
                                 </span>
                                 <span>{lang.nativeName}</span>
                             </button>
@@ -173,10 +185,10 @@ const Settings = ({ onClose }) => {
                 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            {darkMode ? <Moon size={22} color="#667eea" /> : <Sun size={22} color="#f39c12" />}
+                            {darkMode ? <Moon size={22} color="var(--primary-color)" /> : <Sun size={22} color="var(--primary-color)" />}
                             <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px' }}>{t('settings.theme')}</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-light)' }}>
+                                <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.theme')}</div>
+                                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
                                     {darkMode ? t('settings.darkMode') : t('settings.lightMode')}
                                 </div>
                             </div>
@@ -224,11 +236,11 @@ const Settings = ({ onClose }) => {
                 }} onClick={() => setShowHistory(true)}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <History size={22} color="#8e44ad" />
+                            <History size={22} color="var(--primary-color)" />
                             <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px' }}>Bildirim Geçmişi</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-light)' }}>
-                                    Gelen son bildirimleri görüntüleyin
+                                <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.historyTitle', 'Bildirim Geçmişi')}</div>
+                                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
+                                    {t('settings.historyDesc', 'Gelen son bildirimleri görüntüleyin')}
                                 </div>
                             </div>
                         </div>
@@ -248,9 +260,9 @@ const Settings = ({ onClose }) => {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                             <Bell size={22} color="var(--primary-color)" />
                             <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px' }}>Müezzin Seçimi</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-light)' }}>
-                                    Ezan bildirim sesini özelleştirin
+                                <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.muezzinTitle', 'Müezzin Seçimi')}</div>
+                                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
+                                    {t('settings.muezzinDesc', 'Ezan bildirim sesini özelleştirin')}
                                 </div>
                             </div>
                         </div>
@@ -270,7 +282,7 @@ const Settings = ({ onClose }) => {
                                 cursor: 'pointer'
                             }}
                         >
-                            Seç
+                            {t('settings.select', 'Seç')}
                         </button>
                     </div>
                 </div>
@@ -285,10 +297,10 @@ const Settings = ({ onClose }) => {
                 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Clock size={22} color="#e67e22" />
+                            <Clock size={22} color="var(--primary-color)" />
                             <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px' }}>{t('settings.stickyCounter')}</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-light)' }}>
+                                <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.stickyCounter')}</div>
+                                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
                                     {t('settings.stickyCounterDesc')}
                                 </div>
                             </div>
@@ -330,10 +342,10 @@ const Settings = ({ onClose }) => {
                     border: '1px solid var(--glass-border)'
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
-                        <Info size={22} color="#3498db" />
-                        <div style={{ fontWeight: '600', fontSize: '15px' }}>{t('settings.about')}</div>
+                        <Info size={22} color="var(--primary-color)" />
+                        <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.about')}</div>
                     </div>
-                    <div style={{ fontSize: '14px', color: 'var(--text-color-light)' }}>
+                    <div style={{ fontSize: '14px', color: 'var(--text-color-muted)' }}>
                         <div>{t('app.name')} {t('settings.appName')} v{APP_VERSION}</div>
                         <div style={{ marginTop: '4px' }}>{t('settings.appDescription')}</div>
                     </div>
@@ -349,11 +361,11 @@ const Settings = ({ onClose }) => {
                 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Shield size={22} color="#f1c40f" />
+                            <Shield size={22} color="var(--primary-color)" />
                             <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px' }}>Reklamları Kaldır</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-light)' }}>
-                                    Reklamsız deneyim için Pro'ya geçin
+                                <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.removeAdsTitle', 'Reklamları Kaldır')}</div>
+                                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
+                                    {t('settings.removeAdsDesc', "Reklamsız deneyim için Pro'ya geçin")}
                                 </div>
                             </div>
                         </div>
@@ -373,7 +385,7 @@ const Settings = ({ onClose }) => {
                                 cursor: 'pointer'
                             }}
                         >
-                            İncele
+                            {t('settings.review', 'İncele')}
                         </button>
                     </div>
                 </div>
@@ -386,8 +398,8 @@ const Settings = ({ onClose }) => {
                     border: '1px solid var(--glass-border)'
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                        <Shield size={22} color="#9b59b6" />
-                        <div style={{ fontWeight: '600', fontSize: '15px' }}>{t('settings.legal')}</div>
+                        <Shield size={22} color="var(--primary-color)" />
+                        <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.legal')}</div>
                     </div>
                     <button
                         onClick={() => setShowPrivacy(true)}
@@ -443,7 +455,7 @@ const Settings = ({ onClose }) => {
                             gap: '10px'
                         }}
                     >
-                        <FileText size={18} /> Lisanslar ve Kaynaklar
+                        <FileText size={18} /> {t('settings.licensesAndCredits', 'Lisanslar ve Kaynaklar')}
                     </button>
                 </div>
             </div>

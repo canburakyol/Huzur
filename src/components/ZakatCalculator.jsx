@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { X, Calculator, Info, RefreshCw, DollarSign, Coins } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // Zekat nisab değerleri (gram cinsinden)
 const NISAB = {
@@ -8,6 +9,7 @@ const NISAB = {
 };
 
 const ZakatCalculator = ({ onClose }) => {
+    const { t } = useTranslation();
     const [goldPrice, setGoldPrice] = useState(2500); // TL/gram
     const silverPrice = 30; // TL/gram (constant)
 
@@ -81,7 +83,7 @@ const ZakatCalculator = ({ onClose }) => {
                     <Info size={24} />
                 </button>
                 <h2 style={{ margin: 0, color: '#27ae60', fontSize: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <Calculator size={24} /> Zekat Hesaplayıcı
+                    <Calculator size={24} /> {t('zakatCalculator.title', 'Zakat Calculator')}
                 </h2>
                 <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}>
                     <X size={28} />
@@ -99,10 +101,9 @@ const ZakatCalculator = ({ onClose }) => {
                     color: '#155724',
                     border: '1px solid rgba(39, 174, 96, 0.2)'
                 }}>
-                    <strong>📌 Zekat Nedir?</strong>
+                    <strong>📌 {t('zakatCalculator.whatIsZakatTitle', 'What is Zakat?')}</strong>
                     <p style={{ margin: '8px 0 0 0' }}>
-                        Zekat, nisab miktarına ulaşan ve üzerinden bir yıl geçen malların %2.5'inin verilmesidir.
-                        Nisab, 80.18 gram altın veya 561.2 gram gümüş değeridir.
+                        {t('zakatCalculator.whatIsZakatBody', 'Zakat is giving 2.5% of assets that have reached nisab and remained in possession for one lunar year. Nisab equals the value of 80.18g gold or 561.2g silver.')}
                     </p>
                 </div>
             )}
@@ -112,7 +113,7 @@ const ZakatCalculator = ({ onClose }) => {
                 {/* Altın Fiyatı */}
                 <div style={{ marginBottom: '16px' }}>
                     <label style={{ fontSize: '13px', color: '#666', marginBottom: '6px', display: 'block' }}>
-                        Altın Fiyatı (TL/gram)
+                        {t('zakatCalculator.goldPriceLabel', 'Gold Price (TL/gram)')}
                     </label>
                     <input
                         type="number"
@@ -130,16 +131,16 @@ const ZakatCalculator = ({ onClose }) => {
 
                 {/* Varlıklar */}
                 <div style={{ fontSize: '14px', fontWeight: '600', color: '#27ae60', marginBottom: '12px' }}>
-                    💰 Varlıklar
+                    💰 {t('zakatCalculator.assetsTitle', 'Assets')}
                 </div>
 
                 {[
-                    { key: 'cash', label: 'Nakit Para (TL)', icon: '💵' },
-                    { key: 'gold', label: 'Altın (gram)', icon: '🥇' },
-                    { key: 'silver', label: 'Gümüş (gram)', icon: '🥈' },
-                    { key: 'stocks', label: 'Hisse/Yatırım (TL)', icon: '📈' },
-                    { key: 'receivables', label: 'Alacaklar (TL)', icon: '📋' },
-                    { key: 'business', label: 'Ticari Mal (TL)', icon: '🏪' },
+                    { key: 'cash', label: t('zakatCalculator.assetCash', 'Cash (TL)'), icon: '💵' },
+                    { key: 'gold', label: t('zakatCalculator.assetGold', 'Gold (gram)'), icon: '🥇' },
+                    { key: 'silver', label: t('zakatCalculator.assetSilver', 'Silver (gram)'), icon: '🥈' },
+                    { key: 'stocks', label: t('zakatCalculator.assetStocks', 'Stocks/Investments (TL)'), icon: '📈' },
+                    { key: 'receivables', label: t('zakatCalculator.assetReceivables', 'Receivables (TL)'), icon: '📋' },
+                    { key: 'business', label: t('zakatCalculator.assetBusiness', 'Business Goods (TL)'), icon: '🏪' },
                 ].map(item => (
                     <div key={item.key} style={{ marginBottom: '12px' }}>
                         <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -163,7 +164,7 @@ const ZakatCalculator = ({ onClose }) => {
 
                 {/* Borçlar */}
                 <div style={{ fontSize: '14px', fontWeight: '600', color: '#e74c3c', marginBottom: '12px', marginTop: '20px' }}>
-                    💳 Borçlar
+                    💳 {t('zakatCalculator.debtsTitle', 'Debts')}
                 </div>
                 <input
                     type="number"
@@ -199,7 +200,7 @@ const ZakatCalculator = ({ onClose }) => {
                         marginBottom: '20px'
                     }}
                 >
-                    <RefreshCw size={16} /> Sıfırla
+                    <RefreshCw size={16} /> {t('zakatCalculator.reset', 'Reset')}
                 </button>
             </div>
 
@@ -212,18 +213,22 @@ const ZakatCalculator = ({ onClose }) => {
                 textAlign: 'center'
             }}>
                 <div style={{ fontSize: '12px', opacity: 0.9, marginBottom: '4px' }}>
-                    {isNisabReached ? '✅ Nisab\'a ulaştınız' : '❌ Nisab\'a ulaşılmadı'}
+                    {isNisabReached
+                        ? t('zakatCalculator.nisabReached', '✅ Nisab reached')
+                        : t('zakatCalculator.nisabNotReached', '❌ Nisab not reached')}
                 </div>
                 <div style={{ fontSize: '13px', opacity: 0.8, marginBottom: '8px' }}>
-                    Nisab: {formatCurrency(nisabValue)}
+                    {t('zakatCalculator.nisabLabel', 'Nisab')}: {formatCurrency(nisabValue)}
                 </div>
-                <div style={{ fontSize: '14px', marginBottom: '4px' }}>Net Servet: {formatCurrency(netWealth)}</div>
+                <div style={{ fontSize: '14px', marginBottom: '4px' }}>{t('zakatCalculator.netWealth', 'Net Wealth')}: {formatCurrency(netWealth)}</div>
                 <div style={{ fontSize: '28px', fontWeight: 'bold' }}>
-                    {isNisabReached ? `Zekat: ${formatCurrency(zakatAmount)}` : 'Zekat Gerekmez'}
+                    {isNisabReached
+                        ? `${t('zakatCalculator.zakatLabel', 'Zakat')}: ${formatCurrency(zakatAmount)}`
+                        : t('zakatCalculator.noZakatRequired', 'No Zakat required')}
                 </div>
                 {isNisabReached && (
                     <div style={{ fontSize: '11px', opacity: 0.8, marginTop: '8px' }}>
-                        (Net servetin %2.5'i)
+                        {t('zakatCalculator.percentNote', '(2.5% of net wealth)')}
                     </div>
                 )}
             </div>

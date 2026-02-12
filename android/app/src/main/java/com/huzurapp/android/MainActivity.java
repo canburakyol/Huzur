@@ -10,8 +10,6 @@ import com.getcapacitor.JSObject;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
-import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory;
-import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory;
 import com.huzurapp.android.WidgetPlugin;
 import com.huzurapp.android.CrashlyticsPlugin;
 import com.huzurapp.android.NativeAdBridgePlugin;
@@ -51,23 +49,17 @@ public class MainActivity extends BridgeActivity {
             firebaseAppCheck.setTokenAutoRefreshEnabled(true);
             
             Log.i(TAG, "BuildConfig.DEBUG: " + BuildConfig.DEBUG);
-            
+
+            firebaseAppCheck.installAppCheckProviderFactory(
+                AppCheckProviderResolver.getFactory()
+            );
+
             if (BuildConfig.DEBUG) {
-                // Debug mod: Debug token kullan
-                // NOT: Firebase Console > App Check > Manage debug tokens 
-                // bölümünden debug token oluşturun ve local.properties'e ekleyin
-                firebaseAppCheck.installAppCheckProviderFactory(
-                    DebugAppCheckProviderFactory.getInstance()
-                );
                 Log.i(TAG, "App Check: Debug provider installed");
                 
                 // Debug token'ı logla (Firebase Console'a eklenmesi için)
                 logDebugToken();
             } else {
-                // Release mod: Play Integrity kullan
-                firebaseAppCheck.installAppCheckProviderFactory(
-                    PlayIntegrityAppCheckProviderFactory.getInstance()
-                );
                 Log.i(TAG, "App Check: Play Integrity provider installed");
             }
         } catch (Exception e) {
@@ -83,9 +75,13 @@ public class MainActivity extends BridgeActivity {
             // Debug token'ı al ve logla
             FirebaseAppCheck.getInstance().getAppCheckToken(false)
                 .addOnSuccessListener(token -> {
-                    Log.d(TAG, "=== DEBUG TOKEN (Firebase Console'a ekleyin) ===");
-                    Log.d(TAG, token.getToken());
-                    Log.d(TAG, "==============================================");
+                    String fullToken = token.getToken();
+                    String maskedToken = fullToken != null && fullToken.length() > 8
+                        ? fullToken.substring(0, 8) + "..." + " (length: " + fullToken.length() + ")"
+                        : "(empty)";
+                    Log.d(TAG, "=== DEBUG TOKEN (masked) ===");
+                    Log.d(TAG, maskedToken);
+                    Log.d(TAG, "============================");
                 })
                 .addOnFailureListener(e -> {
                     Log.w(TAG, "Debug token alınamadı: " + e.getMessage());
@@ -101,7 +97,7 @@ public class MainActivity extends BridgeActivity {
     @com.getcapacitor.annotation.CapacitorPlugin(name = "AppCheck")
     public static class AppCheckPlugin extends Plugin {
         
-        @com.getcapacitor.annotation.PermissionCallback
+        @com.getcapacitor.PluginMethod
         public void getAppCheckStatus(PluginCall call) {
             try {
                 FirebaseAppCheck.getInstance().getAppCheckToken(false)
@@ -126,7 +122,7 @@ public class MainActivity extends BridgeActivity {
             }
         }
         
-        @com.getcapacitor.annotation.PermissionCallback
+        @com.getcapacitor.PluginMethod
         public void forceRefreshToken(PluginCall call) {
             try {
                 FirebaseAppCheck.getInstance().getAppCheckToken(true)

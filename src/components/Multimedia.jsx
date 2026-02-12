@@ -4,12 +4,15 @@ import { MULTIMEDIA_CATEGORIES, DUA_IMAGES, getImagesByCategory } from '../data/
 import IslamicBackButton from './shared/IslamicBackButton';
 import { Share } from '@capacitor/share';
 import { Capacitor } from '@capacitor/core';
+import { storageService } from '../services/storageService';
+
+const MULTIMEDIA_FAVORITES_KEY = 'multimedia_favorites';
 
 function Multimedia({ onClose }) {
     const [activeCategory, setActiveCategory] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [favorites, setFavorites] = useState(() => {
-        return JSON.parse(localStorage.getItem('multimedia_favorites') || '[]');
+        return storageService.getItem(MULTIMEDIA_FAVORITES_KEY, []);
     });
     const [setLoading] = useState({});
 
@@ -19,7 +22,7 @@ function Multimedia({ onClose }) {
             ? favorites.filter(id => id !== imageId)
             : [...favorites, imageId];
         setFavorites(newFavorites);
-        localStorage.setItem('multimedia_favorites', JSON.stringify(newFavorites));
+        storageService.setItem(MULTIMEDIA_FAVORITES_KEY, newFavorites);
     };
 
     // Share image using Capacitor Share plugin
@@ -52,7 +55,7 @@ function Multimedia({ onClose }) {
         } catch (err) {
             // User cancelled or error
             if (err.message !== 'Share canceled') {
-                // console.log('Share error:', err);
+                // 
             }
         }
     };

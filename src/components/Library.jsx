@@ -1,7 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight, ChevronDown, Book, Search, Volume2, X, Lock, Play, Pause, Crown, Sparkles } from 'lucide-react';
-import { LIBRARY_CATEGORIES, BOOKS, RELIGIOUS_TEXTS, EDUCATION, REFERENCES, FAQ, AUDIO, VIDEO, PRAYERS } from '../data/libraryData';
 import { getReciters, getAudioUrlSync } from '../services/quranService';
 import { surahList } from '../data/surahList';
 import { isPro } from '../services/proService';
@@ -18,6 +17,57 @@ function Library({ onClose, onShowPro }) {
     const [audioPlayer, setAudioPlayer] = useState(null);
     const [currentAudioUrl, setCurrentAudioUrl] = useState(null);
     const [showPaywall, setShowPaywall] = useState(false);
+    const [libraryData, setLibraryData] = useState(null);
+    const [isLibraryDataLoading, setIsLibraryDataLoading] = useState(false);
+
+    const loadLibraryData = useCallback(async () => {
+        if (libraryData || isLibraryDataLoading) return;
+
+        setIsLibraryDataLoading(true);
+        try {
+            const dataModule = await import('../data/libraryData');
+            setLibraryData({
+                BOOKS: dataModule.BOOKS || [],
+                RELIGIOUS_TEXTS: dataModule.RELIGIOUS_TEXTS || [],
+                EDUCATION: dataModule.EDUCATION || [],
+                REFERENCES: dataModule.REFERENCES || [],
+                FAQ: dataModule.FAQ || [],
+                AUDIO: dataModule.AUDIO || [],
+                VIDEO: dataModule.VIDEO || [],
+                PRAYERS: dataModule.PRAYERS || []
+            });
+        } catch (error) {
+            console.error('[Library] Veri yükleme hatası:', error);
+        } finally {
+            setIsLibraryDataLoading(false);
+        }
+    }, [libraryData, isLibraryDataLoading]);
+
+    useEffect(() => {
+        if ((activeCategory || searchQuery.length >= 2) && !libraryData && !isLibraryDataLoading) {
+            loadLibraryData();
+        }
+    }, [activeCategory, searchQuery, libraryData, isLibraryDataLoading, loadLibraryData]);
+
+    const BOOKS = useMemo(() => libraryData?.BOOKS || [], [libraryData]);
+    const RELIGIOUS_TEXTS = useMemo(() => libraryData?.RELIGIOUS_TEXTS || [], [libraryData]);
+    const EDUCATION = useMemo(() => libraryData?.EDUCATION || [], [libraryData]);
+    const REFERENCES = useMemo(() => libraryData?.REFERENCES || [], [libraryData]);
+    const FAQ = useMemo(() => libraryData?.FAQ || [], [libraryData]);
+    const AUDIO = useMemo(() => libraryData?.AUDIO || [], [libraryData]);
+    const VIDEO = useMemo(() => libraryData?.VIDEO || [], [libraryData]);
+    const PRAYERS = useMemo(() => libraryData?.PRAYERS || [], [libraryData]);
+
+    const LIBRARY_CATEGORIES = [
+        { id: 'books', title: 'Kitaplar', icon: '📚', data: BOOKS },
+        { id: 'texts', title: 'Dini Metinler', icon: '📜', data: RELIGIOUS_TEXTS },
+        { id: 'education', title: 'Eğitim', icon: '🎓', data: EDUCATION },
+        { id: 'references', title: 'Referanslar', icon: '📋', data: REFERENCES },
+        { id: 'prayers', title: 'Peygamber Duaları', icon: '🤲', data: PRAYERS },
+        { id: 'audio', title: 'Sesli Kütüphane', icon: '🎧', data: AUDIO, isPro: true },
+        { id: 'video', title: 'İslami Akademi', icon: '🎬', data: VIDEO },
+        { id: 'faq', title: 'Soru-Cevap', icon: '❓', data: FAQ }
+    ];
 
     const userIsPro = isPro();
 
@@ -187,7 +237,7 @@ function Library({ onClose, onShowPro }) {
         });
 
         return results.slice(0, 20); // Limit to 20 results
-    }, [searchQuery]);
+    }, [searchQuery, BOOKS, RELIGIOUS_TEXTS, EDUCATION, REFERENCES, AUDIO, FAQ]);
 
     // Handle search result click
     const handleSearchResultClick = (result) => {
@@ -315,6 +365,7 @@ function Library({ onClose, onShowPro }) {
                         if (category.isPro && !userIsPro) {
                             setShowPaywall(true);
                         } else {
+                            loadLibraryData();
                             setActiveCategory(category.id);
                         }
                     }}
@@ -329,7 +380,7 @@ function Library({ onClose, onShowPro }) {
                                 {category.isPro && <Lock size={14} color="var(--primary-color)" />}
                             </div>
                             <div style={{ fontSize: '13px', color: 'var(--text-color-muted)', marginTop: '4px' }}>
-                                {category.data.length} içerik
+                                {libraryData ? `${category.data.length} içerik` : 'İçerikler yükleniyor...'}
                             </div>
                         </div>
                         <ChevronRight size={24} color="var(--text-color-muted)" />
@@ -341,6 +392,14 @@ function Library({ onClose, onShowPro }) {
 
     // Render items in a category
     const renderCategoryItems = () => {
+        if (!libraryData) {
+            return (
+                <div className="glass-card" style={{ padding: '18px', color: 'var(--text-color-muted)' }}>
+                    Kütüphane içeriği yükleniyor...
+                </div>
+            );
+        }
+
         let items = [];
         switch (activeCategory) {
             case 'books': items = BOOKS; break;

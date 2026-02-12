@@ -5,15 +5,20 @@ import {
   NOTIFICATION_CHANNELS,
   requestNotificationPermission
 } from '../services/smartNotificationService';
+import { useTranslation } from 'react-i18next';
 import './NotificationSettings.css'; // Stil dosyasını oluşturmamız gerekebilir veya inline kullanabiliriz
 
 const NotificationSettings = () => {
+  const { t } = useTranslation();
   const [prefs, setPrefs] = useState({
     prayer: true,
     streak: true,
     reminder: true,
     updates: true,
-    preAlertMinutes: 15
+    preAlertMinutes: 15,
+    quietHoursEnabled: false,
+    quietHoursStart: '22:00',
+    quietHoursEnd: '07:00'
   });
   const [permissionGranted, setPermissionGranted] = useState(false);
 
@@ -49,6 +54,12 @@ const NotificationSettings = () => {
     await updateNotificationPreferences(newPrefs);
   };
 
+  const handleQuietHoursTimeChange = async (key, value) => {
+    const newPrefs = { ...prefs, [key]: value };
+    setPrefs(newPrefs);
+    await updateNotificationPreferences(newPrefs);
+  };
+
   const requestPermission = async () => {
     const granted = await requestNotificationPermission();
     setPermissionGranted(granted);
@@ -57,31 +68,31 @@ const NotificationSettings = () => {
   return (
     <div className="notification-settings-container p-4">
       <h2 className="text-xl font-bold mb-4 flex items-center">
-        <span className="text-2xl mr-2">🔔</span> Bildirim Ayarları
+        <span className="text-2xl mr-2">🔔</span> {t('settings.notificationSettingsTitle', 'Bildirim Ayarları')}
       </h2>
 
       {!permissionGranted && (
         <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
-          <p className="font-bold">Bildirim İzni Gerekli</p>
-          <p>Bildirimleri alabilmek için lütfen izin verin.</p>
+          <p className="font-bold">{t('settings.notificationPermissionRequiredTitle', 'Bildirim İzni Gerekli')}</p>
+          <p>{t('settings.notificationPermissionRequiredDesc', 'Bildirimleri alabilmek için lütfen izin verin.')}</p>
           <button 
             onClick={requestPermission}
             className="mt-2 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
           >
-            İzin Ver
+            {t('settings.allowPermission', 'İzin Ver')}
           </button>
         </div>
       )}
 
       <div className="space-y-4">
         {/* Ezan Vakitleri */}
-        <div className="setting-card bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+        <div className="glass-card notification-card" style={{ borderLeft: '4px solid #FBBF24' }}>
           <div className="flex justify-between items-center mb-2">
             <div className="flex items-center">
               <span className="text-xl mr-3">🕌</span>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100">{NOTIFICATION_CHANNELS.PRAYER.name}</h3>
-                <p className="text-xs text-gray-500">{NOTIFICATION_CHANNELS.PRAYER.description}</p>
+                <h3 className="setting-title">{t('notifications.channels.prayer.name', NOTIFICATION_CHANNELS.PRAYER.name)}</h3>
+                <p className="setting-desc">{t('notifications.channels.prayer.description', NOTIFICATION_CHANNELS.PRAYER.description)}</p>
               </div>
             </div>
             <label className="toggle-switch">
@@ -95,18 +106,18 @@ const NotificationSettings = () => {
           </div>
           
           {prefs.prayer && (
-            <div className="mt-3 pl-8 text-sm text-gray-600 dark:text-gray-400">
+            <div className="mt-3 pl-8 text-sm val-selection">
               <label className="flex items-center justify-between">
-                <span>Vakit Öncesi Uyarı (dk):</span>
+                <span>{t('settings.preAlertMinutes', 'Vakit Öncesi Uyarı (dk):')}</span>
                 <select 
                   value={prefs.preAlertMinutes} 
                   onChange={handleTimeChange}
-                  className="ml-2 border rounded p-1 dark:bg-gray-700 dark:text-white"
+                  className="themed-select-min"
                 >
-                  <option value="15">15 dk</option>
-                  <option value="30">30 dk</option>
-                  <option value="45">45 dk</option>
-                  <option value="0">Kapalı</option>
+                  <option value="15">{t('settings.minutesValue', { count: 15, defaultValue: '15 dk' })}</option>
+                  <option value="30">{t('settings.minutesValue', { count: 30, defaultValue: '30 dk' })}</option>
+                  <option value="45">{t('settings.minutesValue', { count: 45, defaultValue: '45 dk' })}</option>
+                  <option value="0">{t('settings.off', 'Kapalı')}</option>
                 </select>
               </label>
             </div>
@@ -114,13 +125,13 @@ const NotificationSettings = () => {
         </div>
 
         {/* Günlük Hatırlatıcılar */}
-        <div className="setting-card bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+        <div className="glass-card notification-card" style={{ borderLeft: '4px solid #10B981' }}>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <span className="text-xl mr-3">📿</span>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100">{NOTIFICATION_CHANNELS.REMINDER.name}</h3>
-                <p className="text-xs text-gray-500">{NOTIFICATION_CHANNELS.REMINDER.description}</p>
+                <h3 className="setting-title">{t('notifications.channels.reminder.name', NOTIFICATION_CHANNELS.REMINDER.name)}</h3>
+                <p className="setting-desc">{t('notifications.channels.reminder.description', NOTIFICATION_CHANNELS.REMINDER.description)}</p>
               </div>
             </div>
             <label className="toggle-switch">
@@ -135,13 +146,13 @@ const NotificationSettings = () => {
         </div>
 
         {/* Seri Koruması */}
-        <div className="setting-card bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+        <div className="glass-card notification-card" style={{ borderLeft: '4px solid #F59E0B' }}>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <span className="text-xl mr-3">🔥</span>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100">{NOTIFICATION_CHANNELS.STREAK.name}</h3>
-                <p className="text-xs text-gray-500">{NOTIFICATION_CHANNELS.STREAK.description}</p>
+                <h3 className="setting-title">{t('notifications.channels.streak.name', NOTIFICATION_CHANNELS.STREAK.name)}</h3>
+                <p className="setting-desc">{t('notifications.channels.streak.description', NOTIFICATION_CHANNELS.STREAK.description)}</p>
               </div>
             </div>
             <label className="toggle-switch">
@@ -156,13 +167,13 @@ const NotificationSettings = () => {
         </div>
 
         {/* Güncellemeler */}
-        <div className="setting-card bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+        <div className="glass-card notification-card" style={{ borderLeft: '4px solid #3B82F6' }}>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <span className="text-xl mr-3">📢</span>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100">{NOTIFICATION_CHANNELS.UPDATES.name}</h3>
-                <p className="text-xs text-gray-500">{NOTIFICATION_CHANNELS.UPDATES.description}</p>
+                <h3 className="setting-title">{t('notifications.channels.updates.name', NOTIFICATION_CHANNELS.UPDATES.name)}</h3>
+                <p className="setting-desc">{t('notifications.channels.updates.description', NOTIFICATION_CHANNELS.UPDATES.description)}</p>
               </div>
             </div>
             <label className="toggle-switch">
@@ -174,6 +185,48 @@ const NotificationSettings = () => {
               <span className="slider round"></span>
             </label>
           </div>
+        </div>
+
+        {/* Sessiz Saatler */}
+        <div className="glass-card notification-card" style={{ borderLeft: '4px solid #8B5CF6' }}>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <span className="text-xl mr-3">🌙</span>
+              <div>
+                <h3 className="setting-title">{t('settings.quietHoursTitle', 'Sessiz Saatler')}</h3>
+                <p className="setting-desc">{t('settings.quietHoursDesc', 'Bu aralıkta push bildirim gönderilmez')}</p>
+              </div>
+            </div>
+            <label className="toggle-switch">
+              <input
+                type="checkbox"
+                checked={prefs.quietHoursEnabled}
+                onChange={() => handleToggle('quietHoursEnabled')}
+              />
+              <span className="slider round"></span>
+            </label>
+          </div>
+
+          {prefs.quietHoursEnabled && (
+            <div className="quiet-hours-grid mt-3 text-sm text-gray-600 dark:text-gray-300">
+              <label className="quiet-hours-item">
+                <span>{t('settings.start', 'Başlangıç')}</span>
+                <input
+                  type="time"
+                  value={prefs.quietHoursStart}
+                  onChange={(e) => handleQuietHoursTimeChange('quietHoursStart', e.target.value)}
+                />
+              </label>
+              <label className="quiet-hours-item">
+                <span>{t('settings.end', 'Bitiş')}</span>
+                <input
+                  type="time"
+                  value={prefs.quietHoursEnd}
+                  onChange={(e) => handleQuietHoursTimeChange('quietHoursEnd', e.target.value)}
+                />
+              </label>
+            </div>
+          )}
         </div>
       </div>
     </div>

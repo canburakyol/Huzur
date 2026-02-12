@@ -1,0 +1,223 @@
+{
+  "surahs": {
+    "1": {
+      "name": "Al-Fatiha",
+      "meaning": "The Opening",
+      "verses": {
+        "1": {
+          "words": [
+            "In the name",
+            "of Allah",
+            "the Entirely Merciful",
+            "the Especially Merciful"
+          ]
+        },
+        "2": {
+          "words": [
+            "All praise",
+            "is due to Allah",
+            "Lord",
+            "of the worlds"
+          ]
+        },
+        "3": {
+          "words": [
+            "The Entirely Merciful",
+            "The Especially Merciful"
+          ]
+        },
+        "4": {
+          "words": [
+            "Sovereign",
+            "of the Day",
+            "of Recompense"
+          ]
+        },
+        "5": {
+          "words": [
+            "It is You",
+            "we worship",
+            "and You",
+            "we ask for help"
+          ]
+        },
+        "6": {
+          "words": [
+            "Guide us",
+            "to the path",
+            "the straight"
+          ]
+        },
+        "7": {
+          "words": [
+            "The path",
+            "of those",
+            "You have bestowed favor",
+            "upon them",
+            "not",
+            "of those who have evoked [Your] anger",
+            "upon them",
+            "and not",
+            "of those who are astray"
+          ]
+        }
+      }
+    },
+    "112": {
+      "name": "Al-Ikhlas",
+      "meaning": "Sincerity",
+      "verses": {
+        "1": {
+          "words": [
+            "Say",
+            "He is",
+            "Allah",
+            "One"
+          ]
+        },
+        "2": {
+          "words": [
+            "Allah",
+            "the Eternal Refuge"
+          ]
+        },
+        "3": {
+          "words": [
+            "He neither",
+            "begets",
+            "nor",
+            "is born"
+          ]
+        },
+        "4": {
+          "words": [
+            "And nor",
+            "is",
+            "to Him",
+            "equivalent",
+            "anyone"
+          ]
+        }
+      }
+    },
+    "113": {
+      "name": "Al-Falaq",
+      "meaning": "The Daybreak",
+      "verses": {
+        "1": {
+          "words": [
+            "Say",
+            "I seek refuge",
+            "in the Lord",
+            "of daybreak"
+          ]
+        },
+        "2": {
+          "words": [
+            "From",
+            "the evil",
+            "of that which",
+            "He created"
+          ]
+        },
+        "3": {
+          "words": [
+            "And from",
+            "the evil",
+            "of darkness",
+            "when",
+            "it settles"
+          ]
+        },
+        "4": {
+          "words": [
+            "And from",
+            "the evil",
+            "of the blowers",
+            "in",
+            "knots"
+          ]
+        },
+        "5": {
+          "words": [
+            "And from",
+            "the evil",
+            "of an envier",
+            "when",
+            "he envies"
+          ]
+        }
+      }
+    },
+    "114": {
+      "name": "An-Nas",
+      "meaning": "Mankind",
+      "verses": {
+        "1": {
+          "words": [
+            "Say",
+            "I seek refuge",
+            "in the Lord",
+            "of mankind"
+          ]
+        },
+        "2": {
+          "words": [
+            "The Sovereign",
+            "of mankind"
+          ]
+        },
+        "3": {
+          "words": [
+            "The God",
+            "of mankind"
+          ]
+        },
+        "4": {
+          "words": [
+            "From",
+            "the evil",
+            "of the whisperer",
+            "the withdrawing"
+          ]
+        },
+        "5": {
+          "words": [
+            "Who",
+            "whispers",
+            "in",
+            "the breasts",
+            "of mankind"
+          ]
+        },
+        "6": {
+          "words": [
+            "From",
+            "the jinn",
+            "and mankind"
+          ]
+        }
+      }
+    }
+  },
+  "ui": {
+    "title": "Word by Word Quran",
+    "selectSurah": "Select Surah",
+    "freeSurahsBadge": "{{count}} Free Surahs",
+    "chooseSurah": "Choose Surah",
+    "freeSurahsInfo": "The following surahs are available for free.",
+    "unlockAll": "Unlock All Surahs",
+    "unlockAllDesc": "Upgrade to Pro to access word-by-word for the entire Quran",
+    "ayahCount": "{{count}} Ayahs",
+    "analyze": "Analyze",
+    "changeSurah": "Change Surah",
+    "analyzing": "Analyzing word...",
+    "close": "Close",
+    "limitTitle": "Daily Limit Reached",
+    "limitDesc": "You have reached your daily word analysis limit. Upgrade to Pro for unlimited analysis.",
+    "goToPro": "Go Pro",
+    "analysisError": "Analysis error",
+    "unknownError": "Unknown error",
+    "analysisErrorGeneric": "An error occurred during analysis."
+  }
+}

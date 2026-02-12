@@ -25,10 +25,12 @@ export const logger = {
   },
 
   /**
-   * Errors - always logged (goes to Crashlytics)
+   * Errors - only logged in development
+   * In production, errors are captured by Crashlytics via unhandled exception handlers.
+   * This prevents leaking storage keys, API endpoints, and error details via logcat.
    */
   error: (...args) => {
-    console.error(...args);
+    if (isDev) console.error(...args);
   },
 
   /**

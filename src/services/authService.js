@@ -37,7 +37,7 @@ const initAuthListener = () => {
       logger.log('[AuthService] User authenticated');
       // Eski localStorage ID'sini migration için sakla
       // Eski localStorage ID'sini migration için sakla
-      const oldLocalId = localStorage.getItem('hatim_user_id');
+      const oldLocalId = storageService.getString('hatim_user_id', '');
       // Check if migration already done (async check inside sync callback is tricky, but we can fire and forget or use then)
       storageService.getItemAsync('auth_migrated').then(migrated => {
         if (oldLocalId && !migrated) {
@@ -67,8 +67,7 @@ initAuthListener();
  * Anonim olarak giriş yap (hesap yoksa oluşturur)
  * @returns {Promise<string|null>} User ID veya null
  */
-export const ensureAuthenticated = async (options = {}) => {
-  const { requireFirebaseUser = false } = options;
+export const ensureAuthenticated = async () => {
   try {
     // Eğer zaten giriş yapılmışsa, mevcut kullanıcıyı döndür
     if (currentUser) {
@@ -104,16 +103,9 @@ export const ensureAuthenticated = async (options = {}) => {
       logger.warn('[AuthService] Network error, using fallback');
     }
     
-    // Firebase Auth zorunlu ise fallback'e düşme, hatayı yukarı taşı
-    if (requireFirebaseUser) {
-      const authError = new Error('Firebase Auth kullanılamıyor. Lütfen internet bağlantısını ve Anonymous Auth ayarını kontrol edin.');
-      authError.code = error?.code || 'auth/firebase-unavailable';
-      throw authError;
-    }
-
-    // Fallback: Eğer Firebase Auth çalışmazsa, güvenli random ID oluştur
-    // Bu sadece Firestore bağımlı olmayan akışlar için son çare olarak kullanılmalı
-    return await generateSecureFallbackId();
+    // Firebase Auth zorunlu — fallback ID kullanmak Firestore rules'u bypass eder
+    // Null döndürüp çağıran yerde hata yönetimi yapılmasını sağla
+    return null;
   }
 };
 
@@ -123,6 +115,16 @@ export const ensureAuthenticated = async (options = {}) => {
  */
 export const getCurrentUserId = () => {
   return currentUser?.uid || null;
+};
+
+/**
+ * Mevcut kullanıcı ID'sini garanti eder.
+ * Auth henüz hazır değilse veya kullanıcı yoksa anonim login dener.
+ * @returns {Promise<string|null>}
+ */
+export const getCurrentUserIdEnsured = async () => {
+  if (currentUser?.uid) return currentUser.uid;
+  return ensureAuthenticated();
 };
 
 /**
@@ -156,43 +158,12 @@ export const waitForAuth = async () => {
 };
 
 /**
- * Güvenli fallback ID oluştur (Firebase çalışmazsa)
- * Crypto API kullanarak tahmin edilemez ID üretir
- * @returns {string}
- */
-const generateSecureFallbackId = async () => {
-  // Önce secureStorage'da mevcut güvenli ID var mı kontrol et
-  const existingId = await storageService.getStringAsync('secure_fallback_uid');
-  if (existingId) {
-    return existingId;
-  }
-  
-  // Crypto API ile güvenli random bytes oluştur
-  let newId;
-  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-    newId = 'fallback_' + crypto.randomUUID();
-  } else if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
-    const array = new Uint8Array(16);
-    crypto.getRandomValues(array);
-    newId = 'fallback_' + Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
-  } else {
-    // Son çare - daha az güvenli ama hala Math.random()'dan iyi
-    newId = 'fallback_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 16);
-  }
-  
-  await storageService.setStringAsync('secure_fallback_uid', newId);
-  logger.warn('[AuthService] Using fallback ID (Firebase Auth unavailable)');
-  
-  return newId;
-};
-
-/**
  * Eski localStorage ID'sini al (migration için)
  * @returns {string|null}
  */
 export const getOldLocalUserId = async () => {
   const secureId = await storageService.getItemAsync('old_local_user_id');
-  return secureId || localStorage.getItem('hatim_user_id');
+  return secureId || storageService.getString('hatim_user_id', '');
 };
 
 /**
@@ -200,13 +171,14 @@ export const getOldLocalUserId = async () => {
  */
 export const clearMigrationData = async () => {
   await storageService.removeItemAsync('old_local_user_id');
-  localStorage.removeItem('hatim_user_id');
+  storageService.removeItem('hatim_user_id');
   logger.log('[AuthService] Migration data cleared');
 };
 
 export default {
   ensureAuthenticated,
   getCurrentUserId,
+  getCurrentUserIdEnsured,
   onAuthChange,
   waitForAuth,
   getOldLocalUserId,

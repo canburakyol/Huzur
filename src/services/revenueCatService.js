@@ -35,7 +35,7 @@ export const initializeRevenueCat = async () => {
         logger.log('[RevenueCat] Configuring with platform:', platform, 'API Key exists:', !!apiKey);
 
         if (!apiKey) {
-          console.error('[RevenueCat] API Key is missing! Check your .env file.');
+          logger.error('[RevenueCat] API Key is missing! Check your .env file.');
           return;
         }
 
@@ -53,8 +53,8 @@ export const initializeRevenueCat = async () => {
     } else {
         logger.log('[RevenueCat] Not initialized (Web Platform)');
     }
-  } catch (error) {
-    console.error('[RevenueCat] Init error:', error);
+  } catch {
+    logger.error('[RevenueCat] Init error');
   }
 };
 
@@ -62,8 +62,8 @@ export const checkSubscriptionStatus = async () => {
     try {
         const customerInfo = await Purchases.getCustomerInfo();
         return updateProStatusFromInfo(customerInfo);
-    } catch (error) {
-        console.error('Error checking subscription:', error);
+    } catch {
+        logger.error('[RevenueCat] Error checking subscription');
         return false;
     }
 };
@@ -76,7 +76,7 @@ export const purchasePackage = async (packageToPurchase) => {
         if (error.userCancelled) {
             logger.log('User cancelled purchase');
         } else {
-            console.error('Purchase error:', error);
+            logger.error('[RevenueCat] Purchase error');
         }
         return false;
     }
@@ -104,10 +104,10 @@ export const getOfferings = async () => {
             }
         }
         
-        console.error('[RevenueCat] No packages found in any offering');
+        logger.error('[RevenueCat] No packages found in any offering');
         return [];
-    } catch (error) {
-        console.error('[RevenueCat] Error getting offerings:', error);
+    } catch {
+        logger.error('[RevenueCat] Error getting offerings');
         return [];
     }
 };
@@ -116,8 +116,8 @@ export const restorePurchases = async () => {
     try {
         const customerInfo = await Purchases.restorePurchases();
         return updateProStatusFromInfo(customerInfo);
-    } catch (error) {
-        console.error('Error restoring purchases:', error);
+    } catch {
+        logger.error('[RevenueCat] Error restoring purchases');
         return false;
     }
 };

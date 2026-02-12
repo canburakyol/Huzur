@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TrendingUp, Award, Heart, Calendar, Clock } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
+import { storageService } from '../services/storageService';
+
+const ZIKIR_WORLD_KEYS = {
+    ZIKIRMATIK_COUNT: 'zikirmatik_count',
+    TESPIHAT_COUNTS: 'tespihat_counts',
+    START_DATE: 'zikir_start_date'
+};
 
 // Zikir types with their meanings
 const DHIKR_TYPES = [
@@ -63,23 +70,23 @@ function ZikirWorld({ onClose }) {
         let total = 0;
 
         // Check for zikirmatik data
-        const zikirData = localStorage.getItem('zikirmatik_count');
+        const zikirData = storageService.getString(ZIKIR_WORLD_KEYS.ZIKIRMATIK_COUNT, '0');
         if (zikirData) {
             total += parseInt(zikirData) || 0;
         }
 
         // Check for tespihat data
-        const tespihatData = localStorage.getItem('tespihat_counts');
+        const tespihatData = storageService.getItem(ZIKIR_WORLD_KEYS.TESPIHAT_COUNTS, null);
         if (tespihatData) {
-            const counts = JSON.parse(tespihatData);
+            const counts = tespihatData;
             Object.values(counts).forEach(v => total += v || 0);
         }
 
         // Get or set start date
-        let startDate = localStorage.getItem('zikir_start_date');
+        let startDate = storageService.getString(ZIKIR_WORLD_KEYS.START_DATE, '');
         if (!startDate) {
             startDate = new Date().toISOString();
-            localStorage.setItem('zikir_start_date', startDate);
+            storageService.setString(ZIKIR_WORLD_KEYS.START_DATE, startDate);
         }
 
         // Calculate days active

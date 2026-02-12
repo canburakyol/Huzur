@@ -1,4 +1,5 @@
 import { Preferences } from '@capacitor/preferences';
+import { logger } from '../utils/logger';
 
 /**
  * Secure Storage Service
@@ -25,8 +26,8 @@ export const secureStorage = {
     try {
       await Preferences.set({ key, value });
       return true;
-    } catch (error) {
-      console.error(`[SecureStorage] setString error for key ${key}:`, error);
+    } catch {
+      logger.error('[SecureStorage] setString error');
       return false;
     }
   },
@@ -38,8 +39,8 @@ export const secureStorage = {
     try {
       const { value } = await Preferences.get({ key });
       return value !== null ? value : defaultValue;
-    } catch (error) {
-      console.error(`[SecureStorage] getString error for key ${key}:`, error);
+    } catch {
+      logger.error('[SecureStorage] getString error');
       return defaultValue;
     }
   },
@@ -52,8 +53,8 @@ export const secureStorage = {
       const jsonValue = JSON.stringify(value);
       await Preferences.set({ key, value: jsonValue });
       return true;
-    } catch (error) {
-      console.error(`[SecureStorage] setItem error for key ${key}:`, error);
+    } catch {
+      logger.error('[SecureStorage] setItem error');
       return false;
     }
   },
@@ -66,8 +67,8 @@ export const secureStorage = {
       const { value } = await Preferences.get({ key });
       if (value === null) return defaultValue;
       return JSON.parse(value);
-    } catch (error) {
-      console.error(`[SecureStorage] getItem error for key ${key}:`, error);
+    } catch {
+      logger.error('[SecureStorage] getItem error');
       return defaultValue;
     }
   },
@@ -112,8 +113,8 @@ export const secureStorage = {
     try {
       await Preferences.remove({ key });
       return true;
-    } catch (error) {
-      console.error(`[SecureStorage] removeItem error for key ${key}:`, error);
+    } catch {
+      logger.error('[SecureStorage] removeItem error');
       return false;
     }
   },
@@ -125,8 +126,8 @@ export const secureStorage = {
     try {
       await Preferences.clear();
       return true;
-    } catch (error) {
-      console.error('[SecureStorage] clearAll error:', error);
+    } catch {
+      logger.error('[SecureStorage] clearAll error');
       return false;
     }
   },
@@ -150,8 +151,8 @@ export const secureStorage = {
     try {
       const { keys } = await Preferences.keys();
       return keys;
-    } catch (error) {
-      console.error('[SecureStorage] keys error:', error);
+    } catch {
+      logger.error('[SecureStorage] keys error');
       return [];
     }
   },
@@ -168,18 +169,18 @@ export const secureStorage = {
    */
   async setProStatus(active, expiresAt = null, verifiedBy = 'revenuecat') {
     try {
+      const integrity = await this._generateIntegrityHash(active, expiresAt, verifiedBy);
       const status = {
         active,
         expiresAt,
         verifiedBy,
         updatedAt: new Date().toISOString(),
-        // Integrity check için hash (basit)
-        _integrity: this._generateIntegrityHash(active, expiresAt, verifiedBy)
+        _integrity: integrity
       };
       await this.setItem(SECURE_STORAGE_KEYS.PRO_STATUS, status);
       return true;
-    } catch (error) {
-      console.error('[SecureStorage] setProStatus error:', error);
+    } catch {
+      logger.error('[SecureStorage] setProStatus error');
       return false;
     }
   },
@@ -199,8 +200,8 @@ export const secureStorage = {
         return { active: false, expiresAt: null, isValid: false };
       }
 
-      // Integrity check
-      const expectedHash = this._generateIntegrityHash(
+      // Integrity check (SHA-256)
+      const expectedHash = await this._generateIntegrityHash(
         status.active, 
         status.expiresAt, 
         status.verifiedBy
@@ -213,8 +214,8 @@ export const secureStorage = {
         verifiedBy: status.verifiedBy,
         isValid
       };
-    } catch (error) {
-      console.error('[SecureStorage] getProStatus error:', error);
+    } catch {
+      logger.error('[SecureStorage] getProStatus error');
       return null;
     }
   },
@@ -227,19 +228,30 @@ export const secureStorage = {
   },
 
   /**
-   * Basit integrity hash (temper detection)
-   * Not: Bu client-side güvenlik, tam güvenlik için server-side validation gerekir
+   * SHA-256 based integrity hash (tamper detection)
+   * Note: Client-side security layer; full security requires server-side validation via RevenueCat
    */
-  _generateIntegrityHash(active, expiresAt, verifiedBy) {
-    // Basit string concatenation hash
-    const str = `${active}-${expiresAt}-${verifiedBy}-${import.meta.env.VITE_APP_SECRET || 'huzur-default'}`;
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash;
+  async _generateIntegrityHash(active, expiresAt, verifiedBy) {
+    // Salt is NOT from VITE_ env (those get bundled into JS). 
+    // This constant is obfuscated by Terser in production builds.
+    const _s = [72, 122, 114, 80, 114, 111, 73, 110, 116, 71, 114, 100].map(c => String.fromCharCode(c)).join('');
+    const payload = `${active}|${expiresAt}|${verifiedBy}|${_s}`;
+
+    try {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(payload);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    } catch {
+      // Fallback for environments without SubtleCrypto (very old WebViews)
+      let hash = 0x811c9dc5;
+      for (let i = 0; i < payload.length; i++) {
+        hash ^= payload.charCodeAt(i);
+        hash = Math.imul(hash, 0x01000193);
+      }
+      return (hash >>> 0).toString(16);
     }
-    return hash.toString(16);
   }
 };
 

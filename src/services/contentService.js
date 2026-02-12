@@ -1,6 +1,8 @@
-import { ESMA_UL_HUSNA } from '../data/esmaUlHusnaData';
+import { logger } from '../utils/logger';
 import { hadiths, hadithCategories } from '../data/hadiths';
 import { prayers } from '../data/prayers';
+import { ESMA_UL_HUSNA } from '../data/esmaUlHusnaData';
+import { getActiveCampaign } from './campaignService';
 
 // API Endpoints
 const ASMA_AL_HUSNA_API = 'http://api.aladhan.com/v1/asmaAlHusna';
@@ -31,6 +33,7 @@ const DAILY_QUOTES = [
 export const getDailyContent = () => {
     const today = new Date();
     const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+    const campaign = getActiveCampaign(today);
 
     // Daily Esma
     const dailyEsma = ESMA_UL_HUSNA[dayOfYear % ESMA_UL_HUSNA.length];
@@ -49,6 +52,7 @@ export const getDailyContent = () => {
     const dailyQuote = DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
 
     return {
+        campaign,
         // For DailyContentGrid.jsx
         esma: {
             name: dailyEsma.latin,
@@ -113,7 +117,7 @@ export const contentService = {
             }
             return ESMA_UL_HUSNA; // Fallback to TR if API fails
         } catch (error) {
-            console.error('EsmaUlHusna fetch error:', error);
+            logger.error('EsmaUlHusna fetch error:', error);
             return ESMA_UL_HUSNA; // Fallback
         }
     },
@@ -154,7 +158,7 @@ export const contentService = {
             }
             return { categories: hadithCategories, hadiths: hadiths, isCategorized: true };
         } catch (error) {
-            console.error('Hadith fetch error:', error);
+            logger.error('Hadith fetch error:', error);
             return { categories: hadithCategories, hadiths: hadiths, isCategorized: true };
         }
     },

@@ -8,11 +8,26 @@ import {
   arrayUnion, 
   query, 
   where, 
+  limit,
   getDocs,
   serverTimestamp 
 } from 'firebase/firestore';
-import { getCurrentUserId } from './authService';
+import { getCurrentUserIdEnsured } from './authService';
 import { logger } from '../utils/logger';
+
+/**
+ * Generate a cryptographically secure invite code
+ * @param {number} length - Code length (default: 8)
+ * @returns {string} Uppercase alphanumeric code
+ */
+const generateSecureCode = (length = 8) => {
+  const CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const randomBytes = new Uint8Array(length);
+  crypto.getRandomValues(randomBytes);
+  return Array.from(randomBytes)
+    .map(b => CHARSET[b % CHARSET.length])
+    .join('');
+};
 
 const COLLECTION_FAMILIES = 'families';
 const COLLECTION_USERS = 'users';
@@ -24,12 +39,12 @@ export const familyService = {
    * @returns {Promise<string>} Family ID
    */
   createFamily: async (familyName) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
-      // Generate unique invite code (6 char)
-      const inviteCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+      // Generate unique invite code (8 char, cryptographically secure)
+      const inviteCode = generateSecureCode(8);
       
       const newFamilyRef = doc(collection(db, COLLECTION_FAMILIES));
       const familyId = newFamilyRef.id;
@@ -69,12 +84,16 @@ export const familyService = {
    * @param {string} inviteCode 
    */
   joinFamily: async (inviteCode) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
       // Find family by invite code
-      const q = query(collection(db, COLLECTION_FAMILIES), where('inviteCode', '==', inviteCode.toUpperCase()));
+      const q = query(
+        collection(db, COLLECTION_FAMILIES), 
+        where('inviteCode', '==', inviteCode.toUpperCase()),
+        limit(1)
+      );
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
@@ -109,7 +128,7 @@ export const familyService = {
    * Kullanıcının aile bilgilerini getirir
    */
   getMyFamily: async () => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) return null;
 
     try {
@@ -152,7 +171,7 @@ export const familyService = {
    * Bu sanal bir hesap olarak aile içinde tutulur
    */
   addChildMember: async (childName) => { // eslint-disable-line no-unused-vars
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     // Bu özellik sonraki fazda implement edilecek (Sanal Hesaplar)
@@ -166,12 +185,12 @@ export const familyService = {
    * Yeni grup oluştur (FamilyMode uyumlu)
    */
   createGroup: async (name, activeProfile) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
-      // 8 karakterlik kod oluştur
-      const code = Math.random().toString(36).substring(2, 10).toUpperCase();
+      // 8 karakterlik kriptografik güvenli kod oluştur
+      const code = generateSecureCode(8);
       
       const newGroupRef = doc(collection(db, 'familyGroups'));
       const groupId = newGroupRef.id;
@@ -189,6 +208,8 @@ export const familyService = {
           role: activeProfile.role || 'parent',
           isAdmin: true
         }],
+        // Flat array for Firestore array-contains queries
+        memberIds: [userId],
         pendingMembers: []
       };
 
@@ -205,11 +226,15 @@ export const familyService = {
    * Kod ile gruba katılma isteği
    */
   requestJoinGroup: async (code, activeProfile) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
-      const q = query(collection(db, 'familyGroups'), where('code', '==', code.toUpperCase()));
+      const q = query(
+        collection(db, 'familyGroups'), 
+        where('code', '==', code.toUpperCase()),
+        limit(1)
+      );
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
@@ -237,7 +262,7 @@ export const familyService = {
         name: activeProfile.name,
         avatar: activeProfile.avatar || '👤',
         role: activeProfile.role || 'child',
-        requestedAt: serverTimestamp() // Note: serverTimestamp might be tricky in arrays, using specific update logic often safer, but arrayUnion works for simple objects
+        requestedAt: new Date().toISOString() // ISO string used instead of serverTimestamp (incompatible with arrayUnion)
       };
       
       // Since serverTimestamp inside arrayUnion can be problematic in some SDK versions/contexts, 
@@ -245,7 +270,9 @@ export const familyService = {
       // but Firestore allows it.
       
       await updateDoc(groupDoc.ref, {
-        pendingMembers: arrayUnion(pendingMember)
+        pendingMembers: arrayUnion(pendingMember),
+        // Add userId to memberIds for future query support (pending members also tracked)
+        memberIds: arrayUnion(userId)
       });
 
       logger.log('[FamilyService] Join request sent:', groupDoc.id);
@@ -260,7 +287,7 @@ export const familyService = {
    * Katılma isteğini onayla
    */
   approveJoinRequest: async (groupId, pendingProfileId) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
@@ -273,10 +300,12 @@ export const familyService = {
 
       const groupData = groupDoc.data();
       
-      // Admin kontrolü (basit implementation: aktif user admin mi?)
-      // Not: Gerçek admin kontrolü için activeProfile id'si de gerekebilir ama şimdilik user id üzerinden gidelim
-      // veya data içindeki member listesinden user id eşleşmesi arayalım.
-      // Basitleştirilmiş: Herhangi bir admin üye işlem yapabilir.
+      // Admin kontrolü: sadece grup sahibi veya admin üye onaylayabilir
+      const isCreator = groupData.createdBy === userId;
+      const isAdmin = groupData.members?.some(m => m.id === userId && m.isAdmin === true);
+      if (!isCreator && !isAdmin) {
+        throw new Error('Bu işlem için yetkiniz yok');
+      }
       
       // Pending'den bul
       const pendingMember = groupData.pendingMembers?.find(m => m.id === pendingProfileId);
@@ -296,6 +325,7 @@ export const familyService = {
 
       await updateDoc(groupRef, {
         members: arrayUnion(newMember),
+        memberIds: arrayUnion(pendingMember.id),
         pendingMembers: updatedPending
       });
 
@@ -314,7 +344,7 @@ export const familyService = {
    * Katılma isteğini reddet
    */
   rejectJoinRequest: async (groupId, pendingProfileId) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
@@ -326,6 +356,14 @@ export const familyService = {
       }
 
       const groupData = groupDoc.data();
+
+      // Admin kontrolü: sadece grup sahibi veya admin üye reddedebilir
+      const isCreator = groupData.createdBy === userId;
+      const isAdmin = groupData.members?.some(m => m.id === userId && m.isAdmin === true);
+      if (!isCreator && !isAdmin) {
+        throw new Error('Bu işlem için yetkiniz yok');
+      }
+
       const updatedPending = groupData.pendingMembers.filter(m => m.id !== pendingProfileId);
 
       await updateDoc(groupRef, {
@@ -346,31 +384,22 @@ export const familyService = {
    * Kullanıcının gruplarını getir
    * @param {string} profileId - Opsiyonel, spesifik profil için
    */
-  getMyGroups: async (profileId) => {
-    const userId = getCurrentUserId();
+  getMyGroups: async () => {
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) return [];
 
     try {
-      // İdealde 'members' array-contains sorgusu yapılır ama members obje array olduğu için
-      // bu yapı NoSQL'de zordur. Genelde 'memberIds' gibi bir düz array tutulur.
-      // Şimdilik MVP için tüm grupları çekip client-side filtreleyelim (Hacim küçükse)
-      // VEYA 'familyGroups' koleksiyonunda kullanıcı ID'sine göre arama yapamayız çünkü yapı karmaşık.
-      // Düzeltme: Collection scan yapmayalım. Groups'ların ID'lerini user profilinde tutmak en iyisidir.
-      // Ama şimdilik 'createGroup' user'a bişi yazmıyor.
-      // BMAD raporuna sadık kalarak, collection query denersek: index gerekir.
-      
-      const q = query(collection(db, 'familyGroups'));
+      // memberIds flat array üzerinden verimli Firestore sorgusu
+      const q = query(
+        collection(db, 'familyGroups'),
+        where('memberIds', 'array-contains', userId),
+        limit(50)
+      );
       const querySnapshot = await getDocs(q);
       
       const groups = [];
-      querySnapshot.forEach(doc => {
-        const data = doc.data();
-        // Check memberships
-        const isMember = data.members?.some(m => m.id === (profileId || userId) || m.id === userId); // Fallback to userId check
-        
-        if (isMember) {
-          groups.push({ id: doc.id, ...data });
-        }
+      querySnapshot.forEach(docSnap => {
+        groups.push({ id: docSnap.id, ...docSnap.data() });
       });
       
       return groups;

@@ -106,6 +106,9 @@ export const logAppCheckStatus = async () => {
   return status;
 };
 
+// Module-level interval reference for cleanup
+let monitoringIntervalId = null;
+
 /**
  * Uygulama başlangıcında App Check'i kontrol et
  * Sorun varsa kullanıcıya bildir
@@ -116,11 +119,16 @@ export const initializeAppCheckMonitoring = async () => {
   
   logger.log('AppCheck: Initializing monitoring...');
   
+  // Önceki interval varsa temizle (hot reload güvenliği)
+  if (monitoringIntervalId !== null) {
+    clearInterval(monitoringIntervalId);
+  }
+  
   // İlk kontrol
   await logAppCheckStatus();
   
   // Her 30 dakikada bir kontrol et
-  setInterval(async () => {
+  monitoringIntervalId = setInterval(async () => {
     const status = await checkAppCheckStatus();
     
     if (!status.success || !status.tokenPresent) {
@@ -130,10 +138,21 @@ export const initializeAppCheckMonitoring = async () => {
   }, 30 * 60 * 1000); // 30 dakika
 };
 
+/**
+ * App Check monitoring'i durdur (cleanup)
+ */
+export const stopAppCheckMonitoring = () => {
+  if (monitoringIntervalId !== null) {
+    clearInterval(monitoringIntervalId);
+    monitoringIntervalId = null;
+  }
+};
+
 export default {
   checkAppCheckStatus,
   forceRefreshAppCheckToken,
   getAppCheckHealthStatus,
   logAppCheckStatus,
-  initializeAppCheckMonitoring
+  initializeAppCheckMonitoring,
+  stopAppCheckMonitoring
 };

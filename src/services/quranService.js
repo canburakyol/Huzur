@@ -17,7 +17,7 @@ export const getSurahArabic = async (surahNumber) => {
         }
         throw new Error('Sure yüklenemedi');
     } catch (error) {
-        console.error('Surah fetch error:', error);
+        logger.error('Surah fetch error:', error);
         return null;
     }
 };
@@ -32,7 +32,7 @@ export const getSurahWithTranslation = async (surahNumber) => {
         }
         throw new Error('Meal yüklenemedi');
     } catch (error) {
-        console.error('Translation fetch error:', error);
+        logger.error('Translation fetch error:', error);
         return null;
     }
 };
@@ -204,7 +204,7 @@ export const getSurahComplete = async (surahNumber, translationId = 'tr.vakfi') 
         throw new Error('API yanıtı hatalı');
 
     } catch (error) {
-        console.error('Quran API error:', error);
+        logger.error('Quran API error:', error);
         
         // Try to return expired cache if available
         try {
@@ -273,7 +273,7 @@ export const getAvailableTranslations = async () => {
         });
 
     } catch (error) {
-        console.error('Translations fetch error:', error);
+        logger.error('Translations fetch error:', error);
         // Fallback list if fetch fails
         return [
             { identifier: 'tr.vakfi', name: 'Diyanet Vakfı (Türkçe)', language: 'tr' },
@@ -303,7 +303,7 @@ export const getAudioUrl = async (surahNumber, reciterId = 'ar.alafasy') => {
         // Fallback: Direkt URL formatı (bazı hafızlar için çalışabilir)
         return `https://cdn.islamic.network/quran/audio-surah/128/${reciterId}/${surahNumber}.mp3`;
     } catch (error) {
-        console.error('Audio URL fetch error:', error);
+        logger.error('Audio URL fetch error:', error);
         // Fallback URL
         return `https://cdn.islamic.network/quran/audio-surah/128/${reciterId}/${surahNumber}.mp3`;
     }

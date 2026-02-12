@@ -13,117 +13,106 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
-    // join/read erişimi için ortak üyelik kontrolü
-    function isInStringArray(fieldName) {
-      return isAuthenticated()
-        && (fieldName in resource.data)
-        && (request.auth.uid in resource.data[fieldName]);
+    // common membership check for arrays (Hatim participants, etc.)
+    function isInArray(fieldName, uid) {
+      return fieldName in resource.data && uid in resource.data[fieldName];
     }
 
     function isHatimMember() {
       return isAuthenticated()
         && (
-          (resource.data.createdBy == request.auth.uid)
-          || isInStringArray('participants')
-          || isInStringArray('readers')
+          resource.data.createdBy == request.auth.uid
+          || isInArray('participants', request.auth.uid)
+          || isInArray('readers', request.auth.uid)
         );
+    }
+
+    function isValidString(val, min, max) {
+      return val is string && val.size() >= min && val.size() <= max;
     }
 
     // --------------------------------------------
     // USERS
     // --------------------------------------------
     match /users/{userId} {
-      // Aile/hatim üyelerini görüntüleme için authenticated read açık
       allow read: if isAuthenticated();
+      allow create, update: if isOwner(userId);
+      allow delete: if false; // GDPR: Managed via Cloud Functions if needed
 
-      // Kullanıcı sadece kendi dokümanını yazabilir
-      allow create, update, delete: if isOwner(userId);
-
-      // Subscription: client write kapalı (Cloud Functions)
-      match /subscription/{docId} {
+      // Subscription status: Server-side only (Cloud Functions)
+      match /subscription/status {
         allow read: if isOwner(userId);
         allow write: if false;
       }
 
-      // Kişisel alt veriler: sadece owner
+      // Private user data logs/settings
       match /data/{docId} {
         allow read, write: if isOwner(userId);
+      }
+      
+      // Personal growth/funnel analytics logs (proactive)
+      match /growth_logs/{logId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && request.resource.data.eventName is string;
       }
     }
 
     // --------------------------------------------
-    // FAMILIES (legacy)
+    // FAMILIES & GROUPS
     // --------------------------------------------
     match /families/{familyId} {
       allow read: if isAuthenticated();
       allow create: if isAuthenticated();
-      allow update, delete: if isAuthenticated();
+      allow update, delete: if isAuthenticated() && resource.data.adminId == request.auth.uid;
     }
 
-    // --------------------------------------------
-    // FAMILY GROUPS
-    // --------------------------------------------
     match /familyGroups/{groupId} {
       allow read: if isAuthenticated();
-
-      // Grup oluşturan kullanıcı createdBy olarak kendi uid'ini yazmalı
-      allow create: if isAuthenticated()
-        && request.resource.data.createdBy == request.auth.uid;
-
-      // Güncelleme: authenticated (uygulama akışında join request/members güncelleniyor)
-      allow update: if isAuthenticated();
-
-      // Silme: sadece grup sahibi
-      allow delete: if isAuthenticated()
-        && resource.data.createdBy == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.createdBy == request.auth.uid;
+      allow update: if isAuthenticated() && (resource.data.createdBy == request.auth.uid || request.auth.uid in resource.data.memberIds);
+      allow delete: if isAuthenticated() && resource.data.createdBy == request.auth.uid;
     }
 
     // --------------------------------------------
     // HATIMS
     // --------------------------------------------
     match /hatims/{hatimId} {
-      // Listeleme, kodla katılım ve detay akışı için authenticated read
       allow read: if isAuthenticated();
-
-      // Oluşturma: createdBy zorunlu ve auth uid ile eşleşmeli
-      allow create: if isAuthenticated()
-        && request.resource.data.createdBy == request.auth.uid;
-
-      // Güncelleme: oluşturucu veya katılımcı/okuyucu
-      // (mevcut uygulamada hem participants hem readers kullanılıyor)
+      allow create: if isAuthenticated() && request.resource.data.createdBy == request.auth.uid;
       allow update: if isHatimMember();
-
-      // Silme: yalnızca oluşturan kullanıcı
-      allow delete: if isAuthenticated()
-        && resource.data.createdBy == request.auth.uid;
+      allow delete: if isAuthenticated() && resource.data.createdBy == request.auth.uid;
     }
 
     // --------------------------------------------
-    // DUAS
+    // DUAS (Community)
     // --------------------------------------------
     match /duas/{duaId} {
       allow read: if isAuthenticated();
-
-      // Oluşturma:
-      // - text zorunlu
-      // - authorId varsa auth uid ile aynı olmalı
-      // (legacy Community akışındaki authorId'siz yazımla da uyumlu)
+      
+      // Validation: ensures non-empty text and prevents spoofing authorId
       allow create: if isAuthenticated()
-        && ('text' in request.resource.data)
-        && (!( 'authorId' in request.resource.data )
-            || request.resource.data.authorId == request.auth.uid);
-
-      // Güncelleme: amin artırımı vb. için authenticated kullanıcıya izin
-      allow update: if isAuthenticated();
-
-      // Silme: authorId alanı varsa sadece sahibi; yoksa silme kapalı
-      allow delete: if isAuthenticated()
-        && ('authorId' in resource.data)
-        && resource.data.authorId == request.auth.uid;
+        && isValidString(request.resource.data.text, 5, 1000)
+        && (!( 'authorId' in request.resource.data ) || request.resource.data.authorId == request.auth.uid);
+      
+      // Update: prevents editing text/author after post
+      allow update: if isAuthenticated()
+        && request.resource.data.text == resource.data.text
+        && (!( 'authorId' in resource.data ) || request.resource.data.authorId == resource.data.authorId);
+      
+      allow delete: if isAuthenticated() && resource.data.authorId == request.auth.uid;
     }
 
     // --------------------------------------------
-    // PUBLIC DATA
+    // GROWTH & REFERRALS (Proactive)
+    // --------------------------------------------
+    match /referrals/{referralId} {
+      allow read: if isAuthenticated() && resource.data.inviterId == request.auth.uid;
+      allow create: if isAuthenticated(); // Anyone can trigger a referral link click
+      allow update, delete: if false;
+    }
+
+    // --------------------------------------------
+    // PUBLIC DATA (Read Only)
     // --------------------------------------------
     match /public/{document=**} {
       allow read: if true;

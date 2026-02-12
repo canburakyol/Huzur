@@ -20,57 +20,57 @@ export const contentFeatures = {
     component: Hadiths,
     category: 'CONTENT',
     module: 'content',
-    name: 'Hadisler',
+    nameKey: 'features.hadiths',
     icon: '📜'
   },
   hikmetname: {
     component: Hikmetname,
     category: 'CONTENT',
     module: 'content',
-    name: 'Hikmetname',
+    nameKey: 'features.hikmetname',
     icon: '💎'
   },
   weeklySermon: {
     component: WeeklySermon,
     category: 'CONTENT',
     module: 'content',
-    name: 'Haftalık Hutbe',
+    nameKey: 'features.weeklySermon',
     icon: '🎤'
   },
   library: {
     component: Library,
     category: 'CONTENT',
     module: 'content',
-    name: 'Kütüphane',
+    nameKey: 'features.library',
     icon: '📚'
   },
   radio: {
     component: QuranRadio,
     category: 'CONTENT',
     module: 'content',
-    name: 'Kuran Radyo',
+    nameKey: 'features.radio',
     icon: '📻'
   },
   multimedia: {
     component: Multimedia,
     category: 'CONTENT',
     module: 'content',
-    name: 'Multimedya',
+    nameKey: 'features.multimedia',
     icon: '🎬'
   },
   liveBroadcast: {
     component: LiveBroadcast,
     category: 'CONTENT',
     module: 'content',
-    name: 'Canlı Yayın',
+    nameKey: 'features.liveBroadcast',
     icon: '📺'
   }
 };
 
 // Module metadata
 export const moduleInfo = {
-  name: 'İçerik & Medya',
-  description: 'İslami içerik ve medya özellikleri',
+  nameKey: 'modules.content',
+  descriptionKey: 'modules.contentDesc',
   icon: '📖',
   priority: 4,
   chunkName: 'feature-content'

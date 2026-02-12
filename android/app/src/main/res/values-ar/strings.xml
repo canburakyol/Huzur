@@ -9,4 +9,6 @@
     <string name="widget_prayer_time">وقت الصلاة</string>
     <string name="widget_default_location">تطبيق هُدوء</string>
     <string name="widget_time_placeholder">--:--</string>
+    <string name="widget_next_prayer_label">الصلاة</string>
+    <string name="widget_app_name">تطبيق هُدوء</string>
 </resources>

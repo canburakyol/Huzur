@@ -1,0 +1,6 @@
+{
+  "errorBoundary": {
+    "title": "Une erreur s'est produite",
+    "description": "Certaines parties de l'application ne fonctionnent pas correctement. Veuillez recharger la page ou redémarrer l'application."
+  }
+}

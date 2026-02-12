@@ -11,6 +11,11 @@ import i18n from '../i18n';
 import { storageService } from './storageService';
 import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
+import {
+    createNotificationChannels as ensureNotificationChannels,
+    clearPrayerNotificationsInRange,
+    NOTIFICATION_CHANNELS
+} from './notificationPlatformService';
 
 // FCM Token storage key
 const FCM_TOKEN_KEY = 'fcm_token';
@@ -93,7 +98,7 @@ export const FCMService = {
             logger.log('[FCM] Initialized successfully, waiting for token...');
             return null;
         } catch (error) {
-            console.error('[FCM] Initialization error:', error);
+            logger.error('[FCM] Initialization error:', error);
             return null;
         }
     },
@@ -124,7 +129,7 @@ export const FCMService = {
 
         // Registration error
         PushNotifications.addListener('registrationError', (error) => {
-            console.error('[FCM] Registration error:', error);
+            logger.error('[FCM] Registration error:', error);
         });
 
         // Push notification received (foreground)
@@ -163,7 +168,7 @@ export const FCMService = {
      * @returns {string|null}
      */
     getToken() {
-        return this.token || storageService.getString(STORAGE_KEYS.FCM_TOKEN);
+        return this.token || storageService.getString(STORAGE_KEYS.FCM_TOKEN, '');
     },
 
     /**
@@ -200,18 +205,7 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
     let idCounter = 3000; // Different range from other notifications
 
     // Cancel existing scheduled notifications first
-    try {
-        const pending = await LocalNotifications.getPending();
-        const prayerIds = pending.notifications
-            .filter(n => n.id >= 3000 && n.id < 4000)
-            .map(n => ({ id: n.id }));
-        
-        if (prayerIds.length > 0) {
-            await LocalNotifications.cancel({ notifications: prayerIds });
-        }
-    } catch (e) {
-        logger.warn('[Alarm] Could not cancel existing notifications:', e);
-    }
+    await clearPrayerNotificationsInRange();
 
     Object.entries(prayerTimes).forEach(([key, timeStr]) => {
         if (!timeStr || !SUPPORTED_PRAYER_KEYS.includes(key)) return;
@@ -240,7 +234,7 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
                         allowWhileIdle: true // Critical for Doze Mode
                     },
                     sound: 'default',
-                    channelId: 'prayer_times',
+                    channelId: NOTIFICATION_CHANNELS.PRAYER.id,
                     smallIcon: 'ic_stat_icon',
                     largeIcon: 'ic_launcher'
                 });
@@ -260,7 +254,7 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
                             allowWhileIdle: true
                         },
                         sound: 'default',
-                        channelId: 'prayer_reminders',
+                        channelId: NOTIFICATION_CHANNELS.PRAYER_REMINDER.id,
                         smallIcon: 'ic_stat_icon'
                     });
                 }
@@ -284,7 +278,7 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
             settings: { preAlertMinutes, enablePreAlert, enableMainAlert }
         });
     } catch (error) {
-        console.error('[Alarm] Failed to schedule notifications:', error);
+        logger.error('[Alarm] Failed to schedule notifications:', error);
     }
 };
 
@@ -292,44 +286,7 @@ export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
  * Create notification channels (Android 8+)
  */
 export const createNotificationChannels = async () => {
-    if (!Capacitor.isNativePlatform()) return;
-
-    try {
-        await LocalNotifications.createChannel({
-            id: 'prayer_times',
-            name: 'Namaz Vakitleri',
-            description: 'Namaz vakti bildirimleri',
-            importance: 5, // Max importance
-            visibility: 1, // Public
-            sound: 'default',
-            vibration: true,
-            lights: true
-        });
-
-        await LocalNotifications.createChannel({
-            id: 'prayer_reminders',
-            name: 'Vakit Hatırlatmaları',
-            description: 'Namaz vaktinden önce hatırlatmalar',
-            importance: 4, // High
-            visibility: 1,
-            sound: 'default',
-            vibration: true
-        });
-
-        await LocalNotifications.createChannel({
-            id: 'sticky_counter',
-            name: 'Vakit Sayacı',
-            description: 'Kalıcı geri sayım bildirimi',
-            importance: 2, // Low - no sound
-            visibility: 1,
-            sound: null,
-            vibration: false
-        });
-
-        logger.log('[Channels] Notification channels created');
-    } catch (error) {
-        console.error('[Channels] Failed to create channels:', error);
-    }
+    return ensureNotificationChannels();
 };
 
 export default FCMService;

@@ -12,7 +12,7 @@ const LicensesCredits = ({ onClose }) => {
     const sources = [
         {
             category: t('licenses.categories.quranData'),
-            icon: <Book size={20} color="#27ae60" />,
+            icon: <Book size={20} color="var(--primary-color)" />,
             items: [
                 {
                     name: 'Al Quran Cloud API',
@@ -36,7 +36,7 @@ const LicensesCredits = ({ onClose }) => {
         },
         {
             category: t('licenses.categories.recitations'),
-            icon: <Music size={20} color="#e67e22" />,
+            icon: <Music size={20} color="var(--primary-color)" />,
             items: [
                 {
                     name: 'Mishary Rashid Alafasy',
@@ -72,7 +72,7 @@ const LicensesCredits = ({ onClose }) => {
         },
         {
             category: t('licenses.categories.prayerTimes'),
-            icon: <Globe size={20} color="#3498db" />,
+            icon: <Globe size={20} color="var(--primary-color)" />,
             items: [
                 {
                     name: 'Aladhan API',
@@ -90,7 +90,7 @@ const LicensesCredits = ({ onClose }) => {
         },
         {
             category: t('licenses.categories.openSource'),
-            icon: <Code size={20} color="#9b59b6" />,
+            icon: <Code size={20} color="var(--primary-color)" />,
             items: [
                 {
                     name: 'React',
@@ -124,7 +124,7 @@ const LicensesCredits = ({ onClose }) => {
         <div className="app-container" style={{ 
             minHeight: '100vh', 
             paddingBottom: '40px',
-            background: 'var(--bg-color)'
+            background: 'var(--bg-gradient-start)'
         }}>
             {/* Header */}
             <div style={{
@@ -132,13 +132,14 @@ const LicensesCredits = ({ onClose }) => {
                 alignItems: 'center',
                 gap: '12px',
                 marginBottom: '20px',
-                paddingTop: '20px'
+                paddingTop: 'calc(20px + env(safe-area-inset-top))',
+                paddingLeft: '16px'
             }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '20px',
-                    color: 'var(--primary-color)',
+                    color: 'var(--text-color)',
                     fontWeight: '700'
                 }}>
                     📜 {t('licenses.title')}
@@ -147,9 +148,8 @@ const LicensesCredits = ({ onClose }) => {
 
             {/* Intro */}
             <div className="glass-card" style={{ 
-                marginBottom: '16px', 
-                padding: '16px',
-                background: 'linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(52, 152, 219, 0.1))'
+                margin: '0 16px 16px', 
+                padding: '16px'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
                     <Heart size={18} color="#e74c3c" />
@@ -168,78 +168,81 @@ const LicensesCredits = ({ onClose }) => {
             </div>
 
             {/* Sources */}
-            {sources.map((section, sectionIndex) => (
-                <div key={sectionIndex} className="glass-card" style={{ marginBottom: '12px', padding: '16px' }}>
-                    <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '10px', 
-                        marginBottom: '14px',
-                        paddingBottom: '10px',
-                        borderBottom: '1px solid var(--glass-border)'
-                    }}>
-                        {section.icon}
-                        <span style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>
-                            {section.category}
-                        </span>
-                    </div>
+            <div style={{ padding: '0 16px' }}>
+              {sources.map((section, sectionIndex) => (
+                  <div key={sectionIndex} className="glass-card" style={{ marginBottom: '12px', padding: '16px' }}>
+                      <div style={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          gap: '10px', 
+                          marginBottom: '14px',
+                          paddingBottom: '10px',
+                          borderBottom: '1px solid var(--glass-border)'
+                      }}>
+                          {section.icon}
+                          <span style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>
+                              {section.category}
+                          </span>
+                      </div>
 
-                    {section.items.map((item, itemIndex) => (
-                        <div 
-                            key={itemIndex}
-                            style={{ 
-                                padding: '10px 0',
-                                borderBottom: itemIndex < section.items.length - 1 ? '1px solid var(--glass-border)' : 'none'
-                            }}
-                        >
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                <div style={{ flex: 1 }}>
-                                    <div style={{ 
-                                        fontWeight: '600', 
-                                        fontSize: '14px', 
-                                        color: 'var(--primary-color)',
-                                        marginBottom: '2px'
-                                    }}>
-                                        {item.name}
-                                    </div>
-                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
-                                        {item.description}
-                                    </div>
-                                </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <span style={{
-                                        fontSize: '11px',
-                                        padding: '3px 8px',
-                                        background: 'rgba(52, 152, 219, 0.1)',
-                                        color: '#3498db',
-                                        borderRadius: '10px',
-                                        fontWeight: '500'
-                                    }}>
-                                        {item.license}
-                                    </span>
-                                    {item.url && (
-                                        <button
-                                            onClick={() => openLink(item.url)}
-                                            style={{
-                                                background: 'none',
-                                                border: 'none',
-                                                cursor: 'pointer',
-                                                padding: '4px',
-                                                color: 'var(--text-color-muted)'
-                                            }}
-                                        >
-                                            <ExternalLink size={14} />
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            ))}
+                      {section.items.map((item, itemIndex) => (
+                          <div 
+                              key={itemIndex}
+                              style={{ 
+                                  padding: '10px 0',
+                                  borderBottom: itemIndex < section.items.length - 1 ? '1px solid var(--glass-border)' : 'none'
+                              }}
+                          >
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                  <div style={{ flex: 1 }}>
+                                      <div style={{ 
+                                          fontWeight: '600', 
+                                          fontSize: '14px', 
+                                          color: 'var(--primary-color)',
+                                          marginBottom: '2px'
+                                      }}>
+                                          {item.name}
+                                      </div>
+                                      <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                          {item.description}
+                                      </div>
+                                  </div>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                      <span style={{
+                                          fontSize: '11px',
+                                          padding: '3px 8px',
+                                          background: 'rgba(212, 175, 55, 0.1)',
+                                          color: 'var(--primary-color)',
+                                          borderRadius: '10px',
+                                          fontWeight: '500'
+                                      }}>
+                                          {item.license}
+                                      </span>
+                                      {item.url && (
+                                          <button
+                                              onClick={() => openLink(item.url)}
+                                              style={{
+                                                  background: 'none',
+                                                  border: 'none',
+                                                  cursor: 'pointer',
+                                                  padding: '4px',
+                                                  color: 'var(--text-color-muted)'
+                                              }}
+                                          >
+                                              <ExternalLink size={14} />
+                                          </button>
+                                      )}
+                                  </div>
+                              </div>
+                          </div>
+                      ))}
+                  </div>
+              ))}
+            </div>
 
             {/* Disclaimer */}
             <div className="glass-card" style={{ 
+                margin: '12px 16px',
                 padding: '14px',
                 background: 'rgba(231, 76, 60, 0.05)',
                 border: '1px solid rgba(231, 76, 60, 0.2)'
@@ -254,6 +257,7 @@ const LicensesCredits = ({ onClose }) => {
                 </div>
             </div>
         </div>
+
     );
 };
 

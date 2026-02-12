@@ -3,14 +3,14 @@ import { Check, Gift, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { memo } from 'react';
 
-const FALLBACK_ROUTE_MAP = {
-    '/zikirmatik': { tab: 'home', feature: 'zikirmatik' },
-    '/esma': { tab: 'library', feature: 'esma' },
-    '/hadis': { tab: 'library', feature: 'hadiths' },
-    '/ayet': { tab: 'quran', feature: null },
-    '/dua-share': { tab: 'community', feature: null },
-    '/kible': { tab: 'home', feature: 'qibla' },
-    '/': { tab: 'home', feature: null }
+const ROUTE_MAP = {
+    '/zikirmatik': { feature: 'zikirmatik' },
+    '/esma': { feature: 'esmaUlHusna' },
+    '/hadis': { feature: 'hadiths' },
+    '/ayet': { feature: 'quran' },
+    '/dua-share': { tab: 'community' },
+    '/kible': { feature: 'qibla' },
+    '/': { tab: 'home' }
 };
 
 const DailyQuests = memo(() => {
@@ -34,21 +34,14 @@ const DailyQuests = memo(() => {
     const openQuestAction = (action) => {
         if (!action) return;
 
-        try {
-            emitQuestProgressForAction(action);
-            window.history.pushState({}, '', action);
-            window.dispatchEvent(new PopStateEvent('popstate'));
-            return;
-        } catch {
-            // no-op, fallback below
-        }
-
-        const mapped = FALLBACK_ROUTE_MAP[action] || FALLBACK_ROUTE_MAP['/'];
-        if (mapped.feature) {
-            window.dispatchEvent(new CustomEvent('openFeature', { detail: mapped.feature }));
-        }
         emitQuestProgressForAction(action);
-        window.dispatchEvent(new CustomEvent('setActiveTab', { detail: mapped.tab }));
+        const config = ROUTE_MAP[action] || ROUTE_MAP['/'];
+
+        if (config.feature) {
+            window.dispatchEvent(new CustomEvent('openFeature', { detail: config.feature }));
+        } else if (config.tab) {
+            window.dispatchEvent(new CustomEvent('setActiveTab', { detail: config.tab }));
+        }
     };
 
     if (!dailyQuests || !dailyQuests.quests) return null;

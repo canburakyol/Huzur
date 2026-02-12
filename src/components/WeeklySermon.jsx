@@ -1,37 +1,46 @@
 // import { useState } from 'react';
 import { ExternalLink, Calendar, Mic, FileText, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 
 // Diyanet hutbe kaynakları
 const HUTBE_SOURCES = [
     {
         id: 'diyanet-tv',
-        title: 'Diyanet TV - Cuma Hutbesi',
-        description: 'Diyanet\'in resmi hutbe yayınları',
+        titleKey: 'weeklySermon.sources.diyanetTv.title',
+        titleFallback: 'Diyanet TV - Friday Sermon',
+        descriptionKey: 'weeklySermon.sources.diyanetTv.description',
+        descriptionFallback: 'Official sermon broadcasts from Diyanet',
         icon: '📺',
         url: 'https://diyanet.tv/cuma-hutbesi',
         type: 'video'
     },
     {
         id: 'diyanet-gov',
-        title: 'Diyanet.gov.tr - Hutbeler',
-        description: 'Haftalık hutbe metinleri (PDF/Word)',
+        titleKey: 'weeklySermon.sources.diyanetGov.title',
+        titleFallback: 'Diyanet.gov.tr - Sermons',
+        descriptionKey: 'weeklySermon.sources.diyanetGov.description',
+        descriptionFallback: 'Weekly sermon texts (PDF/Word)',
         icon: '📄',
         url: 'https://diyanet.gov.tr/tr-TR/Kurumsal/Detay/11633/cuma-hutbeleri-702',
         type: 'text'
     },
     {
         id: 'edevlet',
-        title: 'e-Devlet Hutbe Sayfası',
-        description: 'Cuma hutbesi PDF indirme',
+        titleKey: 'weeklySermon.sources.edevlet.title',
+        titleFallback: 'e-Government Sermon Page',
+        descriptionKey: 'weeklySermon.sources.edevlet.description',
+        descriptionFallback: 'Download Friday sermon PDF',
         icon: '🏛️',
         url: 'https://www.turkiye.gov.tr/diyanet-isleri-baskanligi-cuma-hutbesi',
         type: 'text'
     },
     {
         id: 'diyanet-sesli',
-        title: 'Sesli Hutbe',
-        description: 'Dinleyerek takip edin',
+        titleKey: 'weeklySermon.sources.audio.title',
+        titleFallback: 'Audio Sermon',
+        descriptionKey: 'weeklySermon.sources.audio.description',
+        descriptionFallback: 'Follow by listening',
         icon: '🎧',
         url: 'https://diyanet.tv/cuma-hutbesi',
         type: 'audio'
@@ -39,6 +48,8 @@ const HUTBE_SOURCES = [
 ];
 
 function WeeklySermon({ onClose }) {
+    const { t, i18n } = useTranslation();
+
     // Get current Friday date
     const getCurrentFriday = () => {
         const today = new Date();
@@ -46,7 +57,17 @@ function WeeklySermon({ onClose }) {
         // const daysUntilFriday = (5 - dayOfWeek + 7) % 7;
         const friday = new Date(today);
         friday.setDate(today.getDate() - ((dayOfWeek + 2) % 7)); // Last Friday
-        return friday.toLocaleDateString('tr-TR', {
+        const localeMap = {
+            tr: 'tr-TR',
+            en: 'en-US',
+            ar: 'ar-SA',
+            id: 'id-ID',
+            es: 'es-ES',
+            fr: 'fr-FR',
+            de: 'de-DE'
+        };
+        const locale = localeMap[i18n.language?.split('-')?.[0]] || 'en-US';
+        return friday.toLocaleDateString(locale, {
             day: 'numeric',
             month: 'long',
             year: 'numeric'
@@ -74,12 +95,12 @@ function WeeklySermon({ onClose }) {
                     color: 'var(--primary-color)',
                     fontWeight: '700'
                 }}>
-                    🎤 Haftanın Hutbesi
+                    🎤 {t('weeklySermon.title', 'Weekly Sermon')}
                 </h1>
             </div>
 
             <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
-                Diyanet İşleri Başkanlığı'nın resmi hutbe yayınları
+                {t('weeklySermon.description', 'Official sermon publications from the Presidency of Religious Affairs')}
             </p>
 
             {/* Current Date Info */}
@@ -95,7 +116,7 @@ function WeeklySermon({ onClose }) {
                     color: 'var(--text-color-muted)',
                     marginBottom: '8px'
                 }}>
-                    Son Cuma Hutbesi
+                    {t('weeklySermon.lastFriday', 'Last Friday Sermon')}
                 </div>
                 <div style={{
                     fontSize: '18px',
@@ -112,7 +133,7 @@ function WeeklySermon({ onClose }) {
                 color: 'var(--primary-color)',
                 marginBottom: '12px'
             }}>
-                Hutbe Kaynakları
+                {t('weeklySermon.sourcesTitle', 'Sermon Sources')}
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
                 {HUTBE_SOURCES.map(source => (
@@ -148,13 +169,13 @@ function WeeklySermon({ onClose }) {
                                 fontSize: '15px',
                                 color: 'var(--primary-color)'
                             }}>
-                                {source.title}
+                                {t(source.titleKey, source.titleFallback)}
                             </div>
                             <div style={{
                                 fontSize: '12px',
                                 color: 'var(--text-color-muted)'
                             }}>
-                                {source.description}
+                                {t(source.descriptionKey, source.descriptionFallback)}
                             </div>
                         </div>
                         <ExternalLink size={20} color="var(--text-color-muted)" />
@@ -174,8 +195,7 @@ function WeeklySermon({ onClose }) {
                     color: 'var(--text-color-muted)',
                     lineHeight: '1.6'
                 }}>
-                    💡 Hutbeler her Cuma günü Diyanet İşleri Başkanlığı tarafından yayınlanmaktadır.
-                    Yukarıdaki kaynaklardan güncel hutbeye ulaşabilirsiniz.
+                    💡 {t('weeklySermon.note', 'Sermons are published every Friday by the Presidency of Religious Affairs. You can access the latest sermon from the sources above.')}
                 </div>
             </div>
         </div>

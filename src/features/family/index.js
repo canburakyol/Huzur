@@ -14,15 +14,15 @@ export const familyFeatures = {
     component: FamilyDashboard,
     category: 'FAMILY',
     module: 'family',
-    name: 'Huzurlu Aile',
+    nameKey: 'features.familyDashboard',
     icon: '🏡'
   }
 };
 
 // Module metadata
 export const moduleInfo = {
-  name: 'Aile & Çocuk',
-  description: 'Aile ve çocuklar için özel içerikler',
+  nameKey: 'modules.family',
+  descriptionKey: 'modules.familyDesc',
   icon: '👨‍👩‍👧‍👦',
   priority: 7,
   chunkName: 'feature-family'

@@ -1,0 +1,6 @@
+{
+  "errorBoundary": {
+    "title": "Bir hata oluştu",
+    "description": "Uygulamanın bazı bölümleri düzgün çalışmıyor. Lütfen sayfayı tekrar yükleyin veya uygulamayı yeniden başlatın."
+  }
+}

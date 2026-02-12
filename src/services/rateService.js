@@ -1,3 +1,4 @@
+import { logger } from '../utils/logger';
 import { Preferences } from '@capacitor/preferences';
 import { Browser } from '@capacitor/browser';
 import { Device } from '@capacitor/device';
@@ -75,7 +76,7 @@ class RateService {
       // Sadece logic kısmını burada yönetiyoruz, "Evet" denirse openStore() çağrılacak.
       return true; // UI göstermeli
     } catch (error) {
-      console.error('Rate prompt check error:', error);
+      logger.error('Rate prompt check error:', error);
       return false;
     }
   }
@@ -96,7 +97,7 @@ class RateService {
         // window.open(...)
       }
     } catch (e) {
-      console.error('Failed to open store:', e);
+      logger.error('Failed to open store:', e);
     }
   }
 

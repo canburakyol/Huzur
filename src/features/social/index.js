@@ -14,15 +14,15 @@ export const socialFeatures = {
     component: SocialDashboard,
     category: 'SOCIAL',
     module: 'social',
-    name: 'Dua Kardeşliği',
+    nameKey: 'features.social',
     icon: '🤲'
   }
 };
 
 // Module metadata
 export const moduleInfo = {
-  name: 'Sosyal',
-  description: 'Grup Hatim ve Dua İstekleri',
+  nameKey: 'modules.social',
+  descriptionKey: 'modules.socialDesc',
   icon: '🤝',
   priority: 8,
   chunkName: 'feature-social'

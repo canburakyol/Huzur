@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 // import { useTranslation } from 'react-i18next';
 import { Send, Bot, User, Sparkles } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
-import { chatWithGemini } from '../services/geminiService';
 
 const SUGGESTIONS = [
   'Kendimi üzgün hissediyorum',
@@ -12,10 +11,49 @@ const SUGGESTIONS = [
   'Kuran okumak istiyorum'
 ];
 
+/** Pre-defined knowledge base for the spiritual assistant */
+const SPIRITUAL_DATA = {
+  // IBADET (Worship)
+  worship: {
+    keywords: ['namaz', 'oruç', 'hac', 'zekat', 'ibadet', 'kılmak', 'vakit'],
+    responses: [
+      "Namaz dinin direğidir. Namazda huşuyu yakalamak için vaktinden önce hazırlık yapmak (abdesti özenle almak) ve ayetlerin anlamlarını düşünmek çok yardımcı olur.",
+      "İbadetlerde devamlılık esastır. Az da olsa sürekli olan amel Allah katında daha sevimlidir. Küçük ama istikrarlı adımlarla maneviyatınızı güçlendirebilirsiniz.",
+      "Namaz kılmakta zorlanıyorsanız, önce sadece farzları kılarak başlayın. Kendinizi zorlamak yerine, namazın ruhunuza verdiği huzura odaklanmaya çalışın."
+    ]
+  },
+  // DUA (Supplication)
+  dua: {
+    keywords: ['dua', 'zikir', 'tesbih', 'istek', 'dilek', 'huzur', 'ferahlık'],
+    responses: [
+      "Dua, müminin silahıdır. Duada samimiyet ve ısrar önemlidir. Allah'tan her şeyi (en küçük ihtiyacınızı bile) isteyebilirsiniz. O, isteyenleri geri çevirmez.",
+      "Zikir kalplerin cilasıdır. 'La ilahe illallah' zikri imanı tazeler, 'Estağfirullah' ise günah yükünü hafifletir ve rızkı genişletir.",
+      "Sıkıntılı anlarda İnşirah suresini okumak ve 'Hasbunallahu ve ni'mel vekil' zikrine devam etmek kalbi ferahlatır."
+    ]
+  },
+  // AHLAK (Morals/Character)
+  morals: {
+    keywords: ['ahlak', 'sabır', 'öfke', 'yalan', 'gıybet', 'insan', 'ilişki', 'kıskançlık'],
+    responses: [
+      "Güzel ahlak, imanın olgunluğundandır. Sabır ise her hayrın başıdır. Öfkelendiğinizde abdest almak veya mekan değiştirmek nebevi bir tavsiyedir.",
+      "Gıybet, kardeşinin etini yemek gibidir. Bir ortamda birinin aleyhinde konuşulduğunda konuyu değiştirmek veya o kişinin iyi yönlerini hatırlatmak çok kıymetlidir.",
+      "Başkalarının ne düşündüğünden ziyade, Allah'ın bizden ne beklediğine odaklanmak, sosyal ilişkilerde bizi daha özgür ve huzurlu kılar."
+    ]
+  },
+  // GUNLUK HAYAT (Daily Life)
+  daily: {
+    keywords: ['iş', 'okul', 'sınav', 'aile', 'anne', 'baba', 'evlilik', 'rızık'],
+    responses: [
+      "Helal rızık peşinde koşmak da bir ibadettir. İşinizi en güzel (ihsan) şekilde yapmaya niyet ederseniz, çalışma vaktiniz sevaba dönüşür.",
+      "Anne ve babaya iyi davranmak (bir 'of' bile dememek), ömrün bereketlenmesine ve duanın kabulüne vesile olur.",
+      "Evlilikte huzur, karşılıklı anlayış ve sabırla inşa edilir. Birbirinizin kusurlarını örtmekte gece gibi olun (Hz. Mevlana)."
+    ]
+  }
+};
+
 const SpiritualCoach = ({ onClose }) => {
-  // const { t } = useTranslation();
   const [messages, setMessages] = useState([
-    { id: 1, text: "Selamun Aleyküm! Ben senin İslami Asistanın'ım. Dini sorularınızı yanıtlar, manevi rehberlik sunarım. Size nasıl yardımcı olabilirim?", sender: 'bot' }
+    { id: 'start', text: "Selamun Aleyküm! Ben senin İslami Asistanın'ım. Size her konuda manevi rehberlik sunabilirim. Bir sorunuz mu var yoksa yukarıdaki hazır konulardan mı başlayalım?", sender: 'bot' }
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -29,36 +67,49 @@ const SpiritualCoach = ({ onClose }) => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = async (text = inputText) => {
+  const handleSend = (text = inputText) => {
     if (!text.trim() || isTyping) return;
 
+    const userInput = text.trim();
+    const messageId = Date.now().toString(); // Standard ID generation
+
     // User message
-    const userMsg = { id: Date.now(), text: text, sender: 'user' };
-    setMessages(prev => [...prev, userMsg]);
+    setMessages(prev => [...prev, { id: `u-${messageId}`, text: userInput, sender: 'user' }]);
     setInputText('');
     setIsTyping(true);
 
-    try {
-      // Gemini API çağrısı
-      const response = await chatWithGemini(text);
-      
-      const botMsg = { 
-        id: Date.now() + 1, 
-        text: response.content || 'Şu anda yanıt veremedim. Lütfen tekrar deneyin.', 
-        sender: 'bot' 
-      };
-      setMessages(prev => [...prev, botMsg]);
-    } catch (error) {
-      console.error('Gemini API Error:', error);
-      const errorMsg = { 
-        id: Date.now() + 1, 
-        text: 'Şu anda servis yoğunluğu nedeniyle yanıt veremiyorum. Lütfen kısa bir süre sonra tekrar deneyin.', 
-        sender: 'bot' 
-      };
-      setMessages(prev => [...prev, errorMsg]);
-    } finally {
-      setIsTyping(false);
+    // Matching Algorithm
+    let responseText = "";
+    const lowerInput = userInput.toLowerCase();
+    
+    // Check for exact category match or keyword match
+    let bestCategory = null;
+    let maxMatches = 0;
+
+    Object.entries(SPIRITUAL_DATA).forEach(([catKey, catData]) => {
+      const matchCount = catData.keywords.filter(kw => lowerInput.includes(kw)).length;
+      if (matchCount > maxMatches) {
+        maxMatches = matchCount;
+        bestCategory = catKey;
+      }
+    });
+
+    if (bestCategory) {
+      const categoryResponses = SPIRITUAL_DATA[bestCategory].responses;
+      responseText = categoryResponses[Math.floor(Math.random() * categoryResponses.length)];
+    } else {
+      responseText = "Bu konuyu tam anlayamadım ama her türlü sıkıntıda 'Hasbunallah' zikrine devam etmenizi öneririm. Daha spesifik bir konuda (namaz, sabır, aile vb.) bir şey sormak ister misiniz?";
     }
+
+    // Simulate natural typing delay
+    setTimeout(() => {
+      setMessages(prev => [...prev, { 
+        id: `b-${messageId}`, 
+        text: responseText, 
+        sender: 'bot' 
+      }]);
+      setIsTyping(false);
+    }, 1000 + (Math.random() * 1000));
   };
 
   return (

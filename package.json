@@ -1,13 +1,19 @@
 {
   "name": "huzur-app",
   "private": true,
-  "version": "18.0.0",
+  "version": "18.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "audit:i18n": "node ./scripts/i18n-audit.mjs",
+    "audit:android-strings": "node ./scripts/android-strings-audit.mjs",
+    "audit:localization": "npm run audit:i18n && npm run audit:android-strings",
+    "sync:translation-keys": "node ./scripts/sync-translation-keys.mjs",
+    "bundle:budget": "node ./scripts/checkBundleBudget.mjs",
+    "build:ci": "npm run build && npm run bundle:budget"
   },
   "dependencies": {
     "@capacitor-community/admob": "^7.2.0",
@@ -28,6 +34,7 @@
     "@fontsource/noto-naskh-arabic": "^5.2.11",
     "@fontsource/scheherazade-new": "^5.2.8",
     "@revenuecat/purchases-capacitor": "^12.0.0",
+    "adhan": "^4.4.3",
     "axios": "^1.13.2",
     "canvas-confetti": "^1.9.4",
     "date-fns": "^4.1.0",

@@ -3,13 +3,16 @@ import { Share2, RefreshCw, Heart, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { HIKMET_CATEGORIES, HIKMETLER, getDailyHikmet, getHikmetByCategory, getRandomHikmet } from '../data/hikmetData';
 import IslamicBackButton from './shared/IslamicBackButton';
+import { storageService } from '../services/storageService';
+
+const HIKMET_FAVORITES_KEY = 'hikmet_favorites';
 
 function Hikmetname({ onClose }) {
     const { t } = useTranslation();
     const [activeCategory, setActiveCategory] = useState(null);
     const [dailyHikmet, setDailyHikmet] = useState(getDailyHikmet());
     const [favorites, setFavorites] = useState(() => {
-        return JSON.parse(localStorage.getItem('hikmet_favorites') || '[]');
+        return storageService.getItem(HIKMET_FAVORITES_KEY, []);
     });
 
     // Toggle favorite
@@ -18,7 +21,7 @@ function Hikmetname({ onClose }) {
             ? favorites.filter(id => id !== hikmetId)
             : [...favorites, hikmetId];
         setFavorites(newFavorites);
-        localStorage.setItem('hikmet_favorites', JSON.stringify(newFavorites));
+        storageService.setItem(HIKMET_FAVORITES_KEY, newFavorites);
     };
 
     // Get new random hikmet

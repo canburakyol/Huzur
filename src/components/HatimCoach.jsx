@@ -6,14 +6,14 @@ import {
 } from 'lucide-react';
 import { calculateHatimTarget, TOTAL_PAGES, getSuggestedDates } from '../utils/hatimCalculator';
 import IslamicBackButton from './shared/IslamicBackButton';
+import { storageService } from '../services/storageService';
 
 const STORAGE_KEY = 'hatim_coach_data';
 
 const HatimCoach = ({ onClose }) => {
     const { t } = useTranslation();
     const [data, setData] = useState(() => {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? JSON.parse(saved) : null;
+        return storageService.getItem(STORAGE_KEY, null);
     });
 
     // Setup State
@@ -37,7 +37,7 @@ const HatimCoach = ({ onClose }) => {
             totalRead: 0
         };
         setData(newData);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+        storageService.setItem(STORAGE_KEY, newData);
     };
 
     const handleUpdateProgress = (newPage) => {
@@ -46,12 +46,12 @@ const HatimCoach = ({ onClose }) => {
         
         const newData = { ...data, currentPage: updatedPage };
         setData(newData);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+        storageService.setItem(STORAGE_KEY, newData);
     };
 
     const handleReset = () => {
         if (confirm(t('common.areYouSure'))) {
-            localStorage.removeItem(STORAGE_KEY);
+            storageService.removeItem(STORAGE_KEY);
             setData(null);
             setTargetDate('');
             setCurrentPage(0);

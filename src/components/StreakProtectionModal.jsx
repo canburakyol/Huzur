@@ -1,11 +1,14 @@
 import React from 'react';
 import { Flame, Snowflake, ShieldCheck, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import './StreakProtectionModal.css';
 
-const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, categoryName = 'Genel' }) => {
+const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, categoryName }) => {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   const { count, freezeTokens } = categoryData || { count: 0, freezeTokens: 0 };
+  const resolvedCategory = categoryName || t('streakProtection.defaultCategory', 'Genel');
 
   return (
     <div className="streak-protection-overlay">
@@ -24,17 +27,21 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
             </div>
           </div>
 
-          <h2 className="modal-title">Seriniz Tehlikede!</h2>
+          <h2 className="modal-title">{t('streakProtection.title', 'Seriniz Tehlikede!')}</h2>
           <p className="modal-description">
-            Dün uygulamayı kullanamadığınız için <strong>{count} günlük</strong> {categoryName} seriniz sıfırlanmak üzere.
+            {t('streakProtection.description', {
+              count,
+              category: resolvedCategory,
+              defaultValue: 'Dün uygulamayı kullanamadığınız için {{count}} günlük {{category}} seriniz sıfırlanmak üzere.'
+            })}
           </p>
 
           <div className="protection-card">
             <div className="protection-info">
               <ShieldCheck className="text-green-500" size={32} />
               <div>
-                <p className="protection-label">Dondurma Hakkı Kullan</p>
-                <p className="protection-stats">{freezeTokens} adet mevcut</p>
+                <p className="protection-label">{t('streakProtection.useTokenLabel', 'Dondurma Hakkı Kullan')}</p>
+                <p className="protection-stats">{t('streakProtection.tokensAvailable', { count: freezeTokens, defaultValue: '{{count}} adet mevcut' })}</p>
               </div>
             </div>
           </div>
@@ -45,10 +52,10 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
               onClick={onUseToken}
               disabled={freezeTokens === 0}
             >
-              Uygula ve Seriyi Koru
+              {t('streakProtection.applyAndProtect', 'Uygula ve Seriyi Koru')}
             </button>
             <button className="btn btn-secondary mt-2" onClick={onClose}>
-              Vazgeç (Seri Sıfırlanır)
+              {t('streakProtection.cancelAndReset', 'Vazgeç (Seri Sıfırlanır)')}
             </button>
           </div>
         </div>

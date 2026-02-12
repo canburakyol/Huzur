@@ -9,4 +9,6 @@
     <string name="widget_prayer_time">Vakit</string>
     <string name="widget_default_location">Huzur App</string>
     <string name="widget_time_placeholder">--:--</string>
+    <string name="widget_next_prayer_label">Vakit</string>
+    <string name="widget_app_name">Huzur App</string>
 </resources>

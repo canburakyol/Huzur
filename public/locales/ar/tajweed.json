@@ -19,8 +19,12 @@
         "desc": "الدمج مع الغنة",
         "rule": "إذا جاء بعد النون الساكنة أو التنوين أحد حروف (ي م ن و)، يُدغمان مع صوت الغنة.",
         "examples": {
-          "0": { "explanation": "التقت النون بالياء فحدث الإدغام." },
-          "1": { "explanation": "التقت النون بالميم فحدث الإدغام." }
+          "0": {
+            "explanation": "التقت النون بالياء فحدث الإدغام."
+          },
+          "1": {
+            "explanation": "التقت النون بالميم فحدث الإدغام."
+          }
         }
       },
       "idgam-bila-gunne": {
@@ -28,8 +32,12 @@
         "desc": "الدمج بدون غنة",
         "rule": "إذا جاء بعد النون الساكنة أو التنوين حرف اللام (ل) أو الراء (ر)، يُدغمان بدون صوت الغنة.",
         "examples": {
-          "0": { "explanation": "التقت النون بالراء فحدث إدغام بلا غنة." },
-          "1": { "explanation": "التقى التنوين باللام فحدث إدغام بلا غنة." }
+          "0": {
+            "explanation": "التقت النون بالراء فحدث إدغام بلا غنة."
+          },
+          "1": {
+            "explanation": "التقى التنوين باللام فحدث إدغام بلا غنة."
+          }
         }
       },
       "ihfa": {
@@ -37,8 +45,12 @@
         "desc": "إخفاء الصوت",
         "rule": "إذا جاء بعد النون الساكنة أو التنوين حرف من حروف الإخفاء، يُخفى صوت النون مع الغنة.",
         "examples": {
-          "0": { "explanation": "التقت النون الساكنة بالظاء فحدث الإخفاء." },
-          "1": { "explanation": "التقت النون الساكنة بالشين فحدث الإخفاء." }
+          "0": {
+            "explanation": "التقت النون الساكنة بالظاء فحدث الإخفاء."
+          },
+          "1": {
+            "explanation": "التقت النون الساكنة بالشين فحدث الإخفاء."
+          }
         }
       },
       "izhar": {
@@ -46,8 +58,12 @@
         "desc": "إظهار الصوت",
         "rule": "إذا جاء بعد النون الساكنة أو التنوين حرف من حروف الحلق، يُنطق صوت النون بوضوح.",
         "examples": {
-          "0": { "explanation": "التقت النون الساكنة بالخاء فحدث الإظهار." },
-          "1": { "explanation": "التقى التنوين بالألف فحدث الإظهار." }
+          "0": {
+            "explanation": "التقت النون الساكنة بالخاء فحدث الإظهار."
+          },
+          "1": {
+            "explanation": "التقى التنوين بالألف فحدث الإظهار."
+          }
         }
       },
       "iklab": {
@@ -55,8 +71,12 @@
         "desc": "التحويل",
         "rule": "إذا جاء بعد النون الساكنة أو التنوين حرف الباء (ب)، يتحول صوت النون إلى ميم (م) مع الغنة.",
         "examples": {
-          "0": { "explanation": "التقت النون الساكنة بالباء فتحولت إلى ميم." },
-          "1": { "explanation": "التقى التنوين بالباء فتحول إلى ميم." }
+          "0": {
+            "explanation": "التقت النون الساكنة بالباء فتحولت إلى ميم."
+          },
+          "1": {
+            "explanation": "التقى التنوين بالباء فتحول إلى ميم."
+          }
         }
       },
       "kalkale": {
@@ -64,10 +84,48 @@
         "desc": "الاهتزاز / الصدى",
         "rule": "عندما تكون حروف القلقلة (ق ط ب ج د) ساكنة (عليها سكون)، تُنطق بصوت مهتز.",
         "examples": {
-          "0": { "explanation": "القاف ساكنة فحدثت القلقلة." },
-          "1": { "explanation": "الدال ساكنة فحدثت القلقلة." }
+          "0": {
+            "explanation": "القاف ساكنة فحدثت القلقلة."
+          },
+          "1": {
+            "explanation": "الدال ساكنة فحدثت القلقلة."
+          }
+        }
+      },
+      "med_tabii": {
+        "title": "Natural Madd",
+        "desc": "Elongation of a vowel letter for 2 counts naturally",
+        "rule": "When a madd letter (alif, waw, ya) appears without a hamza or sukoon after it, it is elongated for 2 counts.",
+        "examples": {
+          "0": {
+            "explanation": "The alif after ba is elongated naturally for 2 counts."
+          },
+          "1": {
+            "explanation": "The ya after mim is elongated naturally for 2 counts."
+          }
+        }
+      },
+      "ra_hukmu": {
+        "title": "Rules of Ra",
+        "desc": "The letter Ra is pronounced with tafkhim (heavy) or tarqiq (light) based on its position",
+        "rule": "Ra with fatha or dhamma is heavy (tafkhim). Ra with kasra is light (tarqiq). Ra with sukoon depends on the preceding vowel.",
+        "examples": {
+          "0": {
+            "explanation": "Ra with fatha is pronounced heavy (tafkhim)."
+          }
+        }
+      },
+      "med_muttasil": {
+        "title": "Connected Madd",
+        "desc": "When a madd letter is followed by hamza in the same word",
+        "rule": "When a madd letter is followed by hamza in the same word, it is elongated for 4-5 counts.",
+        "examples": {
+          "0": {
+            "explanation": "The alif before hamza in the same word is elongated for 4-5 counts."
+          }
         }
       }
-    }
+    },
+    "makhraj": "Articulation Points"
   }
 }

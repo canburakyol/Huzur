@@ -1,0 +1,6 @@
+{
+  "errorBoundary": {
+    "title": "Ein Fehler ist aufgetreten",
+    "description": "Einige Teile der Anwendung funktionieren nicht korrekt. Bitte laden Sie die Seite neu oder starten Sie die App neu."
+  }
+}

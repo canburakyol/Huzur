@@ -8,9 +8,7 @@ function PrivacyPolicy({ onClose }) {
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'linear-gradient(-45deg, #fff0e6, #ffe5d9, #ffd1b3, #fff5f0)',
-            backgroundSize: '400% 400%',
-            animation: 'gradientBG 15s ease infinite',
+            background: 'var(--bg-gradient-start)',
             zIndex: 1000,
             overflowY: 'auto',
             padding: '20px',
@@ -26,9 +24,9 @@ function PrivacyPolicy({ onClose }) {
                 <button
                     onClick={onClose}
                     style={{
-                        background: 'rgba(120, 120, 128, 0.16)',
+                        background: 'rgba(255, 255, 255, 0.05)',
                         backdropFilter: 'blur(10px)',
-                        border: 'none',
+                        border: '1px solid var(--glass-border)',
                         borderRadius: '50%',
                         width: '40px',
                         height: '40px',
@@ -38,17 +36,17 @@ function PrivacyPolicy({ onClose }) {
                         cursor: 'pointer'
                     }}
                 >
-                    <ChevronLeft size={24} color="#1d1d1f" />
+                    <ChevronLeft size={24} color="var(--primary-color)" />
                 </button>
-                <h2 style={{ margin: 0, fontSize: '24px', color: '#1d1d1f', flex: 1 }}>
+                <h2 style={{ margin: 0, fontSize: '24px', color: 'var(--text-color)', flex: 1 }}>
                     Gizlilik Politikası
                 </h2>
             </div>
 
             {/* Content */}
             <div className="glass-card">
-                <div style={{ lineHeight: '1.8', color: '#2c3e50' }}>
-                    <h3 style={{ color: '#d35400', marginTop: 0 }}>Son Güncelleme: {new Date().toLocaleDateString('tr-TR')}</h3>
+                <div style={{ lineHeight: '1.8', color: 'var(--text-color-muted)' }}>
+                    <h3 style={{ color: 'var(--primary-color)', marginTop: 0 }}>Son Güncelleme: {new Date().toLocaleDateString('tr-TR')}</h3>
                     
                     <p>
                         <strong>Huzur</strong> uygulaması olarak, kullanıcılarımızın gizliliğine önem veriyoruz. 
@@ -56,7 +54,7 @@ function PrivacyPolicy({ onClose }) {
                         kullandığını ve koruduğunu açıklamaktadır.
                     </p>
 
-                    <h3 style={{ color: '#d35400', marginTop: '24px' }}>1. Toplanan Veriler</h3>
+                    <h3 style={{ color: 'var(--primary-color)', marginTop: '24px' }}>1. Toplanan Veriler</h3>
                     <p>
                         Uygulamamız aşağıdaki verileri toplayabilir:
                     </p>

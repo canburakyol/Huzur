@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Huzur</string>
+    <string name="title_activity_main">Huzur</string>
+    <string name="package_name">com.huzurapp.android</string>
+    <string name="custom_url_scheme">com.huzurapp.android</string>
+    
+    <!-- Widget Strings -->
+    <string name="widget_prayer_time">Hora de Oración</string>
+    <string name="widget_default_location">Huzur App</string>
+    <string name="widget_time_placeholder">--:--</string>
+    <string name="widget_next_prayer_label">Oración</string>
+    <string name="widget_app_name">Huzur App</string>
+</resources>

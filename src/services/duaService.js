@@ -11,7 +11,7 @@ import {
   increment, 
   serverTimestamp
 } from 'firebase/firestore';
-import { getCurrentUserId } from './authService';
+import { getCurrentUserIdEnsured } from './authService';
 import { logger } from '../utils/logger';
 
 const COLLECTION_DUAS = 'duas';
@@ -24,7 +24,7 @@ export const duaService = {
    * @param {string} authorName - Yazar adı (Anonim değilse)
    */
   createDua: async (text, isAnonymous, authorName) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
@@ -75,7 +75,7 @@ export const duaService = {
    * @param {string} duaId 
    */
   prayForDua: async (duaId) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {

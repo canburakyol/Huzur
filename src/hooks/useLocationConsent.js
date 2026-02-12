@@ -51,42 +51,44 @@ export const useLocationConsent = (onLocationUpdate) => {
 
   // Handle location consent from user
   const handleLocationConsent = useCallback((accepted) => {
-    setShowLocationPrompt(false);
-    
-    if (accepted) {
-      storageService.setString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN, 'true');
-      setLocationConsentGiven(true);
+    return new Promise((resolve) => {
+      setShowLocationPrompt(false);
+      
+      if (accepted) {
+        storageService.setString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN, 'true');
+        setLocationConsentGiven(true);
 
-      // Request location after consent
-      Geolocation.getCurrentPosition({
-        enableHighAccuracy: false, // Battery optimization: Use low accuracy by default
-        timeout: 15000,
-        maximumAge: 30000 // Accept cached location up to 30s old
-      }).then((position) => {
-        const { latitude, longitude } = position.coords;
-        logger.log('[useLocationConsent] Location obtained:', latitude, longitude);
-        window.debugLat = latitude;
-        window.debugLon = longitude;
+        // Request location after consent
+        Geolocation.getCurrentPosition({
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 30000
+        }).then((position) => {
+          const { latitude, longitude } = position.coords;
+          logger.log('[useLocationConsent] Location obtained:', latitude, longitude);
+          window.debugLat = latitude;
+          window.debugLon = longitude;
 
-        fetchWeatherData(latitude, longitude).catch(err => logger.error(err));
-        // Notify parent about location update
-        if (onLocationUpdate) {
-          onLocationUpdate({ latitude, longitude });
-        }
-      }).catch((error) => {
-        logger.warn('[useLocationConsent] Location permission denied/error after consent:', error);
-        // Fallback to Istanbul
+          fetchWeatherData(latitude, longitude).catch(err => logger.error(err));
+          if (onLocationUpdate) {
+            onLocationUpdate({ latitude, longitude });
+          }
+          resolve({ latitude, longitude });
+        }).catch((error) => {
+          logger.warn('[useLocationConsent] Location permission denied/error after consent:', error);
+          fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
+          window.debugLat = DEFAULT_LAT;
+          window.debugLon = DEFAULT_LON;
+          if (onLocationUpdate) onLocationUpdate({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
+          resolve({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
+        });
+      } else {
+        storageService.setString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN, 'declined');
         fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-        window.debugLat = DEFAULT_LAT;
-        window.debugLon = DEFAULT_LON;
         if (onLocationUpdate) onLocationUpdate({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
-      });
-    } else {
-      storageService.setString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN, 'declined');
-      // Fallback for declined consent
-      fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-      if (onLocationUpdate) onLocationUpdate({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
-    }
+        resolve({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
+      }
+    });
   }, [fetchWeatherData, onLocationUpdate]);
 
   // Initial location check - fetch weather based on consent status
@@ -104,7 +106,7 @@ export const useLocationConsent = (onLocationUpdate) => {
       }
     } else if (storedConsent === 'true') {
       Geolocation.getCurrentPosition({
-        enableHighAccuracy: false, // Battery optimization
+        enableHighAccuracy: true, // Increased accuracy for prayer times
         timeout: 15000,
         maximumAge: 30000
       }).then((position) => {

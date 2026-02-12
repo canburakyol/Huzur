@@ -9,9 +9,10 @@ import {
   arrayUnion,
   query,
   where,
+  limit,
   getDocs
 } from 'firebase/firestore';
-import { getCurrentUserId } from './authService';
+import { getCurrentUserIdEnsured } from './authService';
 import { logger } from '../utils/logger';
 
 const COLLECTION_HATIMS = 'hatims';
@@ -24,7 +25,7 @@ export const hatimService = {
    * @param {number} totalParts - Toplam parça (Genelde 30 Cüz)
    */
   createGroupHatim: async (name, description, totalParts = 30) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
@@ -74,11 +75,15 @@ export const hatimService = {
    * @param {string} code 
    */
   joinGroupHatim: async (code) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
-      const q = query(collection(db, COLLECTION_HATIMS), where('joinCode', '==', code.toUpperCase()));
+      const q = query(
+        collection(db, COLLECTION_HATIMS), 
+        where('joinCode', '==', code.toUpperCase()),
+        limit(1)
+      );
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
@@ -108,7 +113,7 @@ export const hatimService = {
    * @param {object} userProfile - { name: 'Ali' }
    */
   updatePartStatus: async (hatimId, partNumber, status, userProfile) => {
-    const userId = getCurrentUserId();
+    const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {

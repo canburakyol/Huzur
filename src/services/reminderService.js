@@ -13,6 +13,38 @@ import { logger } from '../utils/logger';
 const MORNING_REMINDER_ID = 5001;
 const EVENING_REMINDER_ID = 5002;
 
+const REMINDER_WINDOW_CONFIG = {
+    TR: {
+        morning: { hour: 8, minute: 0 },
+        evening: { hour: 21, minute: 0 }
+    },
+    EU_DIASPORA: {
+        morning: { hour: 7, minute: 30 },
+        evening: { hour: 20, minute: 30 }
+    }
+};
+
+const EUROPE_TIMEZONE_PREFIXES = ['Europe/'];
+
+export const getReminderRegion = () => {
+    try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Istanbul';
+        if (tz === 'Europe/Istanbul') return 'TR';
+        if (EUROPE_TIMEZONE_PREFIXES.some(prefix => tz.startsWith(prefix))) return 'EU_DIASPORA';
+        return 'TR';
+    } catch {
+        return 'TR';
+    }
+};
+
+export const getReminderScheduleWindow = () => {
+    const region = getReminderRegion();
+    return {
+        region,
+        ...REMINDER_WINDOW_CONFIG[region]
+    };
+};
+
 /**
  * Schedule daily reminder notifications
  * @param {Object} settings - { morningEnabled, eveningEnabled }
@@ -41,9 +73,11 @@ export const scheduleDailyReminders = async (settings = {}) => {
 
         const notifications = [];
 
-        // Morning reminder at 08:00
+        const scheduleWindow = getReminderScheduleWindow();
+
+        // Morning reminder at region-based hour
         if (morningEnabled) {
-            const morningTime = getNextScheduledTime(8, 0);
+            const morningTime = getNextScheduledTime(scheduleWindow.morning.hour, scheduleWindow.morning.minute);
             notifications.push({
                 id: MORNING_REMINDER_ID,
                 title: '🌅 Günaydın!',
@@ -56,12 +90,12 @@ export const scheduleDailyReminders = async (settings = {}) => {
                 sound: 'default',
                 channelId: 'daily_reminders'
             });
-            logger.log('[Reminder] Morning reminder scheduled for', morningTime);
+            logger.log('[Reminder] Morning reminder scheduled for', morningTime, 'region:', scheduleWindow.region);
         }
 
-        // Evening reminder at 21:00
+        // Evening reminder at region-based hour
         if (eveningEnabled) {
-            const eveningTime = getNextScheduledTime(21, 0);
+            const eveningTime = getNextScheduledTime(scheduleWindow.evening.hour, scheduleWindow.evening.minute);
             notifications.push({
                 id: EVENING_REMINDER_ID,
                 title: '📿 Akşam Hatırlatması',
@@ -74,7 +108,7 @@ export const scheduleDailyReminders = async (settings = {}) => {
                 sound: 'default',
                 channelId: 'daily_reminders'
             });
-            logger.log('[Reminder] Evening reminder scheduled for', eveningTime);
+            logger.log('[Reminder] Evening reminder scheduled for', eveningTime, 'region:', scheduleWindow.region);
         }
 
         if (notifications.length > 0) {
@@ -83,7 +117,7 @@ export const scheduleDailyReminders = async (settings = {}) => {
         }
 
     } catch (error) {
-        console.error('[Reminder] Failed to schedule reminders:', error);
+        logger.error('[Reminder] Failed to schedule reminders:', error);
     }
 };
 
@@ -102,7 +136,7 @@ export const cancelDailyReminders = async () => {
         });
         logger.log('[Reminder] Daily reminders cancelled');
     } catch (error) {
-        console.error('[Reminder] Failed to cancel reminders:', error);
+        logger.error('[Reminder] Failed to cancel reminders:', error);
     }
 };
 

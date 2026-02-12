@@ -3,6 +3,9 @@ import { Search, Heart, Star, Share2, ChevronDown, ChevronUp } from 'lucide-reac
 import { useTranslation } from 'react-i18next';
 import { contentService } from '../services/contentService';
 import IslamicBackButton from './shared/IslamicBackButton';
+import { storageService } from '../services/storageService';
+
+const ESMA_FAVORITES_KEY = 'esma_favorites';
 
 function EsmaUlHusna({ onClose }) {
     const { t, i18n } = useTranslation();
@@ -12,7 +15,7 @@ function EsmaUlHusna({ onClose }) {
     const [dailyEsma, setDailyEsma] = useState(null);
     const [expandedId, setExpandedId] = useState(null);
     const [favorites, setFavorites] = useState(() => {
-        return JSON.parse(localStorage.getItem('esma_favorites') || '[]');
+        return storageService.getItem(ESMA_FAVORITES_KEY, []);
     });
     const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
@@ -54,7 +57,7 @@ function EsmaUlHusna({ onClose }) {
             ? favorites.filter(f => f !== id)
             : [...favorites, id];
         setFavorites(newFavorites);
-        localStorage.setItem('esma_favorites', JSON.stringify(newFavorites));
+        storageService.setItem(ESMA_FAVORITES_KEY, newFavorites);
     };
 
     // Share name

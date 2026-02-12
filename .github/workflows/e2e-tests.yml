@@ -20,6 +20,15 @@ jobs:
     
     - name: Install dependencies
       run: npm ci
+
+    - name: Build + bundle budget gate
+      run: npm run build:ci
+
+    - name: Android assembleDebug gate
+      run: |
+        npx cap sync android
+        cd android
+        ./gradlew assembleDebug
     
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps

@@ -16,6 +16,8 @@ import { FocusProvider } from './context/FocusContext'
 import { GamificationProvider } from './context/GamificationProvider'
 import { FamilyProvider } from './context/FamilyProvider.jsx'
 
+const isDev = import.meta.env.DEV
+
 // Android WebView için netlik optimizasyon sınıfı
 const applyAndroidWebViewClass = () => {
   try {
@@ -76,11 +78,15 @@ const mountStartupDebugOverlay = (label, errorLike) => {
 }
 
 window.addEventListener('error', (event) => {
-  mountStartupDebugOverlay('window.error', event?.error || event?.message || 'unknown')
+  if (isDev) {
+    mountStartupDebugOverlay('window.error', event?.error || event?.message || 'unknown')
+  }
 })
 
 window.addEventListener('unhandledrejection', (event) => {
-  mountStartupDebugOverlay('unhandledrejection', event?.reason || 'unknown')
+  if (isDev) {
+    mountStartupDebugOverlay('unhandledrejection', event?.reason || 'unknown')
+  }
 })
 
 // Tema ayarını uygula
@@ -110,5 +116,7 @@ try {
     </StrictMode>,
   )
 } catch (e) {
-  mountStartupDebugOverlay('root.render', e)
+  if (isDev) {
+    mountStartupDebugOverlay('root.render', e)
+  }
 }

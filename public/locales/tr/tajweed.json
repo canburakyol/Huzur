@@ -1,22 +1,32 @@
 {
   "tajweed": {
-    "title": "Tecvid Öğreticisi",
+    "title": "Tecvid Akademisi",
     "subtitle": "Kuran okumanızı güzelleştirin",
     "rule": "Kural",
     "letters": "Harfler",
     "examples": "Örnekler",
-    "understood": "Anladım, Pratik Yap",
+    "understood": "Anladım, Bir Sonrakine Geç",
     "audioNotReady": "Ses dosyası hazır değil.",
     "audioError": "Ses çalınırken hata oluştu: {{error}}",
+    "makhraj": "Çıkış Noktası (Mahreç)",
     "aiCheck": {
       "title": "AI ile Telaffuz Kontrolü",
       "desc": "Yapay zeka ile okuyuşunuzu analiz edin ve anlık geri bildirim alın.",
       "comingSoon": "Yakında"
     },
     "rules": {
+      "med_tabii": {
+        "title": "Med-i Tabii",
+        "desc": "Asli/Temel Uzatma",
+        "rule": "Harf-i medden (elif, vav, ye) sonra sebeb-i med (hemze, sükun) gelmezse harf 1 elif miktarı uzatılır.",
+        "examples": {
+          "0": { "explanation": "Elif harfi uzatma görevi görür." },
+          "1": { "explanation": "Vav harfi uzatma görevi görür." }
+        }
+      },
       "idgam_meal_gunne": {
         "title": "İdgam Meal Gunne",
-        "desc": "Gunne ile karıştırma (birleştirme)",
+        "desc": "Gunne ile karıştırma",
         "rule": "Sakin Nun (نْ) veya Tenvin (ً ٍ ٌ), Yemnu (ي م ن و) harflerinden birine rastlarsa, harfler şeddeli gibi okunur ve genizden ses (gunne) getirilir.",
         "examples": {
           "0": { "explanation": "Nun harfi Ye harfine uğradığı için idgam olur." },
@@ -62,10 +72,26 @@
       "kalkale": {
         "title": "Kalkale",
         "desc": "Sarsmak / Titretmek",
-        "rule": "Kutb-u Cedin (ق ط ب ج د) harfleri sakin (cezimli) olduğunda, mahreçleri sarsılarak kuvvetli bir sesle okunur.",
+        "rule": "Kutb-u Cedin (ق ط b ج د) harfleri sakin (cezimli) olduğunda, mahreçleri sarsılarak kuvvetli bir sesle okunur.",
         "examples": {
           "0": { "explanation": "Kaf harfi sakin olduğu için kalkale yapılır." },
           "1": { "explanation": "Dal harfi sakin olduğu için kalkale yapılır." }
+        }
+      },
+      "ra_hukmu": {
+        "title": "Hükmü'r-Ra",
+        "desc": "Ra Harfinin Okunuşu",
+        "rule": "Ra harfi üstün ve ötrede kalın, esrede ince okunur. Cezimli durumlarda önceki harfin harekesine bakılır.",
+        "examples": {
+          "0": { "explanation": "Ra harfi üstünlü olduğu için kalın okunur." }
+        }
+      },
+      "med_muttasil": {
+        "title": "Med-i Muttasıl",
+        "desc": "Bitişik Uzatma",
+        "rule": "Harf-i medden sonra sebeb-i medden hemze (küçük elif) gelir ve ikisi aynı kelimede bulunursa Med-i Muttasıl olur.",
+        "examples": {
+          "0": { "explanation": "Elif ve hemze aynı kelimede olduğu için 4 elif miktarı uzatılır." }
         }
       }
     }

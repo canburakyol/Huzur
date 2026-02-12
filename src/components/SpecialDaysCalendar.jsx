@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { 
+import {
   X, 
   ChevronLeft, 
   ChevronRight,
@@ -11,6 +11,7 @@ import {
   Bell
 } from 'lucide-react';
 import './SpecialDaysCalendar.css';
+import { storageService } from '../services/storageService';
 
 // Özel günler veritabanı (2025-2026)
 const SPECIAL_DAYS = [
@@ -57,8 +58,7 @@ export function SpecialDaysCalendar({ onClose }) {
   
   // Load notification preferences from localStorage with initial state
   const [notifications, setNotifications] = useState(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : {};
+    return storageService.getItem(STORAGE_KEY, {});
   });
 
   // Save notification preferences
@@ -68,7 +68,7 @@ export function SpecialDaysCalendar({ onClose }) {
       [dayId]: !notifications[dayId]
     };
     setNotifications(newNotifications);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newNotifications));
+    storageService.setItem(STORAGE_KEY, newNotifications);
   };
 
   // Get days for current month

@@ -1,8 +1,9 @@
 import React from 'react';
-import { 
-  format, 
-  startOfMonth, 
-  endOfMonth, 
+import { useTranslation } from 'react-i18next';
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
   eachDayOfInterval, 
   isSameDay, 
   isToday,
@@ -13,7 +14,8 @@ import { tr } from 'date-fns/locale';
 import { Flame, Snowflake, ShieldCheck } from 'lucide-react';
 import './StreakCalendar.css';
 
-const StreakCalendar = ({ categoryData, categoryName = 'Genel' }) => {
+const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
+  const { t, i18n } = useTranslation();
   const history = categoryData?.history || [];
   const today = new Date();
   
@@ -38,26 +40,39 @@ const StreakCalendar = ({ categoryData, categoryName = 'Genel' }) => {
     return 'missed';
   };
 
-  const weekDays = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+  const localeMap = {
+    tr: tr,
+  };
+  const resolvedLocale = localeMap[i18n.language?.split('-')?.[0]];
+
+  const weekDays = [
+    t('streakCalendar.weekdays.mon', 'Mon'),
+    t('streakCalendar.weekdays.tue', 'Tue'),
+    t('streakCalendar.weekdays.wed', 'Wed'),
+    t('streakCalendar.weekdays.thu', 'Thu'),
+    t('streakCalendar.weekdays.fri', 'Fri'),
+    t('streakCalendar.weekdays.sat', 'Sat'),
+    t('streakCalendar.weekdays.sun', 'Sun')
+  ];
 
   return (
     <div className="streak-calendar-card glass-card">
       <div className="calendar-header">
         <div className="flex items-center gap-2">
           <Flame className="text-orange-500" size={20} />
-          <h3>{categoryName} Serisi</h3>
+          <h3>{t('streakCalendar.seriesTitle', '{{category}} Streak', { category: categoryName })}</h3>
         </div>
         <div className="streak-stats">
           <div className="stat-item">
             <span className="stat-value">{categoryData?.count || 0}</span>
-            <span className="stat-label">Gün</span>
+            <span className="stat-label">{t('streakCalendar.days', 'Days')}</span>
           </div>
           <div className="stat-item">
             <span className="stat-value text-blue-400">
               <Snowflake size={14} className="inline mr-1" />
               {categoryData?.freezeTokens || 0}
             </span>
-            <span className="stat-label">Dondurma</span>
+            <span className="stat-label">{t('streakCalendar.freeze', 'Freeze')}</span>
           </div>
         </div>
       </div>
@@ -72,9 +87,9 @@ const StreakCalendar = ({ categoryData, categoryName = 'Genel' }) => {
           
           return (
             <div 
-              key={i} 
+              key={i}
               className={`calendar-day ${status} ${!isCurrentMonth ? 'other-month' : ''}`}
-              title={format(day, 'd MMMM yyyy', { locale: tr })}
+              title={resolvedLocale ? format(day, 'd MMMM yyyy', { locale: resolvedLocale }) : format(day, 'd MMMM yyyy')}
             >
               <span className="day-number">{format(day, 'd')}</span>
               {status === 'activity' && <div className="status-dot activity" />}
@@ -86,13 +101,13 @@ const StreakCalendar = ({ categoryData, categoryName = 'Genel' }) => {
 
       <div className="calendar-legend mt-4">
         <div className="legend-item">
-          <div className="legend-dot activity" /> <span>Tamamlandı</span>
+          <div className="legend-dot activity" /> <span>{t('streakCalendar.legend.completed', 'Completed')}</span>
         </div>
         <div className="legend-item">
-          <div className="legend-dot frozen" /> <span>Donduruldu</span>
+          <div className="legend-dot frozen" /> <span>{t('streakCalendar.legend.frozen', 'Frozen')}</span>
         </div>
         <div className="legend-item">
-          <div className="legend-dot missed" /> <span>Eksik</span>
+          <div className="legend-dot missed" /> <span>{t('streakCalendar.legend.missed', 'Missed')}</span>
         </div>
       </div>
     </div>

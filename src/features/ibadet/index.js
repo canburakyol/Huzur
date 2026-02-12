@@ -23,78 +23,78 @@ export const ibadatFeatures = {
     component: Zikirmatik,
     category: 'IBADET',
     module: 'ibadet',
-    name: 'Zikirmatik',
+    nameKey: 'features.zikirmatik',
     icon: '📿'
   },
   adhkar: {
     component: Adhkar,
     category: 'IBADET',
     module: 'ibadet',
-    name: 'Dualar',
+    nameKey: 'features.adhkar',
     icon: '🤲'
   },
   tespihat: {
     component: Tespihat,
     category: 'IBADET',
     module: 'ibadet',
-    name: 'Tesbihat',
+    nameKey: 'features.tespihat',
     icon: '🔢'
   },
   esmaUlHusna: {
     component: EsmaUlHusna,
     category: 'IBADET',
     module: 'ibadet',
-    name: '99 Esma',
+    nameKey: 'features.esmaUlHusna',
     icon: '✨'
   },
   fasting: {
     component: FastingTracker,
     category: 'IBADET',
     module: 'ibadet',
-    name: 'Oruç Takibi',
+    nameKey: 'features.fasting',
     icon: '🌙'
   },
   hatimCoach: {
     component: HatimCoach,
     category: 'IBADET',
     module: 'ibadet',
-    name: 'Hatim Koçu',
+    nameKey: 'features.hatimCoach',
     icon: '🎯'
   },
   missedPrayers: {
     component: MissedPrayers,
     category: 'IBADET',
     module: 'ibadet',
-    name: 'Kaza Namazları',
+    nameKey: 'features.missedPrayers',
     icon: '⏰'
   },
   deedJournal: {
     component: DeedJournal,
     category: 'IBADET',
     module: 'ibadet',
-    name: 'İyilik Günlüğü',
+    nameKey: 'features.deedJournal',
     icon: '📝'
   },
   nafilePrayers: {
     component: NafilePrayers,
     category: 'IBADET',
     module: 'ibadet',
-    name: 'Nafile Namazlar',
+    nameKey: 'features.nafilePrayers',
     icon: '🌙'
   },
   duaTracker: {
     component: DuaTracker,
     category: 'IBADET',
     module: 'ibadet',
-    name: 'Dua Takipçisi',
+    nameKey: 'features.duaTracker',
     icon: '🤲'
   }
 };
 
 // Module metadata
 export const moduleInfo = {
-  name: 'İbadet & Zikir',
-  description: 'Günlük ibadet pratikleri ve takip özellikleri',
+  nameKey: 'modules.ibadet',
+  descriptionKey: 'modules.ibadatDesc',
   icon: '🤲',
   priority: 2,
   chunkName: 'feature-ibadet'

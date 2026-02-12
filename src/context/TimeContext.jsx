@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 const TimeContext = createContext();
 
@@ -49,10 +49,10 @@ export const TimeProvider = ({ children }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     timeOfDay,
     greetingKey
-  };
+  }), [timeOfDay, greetingKey]);
 
   return (
     <TimeContext.Provider value={value}>

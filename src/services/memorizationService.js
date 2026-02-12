@@ -3,6 +3,8 @@
  * Spaced Repetition (Aralıklı Tekrar) Sistemi
  */
 
+import { storageService } from './storageService';
+
 const MEMORIZATION_KEY = 'huzur_memorization_data';
 
 /**
@@ -10,8 +12,7 @@ const MEMORIZATION_KEY = 'huzur_memorization_data';
  */
 export const getMemorizationData = () => {
   try {
-    const data = localStorage.getItem(MEMORIZATION_KEY);
-    return data ? JSON.parse(data) : { surahs: [] };
+    return storageService.getItem(MEMORIZATION_KEY, { surahs: [] });
   } catch {
     return { surahs: [] };
   }
@@ -21,7 +22,7 @@ export const getMemorizationData = () => {
  * Ezber verilerini kaydet
  */
 const saveMemorizationData = (data) => {
-  localStorage.setItem(MEMORIZATION_KEY, JSON.stringify(data));
+  storageService.setItem(MEMORIZATION_KEY, data);
 };
 
 /**

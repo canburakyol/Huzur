@@ -5,6 +5,7 @@
 
 import { storageService } from './storageService';
 import { analyticsService } from './analyticsService';
+import { STORAGE_KEYS } from '../constants';
 
 // Rozet tanımlamaları
 const BADGES = {
@@ -149,6 +150,8 @@ export const recordActivity = (category) => {
   if (!categoryData.history) categoryData.history = [];
   categoryData.history.push({ date: today, type: 'activity' });
 
+  const weeklyGoal = storageService.getNumber(STORAGE_KEYS.WEEKLY_GOAL, 3);
+
   // 7 günde 1 dondurma hakkı kazan
   if (categoryData.count > 0 && categoryData.count % 7 === 0) {
     categoryData.freezeTokens += 1;
@@ -156,7 +159,7 @@ export const recordActivity = (category) => {
   }
 
   saveStreakData(data);
-  analyticsService.logEvent('streak_increment', { category, count: categoryData.count });
+  analyticsService.logStreakIncremented(category, categoryData.count, weeklyGoal);
   
   // Dispatch event for Gamification
   window.dispatchEvent(new CustomEvent('streak:activity', { 
@@ -187,7 +190,8 @@ export const useFreezeToken = (category) => {
     categoryData.history.push({ date: yesterdayStr, type: 'frozen' });
 
     saveStreakData(data);
-    analyticsService.logEvent('streak_freeze_used', { category });
+    analyticsService.logStreakRecoveryStarted(category, 'freeze_token');
+    analyticsService.logStreakRecoveryCompleted(category, categoryData.count);
     return { success: true, tokensRemaining: categoryData.freezeTokens };
   }
 
@@ -267,6 +271,107 @@ export const markRecoveryUsed = () => {
   saveStreakData(data);
 };
 
+/**
+ * 24 saatlik telafi penceresi
+ * Kullanıcı bir günü kaçırdıysa ve son aktivite üzerinden 24 saat geçmediyse telafi hakkı verir.
+ */
+export const getCategoryRecoveryStatus = (category = 'prayer') => {
+  const data = getStreakData();
+  const categoryData = data?.streaks?.[category];
+
+  if (!categoryData?.lastDate || !categoryData?.count) {
+    return {
+      canRecover: false,
+      category,
+      deadline: null,
+      reason: 'no_streak'
+    };
+  }
+
+  const now = new Date();
+  const today = getTodayString();
+  if (categoryData.lastDate === today) {
+    return {
+      canRecover: false,
+      category,
+      deadline: null,
+      reason: 'already_active_today'
+    };
+  }
+
+  const lastDate = new Date(categoryData.lastDate);
+  const daysDiff = getDaysDifference(categoryData.lastDate, today);
+
+  if (daysDiff !== 1) {
+    return {
+      canRecover: false,
+      category,
+      deadline: null,
+      reason: 'outside_single_day_gap'
+    };
+  }
+
+  const recoveryDeadline = new Date(lastDate);
+  recoveryDeadline.setHours(23, 59, 59, 999);
+  recoveryDeadline.setDate(recoveryDeadline.getDate() + 1);
+
+  const canRecover = now <= recoveryDeadline;
+
+  return {
+    canRecover,
+    category,
+    deadline: recoveryDeadline.toISOString(),
+    reason: canRecover ? 'within_24h_window' : 'window_expired',
+    currentCount: categoryData.count
+  };
+};
+
+/**
+ * Kategori streak telafisi uygular
+ */
+export const recoverCategoryStreak = (category = 'prayer') => {
+  const status = getCategoryRecoveryStatus(category);
+  if (!status.canRecover) {
+    return { success: false, category, message: status.reason };
+  }
+
+  const data = getStreakData();
+  const categoryData = data.streaks?.[category];
+  if (!categoryData) {
+    return { success: false, category, message: 'category_not_found' };
+  }
+
+  const today = getTodayString();
+  categoryData.lastDate = today;
+  categoryData.history = categoryData.history || [];
+  categoryData.history.push({ date: today, type: 'recovered_24h' });
+
+  saveStreakData(data);
+  analyticsService.logStreakRecoveryStarted(category, '24h_window');
+  analyticsService.logStreakRecoveryCompleted(category, categoryData.count);
+
+  return {
+    success: true,
+    category,
+    count: categoryData.count,
+    message: 'recovered'
+  };
+};
+
+/**
+ * Haftalık hedef tercihi
+ */
+export const getWeeklyGoalPreference = () => {
+  return storageService.getNumber(STORAGE_KEYS.WEEKLY_GOAL, 3);
+};
+
+export const setWeeklyGoalPreference = (goalCount, source = 'settings') => {
+  const normalized = [3, 5, 7].includes(goalCount) ? goalCount : 3;
+  storageService.setNumber(STORAGE_KEYS.WEEKLY_GOAL, normalized);
+  analyticsService.logWeeklyGoalSelected(normalized, source);
+  return normalized;
+};
+
 export default {
   getStreakData,
   checkAndUpdateStreak,
@@ -277,5 +382,9 @@ export default {
   getRecoveryStatus,
   recoverStreak,
   hasUsedRecovery,
-  markRecoveryUsed
+  markRecoveryUsed,
+  getCategoryRecoveryStatus,
+  recoverCategoryStreak,
+  getWeeklyGoalPreference,
+  setWeeklyGoalPreference
 };
