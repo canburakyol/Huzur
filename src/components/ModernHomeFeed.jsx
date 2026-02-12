@@ -6,7 +6,7 @@ import FeatureSlider from './FeatureSlider';
 import DiscoverFeed from './DiscoverFeed';
 import './ModernHomeFeed.css';
 
-const ModernHomeFeed = memo(({ onSelectFeature, timings, nextPrayer, onShowPrayers, children }) => {
+const ModernHomeFeed = memo(({ onSelectFeature, timings, nextPrayer, onShowPrayers, locationName, children }) => {
     const { t } = useTranslation();
 
     return (
@@ -19,6 +19,7 @@ const ModernHomeFeed = memo(({ onSelectFeature, timings, nextPrayer, onShowPraye
                 timings={timings} 
                 nextPrayer={nextPrayer} 
                 onShowPrayers={onShowPrayers} 
+                locationName={locationName}
             />
 
             {/* 3. Dynamic Content (e.g. Daily Quests) */}

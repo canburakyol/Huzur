@@ -12,8 +12,8 @@ const Imsakiye = ({ onClose, locationName }) => {
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
     
-    // Fallback to Istanbul if locationName is missing
-    const city = locationName || 'Istanbul';
+    // Fallback if locationName is missing
+    const city = locationName && locationName !== 'Konum' ? locationName : 'Istanbul';
     const country = 'Turkey';
 
     const monthNames = [

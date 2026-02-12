@@ -17,7 +17,7 @@ const DEFAULT_LON = 28.9784;
  */
 export const useLocationConsent = (onLocationUpdate) => {
   const [weather, setWeather] = useState(null);
-  const [locationName, setLocationName] = useState('İstanbul');
+  const [locationName, setLocationName] = useState('Konum...');
   // Initialize showLocationPrompt based on stored consent (prevents cascading render)
   const [showLocationPrompt, setShowLocationPrompt] = useState(() => {
     return !storageService.getString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN);
@@ -42,7 +42,11 @@ export const useLocationConsent = (onLocationUpdate) => {
           `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=tr`
         );
         const locData = await locRes.json();
-        setLocationName(locData.city || locData.locality || 'Konum');
+        const detectedCity = locData.city || locData.locality || locData.principalSubdivision || 'Konum';
+        setLocationName(detectedCity);
+        logger.log('[useLocationConsent] Detected city:', detectedCity);
+      } else {
+        setLocationName('İstanbul');
       }
     } catch (error) {
       logger.error('[useLocationConsent] Weather/Location error:', error);

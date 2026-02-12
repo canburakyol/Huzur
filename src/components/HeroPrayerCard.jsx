@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Clock, Navigation, MapPin, ChevronRight } from 'lucide-react';
 import './ModernHomeFeed.css';
 
-const HeroPrayerCard = memo(({ timings, nextPrayer, onShowPrayers }) => {
+const HeroPrayerCard = memo(({ timings, nextPrayer, onShowPrayers, locationName }) => {
     const { t } = useTranslation();
 
 
@@ -33,7 +33,7 @@ const HeroPrayerCard = memo(({ timings, nextPrayer, onShowPrayers }) => {
                 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '8px' }}>
                     <MapPin size={14} color="var(--primary-color)" />
-                    <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-color)' }}>İstanbul</span>
+                    <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-color)' }}>{locationName || 'Konum'}</span>
                 </div>
             </div>
 
