@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 import { getSurahComplete, getAyahAudioUrl, getAvailableTranslations } from '../services/quranService';
 import { ChevronLeft, Play, Pause, Volume2, VolumeX, BookOpen, Loader, Menu, X, SkipBack, SkipForward, Heart, Share2, Headphones, List, FileText, Settings, Bookmark, Info, Globe, Maximize, Minimize } from 'lucide-react';
 import { useFocus } from '../context/FocusContext';
@@ -588,15 +590,33 @@ function Quran({ onClose }) {
                                         color={favorites.some(f => f.surahId === selectedSurah.number && f.ayahId === ayah.number) ? "#D4AF37" : "#bdc3c7"}
                                     />
                                 </button>
-                                <button className="action-btn" onClick={(e) => {
+                                <button className="action-btn" onClick={async (e) => {
                                     e.stopPropagation();
-                                    // Share logic placeholder
-                                    if (navigator.share) {
-                                        navigator.share({
-                                            title: `Huzur App - ${selectedSurah.nameTranslation} ${ayah.number}. Ayet`,
-                                            text: `${ayah.arabic}\n\n${ayah.translation}`,
-                                            url: 'https://huzurapp.com'
-                                        }).catch(console.error);
+                                    const title = `Huzur App - ${selectedSurah.nameTranslation} ${ayah.number}. Ayet`;
+                                    const text = `${ayah.arabic}\n\n${ayah.translation}`;
+                                    
+                                    try {
+                                        if (Capacitor.isNativePlatform()) {
+                                            await Share.share({
+                                                title,
+                                                text,
+                                                url: 'https://huzur.app'
+                                            });
+                                            return;
+                                        }
+
+                                        if (navigator.share) {
+                                            await navigator.share({
+                                                title,
+                                                text,
+                                                url: 'https://huzur.app'
+                                            });
+                                        } else {
+                                            await navigator.clipboard.writeText(`${title}\n\n${text}`);
+                                            alert(t('common.copied', 'Kopyalandı!'));
+                                        }
+                                    } catch (err) {
+                                        console.error('Share error:', err);
                                     }
                                 }}>
                                     <Share2 size={18} />

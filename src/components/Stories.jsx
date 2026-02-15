@@ -248,7 +248,7 @@ const Stories = memo(() => {
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    zIndex: 1000,
+                    zIndex: 1100,
                     background: '#000',
                     display: 'flex',
                     flexDirection: 'column'
@@ -376,9 +376,10 @@ const Stories = memo(() => {
                     {/* Share Button - Overlay at bottom */}
                     <div style={{
                         position: 'absolute',
-                        bottom: '30px',
+                        bottom: '0',
                         left: 0,
                         width: '100%',
+                        paddingBottom: 'calc(30px + env(safe-area-inset-bottom))',
                         display: 'flex',
                         justifyContent: 'center',
                         zIndex: 1002

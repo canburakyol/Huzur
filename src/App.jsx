@@ -20,7 +20,6 @@ import AppOverlays from './components/app-shell/AppOverlays';
 import AppHomeTabContent from './components/app-shell/AppHomeTabContent';
 import AppTabRouter from './components/app-shell/AppTabRouter';
 
-
 // Components - Lazy loaded for performance
 const FeatureManager = lazy(() => import('./components/FeatureManager'));
 const BottomNav = lazy(() => import('./components/BottomNav'));

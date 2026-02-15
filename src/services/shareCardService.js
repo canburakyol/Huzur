@@ -1,5 +1,7 @@
 import { logShareOpened, logShareSent, analyticsService } from './analyticsService';
 import { getExperimentVariant } from './experimentService';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 
 const APP_SIGNATURE = '📱 Huzur Uygulaması';
 
@@ -33,6 +35,25 @@ export const buildDuaShareCard = (dua) => {
   };
 };
 
+export const buildEsmaShareCard = (esma) => {
+  const name = esma?.name || esma?.latin || '';
+  const arabic = esma?.arabic || '';
+  const meaning = esma?.meaning || '';
+  const detail = esma?.detail || '';
+
+  let text = `${arabic}\n\n${name}: ${meaning}`;
+  if (detail) {
+    text += `\n\n${detail}`;
+  }
+  text += `\n\n${APP_SIGNATURE}`;
+
+  return {
+    cardType: 'esma',
+    title: `Allah'ın Güzel İsimleri - ${name}`,
+    text
+  };
+};
+
 export const openShareCard = (cardType, source = 'daily_content') => {
   const ctaVariant = getExperimentVariant('share_cta_v1');
   analyticsService.logExperimentAssigned('share_cta_v1', ctaVariant, 'share_card_open');
@@ -50,6 +71,16 @@ export const shareCard = async (card, channelHint = 'native_share') => {
   };
 
   try {
+    if (Capacitor.isNativePlatform()) {
+      await Share.share({
+        title: payload.title,
+        text: payload.text,
+        dialogTitle: 'Paylaş'
+      });
+      logShareSent(card.cardType, channelHint);
+      return { success: true, channel: 'native_share' };
+    }
+
     if (navigator.share) {
       await navigator.share(payload);
       logShareSent(card.cardType, channelHint);
@@ -74,6 +105,7 @@ export const shareCard = async (card, channelHint = 'native_share') => {
 export default {
   buildVerseShareCard,
   buildDuaShareCard,
+  buildEsmaShareCard,
   openShareCard,
   shareCard
 };

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Gift, Link2, Send, X } from 'lucide-react';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 import { createInviteLink, getReferralProgress } from '../services/referralService';
 import { analyticsService } from '../services/analyticsService';
 import { getActiveCampaign } from '../services/campaignService';
@@ -26,15 +28,31 @@ const InviteModal = ({ isOpen, onClose }) => {
     if (!inviteUrl) return;
     const text = `Huzur uygulamasına katıl 🌙\n\nDavet kodum: ${inviteCode}\n${inviteUrl}`;
 
-    if (navigator.share) {
-      await navigator.share({ title: 'Huzur Daveti', text, url: inviteUrl });
-      analyticsService.logShareSent('invite_link', 'native_share');
-      return;
-    }
+    try {
+      if (Capacitor.isNativePlatform()) {
+        await Share.share({
+          title: 'Huzur Daveti',
+          text: text,
+          url: inviteUrl,
+          dialogTitle: 'Arkadaşını Davet Et'
+        });
+        analyticsService.logShareSent('invite_link', 'native_share');
+        return;
+      }
 
-    if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(text);
-      analyticsService.logShareSent('invite_link', 'clipboard');
+      if (navigator.share) {
+        await navigator.share({ title: 'Huzur Daveti', text, url: inviteUrl });
+        analyticsService.logShareSent('invite_link', 'native_share');
+        return;
+      }
+
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        analyticsService.logShareSent('invite_link', 'clipboard');
+        alert('Davet linki kopyalandı!');
+      }
+    } catch (err) {
+      console.error('Share error:', err);
     }
   };
 

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { contentService } from '../services/contentService';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
+import { buildEsmaShareCard, shareCard, openShareCard } from '../services/shareCardService';
 
 const ESMA_FAVORITES_KEY = 'esma_favorites';
 
@@ -62,18 +63,9 @@ function EsmaUlHusna({ onClose }) {
 
     // Share name
     const shareEsma = async (esma) => {
-        const text = `${esma.arabic}\n${esma.latin}\n\n${esma.meaning}\n${esma.detail || ''}\n\n📿 ${t('esma.title')} - ${t('app.name')}`;
-
-        if (navigator.share) {
-            try {
-                await navigator.share({ text });
-            } catch {
-                // Share cancelled
-            }
-        } else {
-            navigator.clipboard.writeText(text);
-            alert(t('common.copied', 'Kopyalandı!'));
-        }
+        const card = buildEsmaShareCard(esma);
+        openShareCard('esma', 'esma_ul_husna_page');
+        await shareCard(card, 'esma_ul_husna_page');
     };
 
     if (loading || !dailyEsma) {

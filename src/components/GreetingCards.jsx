@@ -4,6 +4,8 @@ import { Share2, Heart, ChevronRight, X, Edit3, Check, Download, Image } from 'l
 import IslamicBackButton from './shared/IslamicBackButton';
 import { GREETING_CATEGORIES, getCardsByCategory } from '../data/greetingCardsData';
 import { storageService } from '../services/storageService';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 // html2canvas is dynamically imported when needed to reduce initial bundle size
 
 const GREETING_FAVORITES_KEY = 'greeting_favorites';
@@ -57,11 +59,26 @@ function GreetingCards({ onClose }) {
                 throw new Error(t('greetingCards.ui.imageError'));
             }
             
-            // Create file from blob
+            const message = `${t(selectedCard.titleKey)}\n\n${customMessage || t(selectedCard.messageKey)}\n\n- ${t('greetingCards.ui.sentWith')}`;
+
+            // Handle Native Share
+            if (Capacitor.isNativePlatform()) {
+                // For native, we can share the text at least. 
+                // Sharing file from blob requires Filesystem plugin to save first.
+                // For now, let's ensure the native share dialog opens with text.
+                await Share.share({
+                    title: t(selectedCard.titleKey),
+                    text: message,
+                    dialogTitle: t('greetingCards.ui.shareTitle', 'Tebrik Kartını Paylaş')
+                });
+                return;
+            }
+
+            // Create file from blob for Web Share API
             const file = new File([blob], 'tebrik-karti.png', { type: 'image/png' });
             
             // Check if Web Share API supports files
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({
                     files: [file],
                     title: t(selectedCard.titleKey),
@@ -69,10 +86,9 @@ function GreetingCards({ onClose }) {
                 });
             } else if (navigator.share) {
                 // Fallback: Share without files (text only)
-                const message = customMessage || t(selectedCard.messageKey);
                 await navigator.share({
                     title: t(selectedCard.titleKey),
-                    text: `${t(selectedCard.titleKey)}\n\n${message}\n\n- ${t('greetingCards.ui.sentWith')}`
+                    text: message
                 });
             } else {
                 // Download as fallback

@@ -1,6 +1,6 @@
 export const DEEP_LINK_CONFIG = {
   appScheme: 'huzur://invite',
-  webFallbackBase: 'https://huzur.app/invite',
+  webFallbackBase: 'https://play.google.com/store/apps/details?id=com.huzurapp.android',
   defaultCampaign: 'evergreen',
   defaultSource: 'app_share'
 };

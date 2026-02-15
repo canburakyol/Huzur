@@ -1,7 +1,7 @@
 {
   "name": "huzur-app",
   "private": true,
-  "version": "18.2.1",
+  "version": "18.2.4",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -44,7 +44,6 @@
     "i18next-browser-languagedetector": "^8.2.0",
     "i18next-http-backend": "^3.0.2",
     "leaflet": "^1.9.4",
-    "lottie-react": "^2.4.1",
     "lucide-react": "^0.556.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

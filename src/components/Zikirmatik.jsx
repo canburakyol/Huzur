@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { RotateCcw, Volume2, VolumeX, ChevronLeft, BarChart3, Maximize, Minimize } from 'lucide-react';
+import { RotateCcw, Volume2, VolumeX, ChevronLeft, BarChart3, Maximize, Minimize, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
-import Lottie from 'lottie-react';
 import { useFocus } from '../context/FocusContext';
 import { useGamification } from '../hooks/useGamification';
 import { storageService } from '../services/storageService';
@@ -423,11 +422,10 @@ const Zikirmatik = ({ onClose }) => {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <Lottie 
-                        animationData={null}
-                        path="https://assets9.lottiefiles.com/packages/lf20_u4yrau.json"
-                        loop={false}
-                        style={{ width: '100%', height: '100%' }}
+                    <Sparkles 
+                        size={80}
+                        className="zikir-sparkle"
+                        style={{ color: '#FFD700', animation: 'pulse 1.5s ease-in-out infinite' }}
                     />
                 </div>
             )}

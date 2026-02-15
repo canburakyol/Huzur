@@ -4,6 +4,8 @@ import {
     Users, UserPlus, Trophy, Star, Crown, Activity, 
     MessageCircle, Share2, Target, Heart, Check, X, Clock 
 } from 'lucide-react';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 import { useFamily } from '../hooks/useFamily';
 import IslamicBackButton from './shared/IslamicBackButton';
 
@@ -24,6 +26,33 @@ const FamilyMode = ({ onClose }) => {
     const [groupCode, setGroupCode] = useState('');
     const [groupError, setGroupError] = useState('');
     const [groupSuccess, setGroupSuccess] = useState('');
+    
+    const handleShareInvite = async () => {
+        const text = t('family.inviteText', {
+            code: currentGroup?.code || '',
+            appName: t('app.name')
+        });
+        
+        try {
+            if (Capacitor.isNativePlatform()) {
+                await Share.share({
+                    title: t('family.inviteTitle', 'Aileye Davet Et'),
+                    text,
+                    dialogTitle: t('family.inviteDialog', 'Davet Et')
+                });
+                return;
+            }
+
+            if (navigator.share) {
+                await navigator.share({ title: t('family.inviteTitle'), text });
+            } else {
+                await navigator.clipboard.writeText(text);
+                alert(t('common.copied', 'Davet kodu kopyalandı!'));
+            }
+        } catch (err) {
+            console.error('Share error:', err);
+        }
+    };
 
     const handleCreate = () => {
         if (!newName.trim()) return;
@@ -154,7 +183,7 @@ const FamilyMode = ({ onClose }) => {
                     </div>
                     <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-color)' }}>{t('family.chat')}</span>
                 </button>
-                <button className="glass-card" style={{ padding: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', border: 'none', cursor: 'pointer' }}>
+                <button className="glass-card" onClick={handleShareInvite} style={{ padding: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', border: 'none', cursor: 'pointer' }}>
                     <div style={{ width: '40px', height: '40px', background: '#fef3c7', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706' }}>
                         <Share2 size={20} />
                     </div>

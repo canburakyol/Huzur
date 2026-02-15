@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, Heart, Share2, BookOpen } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { contentService } from '../services/contentService';
 import { storageService } from '../services/storageService';
@@ -56,21 +58,28 @@ const Hadiths = ({ onClose }) => {
     };
 
     const handleShare = async (hadith) => {
-        const text = `📖 ${t('hadith.title', 'Hadis-i Şerif')}\n\n"${hadith.text}"\n\n— ${hadith.narrator}\n(${hadith.source})\n\n- Huzur Uygulaması`;
+        const title = t('hadith.title', 'Hadis-i Şerif');
+        const text = `📖 ${title}\n\n"${hadith.text}"\n\n— ${hadith.narrator}\n(${hadith.source})\n\n- Huzur Uygulaması`;
 
-        if (navigator.share) {
-            try {
-                await navigator.share({ title: t('hadith.title', 'Hadis-i Şerif'), text });
-            } catch {
-                // User cancelled share
+        try {
+            if (Capacitor.isNativePlatform()) {
+                await Share.share({
+                    title: title,
+                    text: text,
+                    dialogTitle: 'Hadisi Paylaş'
+                });
+                return;
             }
-        } else {
-            try {
-                await navigator.clipboard.writeText(text);
-                alert(t('common.copied', 'Hadis panoya kopyalandı!'));
-            } catch {
-                alert(t('common.copy_failed', 'Kopyalama başarısız.'));
+
+            if (navigator.share) {
+                await navigator.share({ title: title, text });
+                return;
             }
+            
+            await navigator.clipboard.writeText(text);
+            alert(t('common.copied', 'Hadis panoya kopyalandı!'));
+        } catch (err) {
+            console.error('Share error:', err);
         }
     };
 

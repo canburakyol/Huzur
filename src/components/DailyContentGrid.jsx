@@ -4,6 +4,7 @@ import { Share2 } from 'lucide-react';
 import {
   buildVerseShareCard,
   buildDuaShareCard,
+  buildEsmaShareCard,
   openShareCard,
   shareCard
 } from '../services/shareCardService';
@@ -15,6 +16,16 @@ import {
  */
 const DailyContentGrid = memo(({ dailyContent }) => {
   const { t } = useTranslation();
+
+  const handleShareEsma = async () => {
+    const card = buildEsmaShareCard({
+      name: dailyContent?.esma?.name,
+      arabic: dailyContent?.esma?.arabic,
+      meaning: t(`esma.meanings.${dailyContent?.esma?.id}`) || dailyContent?.esma?.meaning
+    });
+    openShareCard('esma', 'daily_content_grid');
+    await shareCard(card, 'daily_content_grid');
+  };
 
   const handleShareDua = async () => {
     const card = buildDuaShareCard({
@@ -50,6 +61,9 @@ const DailyContentGrid = memo(({ dailyContent }) => {
         <div className="daily-label">{t('home.dailyName')}</div>
         <div className="daily-name">{dailyContent.esma.name}</div>
         <div className="daily-arabic">{dailyContent.esma.arabic}</div>
+        <button className="daily-share-btn" onClick={handleShareEsma}>
+          <Share2 size={12} /> {t('common.share')}
+        </button>
       </div>
 
       <div className="glass-card daily-card">

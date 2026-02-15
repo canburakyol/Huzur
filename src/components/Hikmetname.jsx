@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Share2, RefreshCw, Heart, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 import { HIKMET_CATEGORIES, HIKMETLER, getDailyHikmet, getHikmetByCategory, getRandomHikmet } from '../data/hikmetData';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
@@ -38,15 +40,23 @@ function Hikmetname({ onClose }) {
             appName: t('app.name')
         });
 
-        if (navigator.share) {
-            try {
-                await navigator.share({ text });
-            } catch {
-                // Share cancelled
+        try {
+            if (Capacitor.isNativePlatform()) {
+                await Share.share({
+                    text,
+                    dialogTitle: t('hikmet.share', 'Paylaş')
+                });
+                return;
             }
-        } else {
-            navigator.clipboard.writeText(text);
-            alert(t('hikmet.copied'));
+
+            if (navigator.share) {
+                await navigator.share({ text });
+            } else {
+                navigator.clipboard.writeText(text);
+                alert(t('hikmet.copied'));
+            }
+        } catch (err) {
+            console.error('Share error:', err);
         }
     };
 
