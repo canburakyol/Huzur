@@ -4,6 +4,7 @@
     - Disables cleartext (HTTP) traffic for security
     - Enforces HTTPS for all connections
     - Prevents Man-in-the-Middle (MITM) attacks
+    - Certificate pinning intentionally omitted unless actively maintained
 -->
 <network-security-config>
     <!-- Base configuration for all connections -->
@@ -14,8 +15,26 @@
         </trust-anchors>
     </base-config>
     
-    <!-- Debug configuration (optional - for development only) -->
-    <!-- Uncomment below during development if needed
+    <!-- AlAdhan API - Prayer times -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">api.aladhan.com</domain>
+    </domain-config>
+    
+    <!-- Firebase APIs -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">firebase.googleapis.com</domain>
+        <domain includeSubdomains="true">firebasestorage.app</domain>
+        <domain includeSubdomains="true">firebaseapp.com</domain>
+        <!-- Firebase uses Google Trust Services - pins managed by SDK -->
+    </domain-config>
+    
+    <!-- RevenueCat API -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">api.revenuecat.com</domain>
+    </domain-config>
+    
+    <!-- Debug configuration (REMOVE IN PRODUCTION) -->
+    <!-- 
     <debug-overrides>
         <trust-anchors>
             <certificates src="user" />

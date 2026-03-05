@@ -10,9 +10,6 @@ import com.getcapacitor.JSObject;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
-import com.huzurapp.android.WidgetPlugin;
-import com.huzurapp.android.CrashlyticsPlugin;
-import com.huzurapp.android.NativeAdBridgePlugin;
 
 public class MainActivity extends BridgeActivity {
     private static final String TAG = "HuzurAppCheck";
@@ -29,6 +26,10 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(AppCheckPlugin.class);
         registerPlugin(CrashlyticsPlugin.class);
         registerPlugin(NativeAdBridgePlugin.class);
+        registerPlugin(PrayerAlarmPlugin.class);
+
+        // Enqueue background prayer data sync (runs daily when network available)
+        PrayerDataSyncWorker.Companion.enqueue(this);
     }
     
     /**
@@ -57,8 +58,8 @@ public class MainActivity extends BridgeActivity {
             if (BuildConfig.DEBUG) {
                 Log.i(TAG, "App Check: Debug provider installed");
                 
-                // Debug token'ı logla (Firebase Console'a eklenmesi için)
-                logDebugToken();
+                // Debug build: only log token metadata (never token value)
+                logDebugTokenMetadata();
             } else {
                 Log.i(TAG, "App Check: Play Integrity provider installed");
             }
@@ -68,29 +69,25 @@ public class MainActivity extends BridgeActivity {
     }
     
     /**
-     * Debug token'ı logla (Firebase Console'a manuel eklemek için)
+     * In debug builds, only log token retrieval metadata.
+     * Never print the App Check token value.
      */
-    private void logDebugToken() {
+    private void logDebugTokenMetadata() {
         try {
-            // Debug token'ı al ve logla
             FirebaseAppCheck.getInstance().getAppCheckToken(false)
                 .addOnSuccessListener(token -> {
                     String fullToken = token.getToken();
-                    String maskedToken = fullToken != null && fullToken.length() > 8
-                        ? fullToken.substring(0, 8) + "..." + " (length: " + fullToken.length() + ")"
-                        : "(empty)";
-                    Log.d(TAG, "=== DEBUG TOKEN (masked) ===");
-                    Log.d(TAG, maskedToken);
-                    Log.d(TAG, "============================");
+                    int tokenLength = fullToken != null ? fullToken.length() : 0;
+                    Log.d(TAG, "Debug App Check token retrieved (length only): " + tokenLength);
                 })
                 .addOnFailureListener(e -> {
-                    Log.w(TAG, "Debug token alınamadı: " + e.getMessage());
+                    Log.w(TAG, "Debug token metadata fetch failed: " + e.getMessage());
                 });
         } catch (Exception e) {
-            Log.w(TAG, "Debug token logging error: " + e.getMessage());
+            Log.w(TAG, "Debug token metadata logging error: " + e.getMessage());
         }
     }
-    
+
     /**
      * App Check durumunu JavaScript tarafına ileten Plugin
      */

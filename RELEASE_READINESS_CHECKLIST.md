@@ -104,3 +104,65 @@ All must be YES before 100% rollout:
   - [ ] Firestore emulator rule tests and audit notes
   - [ ] Runbook templates and rollback command checks
   - [ ] Verification scripts/checklists for release gates
+
+## 9) Firebase + App Check Production Hardening (2026-03-05)
+Current status:
+- [x] Callable functions have `enforceAppCheck: true` (`checkProStatus`, `syncProStatus`)
+- [x] RevenueCat secrets read from Firebase Secrets Manager
+- [x] Local APK static scan: no JWT/Bearer/private key found
+- [ ] Firebase Console level enforcement verified (manual)
+- [ ] Firestore rules emulator test suite completed (manual/JDK21 needed)
+
+Manual console checklist (must-do before release):
+- [ ] App Check -> Apps -> Android app uses Play Integrity in production
+- [ ] App Check -> Enforce for Firestore, Functions, Storage, Realtime Database
+- [ ] Firebase API key restricted to Android app package + SHA-1/SHA-256 fingerprints
+- [ ] Remove/disable debug App Check provider tokens in production projects
+- [ ] Rotate RevenueCat webhook/API secrets if ever shared outside secure channel
+- [ ] Verify alerts are configured for Auth/Functions/Firestore error spikes
+
+Repo-side checklist (done in this pass):
+- [x] Firestore hatim update permission narrowed (immutable fields + field whitelist)
+- [x] Functions dua notification trigger throttled to reduce amin-spam abuse
+- [x] Functions hatim notification trigger hardened against join-spam/noise
+- [x] Android exported receiver surface reduced (boot receiver isolated)
+- [x] Reverse-tabnabbing fixes applied for all `_blank` `window.open` calls
+- [x] `axios` upgraded in root and functions
+
+## 10) Push Preparation (Security-Only Strategy)
+Recommended: use two commits to avoid accidentally shipping unfinished UI/theme work.
+
+Commit A (safe backend/android/security baseline):
+- `git add android/app/src/main/AndroidManifest.xml`
+- `git add android/app/src/main/java/com/huzurapp/android/BootCompletedReceiver.java`
+- `git add android/app/src/main/java/com/huzurapp/android/WidgetAlarmReceiver.java`
+- `git add android/app/src/main/java/com/huzurapp/android/MainActivity.java`
+- `git add android/app/src/main/java/com/huzurapp/android/CrashlyticsPlugin.java`
+- `git add android/app/src/main/java/com/huzurapp/android/AdhanForegroundService.kt`
+- `git add android/app/src/main/res/xml/network_security_config.xml`
+- `git add android/app/src/main/res/xml/file_paths.xml`
+- `git add firestore.rules functions/index.js`
+- `git add package.json package-lock.json functions/package.json functions/package-lock.json`
+- `git add RELEASE_READINESS_CHECKLIST.md`
+- `git commit -m "security: harden android receivers, firestore/functions, and dependency surface"`
+
+Commit B (UI reverse-tabnabbing hardening; may include ongoing visual/theme edits in same files):
+- `git add src/services/browserService.js`
+- `git add src/components/LiveBroadcast.jsx src/components/Multimedia.jsx src/components/MosqueFinder.jsx src/components/WeeklySermon.jsx`
+- `git commit -m "security(ui): enforce noopener/noreferrer for external links"`
+
+Push:
+- `git push origin <branch-name>`
+
+## 11) Dependency Audit Classification (2026-03-05)
+Root app (`npm audit --omit=dev`):
+- [x] High/Critical: 0
+- [x] Moderate: 0
+- [x] Low: 0
+- Note: `vite-plugin-pwa` moved to `devDependencies` (build-time only), runtime prod surface reduced.
+
+Functions (`functions/npm audit --omit=dev`):
+- [x] High/Critical: 0
+- [x] Moderate: 0
+- [x] Low: 0
+- Note: Added `overrides` for `minimatch`, `@tootallnate/once`, and `qs` in `functions/package.json` to close transitive runtime findings without changing `firebase-admin@13.x` / `firebase-functions@7.x`.

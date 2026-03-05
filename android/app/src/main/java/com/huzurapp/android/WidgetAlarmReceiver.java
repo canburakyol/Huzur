@@ -43,10 +43,6 @@ public class WidgetAlarmReceiver extends BroadcastReceiver {
         } else if (ACTION_SCHEDULE_ALARMS.equals(action)) {
             // Tüm namaz vakitleri için alarm kur
             schedulePrayerAlarms(context);
-        } else if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
-            // Cihaz yeniden başlatıldığında alarmları yeniden kur
-            Log.d(TAG, "Boot completed - rescheduling alarms");
-            schedulePrayerAlarms(context);
         }
     }
 
