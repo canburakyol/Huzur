@@ -110,6 +110,8 @@ Current status:
 - [x] Callable functions have `enforceAppCheck: true` (`checkProStatus`, `syncProStatus`)
 - [x] RevenueCat secrets read from Firebase Secrets Manager
 - [x] Local APK static scan: no JWT/Bearer/private key found
+- [x] Firebase CLI project access verified (`huzur-app-c01b7`)
+- [x] Firebase Android app registration + SHA-1/SHA-256 hashes verified via CLI (`com.huzurapp.android`)
 - [ ] Firebase Console level enforcement verified (manual)
 - [ ] Firestore rules emulator test suite completed (manual/JDK21 needed)
 
@@ -117,6 +119,7 @@ Manual console checklist (must-do before release):
 - [ ] App Check -> Apps -> Android app uses Play Integrity in production
 - [ ] App Check -> Enforce for Firestore, Functions, Storage, Realtime Database
 - [ ] Firebase API key restricted to Android app package + SHA-1/SHA-256 fingerprints
+- [ ] Web Firebase API key restrictions reviewed (local `.env` key differs from `firebase apps:sdkconfig WEB` output)
 - [ ] Remove/disable debug App Check provider tokens in production projects
 - [ ] Rotate RevenueCat webhook/API secrets if ever shared outside secure channel
 - [ ] Verify alerts are configured for Auth/Functions/Firestore error spikes
