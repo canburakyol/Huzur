@@ -5,6 +5,18 @@ import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 import { offlineCalculatorService } from './offlineCalculatorService';
 
+// Hanafi school for Asr calculation (Diyanet uses Hanafi)
+const CALCULATION_SCHOOL = 1;
+
+// Get device timezone for accurate API results
+const getDeviceTimezone = () => {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Istanbul';
+  } catch {
+    return 'Europe/Istanbul';
+  }
+};
+
 // Use coordinate-based API for accurate location-based prayer times
 const API_URL_COORDS = 'https://api.aladhan.com/v1/timings';
 const API_URL_CITY = 'https://api.aladhan.com/v1/timingsByCity';
@@ -23,7 +35,7 @@ export const fetchMonthlyPrayerTimes = async (latitude = null, longitude = null,
     const year = now.getFullYear();
     const lat = latitude || DEFAULT_LAT;
     const lon = longitude || DEFAULT_LON;
-    const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${lat.toFixed(2)}_${lon.toFixed(2)}_${year}_${month}`;
+    const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${year}_${month}`;
 
     let response;
     if (latitude && longitude) {
@@ -32,6 +44,8 @@ export const fetchMonthlyPrayerTimes = async (latitude = null, longitude = null,
           latitude,
           longitude,
           method: 13, // Diyanet
+          school: CALCULATION_SCHOOL,
+          timezonestring: getDeviceTimezone(),
         },
         timeout: 15000
       });
@@ -41,6 +55,8 @@ export const fetchMonthlyPrayerTimes = async (latitude = null, longitude = null,
           city,
           country,
           method: 13,
+          school: CALCULATION_SCHOOL,
+          timezonestring: getDeviceTimezone(),
         },
         timeout: 15000
       });
@@ -80,11 +96,11 @@ export const getPrayerTimes = async (latitude = null, longitude = null, city = '
   const today = format(new Date(), 'dd-MM-yyyy');
   const lat = latitude || DEFAULT_LAT;
   const lon = longitude || DEFAULT_LON;
-  const cacheKey = `${CACHE_KEY_PREFIX}${lat.toFixed(2)}_${lon.toFixed(2)}_${today}`;
+  const cacheKey = `${CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${today}`;
   
   const now = new Date();
   const dayOfMonth = now.getDate();
-  const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${lat.toFixed(2)}_${lon.toFixed(2)}_${now.getFullYear()}_${now.getMonth() + 1}`;
+  const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${now.getFullYear()}_${now.getMonth() + 1}`;
 
   try {
     // 1. Günlük cache kontrolü (En taze veri)
@@ -99,12 +115,12 @@ export const getPrayerTimes = async (latitude = null, longitude = null, city = '
     // 2. API İsteği - Bugünün verisini çek
     if (latitude && longitude) {
       response = await axios.get(`${API_URL_COORDS}/${timestamp}`, {
-        params: { latitude, longitude, method: 13 },
+        params: { latitude, longitude, method: 13, school: CALCULATION_SCHOOL, timezonestring: getDeviceTimezone() },
         timeout: 8000
       });
     } else {
       response = await axios.get(API_URL_CITY, {
-        params: { city, country, method: 13, date: today },
+        params: { city, country, method: 13, school: CALCULATION_SCHOOL, timezonestring: getDeviceTimezone(), date: today },
         timeout: 8000
       });
     }
@@ -170,10 +186,10 @@ export const getPrayerTimes = async (latitude = null, longitude = null, city = '
   }
 };
 
-export const getNextPrayer = (timings) => {
+export const getNextPrayer = (timings, currentTime = new Date()) => {
   if (!timings) return null;
 
-  const now = new Date();
+  const now = currentTime;
   const timeStr = format(now, 'HH:mm');
 
   const prayers = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];

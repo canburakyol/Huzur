@@ -531,6 +531,10 @@
       "duas": "Prayer Fellowship",
       "hatims": "Online Hatim"
     },
+    "sanctuary": "Community Sanctuary",
+    "hatimDesc": "Create hatim circles with your loved ones or with the community.",
+    "duaDesc": "Say amen to fellow Muslims' duas or submit your own dua request.",
+    "groupHatim": "Community Hatim",
     "buttons": {
       "cancel": "Cancel",
       "requestDua": "Request Dua / Leave Note",
@@ -568,6 +572,9 @@
     "joinDesc": "Enter the 8-digit code received from the Hatim owner.",
     "placeholderCode": "ENTER CODE",
     "join": "Join",
+    "joined": "Joined",
+    "locked": "Locked",
+    "tapToJoin": "Tap to join",
     "lockedTitle": "Locked Hatim",
     "lockedDesc": "You must enter the access code to join the \"{{title}}\" hatim.",
     "placeholderShortCode": "CODE",

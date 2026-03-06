@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useGroupHatim } from '../../hooks/useGroupHatim';
 import CreateHatimModal from './CreateHatimModal';
 import HatimCard from './HatimCard';
+import { BookOpen, RefreshCw, Users } from 'lucide-react';
+import './Social.css';
 
 const HatimList = ({ onSelectHatim }) => {
   const { t } = useTranslation();
@@ -43,15 +45,26 @@ const HatimList = ({ onSelectHatim }) => {
   };
 
   if (loading && activeHatims.length === 0) {
-    return <div style={{ color: 'var(--text-color)', textAlign: 'center', marginTop: '20px' }}>Yükleniyor...</div>;
+    return (
+      <div className="settings-card reveal-stagger" style={{ justifyContent: 'center', padding: '40px' }}>
+         <div className="spin"><RefreshCw size={32} color="var(--nav-accent)" /></div>
+         <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{t('common.loading')}</p>
+      </div>
+    );
   }
 
   if (error) {
     return (
-      <div className="glass-card" style={{ padding: '20px', textAlign: 'center', color: 'var(--warning-color)' }}>
-        <p>⚠️ Bir sorun oluştu</p>
-        <p style={{ fontSize: '12px', marginTop: '5px' }}>{error}</p>
-        <button className="btn" onClick={fetchAllPublicHatims} style={{ marginTop: '10px' }}>Tekrar Dene</button>
+      <div className="settings-card reveal-stagger" style={{ borderColor: '#ef4444', flexDirection: 'column', gap: '12px' }}>
+        <p style={{ margin: 0, fontSize: '1rem', fontWeight: '800', color: '#ef4444' }}>⚠️ {t('common.error')}</p>
+        <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{error}</p>
+        <button 
+          className="velocity-btn-primary" 
+          onClick={fetchAllPublicHatims} 
+          style={{ width: '100%', padding: '12px', background: 'transparent', border: '1px solid #ef4444', color: '#ef4444', boxShadow: 'none' }}
+        >
+          {t('common.retry')}
+        </button>
       </div>
     );
   }
@@ -59,69 +72,52 @@ const HatimList = ({ onSelectHatim }) => {
   return (
     <div className="hatim-list">
       {/* Actions */}
-      <div style={{ display: 'flex', gap: '12px', marginBottom: '24px' }}>
+      <div className="sanctuary-actions reveal-stagger" style={{ marginBottom: '24px' }}>
         <button
-          className="btn btn-primary"
+          className="sanctuary-btn-primary"
           onClick={() => setShowCreateModal(true)}
-          style={{ flex: 1, padding: '14px', borderRadius: '12px', fontSize: '14px' }}
+          style={{ flex: 1.5 }}
         >
-          + {t('hatim.create', 'Yeni Hatim')}
+          <BookOpen size={18} />
+          {t('hatim.create')}
         </button>
         <button
-          className="btn"
+          className="sanctuary-btn-outline"
           onClick={() => {
             setShowJoinInput(!showJoinInput);
             setTargetHatimId(null);
           }}
-          style={{ 
-            flex: 1, 
-            padding: '14px', 
-            borderRadius: '12px', 
-            fontSize: '14px', 
-            background: 'var(--glass-bg)',
-            border: '1px solid var(--glass-border)',
-            color: 'var(--text-color)'
-          }}
+          style={{ flex: 1 }}
         >
-          {t('hatim.join', 'Koda Katıl')}
+          {t('hatim.join')}
         </button>
       </div>
 
       {/* Join Input */}
       {showJoinInput && (
-        <div className="glass-card" style={{ padding: '20px', marginBottom: '24px', border: `2px solid ${targetHatimId ? 'var(--secondary-color)' : 'var(--primary-color)'}` }}>
+        <div className="sanctuary-join-input-card reveal-stagger">
           {targetHatimId && (
-            <p style={{ color: 'var(--secondary-color)', fontSize: '14px', marginBottom: '12px', fontWeight: 'bold' }}>
-              ℹ️ Bu hatime katılmak için davet kodunu girmelisiniz:
+            <p style={{ margin: '0 0 12px 0', fontSize: '0.85rem', color: 'var(--hb-accent)', fontWeight: '800', textAlign: 'center' }}>
+              ℹ️ {t('hatim.lockedDescShort', 'Katılmak için davet kodu giriniz:')}
             </p>
           )}
           <input
             type="text"
-            placeholder="Davet kodu (Örn: X8K2L9)"
+            className="code-field"
+            placeholder="KODU GİR"
             value={joinCode}
             onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
-            style={{
-              width: '100%',
-              padding: '14px',
-              borderRadius: '10px',
-              border: '1px solid var(--glass-border)',
-              background: 'rgba(0,0,0,0.2)',
-              color: 'var(--text-color)',
-              marginBottom: '12px',
-              textAlign: 'center',
-              fontSize: '18px',
-              fontWeight: 'bold',
-              letterSpacing: '2px'
-            }}
+            maxLength={8}
+            style={{ marginBottom: '16px' }}
           />
-          <button className="btn btn-primary" style={{ width: '100%' }} onClick={handleJoin}>
-             Katıl
+          <button className="sanctuary-btn-primary" style={{ width: '100%' }} onClick={handleJoin}>
+             {t('hatim.join')}
           </button>
         </div>
       )}
 
       {/* List - Using memoized HatimCard */}
-      <div className="hatim-grid" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      <div className="hatim-grid reveal-stagger" style={{ '--delay': '0.5s', display: 'flex', flexDirection: 'column', gap: '15px' }}>
         {activeHatims.map(hatim => (
           <HatimCard 
             key={hatim.id}
@@ -132,15 +128,11 @@ const HatimList = ({ onSelectHatim }) => {
         ))}
 
         {activeHatims.length === 0 && !loading && (
-           <div style={{ 
-             textAlign: 'center', 
-             color: 'var(--text-color-muted)', 
-             padding: '40px 20px',
-             background: 'var(--glass-bg)',
-             borderRadius: '12px',
-             border: '1px solid var(--glass-border)'
-           }}>
-              Henüz katıldığınız bir hatim yok.
+           <div className="settings-card reveal-stagger" style={{ flexDirection: 'column', alignItems: 'center', padding: '60px 20px', gap: '16px' }}>
+              <Users size={48} color="rgba(79, 70, 229, 0.4)" />
+              <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--nav-text-muted)', fontWeight: '700', textAlign: 'center' }}>
+                {t('hatim.noHatims', 'Henüz katıldığınız bir hatim yok.')}
+              </p>
            </div>
         )}
       </div>

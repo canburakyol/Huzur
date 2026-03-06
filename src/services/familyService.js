@@ -32,6 +32,46 @@ const generateSecureCode = (length = 8) => {
 const COLLECTION_FAMILIES = 'families';
 const COLLECTION_USERS = 'users';
 
+const normalizeCode = (value, min = 6, max = 12) => {
+  const normalized = String(value || '')
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, '');
+  if (normalized.length < min || normalized.length > max) return null;
+  return normalized;
+};
+
+const sanitizeDisplayName = (value, fallback = 'Isimsiz') => {
+  const normalized = String(value || '')
+    .replace(/[<>]/g, '')
+    .trim()
+    .slice(0, 80);
+  return normalized || fallback;
+};
+
+const sanitizeGroupName = (value) => {
+  const normalized = String(value || '')
+    .replace(/[<>]/g, '')
+    .trim()
+    .slice(0, 80);
+  return normalized || null;
+};
+
+const sanitizeRole = (value, fallback = 'member') => {
+  const normalized = String(value || '')
+    .trim()
+    .toLowerCase()
+    .slice(0, 20);
+  if (!normalized) return fallback;
+  if (!['parent', 'member', 'child'].includes(normalized)) return fallback;
+  return normalized;
+};
+
+const sanitizeAvatar = (value, fallback = '👤') => {
+  const normalized = String(value || '').trim().slice(0, 16);
+  return normalized || fallback;
+};
+
 export const familyService = {
   /**
    * Yeni bir aile oluşturur
@@ -41,6 +81,8 @@ export const familyService = {
   createFamily: async (familyName) => {
     const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
+    const safeFamilyName = sanitizeGroupName(familyName);
+    if (!safeFamilyName) throw new Error('Gecerli bir aile adi girin');
 
     try {
       // Generate unique invite code (8 char, cryptographically secure)
@@ -51,7 +93,7 @@ export const familyService = {
 
       const familyData = {
         id: familyId,
-        name: familyName,
+        name: safeFamilyName,
         adminId: userId,
         members: [userId],
         inviteCode,
@@ -86,12 +128,14 @@ export const familyService = {
   joinFamily: async (inviteCode) => {
     const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
+    const normalizedInviteCode = normalizeCode(inviteCode, 8, 8);
+    if (!normalizedInviteCode) throw new Error('Gecersiz davet kodu');
 
     try {
       // Find family by invite code
       const q = query(
         collection(db, COLLECTION_FAMILIES), 
-        where('inviteCode', '==', inviteCode.toUpperCase()),
+        where('inviteCode', '==', normalizedInviteCode),
         limit(1)
       );
       const querySnapshot = await getDocs(q);
@@ -187,6 +231,13 @@ export const familyService = {
   createGroup: async (name, activeProfile) => {
     const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
+    const safeGroupName = sanitizeGroupName(name);
+    if (!safeGroupName) throw new Error('Gecerli bir grup adi girin');
+
+    const safeProfileId = String(activeProfile?.id || userId).trim().slice(0, 80) || userId;
+    const safeProfileName = sanitizeDisplayName(activeProfile?.name, 'Isimsiz');
+    const safeProfileAvatar = sanitizeAvatar(activeProfile?.avatar, '👤');
+    const safeProfileRole = sanitizeRole(activeProfile?.role, 'parent');
 
     try {
       // 8 karakterlik kriptografik güvenli kod oluştur
@@ -197,15 +248,16 @@ export const familyService = {
 
       const groupData = {
         id: groupId,
-        name: name,
+        name: safeGroupName,
         code: code,
         createdBy: userId,
         createdAt: serverTimestamp(),
         members: [{
-          id: activeProfile.id,
-          name: activeProfile.name,
-          avatar: activeProfile.avatar || '👤',
-          role: activeProfile.role || 'parent',
+          id: safeProfileId,
+          uid: userId,
+          name: safeProfileName,
+          avatar: safeProfileAvatar,
+          role: safeProfileRole,
           isAdmin: true
         }],
         // Flat array for Firestore array-contains queries
@@ -228,11 +280,19 @@ export const familyService = {
   requestJoinGroup: async (code, activeProfile) => {
     const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
+    const normalizedCode = normalizeCode(code, 6, 12);
+    if (!normalizedCode) throw new Error('Gecersiz grup kodu');
+
+    const safeProfileId = String(activeProfile?.id || '').trim().slice(0, 80);
+    const safeProfileName = sanitizeDisplayName(activeProfile?.name, 'Isimsiz');
+    const safeProfileAvatar = sanitizeAvatar(activeProfile?.avatar, '👤');
+    const safeProfileRole = sanitizeRole(activeProfile?.role, 'child');
+    if (!safeProfileId) throw new Error('Profil bilgisi eksik');
 
     try {
       const q = query(
         collection(db, 'familyGroups'), 
-        where('code', '==', code.toUpperCase()),
+        where('code', '==', normalizedCode),
         limit(1)
       );
       const querySnapshot = await getDocs(q);
@@ -245,23 +305,28 @@ export const familyService = {
       const groupData = groupDoc.data();
       
       // Zaten üye mi kontrol et
-      const isMember = groupData.members?.some(m => m.id === activeProfile.id);
+      const isMember = groupData.members?.some(
+        (m) => m?.uid === userId || m?.id === safeProfileId
+      );
       if (isMember) {
         throw new Error('Zaten bu grubun üyesisiniz');
       }
 
       // Zaten pending mi kontrol et
-      const isPending = groupData.pendingMembers?.some(m => m.id === activeProfile.id);
+      const isPending = groupData.pendingMembers?.some(
+        (m) => m?.requestedByUid === userId || m?.profileId === safeProfileId || m?.id === safeProfileId
+      );
       if (isPending) {
         return { status: 'pending', message: 'Katılma isteğiniz onay bekliyor' };
       }
 
       // Pending members'a ekle
       const pendingMember = {
-        id: activeProfile.id,
-        name: activeProfile.name,
-        avatar: activeProfile.avatar || '👤',
-        role: activeProfile.role || 'child',
+        profileId: safeProfileId,
+        requestedByUid: userId,
+        name: safeProfileName,
+        avatar: safeProfileAvatar,
+        role: safeProfileRole,
         requestedAt: new Date().toISOString() // ISO string used instead of serverTimestamp (incompatible with arrayUnion)
       };
       
@@ -271,8 +336,7 @@ export const familyService = {
       
       await updateDoc(groupDoc.ref, {
         pendingMembers: arrayUnion(pendingMember),
-        // Add userId to memberIds for future query support (pending members also tracked)
-        memberIds: arrayUnion(userId)
+        updatedAt: serverTimestamp()
       });
 
       logger.log('[FamilyService] Join request sent:', groupDoc.id);
@@ -302,31 +366,40 @@ export const familyService = {
       
       // Admin kontrolü: sadece grup sahibi veya admin üye onaylayabilir
       const isCreator = groupData.createdBy === userId;
-      const isAdmin = groupData.members?.some(m => m.id === userId && m.isAdmin === true);
-      if (!isCreator && !isAdmin) {
+      if (!isCreator) {
         throw new Error('Bu işlem için yetkiniz yok');
       }
       
       // Pending'den bul
-      const pendingMember = groupData.pendingMembers?.find(m => m.id === pendingProfileId);
+      const pendingMember = groupData.pendingMembers?.find(
+        (m) => m.requestedByUid === pendingProfileId || m.profileId === pendingProfileId || m.id === pendingProfileId
+      );
       if (!pendingMember) {
         throw new Error('Bekleyen istek bulunamadı');
       }
 
       // Pending'den çıkar, members'a ekle
-      const updatedPending = groupData.pendingMembers.filter(m => m.id !== pendingProfileId);
+      const updatedPending = (groupData.pendingMembers || []).filter(
+        (m) => !(m.requestedByUid === pendingProfileId || m.profileId === pendingProfileId || m.id === pendingProfileId)
+      );
+      const approvedUid = String(pendingMember.requestedByUid || '').trim();
       const newMember = {
-        id: pendingMember.id,
-        name: pendingMember.name,
-        avatar: pendingMember.avatar,
-        role: pendingMember.role,
+        id: String(pendingMember.profileId || pendingMember.id || pendingProfileId).trim().slice(0, 80),
+        uid: approvedUid,
+        name: sanitizeDisplayName(pendingMember.name, 'Isimsiz'),
+        avatar: sanitizeAvatar(pendingMember.avatar, '👤'),
+        role: sanitizeRole(pendingMember.role, 'member'),
         isAdmin: false
       };
+      if (!newMember.uid) {
+        throw new Error('Bekleyen istek uid bilgisi eksik');
+      }
 
       await updateDoc(groupRef, {
         members: arrayUnion(newMember),
-        memberIds: arrayUnion(pendingMember.id),
-        pendingMembers: updatedPending
+        memberIds: arrayUnion(newMember.uid),
+        pendingMembers: updatedPending,
+        updatedAt: serverTimestamp()
       });
 
       return { 
@@ -359,15 +432,17 @@ export const familyService = {
 
       // Admin kontrolü: sadece grup sahibi veya admin üye reddedebilir
       const isCreator = groupData.createdBy === userId;
-      const isAdmin = groupData.members?.some(m => m.id === userId && m.isAdmin === true);
-      if (!isCreator && !isAdmin) {
+      if (!isCreator) {
         throw new Error('Bu işlem için yetkiniz yok');
       }
 
-      const updatedPending = groupData.pendingMembers.filter(m => m.id !== pendingProfileId);
+      const updatedPending = (groupData.pendingMembers || []).filter(
+        (m) => !(m.requestedByUid === pendingProfileId || m.profileId === pendingProfileId || m.id === pendingProfileId)
+      );
 
       await updateDoc(groupRef, {
-        pendingMembers: updatedPending
+        pendingMembers: updatedPending,
+        updatedAt: serverTimestamp()
       });
 
       return { 
@@ -409,3 +484,4 @@ export const familyService = {
     }
   }
 };
+

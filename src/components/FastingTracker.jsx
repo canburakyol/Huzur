@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { X, Check, Plus, Moon, Sun } from 'lucide-react';
+import { Check, Plus, Moon, Sun, Calendar, Info, TrendingUp, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getHijriToday, checkFastingDay } from '../services/hijriService';
 import { storageService } from '../services/storageService';
+import IslamicBackButton from './shared/IslamicBackButton';
+import './FastingTracker.css';
+import './Navigation.css';
 
 const FASTING_LOG_KEY = 'fastingLog';
 
@@ -14,19 +17,15 @@ const FastingTracker = ({ onClose }) => {
     const [stats, setStats] = useState({ thisMonth: 0, total: 0 });
 
     useEffect(() => {
-        // Hicri tarihi al
         const hijri = getHijriToday();
         setHijriDate(hijri);
 
-        // Bugünkü oruç tavsiyeleri
         const fasting = checkFastingDay(new Date(), hijri);
         setTodayFasting(fasting);
 
-        // Kayıtlı oruçları yükle
         const saved = storageService.getItem(FASTING_LOG_KEY, {});
         setFastingLog(saved);
 
-        // İstatistikleri hesapla
         calculateStats(saved);
     }, []);
 
@@ -71,102 +70,91 @@ const FastingTracker = ({ onClose }) => {
     const isFastedToday = fastingLog[today]?.fasted;
 
     return (
-        <div className="glass-card" style={{
-            position: 'relative',
-            height: '85vh',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '20px',
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,245,235,0.95))'
-        }}>
+        <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
             {/* Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <div></div>
-                <h2 style={{ margin: 0, color: '#d35400', fontSize: '22px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <Moon size={24} /> {t('fasting.title')}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+                <IslamicBackButton onClick={onClose} size="medium" />
+                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                    {t('fasting.title', 'Oruç Takipçisi')}
                 </h2>
-                <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}>
-                    <X size={28} />
-                </button>
             </div>
 
-            {/* Hicri Tarih */}
+            {/* Hicri Tarih Card */}
             {hijriDate && (
-                <div style={{
-                    background: 'linear-gradient(135deg, #d35400, #e67e22)',
-                    borderRadius: '16px',
-                    padding: '16px',
-                    marginBottom: '20px',
-                    color: 'white',
-                    textAlign: 'center'
+                <div className="settings-card premium-glass hover-lift" style={{ 
+                    flexDirection: 'column', 
+                    background: 'linear-gradient(135deg, var(--nav-accent), #f97316)', 
+                    border: 'none', 
+                    padding: '32px', 
+                    textAlign: 'center', 
+                    color: 'white', 
+                    marginBottom: '32px',
+                    boxShadow: '0 12px 24px rgba(249, 115, 22, 0.2)'
                 }}>
-                    <div style={{ fontSize: '14px', opacity: 0.9 }}>
+                    <div style={{ fontSize: '0.85rem', fontWeight: '800', opacity: 0.9, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '8px' }}>
                         {t(`calendar.days.${new Date().getDay() === 0 ? 6 : new Date().getDay() - 1}`)}
                     </div>
-                    <div style={{ fontSize: '22px', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '1.75rem', fontWeight: '900' }}>
                         {hijriDate.day} {t(`calendar.hijriMonths.${hijriDate.month - 1}`)} {hijriDate.year}
+                    </div>
+                    <div className="fasting-decoration">
+                        <Moon size={48} style={{ opacity: 0.1, position: 'absolute', right: '20px', bottom: '10px' }} />
                     </div>
                 </div>
             )}
 
-            {/* İstatistikler */}
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '12px',
-                marginBottom: '20px'
-            }}>
-                <div style={{
-                    background: 'rgba(39, 174, 96, 0.1)',
-                    borderRadius: '12px',
-                    padding: '16px',
-                    textAlign: 'center',
-                    border: '1px solid rgba(39, 174, 96, 0.2)'
-                }}>
-                    <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#27ae60' }}>{stats.thisMonth}</div>
-                    <div style={{ fontSize: '12px', color: '#666' }}>{t('fasting.thisMonth')}</div>
+            {/* Stats Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '32px' }}>
+                <div className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', padding: '24px', textAlign: 'center', gap: '12px' }}>
+                    <div style={{ color: 'var(--nav-accent)' }}><TrendingUp size={24} /></div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.thisMonth}</div>
+                    <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('fasting.thisMonth', 'BU AY')}</div>
                 </div>
-                <div style={{
-                    background: 'rgba(211, 84, 0, 0.1)',
-                    borderRadius: '12px',
-                    padding: '16px',
-                    textAlign: 'center',
-                    border: '1px solid rgba(211, 84, 0, 0.2)'
-                }}>
-                    <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#d35400' }}>{stats.total}</div>
-                    <div style={{ fontSize: '12px', color: '#666' }}>{t('fasting.total')}</div>
+                <div className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', padding: '24px', textAlign: 'center', gap: '12px' }}>
+                    <div style={{ color: '#10b981' }}><Sparkles size={24} /></div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.total}</div>
+                    <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('fasting.total', 'TOPLAM')}</div>
                 </div>
             </div>
 
             {/* Bugünün Durumu */}
-            <div style={{
-                background: isFastedToday ? 'linear-gradient(135deg, #d4edda, #c3e6cb)' : 'rgba(255,255,255,0.8)',
-                borderRadius: '16px',
-                padding: '20px',
-                marginBottom: '20px',
-                border: isFastedToday ? '2px solid #28a745' : '1px solid rgba(0,0,0,0.05)'
-            }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                        <div style={{ fontWeight: '600', color: '#2c3e50', fontSize: '16px' }}>{t('fasting.today')}</div>
-                        <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
-                            {isFastedToday ? `✅ ${t('fasting.fasted')}` : t('fasting.notFasted')}
+            <div className="settings-group">
+                <div className="settings-group-title premium-text">{t('fasting.today', 'Bugünün Durumu')}</div>
+                <div 
+                    className={`settings-card premium-glass hover-lift ${isFastedToday ? 'active-fasting-card' : ''}`} 
+                    style={{ 
+                        padding: '24px', 
+                        justifyContent: 'space-between',
+                        border: isFastedToday ? '1px solid #10b981' : '1px solid var(--nav-border)'
+                    }}
+                >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                        <div className="settings-icon-box" style={{ background: isFastedToday ? 'rgba(16, 185, 129, 0.1)' : 'var(--nav-hover)', color: isFastedToday ? '#10b981' : 'var(--nav-text-muted)' }}>
+                            <Moon size={24} />
+                        </div>
+                        <div>
+                            <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '1.1rem' }}>
+                                {isFastedToday ? t('fasting.fasted', 'Oruçlu') : t('fasting.notFasted', 'Oruç Tutulmadı')}
+                            </div>
+                            <p className="settings-desc" style={{ margin: '4px 0 0 0' }}>{t('fasting.status_hint', 'Bugünkü durumunuzu güncelleyin')}</p>
                         </div>
                     </div>
                     <button
                         onClick={() => toggleFasting()}
+                        className={`velocity-dial-btn ${isFastedToday ? 'active' : ''}`}
                         style={{
-                            width: '60px',
-                            height: '60px',
-                            borderRadius: '50%',
+                            width: '56px',
+                            height: '56px',
+                            borderRadius: '16px',
                             border: 'none',
-                            background: isFastedToday ? '#28a745' : 'linear-gradient(135deg, #d35400, #e67e22)',
+                            background: isFastedToday ? '#10b981' : 'var(--nav-accent)',
                             color: 'white',
                             cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+                            boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+                            transition: 'all 0.2s'
                         }}
                     >
                         {isFastedToday ? <Check size={28} /> : <Plus size={28} />}
@@ -175,60 +163,51 @@ const FastingTracker = ({ onClose }) => {
             </div>
 
             {/* Oruç Tavsiyeleri */}
-            {todayFasting && todayFasting.length > 0 && (
-                <div style={{ flex: 1, overflowY: 'auto' }}>
-                    <div style={{ fontSize: '14px', fontWeight: '600', color: '#666', marginBottom: '12px' }}>
-                        📅 {t('fasting.recommendations')}
+            <div className="settings-group" style={{ marginTop: '32px' }}>
+                <div className="settings-group-title premium-text" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Calendar size={18} /> {t('fasting.recommendations', 'Oruç Tavsiyeleri')}
+                </div>
+                
+                {todayFasting && todayFasting.length > 0 ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {todayFasting.map((f, idx) => (
+                            <div key={idx} className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', gap: '12px', padding: '20px', alignItems: 'flex-start' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
+                                    <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '1.05rem' }}>{t(f.nameKey, f.nameParams)}</div>
+                                    <span style={{ 
+                                        padding: '4px 10px', 
+                                        borderRadius: '8px', 
+                                        fontSize: '0.65rem', 
+                                        fontWeight: '900', 
+                                        textTransform: 'uppercase',
+                                        background: f.type === 'farz' ? '#fee2e2' : f.type === 'sunnah' ? 'rgba(245, 158, 11, 0.1)' : 'var(--nav-hover)',
+                                        color: f.type === 'farz' ? '#ef4444' : f.type === 'sunnah' ? 'var(--nav-accent)' : 'var(--nav-text-muted)'
+                                    }}>
+                                        {t(`fasting.types.${f.type}`, f.type)}
+                                    </span>
+                                </div>
+                                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>{t(f.descKey)}</p>
+                            </div>
+                        ))}
                     </div>
-                    {todayFasting.map((fasting, idx) => (
-                        <div
-                            key={idx}
-                            style={{
-                                background: fasting.type === 'farz' ? 'rgba(231, 76, 60, 0.1)' : 'rgba(52, 152, 219, 0.1)',
-                                borderRadius: '12px',
-                                padding: '14px',
-                                marginBottom: '10px',
-                                border: `1px solid ${fasting.type === 'farz' ? 'rgba(231, 76, 60, 0.2)' : 'rgba(52, 152, 219, 0.2)'}`
-                            }}
-                        >
-                            <div style={{ fontWeight: '600', color: '#2c3e50' }}>
-                                {t(fasting.nameKey, fasting.nameParams)}
-                            </div>
-                            <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
-                                {t(fasting.descKey)}
-                            </div>
-                            <div style={{
-                                display: 'inline-block',
-                                marginTop: '8px',
-                                padding: '4px 10px',
-                                borderRadius: '10px',
-                                fontSize: '11px',
-                                fontWeight: '600',
-                                background: fasting.type === 'farz' ? '#e74c3c' : fasting.type === 'sunnah' ? '#3498db' : '#95a5a6',
-                                color: 'white'
-                            }}>
-                                {t(`fasting.types.${fasting.type}`)}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
+                ) : (
+                    <div className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', padding: '48px 24px', textAlign: 'center', gap: '16px', background: 'transparent', border: '2px dashed var(--nav-border)' }}>
+                        <Sun size={48} style={{ opacity: 0.1 }} />
+                        <div style={{ fontWeight: '700', color: 'var(--nav-text-muted)' }}>{t('fasting.noRecommendations', 'Bugün için özel bir oruç tavsiyesi bulunmuyor.')}</div>
+                        <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', opacity: 0.8 }}>{t('fasting.alwaysNafile', 'Ancak her zaman nafile oruç tutabilirsiniz.')}</p>
+                    </div>
+                )}
+            </div>
 
-            {/* Boş durum */}
-            {(!todayFasting || todayFasting.length === 0) && (
-                <div style={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#999'
-                }}>
-                    <Sun size={48} style={{ marginBottom: '16px', opacity: 0.5 }} />
-                    <div>{t('fasting.noRecommendations')}</div>
-                    <div style={{ fontSize: '13px', marginTop: '8px' }}>{t('fasting.alwaysNafile')}</div>
+            {/* Bilgi Kutusu */}
+            <div className="settings-card premium-glass hover-lift" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                    <Info size={18} color="var(--nav-accent)" />
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                        {t('fasting.info_note', 'Oruç ibadeti, hem bedensel hem de ruhsal bir arınma vesilesidir. Hicri takvime göre tavsiye edilen günleri takip ederek borçlarınızı eda edebilir veya nafile oruçlarla sevap kazanabilirsiniz.')}
+                    </p>
                 </div>
-            )}
+            </div>
         </div>
     );
 };

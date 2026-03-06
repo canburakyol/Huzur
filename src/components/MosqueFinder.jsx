@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, MapPin, Navigation, ExternalLink, Loader, RefreshCw } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
@@ -33,6 +34,7 @@ const FlyToLocation = ({ position }) => {
 };
 
 const MosqueFinder = ({ onClose }) => {
+    const { t } = useTranslation();
     const [location, setLocation] = useState(null);
     const [mosques, setMosques] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -140,37 +142,46 @@ const MosqueFinder = ({ onClose }) => {
 
     const openInMaps = (lat, lng) => {
         const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking`;
-        window.open(url, '_blank');
+        const win = window.open(url, '_blank', 'noopener,noreferrer');
+        if (win) {
+            win.opener = null;
+        }
     };
 
     return (
-        <div className="glass-card" style={{
-            position: 'relative',
-            height: '85vh',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '0',
-            overflow: 'hidden'
-        }}>
+        <div className="settings-container reveal-stagger" style={{ padding: 0 }}>
             {/* Header */}
             <div style={{
-                padding: '16px 20px',
-                background: 'linear-gradient(135deg, var(--primary-color), var(--primary-dark))',
-                color: 'white',
+                padding: '24px 20px',
+                background: 'linear-gradient(135deg, var(--nav-bg), var(--nav-hover))',
+                borderBottom: '1px solid var(--nav-border)',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <MapPin size={24} />
-                    <h2 style={{ margin: 0, fontSize: '20px' }}>En Yakın Camiler</h2>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <IslamicBackButton onClick={onClose} size="medium" />
+                    <h2 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--nav-text)', fontWeight: '900' }}>
+                        {t('mosqueFinder.title', 'En Yakın Camiler')}
+                    </h2>
                 </div>
                 <div style={{ display: 'flex', gap: '12px' }}>
-                    <button onClick={getLocation} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <RefreshCw size={18} color="white" />
-                    </button>
-                    <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-                        <X size={28} color="white" />
+                    <button 
+                        onClick={getLocation} 
+                        style={{ 
+                            background: 'var(--nav-hover)', 
+                            border: '1px solid var(--nav-border)', 
+                            borderRadius: '12px', 
+                            width: '44px', 
+                            height: '44px', 
+                            cursor: 'pointer', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                            color: 'var(--nav-accent)'
+                        }}
+                    >
+                        <RefreshCw size={20} />
                     </button>
                 </div>
             </div>
@@ -181,19 +192,30 @@ const MosqueFinder = ({ onClose }) => {
                     <div style={{
                         position: 'absolute',
                         top: 0, left: 0, right: 0, bottom: 0,
-                        background: 'rgba(255,255,255,0.9)',
+                        background: 'rgba(var(--nav-bg-rgb, 255, 255, 255), 0.95)',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        zIndex: 1000
+                        zIndex: 1000,
+                        backdropFilter: 'blur(8px)'
                     }}>
-                        <Loader size={40} className="spin" style={{ animation: 'spin 1s linear infinite' }} />
-                        <div style={{ marginTop: '16px', color: 'var(--text-color)' }}>Konumunuz alınıyor...</div>
+                        <div className="settings-icon-box spin" style={{ 
+                            width: '80px', 
+                            height: '80px', 
+                            background: 'var(--nav-hover)',
+                            color: 'var(--nav-accent)',
+                            animation: 'spin 2s linear infinite'
+                        }}>
+                            <Loader size={32} />
+                        </div>
+                        <div style={{ marginTop: '24px', color: 'var(--nav-text)', fontWeight: '800', fontSize: '1.1rem' }}>
+                            Konumunuz Hesaplanıyor...
+                        </div>
                     </div>
                 )}
 
-                {/* Konum Hatası Ekranı */}
+                {/* Konum Hatası Ekranı - Velocity Style */}
                 {!loading && error && !location && (
                     <div style={{
                         height: '100%',
@@ -203,37 +225,40 @@ const MosqueFinder = ({ onClose }) => {
                         justifyContent: 'center',
                         padding: '40px',
                         textAlign: 'center',
-                        background: 'var(--card-bg)'
+                        background: 'var(--nav-bg)'
                     }}>
-                        <div style={{ fontSize: '64px', marginBottom: '20px' }}>📍</div>
-                        <div style={{ fontSize: '16px', color: 'var(--text-color)', marginBottom: '12px', fontWeight: '600' }}>
-                            Konum Gerekli
+                        <div style={{ 
+                            fontSize: '4rem', 
+                            marginBottom: '24px',
+                            background: 'var(--nav-hover)',
+                            width: '120px',
+                            height: '120px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: '32px'
+                        }}>📍</div>
+                        <div style={{ fontSize: '1.5rem', color: 'var(--nav-text)', marginBottom: '16px', fontWeight: '900' }}>
+                            Konum İzni Gerekli
                         </div>
-                        <div style={{ fontSize: '14px', color: 'var(--text-color-light)', marginBottom: '24px', maxWidth: '280px' }}>
+                        <div style={{ fontSize: '1rem', color: 'var(--nav-text-muted)', marginBottom: '32px', maxWidth: '300px', fontWeight: '600', lineHeight: '1.6' }}>
                             {error}
                         </div>
                         <button
                             onClick={getLocation}
+                            className="velocity-target-btn"
                             style={{
-                                padding: '14px 28px',
-                                background: 'linear-gradient(135deg, var(--primary-color), var(--primary-dark))',
+                                padding: '20px 40px',
+                                background: 'var(--nav-accent)',
                                 color: 'white',
-                                border: 'none',
-                                borderRadius: '12px',
-                                fontSize: '16px',
-                                fontWeight: '600',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                boxShadow: '0 4px 15px rgba(46, 125, 50, 0.3)'
+                                borderRadius: '20px',
+                                fontSize: '1.1rem',
+                                fontWeight: '900',
+                                width: 'auto'
                             }}
                         >
-                            <MapPin size={20} /> Konum İzni Ver
+                            <MapPin size={24} /> Konumu Etkinleştir
                         </button>
-                        <div style={{ fontSize: '12px', color: 'var(--text-color-light)', marginTop: '16px' }}>
-                            Tarayıcınızın konum iznini onaylamanız gerekiyor
-                        </div>
                     </div>
                 )}
 
@@ -298,57 +323,65 @@ const MosqueFinder = ({ onClose }) => {
                 )}
             </div>
 
-            {/* Cami Listesi */}
+            {/* Cami Listesi - Velocity Style */}
             <div style={{
-                maxHeight: '35%',
+                maxHeight: '40%',
                 overflowY: 'auto',
-                background: 'var(--card-bg)',
-                borderTop: '1px solid var(--glass-border)'
+                background: 'var(--nav-bg)',
+                borderTop: '1px solid var(--nav-border)',
+                padding: '8px 0'
             }}>
                 {mosques.length === 0 && !loading && (
-                    <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-color-light)' }}>
-                        Yakında cami bulunamadı
+                    <div style={{ padding: '32px', textAlign: 'center', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                        Yakınınızda cami bulunamadı.
                     </div>
                 )}
                 {mosques.map(mosque => (
                     <div
                         key={mosque.id}
                         onClick={() => setSelectedMosque(mosque)}
+                        className="settings-card reveal-stagger"
                         style={{
-                            padding: '14px 20px',
-                            borderBottom: '1px solid var(--glass-border)',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
+                            margin: '8px 12px',
+                            padding: '16px',
                             cursor: 'pointer',
-                            background: selectedMosque?.id === mosque.id ? 'rgba(46, 125, 50, 0.1)' : 'transparent'
+                            background: selectedMosque?.id === mosque.id ? 'var(--nav-hover)' : 'var(--nav-bg)',
+                            border: selectedMosque?.id === mosque.id ? '1px solid var(--nav-accent)' : '1px solid var(--nav-border)',
+                            borderRadius: '16px'
                         }}
                     >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <span style={{ fontSize: '24px' }}>🕌</span>
-                            <div>
-                                <div style={{ fontWeight: '600', color: 'var(--text-color)', fontSize: '14px' }}>{mosque.name}</div>
-                                <div style={{ fontSize: '12px', color: 'var(--text-color-light)' }}>
-                                    {mosque.distance.toFixed(1)} km
+                        <div className="settings-card-left">
+                            <div className="settings-icon-box" style={{ 
+                                width: '44px', 
+                                height: '44px', 
+                                background: 'var(--nav-hover)',
+                                fontSize: '1.25rem'
+                            }}>
+                                🕌
+                            </div>
+                            <div className="settings-user-info">
+                                <div className="settings-label" style={{ fontSize: '0.95rem' }}>
+                                    {mosque.name}
+                                </div>
+                                <div className="settings-desc">
+                                    📍 {mosque.distance.toFixed(1)} km mesafede
                                 </div>
                             </div>
                         </div>
                         <button
                             onClick={(e) => { e.stopPropagation(); openInMaps(mosque.lat, mosque.lng, mosque.name); }}
+                            className="velocity-target-btn"
                             style={{
-                                background: 'var(--primary-color)',
+                                width: 'auto',
+                                padding: '8px 16px',
+                                background: 'var(--nav-accent)',
                                 color: 'white',
-                                border: 'none',
-                                borderRadius: '8px',
-                                padding: '8px 12px',
-                                fontSize: '12px',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '4px'
+                                borderRadius: '12px',
+                                fontSize: '0.85rem',
+                                fontWeight: '900'
                             }}
                         >
-                            <Navigation size={14} /> Git
+                            <Navigation size={14} /> GİT
                         </button>
                     </div>
                 ))}

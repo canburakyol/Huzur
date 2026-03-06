@@ -6,6 +6,7 @@ import { getMemorizationData, startMemorizing, markAyahMemorized, reviewSurah, g
 import { canAccessMemorize, isPro } from '../services/proService';
 import { surahList } from '../data/surahList';
 import LimitReachedModal from './LimitReachedModal';
+import './Education.css';
 
 // Zorluk seviyeleri
 const getDifficulty = (ayahCount) => {
@@ -78,16 +79,19 @@ function QuranMemorize({ onClose, onUpgrade }) {
     };
 
     return (
-        <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '100px' }}>
+        <div className="education-container geometric-memorize">
             {/* Header */}
-            <div className="memorize-header">
-                <IslamicBackButton onClick={onClose} size="medium" />
-                <div className="header-content">
-                    <h1>🧠 {t('quranMemorize.title', 'Hafızlık Yardımcısı')}</h1>
-                    <p>{t('quranMemorize.subtitle', 'Ezberle, Tekrar Et, Pekiştir')}</p>
+            <div className="manuscript-header">
+                <div className="header-top-nav">
+                    <IslamicBackButton onClick={onClose} size="medium" />
+                    <div className="glass-pill">{t('quranMemorize.title')}</div>
+                </div>
+                <div className="manuscript-header-content reveal-stagger">
+                    <h1 className="manuscript-title">🧠 {t('quranMemorize.title')}</h1>
+                    <p className="manuscript-subtitle">{t('quranMemorize.subtitle')}</p>
                 </div>
                 {!userIsPro && (
-                    <div className="pro-badge-mini" onClick={() => setShowLimitModal(true)}>
+                    <div className="pro-badge-premium" onClick={() => setShowLimitModal(true)}>
                         <Crown size={14} />
                         <span>PRO</span>
                     </div>
@@ -95,43 +99,43 @@ function QuranMemorize({ onClose, onUpgrade }) {
             </div>
 
             {/* Stats Cards */}
-            <div className="stats-grid">
-                <div className="stat-card glass-card">
-                    <div className="stat-value">{stats.memorizedSurahs}</div>
-                    <div className="stat-label">{t('quranMemorize.stats.memorized', 'Ezberlenen')}</div>
+            <div className="geometric-stats-row reveal-stagger" style={{ '--delay': '0.2s' }}>
+                <div className="geometric-stat-card">
+                    <span className="val">{stats.memorizedSurahs}</span>
+                    <span className="lbl">{t('quranMemorize.stats.memorized')}</span>
                 </div>
-                <div className="stat-card glass-card">
-                    <div className="stat-value">{stats.learningCount}</div>
-                    <div className="stat-label">{t('quranMemorize.stats.learning', 'Çalışılan')}</div>
+                <div className="geometric-stat-card">
+                    <span className="val">{stats.learningCount}</span>
+                    <span className="lbl">{t('quranMemorize.stats.learning')}</span>
                 </div>
-                <div className="stat-card glass-card warning">
-                    <div className="stat-value">{stats.reviewCount}</div>
-                    <div className="stat-label">{t('quranMemorize.stats.review', 'Tekrar')}</div>
+                <div className="geometric-stat-card">
+                    <span className="val" style={{ color: '#e67e22' }}>{stats.reviewCount}</span>
+                    <span className="lbl">{t('quranMemorize.stats.review')}</span>
                 </div>
             </div>
 
             {/* Tabs */}
-            <div className="memorize-tabs">
+            <div className="geometric-tabs reveal-stagger" style={{ '--delay': '0.3s' }}>
                 <button 
-                    className={`tab-btn ${activeTab === 'list' ? 'active' : ''}`}
+                    className={`geometric-tab-btn ${activeTab === 'list' ? 'active' : ''}`}
                     onClick={() => setActiveTab('list')}
                 >
                     <BookOpen size={18} />
-                    {t('quranMemorize.tabs.surahs', 'Sureler')}
+                    {t('quranMemorize.tabs.surahs')}
                 </button>
                 <button 
-                    className={`tab-btn ${activeTab === 'reviews' ? 'active' : ''}`}
+                    className={`geometric-tab-btn ${activeTab === 'reviews' ? 'active' : ''}`}
                     onClick={() => setActiveTab('reviews')}
                 >
                     <RefreshCw size={18} />
-                    {t('quranMemorize.tabs.reviews', 'Tekrarlar')}
-                    {dueReviews.length > 0 && <span className="badge">{dueReviews.length}</span>}
+                    {t('quranMemorize.tabs.reviews')}
+                    {dueReviews.length > 0 && <span className="badge-count">{dueReviews.length}</span>}
                 </button>
             </div>
 
             {/* Content */}
             {activeTab === 'list' ? (
-                <div className="surah-list">
+                <div className="geometric-surah-list reveal-stagger" style={{ '--delay': '0.4s' }}>
                     {surahList.map(surah => {
                         const status = getSurahStatus(surah.number);
                         const isLocked = !canAccessMemorize(surah.number) && !status;
@@ -139,58 +143,51 @@ function QuranMemorize({ onClose, onUpgrade }) {
                         const isExpanded = expandedSurah === surah.number;
 
                         return (
-                            <div key={surah.number} className={`surah-card glass-card ${status ? 'active' : ''} ${isLocked ? 'locked' : ''}`}>
+                            <div key={surah.number} className={`geometric-surah-card ${status ? 'active' : ''} ${isLocked ? 'locked' : ''}`}>
                                 <div 
-                                    className="surah-header"
+                                    className="geometric-card-header"
                                     onClick={() => !isLocked && (status ? setExpandedSurah(isExpanded ? null : surah.number) : handleStartMemorizing(surah.number))}
                                 >
-                                    <div className="surah-number">
-                                        {status?.status === 'memorized' ? <Check size={16} /> : surah.number}
+                                    <div className="geometric-number-box">
+                                        {status?.status === 'memorized' ? <CheckCircle size={20} /> : surah.number}
                                     </div>
-                                    <div className="surah-info">
-                                        <div className="surah-name-row">
-                                            <span className="surah-name">{surah.name}</span>
-                                            <span className="surah-arabic">{surah.arabicName}</span>
-                                        </div>
-                                        <div className="surah-meta">
-                                            <span>{t('quranMemorize.ayahCount', { count: surah.ayahCount, defaultValue: '{{count}} Ayet' })}</span>
-                                            <span className="dot">•</span>
-                                            <span style={{ color: getDifficultyColor(difficulty) }}>{difficulty}</span>
+                                    <div className="item-info">
+                                        <div className="item-name">{surah.nameTranslation}</div>
+                                        <div className="item-sub">
+                                            {t('quranMemorize.ayahCount', { count: surah.ayahCount })} • 
+                                            <span style={{ color: getDifficultyColor(difficulty) }}> {difficulty}</span>
                                         </div>
                                     </div>
                                     
                                     {isLocked ? (
-                                        <Lock size={16} className="lock-icon" />
+                                        <Lock size={18} color="var(--edu-text-muted)" />
                                     ) : status ? (
-                                        <div className="progress-ring">
-                                            <svg width="36" height="36">
-                                                <circle cx="18" cy="18" r="16" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
+                                        <div className="premium-progress-circle">
+                                            <svg width="48" height="48">
+                                                <circle className="progress-bg" cx="24" cy="24" r="20" />
                                                 <circle 
-                                                    cx="18" cy="18" r="16" 
-                                                    fill="none" 
-                                                    stroke={status.status === 'memorized' ? '#27ae60' : '#3b82f6'} 
-                                                    strokeWidth="3"
-                                                    strokeDasharray={`${(status.progress / 100) * 100} 100`}
-                                                    pathLength="100"
-                                                    transform="rotate(-90 18 18)"
+                                                    className="progress-fill"
+                                                    cx="24" cy="24" r="20" 
+                                                    strokeDasharray={`${(status.progress / 100) * 125} 125`}
+                                                    pathLength="125"
                                                 />
                                             </svg>
-                                            <span className="progress-text">{status.progress}%</span>
+                                            <span className="progress-pct">{status.progress}%</span>
                                         </div>
                                     ) : (
-                                        <button className="start-btn">{t('quranMemorize.start', 'Başla')}</button>
+                                        <button className="geometric-start-btn">{t('quranMemorize.start')}</button>
                                     )}
                                 </div>
 
                                 {isExpanded && status && (
-                                    <div className="surah-details animate-slideDown">
-                                        <div className="ayah-grid">
+                                    <div className="geometric-ayah-area reveal-stagger">
+                                        <div className="geometric-ayah-grid">
                                             {Array.from({ length: surah.ayahCount }, (_, i) => i + 1).map(ayah => {
                                                 const isMemorized = status.memorizedAyahs.includes(ayah);
                                                 return (
                                                     <button
                                                         key={ayah}
-                                                        className={`ayah-btn ${isMemorized ? 'memorized' : ''}`}
+                                                        className={`geometric-ayah-btn ${isMemorized ? 'memorized' : ''}`}
                                                         onClick={() => handleToggleAyah(surah.number, ayah, surah.ayahCount)}
                                                     >
                                                         {ayah}
@@ -205,38 +202,37 @@ function QuranMemorize({ onClose, onUpgrade }) {
                     })}
                 </div>
             ) : (
-                <div className="reviews-list">
+                <div className="reviews-list reveal-stagger" style={{ '--delay': '0.4s' }}>
                     {dueReviews.length === 0 ? (
-                        <div className="empty-state">
-                            <CheckCircle size={48} color="#27ae60" />
-                            <h3>{t('quranMemorize.empty.title', 'Tebrikler!')}</h3>
-                            <p>{t('quranMemorize.empty.description', 'Bugün tekrar edilecek sure kalmadı.')}</p>
+                        <div className="manuscript-card empty-state-card">
+                            <CheckCircle size={64} color="var(--edu-gold)" />
+                            <h3 className="lesson-title">{t('quranMemorize.empty.title')}</h3>
+                            <p className="lesson-desc">{t('quranMemorize.empty.description')}</p>
                         </div>
                     ) : (
                         dueReviews.map(review => {
                             const surah = surahList.find(s => s.number === review.number);
                             return (
-                                <div key={review.number} className="review-card glass-card">
-                                    <div className="review-header">
-                                        <h3>{surah.name}</h3>
-                                        <span className="level-badge">
-                                            {t('quranMemorize.level', {
-                                                level: review.level,
-                                                defaultValue: 'Seviye {{level}}'
-                                            })}
+                                <div key={review.number} className="geometric-surah-card review-card">
+                                    <div className="review-header" style={{ padding: '20px' }}>
+                                        <h3 className="lesson-title" style={{ margin: 0 }}>{surah.nameTranslation}</h3>
+                                        <span className="rule-badge">
+                                            {t('quranMemorize.level', { level: review.level })}
                                         </span>
                                     </div>
-                                    <p>{t('quranMemorize.reviewQuestion', 'Bu sureyi ne kadar iyi hatırlıyorsun?')}</p>
-                                    <div className="review-actions">
-                                        <button className="review-btn hard" onClick={() => handleReview(review.number, 1)}>
-                                            {t('quranMemorize.reviewActions.hard', 'Zorlandım')}
-                                        </button>
-                                        <button className="review-btn medium" onClick={() => handleReview(review.number, 2)}>
-                                            {t('quranMemorize.reviewActions.medium', 'İdare Eder')}
-                                        </button>
-                                        <button className="review-btn easy" onClick={() => handleReview(review.number, 3)}>
-                                            {t('quranMemorize.reviewActions.easy', 'Kolaydı')}
-                                        </button>
+                                    <div style={{ padding: '0 20px 20px' }}>
+                                        <p className="lesson-desc">{t('quranMemorize.reviewQuestion')}</p>
+                                        <div className="review-actions-premium">
+                                            <button className="rev-btn hard" onClick={() => handleReview(review.number, 1)}>
+                                                {t('quranMemorize.reviewActions.hard')}
+                                            </button>
+                                            <button className="rev-btn medium" onClick={() => handleReview(review.number, 2)}>
+                                                {t('quranMemorize.reviewActions.medium')}
+                                            </button>
+                                            <button className="rev-btn easy" onClick={() => handleReview(review.number, 3)}>
+                                                {t('quranMemorize.reviewActions.easy')}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             );
@@ -257,277 +253,7 @@ function QuranMemorize({ onClose, onUpgrade }) {
                 }}
             />
 
-            <style>{`
-                .memorize-header {
-                    display: flex;
-                    align-items: center;
-                    gap: 16px;
-                    padding: 20px;
-                    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 100%);
-                }
 
-                .header-content h1 {
-                    font-size: 1.4rem;
-                    margin: 0;
-                    color: var(--primary-color);
-                }
-
-                .header-content p {
-                    margin: 0;
-                    font-size: 13px;
-                    color: var(--text-secondary);
-                }
-
-                .stats-grid {
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
-                    gap: 10px;
-                    padding: 0 16px 20px;
-                }
-
-                .stat-card {
-                    padding: 12px;
-                    text-align: center;
-                    background: rgba(255,255,255,0.05);
-                }
-
-                .stat-card.warning {
-                    background: rgba(231, 76, 60, 0.1);
-                    border-color: rgba(231, 76, 60, 0.3);
-                }
-
-                .stat-value {
-                    font-size: 20px;
-                    font-weight: 700;
-                    color: var(--text-primary);
-                }
-
-                .stat-label {
-                    font-size: 11px;
-                    color: var(--text-secondary);
-                }
-
-                .memorize-tabs {
-                    display: flex;
-                    padding: 0 16px 16px;
-                    gap: 10px;
-                }
-
-                .tab-btn {
-                    flex: 1;
-                    padding: 12px;
-                    background: rgba(255,255,255,0.05);
-                    border: none;
-                    border-radius: 12px;
-                    color: var(--text-secondary);
-                    font-size: 14px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 8px;
-                    cursor: pointer;
-                    position: relative;
-                }
-
-                .tab-btn.active {
-                    background: var(--primary-color);
-                    color: white;
-                }
-
-                .badge {
-                    background: #e74c3c;
-                    color: white;
-                    font-size: 10px;
-                    padding: 2px 6px;
-                    border-radius: 10px;
-                    position: absolute;
-                    top: -5px;
-                    right: -5px;
-                }
-
-                .surah-list {
-                    padding: 0 16px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                }
-
-                .surah-card {
-                    padding: 0;
-                    overflow: hidden;
-                    transition: all 0.2s ease;
-                }
-
-                .surah-card.locked {
-                    opacity: 0.6;
-                }
-
-                .surah-header {
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                    padding: 16px;
-                    cursor: pointer;
-                }
-
-                .surah-number {
-                    width: 32px;
-                    height: 32px;
-                    background: rgba(255,255,255,0.1);
-                    border-radius: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 12px;
-                    font-weight: 600;
-                    color: var(--primary-color);
-                }
-
-                .surah-info {
-                    flex: 1;
-                }
-
-                .surah-name-row {
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                }
-
-                .surah-name {
-                    font-weight: 600;
-                    color: var(--text-primary);
-                }
-
-                .surah-arabic {
-                    font-family: var(--arabic-font-family);
-                    color: var(--text-secondary);
-                    font-size: 14px;
-                }
-
-                .surah-meta {
-                    font-size: 11px;
-                    color: var(--text-secondary);
-                    display: flex;
-                    align-items: center;
-                    gap: 6px;
-                }
-
-                .dot {
-                    opacity: 0.5;
-                }
-
-                .start-btn {
-                    padding: 6px 12px;
-                    background: rgba(255,255,255,0.1);
-                    border: 1px solid rgba(255,255,255,0.2);
-                    border-radius: 20px;
-                    color: var(--text-primary);
-                    font-size: 12px;
-                    cursor: pointer;
-                }
-
-                .progress-ring {
-                    position: relative;
-                    width: 36px;
-                    height: 36px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-
-                .progress-text {
-                    font-size: 9px;
-                    font-weight: 700;
-                    color: var(--text-primary);
-                }
-
-                .surah-details {
-                    padding: 0 16px 16px;
-                    border-top: 1px solid rgba(255,255,255,0.1);
-                }
-
-                .ayah-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-                    gap: 8px;
-                    margin-top: 16px;
-                }
-
-                .ayah-btn {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    background: rgba(255,255,255,0.05);
-                    border: 1px solid rgba(255,255,255,0.1);
-                    color: var(--text-secondary);
-                    font-size: 12px;
-                    cursor: pointer;
-                    transition: all 0.2s ease;
-                }
-
-                .ayah-btn.memorized {
-                    background: var(--primary-color);
-                    color: white;
-                    border-color: var(--primary-color);
-                }
-
-                .reviews-list {
-                    padding: 16px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 16px;
-                }
-
-                .review-card {
-                    padding: 20px;
-                    text-align: center;
-                }
-
-                .review-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 16px;
-                }
-
-                .level-badge {
-                    font-size: 11px;
-                    background: rgba(255,255,255,0.1);
-                    padding: 4px 8px;
-                    border-radius: 12px;
-                }
-
-                .review-actions {
-                    display: flex;
-                    gap: 10px;
-                    margin-top: 20px;
-                }
-
-                .review-btn {
-                    flex: 1;
-                    padding: 12px;
-                    border: none;
-                    border-radius: 12px;
-                    font-size: 13px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    color: white;
-                }
-
-                .review-btn.hard { background: #e74c3c; }
-                .review-btn.medium { background: #f39c12; }
-                .review-btn.easy { background: #27ae60; }
-
-                .empty-state {
-                    text-align: center;
-                    padding: 40px 20px;
-                    color: var(--text-secondary);
-                }
-
-                .animate-slideDown {
-                    animation: slideDown 0.3s ease-out;
-                }
-            `}</style>
         </div>
     );
 }

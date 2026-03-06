@@ -1,6 +1,14 @@
 import { Browser } from '@capacitor/browser';
+import { logger } from '../utils/logger';
 
 class BrowserService {
+  safeOpenInNewTab(url) {
+    const win = window.open(url, '_blank', 'noopener,noreferrer');
+    if (win) {
+      win.opener = null;
+    }
+  }
+
   async open(url, options = {}) {
     try {
       await Browser.open({
@@ -11,9 +19,9 @@ class BrowserService {
         showReloadButton: true
       });
     } catch (error) {
-      console.warn('Browser open failed, falling back to window.open:', error);
+      logger.warn('Browser open failed, falling back to window.open:', error);
       // Fallback: window.open
-      window.open(url, '_blank');
+      this.safeOpenInNewTab(url);
     }
   }
 
@@ -21,7 +29,7 @@ class BrowserService {
     try {
       await Browser.close();
     } catch (error) {
-      console.warn('Browser close failed:', error);
+      logger.warn('Browser close failed:', error);
     }
   }
 }

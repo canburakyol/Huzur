@@ -98,17 +98,23 @@ export const gamificationService = {
 
       await updateDoc(userRef, updates);
       
-      // Rozet kontrolü yap
-      const newBadge = await gamificationService.checkBadges(userId, { 
-        ...userData, 
-        streaks: { ...currentStreaks, [`${activityType}_count`]: currentCount } 
-      });
+      // Rozet kontrolü yap - Özel Hata Yakalama (Graceful Degradation)
+      let newBadge = null;
+      try {
+        newBadge = await gamificationService.checkBadges(userId, { 
+          ...userData, 
+          streaks: { ...currentStreaks, [`${activityType}_count`]: currentCount } 
+        });
+      } catch (badgeError) {
+        logger.error('[Gamification] Badge check error during streak update:', badgeError);
+        // Rozet kontrolü hata verse bile streak güncellendiği için süreci kesmiyoruz.
+      }
 
       return { updated: true, currentCount, newBadge };
 
     } catch (error) {
       logger.error('[Gamification] Update streak error:', error);
-      return { updated: false };
+      return { updated: false, error: error.message };
     }
   },
 
@@ -143,20 +149,25 @@ export const gamificationService = {
       }
 
       if (qualified) {
-        // Rozeti ver
-        const badgeEntry = {
-          badgeId: badge.id,
-          earnedAt: new Date().toISOString()
-        };
-        
-        await updateDoc(doc(db, COLLECTION_USERS, userId), {
-          earnedBadges: arrayUnion(badgeEntry)
-        });
-        
-        newlyEarned = badge;
-        logger.log(`[Gamification] Badge earned: ${badge.title}`);
-        // Sadece ilk kazanılanı döndür (birden fazla olabilir ama UI tek gösterecek şimdilik)
-        break; 
+        try {
+          // Rozeti ver
+          const badgeEntry = {
+            badgeId: badge.id,
+            earnedAt: new Date().toISOString()
+          };
+          
+          await updateDoc(doc(db, COLLECTION_USERS, userId), {
+            earnedBadges: arrayUnion(badgeEntry)
+          });
+          
+          newlyEarned = badge;
+          logger.log(`[Gamification] Badge earned: ${badge.title}`);
+          // Sadece ilk kazanılanı döndür (birden fazla olabilir ama UI tek gösterecek şimdilik)
+          break; 
+        } catch (dbError) {
+          logger.error(`[Gamification] Failed to award badge to user ${userId}:`, dbError);
+          // Don't break loop, maybe another badge write could succeed, though unlikely if db is down
+        }
       }
     }
     

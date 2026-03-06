@@ -17,42 +17,42 @@ const DHIKR_TYPES = [
         arabic: 'سُبْحَانَ اللهِ',
         latin: 'Sübhanallah',
         icon: '🌳',
-        color: '#27ae60'
+        color: 'var(--bg-emerald-light)'
     },
     {
         id: 'elhamdulillah',
         arabic: 'الْحَمْدُ لِلهِ',
         latin: 'Elhamdülillah',
         icon: '⚖️',
-        color: '#f39c12'
+        color: 'var(--primary-color)'
     },
     {
         id: 'allahuekber',
         arabic: 'اللهُ أَكْبَرُ',
         latin: 'Allahu Ekber',
         icon: '🌟',
-        color: '#9b59b6'
+        color: 'var(--accent-color)'
     },
     {
         id: 'lailaheillallah',
         arabic: 'لَا إِلٰهَ إِلَّا اللهُ',
         latin: 'Lâ ilâhe illallah',
         icon: '💎',
-        color: '#3498db'
+        color: 'var(--accent-color)'
     },
     {
         id: 'estagfirullah',
         arabic: 'أَسْتَغْفِرُ اللهَ',
         latin: 'Estağfirullah',
         icon: '💧',
-        color: '#1abc9c'
+        color: 'var(--bg-emerald-med)'
     },
     {
         id: 'salavat',
         arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ',
         latin: 'Allahümme salli ala Muhammed',
         icon: '🌹',
-        color: '#e74c3c'
+        color: 'var(--error-color)'
     }
 ];
 
@@ -110,220 +110,296 @@ function ZikirWorld({ onClose }) {
     };
 
     return (
-        <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '100px' }}>
+        <div className="settings-container">
             {/* Header */}
-            <div style={{
+            <div className="reveal-stagger" style={{ 
+                '--delay': '0s',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '12px',
-                marginBottom: '20px',
-                paddingTop: '20px'
+                marginBottom: '24px',
+                padding: '0 4px'
             }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
                 <h1 style={{
                     margin: 0,
-                    fontSize: '22px',
-                    color: 'var(--primary-color)',
-                    fontWeight: '700'
+                    fontSize: '1.5rem',
+                    color: 'var(--nav-text)',
+                    fontWeight: '900'
                 }}>
-                    🌍 {t('title')}
+                    {t('title')}
                 </h1>
             </div>
 
-            <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '20px' }}>
+            <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600', padding: '0 4px' }}>
                 {t('subtitle')}
             </p>
 
-            {/* Personal Stats */}
-            <div className="glass-card" style={{
-                padding: '24px',
-                marginBottom: '20px',
-                background: 'linear-gradient(135deg, rgba(39, 174, 96, 0.2) 0%, rgba(46, 204, 113, 0.1) 100%)'
+            {/* Personal Stats Card */}
+            <div className="settings-card reveal-stagger" style={{
+                '--delay': '0.1s',
+                padding: '32px 24px',
+                marginBottom: '32px',
+                flexDirection: 'column',
+                background: 'linear-gradient(135deg, rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1) 0%, rgba(39, 174, 96, 0.05) 100%)',
+                border: '1px solid var(--nav-accent)',
+                position: 'relative',
+                overflow: 'hidden'
             }}>
-                <h3 style={{
-                    fontSize: '14px',
-                    color: 'var(--primary-color)',
-                    marginBottom: '20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                }}>
-                    <Heart size={18} /> {t('statsTitle')}
-                </h3>
+                {/* Decorative Background Element */}
+                <div style={{
+                    position: 'absolute',
+                    top: '-20px',
+                    right: '-20px',
+                    width: '120px',
+                    height: '120px',
+                    background: 'var(--nav-accent)',
+                    opacity: 0.05,
+                    borderRadius: '50%',
+                    filter: 'blur(40px)'
+                }}></div>
 
-                {/* Main Stat */}
-                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                <div className="hamburger-level-badge" style={{ 
+                    alignSelf: 'center',
+                    marginBottom: '24px',
+                    background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1)',
+                    color: 'var(--nav-accent)',
+                    border: '1px solid var(--nav-accent)'
+                }}>
+                    <Heart size={14} fill="var(--nav-accent)" style={{ marginRight: '6px' }} /> {t('statsTitle')}
+                </div>
+
+                {/* Main Stat Display */}
+                <div style={{ textAlign: 'center', marginBottom: '32px' }}>
                     <div style={{
-                        fontSize: '48px',
-                        fontWeight: '800',
-                        color: 'var(--primary-color)'
+                        fontSize: '4.5rem',
+                        fontWeight: '950',
+                        color: 'var(--nav-text)',
+                        lineHeight: '1',
+                        letterSpacing: '-2px',
+                        marginBottom: '8px'
                     }}>
                         {formatNumber(personalStats.total)}
                     </div>
-                    <div style={{ fontSize: '14px', color: 'var(--text-color)' }}>
+                    <div style={{ fontSize: '1rem', color: 'var(--nav-text-muted)', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
                         {t('totalDhikr')}
                     </div>
                 </div>
 
-                {/* Sub Stats */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
-                    <div style={{ textAlign: 'center' }}>
+                {/* Sub Stats Grid */}
+                <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(3, 1fr)', 
+                    gap: '12px',
+                    width: '100%',
+                    marginTop: '8px'
+                }}>
+                    <div className="settings-card" style={{ padding: '16px 8px', flexDirection: 'column', background: 'var(--nav-bg)', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                         <div style={{
-                            fontSize: '20px',
-                            fontWeight: '700',
-                            color: '#f39c12',
+                            fontSize: '1.25rem',
+                            fontWeight: '900',
+                            color: 'var(--nav-accent)',
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '4px'
+                            gap: '4px',
+                            marginBottom: '4px'
                         }}>
-                            <Calendar size={16} />
-                            {personalStats.daysActive}
+                            <Calendar size={16} /> {personalStats.daysActive}
                         </div>
-                        <div style={{ fontSize: '10px', color: 'var(--text-color-muted)' }}>
+                        <div style={{ fontSize: '0.7rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
                             {t('days')}
                         </div>
                     </div>
-                    <div style={{ textAlign: 'center' }}>
+
+                    <div className="settings-card" style={{ padding: '16px 8px', flexDirection: 'column', background: 'var(--nav-bg)', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                         <div style={{
-                            fontSize: '20px',
-                            fontWeight: '700',
-                            color: '#e74c3c'
+                            fontSize: '1.25rem',
+                            fontWeight: '900',
+                            color: 'var(--error-color)',
+                            marginBottom: '4px'
                         }}>
                             ⭐ {Math.floor(personalStats.total / 33)}
                         </div>
-                        <div style={{ fontSize: '10px', color: 'var(--text-color-muted)' }}>
-                            {t('times')}
+                        <div style={{ fontSize: '0.7rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                            {t('times', 'Tur')}
                         </div>
                     </div>
-                    <div style={{ textAlign: 'center' }}>
+
+                    <div className="settings-card" style={{ padding: '16px 8px', flexDirection: 'column', background: 'var(--nav-bg)', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                         <div style={{
-                            fontSize: '20px',
-                            fontWeight: '700',
-                            color: '#3498db'
+                            fontSize: '1.25rem',
+                            fontWeight: '900',
+                            color: 'var(--accent-color)',
+                            marginBottom: '4px'
                         }}>
                             {personalStats.daysActive > 0 ? Math.round(personalStats.total / personalStats.daysActive) : 0}
                         </div>
-                        <div style={{ fontSize: '10px', color: 'var(--text-color-muted)' }}>
-                            {t('dailyAvg')}
+                        <div style={{ fontSize: '0.7rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                            {t('dailyAvg', 'Ort.')}
                         </div>
                     </div>
                 </div>
 
-                {/* Start Date */}
+                {/* Start Date Footer */}
                 <div style={{
-                    marginTop: '20px',
-                    paddingTop: '16px',
-                    borderTop: '1px solid var(--glass-border)',
-                    fontSize: '12px',
-                    color: 'var(--text-color-muted)',
-                    textAlign: 'center'
+                    marginTop: '32px',
+                    paddingTop: '20px',
+                    borderTop: '1px solid var(--nav-border)',
+                    fontSize: '0.8rem',
+                    color: 'var(--nav-text-muted)',
+                    textAlign: 'center',
+                    fontWeight: '700',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px'
                 }}>
-                    <Clock size={12} style={{ marginRight: '4px', verticalAlign: 'middle' }} />
+                    <Clock size={14} />
                     {t('startDate')} {personalStats.startDate}
                 </div>
             </div>
 
-            {/* Dhikr Types */}
-            <h3 style={{
-                fontSize: '14px',
-                color: 'var(--primary-color)',
-                marginBottom: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-            }}>
-                📿 {t('typesTitle')}
-            </h3>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {DHIKR_TYPES.map(dhikr => (
-                    <div
-                        key={dhikr.id}
-                        className="glass-card"
-                        style={{
-                            padding: '16px',
-                            cursor: 'pointer',
-                            borderLeft: `4px solid ${dhikr.color}`
-                        }}
-                        onClick={() => setSelectedDhikr(selectedDhikr === dhikr.id ? null : dhikr.id)}
-                    >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <span style={{ fontSize: '28px' }}>{dhikr.icon}</span>
-                            <div style={{ flex: 1 }}>
-                                <div style={{
-                                    fontWeight: '700',
-                                    fontSize: '18px',
-                                    color: dhikr.color,
-                                    fontFamily: 'Arial'
-                                }}>
-                                    {dhikr.arabic}
-                                </div>
-                                <div style={{
-                                    fontSize: '13px',
-                                    color: 'var(--text-color)',
-                                    marginTop: '2px'
-                                }}>
-                                    {dhikr.latin}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Expanded Content */}
-                        {selectedDhikr === dhikr.id && (
-                            <div style={{
-                                marginTop: '12px',
-                                paddingTop: '12px',
-                                borderTop: '1px solid var(--glass-border)',
-                                animation: 'fadeIn 0.3s ease'
-                            }}>
-                                <div style={{
-                                    fontSize: '13px',
-                                    color: 'var(--text-color-muted)',
-                                    marginBottom: '8px'
-                                }}>
-                                    <strong>{t('meaning')}</strong> {t(`types.${dhikr.id}.meaning`)}
-                                </div>
-                                <div style={{
-                                    fontSize: '13px',
-                                    color: '#27ae60',
-                                    background: 'rgba(39, 174, 96, 0.1)',
-                                    padding: '10px',
-                                    borderRadius: '8px'
-                                }}>
-                                    <Award size={14} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
-                                    <strong>{t('reward')}</strong> {t(`types.${dhikr.id}.reward`)}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                ))}
+            {/* Dhikr Types List */}
+            <div className="settings-group reveal-stagger" style={{ '--delay': '0.2s' }}>
+                <div className="settings-group-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    📿 {t('typesTitle')}
+                </div>
             </div>
 
-            {/* Motivation */}
-            <div style={{
-                marginTop: '20px',
-                padding: '16px',
-                background: 'var(--glass-bg)',
-                borderRadius: '12px',
-                border: '1px solid var(--glass-border)',
-                textAlign: 'center'
-            }}>
-                <div style={{ fontSize: '24px', marginBottom: '8px' }}>🤲</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} className="reveal-stagger">
+                {DHIKR_TYPES.map((dhikr, index) => {
+                    const isExpanded = selectedDhikr === dhikr.id;
+                    return (
+                        <div
+                            key={dhikr.id}
+                            className="settings-card reveal-stagger"
+                            style={{
+                                '--delay': `${0.3 + index * 0.05}s`,
+                                padding: '16px',
+                                cursor: 'pointer',
+                                flexDirection: 'column',
+                                alignItems: 'stretch',
+                                borderLeft: isExpanded ? `4px solid ${dhikr.color}` : '1px solid var(--nav-border)',
+                                background: isExpanded ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.03)' : 'var(--nav-bg)'
+                            }}
+                            onClick={() => setSelectedDhikr(isExpanded ? null : dhikr.id)}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                <div className="settings-icon-box" style={{ 
+                                    width: '56px', 
+                                    height: '56px', 
+                                    background: isExpanded ? 'var(--nav-hover)' : 'rgba(0,0,0,0.02)',
+                                    fontSize: '1.5rem',
+                                    borderRadius: '16px',
+                                    flexShrink: 0
+                                }}>
+                                    {dhikr.icon}
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <div style={{
+                                        fontWeight: '900',
+                                        fontSize: '1.75rem',
+                                        color: dhikr.color,
+                                        fontFamily: 'var(--arabic-font-family)',
+                                        direction: 'rtl',
+                                        lineHeight: '1.2',
+                                        textAlign: 'right'
+                                    }}>
+                                        {dhikr.arabic}
+                                    </div>
+                                    <div style={{
+                                        fontSize: '1rem',
+                                        color: isExpanded ? 'var(--nav-text)' : 'var(--nav-text-muted)',
+                                        fontWeight: '800',
+                                        marginTop: '4px'
+                                    }}>
+                                        {dhikr.latin}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Expanded Content with Velocity style */}
+                            {isExpanded && (
+                                <div style={{
+                                    marginTop: '20px',
+                                    paddingTop: '20px',
+                                    borderTop: '1px solid var(--nav-border)',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '12px'
+                                }}>
+                                    <div style={{
+                                        padding: '16px',
+                                        background: 'var(--nav-hover)',
+                                        borderRadius: '16px',
+                                        fontSize: '0.9rem',
+                                        color: 'var(--nav-text)',
+                                        lineHeight: '1.6'
+                                    }}>
+                                        <div style={{ fontWeight: '950', marginBottom: '8px', color: 'var(--nav-accent)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px' }}>
+                                            {t('meaning')}
+                                        </div>
+                                        <div style={{ fontWeight: '600' }}>
+                                            {t(`types.${dhikr.id}.meaning`)}
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={{
+                                        padding: '16px',
+                                        background: 'rgba(15, 118, 110, 0.08)',
+                                        borderRadius: '16px',
+                                        fontSize: '0.9rem',
+                                        color: 'var(--bg-emerald-med)',
+                                        lineHeight: '1.6',
+                                        border: '1px solid rgba(15, 118, 110, 0.1)'
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '950', marginBottom: '8px', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px' }}>
+                                            <Award size={14} /> {t('reward')}
+                                        </div>
+                                        <div style={{ fontWeight: '700' }}>
+                                            {t(`types.${dhikr.id}.reward`)}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+
+            {/* Motivation Quote */}
+            <div 
+                className="settings-card reveal-stagger"
+                style={{
+                    '--delay': '0.8s',
+                    marginTop: '32px',
+                    padding: '24px',
+                    background: 'var(--nav-hover)',
+                    borderRadius: '24px',
+                    border: '1px dashed var(--nav-border)',
+                    flexDirection: 'column',
+                    textAlign: 'center',
+                    gap: '12px'
+                }}
+            >
+                <div style={{ fontSize: '2rem' }}>🤲</div>
                 <div style={{
-                    fontSize: '13px',
-                    color: 'var(--text-color)',
+                    fontSize: '0.95rem',
+                    color: 'var(--nav-text)',
                     fontStyle: 'italic',
-                    lineHeight: '1.6'
+                    lineHeight: '1.8',
+                    fontWeight: '600',
+                    padding: '0 12px'
                 }}>
                     "{t('quote')}"
                 </div>
                 <div style={{
-                    fontSize: '11px',
-                    color: 'var(--text-color-muted)',
-                    marginTop: '8px'
+                    fontSize: '0.75rem',
+                    color: 'var(--nav-text-muted)',
+                    fontWeight: '800',
+                    opacity: 0.8
                 }}>
-                    {t('quoteRef')}
+                    — {t('quoteRef')}
                 </div>
             </div>
         </div>

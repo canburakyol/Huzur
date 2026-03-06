@@ -4,6 +4,9 @@ import { useBackButton } from '../../hooks/useBackButton';
 import HatimList from './HatimList';
 import HatimDetail from './HatimDetail';
 import DuaList from './DuaList';
+import IslamicBackButton from '../shared/IslamicBackButton';
+import { BookOpen, Heart, Share2 } from 'lucide-react';
+import './Social.css';
 
 const SocialDashboard = ({ onClose }) => {
   const { t } = useTranslation();
@@ -23,112 +26,58 @@ const SocialDashboard = ({ onClose }) => {
   });
 
   return (
-    <div className="social-dashboard glass-card" style={{ 
-      border: 'none', 
-      borderRadius: 0, 
-      height: '100%', 
-      display: 'flex', 
-      flexDirection: 'column',
-      background: 'var(--bg-color)',
-      backdropFilter: 'none'
-    }}>
+    <div className="education-container social-sanctuary">
       {/* Header */}
       {!selectedHatimId && (
-        <div className="social-header" style={{ 
-          padding: '20px', 
-          background: 'var(--glass-bg)', 
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid var(--glass-border)'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+        <header className="settings-container reveal-stagger sanctuary-header">
+          <div className="sanctuary-header-top">
+            <IslamicBackButton onClick={onClose} size="medium" color="var(--hb-accent)" />
+            <div className="sanctuary-pill">
+              {t('community.sanctuary')}
+            </div>
             <button
-              onClick={onClose}
-              className="social-back-btn"
-              aria-label={t('common.back', 'Geri')}
-              style={{
-                background: 'rgba(255,255,255,0.1)',
-                border: '1px solid var(--glass-border)',
-                borderRadius: '50%',
-                width: '36px',
-                height: '36px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--text-color)'
-              }}
+              className="premium-icon-btn" 
+              style={{ background: 'var(--hb-hover)', color: 'var(--hb-accent)', width: '44px', height: '44px', borderRadius: '14px' }}
+              aria-label="Share community"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <Share2 size={20} />
             </button>
-            <div style={{ width: '36px' }}></div> {/* Spacer */}
           </div>
 
-          {/* Tab Navigation */}
-          <div className="social-tabs" style={{ 
-            display: 'flex', 
-            background: 'rgba(0,0,0,0.2)', 
-            padding: '4px', 
-            borderRadius: '12px',
-            gap: '4px'
-          }}>
+          <div className="sanctuary-title-wrap">
+            <h1 className="sanctuary-title">
+              {activeTab === 'hatim' ? t('community.tabs.hatims') : t('community.tabs.duas')}
+            </h1>
+            <p className="sanctuary-subtitle">
+              {activeTab === 'hatim' ? t('community.hatimDesc') : t('community.duaDesc')}
+            </p>
+          </div>
+          
+          <div className="sanctuary-tabs sanctuary-tabs-main" role="tablist" aria-label="Community tabs">
             <button
               onClick={() => setActiveTab('hatim')}
-              className={`social-tab-btn ${activeTab === 'hatim' ? 'active' : ''}`}
-              style={{
-                flex: 1,
-                padding: '10px',
-                borderRadius: '8px',
-                border: 'none',
-                background: activeTab === 'hatim' ? 'var(--primary-color)' : 'transparent',
-                color: 'white',
-                fontSize: '14px',
-                fontWeight: '600',
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
+              className={`sanctuary-tab-btn ${activeTab === 'hatim' ? 'active' : ''}`}
+              role="tab"
+              aria-selected={activeTab === 'hatim'}
             >
-              📖 {t('community.tabs.hatims', 'Hatimler')}
+              <BookOpen size={20} />
+              {t('community.tabs.hatims')}
             </button>
             <button
               onClick={() => setActiveTab('dua')}
-              className={`social-tab-btn ${activeTab === 'dua' ? 'active' : ''}`}
-              style={{
-                flex: 1,
-                padding: '10px',
-                borderRadius: '8px',
-                border: 'none',
-                background: activeTab === 'dua' ? 'var(--primary-color)' : 'transparent',
-                color: 'white',
-                fontSize: '14px',
-                fontWeight: '600',
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px'
-              }}
+              className={`sanctuary-tab-btn ${activeTab === 'dua' ? 'active' : ''}`}
+              role="tab"
+              aria-selected={activeTab === 'dua'}
             >
-              🤲 {t('community.tabs.duas', 'Dualar')}
+              <Heart size={20} />
+              {t('community.tabs.duas')}
             </button>
           </div>
-        </div>
+        </header>
       )}
 
       {/* Content Area */}
-      <div
-        className="social-content"
-        style={{ 
-          flex: 1,
-          overflowY: 'auto',
-          padding: '20px',
-          paddingBottom: '100px',
-          paddingTop: selectedHatimId ? 'calc(16px + env(safe-area-inset-top))' : '20px' 
-        }}
-      >
+      <div className="sanctuary-content-area reveal-stagger" style={{ '--delay': '0.4s' }}>
         {activeTab === 'hatim' && (
           <div className="hatim-section">
             {selectedHatimId ? (

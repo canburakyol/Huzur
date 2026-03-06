@@ -11,6 +11,8 @@ import { logger } from '../utils/logger';
 import { analyticsService, ANALYTICS_EVENTS } from './analyticsService';
 import { getExperimentVariant } from './experimentService';
 import { getActiveCampaign, resolveCampaignCopy } from './campaignService';
+import { getOptimalReminderHour } from './userActivityTracker';
+import { scheduleNativeAdhanAlarms } from './prayerAlarmBridgeService';
 import {
   NOTIFICATION_CHANNELS,
   requestNotificationPermission,
@@ -75,29 +77,32 @@ const STREAK_NOTIFICATIONS = [
   }
 ];
 
-// Günlük hatırlatıcı bildirimler
+// Günlük hatırlatıcı bildirimler (saatler userActivityTracker'dan dinamik olarak alınır)
 const DAILY_REMINDERS = [
   {
     id: 'zikir_morning',
     title: '📿 Daily Dhikr Reminder',
     body: 'Have you completed your dhikr today?',
-    hour: 10,
-    minute: 0
+    slot: 'morning',   // getOptimalReminderHour('morning') kullanılır
+    fallbackHour: 10,
+    minute: 0,
   },
   {
     id: 'quran_afternoon',
     title: '📖 Quran Reading Time',
     body: 'A great time to complete your daily Quran reading goal!',
-    hour: 14,
-    minute: 0
+    slot: 'afternoon',
+    fallbackHour: 14,
+    minute: 0,
   },
   {
     id: 'tasks_evening',
     title: '✅ Daily Tasks',
-    body: 'Have you completed today’s worship tasks?',
-    hour: 18,
-    minute: 0
-  }
+    body: 'Have you completed today\'s worship tasks?',
+    slot: 'evening',
+    fallbackHour: 18,
+    minute: 0,
+  },
 ];
 
 /**
@@ -249,7 +254,10 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
         id: baseId + index,
         title: variantCopy.title,
         body: variantCopy.body,
-        schedule: { at: prayerTime },
+        schedule: { 
+          at: prayerTime,
+          allowWhileIdle: true // Critical for Android Doze Mode
+        },
         sound: NOTIFICATION_CHANNELS.PRAYER.sound,
         channelId: NOTIFICATION_CHANNELS.PRAYER.id,
         smallIcon: 'ic_notification',
@@ -291,7 +299,10 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
           id: baseId + 50 + index, // Farklı ID aralığı
           title: variantCopy.title,
           body: variantCopy.body,
-          schedule: { at: preTime },
+          schedule: { 
+            at: preTime,
+            allowWhileIdle: true
+          },
           sound: 'default',
           channelId: NOTIFICATION_CHANNELS.PRAYER.id,
           smallIcon: 'ic_notification',
@@ -323,6 +334,9 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
      });
      
     logger.log('Notifications: Prayer notifications scheduled', notifications.length);
+
+    // Schedule native Android AlarmManager alarms for max reliability
+    scheduleNativeAdhanAlarms(prayerTimes);
   } catch (error) {
     logger.error('Notifications: Schedule error', error);
   }
@@ -352,7 +366,10 @@ export const scheduleStreakNotifications = async (currentStreak) => {
       id: 1000 + index,
       title: config.title,
       body: config.body.replace('{days}', currentStreak),
-      schedule: { at: scheduleTime },
+      schedule: { 
+        at: scheduleTime,
+        allowWhileIdle: true
+      },
       sound: NOTIFICATION_CHANNELS.STREAK.sound,
       channelId: NOTIFICATION_CHANNELS.STREAK.id,
       smallIcon: 'ic_notification',
@@ -389,8 +406,11 @@ export const scheduleDailyReminders = async () => {
   await cancelNotificationsByType('reminder');
 
   DAILY_REMINDERS.forEach((config, index) => {
+    // Kullanıcının en aktif olduğu saati al, yoksa fallback kullan
+    const optimalHour = getOptimalReminderHour(config.slot) ?? config.fallbackHour;
+
     const scheduleTime = new Date();
-    scheduleTime.setHours(config.hour, config.minute, 0, 0);
+    scheduleTime.setHours(optimalHour, config.minute, 0, 0);
 
     // Eğer saat geçtiyse yarın için planla
     if (scheduleTime <= new Date()) {

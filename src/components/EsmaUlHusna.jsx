@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Search, Heart, Star, Share2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Search, Heart, Star, Share2, ChevronDown, ChevronUp, Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { contentService } from '../services/contentService';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
 import { buildEsmaShareCard, shareCard, openShareCard } from '../services/shareCardService';
+import './EsmaUlHusna.css';
+import './Navigation.css';
 
 const ESMA_FAVORITES_KEY = 'esma_favorites';
 
@@ -20,26 +22,20 @@ function EsmaUlHusna({ onClose }) {
     });
     const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
-    // Fetch data when language changes
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             const data = await contentService.getEsmaUlHusna(i18n.language);
             setEsmaList(data);
-            
-            // Calculate daily Esma based on the new list
             const today = new Date();
             const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
             const daily = data[dayOfYear % data.length];
             setDailyEsma(daily);
-            
             setLoading(false);
         };
-
         fetchData();
     }, [i18n.language]);
 
-    // Filter names based on search and favorites
     const filteredNames = esmaList.filter(esma => {
         const matchesSearch =
             (esma.latin && esma.latin.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -52,7 +48,6 @@ function EsmaUlHusna({ onClose }) {
         return matchesSearch;
     });
 
-    // Toggle favorite
     const toggleFavorite = (id) => {
         const newFavorites = favorites.includes(id)
             ? favorites.filter(f => f !== id)
@@ -61,7 +56,6 @@ function EsmaUlHusna({ onClose }) {
         storageService.setItem(ESMA_FAVORITES_KEY, newFavorites);
     };
 
-    // Share name
     const shareEsma = async (esma) => {
         const card = buildEsmaShareCard(esma);
         openShareCard('esma', 'esma_ul_husna_page');
@@ -70,294 +64,168 @@ function EsmaUlHusna({ onClose }) {
 
     if (loading || !dailyEsma) {
         return (
-            <div className="app-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                <div className="spinner"></div>
+            <div className="settings-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <div className="spinner premium"></div>
             </div>
         );
     }
 
     return (
-        <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '100px' }}>
+        <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
             {/* Header */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '20px',
-                paddingTop: '20px'
-            }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
-                <h1 style={{
-                    margin: 0,
-                    fontSize: '22px',
-                    color: 'var(--primary-color)',
-                    fontWeight: '700'
-                }}>
-                    ✨ {t('esma.title', 'Esmaül Hüsna')}
-                </h1>
+                <div>
+                    <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                        {t('esma.title', 'Esmaül Hüsna')}
+                    </h2>
+                    <p className="settings-desc">{t('esma.subtitle', "Allah'ın 99 Güzel İsmi")}</p>
+                </div>
             </div>
 
-            <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
-                {t('esma.subtitle', "Allah'ın 99 Güzel İsmi")}
-            </p>
-
-            {/* Daily Name */}
-            <div className="glass-card" style={{
-                padding: '24px',
-                marginBottom: '20px',
-                background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(184, 134, 11, 0.1) 100%)',
-                textAlign: 'center'
+            {/* Daily Name Card */}
+            <div className="settings-card" style={{ 
+                flexDirection: 'column', 
+                background: 'linear-gradient(135deg, var(--nav-accent), #f97316)', 
+                border: 'none', 
+                padding: '32px', 
+                textAlign: 'center', 
+                color: 'white', 
+                marginBottom: '40px',
+                boxShadow: '0 12px 24px rgba(249, 115, 22, 0.2)',
+                position: 'relative',
+                overflow: 'hidden'
             }}>
-                <div style={{
-                    fontSize: '11px',
-                    color: 'var(--text-color-muted)',
-                    marginBottom: '12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px'
-                }}>
-                    <Star size={14} fill="#d4af37" color="#d4af37" /> {t('esma.daily', 'Günün Esması')}
+                <div style={{ position: 'absolute', top: '15px', left: '20px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.7rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.8 }}>
+                    <Star size={12} fill="white" /> {t('esma.daily', 'Günün Esması')}
                 </div>
-                <div style={{
-                    fontSize: '42px',
-                    color: '#d4af37',
-                    fontFamily: 'Arial',
-                    marginBottom: '8px'
-                }}>
+                
+                <div style={{ fontFamily: 'var(--arabic-font)', fontSize: '4rem', marginBottom: '16px', textShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
                     {dailyEsma.arabic}
                 </div>
-                <div style={{
-                    fontSize: '20px',
-                    color: 'var(--primary-color)',
-                    fontWeight: '700',
-                    marginBottom: '8px'
-                }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: '900', marginBottom: '8px' }}>
                     {dailyEsma.latin}
                 </div>
-                <div style={{
-                    fontSize: '14px',
-                    color: 'var(--text-color)'
-                }}>
+                <div style={{ fontSize: '1rem', fontWeight: '500', opacity: 0.9, lineHeight: '1.5' }}>
                     {dailyEsma.meaning}
                 </div>
+                
                 {dailyEsma.detail && (
-                    <div style={{
-                        fontSize: '12px',
-                        color: 'var(--text-color-muted)',
-                        marginTop: '8px',
-                        fontStyle: 'italic'
-                    }}>
+                    <div style={{ fontSize: '0.75rem', marginTop: '16px', opacity: 0.7, fontStyle: 'italic', borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '16px' }}>
                         {dailyEsma.detail}
                     </div>
                 )}
             </div>
 
-            {/* Search */}
-            <div style={{
-                display: 'flex',
-                gap: '8px',
-                marginBottom: '16px'
-            }}>
-                <div style={{
-                    flex: 1,
-                    position: 'relative'
-                }}>
-                    <Search
-                        size={18}
-                        style={{
-                            position: 'absolute',
-                            left: '12px',
-                            top: '50%',
-                            transform: 'translateY(-50%)',
-                            color: 'var(--text-color-muted)'
-                        }}
-                    />
+            {/* Search & filters */}
+            <div className="esma-search-row-modern">
+                <div className="esma-search-input-wrapper">
+                    <Search size={20} className="esma-input-icon" />
                     <input
                         type="text"
+                        className="esma-modern-input"
                         placeholder={t('esma.search_placeholder', 'İsim ara...')}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        style={{
-                            width: '100%',
-                            padding: '12px 12px 12px 40px',
-                            background: 'var(--glass-bg)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '12px',
-                            color: 'var(--text-color)',
-                            fontSize: '14px',
-                            outline: 'none'
-                        }}
                     />
                 </div>
                 <button
+                    className={`esma-fav-btn ${showFavoritesOnly ? 'active' : ''}`}
                     onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
-                    style={{
-                        padding: '12px 16px',
-                        background: showFavoritesOnly ? 'rgba(231, 76, 60, 0.2)' : 'var(--glass-bg)',
-                        border: '1px solid var(--glass-border)',
-                        borderRadius: '12px',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        color: showFavoritesOnly ? '#e74c3c' : 'var(--text-color)'
-                    }}
                 >
-                    <Heart size={18} fill={showFavoritesOnly ? '#e74c3c' : 'transparent'} />
-                    {favorites.length}
+                    <Heart size={24} fill={showFavoritesOnly ? '#ef4444' : 'transparent'} />
                 </button>
             </div>
 
-            {/* Count */}
-            <div style={{
-                fontSize: '12px',
-                color: 'var(--text-color-muted)',
-                marginBottom: '12px'
-            }}>
-                {filteredNames.length} / 99 {t('esma.count_suffix', 'isim')}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', padding: '0 4px' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+                    {filteredNames.length} / 99 {t('esma.count_suffix', 'İSİM')}
+                </span>
             </div>
 
             {/* Names List */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {filteredNames.map(esma => (
-                    <div
-                        key={esma.id}
-                        className="glass-card"
-                        style={{ padding: '16px', cursor: 'pointer' }}
-                        onClick={() => setExpandedId(expandedId === esma.id ? null : esma.id)}
-                    >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            {/* Number */}
-                            <div style={{
-                                width: '36px',
-                                height: '36px',
-                                borderRadius: '50%',
-                                background: 'var(--primary-color)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                color: '#fff',
-                                fontSize: '13px',
-                                fontWeight: '700'
-                            }}>
-                                {esma.id}
-                            </div>
+            <div className="settings-group">
+                {filteredNames.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '64px 24px', opacity: 0.4 }}>
+                        <Search size={48} style={{ marginBottom: '16px' }} />
+                        <p style={{ fontWeight: '700' }}>Sonuç bulunamadı</p>
+                    </div>
+                ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {filteredNames.map((esma) => (
+                            <div
+                                key={esma.id}
+                                className={`settings-card ${expandedId === esma.id ? 'expanded-esma' : ''}`}
+                                style={{ flexDirection: 'column', padding: '16px', transition: 'all 0.3s' }}
+                                onClick={() => setExpandedId(expandedId === esma.id ? null : esma.id)}
+                            >
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
+                                    <div className="esma-id-badge-modern">
+                                        {esma.id}
+                                    </div>
 
-                            {/* Arabic & Latin */}
-                            <div style={{ flex: 1 }}>
-                                <div style={{
-                                    fontSize: '22px',
-                                    color: '#d4af37',
-                                    fontFamily: 'Arial'
-                                }}>
-                                    {esma.arabic}
+                                    <div style={{ flex: 1 }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                            <div style={{ fontFamily: 'var(--arabic-font)', fontSize: '1.5rem', color: 'var(--nav-accent)' }}>
+                                                {esma.arabic}
+                                            </div>
+                                            {expandedId === esma.id ? <ChevronUp size={20} color="var(--nav-text-muted)" /> : <ChevronDown size={20} color="var(--nav-text-muted)" />}
+                                        </div>
+                                        <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '1rem', marginTop: '4px' }}>
+                                            {esma.latin}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div style={{
-                                    fontSize: '14px',
-                                    color: 'var(--primary-color)',
-                                    fontWeight: '600'
-                                }}>
-                                    {esma.latin}
-                                </div>
-                            </div>
 
-                            {/* Expand Icon */}
-                            {expandedId === esma.id ? (
-                                <ChevronUp size={20} color="var(--text-color-muted)" />
-                            ) : (
-                                <ChevronDown size={20} color="var(--text-color-muted)" />
-                            )}
-                        </div>
+                                {expandedId === esma.id && (
+                                    <div className="esma-detail-expand reveal-stagger">
+                                        <div style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--nav-text)', marginBottom: '8px', borderTop: '1px solid var(--nav-border)', paddingTop: '16px' }}>
+                                            {esma.meaning}
+                                        </div>
+                                        {esma.detail && (
+                                            <p style={{ margin: '0 0 20px', fontSize: '0.85rem', color: 'var(--nav-text-muted)', lineHeight: '1.6' }}>
+                                                {esma.detail}
+                                            </p>
+                                        )}
 
-                        {/* Expanded Content */}
-                        {expandedId === esma.id && (
-                            <div style={{
-                                marginTop: '16px',
-                                paddingTop: '16px',
-                                borderTop: '1px solid var(--glass-border)',
-                                animation: 'fadeIn 0.3s ease'
-                            }}>
-                                <div style={{
-                                    fontSize: '15px',
-                                    color: 'var(--text-color)',
-                                    fontWeight: '600',
-                                    marginBottom: '8px'
-                                }}>
-                                    {esma.meaning}
-                                </div>
-                                {esma.detail && (
-                                    <div style={{
-                                        fontSize: '13px',
-                                        color: 'var(--text-color-muted)',
-                                        lineHeight: '1.6',
-                                        marginBottom: '16px'
-                                    }}>
-                                        {esma.detail}
+                                        <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
+                                            <button
+                                                className={`velocity-target-btn ${favorites.includes(esma.id) ? 'active-fav' : ''}`}
+                                                style={{ flex: 1, display: 'flex', gap: '8px', justifyContent: 'center' }}
+                                                onClick={(e) => { e.stopPropagation(); toggleFavorite(esma.id); }}
+                                            >
+                                                <Heart
+                                                    size={16}
+                                                    fill={favorites.includes(esma.id) ? '#ef4444' : 'transparent'}
+                                                />
+                                                {t('common.favorite', 'Favori')}
+                                            </button>
+                                            <button
+                                                className="velocity-action-btn"
+                                                style={{ flex: 1, display: 'flex', gap: '8px', justifyContent: 'center' }}
+                                                onClick={(e) => { e.stopPropagation(); shareEsma(esma); }}
+                                            >
+                                                <Share2 size={16} />
+                                                {t('common.share', 'Paylaş')}
+                                            </button>
+                                        </div>
                                     </div>
                                 )}
-
-                                {/* Actions */}
-                                <div style={{ display: 'flex', gap: '8px' }}>
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); toggleFavorite(esma.id); }}
-                                        style={{
-                                            flex: 1,
-                                            padding: '10px',
-                                            background: favorites.includes(esma.id) ? 'rgba(231, 76, 60, 0.2)' : 'rgba(255,255,255,0.1)',
-                                            border: 'none',
-                                            borderRadius: '8px',
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: '6px',
-                                            color: favorites.includes(esma.id) ? '#e74c3c' : 'var(--text-color)'
-                                        }}
-                                    >
-                                        <Heart
-                                            size={16}
-                                            fill={favorites.includes(esma.id) ? '#e74c3c' : 'transparent'}
-                                        />
-                                        {t('common.favorite', 'Favori')}
-                                    </button>
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); shareEsma(esma); }}
-                                        style={{
-                                            flex: 1,
-                                            padding: '10px',
-                                            background: 'var(--primary-color)',
-                                            border: 'none',
-                                            borderRadius: '8px',
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: '6px',
-                                            color: '#fff'
-                                        }}
-                                    >
-                                        <Share2 size={16} />
-                                        {t('common.share', 'Paylaş')}
-                                    </button>
-                                </div>
                             </div>
-                        )}
+                        ))}
                     </div>
-                ))}
+                )}
             </div>
 
-            {/* Empty State */}
-            {filteredNames.length === 0 && (
-                <div style={{
-                    textAlign: 'center',
-                    padding: '40px',
-                    color: 'var(--text-color-muted)'
-                }}>
-                    <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔍</div>
-                    <div>{t('common.no_results', 'Sonuç bulunamadı')}</div>
+            {/* Info Box */}
+            <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                    <Info size={18} color="var(--nav-accent)" />
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                        {t('esma.info_note', "Esmâü'l-Hüsnâ, Allah Teâlâ'nın en güzel isimleri demektir. Bu isimleri zikretmek, anlamlarını tefekkür etmek ve bu isimlerle Allah'a dua etmek müstehaptır.")}
+                    </p>
                 </div>
-            )}
+            </div>
         </div>
     );
 }

@@ -5,6 +5,7 @@ import MemberCard from './MemberCard';
 import IslamicBackButton from '../shared/IslamicBackButton';
 import BadgeGrid from '../gamification/BadgeGrid';
 import StreakDetail from '../gamification/StreakDetail';
+import { Users, UserPlus, Shield, Activity, Clock, Share2, Trophy } from 'lucide-react';
 
 const FamilyDashboard = ({ onClose }) => {
   const { family, loading, error, createFamily, joinFamily } = useFamily();
@@ -16,49 +17,112 @@ const FamilyDashboard = ({ onClose }) => {
   const [busy, setBusy] = useState(false);
 
   // Aile yoksa Creation/Join ekranı
+  // Aile yoksa Creation/Join ekranı
   if (!family && !loading) {
     return (
-      <div className="family-dashboard glass-card" style={{ padding: '20px', margin: '15px', position: 'relative' }}>
-        <div style={{ position: 'absolute', top: '15px', left: '15px', zIndex: 10 }}>
-          <IslamicBackButton onClick={onClose} size="small" />
+      <div className="settings-container reveal-stagger" style={{ paddingBottom: '120px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+          <IslamicBackButton onClick={onClose} size="medium" />
+          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+            {t('family.title')}
+          </h2>
         </div>
-        <h3 style={{ marginTop: 0, color: 'var(--primary-color)', marginLeft: '35px' }}>{t('family.title')}</h3>
-        <p style={{ color: 'var(--text-color-muted)' }}>{t('family.intro')}</p>
 
-        {error && <div style={{ color: '#e74c3c', marginBottom: '10px', padding: '10px', background: 'rgba(231, 76, 60, 0.1)', borderRadius: '8px' }}>{error}</div>}
+        <div className="settings-card reveal-stagger" style={{ 
+          padding: '32px 24px', 
+          flexDirection: 'column', 
+          alignItems: 'stretch',
+          background: 'linear-gradient(135deg, var(--nav-accent) 0%, #f59e0b 100%)',
+          color: 'white',
+          border: 'none',
+          boxShadow: '0 15px 35px rgba(249, 115, 22, 0.25)',
+          borderRadius: '28px',
+          marginBottom: '24px'
+        }}>
+          <div className="settings-icon-box" style={{ 
+            width: '64px', height: '64px', 
+            background: 'rgba(255,255,255,0.2)', 
+            borderRadius: '18px', 
+            marginBottom: '20px',
+            color: 'white'
+          }}>
+            <Users size={32} />
+          </div>
+          <h3 style={{ margin: '0 0 8px 0', color: 'white', fontWeight: '950', fontSize: '1.5rem' }}>{t('family.title')}</h3>
+          <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.95rem', fontWeight: '600', lineHeight: '1.5', marginBottom: '0' }}>{t('family.intro')}</p>
+        </div>
+
+        {error && (
+          <div className="settings-card pulse" style={{ 
+            color: '#ef4444', 
+            marginBottom: '24px', 
+            padding: '16px', 
+            background: 'rgba(239, 68, 68, 0.05)', 
+            border: '1px solid rgba(239, 68, 68, 0.2)',
+            borderRadius: '16px',
+            fontWeight: '800',
+            fontSize: '0.9rem',
+            justifyContent: 'center'
+          }}>
+            {error}
+          </div>
+        )}
 
         {mode === 'view' && (
-          <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
-            <button className="btn btn-primary" onClick={() => setMode('create')}>
-              {t('family.createAction')}
+          <div style={{ display: 'flex', gap: '12px', flexDirection: 'column' }} className="reveal-stagger">
+            <button 
+              className="settings-card" 
+              onClick={() => setMode('create')}
+              style={{ padding: '24px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)' }}
+            >
+              <div className="settings-icon-box" style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', borderRadius: '14px' }}>
+                <UserPlus size={24} />
+              </div>
+              <div style={{ flex: 1, textAlign: 'left' }}>
+                <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1.1rem' }}>{t('family.createAction')}</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>Yeni bir aile grubu oluşturun</div>
+              </div>
             </button>
-            <button className="btn" style={{ background: '#eee' }} onClick={() => setMode('join')}>
-              {t('family.joinAction')}
+            <button 
+              className="settings-card" 
+              onClick={() => setMode('join')}
+              style={{ padding: '24px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)' }}
+            >
+              <div className="settings-icon-box" style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderRadius: '14px' }}>
+                <Activity size={24} />
+              </div>
+              <div style={{ flex: 1, textAlign: 'left' }}>
+                <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1.1rem' }}>{t('family.joinAction')}</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>Davet kodu ile bir gruba katılın</div>
+              </div>
             </button>
           </div>
         )}
 
         {mode === 'create' && (
-          <div>
+          <div className="settings-card reveal-stagger" style={{ padding: '24px', flexDirection: 'column', alignItems: 'stretch' }}>
+            <h4 style={{ margin: '0 0 20px 0', color: 'var(--nav-text)', fontWeight: '950' }}>{t('family.createAction')}</h4>
             <input 
               type="text" 
               placeholder={t('family.familyNamePlaceholder')}
-              className="form-control"
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               style={{ 
                 width: '100%', 
-                marginBottom: '10px', 
-                padding: '12px',
-                background: 'var(--input-bg)',
-                border: '1px solid var(--input-border)',
-                color: 'var(--text-color)',
-                borderRadius: '12px'
+                marginBottom: '20px', 
+                padding: '16px 20px', 
+                background: 'var(--nav-hover)',
+                border: '1px solid var(--nav-border)',
+                color: 'var(--nav-text)',
+                borderRadius: '16px',
+                fontWeight: '700',
+                outline: 'none'
               }}
             />
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '12px' }}>
               <button 
-                className="btn btn-primary" 
+                className="velocity-target-btn" 
+                style={{ flex: 1, padding: '16px', justifyContent: 'center' }}
                 disabled={busy || !inputVal}
                 onClick={async () => {
                   setBusy(true);
@@ -66,35 +130,47 @@ const FamilyDashboard = ({ onClose }) => {
                   setBusy(false);
                 }}
               >
-                {busy ? '...' : t('common.save')}
+                {busy ? <Clock size={20} className="spin" /> : t('common.save')}
               </button>
-              <button className="btn" onClick={() => setMode('view')}>{t('common.cancel')}</button>
+              <button 
+                className="settings-card" 
+                style={{ flex: 1, padding: '16px', justifyContent: 'center', fontWeight: '800', background: 'transparent' }}
+                onClick={() => setMode('view')}
+              >
+                {t('common.cancel')}
+              </button>
             </div>
           </div>
         )}
 
         {mode === 'join' && (
-          <div>
+          <div className="settings-card reveal-stagger" style={{ padding: '24px', flexDirection: 'column', alignItems: 'stretch' }}>
+            <h4 style={{ margin: '0 0 20px 0', color: 'var(--nav-text)', fontWeight: '950' }}>{t('family.joinAction')}</h4>
             <input 
               type="text" 
               placeholder={t('family.codePlaceholder')}
-              className="form-control"
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               style={{ 
                 width: '100%', 
-                marginBottom: '10px', 
-                padding: '12px', 
+                marginBottom: '20px', 
+                padding: '16px 20px', 
                 textTransform: 'uppercase',
-                background: 'var(--input-bg)',
-                border: '1px solid var(--input-border)',
-                color: 'var(--text-color)',
-                borderRadius: '12px'
+                background: 'var(--nav-hover)',
+                border: '1px solid var(--nav-border)',
+                color: 'var(--nav-text)',
+                borderRadius: '16px',
+                fontWeight: '900',
+                letterSpacing: '2px',
+                textAlign: 'center',
+                fontSize: '1.25rem',
+                outline: 'none'
               }}
             />
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '12px' }}>
               <button 
-                className="btn btn-primary" 
+                className="velocity-target-btn" 
+                style={{ flex: 1, padding: '16px', justifyContent: 'center' }}
                 disabled={busy || !inputVal}
                 onClick={async () => {
                   setBusy(true);
@@ -102,9 +178,15 @@ const FamilyDashboard = ({ onClose }) => {
                   setBusy(false);
                 }}
               >
-                {busy ? '...' : t('family.joinAction')}
+                {busy ? <Clock size={20} className="spin" /> : t('family.joinAction')}
               </button>
-              <button className="btn" onClick={() => setMode('view')}>{t('common.cancel')}</button>
+              <button 
+                className="settings-card" 
+                style={{ flex: 1, padding: '16px', justifyContent: 'center', fontWeight: '800', background: 'transparent' }}
+                onClick={() => setMode('view')}
+              >
+                {t('common.cancel')}
+              </button>
             </div>
           </div>
         )}
@@ -117,16 +199,44 @@ const FamilyDashboard = ({ onClose }) => {
   // Detay Görünümü
   if (selectedMember) {
     return (
-      <div className="family-dashboard" style={{ padding: '15px' }}>
-        <div style={{ padding: '0 15px 15px 5px' }}>
+      <div className="settings-container reveal-stagger" style={{ paddingBottom: '120px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
            <IslamicBackButton onClick={() => setSelectedMember(null)} showLabel={true} label={t('common.back')} />
         </div>
 
-        <div className="glass-card" style={{ padding: '20px', marginBottom: '20px', background: 'var(--card-bg)', textAlign: 'center' }}>
-          <h2 style={{ margin: '0 0 5px 0', color: 'var(--primary-color)' }}>{selectedMember.displayName}</h2>
-          <span style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
+        <div className="settings-card reveal-stagger" style={{ 
+          padding: '32px 24px', 
+          marginBottom: '24px', 
+          background: 'var(--nav-hover)', 
+          textAlign: 'center',
+          flexDirection: 'column',
+          alignItems: 'stretch'
+        }}>
+          <div className="settings-icon-box" style={{ 
+            width: '84px', height: '84px', 
+            background: 'var(--nav-accent)', 
+            borderRadius: '24px', 
+            margin: '0 auto 20px', 
+            color: 'white',
+            fontSize: '2.5rem'
+          }}>
+            {selectedMember.displayName?.charAt(0) || '👤'}
+          </div>
+          <h2 style={{ margin: '0 0 4px 0', color: 'var(--nav-text)', fontWeight: '950', fontSize: '1.75rem' }}>{selectedMember.displayName}</h2>
+          <div style={{ 
+            fontSize: '0.85rem', 
+            color: 'var(--nav-text-muted)', 
+            fontWeight: '800', 
+            textTransform: 'uppercase', 
+            letterSpacing: '0.5px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px'
+          }}>
+             {selectedMember.role === 'child' ? '👶' : '👨‍👩‍👧'}
              {selectedMember.role === 'child' ? t('family.child') : t('common.user')}
-          </span>
+          </div>
         </div>
 
         <BadgeGrid 
@@ -140,46 +250,106 @@ const FamilyDashboard = ({ onClose }) => {
   }
 
   return (
-    <div className="family-dashboard" style={{ padding: '15px' }}>
-      <div style={{ padding: '0 15px 15px 5px' }}>
+    <div className="settings-container reveal-stagger" style={{ paddingBottom: '120px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
          <IslamicBackButton onClick={onClose} showLabel={true} label={t('family.title')} />
       </div>
-      <div className="glass-card" style={{ padding: '20px', marginBottom: '20px', background: 'var(--card-bg)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h2 style={{ margin: 0, color: 'var(--primary-color)' }}>{family?.name}</h2>
-          <span style={{ 
-            background: 'var(--input-bg)', 
-            color: 'var(--text-color)',
-            padding: '5px 10px', 
-            borderRadius: '15px', 
-            fontSize: '12px', 
-            border: '1px solid var(--glass-border)' 
+      
+      <div className="settings-card reveal-stagger" style={{ 
+        padding: '32px 24px', 
+        marginBottom: '32px', 
+        background: 'linear-gradient(135deg, var(--nav-accent) 0%, #f59e0b 100%)',
+        color: 'white',
+        border: 'none',
+        borderRadius: '28px',
+        boxShadow: '0 15px 35px rgba(249, 115, 22, 0.25)',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: '20px',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        {/* Decorative background icon */}
+        <Shield size={120} style={{ position: 'absolute', right: '-20px', bottom: '-20px', opacity: 0.1, transform: 'rotate(-15deg)' }} />
+        
+        <div style={{ flex: 1, position: 'relative', zIndex: 1 }}>
+          <h2 style={{ margin: 0, color: 'white', fontWeight: '950', fontSize: '1.75rem', letterSpacing: '-0.5px' }}>{family?.name}</h2>
+          <div style={{ 
+            marginTop: '8px', 
+            fontSize: '0.9rem', 
+            color: 'rgba(255,255,255,0.9)', 
+            fontWeight: '700',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
           }}>
-            Kod: <b>{family?.inviteCode}</b>
-          </span>
+            <Users size={16} />
+            {t('family.membersCount', { count: family?.members?.length })}
+          </div>
         </div>
-        <p style={{ marginTop: '5px', fontSize: '13px', color: 'var(--text-color-muted)' }}>
-          {t('family.membersCount', { count: family?.members?.length })}
-        </p>
+
+        <div style={{ 
+          background: 'rgba(255,255,255,0.2)', 
+          backdropFilter: 'blur(10px)',
+          color: 'white',
+          padding: '12px 20px', 
+          borderRadius: '18px', 
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+          border: '1px solid rgba(255,255,255,0.3)',
+          position: 'relative',
+          zIndex: 1
+        }}>
+          <span style={{ fontSize: '0.7rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', opacity: 0.8 }}>KOD</span>
+          <b style={{ fontSize: '1.25rem', letterSpacing: '2px' }}>{family?.inviteCode}</b>
+        </div>
       </div>
 
-      <h3 style={{ fontSize: '18px', marginBottom: '15px' }}>{t('family.members')}</h3>
+      <h3 style={{ 
+        fontSize: '1rem', 
+        marginBottom: '20px', 
+        color: 'var(--nav-text)', 
+        fontWeight: '900',
+        textTransform: 'uppercase',
+        letterSpacing: '0.5px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px'
+      }}>
+        <Users size={20} color="var(--nav-accent)" />
+        {t('family.members')}
+      </h3>
       
-      {family?.membersDetails?.map(member => (
-        <MemberCard 
-          key={member.uid} 
-          member={member} 
-          isChild={member.role === 'child'} 
-          onClick={() => setSelectedMember(member)}
-        />
-      ))}
+      <div className="reveal-stagger" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {family?.membersDetails?.map((member, index) => (
+          <MemberCard 
+            key={member.uid} 
+            member={member} 
+            isChild={member.role === 'child'} 
+            onClick={() => setSelectedMember(member)}
+            style={{ '--delay': `${index * 0.05}s` }}
+          />
+        ))}
+      </div>
 
-      <div style={{ marginTop: '30px', textAlign: 'center' }}>
-        <p style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
-          {t('family.inviteTip')}
-          <br/>
-          <span style={{ fontSize: '11px', opacity: 0.8 }}>Detaylar için üyeye tıklayın</span>
-        </p>
+      <div style={{ marginTop: '48px', textAlign: 'center' }} className="reveal-stagger">
+        <div className="settings-card" style={{ 
+          padding: '24px', 
+          background: 'var(--nav-hover)', 
+          flexDirection: 'column', 
+          alignItems: 'center',
+          border: '1px dashed var(--nav-border)' 
+        }}>
+          <div className="settings-icon-box" style={{ background: 'rgba(249, 115, 22, 0.1)', color: 'var(--nav-accent)', marginBottom: '16px' }}>
+            <Share2 size={24} />
+          </div>
+          <p style={{ fontSize: '0.95rem', color: 'var(--nav-text)', fontWeight: '700', margin: '0 0 8px 0' }}>
+            {t('family.inviteTip')}
+          </p>
+          <span style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>Detaylar için üyeye tıklayın</span>
+        </div>
       </div>
     </div>
   );

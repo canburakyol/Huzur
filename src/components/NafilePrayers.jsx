@@ -27,7 +27,7 @@ const NAFILE_PRAYERS = [
     description: 'Ramazan ayında yatsı namazından sonra kılınan 20 rekatlık namaz',
     icon: '🌙',
     rekat: 20,
-    color: '#8b5cf6',
+    color: 'var(--accent-color)',
     category: 'ramazan',
     time: 'yatsi_after'
   },
@@ -38,7 +38,7 @@ const NAFILE_PRAYERS = [
     description: 'Güneş doğduktan 15-20 dakika sonra kılınan 2-8 rekatlık namaz',
     icon: '☀️',
     rekat: 8,
-    color: '#f59e0b',
+    color: 'var(--primary-color)',
     category: 'daily',
     time: 'morning'
   },
@@ -49,7 +49,7 @@ const NAFILE_PRAYERS = [
     description: 'Gece yarısından sonra kılınan 2-12 rekatlık namaz',
     icon: '🌟',
     rekat: 12,
-    color: '#3b82f6',
+    color: 'var(--accent-color)',
     category: 'night',
     time: 'midnight'
   },
@@ -60,7 +60,7 @@ const NAFILE_PRAYERS = [
     description: 'Güneş doğup 45 derece yükseldikten sonra kılınan 2-4 rekatlık namaz',
     icon: '🌅',
     rekat: 4,
-    color: '#ec4899',
+    color: 'var(--accent-gold)',
     category: 'morning',
     time: 'mid_morning'
   },
@@ -71,7 +71,7 @@ const NAFILE_PRAYERS = [
     description: 'Yatsı namazından sonra kılınan tek rekatlık namaz',
     icon: '✨',
     rekat: 3,
-    color: '#22c55e',
+    color: 'var(--bg-emerald-light)',
     category: 'daily',
     time: 'yatsi_after'
   },
@@ -82,7 +82,7 @@ const NAFILE_PRAYERS = [
     description: 'Bir işe başlamadan önce danışma namazı',
     icon: '🤲',
     rekat: 2,
-    color: '#14b8a6',
+    color: 'var(--bg-emerald-deep)',
     category: 'special',
     time: 'any'
   },
@@ -93,7 +93,7 @@ const NAFILE_PRAYERS = [
     description: 'Günahların affı için kılınan namaz',
     icon: '🙏',
     rekat: 2,
-    color: '#ef4444',
+    color: 'var(--error-color)',
     category: 'special',
     time: 'any'
   },
@@ -104,7 +104,7 @@ const NAFILE_PRAYERS = [
     description: 'Bir ihtiyaç için kılınan namaz',
     icon: '💫',
     rekat: 2,
-    color: '#f97316',
+    color: 'var(--primary-dark)',
     category: 'special',
     time: 'any'
   }
@@ -275,20 +275,20 @@ export function NafilePrayers({ onClose }) {
       </div>
 
       {/* Stats Overview */}
-      <div className="nafile-stats">
+      <div className="nafile-stats reveal-stagger" style={{ '--delay': '0.1s' }}>
         <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(34, 197, 94, 0.2)', color: '#22c55e' }}>
-            <CheckCircle2 size={20} />
+          <div className="stat-icon" style={{ background: 'rgba(15, 118, 110, 0.1)', color: 'var(--bg-emerald-light)' }}>
+            <CheckCircle2 size={24} />
           </div>
           <div className="stat-info">
             <span className="stat-value">{todayStats.completed}</span>
-            <span className="stat-label">{t('nafilePrayers.stats.completedToday', 'Bugün Tamamlanan')}</span>
+            <span className="stat-label">{t('nafilePrayers.stats.completedToday', 'Bugün')}</span>
           </div>
         </div>
         
         <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(245, 158, 11, 0.2)', color: '#f59e0b' }}>
-            <Trophy size={20} />
+          <div className="stat-icon" style={{ background: 'rgba(180, 83, 9, 0.1)', color: 'var(--accent-gold)' }}>
+            <Trophy size={24} />
           </div>
           <div className="stat-info">
             <span className="stat-value">{totalCompleted}</span>
@@ -297,12 +297,12 @@ export function NafilePrayers({ onClose }) {
         </div>
         
         <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(236, 72, 153, 0.2)', color: '#ec4899' }}>
-            <Flame size={20} />
+          <div className="stat-icon" style={{ background: 'rgba(236, 72, 153, 0.1)', color: 'var(--accent-color)' }}>
+            <Flame size={24} />
           </div>
           <div className="stat-info">
             <span className="stat-value">{streak}</span>
-            <span className="stat-label">{t('nafilePrayers.stats.dayStreak', 'Gün Serisi')}</span>
+            <span className="stat-label">{t('nafilePrayers.stats.dayStreak', 'Seri')}</span>
           </div>
         </div>
       </div>
@@ -319,13 +319,14 @@ export function NafilePrayers({ onClose }) {
 
       {/* Prayer List */}
       <div className="nafile-list">
-        {NAFILE_PRAYERS.map((prayer) => {
+        {NAFILE_PRAYERS.map((prayer, index) => {
           const progress = getProgress(prayer.id);
           
           return (
             <div 
               key={prayer.id}
-              className={`nafile-card ${progress.completed ? 'completed' : ''}`}
+              className={`nafile-card reveal-stagger ${progress.completed ? 'completed' : ''}`}
+              style={{ '--delay': `${0.2 + index * 0.05}s` }}
             >
               <div className="nafile-header-row">
                 <div 
@@ -370,7 +371,7 @@ export function NafilePrayers({ onClose }) {
                     className="progress-bar"
                     style={{ 
                       width: `${progress.percentage}%`,
-                      backgroundColor: progress.completed ? '#22c55e' : prayer.color
+                      backgroundColor: progress.completed ? 'var(--bg-emerald-light)' : prayer.color
                     }}
                   />
                 </div>

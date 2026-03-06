@@ -72,105 +72,148 @@ const DailyTasks = ({ onClose }) => {
   };
 
   return (
-    <div className="daily-tasks-container">
+    <div className="settings-container reveal-stagger" style={{ paddingBottom: '120px' }}>
       {/* Header */}
-      <div className="daily-tasks-header">
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
         <IslamicBackButton onClick={onClose} size="medium" />
-        <div className="header-content">
-          <h1>{t('menu.dailyTasks')}</h1>
-          <p className="subtitle">{t('home.dailyTasksSubtitle')}</p>
+        <div>
+          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+            {t('menu.dailyTasks')}
+          </h2>
+          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+            {t('home.dailyTasksSubtitle')}
+          </p>
         </div>
       </div>
 
       {/* Progress Card */}
-      <div className="progress-card glass-card">
-        <div className="progress-info">
-          <div className="progress-circle">
-            <svg viewBox="0 0 36 36" className="circular-progress">
+      <div className="settings-card reveal-stagger" style={{ 
+        padding: '32px 24px', 
+        marginBottom: '24px',
+        background: 'linear-gradient(135deg, var(--nav-accent) 0%, #10b981 100%)',
+        color: 'white',
+        border: 'none',
+        borderRadius: '28px',
+        boxShadow: '0 15px 35px rgba(79, 70, 229, 0.25)',
+        flexDirection: 'column',
+        alignItems: 'stretch'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '32px' }}>
+          <div style={{ position: 'relative', width: '84px', height: '84px' }}>
+            <svg viewBox="0 0 36 36" style={{ transform: 'rotate(-90deg)', width: '100%', height: '100%' }}>
               <path
-                className="circle-bg"
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 fill="none"
                 stroke="rgba(255,255,255,0.2)"
-                strokeWidth="3"
+                strokeWidth="3.5"
               />
               <path
-                className="circle-progress"
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 fill="none"
-                stroke="var(--accent)"
-                strokeWidth="3"
+                stroke="white"
+                strokeWidth="3.5"
                 strokeDasharray={`${progress.percentage}, 100`}
-                style={{ transition: 'stroke-dasharray 0.5s ease' }}
+                strokeLinecap="round"
+                style={{ transition: 'stroke-dasharray 0.8s cubic-bezier(0.4, 0, 0.2, 1)' }}
               />
             </svg>
-            <span className="progress-percentage">{progress.percentage}%</span>
+            <div style={{ 
+                position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                fontSize: '1.25rem', fontWeight: '950', color: 'white'
+            }}>
+                {progress.percentage}%
+            </div>
           </div>
-          <div className="progress-text">
-            <h3>{progress.completed} / {progress.total} {t('dailyTasks.task')}</h3>
-            <p>+{progress.points} {t('dailyTasks.pointsToday')}</p>
+          <div style={{ flex: 1 }}>
+            <h3 style={{ margin: 0, fontSize: '1.5rem', color: 'white', fontWeight: '950' }}>{progress.completed} / {progress.total}</h3>
+            <div style={{ 
+                marginTop: '4px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.9)', 
+                fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' 
+            }}>
+                <Star size={16} fill="white" />
+                +{progress.points} {t('dailyTasks.pointsToday')}
+            </div>
           </div>
         </div>
         
         {stats && (
-          <div className="stats-row">
-            <div className="stat-item">
-              <Trophy size={18} />
-              <span>{stats.totalPoints}</span>
-              <small>{t('dailyTasks.badges.point_100.title').replace('100 ', '')}</small>
+          <div style={{ 
+              display: 'flex', justifyContent: 'space-between', 
+              paddingTop: '24px', borderTop: '1px solid rgba(255,255,255,0.2)' 
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+              <Trophy size={20} color="white" />
+              <span style={{ fontSize: '1.25rem', fontWeight: '950', color: 'white' }}>{stats.totalPoints}</span>
+              <small style={{ fontSize: '0.65rem', fontWeight: '800', textTransform: 'uppercase', opacity: 0.8 }}>Puan</small>
             </div>
-            <div className="stat-item">
-              <Flame size={18} />
-              <span>{stats.consecutiveDays}</span>
-              <small>{t('dailyTasks.badges.week_streak.title').replace('Haftalık ', '')}</small>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+              <Flame size={20} color="white" />
+              <span style={{ fontSize: '1.25rem', fontWeight: '950', color: 'white' }}>{stats.consecutiveDays}</span>
+              <small style={{ fontSize: '0.65rem', fontWeight: '800', textTransform: 'uppercase', opacity: 0.8 }}>Seri</small>
             </div>
-            <div className="stat-item">
-              <Target size={18} />
-              <span>{stats.totalTasksCompleted}</span>
-              <small>{t('dailyTasks.task')}</small>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+              <Target size={20} color="white" />
+              <span style={{ fontSize: '1.25rem', fontWeight: '950', color: 'white' }}>{stats.totalTasksCompleted}</span>
+              <small style={{ fontSize: '0.65rem', fontWeight: '800', textTransform: 'uppercase', opacity: 0.8 }}>Görev</small>
             </div>
           </div>
         )}
       </div>
 
       {/* Tasks List */}
-      <div className="tasks-list">
-        {tasks.map((task) => (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} className="reveal-stagger">
+        {tasks.map((task, index) => (
           <div 
             key={task.id}
-            className={`task-item glass-card ${task.completed ? 'completed' : ''} ${animatingTask === task.id ? 'animating' : ''}`}
+            className={`settings-card ${task.completed ? 'completed' : ''} ${animatingTask === task.id ? 'animating' : ''}`}
             onClick={() => handleToggleTask(task.id)}
+            style={{ 
+                padding: '16px 20px', 
+                background: task.completed ? 'rgba(255,255,255,0.01)' : 'var(--nav-hover)',
+                opacity: task.completed ? 0.6 : 1,
+                border: task.completed ? '1px dashed var(--nav-border)' : '1px solid var(--nav-border)',
+                cursor: 'pointer',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                '--delay': `${index * 0.05}s`
+            }}
           >
             <div 
-              className="task-checkbox"
-              style={{ borderColor: getCategoryColor(task.category) }}
+              className="settings-icon-box"
+              style={{ 
+                  width: '32px', height: '32px', 
+                  borderRadius: '10px',
+                  background: task.completed ? `${getCategoryColor(task.category)}20` : 'transparent',
+                  border: `2px solid ${getCategoryColor(task.category)}`,
+                  color: getCategoryColor(task.category),
+                  flexShrink: 0,
+                  marginRight: '16px'
+              }}
             >
-              {task.completed ? (
-                <Check size={18} style={{ color: getCategoryColor(task.category) }} />
-              ) : (
-                <Circle size={18} style={{ color: 'rgba(255,255,255,0.3)' }} />
-              )}
+              {task.completed ? <Check size={18} strokeWidth={3} /> : <div style={{ width: '12px', height: '12px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px' }} />}
             </div>
             
-            <div className="task-content">
-              <div className="task-header">
-                <span className="task-icon">{task.icon}</span>
-                <h4 className={task.completed ? 'line-through' : ''}>{t(task.title)}</h4>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                <span style={{ fontSize: '1.25rem' }}>{task.icon}</span>
+                <h4 style={{ 
+                    margin: 0, fontSize: '1rem', color: 'var(--nav-text)', 
+                    fontWeight: '800', textDecoration: task.completed ? 'line-through' : 'none',
+                    transition: 'all 0.3s'
+                }}>{t(task.title)}</h4>
               </div>
-              <p className="task-description">{t(task.description)}</p>
-              <div className="task-meta">
+              <p style={{ margin: '0 0 10px 0', fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{t(task.description)}</p>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                 <span 
-                  className="category-badge"
-                  style={{ backgroundColor: `${getCategoryColor(task.category)}20`, color: getCategoryColor(task.category) }}
+                  style={{ 
+                      fontSize: '0.65rem', padding: '4px 10px', borderRadius: '8px', fontWeight: '900',
+                      textTransform: 'uppercase', letterSpacing: '0.5px',
+                      backgroundColor: `${getCategoryColor(task.category)}15`, color: getCategoryColor(task.category) 
+                  }}
                 >
                   {getCategoryName(task.category)}
                 </span>
-                <span className="points-badge">
-                  <Star size={12} />
+                <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: '#f59e0b', fontWeight: '800' }}>
+                  <Star size={12} fill="#f59e0b" />
                   +{task.points}
                 </span>
               </div>
@@ -181,13 +224,20 @@ const DailyTasks = ({ onClose }) => {
 
       {/* Earned Badges Section */}
       {stats && stats.earnedBadges.length > 0 && (
-        <div className="badges-section glass-card">
-          <h3><Gift size={18} /> {t('dailyTasks.earnedBadges')}</h3>
-          <div className="badges-grid">
+        <div className="settings-card reveal-stagger" style={{ 
+            marginTop: '32px', padding: '24px', flexDirection: 'column', alignItems: 'stretch' 
+        }}>
+          <h3 style={{ margin: '0 0 20px 0', fontSize: '1rem', fontWeight: '950', color: 'var(--nav-text)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <Gift size={20} color="var(--nav-accent)" /> {t('dailyTasks.earnedBadges')}
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
             {getEarnedBadges().map((badge) => (
-              <div key={badge.id} className="badge-item">
-                <span className="badge-emoji">{badge.emoji}</span>
-                <span className="badge-title">{t(badge.title)}</span>
+              <div key={badge.id} className="settings-card" style={{ 
+                  flexDirection: 'column', gap: '6px', padding: '12px 8px', 
+                  background: 'var(--nav-hover)', border: '1px solid var(--nav-border)'
+              }}>
+                <span style={{ fontSize: '1.75rem' }}>{badge.emoji}</span>
+                <span style={{ fontSize: '0.6rem', color: 'var(--nav-text-muted)', fontWeight: '800', textAlign: 'center', lineHeight: '1.2' }}>{t(badge.title)}</span>
               </div>
             ))}
           </div>
@@ -196,15 +246,18 @@ const DailyTasks = ({ onClose }) => {
 
       {/* Badge Earned Modal */}
       {showBadgeModal && (
-        <div className="badge-modal-overlay" onClick={() => setShowBadgeModal(null)}>
-          <div className="badge-modal glass-card" onClick={e => e.stopPropagation()}>
-            <div className="badge-modal-icon celebrate-animation">
+        <div className="badge-modal-overlay" onClick={() => setShowBadgeModal(null)} style={{ backdropFilter: 'blur(10px)', zIndex: 2000 }}>
+          <div className="settings-card reveal-stagger" onClick={e => e.stopPropagation()} style={{ 
+              flexDirection: 'column', padding: '32px', maxWidth: '340px', textAlign: 'center',
+              background: 'var(--nav-bg)', border: '1px solid var(--nav-border)', borderRadius: '32px'
+          }}>
+            <div className="celebrate-animation" style={{ fontSize: '5rem', marginBottom: '20px' }}>
               {showBadgeModal.emoji}
             </div>
-            <h2>{t('dailyTasks.newBadge')}</h2>
-            <h3>{t(showBadgeModal.title)}</h3>
-            <p>{t(showBadgeModal.requirement)}</p>
-            <button className="close-modal-btn" onClick={() => setShowBadgeModal(null)}>
+            <h2 style={{ margin: '0 0 8px 0', color: 'var(--nav-accent)', fontWeight: '950', fontSize: '1.5rem' }}>{t('dailyTasks.newBadge')}</h2>
+            <h3 style={{ margin: '0 0 12px 0', color: 'var(--nav-text)', fontWeight: '900', fontSize: '1.25rem' }}>{t(showBadgeModal.title)}</h3>
+            <p style={{ margin: '0 0 32px 0', color: 'var(--nav-text-muted)', fontWeight: '600', fontSize: '0.9rem', lineHeight: '1.5' }}>{t(showBadgeModal.requirement)}</p>
+            <button className="velocity-target-btn" onClick={() => setShowBadgeModal(null)} style={{ padding: '16px 48px' }}>
               {t('home.awesome')}
             </button>
           </div>
@@ -213,390 +266,44 @@ const DailyTasks = ({ onClose }) => {
 
       {/* All Complete Celebration */}
       {showAllComplete && (
-        <div className="celebration-overlay" onClick={() => setShowAllComplete(false)}>
-          <div className="celebration-content">
-            <div className="celebration-emoji">🎉</div>
-            <h2>{t('dailyTasks.congrats')}</h2>
-            <p>{t('dailyTasks.allTasksCompleted')}</p>
-            <p className="bonus-text">{t('dailyTasks.bonusPoints', { points: 50 })}</p>
+        <div className="celebration-overlay" onClick={() => setShowAllComplete(false)} style={{ backdropFilter: 'blur(10px)', zIndex: 2000 }}>
+          <div style={{ textAlign: 'center' }} className="reveal-stagger">
+            <div className="celebrate-animation" style={{ fontSize: '6rem', marginBottom: '20px' }}>🎉</div>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: '950', color: '#f59e0b', margin: '0 0 8px 0' }}>{t('dailyTasks.congrats')}</h2>
+            <p style={{ fontSize: '1.25rem', fontWeight: '800', color: 'white', margin: '0 0 12px 0' }}>{t('dailyTasks.allTasksCompleted')}</p>
+            <p style={{ color: '#10b981', fontWeight: '950', fontSize: '1.5rem' }}>{t('dailyTasks.bonusPoints', { points: 50 })}</p>
           </div>
         </div>
       )}
 
       <style>{`
-        .daily-tasks-container {
-          min-height: 100vh;
-          padding: 0 0 100px 0;
-          background: var(--bg-primary);
-        }
-
-        .daily-tasks-header {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 20px;
-          background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 100%);
-          position: sticky;
-          top: 0;
-          z-index: 10;
-        }
-
-        .header-content h1 {
-          font-size: 1.5rem;
-          margin: 0;
-          color: var(--text-primary);
-        }
-
-        .subtitle {
-          font-size: 0.85rem;
-          color: var(--text-secondary);
-          margin: 4px 0 0 0;
-        }
-
-        .progress-card {
-          margin: 0 16px 20px;
-          padding: 20px;
-          border-radius: 20px;
-        }
-
-        .progress-info {
-          display: flex;
-          align-items: center;
-          gap: 20px;
-          margin-bottom: 20px;
-        }
-
-        .progress-circle {
-          position: relative;
-          width: 80px;
-          height: 80px;
-        }
-
-        .circular-progress {
-          transform: rotate(-90deg);
-          width: 100%;
-          height: 100%;
-        }
-
-        .progress-percentage {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          font-size: 1.2rem;
-          font-weight: bold;
-          color: var(--accent);
-        }
-
-        .progress-text h3 {
-          margin: 0;
-          font-size: 1.1rem;
-          color: var(--text-primary);
-        }
-
-        .progress-text p {
-          margin: 4px 0 0;
-          font-size: 0.85rem;
-          color: var(--accent);
-        }
-
-        .stats-row {
-          display: flex;
-          justify-content: space-around;
-          padding-top: 16px;
-          border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .stat-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 4px;
-        }
-
-        .stat-item svg {
-          color: var(--accent);
-        }
-
-        .stat-item span {
-          font-size: 1.2rem;
-          font-weight: bold;
-          color: var(--text-primary);
-        }
-
-        .stat-item small {
-          font-size: 0.7rem;
-          color: var(--text-secondary);
-        }
-
-        .tasks-list {
-          padding: 0 16px;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-
-        .task-item {
-          display: flex;
-          gap: 16px;
-          padding: 16px;
-          border-radius: 16px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          align-items: flex-start;
-        }
-
-        .task-item:active {
-          transform: scale(0.98);
-        }
-
-        .task-item.completed {
-          opacity: 0.7;
-        }
-
-        .task-item.animating {
-          animation: taskComplete 0.3s ease;
-        }
-
-        @keyframes taskComplete {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.02); }
-          100% { transform: scale(1); }
-        }
-
-        .task-checkbox {
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-          border: 2px solid;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          transition: all 0.3s ease;
-        }
-
-        .task-item.completed .task-checkbox {
-          background: rgba(255,255,255,0.1);
-        }
-
-        .task-content {
-          flex: 1;
-        }
-
-        .task-header {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin-bottom: 4px;
-        }
-
-        .task-icon {
-          font-size: 1.2rem;
-        }
-
-        .task-header h4 {
-          margin: 0;
-          font-size: 1rem;
-          color: var(--text-primary);
-          transition: all 0.3s ease;
-        }
-
-        .task-header h4.line-through {
-          text-decoration: line-through;
-          opacity: 0.7;
-        }
-
-        .task-description {
-          font-size: 0.8rem;
-          color: var(--text-secondary);
-          margin: 0 0 8px 0;
-        }
-
-        .task-meta {
-          display: flex;
-          gap: 8px;
-          align-items: center;
-        }
-
-        .category-badge {
-          font-size: 0.7rem;
-          padding: 4px 8px;
-          border-radius: 12px;
-          font-weight: 500;
-        }
-
-        .points-badge {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          font-size: 0.75rem;
-          color: var(--accent);
-          font-weight: 600;
-        }
-
-        .badges-section {
-          margin: 24px 16px;
-          padding: 20px;
-          border-radius: 20px;
-        }
-
-        .badges-section h3 {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin: 0 0 16px 0;
-          font-size: 1rem;
-          color: var(--text-primary);
-        }
-
-        .badges-grid {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-        }
-
-        .badge-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 4px;
-          padding: 12px;
-          background: rgba(255,255,255,0.05);
-          border-radius: 12px;
-          min-width: 70px;
-        }
-
-        .badge-emoji {
-          font-size: 1.5rem;
-        }
-
-        .badge-title {
-          font-size: 0.65rem;
-          color: var(--text-secondary);
-          text-align: center;
-        }
-
-        .badge-modal-overlay,
-        .celebration-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0,0,0,0.8);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 1000;
-          animation: fadeIn 0.3s ease;
-        }
-
-        .badge-modal {
-          padding: 32px;
-          border-radius: 24px;
-          text-align: center;
-          max-width: 300px;
-          animation: slideUp 0.4s ease;
-        }
-
-        .badge-modal-icon {
-          font-size: 4rem;
-          margin-bottom: 16px;
-        }
-
         .celebrate-animation {
-          animation: celebrate 0.6s ease infinite;
+          animation: celebrate 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
         }
 
         @keyframes celebrate {
           0%, 100% { transform: scale(1) rotate(0deg); }
-          25% { transform: scale(1.1) rotate(-5deg); }
-          75% { transform: scale(1.1) rotate(5deg); }
+          25% { transform: scale(1.1) rotate(-8deg); }
+          75% { transform: scale(1.1) rotate(8deg); }
         }
 
-        .badge-modal h2 {
-          margin: 0;
-          font-size: 1.3rem;
-          color: var(--accent);
+        .animating {
+          animation: taskComplete 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .badge-modal h3 {
-          margin: 8px 0;
-          font-size: 1.1rem;
-          color: var(--text-primary);
+        @keyframes taskComplete {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+          100% { transform: scale(1); }
         }
 
-        .badge-modal p {
-          margin: 0 0 20px;
-          font-size: 0.85rem;
-          color: var(--text-secondary);
-        }
-
-        .close-modal-btn {
-          background: var(--accent);
-          color: var(--bg-primary);
-          border: none;
-          padding: 12px 32px;
-          border-radius: 25px;
-          font-size: 1rem;
-          font-weight: 600;
-          cursor: pointer;
-          transition: transform 0.2s ease;
-        }
-
-        .close-modal-btn:active {
-          transform: scale(0.95);
-        }
-
-        .celebration-content {
-          text-align: center;
-          animation: slideUp 0.4s ease;
-        }
-
-        .celebration-emoji {
-          font-size: 5rem;
-          animation: bounce 0.6s ease infinite;
-        }
-
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
-        }
-
-        .celebration-content h2 {
-          font-size: 2rem;
-          color: var(--accent);
-          margin: 16px 0 8px;
-        }
-
-        .celebration-content p {
-          color: var(--text-primary);
-          font-size: 1.1rem;
-          margin: 0;
-        }
-
-        .bonus-text {
-          color: #22c55e !important;
-          font-weight: bold;
-          font-size: 1.3rem !important;
-          margin-top: 12px !important;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-          from { 
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to { 
-            opacity: 1;
-            transform: translateY(0);
-          }
+        .badge-modal-overlay, .celebration-overlay {
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0,0,0,0.85);
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       `}</style>
     </div>

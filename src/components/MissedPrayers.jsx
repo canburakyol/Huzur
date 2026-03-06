@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Calculator, Save, RotateCcw, Minus, Plus, History } from 'lucide-react';
+import { 
+    Calculator, Save, RotateCcw, Minus, Plus, History, 
+    Sunrise, Sun, CloudSun, Sunset, Moon, Sparkles, 
+    Calendar, User, CheckCircle2, Info, ChevronRight,
+    TrendingUp, Award
+} from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
+import './Navigation.css';
 
 const MISSED_PRAYER_CALC_KEY = 'missedPrayerCalc';
 const MISSED_PRAYER_COUNTS_KEY = 'missedPrayerCounts';
@@ -10,19 +16,16 @@ const MISSED_PRAYER_COUNTS_KEY = 'missedPrayerCounts';
 const MissedPrayers = ({ onClose }) => {
   const { t } = useTranslation();
   
-  // Helper to load saved calc params
   const loadSavedCalc = () => {
     return storageService.getItem(MISSED_PRAYER_CALC_KEY, null);
   };
 
   const savedCalcData = loadSavedCalc();
 
-  // State for calculation - Initialize lazily
   const [birthDate, setBirthDate] = useState(savedCalcData?.birthDate || '');
   const [pubertyAge, setPubertyAge] = useState(savedCalcData?.pubertyAge || 12);
   const [isCalculated, setIsCalculated] = useState(!!savedCalcData);
 
-  // State for counts - Initialize lazily from localStorage
   const [missedCounts, setMissedCounts] = useState(() => {
     return storageService.getItem(MISSED_PRAYER_COUNTS_KEY, {
       fajr: 0,
@@ -34,7 +37,6 @@ const MissedPrayers = ({ onClose }) => {
     });
   });
 
-  // Save counts whenever they change
   useEffect(() => {
     storageService.setItem(MISSED_PRAYER_COUNTS_KEY, missedCounts);
   }, [missedCounts]);
@@ -46,12 +48,10 @@ const MissedPrayers = ({ onClose }) => {
     const today = new Date();
     const pubertyDate = new Date(birth.getFullYear() + parseInt(pubertyAge), birth.getMonth(), birth.getDate());
     
-    // Calculate days passed since puberty
     const diffTime = Math.abs(today - pubertyDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
     if (diffDays > 0) {
-      // Ask user if they want to overwrite existing counts
       if (isCalculated && !window.confirm(t('missedPrayers.confirmRecalculate'))) {
         return;
       }
@@ -67,8 +67,6 @@ const MissedPrayers = ({ onClose }) => {
       
       setMissedCounts(newCounts);
       setIsCalculated(true);
-      
-      // Save calculation parameters
       storageService.setItem(MISSED_PRAYER_CALC_KEY, { birthDate, pubertyAge });
     }
   };
@@ -81,375 +79,155 @@ const MissedPrayers = ({ onClose }) => {
   };
 
   const prayers = [
-    { id: 'fajr', label: t('prayer.fajr'), color: '#FBBF24', icon: '☀️' },
-    { id: 'dhuhr', label: t('prayer.dhuhr'), color: '#3B82F6', icon: '🌤️' },
-    { id: 'asr', label: t('prayer.asr'), color: '#F59E0B', icon: '🌥️' },
-    { id: 'maghrib', label: t('prayer.maghrib'), color: '#8B5CF6', icon: '🌅' },
-    { id: 'isha', label: t('prayer.isha'), color: '#1E40AF', icon: '🌙' },
-    { id: 'witr', label: 'Vitir', color: '#10B981', icon: '✨' }
+    { id: 'fajr', label: t('prayer.fajr'), color: '#f59e0b', icon: <Sunrise size={20} /> },
+    { id: 'dhuhr', label: t('prayer.dhuhr'), color: '#3b82f6', icon: <Sun size={20} /> },
+    { id: 'asr', label: t('prayer.asr'), color: '#f97316', icon: <CloudSun size={20} /> },
+    { id: 'maghrib', label: t('prayer.maghrib'), color: '#8b5cf6', icon: <Sunset size={20} /> },
+    { id: 'isha', label: t('prayer.isha'), color: '#1e40af', icon: <Moon size={20} /> },
+    { id: 'witr', label: t('prayer.witr', 'Vitir'), color: '#10b981', icon: <Sparkles size={20} /> }
   ];
 
+  const totalMissed = Object.values(missedCounts).reduce((a, b) => a + b, 0);
+
   return (
-    <div className="missed-prayers-container animate-fadeIn">
+    <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
       {/* Header */}
-      <div className="missed-header" style={{
-          paddingTop: 'calc(20px + env(safe-area-inset-top))'
-      }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
         <IslamicBackButton onClick={onClose} size="medium" />
-        <div className="header-content">
-          <h1>🕌 {t('missedPrayers.title')}</h1>
-          <p className="subtitle">Kaza borçlarınızı planlı bir şekilde takip edin</p>
+        <div>
+            <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                {t('missedPrayers.title')}
+            </h2>
+            <p className="settings-desc">{t('missedPrayers.subtitle', 'Kaza borçlarınızı planlı bir şekilde takip edin')}</p>
         </div>
       </div>
 
       <div className="missed-content">
-        {/* Calculator Section */}
         {!isCalculated ? (
-          <div className="card-outer glass-card item-stagger">
-            <div className="card-header">
-              <Calculator size={20} color="var(--primary-color)" />
-              <h3>{t('missedPrayers.calculatorTitle')}</h3>
-            </div>
+          <div className="settings-group">
+            <div className="settings-group-title">{t('missedPrayers.calculatorTitle')}</div>
             
-            <div className="input-group">
-              <label>{t('missedPrayers.birthDate')}</label>
-              <div className="input-wrapper">
-                <input 
-                  type="date" 
-                  value={birthDate} 
-                  onChange={(e) => setBirthDate(e.target.value)}
-                  className="themed-input"
-                />
-              </div>
-            </div>
+            <div className="settings-card" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <label style={{ fontSize: '13px', fontWeight: '800', color: 'var(--nav-text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Calendar size={14} /> {t('missedPrayers.birthDate')}
+                    </label>
+                    <input 
+                        type="date" 
+                        value={birthDate} 
+                        onChange={(e) => setBirthDate(e.target.value)}
+                        style={{ width: '100%', padding: '12px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '12px', color: 'var(--nav-text)', outline: 'none' }}
+                    />
+                </div>
 
-            <div className="input-group">
-              <label>{t('missedPrayers.pubertyAge')}</label>
-              <div className="input-wrapper">
-                <select 
-                  value={pubertyAge} 
-                  onChange={(e) => setPubertyAge(e.target.value)}
-                  className="themed-select"
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <label style={{ fontSize: '13px', fontWeight: '800', color: 'var(--nav-text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <User size={14} /> {t('missedPrayers.pubertyAge')}
+                    </label>
+                    <select 
+                        value={pubertyAge} 
+                        onChange={(e) => setPubertyAge(e.target.value)}
+                        style={{ width: '100%', padding: '12px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '12px', color: 'var(--nav-text)', outline: 'none' }}
+                    >
+                        {[...Array(6)].map((_, i) => (
+                            <option key={i} value={10 + i}>{10 + i} {t('common.age', 'Yaş')}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <button 
+                  onClick={calculateMissed}
+                  style={{ 
+                    width: '100%', padding: '16px', background: 'var(--nav-accent)', color: 'white', 
+                    border: 'none', borderRadius: '16px', fontWeight: '800', fontSize: '1rem', 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
+                    boxShadow: '0 4px 12px rgba(249, 115, 22, 0.2)'
+                  }}
+                  disabled={!birthDate}
                 >
-                  {[...Array(6)].map((_, i) => (
-                    <option key={i} value={10 + i}>{10 + i} Yaş</option>
-                  ))}
-                </select>
-              </div>
+                  <TrendingUp size={20} />
+                  {t('missedPrayers.calculate')}
+                </button>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center', opacity: 0.6 }}>
+                    <Info size={14} />
+                    <p style={{ fontSize: '11px', margin: 0 }}>{t('missedPrayers.calcNote', 'Kaza namazlarınız otomatik olarak hesaplanır.')}</p>
+                </div>
             </div>
-
-            <button 
-              onClick={calculateMissed}
-              className="calculate-btn"
-              disabled={!birthDate}
-            >
-              <History size={18} />
-              {t('missedPrayers.calculate')}
-            </button>
-            <p className="calc-note">Doğum tarihiniz ve ergenlik yaşınıza göre kaza namazlarınız otomatik hesaplanır.</p>
           </div>
         ) : (
           <div className="tracker-view animate-slideUp">
-             <div className="tracker-summary glass-card">
-                <div className="summary-header">
-                  <h3>{t('missedPrayers.trackerTitle')}</h3>
-                  <button onClick={() => setIsCalculated(false)} className="recalc-btn">
-                    <RotateCcw size={14} />
-                    {t('missedPrayers.recalculate')}
-                  </button>
-                </div>
-                <div className="summary-stats">
-                  <div className="stat-item">
-                     <span className="stat-value">{Object.values(missedCounts).reduce((a, b) => a + b, 0)}</span>
-                     <span className="stat-label">Toplam Kaza</span>
-                  </div>
+             {/* Stats Card */}
+             <div className="settings-card" style={{ background: 'var(--nav-accent)', color: 'white', border: 'none', padding: '24px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                    <div>
+                        <div style={{ fontSize: '0.85rem', fontWeight: '700', opacity: 0.9 }}>{t('missedPrayers.totalMissed', 'Toplam Kaza Borcu')}</div>
+                        <div style={{ fontSize: '2.5rem', fontWeight: '900', letterSpacing: '-0.02em', margin: '4px 0' }}>{totalMissed}</div>
+                        <div style={{ fontSize: '0.75rem', fontWeight: '600', opacity: 0.8, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <Award size={12} /> {t('missedPrayers.keepGoing', 'İstikrarla devam edin')}
+                        </div>
+                    </div>
+                    <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifySelf: 'center', justifyContent: 'center' }}>
+                        <TrendingUp size={40} />
+                    </div>
                 </div>
              </div>
 
-             <div className="missed-grid">
-               {prayers.map((prayer, index) => (
-                 <div key={prayer.id} className="missed-card glass-card item-stagger" style={{ 
-                   animationDelay: `${index * 0.05}s`,
-                   borderLeft: `4px solid ${prayer.color}`
-                 }}>
-                   <div className="prayer-info">
-                     <span className="prayer-icon">{prayer.icon}</span>
-                     <span className="prayer-label">{prayer.label}</span>
-                   </div>
-                   
-                   <div className="counter-controls">
-                     <button 
-                       onClick={() => updateCount(prayer.id, -1)}
-                       className="control-btn minus"
-                     >
-                       <Minus size={16} />
-                     </button>
-                     
-                     <div className="count-display">
-                       <span className="count-number">{missedCounts[prayer.id]}</span>
-                     </div>
-
-                     <button 
-                       onClick={() => updateCount(prayer.id, 1)}
-                       className="control-btn plus"
-                     >
-                       <Plus size={16} />
-                     </button>
-                   </div>
-                 </div>
-               ))}
+             <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '12px 0 24px' }}>
+                <button onClick={() => setIsCalculated(false)} className="hamburger-pro-badge" style={{ background: 'var(--nav-hover)', color: 'var(--nav-text-muted)', border: '1px solid var(--nav-border)', boxShadow: 'none' }}>
+                    <RotateCcw size={12} /> {t('missedPrayers.recalculate')}
+                </button>
              </div>
-             
-             <div className="tracker-footer">
-               <div className="info-box">
-                 <History size={14} />
-                 <span>{t('missedPrayers.note')}</span>
-               </div>
+
+             <div className="settings-group">
+                <div className="settings-group-title">{t('missedPrayers.prayerList', 'Namaz Listesi')}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {prayers.map((prayer) => (
+                        <div key={prayer.id} className="settings-card" style={{ padding: '16px' }}>
+                            <div className="settings-card-left">
+                                <div className="settings-icon-box" style={{ background: 'var(--nav-hover)', color: prayer.color }}>
+                                    {prayer.icon}
+                                </div>
+                                <div>
+                                    <div className="settings-label">{prayer.label}</div>
+                                    <div className="settings-desc">{missedCounts[prayer.id]} {t('common.remaining', 'Kalan')}</div>
+                                </div>
+                            </div>
+                            
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                <button 
+                                    onClick={() => updateCount(prayer.id, -1)}
+                                    className="kaza-btn minus"
+                                >
+                                    <Minus size={16} />
+                                </button>
+                                
+                                <span className={`kaza-count ${missedCounts[prayer.id] === 0 ? 'zero' : ''}`}>
+                                    {missedCounts[prayer.id]}
+                                </span>
+
+                                <button 
+                                    onClick={() => updateCount(prayer.id, 1)}
+                                    className="kaza-btn plus"
+                                >
+                                    <Plus size={16} />
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+             </div>
+
+             <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none' }}>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                    <Info size={18} color="var(--nav-text-muted)" />
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                        {t('missedPrayers.note')}
+                    </p>
+                </div>
              </div>
           </div>
         )}
       </div>
-
-      <style>{`
-        .missed-prayers-container {
-          min-height: 100vh;
-          background: var(--bg-gradient-start);
-          padding-bottom: 40px;
-        }
-
-        .missed-header {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 20px;
-          position: sticky;
-          top: 0;
-          z-index: 100;
-          backdrop-filter: blur(10px);
-        }
-
-        .header-content h1 {
-          font-size: 1.4rem;
-          margin: 0;
-          color: var(--text-color);
-        }
-
-        .subtitle {
-          font-size: 0.85rem;
-          color: var(--text-color-muted);
-          margin: 4px 0 0 0;
-        }
-
-        .missed-content {
-          padding: 16px;
-          max-width: 500px;
-          margin: 0 auto;
-        }
-
-        .card-header {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-bottom: 20px;
-        }
-
-        .card-header h3 {
-          margin: 0;
-          font-size: 18px;
-          color: var(--text-color);
-        }
-
-        .input-group {
-          margin-bottom: 20px;
-        }
-
-        .input-group label {
-          display: block;
-          font-size: 13px;
-          color: var(--text-color-muted);
-          margin-bottom: 8px;
-          font-weight: 600;
-        }
-
-        .input-wrapper {
-          position: relative;
-        }
-
-        .themed-input, .themed-select {
-          width: 100%;
-          background: rgba(0,0,0,0.2);
-          border: 1px solid var(--glass-border);
-          border-radius: 12px;
-          padding: 12px;
-          color: var(--text-color);
-          font-size: 15px;
-          outline: none;
-          transition: border-color 0.3s;
-        }
-
-        .themed-input:focus, .themed-select:focus {
-          border-color: var(--primary-color);
-        }
-
-        .themed-select option {
-          background: #1a5c45;
-          color: white;
-        }
-
-        .calculate-btn {
-          width: 100%;
-          padding: 16px;
-          background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-          color: white;
-          border: none;
-          border-radius: 12px;
-          font-weight: 700;
-          font-size: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          cursor: pointer;
-          box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-          transition: transform 0.2s;
-        }
-
-        .calculate-btn:active { transform: scale(0.98); }
-        .calculate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .calc-note {
-          margin-top: 15px;
-          font-size: 12px;
-          color: var(--text-color-muted);
-          text-align: center;
-          line-height: 1.4;
-        }
-
-        /* Tracker View */
-        .summary-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 12px;
-        }
-
-        .summary-header h3 { margin: 0; font-size: 16px; }
-
-        .recalc-btn {
-          background: rgba(255,255,255,0.05);
-          border: 1px solid var(--glass-border);
-          color: var(--text-color-muted);
-          padding: 4px 10px;
-          border-radius: 8px;
-          font-size: 11px;
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          cursor: pointer;
-        }
-
-        .summary-stats {
-          text-align: center;
-          padding: 10px 0;
-        }
-
-        .stat-value {
-          display: block;
-          font-size: 32px;
-          font-weight: 800;
-          color: var(--primary-color);
-        }
-
-        .stat-label {
-          font-size: 11px;
-          color: var(--text-color-muted);
-          text-transform: uppercase;
-          letter-spacing: 1px;
-        }
-
-        .missed-grid {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          margin-top: 20px;
-        }
-
-        .missed-card {
-          padding: 12px 16px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          background: rgba(255,255,255,0.03);
-        }
-
-        .prayer-info {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .prayer-icon { font-size: 18px; }
-        .prayer-label { font-weight: 600; font-size: 15px; }
-
-        .counter-controls {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .count-display {
-          min-width: 60px;
-          text-align: center;
-        }
-
-        .count-number {
-          font-size: 20px;
-          font-weight: 700;
-          color: var(--text-color);
-        }
-
-        .control-btn {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          border: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          cursor: pointer;
-          transition: opacity 0.2s;
-        }
-
-        .control-btn.minus { background: rgba(239, 68, 68, 0.8); }
-        .control-btn.plus { background: rgba(16, 185, 129, 0.8); }
-        .control-btn:active { transform: scale(0.9); opacity: 1; }
-
-        .tracker-footer {
-          margin-top: 24px;
-          padding: 0 10px;
-        }
-
-        .info-box {
-          display: flex;
-          align-items: flex-start;
-          gap: 10px;
-          padding: 15px;
-          background: rgba(212, 175, 55, 0.05);
-          border-radius: 12px;
-          border: 1px solid rgba(212, 175, 55, 0.2);
-          color: var(--text-color-muted);
-          font-size: 12px;
-          line-height: 1.5;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        .animate-fadeIn { animation: fadeIn 0.4s ease-out; }
-        .animate-slideUp { animation: slideUp 0.3s ease-out; }
-        .item-stagger { animation: slideUp 0.3s ease-out backwards; }
-      `}</style>
     </div>
   );
 };

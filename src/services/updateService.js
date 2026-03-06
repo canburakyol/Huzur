@@ -15,7 +15,7 @@ class UpdateService {
       const result = await AppUpdate.getAppUpdateInfo();
       return result;
     } catch (error) {
-      console.warn('Update check failed (likely dev env):', error);
+      logger.warn('Update check failed (likely dev env):', error);
       return { updateAvailable: false };
     }
   }

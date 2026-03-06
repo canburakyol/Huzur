@@ -1,0 +1,92 @@
+/* Prayer Tracker - Lifestyle & Velocity Modern Styles */
+
+.kaza-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.kaza-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--nav-bg);
+    padding: 6px;
+    border-radius: 16px;
+    border: 1px solid var(--nav-border);
+}
+
+.kaza-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.kaza-btn.minus {
+    background: var(--nav-hover);
+    color: var(--nav-text-muted);
+}
+
+.kaza-btn.plus {
+    background: var(--nav-accent);
+    color: white;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+}
+
+.kaza-btn:active:not(.disabled) {
+    transform: scale(0.9);
+}
+
+.kaza-btn.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.kaza-count {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--nav-text);
+    min-width: 30px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.kaza-count.zero {
+    color: var(--nav-text-muted);
+    opacity: 0.5;
+}
+
+.prayer-done {
+    border-left: 4px solid #10b981 !important;
+}
+
+.reveal-stagger {
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Tweaks */
+@media (max-width: 480px) {
+    .kaza-controls {
+        gap: 8px;
+    }
+    
+    .kaza-btn {
+        width: 32px;
+        height: 32px;
+    }
+}

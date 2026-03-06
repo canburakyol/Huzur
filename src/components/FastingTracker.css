@@ -1,0 +1,46 @@
+/* Fasting Tracker - Lifestyle & Velocity Modern Styles */
+
+.active-fasting-card {
+    background: rgba(16, 185, 129, 0.05) !important;
+    border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+.velocity-dial-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+}
+
+.velocity-dial-btn:active {
+    transform: scale(0.9) rotate(-10deg);
+}
+
+.fasting-decoration {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+/* Animations */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal-stagger {
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Checkbox Animation */
+.velocity-dial-btn.active {
+    animation: successPulse 0.4s ease-out;
+}
+
+@keyframes successPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}

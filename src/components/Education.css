@@ -1,0 +1,663 @@
+/* Education.css - Premium Emerald & Gold Theme for Education Modules */
+
+/* ── Zorluk Renk Sabitleri ─────────────────────────────────── */
+:root {
+    --edu-emerald:       var(--bg-emerald-deep, #064e3b);
+    --edu-emerald-dark:  var(--bg-gradient-end, #042f2e);
+    --edu-emerald-light: var(--bg-emerald-light, #0f766e);
+    --edu-gold:          var(--accent-gold-shimmer, #fbbf24);
+    --edu-gold-pale:     rgba(251, 191, 36, 0.15);
+    --edu-parchment:     var(--bg-gradient-start, #064e3b);
+    --edu-parchment-dark: rgba(6, 78, 59, 0.4);
+    --edu-text:          var(--text-primary, #f8fafc);
+    --edu-text-muted:    var(--text-muted, rgba(209, 213, 219, 0.6));
+    --edu-glass:         var(--glass-bg, rgba(6, 78, 59, 0.65));
+    --edu-glass-dark:    rgba(4, 47, 46, 0.85);
+    --edu-shadow:        var(--glass-shadow, 0 12px 40px 0 rgba(0, 0, 0, 0.45));
+    --edu-border:        1px solid var(--glass-border, rgba(180, 83, 9, 0.25));
+    /* Zorluk renk sabitleri */
+    --edu-difficulty-hard:   #ef4444;
+    --edu-difficulty-medium: var(--accent-gold-light, #f59e0b);
+    --edu-difficulty-easy:   var(--bg-emerald-light, #0f766e);
+}
+
+/* Base Container */
+.education-container {
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--bg-gradient-start, #064e3b) 0%, var(--bg-gradient-end, #042f2e) 100%);
+    background-image: 
+        radial-gradient(circle at 2px 2px, rgba(180, 83, 9, 0.06) 1px, transparent 0);
+    background-size: 24px 24px;
+    color: var(--edu-text);
+    font-family: 'Inter', sans-serif;
+    padding-bottom: 80px;
+}
+
+/* --- Scholarly Manuscript (Tajweed) --- */
+.manuscript-header {
+    background: linear-gradient(135deg, var(--edu-emerald) 0%, var(--edu-emerald-dark) 100%);
+    color: white;
+    padding: 30px 20px 40px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(15, 61, 46, 0.3);
+}
+
+.manuscript-header::before {
+    content: "❧";
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+    font-size: 120px;
+    opacity: 0.1;
+    color: var(--edu-gold);
+}
+
+.manuscript-card {
+    background: var(--edu-glass);
+    backdrop-filter: blur(var(--surface-blur, 16px));
+    -webkit-backdrop-filter: blur(var(--surface-blur, 16px));
+    border: var(--edu-border);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--edu-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.manuscript-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.manuscript-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--edu-gold);
+}
+
+.rule-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: var(--edu-gold-pale);
+    color: var(--edu-emerald);
+    margin-bottom: 8px;
+}
+
+.lesson-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--edu-emerald);
+    margin-bottom: 12px;
+}
+
+.arabic-preview {
+    font-family: 'Amiri', serif;
+    font-size: 2rem;
+    color: var(--edu-emerald);
+    text-align: right;
+    direction: rtl;
+    padding: 15px;
+    background: var(--edu-parchment-dark);
+    border-radius: 12px;
+    margin: 15px 0;
+}
+
+/* --- Atmospheric Ethereal (Radio) --- */
+.ethereal-radio {
+    background: linear-gradient(135deg, #051a14 0%, var(--edu-emerald-dark) 50%, #0a2e24 100%);
+    color: white;
+}
+
+.radio-glass-header {
+    background: rgba(15, 61, 46, 0.4) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #ff4757;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.ethereal-reciter-bar {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 20px;
+    scrollbar-width: none;
+}
+
+.ethereal-chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 8px 20px;
+    border-radius: 50px;
+    white-space: nowrap;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.ethereal-chip.active {
+    background: var(--edu-gold);
+    color: var(--edu-emerald-dark);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    border-color: var(--edu-gold);
+}
+
+.ethereal-display {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+}
+
+.ethereal-visualizer-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.ethereal-orb {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, var(--edu-emerald-light) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(20px);
+    opacity: 0.5;
+}
+
+.ethereal-orb.pulse {
+    animation: orbPulse 4s infinite ease-in-out;
+}
+
+.ethereal-orb.secondary {
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, var(--edu-gold) 0%, transparent 70%);
+    opacity: 0.2;
+    animation: orbPulse 6s infinite ease-in-out reverse;
+}
+
+@keyframes orbPulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.ethereal-waves {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 2;
+}
+
+.ethereal-wave-bar {
+    width: 6px;
+    height: 30px;
+    background: var(--edu-gold);
+    border-radius: 10px;
+    transition: height 0.3s ease;
+}
+
+.ethereal-wave-bar.playing {
+    animation: waveAnim 1.2s infinite ease-in-out;
+}
+
+@keyframes waveAnim {
+    0%, 100% { height: 20px; }
+    50% { height: var(--height, 60px); }
+}
+
+.ethereal-surah-card {
+    text-align: center;
+}
+
+.surah-name-ar-big {
+    font-family: 'Amiri', serif;
+    font-size: 3.5rem;
+    color: var(--edu-gold-pale);
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+.surah-details-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.detail-tag {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--edu-gold);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* List Area */
+.ethereal-list-area {
+    padding: 10px 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.ethereal-list-item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.ethereal-list-item.active {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.item-index {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-right: 15px;
+}
+
+.ethereal-list-item.active .item-index {
+    background: var(--edu-gold);
+    color: var(--edu-emerald-dark);
+}
+
+.item-info { flex: 1; }
+.item-name { font-weight: 700; font-size: 1rem; }
+.item-sub { font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); }
+.item-arabic { font-family: 'Amiri', serif; font-size: 1.4rem; color: var(--edu-gold-pale); }
+
+/* Controls */
+.ethereal-controls-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
+    background: linear-gradient(0deg, rgba(5, 26, 20, 0.95) 0%, transparent 100%);
+    backdrop-filter: blur(10px);
+}
+
+.ethereal-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.ethereal-play-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--edu-gold);
+    color: var(--edu-emerald-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+    transition: transform 0.2s ease;
+}
+
+.ethereal-play-btn:active { transform: scale(0.95); }
+
+.ethereal-skip-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.2s ease;
+}
+
+.ethereal-skip-btn:hover { color: white; }
+
+.spin { animation: fullSpin 2s linear infinite; }
+@keyframes fullSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* --- Geometric Progression (Memorize) --- */
+.geometric-memorize {
+    background: linear-gradient(180deg, var(--bg-gradient-start, #064e3b) 0%, var(--bg-gradient-end, #042f2e) 100%);
+}
+
+.geometric-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 0 20px 20px;
+}
+
+.geometric-stat-card {
+    background: var(--edu-glass);
+    backdrop-filter: blur(var(--surface-blur, 16px));
+    -webkit-backdrop-filter: blur(var(--surface-blur, 16px));
+    padding: 16px 10px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: var(--edu-shadow);
+    border: var(--edu-border);
+}
+
+.geometric-stat-card .val {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--edu-emerald);
+    display: block;
+}
+
+.geometric-stat-card .lbl {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--edu-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.geometric-tabs {
+    display: flex;
+    padding: 0 20px 20px;
+    gap: 12px;
+}
+
+.geometric-tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 14px;
+    border: var(--edu-border);
+    background: rgba(6, 78, 59, 0.3);
+    font-weight: 700;
+    color: var(--edu-text-muted);
+    transition: all 0.3s ease;
+}
+
+.geometric-tab-btn.active {
+    background: var(--edu-emerald);
+    color: white;
+    border-color: var(--edu-emerald);
+    box-shadow: 0 4px 15px rgba(15, 61, 46, 0.2);
+}
+
+/* Surah Cards */
+.geometric-surah-list {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.geometric-surah-card {
+    background: var(--edu-glass);
+    backdrop-filter: blur(var(--surface-blur, 16px));
+    -webkit-backdrop-filter: blur(var(--surface-blur, 16px));
+    border-radius: 24px;
+    overflow: hidden;
+    border: var(--edu-border);
+    box-shadow: var(--edu-shadow);
+}
+
+.geometric-card-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 15px;
+}
+
+.geometric-number-box {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--edu-gold-pale);
+    color: var(--edu-emerald);
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+}
+
+.premium-progress-circle {
+    position: relative;
+    width: 48px;
+    height: 48px;
+}
+
+.premium-progress-circle svg {
+    transform: rotate(-90deg);
+}
+
+.progress-bg {
+    fill: none;
+    stroke: var(--edu-parchment-dark);
+    stroke-width: 4;
+}
+
+.progress-fill {
+    fill: none;
+    stroke: var(--edu-gold);
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.6s ease;
+}
+
+.progress-pct {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--edu-emerald);
+}
+
+/* Ayah Grid */
+.geometric-ayah-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+    gap: 8px;
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--edu-parchment-dark);
+    padding-top: 20px;
+}
+
+.geometric-ayah-btn {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--edu-parchment);
+    border: 1px solid var(--edu-parchment-dark);
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--edu-text);
+    transition: all 0.2s ease;
+}
+
+.geometric-ayah-btn.memorized {
+    background: var(--edu-gold);
+    color: white;
+    border-color: var(--edu-gold);
+}
+
+.geometric-start-btn {
+    padding: 8px 20px;
+    background: var(--edu-emerald);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 10px rgba(15, 61, 46, 0.2);
+}
+
+/* Animations */
+@keyframes revealStagger {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal-stagger {
+    animation: revealStagger 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+    animation-delay: var(--delay, 0s);
+}
+
+.glass-pill {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 6px 16px;
+    color: white;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.royal-tab-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 12px 20px;
+    font-weight: 600;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.royal-tab-btn.active {
+    color: var(--edu-gold);
+}
+
+.royal-tab-btn.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    background: var(--edu-gold);
+    border-radius: 2px;
+}
+
+/* Additional Layouts for Memorize */
+.geometric-ayah-area {
+    padding-bottom: 5px;
+}
+
+.review-actions-premium {
+    display: flex;
+    gap: 10px;
+}
+
+.rev-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.rev-btn:active { opacity: 0.8; }
+.rev-btn.hard   { background: var(--edu-difficulty-hard); }
+.rev-btn.medium { background: var(--edu-difficulty-medium); }
+.rev-btn.easy   { background: var(--edu-difficulty-easy); }
+
+.empty-state-card {
+    text-align: center;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.badge-count {
+    background: var(--edu-difficulty-hard);
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+.pro-badge-premium {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--edu-gold);
+    color: var(--edu-emerald-dark);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    z-index: 10;
+}
+
+.premium-icon-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.radio-glass-header {
+    padding-bottom: 30px !important;
+}

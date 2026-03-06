@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, Heart, Share2, BookOpen } from 'lucide-react';
+import { ChevronLeft, Heart, Share2, BookOpen, Star, Sparkles, Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { contentService } from '../services/contentService';
 import { storageService } from '../services/storageService';
+import './Hadiths.css';
+import './Navigation.css';
 
 const HADITH_FAVORITES_KEY = 'hadithFavorites';
 
 const Hadiths = ({ onClose }) => {
     const { t, i18n } = useTranslation();
-    const [view, setView] = useState('home'); // home, category, detail
+    const [view, setView] = useState('home'); 
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedHadith, setSelectedHadith] = useState(null);
-    
-    // Data states
     const [categories, setCategories] = useState([]);
     const [allHadiths, setAllHadiths] = useState([]);
     const [dailyHadith, setDailyHadith] = useState(null);
@@ -25,72 +25,51 @@ const Hadiths = ({ onClose }) => {
         return storageService.getItem(HADITH_FAVORITES_KEY, []);
     });
 
-    // Fetch data when language changes
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const data = await contentService.getHadiths(i18n.language);
-            setCategories(data.categories);
-            setAllHadiths(data.hadiths);
-
-            // Calculate daily Hadith
-            if (data.hadiths && data.hadiths.length > 0) {
-                const today = new Date();
-                const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-                setDailyHadith(data.hadiths[dayOfYear % data.hadiths.length]);
+            try {
+                const data = await contentService.getHadiths(i18n.language);
+                setCategories(data.categories || []);
+                setAllHadiths(data.hadiths || []);
+                if (data.hadiths && data.hadiths.length > 0) {
+                    const today = new Date();
+                    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+                    setDailyHadith(data.hadiths[dayOfYear % data.hadiths.length]);
+                }
+            } catch (err) {
+                console.error('Fetch hadiths error:', err);
+            } finally {
+                setLoading(false);
             }
-            
-            setLoading(false);
         };
-
         fetchData();
     }, [i18n.language]);
 
     const toggleFavorite = (hadithId) => {
-        let newFavorites;
-        if (favorites.includes(hadithId)) {
-            newFavorites = favorites.filter(id => id !== hadithId);
-        } else {
-            newFavorites = [...favorites, hadithId];
-        }
+        let newFavorites = favorites.includes(hadithId)
+            ? favorites.filter(id => id !== hadithId)
+            : [...favorites, hadithId];
         setFavorites(newFavorites);
         storageService.setItem(HADITH_FAVORITES_KEY, newFavorites);
+        if (navigator.vibrate) navigator.vibrate(20);
     };
 
     const handleShare = async (hadith) => {
         const title = t('hadith.title', 'Hadis-i Şerif');
         const text = `📖 ${title}\n\n"${hadith.text}"\n\n— ${hadith.narrator}\n(${hadith.source})\n\n- Huzur Uygulaması`;
-
         try {
             if (Capacitor.isNativePlatform()) {
-                await Share.share({
-                    title: title,
-                    text: text,
-                    dialogTitle: 'Hadisi Paylaş'
-                });
+                await Share.share({ title, text, dialogTitle: 'Hadisi Paylaş' });
                 return;
             }
-
             if (navigator.share) {
-                await navigator.share({ title: title, text });
-                return;
+                await navigator.share({ title, text });
+            } else {
+                await navigator.clipboard.writeText(text);
+                alert(t('common.copied', 'Panoya kopyalandı!'));
             }
-            
-            await navigator.clipboard.writeText(text);
-            alert(t('common.copied', 'Hadis panoya kopyalandı!'));
-        } catch (err) {
-            console.error('Share error:', err);
-        }
-    };
-
-    const openCategory = (category) => {
-        setSelectedCategory(category);
-        setView('category');
-    };
-
-    const openHadith = (hadith) => {
-        setSelectedHadith(hadith);
-        setView('detail');
+        } catch (err) { console.error('Share error:', err); }
     };
 
     const goBack = () => {
@@ -100,160 +79,97 @@ const Hadiths = ({ onClose }) => {
         } else if (view === 'category') {
             setView('home');
             setSelectedCategory(null);
+        } else {
+            onClose();
         }
     };
 
     const getHadithsByCategory = (categoryId) => {
-        if (categoryId === 'favorites') {
-            return allHadiths.filter(h => favorites.includes(h.id));
-        }
+        if (categoryId === 'favorites') return allHadiths.filter(h => favorites.includes(h.id));
         return allHadiths.filter(h => h.category === categoryId);
     };
 
     if (loading) {
         return (
-            <div className="app-container" style={{
-                minHeight: '100vh',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
-                <div className="spinner"></div>
+            <div className="settings-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <div className="spinner premium"></div>
             </div>
         );
     }
 
-    // Detay Görünümü
+    // --- DETAIL VIEW ---
     if (view === 'detail' && selectedHadith) {
         const isFav = favorites.includes(selectedHadith.id);
         const category = categories.find(c => c.id === selectedHadith.category);
 
         return (
-            <div className="app-container" style={{
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '20px'
-            }}>
-                {/* Header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                    <button onClick={goBack} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                        <ChevronLeft size={24} />
-                        <span>{t('common.back', 'Geri')}</span>
-                    </button>
-                    <div style={{ display: 'flex', gap: '12px' }}>
-                        <button onClick={() => toggleFavorite(selectedHadith.id)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-                            <Heart size={24} color={isFav ? '#e74c3c' : 'var(--text-color-muted)'} fill={isFav ? '#e74c3c' : 'none'} />
+            <div className="settings-container reveal-stagger">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+                    <IslamicBackButton onClick={goBack} size="medium" />
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                        <button className={`velocity-target-btn ${isFav ? 'active' : ''}`} onClick={() => toggleFavorite(selectedHadith.id)}>
+                            <Heart size={20} fill={isFav ? '#ef4444' : 'transparent'} color={isFav ? '#ef4444' : 'currentColor'} />
                         </button>
-                        <button onClick={() => handleShare(selectedHadith)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-color-muted)' }}>
-                            <Share2 size={24} />
+                        <button className="velocity-target-btn" onClick={() => handleShare(selectedHadith)}>
+                            <Share2 size={20} />
                         </button>
                     </div>
                 </div>
 
-                {/* Content */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', overflowY: 'auto' }}>
-                    {/* Kategori badge */}
+                <div className="settings-card" style={{ flexDirection: 'column', gap: '24px', padding: '32px', textAlign: 'center', minHeight: '60vh', justifyContent: 'center' }}>
                     {category && (
-                        <div style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            padding: '6px 14px',
-                            borderRadius: '20px',
-                            background: category.color || 'var(--primary-color)',
-                            color: 'white',
-                            fontSize: '13px',
-                            fontWeight: '600',
-                            alignSelf: 'center',
-                            marginBottom: '20px'
-                        }}>
+                        <div className="hadith-category-badge" style={{ background: category.color || 'var(--nav-accent)' }}>
                             {category.icon} {category.name}
                         </div>
                     )}
 
-                    {/* Arapça */}
-                    {selectedHadith.arabic && (
-                        <div style={{
-                            fontFamily: 'serif',
-                            fontSize: '26px',
-                            color: 'var(--text-color)',
-                            lineHeight: 1.8,
-                            marginBottom: '24px',
-                            direction: 'rtl'
-                        }}>
-                            {selectedHadith.arabic}
-                        </div>
-                    )}
+                    <div style={{ fontFamily: 'var(--arabic-font)', fontSize: '2rem', color: 'var(--nav-text)', lineHeight: '1.8', direction: 'rtl' }}>
+                        {selectedHadith.arabic}
+                    </div>
 
-                    {/* Türkçe/English */}
-                    <div style={{
-                        fontSize: '18px',
-                        color: 'var(--text-color)',
-                        lineHeight: 1.7,
-                        fontStyle: 'italic',
-                        marginBottom: '24px',
-                        padding: '0 10px'
-                    }}>
+                    <div style={{ fontSize: '1.25rem', color: 'var(--nav-text)', lineHeight: '1.7', fontStyle: 'italic', padding: '0 10px' }}>
                         "{selectedHadith.text}"
                     </div>
 
-                    {/* Kaynak */}
-                    <div style={{ color: 'var(--text-color-muted)', fontSize: '14px' }}>
-                        <div style={{ fontWeight: '600', color: 'var(--primary-color)' }}>{selectedHadith.narrator}</div>
-                        <div style={{ marginTop: '4px' }}>({selectedHadith.source})</div>
+                    <div style={{ marginTop: '20px' }}>
+                        <div style={{ fontWeight: '800', color: 'var(--nav-accent)', fontSize: '1.1rem' }}>{selectedHadith.narrator}</div>
+                        <div style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginTop: '4px' }}>({selectedHadith.source})</div>
                     </div>
                 </div>
             </div>
         );
     }
 
-    // Kategori Görünümü
+    // --- CATEGORY VIEW ---
     if (view === 'category' && selectedCategory) {
         const categoryHadiths = getHadithsByCategory(selectedCategory.id);
 
         return (
-            <div className="app-container" style={{
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '20px'
-            }}>
-                {/* Header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                    <button onClick={goBack} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                        <ChevronLeft size={24} />
-                        <span>{t('common.back', 'Geri')}</span>
-                    </button>
-                    <h2 style={{ margin: 0, color: 'var(--text-color)', fontSize: '20px' }}>
+            <div className="settings-container reveal-stagger">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+                    <IslamicBackButton onClick={goBack} size="medium" />
+                    <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
                         {selectedCategory.icon} {selectedCategory.name}
                     </h2>
-                    <div style={{ width: '60px' }}></div>
                 </div>
 
-                {/* Hadis Listesi */}
-                <div style={{ flex: 1, overflowY: 'auto' }}>
-                    {categoryHadiths.map(hadith => (
-                        <div
-                            key={hadith.id}
-                            onClick={() => openHadith(hadith)}
-                            className="glass-card"
-                            style={{
-                                background: 'var(--card-bg)',
-                                borderRadius: '14px',
-                                padding: '16px',
-                                marginBottom: '12px',
-                                cursor: 'pointer',
-                                border: '1px solid var(--glass-border)',
-                                transition: 'all 0.2s ease'
-                            }}
+                <div className="settings-group">
+                    {categoryHadiths.map((hadith, index) => (
+                        <div 
+                            key={hadith.id} 
+                            className="settings-card reveal-stagger" 
+                            style={{ padding: '20px', cursor: 'pointer', '--delay': `${index * 0.05}s` }}
+                            onClick={() => { setSelectedHadith(hadith); setView('detail'); }}
                         >
-                            <div style={{ fontSize: '15px', color: 'var(--text-color)', lineHeight: 1.6 }}>
-                                "{hadith.text.substring(0, 100)}{hadith.text.length > 100 ? '...' : ''}"
+                            <div style={{ flex: 1 }}>
+                                <div style={{ fontSize: '1rem', color: 'var(--nav-text)', lineHeight: '1.6', fontStyle: 'italic' }}>
+                                    "{hadith.text.substring(0, 100)}{hadith.text.length > 100 ? '...' : ''}"
+                                </div>
+                                <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', marginTop: '8px', fontWeight: '800' }}>
+                                    {hadith.source}
+                                </div>
                             </div>
-                            <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginTop: '8px' }}>
-                                {hadith.source}
-                            </div>
+                            <ChevronRight size={20} color="var(--nav-border)" />
                         </div>
                     ))}
                 </div>
@@ -261,102 +177,94 @@ const Hadiths = ({ onClose }) => {
         );
     }
 
-    // Ana Sayfa
+    // --- HOME VIEW ---
     return (
-        <div className="app-container" style={{
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '20px'
-        }}>
-            {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+        <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
-                <h2 style={{ margin: 0, color: 'var(--primary-color)', fontSize: '22px', display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
-                    <BookOpen size={24} color="var(--primary-color)" /> {t('hadith.title', 'Hadisler')}
+                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <BookOpen size={24} color="var(--nav-accent)" /> {t('hadith.title', 'Hadisler')}
                 </h2>
             </div>
 
-            {/* Günün Hadisi */}
             {dailyHadith && (
-                <div
-                    onClick={() => openHadith(dailyHadith)}
-                    className="glass-card"
-                    style={{
-                        background: 'var(--primary-color)',
-                        borderRadius: '16px',
-                        padding: '20px',
-                        marginBottom: '20px',
-                        color: 'white',
-                        cursor: 'pointer'
+                <div 
+                    className="settings-card reveal-stagger" 
+                    style={{ 
+                        flexDirection: 'column', 
+                        background: 'linear-gradient(135deg, var(--nav-accent), #f97316)', 
+                        border: 'none', 
+                        padding: '32px', 
+                        color: 'white', 
+                        marginBottom: '32px',
+                        cursor: 'pointer',
+                        boxShadow: '0 12px 24px rgba(249, 115, 22, 0.2)'
                     }}
+                    onClick={() => { setSelectedHadith(dailyHadith); setView('detail'); }}
                 >
-                    <div style={{ fontSize: '12px', opacity: 0.9, marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        ✨ {t('hadith.daily', 'Günün Hadisi')}
+                    <div style={{ fontSize: '0.7rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.9, display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '16px' }}>
+                        <Sparkles size={14} fill="white" /> {t('hadith.daily', 'Günün Hadisi')}
                     </div>
-                    <div style={{ fontSize: '15px', lineHeight: 1.6, fontStyle: 'italic' }}>
-                        "{dailyHadith.text.substring(0, 120)}{dailyHadith.text.length > 120 ? '...' : ''}"
+                    <div style={{ fontSize: '1.1rem', lineHeight: '1.6', fontStyle: 'italic', fontWeight: '500' }}>
+                        "{dailyHadith.text.substring(0, 150)}{dailyHadith.text.length > 150 ? '...' : ''}"
                     </div>
-                    <div style={{ fontSize: '12px', opacity: 0.8, marginTop: '10px' }}>
+                    <div style={{ fontSize: '0.8rem', opacity: 0.8, marginTop: '16px', fontWeight: '800', textAlign: 'right' }}>
                         — {dailyHadith.source}
                     </div>
                 </div>
             )}
 
-            {/* Kategoriler */}
-            <div style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text-color-muted)', marginBottom: '12px' }}>
-                {t('hadith.categories', 'Kategoriler')}
-            </div>
-            <div style={{ flex: 1, overflowY: 'auto' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
-                    {categories.map(category => (
-                        <div
-                            key={category.id}
-                            onClick={() => openCategory(category)}
-                            className="glass-card"
-                            style={{
-                                background: 'var(--card-bg)',
-                                borderRadius: '14px',
-                                padding: '18px',
-                                cursor: 'pointer',
-                                border: '1px solid var(--glass-border)',
-                                textAlign: 'center',
-                                transition: 'all 0.2s ease'
+            <div className="settings-group">
+                <div className="settings-group-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>{t('hadith.categories', 'Kategoriler')}</span>
+                    {favorites.length > 0 && (
+                        <button 
+                            className="hadith-fav-badge" 
+                            onClick={() => {
+                                setSelectedCategory({ id: 'favorites', name: t('common.favorites', 'Favoriler'), icon: '❤️' });
+                                setView('category');
                             }}
                         >
-                            <div style={{ fontSize: '28px', marginBottom: '8px' }}>{category.icon}</div>
-                            <div style={{ fontWeight: '600', color: 'var(--text-color)', fontSize: '14px' }}>{category.name}</div>
-                            <div style={{ fontSize: '11px', color: 'var(--text-color-muted)', marginTop: '4px' }}>
-                                {getHadithsByCategory(category.id).length} {t('hadith.count_suffix', 'hadis')}
-                            </div>
-                        </div>
-                    ))}
+                            <Heart size={12} fill="#ef4444" color="#ef4444" /> {favorites.length}
+                        </button>
+                    )}
                 </div>
+                
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
+                    {categories.map((category, index) => {
+                        const count = getHadithsByCategory(category.id).length;
+                        return (
+                            <div 
+                                key={category.id} 
+                                className="settings-card reveal-stagger" 
+                                style={{ 
+                                    flexDirection: 'column', 
+                                    padding: '24px', 
+                                    textAlign: 'center', 
+                                    gap: '12px',
+                                    '--delay': `${index * 0.03}s`,
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => { setSelectedCategory(category); setView('category'); }}
+                            >
+                                <div style={{ fontSize: '2.5rem' }}>{category.icon}</div>
+                                <div>
+                                    <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '0.9rem' }}>{category.name}</div>
+                                    <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', marginTop: '4px' }}>{count} {t('hadith.count_suffix', 'HADİS')}</div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
 
-                {/* Favori buton */}
-                {favorites.length > 0 && (
-                    <div
-                        onClick={() => {
-                            setSelectedCategory({ id: 'favorites', name: t('common.favorites', 'Favoriler'), icon: '❤️' });
-                            setView('category');
-                        }}
-                        style={{
-                            background: '#e74c3c',
-                            borderRadius: '14px',
-                            padding: '16px',
-                            marginTop: '16px',
-                            color: 'white',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '10px'
-                        }}
-                    >
-                        <Heart size={20} fill="white" />
-                        <span style={{ fontWeight: '600' }}>{t('common.my_favorites', 'Favorilerim')} ({favorites.length})</span>
-                    </div>
-                )}
+            <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                    <Info size={18} color="var(--nav-accent)" />
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                        {t('hadith.info_note', "Hadis-i Şerifler, Peygamber Efendimiz'in (s.a.v.) sözleri, fiilleri ve takrirleridir. İslam dininin Kur'an-ı Kerim'den sonraki ikinci temel kaynağıdır.")}
+                    </p>
+                </div>
             </div>
         </div>
     );

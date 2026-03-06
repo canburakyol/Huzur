@@ -2,15 +2,18 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { requestNotificationPermission } from '../services/smartNotificationService';
 import { changeLanguage, getSupportedLanguages } from '../services/languageService';
+import { ChevronRight } from 'lucide-react';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import LicensesCredits from './LicensesCredits';
 import IslamicBackButton from './shared/IslamicBackButton';
-import { Sun, Moon, Bell, Info, FileText, Shield, Clock, Globe, History } from 'lucide-react';
+import { Bell, Info, FileText, Shield, Clock, History, AlertCircle } from 'lucide-react';
 import { storageService } from '../services/storageService';
 import { STORAGE_KEYS, APP_VERSION } from '../constants';
 import NotificationSettings from './NotificationSettings';
 import NotificationHistory from './NotificationHistory';
+import { isPro, setProStatus } from '../services/proService';
+import CancelFlowModal from './CancelFlowModal';
 
 const Settings = ({ onClose }) => {
     const { t, i18n } = useTranslation();
@@ -18,6 +21,8 @@ const Settings = ({ onClose }) => {
     const [showTerms, setShowTerms] = useState(false);
     const [showLicenses, setShowLicenses] = useState(false);
     const [showHistory, setShowHistory] = useState(false);
+    const [showCancelFlow, setShowCancelFlow] = useState(false);
+    const userIsPro = isPro();
     
     const [darkMode, setDarkMode] = useState(() => {
         const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
@@ -65,6 +70,18 @@ const Settings = ({ onClose }) => {
         await changeLanguage(langCode);
     };
 
+    const handleConfirmCancel = async () => {
+        // Here we would typically unsubscribe via RevenueCat or Store
+        await setProStatus(false);
+        setShowCancelFlow(false);
+        // Force reload or re-render to reflect pro status change
+        // In a real app we might toast a success message here
+    };
+
+    if (showCancelFlow) {
+        return <CancelFlowModal onClose={() => setShowCancelFlow(false)} onConfirmCancel={handleConfirmCancel} />;
+    }
+
     if (showPrivacy) {
         return <PrivacyPolicy onClose={() => setShowPrivacy(false)} />;
     }
@@ -95,36 +112,17 @@ const Settings = ({ onClose }) => {
     }
 
     return (
-        <div className="glass-card" style={{
-            textAlign: 'center',
-            position: 'relative',
-            background: 'var(--glass-bg)',
-            color: 'var(--text-color)'
-        }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+        <div className="settings-container reveal-stagger">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
+                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                    {t('settings.title')}
+                </h2>
             </div>
 
-            <h2 style={{ color: 'var(--primary-color)', marginBottom: '24px' }}>⚙️ {t('settings.title')}</h2>
-
-            <div style={{ textAlign: 'left' }}>
-                {/* Dil Seçimi */}
-                <div style={{
-                    marginBottom: '16px',
-                    padding: '16px',
-                    background: 'var(--card-bg)',
-                    borderRadius: '14px',
-                    border: '1px solid var(--glass-border)'
-                }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                        <Globe size={22} color="var(--primary-color)" />
-                        <div>
-                            <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.language')}</div>
-                            <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
-                                {t('settings.languageDesc')}
-                            </div>
-                        </div>
-                    </div>
+            <div className="settings-group">
+                <div className="settings-group-title premium-text">{t('settings.language')}</div>
+                <div className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                         {supportedLanguages.map((lang) => (
                             <button
@@ -133,19 +131,19 @@ const Settings = ({ onClose }) => {
                                 style={{
                                     flex: '1',
                                     minWidth: '80px',
-                                    padding: '12px 16px',
-                                    borderRadius: '12px',
+                                    padding: '12px',
+                                    borderRadius: '16px',
                                     border: currentLang === lang.code 
-                                        ? '2px solid var(--primary-color)' 
-                                        : '1px solid var(--glass-border)',
+                                        ? '2px solid var(--nav-accent)' 
+                                        : '1px solid var(--nav-border)',
                                     background: currentLang === lang.code 
-                                        ? 'rgba(212, 175, 55, 0.15)' 
-                                        : 'rgba(255, 255, 255, 0.05)',
+                                        ? 'rgba(245, 158, 11, 0.1)' 
+                                        : 'var(--nav-hover)',
                                     cursor: 'pointer',
-                                    fontSize: '14px',
-                                    fontWeight: currentLang === lang.code ? '700' : '500',
-                                    color: 'var(--text-color)',
-                                    transition: 'all 0.2s ease',
+                                    fontSize: '13px',
+                                    fontWeight: currentLang === lang.code ? '800' : '600',
+                                    color: 'var(--nav-text)',
+                                    transition: 'all 0.2s',
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
@@ -153,185 +151,83 @@ const Settings = ({ onClose }) => {
                                 }}
                             >
                                 <span style={{ fontSize: '20px' }}>
-                                    {lang.code === 'tr'
-                                        ? '🇹🇷'
-                                        : lang.code === 'en'
-                                            ? '🇺🇸'
-                                            : lang.code === 'ar'
-                                                ? '🇸🇦'
-                                                : lang.code === 'id'
-                                                    ? '🇮🇩'
-                                                    : lang.code === 'es'
-                                                        ? '🇪🇸'
-                                                        : lang.code === 'fr'
-                                                            ? '🇫🇷'
-                                                            : lang.code === 'de'
-                                                                ? '🇩🇪'
-                                                                : '🌐'}
+                                    {lang.code === 'tr' ? '🇹🇷' : lang.code === 'en' ? '🇺🇸' : lang.code === 'ar' ? '🇸🇦' : '🌐'}
                                 </span>
                                 <span>{lang.nativeName}</span>
                             </button>
                         ))}
                     </div>
                 </div>
+            </div>
 
-                {/* Tema Ayarı */}
-                <div style={{
-                    marginBottom: '16px',
-                    padding: '16px',
-                    background: 'var(--card-bg)',
-                    borderRadius: '14px',
-                    border: '1px solid var(--glass-border)'
-                }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            {darkMode ? <Moon size={22} color="var(--primary-color)" /> : <Sun size={22} color="var(--primary-color)" />}
-                            <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.theme')}</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
-                                    {darkMode ? t('settings.darkMode') : t('settings.lightMode')}
-                                </div>
-                            </div>
+            <div className="settings-group">
+                <div className="settings-group-title premium-text">{t('settings.appearance', 'Görünüm')}</div>
+                <div className="settings-card premium-glass hover-lift" onClick={toggleDarkMode}>
+                    <div className="settings-card-left">
+                        <div className="settings-icon-box">
+                            {darkMode ? <Moon size={20} /> : <Sun size={20} />}
                         </div>
-                        <button
-                            onClick={toggleDarkMode}
-                            style={{
-                                width: '56px',
-                                height: '30px',
-                                borderRadius: '15px',
-                                border: 'none',
-                                background: darkMode ? 'linear-gradient(135deg, #667eea, #764ba2)' : '#ddd',
-                                cursor: 'pointer',
-                                position: 'relative',
-                                transition: 'background 0.3s ease'
-                            }}
-                        >
-                            <div style={{
-                                width: '24px',
-                                height: '24px',
-                                borderRadius: '50%',
-                                background: 'white',
-                                position: 'absolute',
-                                top: '3px',
-                                left: darkMode ? '29px' : '3px',
-                                transition: 'left 0.3s ease',
-                                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                            }}></div>
-                        </button>
+                        <div>
+                            <div className="settings-label">{t('settings.theme')}</div>
+                            <div className="settings-desc">{darkMode ? t('settings.darkMode') : t('settings.lightMode')}</div>
+                        </div>
+                    </div>
+                    <div className={`velocity-switch ${darkMode ? 'active' : ''}`}>
+                        <div className="velocity-knob" />
                     </div>
                 </div>
+            </div>
 
                 {/* YENİ: Bildirim Ayarları (Enhanced) */}
                 <NotificationSettings />
 
-                {/* Bildirim Geçmişi Butonu */}
-                <div style={{
-                    marginTop: '16px',
-                    marginBottom: '16px',
-                    padding: '16px',
-                    background: 'var(--card-bg)',
-                    borderRadius: '14px',
-                    border: '1px solid var(--glass-border)',
-                    cursor: 'pointer'
-                }} onClick={() => setShowHistory(true)}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <History size={22} color="var(--primary-color)" />
-                            <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.historyTitle', 'Bildirim Geçmişi')}</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
-                                    {t('settings.historyDesc', 'Gelen son bildirimleri görüntüleyin')}
-                                </div>
-                            </div>
+            <div className="settings-group">
+                <div className="settings-group-title premium-text">{t('settings.notifications')}</div>
+                
+                <div className="settings-card premium-glass hover-lift" onClick={() => setShowHistory(true)}>
+                    <div className="settings-card-left">
+                        <div className="settings-icon-box">
+                            <History size={20} />
                         </div>
-                        <div className="text-gray-400">›</div>
+                        <div>
+                            <div className="settings-label">{t('settings.historyTitle', 'Bildirim Geçmişi')}</div>
+                            <div className="settings-desc">{t('settings.historyDesc')}</div>
+                        </div>
                     </div>
+                    <ChevronRight size={18} color="var(--nav-border)" />
                 </div>
 
-                {/* Müezzin Seçimi */}
-                <div style={{
-                    marginBottom: '16px',
-                    padding: '16px',
-                    background: 'var(--card-bg)',
-                    borderRadius: '14px',
-                    border: '1px solid var(--glass-border)'
+                <div className="settings-card premium-glass hover-lift" onClick={() => {
+                    onClose();
+                    window.dispatchEvent(new CustomEvent('openFeature', { detail: 'muezzinSelector' }));
                 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Bell size={22} color="var(--primary-color)" />
-                            <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.muezzinTitle', 'Müezzin Seçimi')}</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
-                                    {t('settings.muezzinDesc', 'Ezan bildirim sesini özelleştirin')}
-                                </div>
-                            </div>
+                    <div className="settings-card-left">
+                        <div className="settings-icon-box">
+                            <Bell size={20} />
                         </div>
-                        <button
-                            onClick={() => {
-                                onClose(); // Settings'i kapat
-                                window.dispatchEvent(new CustomEvent('openFeature', { detail: 'muezzinSelector' }));
-                            }}
-                            style={{
-                                padding: '8px 16px',
-                                background: 'var(--primary-color)',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '20px',
-                                fontSize: '13px',
-                                fontWeight: '600',
-                                cursor: 'pointer'
-                            }}
-                        >
-                            {t('settings.select', 'Seç')}
-                        </button>
+                        <div>
+                            <div className="settings-label">{t('settings.muezzinTitle')}</div>
+                            <div className="settings-desc">{t('settings.muezzinDesc')}</div>
+                        </div>
                     </div>
+                    <ChevronRight size={18} color="var(--nav-border)" />
                 </div>
 
-                {/* Kalıcı Vakit Sayacı */}
-                <div style={{
-                    marginBottom: '16px',
-                    padding: '16px',
-                    background: 'var(--card-bg)',
-                    borderRadius: '14px',
-                    border: '1px solid var(--glass-border)'
-                }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Clock size={22} color="var(--primary-color)" />
-                            <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.stickyCounter')}</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
-                                    {t('settings.stickyCounterDesc')}
-                                </div>
-                            </div>
+                <div className="settings-card premium-glass hover-lift" onClick={toggleStickyNotification}>
+                    <div className="settings-card-left">
+                        <div className="settings-icon-box">
+                            <Clock size={20} />
                         </div>
-                        <button
-                            onClick={toggleStickyNotification}
-                            style={{
-                                width: '56px',
-                                height: '30px',
-                                borderRadius: '15px',
-                                border: 'none',
-                                background: stickyNotification ? 'linear-gradient(135deg, #e67e22, #d35400)' : '#ddd',
-                                cursor: 'pointer',
-                                position: 'relative',
-                                transition: 'background 0.3s ease'
-                            }}
-                        >
-                            <div style={{
-                                width: '24px',
-                                height: '24px',
-                                borderRadius: '50%',
-                                background: 'white',
-                                position: 'absolute',
-                                top: '3px',
-                                left: stickyNotification ? '29px' : '3px',
-                                transition: 'left 0.3s ease',
-                                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                            }}></div>
-                        </button>
+                        <div>
+                            <div className="settings-label">{t('settings.stickyCounter')}</div>
+                            <div className="settings-desc">{t('settings.stickyCounterDesc')}</div>
+                        </div>
+                    </div>
+                    <div className={`velocity-switch ${stickyNotification ? 'active' : ''}`}>
+                        <div className="velocity-knob" />
                     </div>
                 </div>
+            </div>
 
                 {/* Hakkında */}
                 <div style={{
@@ -351,113 +247,79 @@ const Settings = ({ onClose }) => {
                     </div>
                 </div>
 
-                {/* Reklamları Kaldır */}
-                <div style={{
-                    marginBottom: '16px',
-                    padding: '16px',
-                    background: 'var(--card-bg)',
-                    borderRadius: '14px',
-                    border: '1px solid var(--glass-border)'
+            <div className="settings-group">
+                <div className="settings-group-title premium-text">{t('settings.proFeatures', 'Premium Özellikler')}</div>
+                <div className="settings-card premium-glass hover-lift" onClick={() => {
+                    onClose();
+                    window.dispatchEvent(new CustomEvent('openFeature', { detail: 'pro' }));
                 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <Shield size={22} color="var(--primary-color)" />
+                    <div className="settings-card-left">
+                        <div className="settings-icon-box" style={{ background: 'rgba(245, 158, 11, 0.1)', color: 'var(--accent-color)' }}>
+                            <Shield size={20} />
+                        </div>
+                        <div>
+                            <div className="settings-label">{t('settings.removeAdsTitle')}</div>
+                            <div className="settings-desc">{t('settings.removeAdsDesc')}</div>
+                        </div>
+                    </div>
+                    <ChevronRight size={18} color="var(--nav-border)" />
+                </div>
+            </div>
+
+            {userIsPro && (
+                <div className="settings-group">
+                    <div className="settings-group-title premium-text">{t('settings.subscriptionManagement', 'Abonelik Yönetimi')}</div>
+                    <div className="settings-card premium-glass hover-lift" onClick={() => setShowCancelFlow(true)} style={{ border: '1px solid rgba(239, 68, 68, 0.2)', background: 'rgba(239, 68, 68, 0.05)' }}>
+                        <div className="settings-card-left">
+                            <div className="settings-icon-box" style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--error-color)' }}>
+                                <AlertCircle size={20} />
+                            </div>
                             <div>
-                                <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.removeAdsTitle', 'Reklamları Kaldır')}</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)' }}>
-                                    {t('settings.removeAdsDesc', "Reklamsız deneyim için Pro'ya geçin")}
-                                </div>
+                                <div className="settings-label" style={{ color: 'var(--error-color)' }}>{t('settings.cancelSubscription', 'Aboneliği İptal Et')}</div>
+                                <div className="settings-desc">{t('settings.cancelSubscriptionDesc', 'Huzur Pro aboneliğinizi sonlandırın.')}</div>
                             </div>
                         </div>
-                        <button
-                            onClick={() => {
-                                onClose();
-                                window.dispatchEvent(new CustomEvent('openFeature', { detail: 'pro' }));
-                            }}
-                            style={{
-                                padding: '8px 16px',
-                                background: 'linear-gradient(135deg, #f1c40f 0%, #f39c12 100%)',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '20px',
-                                fontSize: '13px',
-                                fontWeight: '600',
-                                cursor: 'pointer'
-                            }}
-                        >
-                            {t('settings.review', 'İncele')}
-                        </button>
+                        <ChevronRight size={18} color="rgba(239, 68, 68, 0.4)" />
                     </div>
+                </div>
+            )}
+
+            <div className="settings-group">
+                <div className="settings-group-title premium-text">{t('settings.legal')}</div>
+                
+                <div className="settings-card premium-glass hover-lift" onClick={() => setShowPrivacy(true)}>
+                    <div className="settings-card-left">
+                        <div className="settings-icon-box">
+                            <Shield size={20} />
+                        </div>
+                        <div className="settings-label">{t('settings.privacyPolicy')}</div>
+                    </div>
+                    <ChevronRight size={18} color="var(--nav-border)" />
                 </div>
 
-                {/* Yasal */}
-                <div style={{
-                    padding: '16px',
-                    background: 'var(--card-bg)',
-                    borderRadius: '14px',
-                    border: '1px solid var(--glass-border)'
-                }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                        <Shield size={22} color="var(--primary-color)" />
-                        <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>{t('settings.legal')}</div>
+                <div className="settings-card premium-glass hover-lift" onClick={() => setShowTerms(true)}>
+                    <div className="settings-card-left">
+                        <div className="settings-icon-box">
+                            <FileText size={20} />
+                        </div>
+                        <div className="settings-label">{t('settings.termsOfService')}</div>
                     </div>
-                    <button
-                        onClick={() => setShowPrivacy(true)}
-                        style={{
-                            width: '100%',
-                            padding: '12px',
-                            marginBottom: '8px',
-                            background: 'transparent',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '10px',
-                            cursor: 'pointer',
-                            fontSize: '14px',
-                            color: 'var(--text-color)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px'
-                        }}
-                    >
-                        <FileText size={18} /> {t('settings.privacyPolicy')}
-                    </button>
-                    <button
-                        onClick={() => setShowTerms(true)}
-                        style={{
-                            width: '100%',
-                            padding: '12px',
-                            background: 'transparent',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '10px',
-                            cursor: 'pointer',
-                            fontSize: '14px',
-                            color: 'var(--text-color)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px'
-                        }}
-                    >
-                        <FileText size={18} /> {t('settings.termsOfService')}
-                    </button>
-                    <button
-                        onClick={() => setShowLicenses(true)}
-                        style={{
-                            width: '100%',
-                            padding: '12px',
-                            marginTop: '8px',
-                            background: 'transparent',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '10px',
-                            cursor: 'pointer',
-                            fontSize: '14px',
-                            color: 'var(--text-color)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px'
-                        }}
-                    >
-                        <FileText size={18} /> {t('settings.licensesAndCredits', 'Lisanslar ve Kaynaklar')}
-                    </button>
+                    <ChevronRight size={18} color="var(--nav-border)" />
                 </div>
+
+                <div className="settings-card premium-glass hover-lift" onClick={() => setShowLicenses(true)}>
+                    <div className="settings-card-left">
+                        <div className="settings-icon-box">
+                            <Info size={20} />
+                        </div>
+                        <div className="settings-label">{t('settings.licensesAndCredits')}</div>
+                    </div>
+                    <ChevronRight size={18} color="var(--nav-border)" />
+                </div>
+            </div>
+
+            <div style={{ textAlign: 'center', opacity: 0.5, fontSize: '0.8rem', padding: '20px' }}>
+                {t('app.name')} v{APP_VERSION}
             </div>
         </div>
     );

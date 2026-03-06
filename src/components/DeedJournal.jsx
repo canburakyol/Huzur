@@ -138,75 +138,72 @@ function DeedJournal({ onClose }) {
 
     // Render Today tab
     const renderToday = () => (
-        <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
+        <div className="reveal-stagger">
             {/* Motivation */}
-            <div className="glass-card" style={{
+            <div className="settings-card" style={{
                 padding: '16px',
                 marginBottom: '16px',
                 textAlign: 'center',
                 fontStyle: 'italic',
-                color: 'var(--text-color)'
+                background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.05)',
+                border: '1px dashed var(--nav-accent)'
             }}>
                 ✨ "{t(motivation)}"
             </div>
 
             {/* Today's Score */}
-            <div className="glass-card" style={{
-                padding: '20px',
-                marginBottom: '16px',
-                textAlign: 'center'
+            <div className="settings-card" style={{
+                padding: '24px',
+                marginBottom: '24px',
+                flexDirection: 'column',
+                gap: '4px'
             }}>
-                <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginBottom: '8px' }}>
+                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
                     {t('deedJournal.today.score')}
                 </div>
                 <div style={{
-                    fontSize: '42px',
-                    fontWeight: '800',
-                    color: calculateTodayPoints() >= 0 ? 'var(--primary-color)' : '#e74c3c'
+                    fontSize: '3.5rem',
+                    fontWeight: '900',
+                    color: calculateTodayPoints() >= 0 ? 'var(--nav-accent)' : '#ef4444',
+                    lineHeight: '1'
                 }}>
                     {calculateTodayPoints()}
                 </div>
-                <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginTop: '8px' }}>
+                <div className="hamburger-level-badge" style={{ marginTop: '12px', background: 'var(--nav-accent)', color: 'white' }}>
                     🔥 {allTimeStats.currentStreak} {t('deedJournal.today.streak')}
                 </div>
             </div>
 
             {/* Daily Prayers */}
-            <div style={{ marginBottom: '20px' }}>
-                <h3 style={{
-                    fontSize: '14px',
-                    color: 'var(--primary-color)',
-                    marginBottom: '12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                }}>
-                    🕌 {t('deedJournal.today.prayers')} ({countCompletedPrayers()}/5)
-                </h3>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <div className="settings-group">
+                <div className="settings-group-title">
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        🕌 {t('deedJournal.today.prayers')} ({countCompletedPrayers()}/5)
+                    </span>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' }}>
                     {DAILY_WORSHIP.map(deed => (
                         <button
                             key={deed.id}
                             onClick={() => toggleDeed(deed.id, deed.points)}
+                            className={`nav-item ${todayDeeds[deed.id] ? 'active' : ''}`}
                             style={{
-                                flex: '1 1 60px',
-                                padding: '12px 8px',
-                                background: todayDeeds[deed.id] ? 'var(--primary-color)' : 'var(--glass-bg)',
-                                border: '1px solid var(--glass-border)',
-                                borderRadius: '12px',
-                                cursor: 'pointer',
-                                textAlign: 'center'
+                                padding: '12px 4px',
+                                borderRadius: '16px',
+                                position: 'relative'
                             }}
                         >
-                            <div style={{ fontSize: '20px', marginBottom: '4px' }}>{deed.icon}</div>
+                            <div style={{ fontSize: '1.2rem' }}>{deed.icon}</div>
                             <div style={{
-                                fontSize: '10px',
-                                color: todayDeeds[deed.id] ? '#fff' : 'var(--text-color)'
+                                fontSize: '0.65rem',
+                                fontWeight: '800'
                             }}>
-                                {t(deed.title).replace(' Namazı', '').replace(' Prayer', '').replace(' صلاة', '')}
+                                {t(deed.title).split(' ')[0]}
                             </div>
                             {todayDeeds[deed.id] && (
-                                <Check size={14} color="#fff" style={{ marginTop: '4px' }} />
+                                <div className="nav-item-badge">
+                                    <Check size={10} strokeWidth={4} />
+                                </div>
                             )}
                         </button>
                     ))}
@@ -214,110 +211,79 @@ function DeedJournal({ onClose }) {
             </div>
 
             {/* Sunnah Deeds */}
-            <div style={{ marginBottom: '20px' }}>
-                <h3 style={{
-                    fontSize: '14px',
-                    color: 'var(--primary-color)',
-                    marginBottom: '12px'
-                }}>
-                    ✨ {t('deedJournal.today.sunnah')}
-                </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div className="settings-group" style={{ marginTop: '24px' }}>
+                <div className="settings-group-title">✨ {t('deedJournal.today.sunnah')}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {SUNNAH_DEEDS.map(deed => (
                         <div
                             key={deed.id}
                             onClick={() => toggleDeed(deed.id, deed.points)}
-                            className="glass-card"
+                            className="settings-card"
                             style={{
-                                padding: '14px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '12px',
+                                padding: '16px',
                                 cursor: 'pointer',
-                                background: todayDeeds[deed.id] ? 'rgba(46, 204, 113, 0.2)' : 'var(--glass-bg)'
+                                borderLeft: todayDeeds[deed.id] ? '4px solid var(--nav-accent)' : '1px solid var(--nav-border)'
                             }}
                         >
-                            <span style={{ fontSize: '24px' }}>{deed.icon}</span>
-                            <div style={{ flex: 1 }}>
-                                <div style={{ fontWeight: '600', fontSize: '14px', color: 'var(--text-color)' }}>
-                                    {t(deed.title)}
+                            <div className="settings-card-left">
+                                <div className="settings-icon-box" style={{ background: todayDeeds[deed.id] ? 'var(--nav-accent)' : '', color: todayDeeds[deed.id] ? 'white' : 'var(--nav-accent)' }}>
+                                    <span style={{ fontSize: '1.2rem' }}>{deed.icon}</span>
                                 </div>
-                                <div style={{ fontSize: '11px', color: 'var(--text-color-muted)' }}>
-                                    {t(deed.description)}
+                                <div className="settings-user-info">
+                                    <div className="settings-label">{t(deed.title)}</div>
+                                    <div className="settings-desc">{t(deed.description)}</div>
                                 </div>
                             </div>
                             <div style={{
-                                fontSize: '12px',
-                                color: 'var(--primary-color)',
-                                fontWeight: '600'
+                                fontSize: '0.9rem',
+                                color: 'var(--nav-accent)',
+                                fontWeight: '800'
                             }}>
                                 +{deed.points}
                             </div>
-                            {todayDeeds[deed.id] ? (
-                                <div style={{
-                                    width: '24px',
-                                    height: '24px',
-                                    borderRadius: '50%',
-                                    background: '#2ecc71',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }}>
-                                    <Check size={14} color="#fff" />
-                                </div>
-                            ) : (
-                                <div style={{
-                                    width: '24px',
-                                    height: '24px',
-                                    borderRadius: '50%',
-                                    border: '2px solid var(--glass-border)'
-                                }} />
-                            )}
                         </div>
                     ))}
                 </div>
             </div>
 
             {/* Good Deeds */}
-            <div style={{ marginBottom: '20px' }}>
-                <h3 style={{
-                    fontSize: '14px',
-                    color: 'var(--primary-color)',
-                    marginBottom: '12px'
-                }}>
-                    💚 {t('deedJournal.today.goodDeeds')}
-                </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
+            <div className="settings-group" style={{ marginTop: '24px' }}>
+                <div className="settings-group-title">💚 {t('deedJournal.today.goodDeeds')}</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
                     {GOOD_DEEDS.map(deed => (
                         <div
                             key={deed.id}
                             onClick={() => toggleDeed(deed.id, deed.points)}
-                            className="glass-card"
+                            className="settings-card"
                             style={{
-                                padding: '12px',
+                                padding: '16px',
                                 textAlign: 'center',
                                 cursor: 'pointer',
-                                background: todayDeeds[deed.id] ? 'rgba(46, 204, 113, 0.2)' : 'var(--glass-bg)'
+                                flexDirection: 'column',
+                                gap: '8px',
+                                border: todayDeeds[deed.id] ? '1px solid var(--nav-accent)' : '1px solid var(--nav-border)',
+                                background: todayDeeds[deed.id] ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.03)' : ''
                             }}
                         >
-                            <span style={{ fontSize: '24px' }}>{deed.icon}</span>
+                            <span style={{ fontSize: '1.5rem' }}>{deed.icon}</span>
                             <div style={{
-                                fontSize: '12px',
-                                fontWeight: '600',
-                                color: 'var(--text-color)',
-                                marginTop: '4px'
+                                fontSize: '0.85rem',
+                                fontWeight: '700',
+                                color: 'var(--nav-text)'
                             }}>
                                 {t(deed.title)}
                             </div>
                             <div style={{
-                                fontSize: '10px',
-                                color: 'var(--primary-color)',
-                                marginTop: '4px'
+                                fontSize: '0.75rem',
+                                color: 'var(--nav-accent)',
+                                fontWeight: '800'
                             }}>
                                 +{deed.points}
                             </div>
                             {todayDeeds[deed.id] && (
-                                <Check size={14} color="#2ecc71" style={{ marginTop: '4px' }} />
+                                <div className="nav-item-badge">
+                                    <Check size={10} strokeWidth={4} />
+                                </div>
                             )}
                         </div>
                     ))}
@@ -325,15 +291,9 @@ function DeedJournal({ onClose }) {
             </div>
 
             {/* Things to Avoid */}
-            <div style={{ marginBottom: '20px' }}>
-                <h3 style={{
-                    fontSize: '14px',
-                    color: '#e74c3c',
-                    marginBottom: '12px'
-                }}>
-                    🚫 {t('deedJournal.today.avoid')}
-                </h3>
-                <p style={{ fontSize: '11px', color: 'var(--text-color-muted)', marginBottom: '12px' }}>
+            <div className="settings-group" style={{ marginTop: '24px' }}>
+                <div className="settings-group-title" style={{ color: '#ef4444' }}>🚫 {t('deedJournal.today.avoid')}</div>
+                <p style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', marginBottom: '16px', paddingLeft: '8px' }}>
                     {t('deedJournal.today.avoidDesc')}
                 </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -341,17 +301,15 @@ function DeedJournal({ onClose }) {
                         <button
                             key={deed.id}
                             onClick={() => toggleDeed(deed.id, deed.points)}
+                            className={`nav-item ${todayDeeds[deed.id] ? 'active' : ''}`}
                             style={{
-                                padding: '10px 14px',
-                                background: todayDeeds[deed.id] ? 'rgba(231, 76, 60, 0.3)' : 'var(--glass-bg)',
-                                border: todayDeeds[deed.id] ? '1px solid #e74c3c' : '1px solid var(--glass-border)',
-                                borderRadius: '20px',
-                                cursor: 'pointer',
-                                fontSize: '12px',
-                                color: todayDeeds[deed.id] ? '#e74c3c' : 'var(--text-color)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px'
+                                padding: '10px 16px',
+                                borderRadius: '24px',
+                                border: todayDeeds[deed.id] ? '1px solid #ef4444' : '1px solid var(--nav-border)',
+                                background: todayDeeds[deed.id] ? 'rgba(239, 68, 68, 0.1)' : 'var(--nav-hover)',
+                                color: todayDeeds[deed.id] ? '#ef4444' : 'var(--nav-text)',
+                                fontSize: '0.8rem',
+                                fontWeight: '700'
                             }}
                         >
                             {deed.icon} {t(deed.title)} ({deed.points})
@@ -363,132 +321,119 @@ function DeedJournal({ onClose }) {
             {/* Reset Button */}
             <button
                 onClick={resetToday}
+                className="velocity-target-btn"
                 style={{
+                    marginTop: '32px',
                     width: '100%',
-                    padding: '14px',
-                    background: 'rgba(255,255,255,0.1)',
-                    border: '1px solid var(--glass-border)',
-                    borderRadius: '12px',
-                    color: 'var(--text-color-muted)',
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '8px'
+                    background: 'var(--nav-hover)',
+                    color: 'var(--nav-text-muted)',
+                    borderColor: 'transparent'
                 }}
             >
-                <RefreshCw size={16} /> {t('deedJournal.today.reset')}
+                <RefreshCw size={18} /> {t('deedJournal.today.reset')}
             </button>
         </div>
     );
 
     // Render Stats tab
     const renderStats = () => (
-        <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
+        <div className="reveal-stagger">
             {/* Overall Stats */}
-            <div className="glass-card" style={{ padding: '20px', marginBottom: '16px' }}>
-                <h3 style={{ fontSize: '16px', color: 'var(--primary-color)', marginBottom: '16px' }}>
-                    📊 {t('deedJournal.stats.title')}
-                </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '28px', fontWeight: '800', color: 'var(--primary-color)' }}>
-                            {allTimeStats.totalPoints}
+            <div className="settings-group">
+                <div className="settings-group-title">📊 {t('deedJournal.stats.title')}</div>
+                <div className="settings-card" style={{ padding: '24px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', width: '100%' }}>
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--nav-accent)' }}>
+                                {allTimeStats.totalPoints}
+                            </div>
+                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+                                {t('deedJournal.stats.totalPoints')}
+                            </div>
                         </div>
-                        <div style={{ fontSize: '11px', color: 'var(--text-color-muted)' }}>{t('deedJournal.stats.totalPoints')}</div>
-                    </div>
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '28px', fontWeight: '800', color: 'var(--primary-color)' }}>
-                            {allTimeStats.totalDays}
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--nav-accent)' }}>
+                                {allTimeStats.totalDays}
+                            </div>
+                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+                                {t('deedJournal.stats.totalDays')}
+                            </div>
                         </div>
-                        <div style={{ fontSize: '11px', color: 'var(--text-color-muted)' }}>{t('deedJournal.stats.totalDays')}</div>
-                    </div>
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '28px', fontWeight: '800', color: '#e74c3c' }}>
-                            🔥 {allTimeStats.currentStreak}
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{ fontSize: '2rem', fontWeight: '900', color: '#f59e0b' }}>
+                                🔥 {allTimeStats.currentStreak}
+                            </div>
+                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+                                {t('deedJournal.stats.currentStreak')}
+                            </div>
                         </div>
-                        <div style={{ fontSize: '11px', color: 'var(--text-color-muted)' }}>{t('deedJournal.stats.currentStreak')}</div>
-                    </div>
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '28px', fontWeight: '800', color: '#f39c12' }}>
-                            🏆 {allTimeStats.longestStreak}
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{ fontSize: '2rem', fontWeight: '900', color: '#9d174d' }}>
+                                🏆 {allTimeStats.longestStreak}
+                            </div>
+                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+                                {t('deedJournal.stats.longestStreak')}
+                            </div>
                         </div>
-                        <div style={{ fontSize: '11px', color: 'var(--text-color-muted)' }}>{t('deedJournal.stats.longestStreak')}</div>
                     </div>
                 </div>
             </div>
 
             {/* Daily Progress */}
-            <div className="glass-card" style={{ padding: '20px', marginBottom: '16px' }}>
-                <h3 style={{ fontSize: '16px', color: 'var(--primary-color)', marginBottom: '16px' }}>
-                    📅 {t('deedJournal.stats.todayProgress')}
-                </h3>
+            <div className="settings-group" style={{ marginTop: '24px' }}>
+                <div className="settings-group-title">📅 {t('deedJournal.stats.todayProgress')}</div>
+                <div className="settings-card" style={{ flexDirection: 'column', gap: '20px', padding: '20px' }}>
+                    {/* Prayer Progress */}
+                    <div style={{ width: '100%' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--nav-text)' }}>{t('deedJournal.stats.prayers')}</span>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--nav-accent)' }}>{countCompletedPrayers()}/5</span>
+                        </div>
+                        <div style={{ height: '10px', borderRadius: '5px', background: 'var(--nav-hover)', overflow: 'hidden' }}>
+                            <div style={{
+                                height: '100%',
+                                background: 'var(--nav-accent)',
+                                width: `${(countCompletedPrayers() / 5) * 100}%`,
+                                transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }} />
+                        </div>
+                    </div>
 
-                {/* Prayer Progress */}
-                <div style={{ marginBottom: '16px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                        <span style={{ fontSize: '13px', color: 'var(--text-color)' }}>{t('deedJournal.stats.prayers')}</span>
-                        <span style={{ fontSize: '13px', color: 'var(--primary-color)' }}>{countCompletedPrayers()}/5</span>
+                    {/* Sunnah Progress */}
+                    <div style={{ width: '100%' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--nav-text)' }}>{t('deedJournal.stats.sunnahs')}</span>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '800', color: '#10b981' }}>
+                                {SUNNAH_DEEDS.filter(d => todayDeeds[d.id]).length}/{SUNNAH_DEEDS.length}
+                            </span>
+                        </div>
+                        <div style={{ height: '10px', borderRadius: '5px', background: 'var(--nav-hover)', overflow: 'hidden' }}>
+                            <div style={{
+                                height: '100%',
+                                background: '#10b981',
+                                width: `${(SUNNAH_DEEDS.filter(d => todayDeeds[d.id]).length / SUNNAH_DEEDS.length) * 100}%`,
+                                transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }} />
+                        </div>
                     </div>
-                    <div style={{
-                        height: '8px',
-                        borderRadius: '4px',
-                        background: 'rgba(255,255,255,0.1)'
-                    }}>
-                        <div style={{
-                            height: '100%',
-                            borderRadius: '4px',
-                            background: 'var(--primary-color)',
-                            width: `${(countCompletedPrayers() / 5) * 100}%`,
-                            transition: 'width 0.3s ease'
-                        }} />
-                    </div>
-                </div>
 
-                {/* Sunnah Progress */}
-                <div style={{ marginBottom: '16px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                        <span style={{ fontSize: '13px', color: 'var(--text-color)' }}>{t('deedJournal.stats.sunnahs')}</span>
-                        <span style={{ fontSize: '13px', color: 'var(--primary-color)' }}>
-                            {SUNNAH_DEEDS.filter(d => todayDeeds[d.id]).length}/{SUNNAH_DEEDS.length}
-                        </span>
-                    </div>
-                    <div style={{
-                        height: '8px',
-                        borderRadius: '4px',
-                        background: 'rgba(255,255,255,0.1)'
-                    }}>
-                        <div style={{
-                            height: '100%',
-                            borderRadius: '4px',
-                            background: '#2ecc71',
-                            width: `${(SUNNAH_DEEDS.filter(d => todayDeeds[d.id]).length / SUNNAH_DEEDS.length) * 100}%`,
-                            transition: 'width 0.3s ease'
-                        }} />
-                    </div>
-                </div>
-
-                {/* Good Deeds Progress */}
-                <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                        <span style={{ fontSize: '13px', color: 'var(--text-color)' }}>{t('deedJournal.stats.goodDeeds')}</span>
-                        <span style={{ fontSize: '13px', color: 'var(--primary-color)' }}>
-                            {GOOD_DEEDS.filter(d => todayDeeds[d.id]).length}/{GOOD_DEEDS.length}
-                        </span>
-                    </div>
-                    <div style={{
-                        height: '8px',
-                        borderRadius: '4px',
-                        background: 'rgba(255,255,255,0.1)'
-                    }}>
-                        <div style={{
-                            height: '100%',
-                            borderRadius: '4px',
-                            background: '#3498db',
-                            width: `${(GOOD_DEEDS.filter(d => todayDeeds[d.id]).length / GOOD_DEEDS.length) * 100}%`,
-                            transition: 'width 0.3s ease'
-                        }} />
+                    {/* Good Deeds Progress */}
+                    <div style={{ width: '100%' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--nav-text)' }}>{t('deedJournal.stats.goodDeeds')}</span>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '800', color: '#3b82f6' }}>
+                                {GOOD_DEEDS.filter(d => todayDeeds[d.id]).length}/{GOOD_DEEDS.length}
+                            </span>
+                        </div>
+                        <div style={{ height: '10px', borderRadius: '5px', background: 'var(--nav-hover)', overflow: 'hidden' }}>
+                            <div style={{
+                                height: '100%',
+                                background: '#3b82f6',
+                                width: `${(GOOD_DEEDS.filter(d => todayDeeds[d.id]).length / GOOD_DEEDS.length) * 100}%`,
+                                transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -497,8 +442,8 @@ function DeedJournal({ onClose }) {
 
     // Render Achievements tab
     const renderAchievements = () => (
-        <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
-            <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+        <div className="reveal-stagger">
+            <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', paddingLeft: '8px', fontWeight: '600' }}>
                 {t('deedJournal.achievements.title')}
             </p>
 
@@ -508,41 +453,36 @@ function DeedJournal({ onClose }) {
                     return (
                         <div
                             key={achievement.id}
-                            className="glass-card"
+                            className="settings-card"
                             style={{
                                 padding: '16px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '16px',
-                                opacity: unlocked ? 1 : 0.5
+                                opacity: unlocked ? 1 : 0.6,
+                                border: unlocked ? '1px solid var(--nav-accent)' : '1px solid var(--nav-border)',
+                                background: unlocked ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.03)' : ''
                             }}
                         >
-                            <div style={{
-                                width: '50px',
-                                height: '50px',
-                                borderRadius: '50%',
-                                background: unlocked ? 'var(--primary-color)' : 'rgba(255,255,255,0.1)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '24px'
-                            }}>
-                                {unlocked ? achievement.icon : '🔒'}
-                            </div>
-                            <div style={{ flex: 1 }}>
-                                <div style={{
-                                    fontWeight: '700',
-                                    fontSize: '15px',
-                                    color: unlocked ? 'var(--primary-color)' : 'var(--text-color-muted)'
+                            <div className="settings-card-left">
+                                <div className="settings-icon-box" style={{ 
+                                    background: unlocked ? 'var(--nav-accent)' : 'var(--nav-hover)', 
+                                    color: unlocked ? 'white' : 'var(--nav-text-muted)',
+                                    width: '48px',
+                                    height: '48px'
                                 }}>
-                                    {t(achievement.title)}
+                                    {unlocked ? achievement.icon : '🔒'}
                                 </div>
-                                <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
-                                    {t(achievement.description)}
+                                <div className="settings-user-info">
+                                    <div className="settings-label" style={{ color: unlocked ? 'var(--nav-accent)' : 'var(--nav-text)' }}>
+                                        {t(achievement.title)}
+                                    </div>
+                                    <div className="settings-desc">
+                                        {t(achievement.description)}
+                                    </div>
                                 </div>
                             </div>
                             {unlocked && (
-                                <Check size={24} color="var(--primary-color)" />
+                                <div className="nav-item-badge" style={{ position: 'relative', right: '0', top: '0' }}>
+                                    <Check size={14} strokeWidth={4} />
+                                </div>
                             )}
                         </div>
                     );
@@ -552,64 +492,73 @@ function DeedJournal({ onClose }) {
     );
 
     return (
-        <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '100px' }}>
+        <div className="settings-container reveal-stagger">
             {/* Header */}
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px',
-                marginBottom: '20px',
-                paddingTop: '20px'
+                gap: '16px',
+                marginBottom: '32px'
             }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
-                <h1 style={{
+                <h2 style={{
                     margin: 0,
-                    fontSize: '22px',
-                    color: 'var(--primary-color)',
-                    fontWeight: '700'
+                    fontSize: '1.5rem',
+                    color: 'var(--nav-text)',
+                    fontWeight: '800'
                 }}>
-                    📝 {t('deedJournal.title')}
-                </h1>
+                    {t('deedJournal.title')}
+                </h2>
             </div>
 
             {/* Tabs */}
             <div style={{
                 display: 'flex',
-                gap: '8px',
-                marginBottom: '20px'
+                gap: '12px',
+                marginBottom: '32px',
+                background: 'var(--nav-hover)',
+                padding: '8px',
+                borderRadius: '24px'
             }}>
                 {[
-                    { id: 'today', label: t('deedJournal.tabs.today'), icon: <Calendar size={16} /> },
-                    { id: 'stats', label: t('deedJournal.tabs.stats'), icon: <TrendingUp size={16} /> },
-                    { id: 'achievements', label: t('deedJournal.tabs.achievements'), icon: <Award size={16} /> }
+                    { id: 'today', label: t('deedJournal.tabs.today'), icon: <Calendar size={18} /> },
+                    { id: 'stats', label: t('deedJournal.tabs.stats'), icon: <TrendingUp size={18} /> },
+                    { id: 'achievements', label: t('deedJournal.tabs.achievements'), icon: <Award size={18} /> }
                 ].map(tab => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         style={{
                             flex: 1,
-                            padding: '12px',
-                            background: activeTab === tab.id ? 'var(--primary-color)' : 'var(--glass-bg)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '12px',
-                            color: activeTab === tab.id ? '#fff' : 'var(--text-color)',
-                            fontSize: '12px',
+                            padding: '12px 8px',
+                            background: activeTab === tab.id ? 'white' : 'transparent',
+                            border: 'none',
+                            borderRadius: '16px',
+                            color: activeTab === tab.id ? 'var(--nav-accent)' : 'var(--nav-text-muted)',
+                            fontSize: '0.75rem',
+                            fontWeight: '800',
                             cursor: 'pointer',
                             display: 'flex',
+                            flexDirection: 'column',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            gap: '6px'
+                            gap: '4px',
+                            boxShadow: activeTab === tab.id ? '0 4px 12px rgba(0,0,0,0.05)' : 'none',
+                            transition: 'all 0.2s'
                         }}
                     >
-                        {tab.icon} {tab.label}
+                        {tab.icon}
+                        {tab.label}
                     </button>
                 ))}
             </div>
 
-            {/* Content */}
-            {activeTab === 'today' && renderToday()}
-            {activeTab === 'stats' && renderStats()}
-            {activeTab === 'achievements' && renderAchievements()}
+            {/* Content Area */}
+            <div style={{ minHeight: '60vh' }}>
+                {activeTab === 'today' && renderToday()}
+                {activeTab === 'stats' && renderStats()}
+                {activeTab === 'achievements' && renderAchievements()}
+            </div>
         </div>
     );
 }

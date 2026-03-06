@@ -69,51 +69,68 @@ const ZakatCalculator = ({ onClose }) => {
     };
 
     return (
-        <div className="glass-card" style={{
-            position: 'relative',
-            height: '85vh',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '20px',
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,255,240,0.95))'
-        }}>
+        <div className="settings-container reveal-stagger">
             {/* Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <button onClick={() => setShowInfo(!showInfo)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#27ae60' }}>
-                    <Info size={24} />
-                </button>
-                <h2 style={{ margin: 0, color: '#27ae60', fontSize: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <Calculator size={24} /> {t('zakatCalculator.title', 'Zakat Calculator')}
-                </h2>
-                <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}>
-                    <X size={28} />
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                marginBottom: '24px',
+                padding: '0 4px'
+            }}>
+                <IslamicBackButton onClick={onClose} size="medium" />
+                <h1 style={{
+                    margin: 0,
+                    fontSize: '1.5rem',
+                    color: 'var(--nav-text)',
+                    fontWeight: '900'
+                }}>
+                    {t('zakatCalculator.title', 'Zekat Hesapla')}
+                </h1>
+                <div style={{ flex: 1 }}></div>
+                <button
+                    onClick={() => setShowInfo(!showInfo)}
+                    style={{
+                        background: 'var(--nav-hover)',
+                        border: 'none',
+                        cursor: 'pointer',
+                        color: 'var(--nav-accent)',
+                        padding: '10px',
+                        borderRadius: '12px'
+                    }}
+                >
+                    <Info size={20} />
                 </button>
             </div>
 
-            {/* Bilgi Kutusu */}
+            {/* Info Box */}
             {showInfo && (
-                <div style={{
-                    background: 'rgba(39, 174, 96, 0.1)',
-                    borderRadius: '12px',
-                    padding: '14px',
-                    marginBottom: '16px',
-                    fontSize: '13px',
-                    color: '#155724',
-                    border: '1px solid rgba(39, 174, 96, 0.2)'
+                <div className="settings-card" style={{
+                    background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1)',
+                    borderRadius: '24px',
+                    padding: '20px',
+                    marginBottom: '24px',
+                    fontSize: '0.9rem',
+                    color: 'var(--nav-accent)',
+                    border: '1px solid var(--nav-accent)',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    gap: '8px'
                 }}>
-                    <strong>📌 {t('zakatCalculator.whatIsZakatTitle', 'What is Zakat?')}</strong>
-                    <p style={{ margin: '8px 0 0 0' }}>
-                        {t('zakatCalculator.whatIsZakatBody', 'Zakat is giving 2.5% of assets that have reached nisab and remained in possession for one lunar year. Nisab equals the value of 80.18g gold or 561.2g silver.')}
+                    <strong style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1rem' }}>
+                        <Calculator size={18} /> {t('zakatCalculator.whatIsZakatTitle', 'Zekat Nedir?')}
+                    </strong>
+                    <p style={{ margin: 0, lineHeight: '1.6', color: 'var(--nav-text)', fontWeight: '600' }}>
+                        {t('zakatCalculator.whatIsZakatBody', 'Zekat, nisap miktarına ulaşan ve üzerinden bir hicri yıl geçen malın %2.5\'inin verilmesidir. Nisap, 80.18 gram altın veya karşılığıdır.')}
                     </p>
                 </div>
             )}
 
-            {/* İçerik */}
-            <div style={{ flex: 1, overflowY: 'auto' }}>
-                {/* Altın Fiyatı */}
-                <div style={{ marginBottom: '16px' }}>
-                    <label style={{ fontSize: '13px', color: '#666', marginBottom: '6px', display: 'block' }}>
-                        {t('zakatCalculator.goldPriceLabel', 'Gold Price (TL/gram)')}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {/* Gold Price Card */}
+                <div className="settings-card" style={{ padding: '20px', flexDirection: 'column', alignItems: 'stretch' }}>
+                    <label style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', marginBottom: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                        🥇 {t('zakatCalculator.goldPriceLabel', 'Güncel Altın Fiyatı (TL/gr)')}
                     </label>
                     <input
                         type="number"
@@ -121,114 +138,162 @@ const ZakatCalculator = ({ onClose }) => {
                         onChange={(e) => setGoldPrice(parseFloat(e.target.value) || 0)}
                         style={{
                             width: '100%',
-                            padding: '12px',
-                            borderRadius: '10px',
-                            border: '1px solid #ddd',
-                            fontSize: '16px'
+                            padding: '16px',
+                            borderRadius: '16px',
+                            background: 'var(--nav-hover)',
+                            border: '1px solid var(--nav-border)',
+                            fontSize: '1.25rem',
+                            fontWeight: '900',
+                            color: 'var(--nav-accent)',
+                            outline: 'none'
                         }}
                     />
                 </div>
 
-                {/* Varlıklar */}
-                <div style={{ fontSize: '14px', fontWeight: '600', color: '#27ae60', marginBottom: '12px' }}>
-                    💰 {t('zakatCalculator.assetsTitle', 'Assets')}
-                </div>
-
-                {[
-                    { key: 'cash', label: t('zakatCalculator.assetCash', 'Cash (TL)'), icon: '💵' },
-                    { key: 'gold', label: t('zakatCalculator.assetGold', 'Gold (gram)'), icon: '🥇' },
-                    { key: 'silver', label: t('zakatCalculator.assetSilver', 'Silver (gram)'), icon: '🥈' },
-                    { key: 'stocks', label: t('zakatCalculator.assetStocks', 'Stocks/Investments (TL)'), icon: '📈' },
-                    { key: 'receivables', label: t('zakatCalculator.assetReceivables', 'Receivables (TL)'), icon: '📋' },
-                    { key: 'business', label: t('zakatCalculator.assetBusiness', 'Business Goods (TL)'), icon: '🏪' },
-                ].map(item => (
-                    <div key={item.key} style={{ marginBottom: '12px' }}>
-                        <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            {item.icon} {item.label}
-                        </label>
-                        <input
-                            type="number"
-                            value={assets[item.key] || ''}
-                            onChange={(e) => updateAsset(item.key, e.target.value)}
-                            placeholder="0"
-                            style={{
-                                width: '100%',
-                                padding: '10px',
-                                borderRadius: '8px',
-                                border: '1px solid #ddd',
-                                fontSize: '15px'
-                            }}
-                        />
+                {/* Assets Section */}
+                <div className="settings-group">
+                    <div className="settings-group-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        💰 {t('zakatCalculator.assetsTitle', 'Varlıklar')}
                     </div>
-                ))}
-
-                {/* Borçlar */}
-                <div style={{ fontSize: '14px', fontWeight: '600', color: '#e74c3c', marginBottom: '12px', marginTop: '20px' }}>
-                    💳 {t('zakatCalculator.debtsTitle', 'Debts')}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {[
+                            { key: 'cash', label: t('zakatCalculator.assetCash', 'Nakit Para (TL)'), icon: '💵' },
+                            { key: 'gold', label: t('zakatCalculator.assetGold', 'Altın (gram)'), icon: '🥇' },
+                            { key: 'silver', label: t('zakatCalculator.assetSilver', 'Gümüş (gram)'), icon: '🥈' },
+                            { key: 'stocks', label: t('zakatCalculator.assetStocks', 'Hisse / Yatırım (TL)'), icon: '📈' },
+                            { key: 'receivables', label: t('zakatCalculator.assetReceivables', 'Alacaklar (TL)'), icon: '📋' },
+                            { key: 'business', label: t('zakatCalculator.assetBusiness', 'Ticari Mal (TL)'), icon: '🏪' },
+                        ].map(item => (
+                            <div key={item.key} className="settings-card" style={{ padding: '16px', flexDirection: 'column', alignItems: 'stretch' }}>
+                                <label style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', marginBottom: '8px', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    {item.icon} {item.label}
+                                </label>
+                                <input
+                                    type="number"
+                                    value={assets[item.key] || ''}
+                                    onChange={(e) => updateAsset(item.key, e.target.value)}
+                                    placeholder="0"
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px',
+                                        borderRadius: '12px',
+                                        background: 'transparent',
+                                        border: '1px solid var(--nav-border)',
+                                        fontSize: '1.1rem',
+                                        fontWeight: '800',
+                                        color: 'var(--nav-text)',
+                                        outline: 'none'
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <input
-                    type="number"
-                    value={debts || ''}
-                    onChange={(e) => setDebts(parseFloat(e.target.value) || 0)}
-                    placeholder="0"
-                    style={{
-                        width: '100%',
-                        padding: '10px',
-                        borderRadius: '8px',
-                        border: '1px solid #ddd',
-                        fontSize: '15px',
-                        marginBottom: '20px'
-                    }}
-                />
 
-                {/* Sıfırla */}
+                {/* Debts Section */}
+                <div className="settings-card" style={{ padding: '20px', flexDirection: 'column', alignItems: 'stretch', background: 'rgba(231, 76, 60, 0.05)', border: '1px solid rgba(231, 76, 60, 0.2)' }}>
+                    <label style={{ fontSize: '0.85rem', color: 'var(--error-color)', marginBottom: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                        💳 {t('zakatCalculator.debtsTitle', 'Borçlar')}
+                    </label>
+                    <input
+                        type="number"
+                        value={debts || ''}
+                        onChange={(e) => setDebts(parseFloat(e.target.value) || 0)}
+                        placeholder="0"
+                        style={{
+                            width: '100%',
+                            padding: '16px',
+                            borderRadius: '16px',
+                            background: 'white',
+                            border: '1px solid var(--error-color)',
+                            fontSize: '1.25rem',
+                            fontWeight: '900',
+                            color: 'var(--error-color)',
+                            outline: 'none'
+                        }}
+                    />
+                </div>
+
+                {/* Reset Button */}
                 <button
                     onClick={reset}
+                    className="velocity-target-btn"
                     style={{
-                        width: '100%',
-                        padding: '10px',
-                        borderRadius: '8px',
-                        border: 'none',
-                        background: 'rgba(0,0,0,0.05)',
-                        color: '#666',
-                        fontSize: '14px',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
+                        padding: '16px',
+                        background: 'var(--nav-hover)',
+                        color: 'var(--nav-text-muted)',
                         justifyContent: 'center',
-                        gap: '8px',
-                        marginBottom: '20px'
+                        fontWeight: '900',
+                        marginTop: '12px'
                     }}
                 >
-                    <RefreshCw size={16} /> {t('zakatCalculator.reset', 'Reset')}
+                    <RefreshCw size={18} /> {t('zakatCalculator.reset', 'Sıfırla')}
                 </button>
             </div>
 
-            {/* Sonuç */}
-            <div style={{
-                background: isNisabReached ? 'linear-gradient(135deg, #27ae60, #2ecc71)' : 'linear-gradient(135deg, #95a5a6, #7f8c8d)',
-                borderRadius: '16px',
-                padding: '20px',
-                color: 'white',
-                textAlign: 'center'
+            {/* Result Section */}
+            <div className="settings-card" style={{
+                marginTop: '32px',
+                padding: '32px 24px',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                gap: '20px',
+                background: isNisabReached 
+                    ? 'linear-gradient(135deg, var(--bg-emerald-light), var(--bg-emerald-deep))' 
+                    : 'var(--nav-hover)',
+                border: isNisabReached ? 'none' : '1px solid var(--nav-border)',
+                borderRadius: '32px',
+                color: isNisabReached ? 'white' : 'var(--nav-text)',
+                boxShadow: isNisabReached ? '0 20px 40px rgba(15, 118, 110, 0.3)' : 'none'
             }}>
-                <div style={{ fontSize: '12px', opacity: 0.9, marginBottom: '4px' }}>
+                <div className="hamburger-level-badge" style={{ 
+                    background: isNisabReached ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.05)', 
+                    color: isNisabReached ? 'white' : 'var(--nav-text-muted)',
+                    border: 'none',
+                    fontWeight: '900'
+                }}>
                     {isNisabReached
-                        ? t('zakatCalculator.nisabReached', '✅ Nisab reached')
-                        : t('zakatCalculator.nisabNotReached', '❌ Nisab not reached')}
+                        ? `✅ ${t('zakatCalculator.nisabReached', 'Nisap Miktarına Ulaşıldı')}`
+                        : `❌ ${t('zakatCalculator.nisabNotReached', 'Nisap Miktarına Ulaşılamadı')}`}
                 </div>
-                <div style={{ fontSize: '13px', opacity: 0.8, marginBottom: '8px' }}>
-                    {t('zakatCalculator.nisabLabel', 'Nisab')}: {formatCurrency(nisabValue)}
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div style={{ fontSize: '0.85rem', opacity: 0.8, fontWeight: '700' }}>
+                        {t('zakatCalculator.nisabLabel', 'Nisap Hesabı')} ({formatCurrency(nisabValue)})
+                    </div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: '900' }}>
+                        {t('zakatCalculator.netWealth', 'Net Servet')}: {formatCurrency(netWealth)}
+                    </div>
                 </div>
-                <div style={{ fontSize: '14px', marginBottom: '4px' }}>{t('zakatCalculator.netWealth', 'Net Wealth')}: {formatCurrency(netWealth)}</div>
-                <div style={{ fontSize: '28px', fontWeight: 'bold' }}>
-                    {isNisabReached
-                        ? `${t('zakatCalculator.zakatLabel', 'Zakat')}: ${formatCurrency(zakatAmount)}`
-                        : t('zakatCalculator.noZakatRequired', 'No Zakat required')}
+
+                <hr style={{ width: '60%', border: 'none', borderTop: isNisabReached ? '1px solid rgba(255,255,255,0.3)' : '1px solid var(--nav-border)' }} />
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ 
+                        fontSize: isNisabReached ? '2.5rem' : '1.5rem', 
+                        fontWeight: '950',
+                        lineHeight: '1.2'
+                    }}>
+                        {isNisabReached
+                            ? formatCurrency(zakatAmount)
+                            : t('zakatCalculator.noZakatRequired', 'Zekat Gerekmiyor')}
+                    </div>
+                    <div style={{ fontSize: '0.9rem', opacity: 0.9, fontWeight: '800' }}>
+                        {isNisabReached ? t('zakatCalculator.zakatLabel', 'Ödenmesi Gereken Zekat') : ''}
+                    </div>
                 </div>
+
                 {isNisabReached && (
-                    <div style={{ fontSize: '11px', opacity: 0.8, marginTop: '8px' }}>
-                        {t('zakatCalculator.percentNote', '(2.5% of net wealth)')}
+                    <div style={{ 
+                        fontSize: '0.75rem', 
+                        opacity: 0.7, 
+                        fontWeight: '700',
+                        background: 'rgba(0,0,0,0.1)',
+                        padding: '6px 12px',
+                        borderRadius: '12px'
+                    }}>
+                        {t('zakatCalculator.percentNote', 'Net servetin %2.5\'i hesaplanmıştır.')}
                     </div>
                 )}
             </div>

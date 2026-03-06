@@ -21,6 +21,13 @@ const FamilyMode = ({ onClose }) => {
     const [newName, setNewName] = useState('');
     const [newRole, setNewRole] = useState('child');
     
+    const TABS = [
+        { id: 'overview', icon: <Activity size={18} /> },
+        { id: 'leaderboard', icon: <Trophy size={18} /> },
+        { id: 'activities', icon: <Clock size={18} /> },
+        { id: 'groups', icon: <Users size={18} /> }
+    ];
+    
     // Group State
     const [groupName, setGroupName] = useState('');
     const [groupCode, setGroupCode] = useState('');
@@ -107,48 +114,122 @@ const FamilyMode = ({ onClose }) => {
     };
 
     const renderTabs = () => (
-        <div className="glass-card" style={{ padding: '5px', display: 'flex', gap: '5px', marginBottom: '20px' }}>
-            {['overview', 'leaderboard', 'activities', 'groups'].map(tab => (
+        <div className="settings-card reveal-stagger" style={{ 
+            padding: '6px', 
+            display: 'flex', 
+            gap: '6px', 
+            marginBottom: '24px',
+            background: 'var(--nav-hover)',
+            borderRadius: '16px'
+        }}>
+            {TABS.map(tab => (
                 <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
                     style={{
-                        flex: 1, padding: '10px', borderRadius: '8px', border: 'none',
-                        background: activeTab === tab ? 'var(--primary-color)' : 'transparent',
-                        color: activeTab === tab ? 'white' : 'var(--text-color)',
-                        fontSize: '13px', fontWeight: '600', cursor: 'pointer',
-                        transition: 'all 0.2s'
+                        flex: 1, 
+                        padding: '12px 8px', 
+                        borderRadius: '12px', 
+                        border: 'none',
+                        background: activeTab === tab.id ? 'var(--nav-accent)' : 'transparent',
+                        color: activeTab === tab.id ? 'white' : 'var(--nav-text-muted)',
+                        fontSize: '0.85rem', 
+                        fontWeight: '800', 
+                        cursor: 'pointer',
+                        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '4px'
                     }}
                 >
-                    {t(`family.tabs.${tab}`)}
+                    <div style={{ opacity: activeTab === tab.id ? 1 : 0.7 }}>
+                        {tab.icon}
+                    </div>
+                    <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        {t(`family.tabs.${tab.id}`)}
+                    </span>
                 </button>
             ))}
         </div>
     );
 
     const renderOverview = () => (
-        <div className="animate-fade-in">
+        <div className="reveal-stagger">
             {/* Active Profile Banner */}
             {activeProfile && (
-                <div className="glass-card" style={{ 
-                    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-                    color: 'white', padding: '25px', display: 'flex', alignItems: 'center', gap: '20px',
-                    boxShadow: '0 10px 25px rgba(37, 99, 235, 0.3)'
+                <div className="reveal-stagger" style={{ 
+                    background: 'linear-gradient(135deg, var(--nav-accent) 0%, #f59e0b 100%)',
+                    color: 'white', 
+                    padding: '32px 24px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '20px',
+                    borderRadius: '28px',
+                    boxShadow: '0 15px 35px rgba(249, 115, 22, 0.25)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    marginBottom: '24px'
                 }}>
-                    <div style={{ fontSize: '48px', background: 'rgba(255,255,255,0.2)', width: '80px', height: '80px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {/* Decorative element */}
+                    <div style={{
+                        position: 'absolute',
+                        top: '-20px',
+                        right: '-20px',
+                        fontSize: '100px',
+                        opacity: 0.1,
+                        transform: 'rotate(15deg)'
+                    }}>
                         {activeProfile.avatar}
                     </div>
-                    <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '14px', opacity: 0.9, marginBottom: '5px' }}>{t('family.welcomeBack')}</div>
-                        <div style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '5px' }}>{activeProfile.name}</div>
-                        <div style={{ display: 'flex', gap: '15px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '5px', background: 'rgba(0,0,0,0.2)', padding: '4px 10px', borderRadius: '12px' }}>
-                                <Star size={14} fill="gold" color="gold" />
-                                <span style={{ fontWeight: 'bold', fontSize: '14px' }}>{activeProfile.points}</span>
+
+                    <div style={{ 
+                        fontSize: '48px', 
+                        background: 'rgba(255,255,255,0.2)', 
+                        backdropFilter: 'blur(10px)',
+                        width: '84px', 
+                        height: '84px', 
+                        borderRadius: '24px', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+                        border: '1px solid rgba(255,255,255,0.3)'
+                    }}>
+                        {activeProfile.avatar}
+                    </div>
+                    <div style={{ flex: 1, position: 'relative', zIndex: 1 }}>
+                        <div style={{ fontSize: '0.85rem', opacity: 0.9, marginBottom: '2px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                            {t('family.welcomeBack')}
+                        </div>
+                        <div style={{ fontSize: '1.75rem', fontWeight: '950', marginBottom: '8px', letterSpacing: '-0.5px' }}>
+                            {activeProfile.name}
+                        </div>
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                            <div style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '6px', 
+                                background: 'rgba(255,255,255,0.2)', 
+                                padding: '6px 12px', 
+                                borderRadius: '12px',
+                                backdropFilter: 'blur(5px)'
+                            }}>
+                                <Star size={14} fill="white" color="white" />
+                                <span style={{ fontWeight: '800', fontSize: '0.9rem' }}>{activeProfile.points}</span>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '5px', background: 'rgba(0,0,0,0.2)', padding: '4px 10px', borderRadius: '12px' }}>
-                                <Trophy size={14} color="#fbbf24" />
-                                <span style={{ fontWeight: 'bold', fontSize: '14px' }}>#{profiles.sort((a,b) => b.points - a.points).findIndex(p => p.id === activeProfile.id) + 1}</span>
+                            <div style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '6px', 
+                                background: 'rgba(0,0,0,0.15)', 
+                                padding: '6px 12px', 
+                                borderRadius: '12px' 
+                            }}>
+                                <Trophy size={14} color="white" />
+                                <span style={{ fontWeight: '800', fontSize: '0.9rem' }}>
+                                    #{profiles.sort((a,b) => b.points - a.points).findIndex(p => p.id === activeProfile.id) + 1}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -156,58 +237,144 @@ const FamilyMode = ({ onClose }) => {
             )}
 
             {/* Shared Goals Section */}
-            <div style={{ marginTop: '20px' }}>
-                <h3 style={{ fontSize: '18px', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-color)' }}>
-                    <Target size={20} color="var(--primary-color)" /> {t('family.sharedGoals')}
+            <div style={{ marginTop: '24px' }}>
+                <h3 style={{ 
+                    fontSize: '1rem', 
+                    marginBottom: '16px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '10px', 
+                    color: 'var(--nav-text)',
+                    fontWeight: '900',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                }}>
+                    <Target size={20} color="var(--nav-accent)" /> {t('family.sharedGoals')}
                 </h3>
-                <div className="glass-card" style={{ padding: '15px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-                    <div style={{ width: '50px', height: '50px', background: '#ecfdf5', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981' }}>
-                        <Heart size={24} fill="#10b981" />
+                <div className="settings-card reveal-stagger" style={{ 
+                    padding: '24px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '20px',
+                    flexDirection: 'row'
+                }}>
+                    <div className="settings-icon-box" style={{ 
+                        width: '56px', height: '56px', 
+                        background: 'rgba(16, 185, 129, 0.1)', 
+                        borderRadius: '16px', 
+                        color: '#10b981' 
+                    }}>
+                        <Heart size={28} fill="#10b981" />
                     </div>
                     <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: '600', marginBottom: '4px', color: 'var(--text-color)' }}>{t('family.goals.familyHatim')}</div>
-                        <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginBottom: '8px' }}>{t('family.goals.desc')}</div>
-                        <div style={{ height: '6px', background: '#f1f5f9', borderRadius: '3px', overflow: 'hidden' }}>
-                            <div style={{ width: '45%', height: '100%', background: '#10b981' }} />
+                        <div style={{ fontWeight: '900', marginBottom: '4px', color: 'var(--nav-text)', fontSize: '1.05rem' }}>
+                            {t('family.goals.familyHatim')}
+                        </div>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', marginBottom: '12px', fontWeight: '600' }}>
+                            {t('family.goals.desc')}
+                        </div>
+                        <div style={{ 
+                            height: '8px', 
+                            background: 'var(--nav-hover)', 
+                            borderRadius: '10px', 
+                            overflow: 'hidden',
+                            border: '1px solid var(--nav-border)'
+                        }}>
+                            <div style={{ 
+                                width: '45%', 
+                                height: '100%', 
+                                background: 'linear-gradient(90deg, #10b981, #34d399)',
+                                borderRadius: '10px'
+                            }} />
+                        </div>
+                        <div style={{ marginTop: '8px', fontSize: '0.75rem', fontWeight: '800', color: '#10b981' }}>
+                            %45 Tamamlandı
                         </div>
                     </div>
-                    <button className="btn btn-sm btn-primary">{t('common.view')}</button>
+                    <button className="velocity-target-btn" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>
+                        {t('common.view')}
+                    </button>
                 </div>
             </div>
 
             {/* Quick Actions */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '20px' }}>
-                <button className="glass-card" style={{ padding: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', border: 'none', cursor: 'pointer' }}>
-                    <div style={{ width: '40px', height: '40px', background: '#eff6ff', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3b82f6' }}>
-                        <MessageCircle size={20} />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '24px' }}>
+                <button className="settings-card reveal-stagger" style={{ 
+                    padding: '24px 16px', 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'center', 
+                    gap: '12px', 
+                    border: 'none', 
+                    cursor: 'pointer',
+                    '--delay': '0.1s'
+                }}>
+                    <div className="settings-icon-box" style={{ 
+                        width: '48px', height: '48px', 
+                        background: 'rgba(59, 130, 246, 0.1)', 
+                        borderRadius: '14px', 
+                        color: '#3b82f6' 
+                    }}>
+                        <MessageCircle size={24} />
                     </div>
-                    <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-color)' }}>{t('family.chat')}</span>
+                    <span style={{ fontSize: '0.9rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                        {t('family.chat')}
+                    </span>
                 </button>
-                <button className="glass-card" onClick={handleShareInvite} style={{ padding: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', border: 'none', cursor: 'pointer' }}>
-                    <div style={{ width: '40px', height: '40px', background: '#fef3c7', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706' }}>
-                        <Share2 size={20} />
+                <button 
+                    className="settings-card reveal-stagger" 
+                    onClick={handleShareInvite} 
+                    style={{ 
+                        padding: '24px 16px', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        gap: '12px', 
+                        border: 'none', 
+                        cursor: 'pointer',
+                        '--delay': '0.15s'
+                    }}
+                >
+                    <div className="settings-icon-box" style={{ 
+                        width: '48px', height: '48px', 
+                        background: 'rgba(249, 115, 22, 0.1)', 
+                        borderRadius: '14px', 
+                        color: 'var(--nav-accent)' 
+                    }}>
+                        <Share2 size={24} />
                     </div>
-                    <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-color)' }}>{t('family.invite')}</span>
+                    <span style={{ fontSize: '0.9rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                        {t('family.invite')}
+                    </span>
                 </button>
             </div>
         </div>
     );
 
     const renderLeaderboard = () => (
-        <div className="animate-fade-in">
-            <div className="glass-card" style={{ padding: '0' }}>
-                <div style={{ padding: '15px', borderBottom: '1px solid rgba(0,0,0,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h3 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-color)' }}>
+        <div className="reveal-stagger">
+            <div className="settings-card" style={{ padding: '0', flexDirection: 'column', alignItems: 'stretch' }}>
+                <div style={{ 
+                    padding: '24px', 
+                    borderBottom: '1px solid var(--nav-border)', 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                    background: 'var(--nav-hover)',
+                    borderTopLeftRadius: '24px',
+                    borderTopRightRadius: '24px'
+                }}>
+                    <h3 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--nav-text)', fontWeight: '900' }}>
                         <Trophy size={20} color="#f59e0b" /> {t('family.leaderboard')}
                     </h3>
-                    <button onClick={() => setView('create')} className="btn btn-sm" style={{ padding: '6px 12px', fontSize: '12px' }}>
-                        <UserPlus size={14} style={{ marginRight: '4px' }} /> {t('common.add')}
+                    <button onClick={() => setView('create')} className="velocity-target-btn" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>
+                        <UserPlus size={16} /> {t('common.add')}
                     </button>
                 </div>
                 
-                <div style={{ padding: '10px' }}>
+                <div style={{ padding: '12px' }}>
                     {profiles.length === 0 ? (
-                        <div style={{ textAlign: 'center', padding: '20px', color: 'var(--text-color-muted)' }}>
+                        <div style={{ textAlign: 'center', padding: '40px', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
                             {t('family.noProfiles')}
                         </div>
                     ) : (
@@ -216,24 +383,50 @@ const FamilyMode = ({ onClose }) => {
                             .map((profile, index) => (
                                 <div 
                                     key={profile.id}
+                                    className="reveal-stagger"
                                     onClick={() => switchProfile(profile.id)}
                                     style={{ 
-                                        display: 'flex', alignItems: 'center', gap: '12px', 
-                                        padding: '12px', borderRadius: '12px',
-                                        background: activeProfile?.id === profile.id ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
-                                        cursor: 'pointer', marginBottom: '5px',
-                                        border: activeProfile?.id === profile.id ? '1px solid rgba(59, 130, 246, 0.3)' : '1px solid transparent'
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        gap: '16px', 
+                                        padding: '16px', 
+                                        borderRadius: '16px',
+                                        background: activeProfile?.id === profile.id ? 'var(--nav-hover)' : 'transparent',
+                                        cursor: 'pointer', 
+                                        marginBottom: '4px',
+                                        border: activeProfile?.id === profile.id ? '1px solid var(--nav-accent)' : '1px solid transparent',
+                                        transition: 'all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                                        '--delay': `${index * 0.05}s`
                                     }}
                                 >
-                                    <div style={{ width: '24px', textAlign: 'center', fontWeight: 'bold', color: index < 3 ? '#f59e0b' : 'var(--text-color-muted)' }}>
-                                        {index === 0 ? <Crown size={20} color="#f59e0b" fill="#f59e0b" /> : index + 1}
+                                    <div style={{ 
+                                        width: '32px', 
+                                        textAlign: 'center', 
+                                        fontWeight: '950', 
+                                        color: index < 3 ? '#f59e0b' : 'var(--nav-text-muted)',
+                                        fontSize: index < 3 ? '1.2rem' : '1rem'
+                                    }}>
+                                        {index === 0 ? <Crown size={24} color="#f59e0b" fill="#f59e0b" /> : index + 1}
                                     </div>
-                                    <div style={{ fontSize: '24px' }}>{profile.avatar}</div>
+                                    <div className="settings-icon-box" style={{ 
+                                        width: '48px', 
+                                        height: '48px', 
+                                        fontSize: '1.5rem',
+                                        background: activeProfile?.id === profile.id ? 'var(--nav-accent)' : 'var(--nav-hover)',
+                                        color: activeProfile?.id === profile.id ? 'white' : 'inherit',
+                                        borderRadius: '14px'
+                                    }}>
+                                        {profile.avatar}
+                                    </div>
                                     <div style={{ flex: 1 }}>
-                                        <div style={{ fontWeight: '600', color: 'var(--text-color)' }}>{profile.name}</div>
-                                        <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>{profile.role === 'child' ? t('family.child') : t('family.parent')}</div>
+                                        <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1rem' }}>{profile.name}</div>
+                                        <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '700', textTransform: 'uppercase' }}>
+                                            {profile.role === 'child' ? t('family.child') : t('family.parent')}
+                                        </div>
                                     </div>
-                                    <div style={{ fontWeight: 'bold', color: '#3b82f6' }}>{profile.points}p</div>
+                                    <div style={{ fontWeight: '950', color: 'var(--nav-accent)', fontSize: '1.1rem' }}>
+                                        {profile.points}<span style={{ fontSize: '0.7rem', opacity: 0.7, marginLeft: '2px' }}>p</span>
+                                    </div>
                                 </div>
                             ))
                     )}
@@ -243,28 +436,39 @@ const FamilyMode = ({ onClose }) => {
     );
 
     const renderActivities = () => (
-        <div className="animate-fade-in">
-            <div className="glass-card" style={{ padding: '20px' }}>
-                <h3 style={{ marginTop: 0, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-color)' }}>
+        <div className="reveal-stagger">
+            <div className="settings-card" style={{ padding: '24px', flexDirection: 'column', alignItems: 'stretch' }}>
+                <h3 style={{ marginTop: 0, marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--nav-text)', fontWeight: '950' }}>
                     <Activity size={20} color="#8b5cf6" /> {t('family.recentActivity')}
                 </h3>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {/* Mock Activities */}
-                    {[1, 2, 3].map((i) => (
-                        <div key={i} style={{ display: 'flex', gap: '15px' }}>
-                            <div style={{ 
-                                width: '36px', height: '36px', borderRadius: '50%', background: '#f3f4f6', 
-                                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' 
+                    {[1, 2, 3].map((i, index) => (
+                        <div key={i} className="reveal-stagger" style={{ display: 'flex', gap: '16px', '--delay': `${index * 0.05}s` }}>
+                            <div className="settings-icon-box" style={{ 
+                                width: '44px', height: '44px', borderRadius: '12px', background: 'var(--nav-hover)', 
+                                fontSize: '1.25rem' 
                             }}>
                                 {['👨‍👩‍👧', '👶', '👵'][i-1]}
                             </div>
                             <div style={{ flex: 1 }}>
-                                <div style={{ fontSize: '14px', color: 'var(--text-color)' }}>
-                                    <span style={{ fontWeight: '600' }}>{['Ahmet', 'Zeynep', 'Fatma'][i-1]}</span>
+                                <div style={{ fontSize: '0.95rem', color: 'var(--nav-text)', lineHeight: '1.4' }}>
+                                    <span style={{ fontWeight: '900' }}>{['Ahmet', 'Zeynep', 'Fatma'][i-1]}</span>
                                     {' '}{t(`family.activities.action${i}`)}
                                 </div>
-                                <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginTop: '4px' }}>{i * 15} {t('family.minutesAgo')}</div>
+                                <div style={{ 
+                                    fontSize: '0.75rem', 
+                                    color: 'var(--nav-text-muted)', 
+                                    marginTop: '4px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    fontWeight: '700'
+                                }}>
+                                    <Clock size={12} />
+                                    {i * 15} {t('family.minutesAgo')}
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -274,65 +478,135 @@ const FamilyMode = ({ onClose }) => {
     );
 
     const renderGroups = () => (
-        <div className="animate-fade-in">
+        <div className="reveal-stagger">
             {currentGroup ? (
-                <div className="glass-card" style={{ padding: '25px', textAlign: 'center' }}>
-                    <div style={{ width: '80px', height: '80px', background: '#e0e7ff', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 15px', color: '#4f46e5' }}>
+                <div className="settings-card" style={{ padding: '32px 24px', textAlign: 'center', flexDirection: 'column', alignItems: 'stretch' }}>
+                    <div className="settings-icon-box" style={{ 
+                        width: '84px', height: '84px', 
+                        background: 'rgba(79, 70, 229, 0.1)', 
+                        borderRadius: '24px', 
+                        margin: '0 auto 16px', 
+                        color: '#4f46e5' 
+                    }}>
                         <Users size={40} />
                     </div>
-                    <h2 style={{ margin: '0 0 5px', color: 'var(--text-color)' }}>{currentGroup.name}</h2>
-                    <div style={{ background: '#f3f4f6', padding: '8px 16px', borderRadius: '20px', display: 'inline-block', marginBottom: '20px' }}>
-                        <span style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginRight: '8px' }}>{t('family.groups.code')}:</span>
-                        <span style={{ fontWeight: 'bold', fontSize: '16px', letterSpacing: '2px', color: 'var(--text-color)' }}>{currentGroup.code}</span>
+                    <h2 style={{ margin: '0 0 8px', color: 'var(--nav-text)', fontWeight: '950', fontSize: '1.5rem' }}>{currentGroup.name}</h2>
+                    <div style={{ 
+                        background: 'var(--nav-hover)', 
+                        padding: '10px 20px', 
+                        borderRadius: '16px', 
+                        display: 'inline-block', 
+                        marginBottom: '32px',
+                        border: '1px solid var(--nav-border)'
+                    }}>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', marginRight: '10px', fontWeight: '800', textTransform: 'uppercase' }}>
+                            {t('family.groups.code')}:
+                        </span>
+                        <span style={{ fontWeight: '950', fontSize: '1.25rem', letterSpacing: '3px', color: 'var(--nav-accent)' }}>{currentGroup.code}</span>
                     </div>
                     
-                    <div style={{ textAlign: 'left', marginTop: '20px' }}>
-                        <h4 style={{ marginBottom: '15px', color: 'var(--text-color)' }}>{t('family.groups.members')} ({currentGroup.members.length})</h4>
-                        {currentGroup.members.map((member, idx) => (
-                            <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px', borderBottom: '1px solid #f1f5f9' }}>
-                                <div style={{ fontSize: '24px' }}>{member.avatar}</div>
-                                <div>
-                                    <div style={{ fontWeight: '600', color: 'var(--text-color)' }}>{member.name}</div>
-                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>{member.role === 'child' ? t('family.child') : t('family.parent')}</div>
+                    <div style={{ textAlign: 'left', marginTop: '16px' }}>
+                        <h4 style={{ 
+                            marginBottom: '16px', 
+                            color: 'var(--nav-text)', 
+                            fontWeight: '900',
+                            fontSize: '1rem',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}>
+                            <span>{t('family.groups.members')}</span>
+                            <span style={{ fontSize: '0.8rem', opacity: 0.6 }}>{currentGroup.members.length} Üye</span>
+                        </h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {currentGroup.members.map((member, idx) => (
+                                <div key={idx} style={{ 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    gap: '14px', 
+                                    padding: '12px', 
+                                    borderRadius: '12px',
+                                    background: 'var(--nav-hover)'
+                                }}>
+                                    <div style={{ fontSize: '1.5rem' }}>{member.avatar}</div>
+                                    <div style={{ flex: 1 }}>
+                                        <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '0.95rem' }}>{member.name}</div>
+                                        <div style={{ 
+                                            fontSize: '0.7rem', 
+                                            color: 'var(--nav-text-muted)', 
+                                            fontWeight: '700',
+                                            textTransform: 'uppercase',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '4px'
+                                        }}>
+                                            {member.role === 'child' ? '👶' : '👨‍👩‍👧'}
+                                            {member.role === 'child' ? t('family.child') : t('family.parent')}
+                                        </div>
+                                    </div>
+                                    {member.isOwner && (
+                                        <div style={{ background: 'var(--nav-accent)', color: 'white', padding: '4px 8px', borderRadius: '6px', fontSize: '0.65rem', fontWeight: '900' }}>
+                                            ADMIN
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
 
                     {/* Pending Members Section - Admin Only */}
                     {isGroupAdmin && currentGroup.pendingMembers && currentGroup.pendingMembers.length > 0 && (
-                        <div style={{ textAlign: 'left', marginTop: '25px', paddingTop: '20px', borderTop: '1px solid #e5e7eb' }}>
-                            <h4 style={{ marginBottom: '15px', color: 'var(--text-color)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <Clock size={16} color="#f59e0b" /> {t('family.groups.pendingRequests')} ({currentGroup.pendingMembers.length})
+                        <div style={{ textAlign: 'left', marginTop: '32px', paddingTop: '24px', borderTop: '2px dashed var(--nav-border)' }}>
+                            <h4 style={{ marginBottom: '16px', color: 'var(--nav-text)', display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '900' }}>
+                                <Clock size={18} color="#f59e0b" /> {t('family.groups.pendingRequests')}
+                                <span style={{ background: '#f59e0b', color: 'white', padding: '2px 8px', borderRadius: '10px', fontSize: '0.7rem' }}>
+                                    {currentGroup.pendingMembers.length}
+                                </span>
                             </h4>
-                            {currentGroup.pendingMembers.map((member, idx) => (
-                                <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px', background: '#fef3c7', borderRadius: '8px', marginBottom: '8px' }}>
-                                    <div style={{ fontSize: '24px' }}>{member.avatar}</div>
-                                    <div style={{ flex: 1 }}>
-                                        <div style={{ fontWeight: '600', color: 'var(--text-color)' }}>{member.name}</div>
-                                        <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>{member.role === 'child' ? t('family.child') : t('family.parent')}</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                {currentGroup.pendingMembers.map((member, idx) => (
+                                    <div key={idx} style={{ 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        gap: '14px', 
+                                        padding: '16px', 
+                                        background: 'rgba(245, 158, 11, 0.05)', 
+                                        borderRadius: '16px',
+                                        border: '1px solid rgba(245, 158, 11, 0.2)'
+                                    }}>
+                                        <div style={{ fontSize: '1.5rem' }}>{member.avatar}</div>
+                                        <div style={{ flex: 1 }}>
+                                            <div style={{ fontWeight: '800', color: 'var(--nav-text)' }}>{member.name}</div>
+                                            <div style={{ fontSize: '0.7rem', color: 'var(--nav-text-muted)', fontWeight: '700', textTransform: 'uppercase' }}>
+                                                {member.role === 'child' ? t('family.child') : t('family.parent')}
+                                            </div>
+                                        </div>
+                                        <div style={{ display: 'flex', gap: '8px' }}>
+                                            <button 
+                                                onClick={() => handleApprove(member.id)} 
+                                                className="settings-icon-box"
+                                                style={{ background: '#10b981', color: 'white', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', border: 'none' }}
+                                            >
+                                                <Check size={18} />
+                                            </button>
+                                            <button 
+                                                onClick={() => handleReject(member.id)} 
+                                                className="settings-icon-box"
+                                                style={{ background: '#ef4444', color: 'white', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', border: 'none' }}
+                                            >
+                                                <X size={18} />
+                                            </button>
+                                        </div>
                                     </div>
-                                    <button 
-                                        onClick={() => handleApprove(member.id)} 
-                                        style={{ background: '#10b981', color: 'white', border: 'none', borderRadius: '8px', padding: '8px', cursor: 'pointer' }}
-                                    >
-                                        <Check size={18} />
-                                    </button>
-                                    <button 
-                                        onClick={() => handleReject(member.id)} 
-                                        style={{ background: '#ef4444', color: 'white', border: 'none', borderRadius: '8px', padding: '8px', cursor: 'pointer' }}
-                                    >
-                                        <X size={18} />
-                                    </button>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
                     )}
                 </div>
             ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                    <div className="glass-card" style={{ padding: '25px' }}>
-                        <h3 style={{ marginTop: 0, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-color)' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    <div className="settings-card" style={{ padding: '24px', flexDirection: 'column', alignItems: 'stretch' }}>
+                        <h3 style={{ marginTop: 0, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--nav-text)', fontWeight: '950' }}>
                             <UserPlus size={20} color="#10b981" /> {t('family.groups.create')}
                         </h3>
                         <div style={{ display: 'flex', gap: '10px' }}>
@@ -341,17 +615,26 @@ const FamilyMode = ({ onClose }) => {
                                 value={groupName}
                                 onChange={(e) => setGroupName(e.target.value)}
                                 placeholder={t('family.namePlaceholder')}
-                                style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #ddd' }}
+                                style={{ 
+                                    flex: 1, 
+                                    padding: '14px 18px', 
+                                    borderRadius: '14px', 
+                                    background: 'var(--nav-hover)',
+                                    border: '1px solid var(--nav-border)',
+                                    color: 'var(--nav-text)',
+                                    fontWeight: '600',
+                                    outline: 'none'
+                                }}
                             />
-                            <button onClick={handleCreateGroup} className="btn btn-primary">
+                            <button onClick={handleCreateGroup} className="velocity-target-btn" style={{ padding: '0 24px' }}>
                                 {t('family.groups.createBtn')}
                             </button>
                         </div>
                     </div>
 
-                    <div className="glass-card" style={{ padding: '25px' }}>
-                        <h3 style={{ marginTop: 0, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-color)' }}>
-                            <Users size={20} color="#3b82f6" /> {t('family.groups.join')}
+                    <div className="settings-card" style={{ padding: '24px', flexDirection: 'column', alignItems: 'stretch' }}>
+                        <h3 style={{ marginTop: 0, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--nav-text)', fontWeight: '950' }}>
+                            <Users size={20} color="var(--nav-accent)" /> {t('family.groups.join')}
                         </h3>
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <input 
@@ -359,22 +642,52 @@ const FamilyMode = ({ onClose }) => {
                                 value={groupCode}
                                 onChange={(e) => setGroupCode(e.target.value)}
                                 placeholder={t('family.groups.enterCode')}
-                                style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #ddd' }}
+                                style={{ 
+                                    flex: 1, 
+                                    padding: '14px 18px', 
+                                    borderRadius: '14px', 
+                                    background: 'var(--nav-hover)',
+                                    border: '1px solid var(--nav-border)',
+                                    color: 'var(--nav-text)',
+                                    fontWeight: '600',
+                                    outline: 'none'
+                                }}
                             />
-                            <button onClick={handleRequestJoinGroup} className="btn btn-primary">
+                            <button onClick={handleRequestJoinGroup} className="velocity-target-btn" style={{ padding: '0 24px' }}>
                                 {t('family.groups.joinBtn')}
                             </button>
                         </div>
                     </div>
                     
                     {groupSuccess && (
-                        <div style={{ color: '#10b981', textAlign: 'center', padding: '10px', background: '#ecfdf5', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                        <div className="settings-card pulse" style={{ 
+                            color: '#10b981', 
+                            padding: '16px', 
+                            background: 'rgba(16, 185, 129, 0.05)', 
+                            border: '1px solid rgba(16, 185, 129, 0.2)',
+                            borderRadius: '16px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            gap: '10px',
+                            fontWeight: '800',
+                            fontSize: '0.9rem'
+                        }}>
                             <Clock size={16} /> {groupSuccess}
                         </div>
                     )}
                     
                     {groupError && (
-                        <div style={{ color: '#ef4444', textAlign: 'center', padding: '10px', background: '#fee2e2', borderRadius: '8px' }}>
+                        <div className="settings-card" style={{ 
+                            color: '#ef4444', 
+                            padding: '16px', 
+                            background: 'rgba(239, 68, 68, 0.05)', 
+                            border: '1px solid rgba(239, 68, 68, 0.2)',
+                            borderRadius: '16px',
+                            justifyContent: 'center',
+                            fontWeight: '800',
+                            fontSize: '0.9rem'
+                        }}>
                             {groupError}
                         </div>
                     )}
@@ -384,46 +697,119 @@ const FamilyMode = ({ onClose }) => {
     );
 
     const renderCreate = () => (
-        <div className="glass-card" style={{ padding: '20px' }}>
-            <h3 style={{ marginTop: 0 }}>{t('family.createProfile')}</h3>
-            <input 
-                type="text" 
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-                placeholder={t('family.namePlaceholder')}
-                style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #ddd', marginBottom: '10px' }}
-            />
-            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+        <div className="settings-card reveal-stagger" style={{ padding: '32px 24px', flexDirection: 'column', alignItems: 'stretch' }}>
+            <h3 style={{ marginTop: 0, marginBottom: '24px', color: 'var(--nav-text)', fontWeight: '950', fontSize: '1.25rem' }}>
+                {t('family.createProfile')}
+            </h3>
+            <div style={{ marginBottom: '20px' }}>
+                <label style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', marginBottom: '8px', display: 'block', textTransform: 'uppercase' }}>
+                    {t('family.nameLabel', 'Profil İsmi')}
+                </label>
+                <input 
+                    type="text" 
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    placeholder={t('family.namePlaceholder')}
+                    style={{ 
+                        width: '100%', 
+                        padding: '14px 18px', 
+                        borderRadius: '14px', 
+                        background: 'var(--nav-hover)',
+                        border: '1px solid var(--nav-border)',
+                        color: 'var(--nav-text)',
+                        fontWeight: '600',
+                        fontSize: '1rem',
+                        outline: 'none'
+                    }}
+                />
+            </div>
+            
+            <label style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', marginBottom: '12px', display: 'block', textTransform: 'uppercase' }}>
+                {t('family.roleLabel', 'Rol Seçimi')}
+            </label>
+            <div style={{ display: 'flex', gap: '12px', marginBottom: '32px' }}>
                 <button 
                     onClick={() => setNewRole('child')}
-                    className={`btn ${newRole === 'child' ? 'btn-primary' : ''}`}
-                    style={{ flex: 1, opacity: newRole === 'child' ? 1 : 0.6 }}
+                    className="settings-card"
+                    style={{ 
+                        flex: 1, 
+                        background: newRole === 'child' ? 'var(--nav-accent)' : 'var(--nav-hover)',
+                        color: newRole === 'child' ? 'white' : 'var(--nav-text)',
+                        padding: '16px',
+                        justifyContent: 'center',
+                        fontSize: '0.9rem',
+                        fontWeight: '800',
+                        border: newRole === 'child' ? '1px solid var(--nav-accent)' : '1px solid var(--nav-border)',
+                        transition: 'all 0.2s'
+                    }}
                 >
                     👶 {t('family.child')}
                 </button>
                 <button 
                     onClick={() => setNewRole('parent')}
-                    className={`btn ${newRole === 'parent' ? 'btn-primary' : ''}`}
-                    style={{ flex: 1, opacity: newRole === 'parent' ? 1 : 0.6 }}
+                    className="settings-card"
+                    style={{ 
+                        flex: 1, 
+                        background: newRole === 'parent' ? 'var(--nav-accent)' : 'var(--nav-hover)',
+                        color: newRole === 'parent' ? 'white' : 'var(--nav-text)',
+                        padding: '16px',
+                        justifyContent: 'center',
+                        fontSize: '0.9rem',
+                        fontWeight: '800',
+                        border: newRole === 'parent' ? '1px solid var(--nav-accent)' : '1px solid var(--nav-border)',
+                        transition: 'all 0.2s'
+                    }}
                 >
                     👨‍👩‍👧 {t('family.parent')}
                 </button>
             </div>
-            <div style={{ display: 'flex', gap: '10px' }}>
-                <button onClick={() => setView('list')} className="btn" style={{ flex: 1 }}>{t('common.cancel')}</button>
-                <button onClick={handleCreate} className="btn btn-primary" style={{ flex: 1 }}>{t('common.save')}</button>
+            <div style={{ display: 'flex', gap: '12px' }}>
+                <button 
+                    onClick={() => setView('list')} 
+                    className="settings-card"
+                    style={{ 
+                        flex: 1, 
+                        justifyContent: 'center', 
+                        padding: '16px', 
+                        fontWeight: '800',
+                        color: 'var(--nav-text-muted)'
+                    }}
+                >
+                    {t('common.cancel')}
+                </button>
+                <button 
+                    onClick={handleCreate} 
+                    className="velocity-target-btn" 
+                    style={{ flex: 1, padding: '16px' }}
+                >
+                    {t('common.save')}
+                </button>
             </div>
         </div>
     );
 
     return (
-        <div className="app-container" style={{ paddingBottom: '100px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '20px' }}>
+        <div className="settings-container reveal-stagger" style={{ paddingBottom: '120px' }}>
+            <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '16px', 
+                padding: '12px 4px',
+                marginBottom: '24px' 
+            }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
-                <h2 style={{ margin: 0, fontSize: '20px', color: 'var(--text-color)' }}>{t('family.title')}</h2>
+                <h2 style={{ 
+                    margin: 0, 
+                    fontSize: '1.75rem', 
+                    color: 'var(--nav-text)',
+                    fontWeight: '950',
+                    letterSpacing: '-0.5px'
+                }}>
+                    {t('family.title')}
+                </h2>
             </div>
 
-            <div style={{ padding: '0 20px' }}>
+            <div className="reveal-stagger">
                 {view === 'create' ? renderCreate() : (
                     <>
                         {renderTabs()}

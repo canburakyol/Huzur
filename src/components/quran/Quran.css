@@ -125,131 +125,117 @@
     padding: 220px 20px 120px 20px; /* Top padding accounts for header height */
 }
 
-/* --- BASMALA STRIP --- */
-.basmala-container {
-    margin: 0 10px 20px;
-    background-color: #fff;
-    background-image: radial-gradient(#fdfbf7 50%, #fff 100%);
-    border-radius: 50px;
-    padding: 8px 20px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    position: relative;
-    z-index: 5;
+/* --- MUSHAF PAGE SURROUNDINGS --- */
+.mushaf-frame {
+    margin: 0 10px 30px;
+    padding: 10px;
+    background: #f1e9d2; /* Kağıt dış renk zemin */
+    border-radius: 6px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.mushaf-paper {
+    background: #FFFAF0; /* Klasik Kuran Sayfa Rengi (Şamua Kağıt) */
     border: 2px solid var(--gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
+    outline: 1px solid var(--emerald);
+    outline-offset: -4px;
+    border-radius: 4px;
+    padding: 20px 15px;
+    min-height: 50vh;
+    box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.1);
 }
 
-.basmala-text {
-    font-family: var(--arabic-font-family);
-    font-size: 1.4rem;
+/* --- BASMALA STRIP --- */
+.basmala-container-premium {
+    text-align: center;
+    font-family: var(--arabic-font-family), "Amiri", serif;
+    font-size: 1.8rem;
     color: var(--emerald);
-    margin: 0 15px;
-    line-height: 1;
-    padding-bottom: 5px;
+    padding: 10px 0;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+    border-top: 1px solid rgba(212, 175, 55, 0.4);
+    display: inline-block;
+    width: 80%;
+    margin-left: 10%;
 }
 
-.strip-ornament {
-    color: var(--gold);
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
+/* --- MUSHAF AYAH BLOCK --- */
+.mushaf-ayah-block {
+    position: relative;
+    padding: 10px 0 20px 0;
+    margin-bottom: 15px;
+    transition: background-color 0.4s ease;
+    border-bottom: 1px dashed rgba(212, 175, 55, 0.3); /* İnce ayrıştırıcı */
 }
 
-/* --- AYAH CARDS --- */
-.ayah-card {
-    background: white;
-    border-radius: 16px;
-    padding: 15px;
-    margin-bottom: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.03);
-    border-left: 3px solid transparent;
-    transition: all 0.3s ease;
+/* Aktif (Çalınan) Ayet Gösterimi */
+.mushaf-ayah-block.active {
+    background-color: rgba(212, 175, 55, 0.08); /* Yumuşak vurgu */
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
 }
 
-.ayah-card.active {
-    border-left: 3px solid var(--gold);
-    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.15);
-    background: linear-gradient(to right, #fff, #fffdf5);
-}
-
-.ayah-header {
+/* Ayet Üst Bilgi Satırı (Numara + Aksiyonlar) */
+.ayah-meta-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    padding: 0 5px;
 }
 
-.ayah-number-symbol {
-    width: 30px;
-    height: 30px;
+.ayah-id-badge {
+    width: 38px;
+    height: 38px;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0L61 11L50 22L39 11L50 0Z' fill='%23D4AF37'/%3E%3Cpath d='M50 100L39 89L50 78L61 89L50 100Z' fill='%23D4AF37'/%3E%3Cpath d='M100 50L89 61L78 50L89 39L100 50Z' fill='%23D4AF37'/%3E%3Cpath d='M0 50L11 39L22 50L11 61L0 50Z' fill='%23D4AF37'/%3E%3Ccircle cx='50' cy='50' r='35' stroke='%23D4AF37' stroke-width='2'/%3E%3C/svg%3E");
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: bold;
     color: var(--emerald);
-    font-family: var(--arabic-font-family);
+    /* Arapça font ile uyumlu olması için */
+    font-family: serif; 
+    padding-top: 2px;
 }
 
-.ayah-actions {
-    display: flex;
-    gap: 8px;
-}
-
-.action-btn {
-    background: none;
-    border: none;
-    color: #bdc3c7;
-    cursor: pointer;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.action-btn:hover { color: var(--gold); }
-
-.ayah-arabic {
+/* Arapça Metin - Mushaf Tarzı */
+.ayah-arabic-display {
     text-align: right;
-    font-family: var(--arabic-font-family);
-    font-size: 1.6rem;
-    line-height: 2;
-    color: black;
-    margin-bottom: 12px;
+    font-family: var(--arabic-font-family), "Amiri", "Noto Naskh Arabic", serif;
+    font-size: 2.1rem; /* Daha büyük puntolar */
+    line-height: 2.3;
+    color: #111; /* Siyah-gri arası, klasik mürekkep rengi */
     direction: rtl;
+    padding: 10px 5px;
+    margin-bottom: 5px;
+    /* justify-content ile sayfa ortasına yaymak / hizalamak istenir ancak RTL dillerde blok tasarımı yeterlidir */
 }
 
-.ayah-transliteration {
-    font-size: 0.85rem;
-    color: var(--text-light);
-    font-style: italic;
-    margin-bottom: 6px;
-    line-height: 1.4;
-}
-
-.ayah-translation {
+/* Transliterasyon / Okunuş */
+.ayah-latin-display {
     font-size: 0.9rem;
-    color: var(--text-dark);
-    font-weight: 500;
-    line-height: 1.4;
-    border-left: 2px solid var(--gold-light);
-    padding-left: 10px;
+    color: #555;
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    text-align: left; /* Meal ve Okunuş sola dayalı */
+    padding: 0 10px;
 }
 
-.text-label {
-    font-size: 0.65rem;
-    color: var(--gold);
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    margin-top: 10px;
-    margin-bottom: 2px;
-    text-transform: uppercase;
+/* Meal / Anlam */
+.ayah-meaning-display {
+    font-size: 0.95rem;
+    color: #222;
+    font-weight: 400;
+    line-height: 1.6;
+    padding: 5px 10px;
+    text-align: left;
+    border-left: 2px solid rgba(15, 61, 46, 0.2); /* İnce yan çizgi, meal olduğunu vurgulamak için */
 }
 
 /* --- PLAYER BAR --- */
@@ -307,6 +293,7 @@
     width: 100%;
     height: 4px;
     -webkit-appearance: none;
+    appearance: none;
     background: rgba(255,255,255,0.2);
     border-radius: 2px;
     outline: none;

@@ -128,8 +128,8 @@ function GreetingCards({ onClose }) {
 
     // Render categories
     const renderCategories = () => (
-        <div>
-            <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '20px' }}>
+        <div className="reveal-stagger">
+            <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600', padding: '0 4px' }}>
                 {t('greetingCards.ui.subtitle')}
             </p>
 
@@ -139,30 +139,41 @@ function GreetingCards({ onClose }) {
                 gridTemplateColumns: 'repeat(2, 1fr)',
                 gap: '12px'
             }}>
-                {GREETING_CATEGORIES.map(category => (
+                {GREETING_CATEGORIES.map((category, index) => (
                     <div
                         key={category.id}
-                        className="glass-card"
+                        className="settings-card reveal-stagger"
                         style={{
-                            padding: '20px',
+                            padding: '24px 16px',
                             cursor: 'pointer',
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '12px',
+                            '--delay': `${index * 0.05}s`
                         }}
                         onClick={() => setActiveCategory(category.id)}
                     >
-                        <span style={{ fontSize: '36px', display: 'block', marginBottom: '10px' }}>
-                            {category.icon}
-                        </span>
-                        <div style={{
-                            fontWeight: '700',
-                            color: 'var(--primary-color)',
-                            fontSize: '14px',
-                            marginBottom: '4px'
+                        <div className="settings-icon-box" style={{ 
+                            width: '64px', height: '64px', 
+                            background: 'var(--nav-hover)',
+                            fontSize: '2.5rem',
+                            borderRadius: '20px'
                         }}>
-                            {t(category.titleKey)}
+                            {category.icon}
                         </div>
-                        <div style={{ fontSize: '11px', color: 'var(--text-color-muted)' }}>
-                            {t(category.descKey)}
+                        <div>
+                            <div style={{
+                                fontWeight: '950',
+                                color: 'var(--nav-text)',
+                                fontSize: '1rem',
+                                marginBottom: '4px'
+                            }}>
+                                {t(category.titleKey)}
+                            </div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>
+                                {t(category.descKey)}
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -179,48 +190,72 @@ function GreetingCards({ onClose }) {
 
         return (
             <div>
-                <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600', padding: '0 4px' }}>
                     {t(category?.descKey)}
                 </p>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                    {cards.map(card => (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    {cards.map((card, index) => (
                         <div
                             key={card.id}
+                            className="reveal-stagger"
                             style={{
                                 background: card.bgGradient,
-                                borderRadius: '16px',
-                                padding: '20px',
+                                borderRadius: '24px',
+                                padding: '24px',
                                 cursor: 'pointer',
-                                position: 'relative'
+                                position: 'relative',
+                                '--delay': `${index * 0.05}s`,
+                                boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
+                                overflow: 'hidden'
                             }}
                             onClick={() => {
                                 setSelectedCard(card);
                                 setCustomMessage(t(card.messageKey));
                             }}
                         >
+                            {/* Decorative background element */}
                             <div style={{
-                                fontSize: '24px',
-                                marginBottom: '8px',
-                                textAlign: 'center'
+                                position: 'absolute',
+                                top: '-20px',
+                                right: '-20px',
+                                fontSize: '80px',
+                                opacity: 0.1,
+                                transform: 'rotate(15deg)',
+                                pointerEvents: 'none'
+                            }}>
+                                {card.decoration}
+                            </div>
+
+                            <div style={{
+                                fontSize: '2rem',
+                                marginBottom: '12px',
+                                textAlign: 'center',
+                                position: 'relative',
+                                zIndex: 1
                             }}>
                                 {card.decoration}
                             </div>
                             <div style={{
-                                fontSize: '16px',
-                                fontWeight: '700',
+                                fontSize: '1.25rem',
+                                fontWeight: '950',
                                 color: card.textColor,
                                 textAlign: 'center',
-                                marginBottom: '8px'
+                                marginBottom: '8px',
+                                position: 'relative',
+                                zIndex: 1
                             }}>
                                 {t(card.titleKey)}
                             </div>
                             <div style={{
-                                fontSize: '13px',
+                                fontSize: '0.9rem',
                                 color: card.textColor,
                                 textAlign: 'center',
                                 opacity: 0.9,
-                                lineHeight: '1.5'
+                                lineHeight: '1.6',
+                                position: 'relative',
+                                zIndex: 1,
+                                padding: '0 10px'
                             }}>
                                 {t(card.messageKey)}
                             </div>
@@ -230,23 +265,26 @@ function GreetingCards({ onClose }) {
                                 onClick={(e) => { e.stopPropagation(); toggleFavorite(card.id); }}
                                 style={{
                                     position: 'absolute',
-                                    top: '12px',
-                                    right: '12px',
-                                    background: 'rgba(0,0,0,0.3)',
-                                    border: 'none',
+                                    top: '16px',
+                                    right: '16px',
+                                    background: 'rgba(255,255,255,0.2)',
+                                    backdropFilter: 'blur(8px)',
+                                    border: '1px solid rgba(255,255,255,0.3)',
                                     borderRadius: '50%',
-                                    width: '32px',
-                                    height: '32px',
+                                    width: '36px',
+                                    height: '36px',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    cursor: 'pointer'
+                                    cursor: 'pointer',
+                                    zIndex: 2,
+                                    transition: 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
                                 }}
                             >
                                 <Heart
-                                    size={16}
-                                    color="#fff"
-                                    fill={favorites.includes(card.id) ? '#ff6b6b' : 'transparent'}
+                                    size={18}
+                                    color={favorites.includes(card.id) ? '#ff4757' : '#fff'}
+                                    fill={favorites.includes(card.id) ? '#ff4757' : 'transparent'}
                                 />
                             </button>
                         </div>
@@ -267,61 +305,89 @@ function GreetingCards({ onClose }) {
                     ref={cardRef}
                     style={{
                         background: selectedCard.bgGradient,
-                        borderRadius: '20px',
-                        padding: '30px 24px',
-                        marginBottom: '20px',
-                        textAlign: 'center'
+                        borderRadius: '24px',
+                        padding: '40px 24px',
+                        marginBottom: '24px',
+                        textAlign: 'center',
+                        boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+                        position: 'relative',
+                        overflow: 'hidden'
                     }}
                 >
-                    <div style={{ fontSize: '32px', marginBottom: '12px' }}>
+                    <div style={{
+                        position: 'absolute',
+                        top: '-30px',
+                        right: '-30px',
+                        fontSize: '120px',
+                        opacity: 0.08,
+                        transform: 'rotate(15deg)',
+                        pointerEvents: 'none'
+                    }}>
+                        {selectedCard.decoration}
+                    </div>
+
+                    <div style={{ fontSize: '3.5rem', marginBottom: '16px', position: 'relative' }}>
                         {selectedCard.decoration}
                     </div>
                     <div style={{
-                        fontSize: '20px',
-                        fontWeight: '700',
+                        fontSize: '1.5rem',
+                        fontWeight: '950',
                         color: selectedCard.textColor,
-                        marginBottom: '16px'
+                        marginBottom: '20px',
+                        position: 'relative'
                     }}>
                         {t(selectedCard.titleKey)}
                     </div>
 
                     {recipientName && (
                         <div style={{
-                            fontSize: '14px',
+                            fontSize: '1.1rem',
                             color: selectedCard.textColor,
-                            marginBottom: '12px',
-                            fontStyle: 'italic'
+                            marginBottom: '16px',
+                            fontStyle: 'italic',
+                            fontWeight: '600',
+                            position: 'relative'
                         }}>
                             {t('greetingCards.ui.dear', { name: recipientName })}
                         </div>
                     )}
 
                     <div style={{
-                        fontSize: '15px',
+                        fontSize: '1.05rem',
                         color: selectedCard.textColor,
-                        lineHeight: '1.7',
-                        opacity: 0.95
+                        lineHeight: '1.8',
+                        opacity: 0.95,
+                        whiteSpace: 'pre-wrap',
+                        fontWeight: '500',
+                        position: 'relative'
                     }}>
                         {editMode ? customMessage : t(selectedCard.messageKey)}
                     </div>
 
                     <div style={{
-                        marginTop: '16px',
-                        fontSize: '11px',
+                        marginTop: '24px',
+                        fontSize: '0.75rem',
                         color: selectedCard.textColor,
-                        opacity: 0.6
+                        opacity: 0.6,
+                        fontWeight: '700',
+                        letterSpacing: '1px',
+                        textTransform: 'uppercase',
+                        position: 'relative'
                     }}>
                         🕌 {t('greetingCards.ui.appName')}
                     </div>
                 </div>
 
                 {/* Recipient Name */}
-                <div className="glass-card" style={{ padding: '16px', marginBottom: '12px' }}>
+                <div className="settings-card" style={{ padding: '20px', marginBottom: '12px', flexDirection: 'column', alignItems: 'stretch' }}>
                     <label style={{
-                        fontSize: '12px',
-                        color: 'var(--text-color-muted)',
+                        fontSize: '0.75rem',
+                        color: 'var(--nav-text-muted)',
                         display: 'block',
-                        marginBottom: '8px'
+                        marginBottom: '10px',
+                        fontWeight: '800',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
                     }}>
                         {t('greetingCards.ui.recipientName')}
                     </label>
@@ -332,44 +398,44 @@ function GreetingCards({ onClose }) {
                         onChange={(e) => setRecipientName(e.target.value)}
                         style={{
                             width: '100%',
-                            padding: '10px 12px',
-                            background: 'rgba(255,255,255,0.1)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '8px',
-                            color: 'var(--text-color)',
-                            fontSize: '14px',
-                            outline: 'none'
+                            padding: '14px 18px',
+                            background: 'var(--nav-hover)',
+                            border: '1px solid var(--nav-border)',
+                            borderRadius: '14px',
+                            color: 'var(--nav-text)',
+                            fontSize: '1rem',
+                            outline: 'none',
+                            fontWeight: '600',
+                            transition: 'border-color 0.2s'
                         }}
+                        onFocus={(e) => e.target.style.borderColor = 'var(--nav-accent)'}
+                        onBlur={(e) => e.target.style.borderColor = 'var(--nav-border)'}
                     />
                 </div>
 
                 {/* Edit Message Toggle */}
-                <div className="glass-card" style={{ padding: '16px', marginBottom: '12px' }}>
+                <div className="settings-card" style={{ padding: '20px', marginBottom: '16px', flexDirection: 'column', alignItems: 'stretch' }}>
                     <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: editMode ? '12px' : '0'
+                        marginBottom: editMode ? '16px' : '0'
                     }}>
-                        <span style={{ fontSize: '14px', color: 'var(--text-color)' }}>
+                        <span style={{ fontSize: '0.9rem', color: 'var(--nav-text)', fontWeight: '800' }}>
                             {t('greetingCards.ui.editMessage')}
                         </span>
                         <button
                             onClick={() => setEditMode(!editMode)}
+                            className="velocity-target-btn"
                             style={{
-                                background: editMode ? 'var(--primary-color)' : 'rgba(255,255,255,0.1)',
-                                border: 'none',
-                                borderRadius: '20px',
-                                padding: '6px 12px',
-                                color: '#fff',
-                                fontSize: '12px',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '4px'
+                                padding: '8px 16px',
+                                background: editMode ? 'var(--nav-accent)' : 'var(--nav-hover)',
+                                color: editMode ? 'white' : 'var(--nav-text)',
+                                borderRadius: '12px',
+                                fontSize: '0.8rem'
                             }}
                         >
-                            {editMode ? <Check size={14} /> : <Edit3 size={14} />}
+                            {editMode ? <Check size={16} /> : <Edit3 size={16} />}
                             {editMode ? t('greetingCards.ui.done') : t('greetingCards.ui.edit')}
                         </button>
                     </div>
@@ -381,16 +447,20 @@ function GreetingCards({ onClose }) {
                             rows={4}
                             style={{
                                 width: '100%',
-                                padding: '12px',
-                                background: 'rgba(255,255,255,0.1)',
-                                border: '1px solid var(--glass-border)',
-                                borderRadius: '8px',
-                                color: 'var(--text-color)',
-                                fontSize: '14px',
+                                padding: '16px',
+                                background: 'var(--nav-hover)',
+                                border: '1px solid var(--nav-border)',
+                                borderRadius: '14px',
+                                color: 'var(--nav-text)',
+                                fontSize: '0.95rem',
                                 outline: 'none',
                                 resize: 'none',
-                                lineHeight: '1.5'
+                                lineHeight: '1.6',
+                                fontWeight: '500',
+                                transition: 'border-color 0.2s'
                             }}
+                            onFocus={(e) => e.target.style.borderColor = 'var(--nav-accent)'}
+                            onBlur={(e) => e.target.style.borderColor = 'var(--nav-border)'}
                         />
                     )}
                 </div>
@@ -399,55 +469,45 @@ function GreetingCards({ onClose }) {
                 <div style={{ display: 'flex', gap: '12px' }}>
                     <button
                         onClick={() => toggleFavorite(selectedCard.id)}
+                        className="settings-card"
                         style={{
                             flex: 1,
-                            padding: '14px',
+                            padding: '16px',
                             background: favorites.includes(selectedCard.id)
-                                ? 'rgba(255,107,107,0.2)'
-                                : 'var(--glass-bg)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '12px',
-                            color: 'var(--text-color)',
-                            fontSize: '14px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '8px'
+                                ? 'rgba(255,107,107,0.1)'
+                                : 'var(--nav-hover)',
+                            border: favorites.includes(selectedCard.id)
+                                ? '1px solid #ff6b6b'
+                                : '1px solid var(--nav-border)',
+                            borderRadius: '16px',
+                            color: favorites.includes(selectedCard.id) ? '#ff6b6b' : 'var(--nav-text)',
+                            justifyContent: 'center'
                         }}
                     >
                         <Heart
-                            size={18}
+                            size={20}
                             fill={favorites.includes(selectedCard.id) ? '#ff6b6b' : 'transparent'}
-                            color={favorites.includes(selectedCard.id) ? '#ff6b6b' : 'var(--text-color)'}
+                            color={favorites.includes(selectedCard.id) ? '#ff6b6b' : 'var(--nav-text)'}
                         />
-                        {t('greetingCards.ui.favorite')}
                     </button>
                     <button
                         onClick={shareCard}
                         disabled={isSharing}
+                        className="velocity-target-btn pulse"
                         style={{
-                            flex: 2,
-                            padding: '14px',
-                            background: isSharing ? '#666' : 'var(--primary-color)',
-                            border: 'none',
-                            borderRadius: '12px',
-                            color: '#fff',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            cursor: isSharing ? 'wait' : 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
+                            flex: 3,
+                            padding: '16px',
+                            background: isSharing ? 'var(--nav-text-muted)' : 'var(--nav-accent)',
+                            color: 'white',
                             justifyContent: 'center',
-                            gap: '8px',
-                            opacity: isSharing ? 0.7 : 1
+                            fontSize: '1rem'
                         }}
                     >
                         {isSharing ? (
                             <>⏳ {t('greetingCards.ui.preparing')}</>
                         ) : (
                             <>
-                                <Image size={18} />
+                                <Image size={20} />
                                 {t('greetingCards.ui.shareAsImage')}
                             </>
                         )}
@@ -468,28 +528,27 @@ function GreetingCards({ onClose }) {
     };
 
     return (
-        <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '100px' }}>
+        <div className="settings-container reveal-stagger" style={{ paddingBottom: '120px' }}>
             {/* Header */}
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px',
-                marginBottom: '20px',
-                paddingTop: '20px'
+                gap: '16px',
+                marginBottom: '32px'
             }}>
                 <IslamicBackButton onClick={goBack} size="medium" />
-                <h1 style={{
+                <h2 style={{
                     margin: 0,
-                    fontSize: '20px',
-                    color: 'var(--primary-color)',
-                    fontWeight: '700'
+                    fontSize: '1.75rem',
+                    color: 'var(--nav-text)',
+                    fontWeight: '950'
                 }}>
-                    💌 {getTitle()}
-                </h1>
+                    {getTitle()}
+                </h2>
             </div>
 
-            {/* Content */}
-            <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
+            {/* Content orientation fix */}
+            <div className="reveal-stagger">
                 {!activeCategory && !selectedCard && renderCategories()}
                 {activeCategory && !selectedCard && renderCategoryCards()}
                 {selectedCard && renderCardDetail()}

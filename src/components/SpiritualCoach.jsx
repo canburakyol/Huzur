@@ -51,13 +51,20 @@ const SPIRITUAL_DATA = {
   }
 };
 
+const pickResponseDeterministic = (responses, input) => {
+  if (!Array.isArray(responses) || responses.length === 0) return '';
+  const seed = Array.from(input).reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+  return responses[seed % responses.length];
+};
+
 const SpiritualCoach = ({ onClose }) => {
   const [messages, setMessages] = useState([
-    { id: 'start', text: "Selamun Aleyküm! Ben senin İslami Asistanın'ım. Size her konuda manevi rehberlik sunabilirim. Bir sorunuz mu var yoksa yukarıdaki hazır konulardan mı başlayalım?", sender: 'bot' }
+    { id: 'start', text: "Selamünaleyküm! Ben senin İslami asistanınım. Sana her konuda manevi rehberlik sunabilirim. Bir sorun mu var, yoksa yukarıdaki hazır konulardan mı başlayalım?", sender: 'bot' }
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+  const messageCounterRef = useRef(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -71,7 +78,8 @@ const SpiritualCoach = ({ onClose }) => {
     if (!text.trim() || isTyping) return;
 
     const userInput = text.trim();
-    const messageId = Date.now().toString(); // Standard ID generation
+    messageCounterRef.current += 1;
+    const messageId = messageCounterRef.current.toString();
 
     // User message
     setMessages(prev => [...prev, { id: `u-${messageId}`, text: userInput, sender: 'user' }]);
@@ -96,7 +104,7 @@ const SpiritualCoach = ({ onClose }) => {
 
     if (bestCategory) {
       const categoryResponses = SPIRITUAL_DATA[bestCategory].responses;
-      responseText = categoryResponses[Math.floor(Math.random() * categoryResponses.length)];
+      responseText = pickResponseDeterministic(categoryResponses, userInput);
     } else {
       responseText = "Bu konuyu tam anlayamadım ama her türlü sıkıntıda 'Hasbunallah' zikrine devam etmenizi öneririm. Daha spesifik bir konuda (namaz, sabır, aile vb.) bir şey sormak ister misiniz?";
     }
@@ -109,7 +117,7 @@ const SpiritualCoach = ({ onClose }) => {
         sender: 'bot' 
       }]);
       setIsTyping(false);
-    }, 1000 + (Math.random() * 1000));
+    }, 1200);
   };
 
   return (

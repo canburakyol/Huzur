@@ -12,37 +12,43 @@ const ModernHomeFeed = memo(({ onSelectFeature, timings, nextPrayer, onShowPraye
     return (
         <div className="modern-home-feed">
             {/* 1. Stories */}
-            <StoryBar onSelectFeature={onSelectFeature} />
+            <div className="reveal-stagger" style={{ '--delay': '0s' }}>
+                <StoryBar onSelectFeature={onSelectFeature} />
+            </div>
 
             {/* 2. Hero Prayer Card */}
-            <HeroPrayerCard 
-                timings={timings} 
-                nextPrayer={nextPrayer} 
-                onShowPrayers={onShowPrayers} 
-                locationName={locationName}
-            />
+            <div className="reveal-stagger" style={{ '--delay': '0.2s' }}>
+                <HeroPrayerCard 
+                    timings={timings} 
+                    nextPrayer={nextPrayer} 
+                    onShowPrayers={onShowPrayers} 
+                    locationName={locationName}
+                />
+            </div>
 
             {/* 3. Dynamic Content (e.g. Daily Quests) */}
-            {children}
+            <div className="reveal-stagger" style={{ '--delay': '0.4s' }}>
+                {children}
+            </div>
 
             {/* 4. Quick Features */}
-            <div className="section-header">
-                <span className="section-title">
-                    {t('home.features', 'Özellikleriniz')} 
-                    <span style={{ fontSize: '10px', background: 'var(--primary-color)', color: 'white', padding: '2px 6px', borderRadius: '8px' }}>YENİ</span>
-                </span>
-                <span 
-                    className="section-action" 
-                    onClick={() => onSelectFeature && onSelectFeature('more')}
-                >
-                    {t('common.viewAll')}
-                </span>
+            <div className="reveal-stagger" style={{ '--delay': '0.6s' }}>
+                <div className="gazette-section-header">
+                    <div className="section-title-wrapper">
+                        <span className="gazette-title premium-text">
+                            {t('home.features')}
+                        </span>
+                        <div className="badge-new" style={{ marginLeft: '10px' }}>PRO</div>
+                    </div>
+                </div>
+                
+                <FeatureSlider onSelectFeature={onSelectFeature} />
             </div>
-            
-            <FeatureSlider onSelectFeature={onSelectFeature} />
 
-            {/* 4. Vertical Feed */}
-            <DiscoverFeed />
+            {/* 5. Vertical Feed */}
+            <div className="reveal-stagger" style={{ '--delay': '0.8s' }}>
+                <DiscoverFeed />
+            </div>
         </div>
     );
 });

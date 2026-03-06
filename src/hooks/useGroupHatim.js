@@ -23,19 +23,28 @@ export const useGroupHatim = (hatimId = null) => {
 
   // Auth initialization
   useEffect(() => {
+    let isMounted = true;
     const initAuth = async () => {
       try {
         const uid = await ensureAuthenticated();
-        setUserId(uid);
-        setAuthReady(true);
-        logger.log('[useGroupHatim] Auth initialized, userId:', uid);
+        if (isMounted) {
+          setUserId(uid);
+          setAuthReady(true);
+          logger.log('[useGroupHatim] Auth initialized, userId:', uid);
+        }
       } catch (err) {
         logger.error('[useGroupHatim] Auth error:', err);
-        setError('Firebase kimlik doğrulaması başarısız. İnternetinizi kontrol edip tekrar deneyin.');
-        setAuthReady(true); // Set true even on error to stop loading
+        if (isMounted) {
+          setError('Firebase kimlik doğrulaması başarısız. İnternetinizi kontrol edip tekrar deneyin.');
+          setAuthReady(true); // Set true even on error to stop loading
+        }
       }
     };
     initAuth();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // 1. Fetch User's Active Hatims (List View)
@@ -114,7 +123,11 @@ export const useGroupHatim = (hatimId = null) => {
       }
     );
 
-    return () => unsub();
+    // Düzgün bir cleanup işlemi dönüyoruz
+    return () => {
+       logger.log(`[useGroupHatim] Unsubscribing from hatim: ${hatimId}`);
+       unsub();
+    };
   }, [hatimId, authReady, userId]);
 
   // Actions

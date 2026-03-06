@@ -1,0 +1,53 @@
+/* Hadiths - Lifestyle & Velocity Modern Styles */
+
+.hadith-category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    align-self: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.hadith-fav-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--nav-hover);
+    border: 1px solid var(--nav-border);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--nav-text);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.hadith-fav-badge:hover {
+    background: var(--nav-border);
+    transform: translateY(-2px);
+}
+
+/* Detail Animations */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.reveal-stagger {
+    animation: fadeInScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Mobile Tweaks */
+@media (max-width: 480px) {
+    .settings-card {
+        padding: 20px !important;
+    }
+}

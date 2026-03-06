@@ -1,4 +1,5 @@
 import { ScreenOrientation } from '@capacitor/screen-orientation';
+import { logger } from '../utils/logger';
 
 class OrientationService {
   async lockPortrait() {
@@ -9,7 +10,7 @@ class OrientationService {
         orientation: 'portrait'
       });
     } catch (error) {
-      console.warn('Orientation lock failed (likely browser env):', error);
+      logger.warn('Orientation lock failed (likely browser env):', error);
     }
   }
 
@@ -17,7 +18,7 @@ class OrientationService {
     try {
       await ScreenOrientation.unlock();
     } catch (error) {
-      console.warn('Orientation unlock failed:', error);
+      logger.warn('Orientation unlock failed:', error);
     }
   }
 }

@@ -10,18 +10,14 @@
     "grep": {},
     "grepInvert": null,
     "maxFailures": 0,
-    "metadata": {
-      "actualWorkers": 4
-    },
+    "metadata": {},
     "preserveOutput": "always",
     "projects": [
       {
         "outputDir": "d:/Projem/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 4
-        },
+        "metadata": {},
         "id": "chromium",
         "name": "chromium",
         "testDir": "d:/Projem/e2e",
@@ -35,9 +31,7 @@
         "outputDir": "d:/Projem/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 4
-        },
+        "metadata": {},
         "id": "firefox",
         "name": "firefox",
         "testDir": "d:/Projem/e2e",
@@ -51,9 +45,7 @@
         "outputDir": "d:/Projem/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 4
-        },
+        "metadata": {},
         "id": "webkit",
         "name": "webkit",
         "testDir": "d:/Projem/e2e",
@@ -67,9 +59,7 @@
         "outputDir": "d:/Projem/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 4
-        },
+        "metadata": {},
         "id": "Mobile Chrome",
         "name": "Mobile Chrome",
         "testDir": "d:/Projem/e2e",
@@ -83,9 +73,7 @@
         "outputDir": "d:/Projem/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 4
-        },
+        "metadata": {},
         "id": "Mobile Safari",
         "name": "Mobile Safari",
         "testDir": "d:/Projem/e2e",
@@ -124,7 +112,7 @@
     "tags": [],
     "updateSnapshots": "missing",
     "updateSourceMethod": "patch",
-    "version": "1.58.1",
+    "version": "1.58.2",
     "workers": 8,
     "webServer": {
       "command": "npm run dev",
@@ -134,6 +122,2506 @@
     }
   },
   "suites": [
+    {
+      "title": "tests\\family-mode.spec.js",
+      "file": "tests/family-mode.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Family Mode Tests",
+          "file": "tests/family-mode.spec.js",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Family Mode opens successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-3174fc2429b6e0ccad36",
+              "file": "tests/family-mode.spec.js",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "Home tab displays family members section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-9362f5acde8ef9831459",
+              "file": "tests/family-mode.spec.js",
+              "line": 35,
+              "column": 3
+            },
+            {
+              "title": "Home tab shows mock activity data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-d50a02edaa865552dc5a",
+              "file": "tests/family-mode.spec.js",
+              "line": 42,
+              "column": 3
+            },
+            {
+              "title": "Aile Hatmi shows mock progress data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-917fc5393ed5d9734c84",
+              "file": "tests/family-mode.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "Challenges tab opens without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-ef88bf71c78c0b475491",
+              "file": "tests/family-mode.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "Challenges tab displays family challenges",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-591a07d9a975564d0be6",
+              "file": "tests/family-mode.spec.js",
+              "line": 87,
+              "column": 3
+            },
+            {
+              "title": "Leaderboard tab displays ranking",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-d530baf02bf9abd83c27",
+              "file": "tests/family-mode.spec.js",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "Groups tab shows group management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-dc530f323fa278453c8c",
+              "file": "tests/family-mode.spec.js",
+              "line": 115,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-7f9286860049ae47188e",
+              "file": "tests/family-mode.spec.js",
+              "line": 129,
+              "column": 3
+            },
+            {
+              "title": "Family Mode opens successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-4d8f0ae84ea818ad30a4",
+              "file": "tests/family-mode.spec.js",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "Home tab displays family members section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-586ef4244f1a446e7e92",
+              "file": "tests/family-mode.spec.js",
+              "line": 35,
+              "column": 3
+            },
+            {
+              "title": "Home tab shows mock activity data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-54fd343a9bf247712ae1",
+              "file": "tests/family-mode.spec.js",
+              "line": 42,
+              "column": 3
+            },
+            {
+              "title": "Aile Hatmi shows mock progress data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-44e58f6eced3bb2ffe01",
+              "file": "tests/family-mode.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "Challenges tab opens without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-b29e214352d4b57281be",
+              "file": "tests/family-mode.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "Challenges tab displays family challenges",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-390d5cc2c6d402cec867",
+              "file": "tests/family-mode.spec.js",
+              "line": 87,
+              "column": 3
+            },
+            {
+              "title": "Leaderboard tab displays ranking",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-e4e4cce77b31abb79206",
+              "file": "tests/family-mode.spec.js",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "Groups tab shows group management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-999559f0c8f21b977633",
+              "file": "tests/family-mode.spec.js",
+              "line": 115,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-401fffafb16caf0482c6",
+              "file": "tests/family-mode.spec.js",
+              "line": 129,
+              "column": 3
+            },
+            {
+              "title": "Family Mode opens successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-64367c1fe053a461a33d",
+              "file": "tests/family-mode.spec.js",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "Home tab displays family members section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-07d8c976823eaab733aa",
+              "file": "tests/family-mode.spec.js",
+              "line": 35,
+              "column": 3
+            },
+            {
+              "title": "Home tab shows mock activity data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-eb2e2be14586dfd17a23",
+              "file": "tests/family-mode.spec.js",
+              "line": 42,
+              "column": 3
+            },
+            {
+              "title": "Aile Hatmi shows mock progress data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-1732e8062a27625703dc",
+              "file": "tests/family-mode.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "Challenges tab opens without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-2d44b8cb611d111aa6b5",
+              "file": "tests/family-mode.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "Challenges tab displays family challenges",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-45cfb9bc2529f7619af5",
+              "file": "tests/family-mode.spec.js",
+              "line": 87,
+              "column": 3
+            },
+            {
+              "title": "Leaderboard tab displays ranking",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-3eae029f0d1fbb5af47e",
+              "file": "tests/family-mode.spec.js",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "Groups tab shows group management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-d230974c89fea52a5ba4",
+              "file": "tests/family-mode.spec.js",
+              "line": 115,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-d0ca054782bbc2a4dd3e",
+              "file": "tests/family-mode.spec.js",
+              "line": 129,
+              "column": 3
+            },
+            {
+              "title": "Family Mode opens successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-d6803fe006754696f501",
+              "file": "tests/family-mode.spec.js",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "Home tab displays family members section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-449b5c8a76d026a66193",
+              "file": "tests/family-mode.spec.js",
+              "line": 35,
+              "column": 3
+            },
+            {
+              "title": "Home tab shows mock activity data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-f9b4b6d287764c170aa8",
+              "file": "tests/family-mode.spec.js",
+              "line": 42,
+              "column": 3
+            },
+            {
+              "title": "Aile Hatmi shows mock progress data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-0fe13213ec95a4522e05",
+              "file": "tests/family-mode.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "Challenges tab opens without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-46a6ba95584d0bd2abe3",
+              "file": "tests/family-mode.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "Challenges tab displays family challenges",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-b7a7364c25957116adfc",
+              "file": "tests/family-mode.spec.js",
+              "line": 87,
+              "column": 3
+            },
+            {
+              "title": "Leaderboard tab displays ranking",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-84122cf99ec3a92a70dc",
+              "file": "tests/family-mode.spec.js",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "Groups tab shows group management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-a486095cf0e81b879607",
+              "file": "tests/family-mode.spec.js",
+              "line": 115,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-45618b87cbf8936d6018",
+              "file": "tests/family-mode.spec.js",
+              "line": 129,
+              "column": 3
+            },
+            {
+              "title": "Family Mode opens successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-73de44fb6f78921c4142",
+              "file": "tests/family-mode.spec.js",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "Home tab displays family members section",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-5ce3bc040c7003259733",
+              "file": "tests/family-mode.spec.js",
+              "line": 35,
+              "column": 3
+            },
+            {
+              "title": "Home tab shows mock activity data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-321da31eef084418aa3c",
+              "file": "tests/family-mode.spec.js",
+              "line": 42,
+              "column": 3
+            },
+            {
+              "title": "Aile Hatmi shows mock progress data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-04935df84639093713e3",
+              "file": "tests/family-mode.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "Challenges tab opens without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-4b8c5ea5fb3195145c0c",
+              "file": "tests/family-mode.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "Challenges tab displays family challenges",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-858234407e1454ad9cf3",
+              "file": "tests/family-mode.spec.js",
+              "line": 87,
+              "column": 3
+            },
+            {
+              "title": "Leaderboard tab displays ranking",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-a014c30924dc3b8716da",
+              "file": "tests/family-mode.spec.js",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "Groups tab shows group management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-7aaae125100213bc661b",
+              "file": "tests/family-mode.spec.js",
+              "line": 115,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "720b9f0ecdb53ef0a424-83136c8c79187ec4ae8e",
+              "file": "tests/family-mode.spec.js",
+              "line": 129,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "tests\\features.spec.js",
+      "file": "tests/features.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Feature Module Tests",
+          "file": "tests/features.spec.js",
+          "line": 10,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Core Features",
+              "file": "tests/features.spec.js",
+              "line": 18,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Qibla Compass opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-a942726dea7a6ce8f052",
+                  "file": "tests/features.spec.js",
+                  "line": 19,
+                  "column": 5
+                },
+                {
+                  "title": "Quran opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-55f80fda1b33983887dd",
+                  "file": "tests/features.spec.js",
+                  "line": 29,
+                  "column": 5
+                },
+                {
+                  "title": "Qibla Compass opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-ab20b3882070e8100929",
+                  "file": "tests/features.spec.js",
+                  "line": 19,
+                  "column": 5
+                },
+                {
+                  "title": "Quran opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-4f298dc1e23c9c52d9c1",
+                  "file": "tests/features.spec.js",
+                  "line": 29,
+                  "column": 5
+                },
+                {
+                  "title": "Qibla Compass opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-27da1cd0e48aca8a1f17",
+                  "file": "tests/features.spec.js",
+                  "line": 19,
+                  "column": 5
+                },
+                {
+                  "title": "Quran opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-62401a65f0baeae543b0",
+                  "file": "tests/features.spec.js",
+                  "line": 29,
+                  "column": 5
+                },
+                {
+                  "title": "Qibla Compass opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-47a709540c09611e262e",
+                  "file": "tests/features.spec.js",
+                  "line": 19,
+                  "column": 5
+                },
+                {
+                  "title": "Quran opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-5211c9717fd214d799ac",
+                  "file": "tests/features.spec.js",
+                  "line": 29,
+                  "column": 5
+                },
+                {
+                  "title": "Qibla Compass opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-bddf61dd13a7b6b15863",
+                  "file": "tests/features.spec.js",
+                  "line": 19,
+                  "column": 5
+                },
+                {
+                  "title": "Quran opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-5bc6a0bcaa184c7d50e6",
+                  "file": "tests/features.spec.js",
+                  "line": 29,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "Ibadet Features",
+              "file": "tests/features.spec.js",
+              "line": 40,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Zikirmatik opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-81053d297b40bd2b5a78",
+                  "file": "tests/features.spec.js",
+                  "line": 41,
+                  "column": 5
+                },
+                {
+                  "title": "Adhkar opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-e31d9818efab1469f8a8",
+                  "file": "tests/features.spec.js",
+                  "line": 51,
+                  "column": 5
+                },
+                {
+                  "title": "EsmaUlHusna opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-d472831c6abd1415c3b2",
+                  "file": "tests/features.spec.js",
+                  "line": 61,
+                  "column": 5
+                },
+                {
+                  "title": "Zikirmatik opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-713ea1c60028140f5f10",
+                  "file": "tests/features.spec.js",
+                  "line": 41,
+                  "column": 5
+                },
+                {
+                  "title": "Adhkar opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-bf8868c93ebb706616d9",
+                  "file": "tests/features.spec.js",
+                  "line": 51,
+                  "column": 5
+                },
+                {
+                  "title": "EsmaUlHusna opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-0515baaf46977b65daaa",
+                  "file": "tests/features.spec.js",
+                  "line": 61,
+                  "column": 5
+                },
+                {
+                  "title": "Zikirmatik opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-a0f50380b41e8dd483c6",
+                  "file": "tests/features.spec.js",
+                  "line": 41,
+                  "column": 5
+                },
+                {
+                  "title": "Adhkar opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-4e48d9551d016ded561a",
+                  "file": "tests/features.spec.js",
+                  "line": 51,
+                  "column": 5
+                },
+                {
+                  "title": "EsmaUlHusna opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-7b6f1ced5c6948f548f6",
+                  "file": "tests/features.spec.js",
+                  "line": 61,
+                  "column": 5
+                },
+                {
+                  "title": "Zikirmatik opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-4ade052f226f68e2719d",
+                  "file": "tests/features.spec.js",
+                  "line": 41,
+                  "column": 5
+                },
+                {
+                  "title": "Adhkar opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-c739fdee514a8c5934d0",
+                  "file": "tests/features.spec.js",
+                  "line": 51,
+                  "column": 5
+                },
+                {
+                  "title": "EsmaUlHusna opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-4c7eb02d40725d094baf",
+                  "file": "tests/features.spec.js",
+                  "line": 61,
+                  "column": 5
+                },
+                {
+                  "title": "Zikirmatik opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-98f0bac8e8a3ee8bf096",
+                  "file": "tests/features.spec.js",
+                  "line": 41,
+                  "column": 5
+                },
+                {
+                  "title": "Adhkar opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-4084e259af67741de91a",
+                  "file": "tests/features.spec.js",
+                  "line": 51,
+                  "column": 5
+                },
+                {
+                  "title": "EsmaUlHusna opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-d563b583fe6871d9b6b2",
+                  "file": "tests/features.spec.js",
+                  "line": 61,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "Content Features",
+              "file": "tests/features.spec.js",
+              "line": 72,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Hadiths opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-391b72b0fb045a9ee3c7",
+                  "file": "tests/features.spec.js",
+                  "line": 73,
+                  "column": 5
+                },
+                {
+                  "title": "Radio opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-8fed1bc91cecd4b66296",
+                  "file": "tests/features.spec.js",
+                  "line": 83,
+                  "column": 5
+                },
+                {
+                  "title": "Hadiths opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-40844b07b8741a562f16",
+                  "file": "tests/features.spec.js",
+                  "line": 73,
+                  "column": 5
+                },
+                {
+                  "title": "Radio opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-4bb734aec07547b8195e",
+                  "file": "tests/features.spec.js",
+                  "line": 83,
+                  "column": 5
+                },
+                {
+                  "title": "Hadiths opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-fbf372d6f52505284580",
+                  "file": "tests/features.spec.js",
+                  "line": 73,
+                  "column": 5
+                },
+                {
+                  "title": "Radio opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-ae0324bd35161372a14c",
+                  "file": "tests/features.spec.js",
+                  "line": 83,
+                  "column": 5
+                },
+                {
+                  "title": "Hadiths opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-c342d3c0bc0c39e7bca9",
+                  "file": "tests/features.spec.js",
+                  "line": 73,
+                  "column": 5
+                },
+                {
+                  "title": "Radio opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-543e278458027de5a49b",
+                  "file": "tests/features.spec.js",
+                  "line": 83,
+                  "column": 5
+                },
+                {
+                  "title": "Hadiths opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-abf172d475aa090b4d03",
+                  "file": "tests/features.spec.js",
+                  "line": 73,
+                  "column": 5
+                },
+                {
+                  "title": "Radio opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-86720ac2d544bc9fc54f",
+                  "file": "tests/features.spec.js",
+                  "line": 83,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "Tool Features",
+              "file": "tests/features.spec.js",
+              "line": 94,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Imsakiye opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-97f0ff31dc0eb0bd52a5",
+                  "file": "tests/features.spec.js",
+                  "line": 95,
+                  "column": 5
+                },
+                {
+                  "title": "Imsakiye opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-ea577d1c13a6ad30c64e",
+                  "file": "tests/features.spec.js",
+                  "line": 95,
+                  "column": 5
+                },
+                {
+                  "title": "Imsakiye opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-84ed71af726ff15b30bf",
+                  "file": "tests/features.spec.js",
+                  "line": 95,
+                  "column": 5
+                },
+                {
+                  "title": "Imsakiye opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-f5cfe169e2521e4ebeca",
+                  "file": "tests/features.spec.js",
+                  "line": 95,
+                  "column": 5
+                },
+                {
+                  "title": "Imsakiye opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-b959c46a75d44964eb9a",
+                  "file": "tests/features.spec.js",
+                  "line": 95,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "Social Features",
+              "file": "tests/features.spec.js",
+              "line": 106,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Greeting Cards opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-ac080fbf245fd8606201",
+                  "file": "tests/features.spec.js",
+                  "line": 107,
+                  "column": 5
+                },
+                {
+                  "title": "Greeting Cards opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-7d9c4b1e30c5ca8fb086",
+                  "file": "tests/features.spec.js",
+                  "line": 107,
+                  "column": 5
+                },
+                {
+                  "title": "Greeting Cards opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-39991da9c0ceb0a9af39",
+                  "file": "tests/features.spec.js",
+                  "line": 107,
+                  "column": 5
+                },
+                {
+                  "title": "Greeting Cards opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-b4db8706d9f629e536a4",
+                  "file": "tests/features.spec.js",
+                  "line": 107,
+                  "column": 5
+                },
+                {
+                  "title": "Greeting Cards opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-f360f2871bf2a34ee69a",
+                  "file": "tests/features.spec.js",
+                  "line": 107,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "Education Features",
+              "file": "tests/features.spec.js",
+              "line": 118,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Seerah Map opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-fe8ac6f6a8dc17f396d0",
+                  "file": "tests/features.spec.js",
+                  "line": 119,
+                  "column": 5
+                },
+                {
+                  "title": "Seerah Map opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-2eb2b71feccbde99cb98",
+                  "file": "tests/features.spec.js",
+                  "line": 119,
+                  "column": 5
+                },
+                {
+                  "title": "Seerah Map opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-a5b0bc4f9176d3055b60",
+                  "file": "tests/features.spec.js",
+                  "line": 119,
+                  "column": 5
+                },
+                {
+                  "title": "Seerah Map opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-f990231ec3fd340554f5",
+                  "file": "tests/features.spec.js",
+                  "line": 119,
+                  "column": 5
+                },
+                {
+                  "title": "Seerah Map opens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "56e95f0a0e39da54fb4d-3b563b30ce468c04a820",
+                  "file": "tests/features.spec.js",
+                  "line": 119,
+                  "column": 5
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "tests\\mock-data-detection.spec.js",
+      "file": "tests/mock-data-detection.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Mock Data Detection Tests",
+          "file": "tests/mock-data-detection.spec.js",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "detect mock data in Family Mode - Home tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-f591cb4e438d6578dc94",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Challenges tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-5bed68a7eb6095330f89",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 52,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Dashboard tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-57e880f2a28bfa47732b",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 76,
+              "column": 3
+            },
+            {
+              "title": "detect TODO comments in rendered content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-e22ff4b213b2d32026ca",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "generate mock data report",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-26a80fbdaab4c47c2032",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 134,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Home tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-25723a5b1f9110588463",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Challenges tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-50cdeb725b0794c9eaff",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 52,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Dashboard tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-6d2680b2c576ced42da8",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 76,
+              "column": 3
+            },
+            {
+              "title": "detect TODO comments in rendered content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-4c1ba18ec1a963f3eaec",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "generate mock data report",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-31f6e402330c4b6ac942",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 134,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Home tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-d3686e111f3b70d29821",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Challenges tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-0771b7f012b81d6b1967",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 52,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Dashboard tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-0cf395ff3a95226c52e1",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 76,
+              "column": 3
+            },
+            {
+              "title": "detect TODO comments in rendered content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-49245881399fdeef23c1",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "generate mock data report",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-a53e1f7dd2bc7cdf3a8b",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 134,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Home tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-e41cd597ddb00470f5ba",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Challenges tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-5663323b96f7c8a6409f",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 52,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Dashboard tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-ce7318fd3a01a12f2619",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 76,
+              "column": 3
+            },
+            {
+              "title": "detect TODO comments in rendered content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-c504886532c9030cf4ed",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "generate mock data report",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-971e6fc14f847a18d3eb",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 134,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Home tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-bf4d4b0256acf94fef3a",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 22,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Challenges tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-e8e056e323640aa95927",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 52,
+              "column": 3
+            },
+            {
+              "title": "detect mock data in Family Mode - Dashboard tab",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-dbc4f0206d091246521c",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 76,
+              "column": 3
+            },
+            {
+              "title": "detect TODO comments in rendered content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-88cc196f0ecbad0ff3e9",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "generate mock data report",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e3f99046314f41dfa62e-a2f5f2593c4d801a2960",
+              "file": "tests/mock-data-detection.spec.js",
+              "line": 134,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
     {
       "title": "tests\\navigation.spec.js",
       "file": "tests/navigation.spec.js",
@@ -158,22 +2646,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 5041,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-01T13:32:59.092Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "fd9b26343428720d0f08-6cf15d43d2859abee799",
@@ -192,22 +2666,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 5015,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-01T13:32:59.124Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "fd9b26343428720d0f08-221b8723ff9e746eaa28",
@@ -226,22 +2686,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 4976,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-01T13:32:59.123Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "fd9b26343428720d0f08-8ed438f5f600069763cc",
@@ -251,7 +2697,7 @@
             },
             {
               "title": "prayer time banner displays",
-              "ok": false,
+              "ok": true,
               "tags": [],
               "tests": [
                 {
@@ -260,62 +2706,750 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
-                      "status": "failed",
-                      "duration": 10053,
-                      "error": {
-                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=Istanbul')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=Istanbul')\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=Istanbul')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=Istanbul')\u001b[22m\n\n    at d:\\Projem\\e2e\\tests\\navigation.spec.js:65:49",
-                        "location": {
-                          "file": "d:\\Projem\\e2e\\tests\\navigation.spec.js",
-                          "column": 49,
-                          "line": 65
-                        },
-                        "snippet": "\u001b[0m \u001b[90m 63 |\u001b[39m     \n \u001b[90m 64 |\u001b[39m     \u001b[90m// Check for location indicator\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 65 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'text=Istanbul'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 66 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 67 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
-                      },
-                      "errors": [
-                        {
-                          "location": {
-                            "file": "d:\\Projem\\e2e\\tests\\navigation.spec.js",
-                            "column": 49,
-                            "line": 65
-                          },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=Istanbul')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=Istanbul')\u001b[22m\n\n\n  63 |     \n  64 |     // Check for location indicator\n> 65 |     await expect(page.locator('text=Istanbul')).toBeVisible();\n     |                                                 ^\n  66 |   });\n  67 | });\n    at d:\\Projem\\e2e\\tests\\navigation.spec.js:65:49"
-                        }
-                      ],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-02-01T13:32:59.108Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "d:\\Projem\\test-results\\tests-navigation-Navigatio-b0b94-prayer-time-banner-displays-chromium\\test-failed-1.png"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "d:\\Projem\\test-results\\tests-navigation-Navigatio-b0b94-prayer-time-banner-displays-chromium\\error-context.md"
-                        }
-                      ],
-                      "errorLocation": {
-                        "file": "d:\\Projem\\e2e\\tests\\navigation.spec.js",
-                        "column": 49,
-                        "line": 65
-                      }
-                    }
-                  ],
-                  "status": "unexpected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "fd9b26343428720d0f08-8c80a214d3957b0ceb4f",
               "file": "tests/navigation.spec.js",
               "line": 58,
+              "column": 3
+            },
+            {
+              "title": "quran arabic glyphs render without tofu squares",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-3997886f25f07bce8022",
+              "file": "tests/navigation.spec.js",
+              "line": 68,
+              "column": 3
+            },
+            {
+              "title": "homepage loads successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-0230fcface497a5c4058",
+              "file": "tests/navigation.spec.js",
+              "line": 17,
+              "column": 3
+            },
+            {
+              "title": "feature grid displays all main features",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-7855b19ff41c0b3ca4de",
+              "file": "tests/navigation.spec.js",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "bottom navigation is visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-57e4dce9e7f30db4f9fb",
+              "file": "tests/navigation.spec.js",
+              "line": 48,
+              "column": 3
+            },
+            {
+              "title": "prayer time banner displays",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-65fd558dbae5c0c74c6b",
+              "file": "tests/navigation.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "quran arabic glyphs render without tofu squares",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-554e97694396dacb5874",
+              "file": "tests/navigation.spec.js",
+              "line": 68,
+              "column": 3
+            },
+            {
+              "title": "homepage loads successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-7c796505b3d2446caa23",
+              "file": "tests/navigation.spec.js",
+              "line": 17,
+              "column": 3
+            },
+            {
+              "title": "feature grid displays all main features",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-5ea4473af1e7ca2c78f7",
+              "file": "tests/navigation.spec.js",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "bottom navigation is visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-ec439417d2dbce5b5222",
+              "file": "tests/navigation.spec.js",
+              "line": 48,
+              "column": 3
+            },
+            {
+              "title": "prayer time banner displays",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-7c1e845a81e93fbb4a10",
+              "file": "tests/navigation.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "quran arabic glyphs render without tofu squares",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-3ac69ed52fd42861931d",
+              "file": "tests/navigation.spec.js",
+              "line": 68,
+              "column": 3
+            },
+            {
+              "title": "homepage loads successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-46798155ea008705bd00",
+              "file": "tests/navigation.spec.js",
+              "line": 17,
+              "column": 3
+            },
+            {
+              "title": "feature grid displays all main features",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-cc373270325d8f0b07f5",
+              "file": "tests/navigation.spec.js",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "bottom navigation is visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-0300fa9c5fdf2f661cc4",
+              "file": "tests/navigation.spec.js",
+              "line": 48,
+              "column": 3
+            },
+            {
+              "title": "prayer time banner displays",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-a6841e335622cdd91ab4",
+              "file": "tests/navigation.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "quran arabic glyphs render without tofu squares",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-d2d8cbc2c9953bae5e1a",
+              "file": "tests/navigation.spec.js",
+              "line": 68,
+              "column": 3
+            },
+            {
+              "title": "homepage loads successfully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-eae9dded345e6fe9aa7c",
+              "file": "tests/navigation.spec.js",
+              "line": 17,
+              "column": 3
+            },
+            {
+              "title": "feature grid displays all main features",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-7a720ca9f4f9ab9af69f",
+              "file": "tests/navigation.spec.js",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "bottom navigation is visible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-84b24355269b59d18c3c",
+              "file": "tests/navigation.spec.js",
+              "line": 48,
+              "column": 3
+            },
+            {
+              "title": "prayer time banner displays",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-18db72061e9cb469663e",
+              "file": "tests/navigation.spec.js",
+              "line": 58,
+              "column": 3
+            },
+            {
+              "title": "quran arabic glyphs render without tofu squares",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fd9b26343428720d0f08-f6d9018fe1e5ef73ad66",
+              "file": "tests/navigation.spec.js",
+              "line": 68,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "tests\\referral-flow.spec.js",
+      "file": "tests/referral-flow.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Referral Flow E2E (invite/create/accept/reward)",
+          "file": "tests/referral-flow.spec.js",
+          "line": 34,
+          "column": 6,
+          "specs": [
+            {
+              "title": "invite create stores code/state and logs analytics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-0e3dd0bcd4ad56d0b682",
+              "file": "tests/referral-flow.spec.js",
+              "line": 49,
+              "column": 3
+            },
+            {
+              "title": "deep link accept + onboarding unlocks invitee reward once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-6aecafb0e5ac54799b34",
+              "file": "tests/referral-flow.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "anti-abuse blocks repeated referral attempts and logs block events",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-5eb0d0b6e79d90b57713",
+              "file": "tests/referral-flow.spec.js",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "invite create stores code/state and logs analytics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-1f2701380154ff68c973",
+              "file": "tests/referral-flow.spec.js",
+              "line": 49,
+              "column": 3
+            },
+            {
+              "title": "deep link accept + onboarding unlocks invitee reward once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-71b5a9fa0b7b7a4cad4b",
+              "file": "tests/referral-flow.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "anti-abuse blocks repeated referral attempts and logs block events",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-6f66f3a0f608e43f2b31",
+              "file": "tests/referral-flow.spec.js",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "invite create stores code/state and logs analytics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-4d99a0d25c5de170c1e9",
+              "file": "tests/referral-flow.spec.js",
+              "line": 49,
+              "column": 3
+            },
+            {
+              "title": "deep link accept + onboarding unlocks invitee reward once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-46230437d04db5d2a304",
+              "file": "tests/referral-flow.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "anti-abuse blocks repeated referral attempts and logs block events",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-c9b2cb0877cf2908958e",
+              "file": "tests/referral-flow.spec.js",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "invite create stores code/state and logs analytics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-f513fc8fe35343b864eb",
+              "file": "tests/referral-flow.spec.js",
+              "line": 49,
+              "column": 3
+            },
+            {
+              "title": "deep link accept + onboarding unlocks invitee reward once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-1335613b4b619c5ec6a9",
+              "file": "tests/referral-flow.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "anti-abuse blocks repeated referral attempts and logs block events",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-a9f12b5cce2e74aaaf65",
+              "file": "tests/referral-flow.spec.js",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "invite create stores code/state and logs analytics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-66511ec4da88e9a8190f",
+              "file": "tests/referral-flow.spec.js",
+              "line": 49,
+              "column": 3
+            },
+            {
+              "title": "deep link accept + onboarding unlocks invitee reward once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-6caf4487a4b1655a6afa",
+              "file": "tests/referral-flow.spec.js",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "anti-abuse blocks repeated referral attempts and logs block events",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cb40c2c3bf160e1ecc8d-2200ca4651ba7c4058cd",
+              "file": "tests/referral-flow.spec.js",
+              "line": 103,
               "column": 3
             }
           ]
@@ -325,11 +3459,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-02-01T13:32:56.220Z",
-    "duration": 13225.396,
-    "expected": 3,
-    "skipped": 0,
-    "unexpected": 1,
+    "startTime": "2026-03-01T08:28:54.710Z",
+    "duration": 188.03600000000006,
+    "expected": 0,
+    "skipped": 160,
+    "unexpected": 0,
     "flaky": 0
   }
 }

@@ -14,7 +14,7 @@ const HeroPrayerCard = memo(({ timings, nextPrayer, onShowPrayers, locationName 
     );
 
     return (
-        <div className="hero-prayer-card" onClick={onShowPrayers}>
+        <div className="hero-prayer-card hover-lift" onClick={onShowPrayers}>
             <div className="hero-overlay"></div>
             
             {/* Left: Current Status */}
@@ -42,7 +42,7 @@ const HeroPrayerCard = memo(({ timings, nextPrayer, onShowPrayers, locationName 
                 <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginBottom: '4px' }}>
                     {t('prayer.next')}
                 </div>
-                <div style={{ fontSize: '18px', fontWeight: '700', color: 'var(--primary-color)' }}>
+                <div className="premium-text" style={{ fontSize: '18px', fontWeight: '700' }}>
                     {nextPrayer.name}
                 </div>
                 

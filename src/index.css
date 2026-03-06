@@ -1,70 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap');
 
 :root {
-  /* Green & Gold Theme (Main App) */
-  --bg-gradient-start: #0f3d2e;
-  /* Deep Islamic Green */
-  --bg-gradient-end: #1a5c45;
-  /* Lighter Green */
-  --bg-gradient-accent: #d4af37;
-  /* Gold */
+  /* Premium Deep Islamic Palette */
+  --bg-emerald-deep: #064e3b;
+  --bg-emerald-med: #065f46;
+  --bg-emerald-light: #0f766e;
+  
+  --bg-gradient-start: var(--bg-emerald-deep);
+  --bg-gradient-end: #042f2e;
+  
+  --accent-gold: #b45309; /* Antique Gold */
+  --accent-gold-light: #f59e0b; /* Amber */
+  --accent-gold-shimmer: #fbbf24;
+  
+  --primary-color: var(--accent-gold);
+  --primary-dark: #78350f;
+  --accent-color: var(--accent-gold-light);
+  
+  --text-primary: #f8fafc; /* Near white for high readability on dark */
+  --text-secondary: #d1d5db; /* Gray 300 */
+  --text-gold: #fde68a; /* Soft Gold text for accents */
+  --text-muted: rgba(209, 213, 219, 0.6);
 
-  --text-color: #f0e68c;
-  /* Cream/Gold Text */
-  --text-color-light: #d4af37;
-  /* Gold Text */
-  --text-color-muted: #c5d1b1;
-  /* Muted Green/Grey */
+  --glass-bg: rgba(6, 78, 59, 0.65);
+  --glass-border: rgba(180, 83, 9, 0.25);
+  --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
 
-  --primary-color: #d4af37;
-  /* Gold */
-  --primary-dark: #b8860b;
-  /* Dark Gold */
-  --accent-color: #f1c40f;
-  /* Bright Gold */
-  --secondary-color: #ffc107;
+  /* Advanced Typography */
+  --font-display: 'Outfit', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-main: 'Inter', 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  --font-arabic: 'Amiri', 'Noto Naskh Arabic', serif;
+  
+  --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-quick: all 0.2s ease;
 
-  --glass-bg: rgba(15, 61, 46, 0.7);
-  /* Dark Green Glass */
-  --glass-border: rgba(212, 175, 55, 0.3);
-  /* Gold Border */
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  /* Refined Glassmorphism Tokens */
+  --surface-blur: 16px;
+  --surface-saturate: 180%;
+  --elevation-premium: 0 20px 50px rgba(0, 0, 0, 0.3);
 
-  --card-bg: rgba(20, 70, 55, 0.8);
-  --input-bg: rgba(255, 255, 255, 0.1);
-  --input-border: #d4af37;
-
-  --success-color: #2ecc71;
-  --warning-color: #f39c12;
-
-  /* Font Settings Defaults */
-  --arabic-font-size: 1.5rem; /* 24px */
-  --turkish-font-size: 1rem; /* 16px */
-  --arabic-font-family: 'Amiri', 'Noto Naskh Arabic', 'Scheherazade New', 'Noto Sans Arabic', 'Droid Arabic Naskh', 'Geeza Pro', 'Tahoma', 'Arial', serif;
-  --quran-line-height: 1.8;
-
-  --font-main: 'Segoe UI', Roboto, 'system-ui', sans-serif;
-  --font-size-base: 1.125rem; /* 18px */
-  --font-size-large: 1.5rem; /* 24px */
-  --font-size-xl: 2.625rem; /* 42px */
-
-  /* New Semantic Tokens */
-  --accent-vibrant: #ffc107; /* Vibrant Amber */
-  --error-color: #ef4444; /* Standard Error Red */
+  /* New Semantic Tokens (Updated) */
+  --accent-vibrant: var(--accent-gold-light);
+  --error-color: #ef4444;
   --notification-dot: #e74c3c;
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Crisp UI Tokens */
-  --surface-blur: 12px;
-  --surface-blur-strong: 20px;
-  --surface-saturate: 145%;
-  --surface-opacity: 0.82;
-  --surface-opacity-strong: 0.95;
-  --surface-border-opacity: 0.32;
-  --text-contrast-boost: 1;
+  /* Legacy Compat/Transitions (Preserved but updated) */
   --icon-stroke-width: 2px;
-  --elevation-soft: 0 4px 14px rgba(0, 0, 0, 0.12);
-  --elevation-medium: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
 
@@ -126,26 +108,32 @@ button, .no-select, .nav-item, .feature-btn, .hamburger-item {
 
 body {
   font-family: var(--font-main);
-
-  /* Green/Gold Background */
   background-color: var(--bg-gradient-start);
-  background-image:
-    /* Cami Silueti (Alt Kısımda) - Gold Color */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23d4af37' fill-opacity='0.1' d='M0,320L0,280L60,280L60,200L80,180L100,200L100,280L180,280C180,280,200,180,320,180C440,180,460,280,460,280L540,280L540,160L560,140L580,160L580,280L640,280C640,280,680,100,880,100C1080,100,1120,280,1120,280L1180,280L1180,140L1200,120L1220,140L1220,280L1440,280L1440,320Z'%3E%3C/path%3E%3C/svg%3E"),
-    /* Ana Gradient */
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(180, 83, 9, 0.1) 0px, transparent 50%),
     linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-
-  background-position: center bottom, center;
-  background-repeat: no-repeat, no-repeat;
-  background-size: 100% auto, cover;
-  background-attachment: fixed, fixed;
-
-  color: var(--text-color);
-  font-size: var(--font-size-base);
-  line-height: 1.6;
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  line-height: 1.65;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Android WebView netlik optimizasyonları */
@@ -240,6 +228,46 @@ h1 {
   margin-bottom: 20px;
   font-weight: 300;
   letter-spacing: 1px;
+}
+
+/* --- PREMIUM DESIGN TOKENS (PHASE 2) --- */
+
+.premium-text {
+  background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0px 4px 15px rgba(245, 158, 11, 0.25);
+  font-family: var(--font-display);
+}
+
+.hover-lift {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(245, 158, 11, 0.15);
+  z-index: 10;
+}
+
+.premium-glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
+}
+
+[data-theme='dark'] .premium-glass {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.smooth-transition {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Glassmorphism Card */
@@ -510,7 +538,7 @@ body.android-webview .bottom-nav {
 .nav-item.active {
   color: var(--accent-vibrant) !important;
   /* Tema rengi (Turuncu) - Zorla uygula */
-  background: color-mix(in srgb, var(--accent-vibrant) 15%, transparent);
+  background: #ffffff;
 }
 
 .nav-item.active svg {

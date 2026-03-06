@@ -1,12 +1,17 @@
-import { AdMob, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
+import {
+    AdMob,
+    BannerAdSize,
+    BannerAdPosition,
+    RewardAdPluginEvents
+} from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 import { logger } from '../utils/logger';
 
 // Test IDs (Google Official Test IDs - always work)
 const TEST_BANNER_ID = 'ca-app-pub-3940256099942544/6300978111';
 
-// Real IDs - Huzur App
-const REAL_BANNER_ID = 'ca-app-pub-3074026744164717/3228028982'; // Bottom Banner (320x50)
+// Real IDs - Huzur App (override with env for release channels)
+const REAL_BANNER_ID = import.meta.env.VITE_ADMOB_BANNER_ID || 'ca-app-pub-3074026744164717/3228028982';
 
 // Development mode flag - uses Vite environment
 const isDev = import.meta.env.DEV;
@@ -26,10 +31,9 @@ export const adMobService = {
         try {
             // Step 1: Request consent info (checks if user is in GDPR region)
             const consentInfo = await AdMob.requestConsentInfo();
-            
+
             // Step 2: Show consent form if required and available
-            if (consentInfo.isConsentFormAvailable && 
-                consentInfo.status === 'REQUIRED') {
+            if (consentInfo.isConsentFormAvailable && consentInfo.status === 'REQUIRED') {
                 await AdMob.showConsentForm();
             }
 
@@ -123,8 +127,6 @@ export const adMobService = {
 
         try {
             await AdMob.hideBanner();
-            // await AdMob.removeBanner(); // Don't remove, just hide to resume faster if needed? 
-            // Actually removeBanner is safer to switch sizes
             await AdMob.removeBanner();
             logger.log('AdMob: Banner hidden/removed');
         } catch (e) {
@@ -144,7 +146,7 @@ export const adMobService = {
         } catch (e) {
             logger.warn('AdMob: Error hiding banner:', e);
         }
-        
+
         try {
             await AdMob.removeBanner();
         } catch (e) {
@@ -156,16 +158,17 @@ export const adMobService = {
 
 // Rewarded Ad IDs
 const TEST_REWARDED_ID = 'ca-app-pub-3940256099942544/5224354917';
-const REAL_REWARDED_ID = 'ca-app-pub-3074026744164717/7167273995'; // Rewarded ad ID
+const REAL_REWARDED_ID = import.meta.env.VITE_ADMOB_REWARDED_ID || 'ca-app-pub-3074026744164717/7167273995';
 const REWARDED_ID = isDev ? TEST_REWARDED_ID : REAL_REWARDED_ID;
 
 /**
  * Show Rewarded Ad for Streak Recovery
+ * Reward is granted only if the SDK emits a real reward event.
  * @returns {Promise<{success: boolean, reward?: object, error?: string}>}
  */
 export const showRewardedAd = async () => {
     if (Capacitor.getPlatform() === 'web') {
-        // Web'de simülasyon
+        // Web simulation
         logger.log('AdMob: Web platform - rewarded ad simulated');
         await new Promise(resolve => setTimeout(resolve, 1000));
         return { success: true, reward: { amount: 1, type: 'streak_recovery' } };
@@ -177,35 +180,36 @@ export const showRewardedAd = async () => {
             return { success: false, error: 'Plugin not available' };
         }
 
-        // Rewarded ad'i yükle ve göster
-        const reward = await new Promise((resolve, reject) => {
-            let rewarded = false;
-            
-            // Show rewarded ad
-            AdMob.showRewardedAd({
-                adId: REWARDED_ID,
-                isTesting: isDev
-            }).then(() => {
-                logger.log('AdMob: Rewarded ad shown');
-                // Basit implementasyon - ad gösterildikten sonra başarılı kabul et
-                rewarded = true;
-                resolve({ success: true, reward: { type: 'streak_recovery', amount: 1 } });
-            }).catch((error) => {
-                reject(error);
-            });
-
-            // Set timeout
-            setTimeout(() => {
-                if (!rewarded) {
-                    reject(new Error('Ad timeout'));
-                }
-            }, 60000); // 60 saniye timeout
+        await AdMob.prepareRewardVideoAd({
+            adId: REWARDED_ID,
+            isTesting: isDev
         });
 
-        return reward;
+        let rewardedItem = null;
+        const rewardedListener = await AdMob.addListener(RewardAdPluginEvents.Rewarded, (item) => {
+            rewardedItem = item;
+        });
+
+        try {
+            const immediateReward = await AdMob.showRewardVideoAd();
+            if (!rewardedItem && immediateReward?.amount) {
+                rewardedItem = immediateReward;
+            }
+        } finally {
+            rewardedListener.remove();
+        }
+
+        const amount = Number(rewardedItem?.amount || 0);
+        const type = rewardedItem?.type || 'streak_recovery';
+
+        if (amount > 0) {
+            logger.log('AdMob: Reward granted', { type, amount });
+            return { success: true, reward: { type, amount } };
+        }
+
+        return { success: false, error: 'Reward not granted' };
     } catch (error) {
         logger.error('AdMob: Rewarded Ad Error -', error);
-        return { success: false, error: error.message };
+        return { success: false, error: error?.message || 'Rewarded ad failed' };
     }
 };
-

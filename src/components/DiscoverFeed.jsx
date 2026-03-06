@@ -1,8 +1,10 @@
 import { memo } from 'react';
-import { PlayCircle, ArrowRight, MessageCircle } from 'lucide-react';
+import { PlayCircle, ArrowRight, MessageCircle, Clock, BookOpen, Share2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import './ModernHomeFeed.css';
 
 const DiscoverFeed = memo(() => {
+    const { t } = useTranslation();
     const feedItems = [
         {
             id: 1,
@@ -35,24 +37,33 @@ const DiscoverFeed = memo(() => {
 
     return (
         <div className="discover-feed">
-             <div className="section-header" style={{ padding: '0 4px 12px 4px' }}>
-                <span className="section-title">Keşfet</span>
+             <div className="gazette-section-header">
+                <span className="gazette-title premium-text">{t('home.discover', 'Keşfet')}</span>
             </div>
             
-            {feedItems.map((item) => (
-                <div key={item.id} className="feed-card">
-                    <div className="feed-image" style={{ background: item.image, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {feedItems.map((item, idx) => (
+                <div key={item.id} className="gazette-card reveal-stagger premium-glass hover-lift" style={{ '--delay': `${0.2 * idx}s` }}>
+                    <div className="gazette-image-area" style={{ background: item.image, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div className="gazette-floating-tag">
+                            {item.tag}
+                        </div>
                         {item.type === 'video' && <PlayCircle size={48} color="white" style={{ opacity: 0.8 }} />}
                         {item.type === 'community' && <MessageCircle size={48} color="white" style={{ opacity: 0.8 }} />}
+                        {item.type === 'article' && <BookOpen size={48} color="white" style={{ opacity: 0.8 }} />}
                     </div>
-                    <div className="feed-content">
-                        <div className="feed-tag">{item.tag}</div>
-                        <div className="feed-title">{item.title}</div>
-                        <div className="feed-desc">{item.desc}</div>
-                        <div className="feed-cta">
-                            <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+                    <div className="gazette-body">
+                        <span className="gazette-category">{item.tag}</span>
+                        <h3 className="gazette-headline premium-text">{item.title}</h3>
+                        <p className="gazette-excerpt">{item.desc}</p>
+                        
+                        <div className="gazette-footer">
+                            <div className="gazette-meta">
+                                <Clock size={12} style={{ display: 'inline', marginRight: '4px' }} />
+                                5 {t('common.minutes', 'dk')}
+                            </div>
+                            <div className="gazette-btn-read">
                                 {item.cta} <ArrowRight size={14} />
-                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>

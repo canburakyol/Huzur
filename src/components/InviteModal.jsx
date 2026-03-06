@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Gift, Link2, Send, X } from 'lucide-react';
+import { Gift, Link2, Send, X, Users, CheckCircle2, Copy } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
 import { createInviteLink, getReferralProgress } from '../services/referralService';
@@ -49,6 +49,7 @@ const InviteModal = ({ isOpen, onClose }) => {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(text);
         analyticsService.logShareSent('invite_link', 'clipboard');
+        // Simple visual feedback instead of alert if possible, but keeping it for now
         alert('Davet linki kopyalandı!');
       }
     } catch (err) {
@@ -57,40 +58,56 @@ const InviteModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 10003,
-        background: 'rgba(0,0,0,0.58)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 18
-      }}
-    >
-      <div className="glass-card" style={{ width: '100%', maxWidth: 430, padding: 18 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 style={{ margin: 0, display: 'flex', gap: 8, alignItems: 'center', color: '#d4af37' }}>
-            <Gift size={18} /> Arkadaşını Davet Et
+    <div className="velocity-modal-overlay">
+      <div className="settings-card reveal-stagger" style={{ 
+          flexDirection: 'column', padding: '32px', maxWidth: '440px', width: '90%',
+          position: 'relative', border: '1px solid rgba(212, 175, 55, 0.3)',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212, 175, 55, 0.1)'
+      }}>
+        <button 
+            onClick={onClose}
+            className="modal-close-btn"
+        >
+          <X size={18} />
+        </button>
+
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+          <div className="settings-icon-box" style={{ 
+              width: '64px', height: '64px', background: 'rgba(212, 175, 55, 0.15)', 
+              color: '#d4af37', borderRadius: '20px', margin: '0 auto 16px' 
+          }}>
+            <Gift size={32} />
+          </div>
+          <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '950', color: 'var(--nav-text)', letterSpacing: '-0.5px' }}>
+             Arkadaşını Davet Et
           </h3>
-          <button onClick={onClose} style={{ border: 'none', background: 'transparent', cursor: 'pointer' }}>
-            <X size={18} />
-          </button>
+          <p style={{ margin: '8px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>
+            Huzur'u paylaş, beraber kazanın. Referans ilerlemeni buradan takip edebilirsin.
+          </p>
         </div>
 
-        <p style={{ marginTop: 10, marginBottom: 14, opacity: 0.85 }}>
-          Davet linki oluşturup paylaş. Referans ilerlemeni aşağıda takip edebilirsin.
-        </p>
-
         {referralProgress && (
-          <div style={{ border: '1px solid rgba(255,255,255,0.2)', borderRadius: 10, padding: 10, marginBottom: 12 }}>
-            <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 6 }}>Referans Durumu</div>
-            <div style={{ fontSize: 13, marginBottom: 4 }}>
-              Davet eden ödülü: {referralProgress.rewards?.inviterUnlockedAt ? 'Açıldı' : 'Beklemede'}
-            </div>
-            <div style={{ fontSize: 13 }}>
-              Davet edilen ödülü: {referralProgress.rewards?.inviteeUnlockedAt ? 'Açıldı' : 'Beklemede'}
+          <div className="progress-section" style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '900', color: 'var(--nav-text)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '12px' }}>
+                Referans Durumu
+            </label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div className="progress-item">
+                    <div className={`status-dot ${referralProgress.rewards?.inviterUnlockedAt ? 'active' : ''}`} />
+                    <span style={{ flex: 1 }}>Davet Eden Ödülü</span>
+                    <span style={{ fontWeight: '800', color: referralProgress.rewards?.inviterUnlockedAt ? '#10b981' : 'var(--nav-text-muted)' }}>
+                        {referralProgress.rewards?.inviterUnlockedAt ? 'AÇILDI' : 'BEKLEMEDE'}
+                    </span>
+                    {referralProgress.rewards?.inviterUnlockedAt && <CheckCircle2 size={14} color="#10b981" />}
+                </div>
+                <div className="progress-item">
+                    <div className={`status-dot ${referralProgress.rewards?.inviteeUnlockedAt ? 'active' : ''}`} />
+                    <span style={{ flex: 1 }}>Davet Edilen Ödülü</span>
+                    <span style={{ fontWeight: '800', color: referralProgress.rewards?.inviteeUnlockedAt ? '#10b981' : 'var(--nav-text-muted)' }}>
+                        {referralProgress.rewards?.inviteeUnlockedAt ? 'AÇILDI' : 'BEKLEMEDE'}
+                    </span>
+                    {referralProgress.rewards?.inviteeUnlockedAt && <CheckCircle2 size={14} color="#10b981" />}
+                </div>
             </div>
           </div>
         )}
@@ -98,53 +115,125 @@ const InviteModal = ({ isOpen, onClose }) => {
         {!inviteUrl ? (
           <button
             onClick={handleCreateInvite}
-            style={{
-              width: '100%',
-              border: '1px solid #d4af37',
-              borderRadius: 10,
-              background: '#d4af37',
-              color: '#14352a',
-              padding: '11px 12px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 8
-            }}
+            className="velocity-btn-primary"
+            style={{ width: '100%', padding: '16px', background: '#d4af37' }}
           >
-            <Link2 size={16} /> Davet Linki Oluştur
+            <Link2 size={18} style={{ marginRight: '8px' }} />
+            Davet Linki Oluştur
           </button>
         ) : (
-          <>
-            <div style={{ border: '1px solid rgba(255,255,255,0.2)', borderRadius: 10, padding: 10, marginBottom: 10 }}>
-              <div style={{ fontSize: 12, opacity: 0.75 }}>Davet Kodu</div>
-              <div style={{ fontWeight: 700 }}>{inviteCode}</div>
-              <div style={{ marginTop: 6, fontSize: 12, wordBreak: 'break-all' }}>{inviteUrl}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="invite-info-card">
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>Davet Kodu</span>
+                  <Copy size={14} color="var(--nav-accent)" style={{ cursor: 'pointer' }} onClick={() => navigator.clipboard.writeText(inviteCode)} />
+              </div>
+              <div style={{ fontSize: '1.25rem', fontWeight: '950', color: 'var(--nav-text)', letterSpacing: '1px' }}>
+                  {inviteCode}
+              </div>
+              <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid var(--nav-border)', fontSize: '0.75rem', color: 'var(--nav-text-muted)', wordBreak: 'break-all', fontWeight: '600' }}>
+                  {inviteUrl}
+              </div>
             </div>
 
             <button
               onClick={handleShareInvite}
-              style={{
-                width: '100%',
-                border: '1px solid rgba(255,255,255,0.25)',
-                borderRadius: 10,
-                background: 'rgba(255,255,255,0.06)',
-                color: '#fff',
-                padding: '11px 12px',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: 8
-              }}
+              className="velocity-btn-primary"
+              style={{ width: '100%', padding: '16px' }}
             >
-              <Send size={16} /> Linki Paylaş
+              <Send size={18} style={{ marginRight: '8px' }} />
+              Linki Paylaş
             </button>
-          </>
+          </div>
         )}
       </div>
+
+      <style>{`
+        .velocity-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10003;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--nav-hover);
+            border: none;
+            color: var(--nav-text-muted);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-close-btn:hover { background: var(--nav-border); color: var(--nav-text); }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--nav-hover);
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--nav-text);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--nav-border);
+        }
+
+        .status-dot.active {
+            background: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
+        .invite-info-card {
+            background: var(--nav-hover);
+            border: 1px solid var(--nav-border);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .velocity-btn-primary {
+            background: var(--nav-accent);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            font-weight: 950;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .velocity-btn-primary:active { transform: scale(0.97); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 };

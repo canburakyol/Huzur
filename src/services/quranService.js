@@ -1,247 +1,277 @@
-// Quran API Service - Açık Kuran API (Turkish Transliteration Support)
 import { surahList } from '../data/surahList';
 import { storageService } from './storageService';
-import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 
 const BASE_URL = 'https://api.alquran.cloud/v1';
 const ACIK_KURAN_URL = 'https://api.acikkuran.com';
+const FETCH_OPTIONS = { cache: 'no-store' };
 
-// Sure içeriğini getir (Arapça)
+const SURAH_CACHE_PREFIX = 'quran_surah_v5_';
+const SURAH_CACHE_MAX_AGE_DAYS = 7;
+const DEFAULT_TURKISH_TRANSLATION_ID = 'tr.vakfi';
+
+const normalizeTranslationId = (translationId = DEFAULT_TURKISH_TRANSLATION_ID) => {
+    return translationId === 'tr.diyanet' ? DEFAULT_TURKISH_TRANSLATION_ID : translationId;
+};
+
+const hasMatchingSurahNumber = (data, surahNumber) => {
+    return Number(data?.number) === Number(surahNumber);
+};
+
+const getCachedSurah = (cacheKey, expectedSurahNumber = null) => {
+    try {
+        const storageKey = `${SURAH_CACHE_PREFIX}${cacheKey}`;
+        const cached = storageService.getItem(storageKey);
+
+        if (!cached) {
+            return null;
+        }
+
+        const { data, timestamp } = cached;
+
+        if (expectedSurahNumber !== null && !hasMatchingSurahNumber(data, expectedSurahNumber)) {
+            storageService.removeItem(storageKey);
+            logger.warn(`[Quran] Discarded mismatched cache for surah ${cacheKey}`);
+            return null;
+        }
+
+        const ageInDays = (Date.now() - timestamp) / (1000 * 60 * 60 * 24);
+        if (ageInDays > SURAH_CACHE_MAX_AGE_DAYS) {
+            storageService.removeItem(storageKey);
+            return null;
+        }
+
+        logger.log(`[Quran] Using cached surah ${cacheKey}`);
+        return data;
+    } catch (error) {
+        logger.warn('[Quran] Cache read error:', error);
+        return null;
+    }
+};
+
+const cacheSurah = (cacheKey, data) => {
+    try {
+        storageService.setItem(`${SURAH_CACHE_PREFIX}${cacheKey}`, {
+            data,
+            timestamp: Date.now()
+        });
+        logger.log(`[Quran] Cached surah ${cacheKey}`);
+    } catch (error) {
+        logger.warn('[Quran] Cache write error:', error);
+    }
+};
+
+const buildSurahData = (surahNumber, arabicPayload, translationPayload, transliterationByAyah = null) => {
+    if (arabicPayload?.code !== 200 || translationPayload?.code !== 200) {
+        throw new Error('Sure yuklenemedi - kritik veri eksik');
+    }
+
+    if (
+        !hasMatchingSurahNumber({ number: arabicPayload.data?.number }, surahNumber) ||
+        !hasMatchingSurahNumber({ number: translationPayload.data?.number }, surahNumber)
+    ) {
+        throw new Error(`Wrong surah returned for request ${surahNumber}`);
+    }
+
+    const translations = new Map(
+        (translationPayload.data?.ayahs || []).map((ayah) => [Number(ayah.numberInSurah), ayah.text || ''])
+    );
+
+    const ayahs = (arabicPayload.data?.ayahs || []).map((ayah) => {
+        const ayahNumber = Number(ayah.numberInSurah);
+
+        return {
+            number: ayahNumber,
+            arabic: ayah.text,
+            transliteration: transliterationByAyah?.get(ayahNumber) || '',
+            translation: translations.get(ayahNumber) || ''
+        };
+    });
+
+    return {
+        number: arabicPayload.data.number,
+        name: arabicPayload.data.name,
+        englishName: arabicPayload.data.englishName,
+        turkishName: arabicPayload.data.englishNameTranslation,
+        meaning: arabicPayload.data.englishNameTranslation,
+        revelationType: arabicPayload.data.revelationType,
+        numberOfAyahs: arabicPayload.data.numberOfAyahs,
+        ayahs
+    };
+};
+
+const fetchAcikKuranTransliteration = async (surahNumber) => {
+    try {
+        const response = await fetch(`${ACIK_KURAN_URL}/surah/${surahNumber}`, FETCH_OPTIONS);
+        if (!response.ok) {
+            throw new Error('Acik Kuran transliteration request failed');
+        }
+
+        const result = await response.json();
+        const apiData = result.data;
+
+        if (!apiData?.verses) {
+            throw new Error('Acik Kuran transliteration payload missing verses');
+        }
+
+        if (!hasMatchingSurahNumber({ number: apiData.id }, surahNumber)) {
+            throw new Error(`Acik Kuran returned wrong surah: expected ${surahNumber}, got ${apiData.id}`);
+        }
+
+        return new Map(
+            apiData.verses.map((verse) => [Number(verse.verse_number), verse.transcription || ''])
+        );
+    } catch (error) {
+        logger.warn('[Quran] Transliteration fetch failed, continuing without it:', error);
+        return null;
+    }
+};
+
+const fetchJson = async (url) => {
+    const response = await fetch(url, FETCH_OPTIONS);
+    return response.json();
+};
+
 export const getSurahArabic = async (surahNumber) => {
     try {
-        const response = await fetch(`${BASE_URL}/surah/${surahNumber}`);
-        const data = await response.json();
+        const data = await fetchJson(`${BASE_URL}/surah/${surahNumber}`);
         if (data.code === 200) {
             return data.data;
         }
-        throw new Error('Sure yüklenemedi');
+        throw new Error('Sure yuklenemedi');
     } catch (error) {
         logger.error('Surah fetch error:', error);
         return null;
     }
 };
 
-// Sure içeriğini Türkçe meal ile getir
 export const getSurahWithTranslation = async (surahNumber) => {
     try {
-        const response = await fetch(`${BASE_URL}/surah/${surahNumber}/tr.vakfi`);
-        const data = await response.json();
+        const data = await fetchJson(`${BASE_URL}/surah/${surahNumber}/${DEFAULT_TURKISH_TRANSLATION_ID}`);
         if (data.code === 200) {
             return data.data;
         }
-        throw new Error('Meal yüklenemedi');
+        throw new Error('Meal yuklenemedi');
     } catch (error) {
         logger.error('Translation fetch error:', error);
         return null;
     }
 };
 
-// Cache constants
-const SURAH_CACHE_PREFIX = 'quran_surah_v2_'; // v2 for new API
-const SURAH_CACHE_MAX_AGE_DAYS = 7; // Cache valid for 7 days
+export const getSurahComplete = async (surahNumber, translationId = DEFAULT_TURKISH_TRANSLATION_ID) => {
+    const normalizedTranslationId = normalizeTranslationId(translationId);
+    const cacheKey = `${surahNumber}_${normalizedTranslationId}`;
+    const cached = getCachedSurah(cacheKey, surahNumber);
 
-// Helper: Get cached surah
-const getCachedSurah = (surahNumber) => {
-    try {
-        const cacheKey = `${SURAH_CACHE_PREFIX}${surahNumber}`;
-        const cached = storageService.getItem(cacheKey);
-        if (!cached) return null;
-
-        const { data, timestamp } = cached;
-        const ageInDays = (Date.now() - timestamp) / (1000 * 60 * 60 * 24);
-        
-        if (ageInDays > SURAH_CACHE_MAX_AGE_DAYS) {
-            storageService.removeItem(cacheKey);
-            return null;
-        }
-        
-        logger.log(`[Quran] Using cached surah ${surahNumber}`);
-        return data;
-    } catch (e) {
-        logger.warn('[Quran] Cache read error:', e);
-        return null;
-    }
-};
-
-// Helper: Save surah to cache
-const cacheSurah = (surahNumber, data) => {
-    try {
-        const cacheKey = `${SURAH_CACHE_PREFIX}${surahNumber}`;
-        const cacheData = {
-            data,
-            timestamp: Date.now()
-        };
-        storageService.setItem(cacheKey, cacheData);
-        logger.log(`[Quran] Cached surah ${surahNumber}`);
-    } catch (e) {
-        // storage full or other error - fail silently
-        logger.warn('[Quran] Cache write error:', e);
-    }
-};
-
-// Açık Kuran API - Türkçe Okunuş Destekli - WITH CACHING
-// Açık Kuran API - Türkçe Okunuş Destekli - WITH CACHING
-export const getSurahComplete = async (surahNumber, translationId = 'tr.vakfi') => {
-    // Step 1: Check cache first
-    // Cache key should include translationId to avoid showing Turkish for English users
-    const cacheKey = `${surahNumber}_${translationId}`;
-    const cached = getCachedSurah(cacheKey);
     if (cached) {
         return cached;
     }
 
-    // Determine if we should use Acik Kuran (Only for Turkish default/Vakfi)
-    // Acik Kuran API primarily serves Turkish content with transliteration
-    const useAcikKuran = translationId === 'tr.vakfi' || translationId === 'tr.diyanet';
-
     try {
-        if (useAcikKuran) {
-            // Step 2: Fetch from Açık Kuran API (has Turkish transliteration)
-            const response = await fetch(`${ACIK_KURAN_URL}/surah/${surahNumber}`);
-            
-            if (!response.ok) {
-                throw new Error('Sure yüklenemedi');
+        if (normalizedTranslationId === DEFAULT_TURKISH_TRANSLATION_ID) {
+            const [arabicPayload, vakfiPayload, transliterationByAyah] = await Promise.all([
+                fetchJson(`${BASE_URL}/surah/${surahNumber}`),
+                fetchJson(`${BASE_URL}/surah/${surahNumber}/${DEFAULT_TURKISH_TRANSLATION_ID}`),
+                fetchAcikKuranTransliteration(surahNumber)
+            ]);
+
+            const surahData = buildSurahData(
+                surahNumber,
+                arabicPayload,
+                vakfiPayload,
+                transliterationByAyah
+            );
+
+            if (!hasMatchingSurahNumber(surahData, surahNumber)) {
+                throw new Error(`Vakfi hybrid payload returned wrong surah: expected ${surahNumber}, got ${surahData.number}`);
             }
-
-            const result = await response.json();
-            const apiData = result.data;
-
-            if (apiData && apiData.verses) {
-                const ayahs = apiData.verses.map((verse) => ({
-                    number: verse.verse_number,
-                    arabic: verse.verse || verse.verse_simplified,
-                    transliteration: verse.transcription || '', // Turkish transliteration!
-                    translation: verse.translation?.text || ''
-                }));
-
-                const surahData = {
-                    number: apiData.id,
-                    name: apiData.name_original,
-                    englishName: apiData.name_en,
-                    turkishName: apiData.name,
-                    meaning: apiData.name_translation_tr,
-                    revelationType: null, // Açık Kuran doesn't provide this
-                    numberOfAyahs: apiData.verse_count,
-                    ayahs
-                };
-
-                // Step 3: Cache the result
-                cacheSurah(cacheKey, surahData);
-
-                return surahData;
-            }
-        }
-
-        // Step 4: Al Quran Cloud API (For English, Arabic, or fallback)
-        logger.log(`[Quran] Fetching from Al Quran Cloud API for ${translationId}...`);
-        
-        // We need 3 things: Arabic text, Translation, and Transliteration (if available/needed)
-        // For non-Turkish, we might not have good transliteration, but we can try 'en.transliteration' for English
-        
-        const fetchUrls = [
-            fetch(`${BASE_URL}/surah/${surahNumber}`), // 0: Arabic
-            fetch(`${BASE_URL}/surah/${surahNumber}/${translationId}`) // 1: Translation
-        ];
-
-        // Add transliteration if it's Turkish (fallback case) or English
-        // Note: Al Quran Cloud might not have 'tr.transliteration' reliably, but let's keep logic generic
-        // For this implementation, we will skip transliteration for non-Turkish to save bandwidth/complexity unless requested,
-        // but the UI expects it. Let's try to get it.
-        // actually 'en.transliteration' exists.
-        
-        if (translationId.startsWith('tr')) {
-             fetchUrls.push(fetch(`${BASE_URL}/surah/${surahNumber}/tr.transliteration`));
-        } else {
-             // For English/others, maybe fetch en.transliteration? 
-             // Let's just fetch it.
-             fetchUrls.push(fetch(`${BASE_URL}/surah/${surahNumber}/en.transliteration`));
-        }
-
-        const results = await Promise.allSettled(fetchUrls);
-
-        const arabicRes = results[0].status === 'fulfilled' ? results[0].value : null;
-        const translationRes = results[1].status === 'fulfilled' ? results[1].value : null;
-        const transliterationRes = results[2] && results[2].status === 'fulfilled' ? results[2].value : null;
-
-        if (!arabicRes || !translationRes) {
-            throw new Error('Sure yüklenemedi - kritik veri eksik');
-        }
-
-        const arabicData = await arabicRes.json();
-        const translationData = await translationRes.json();
-        const transliterationData = transliterationRes ? await transliterationRes.json() : null;
-
-        if (arabicData.code === 200 && translationData.code === 200) {
-            const ayahs = arabicData.data.ayahs.map((ayah) => {
-                const ayahNumber = ayah.numberInSurah;
-                const translationAyah = translationData.data.ayahs.find(t => t.numberInSurah === ayahNumber);
-                const transliterationAyah = transliterationData?.data?.ayahs?.find(t => t.numberInSurah === ayahNumber);
-
-                return {
-                    number: ayahNumber,
-                    arabic: ayah.text,
-                    transliteration: transliterationAyah?.text || '',
-                    translation: translationAyah?.text || ''
-                };
-            });
-
-            const surahData = {
-                number: arabicData.data.number,
-                name: arabicData.data.name,
-                englishName: arabicData.data.englishName,
-                turkishName: arabicData.data.englishNameTranslation, // Use English translation as name if Turkish not avail
-                meaning: arabicData.data.englishNameTranslation,
-                revelationType: arabicData.data.revelationType,
-                numberOfAyahs: arabicData.data.numberOfAyahs,
-                ayahs
-            };
 
             cacheSurah(cacheKey, surahData);
             return surahData;
         }
-        
-        throw new Error('API yanıtı hatalı');
 
+        logger.log(`[Quran] Fetching from Al Quran Cloud API for ${normalizedTranslationId}...`);
+
+        const transliterationUrl = normalizedTranslationId.startsWith('tr')
+            ? `${BASE_URL}/surah/${surahNumber}/tr.transliteration`
+            : `${BASE_URL}/surah/${surahNumber}/en.transliteration`;
+
+        const [arabicPayload, translationPayload, transliterationPayload] = await Promise.all([
+            fetchJson(`${BASE_URL}/surah/${surahNumber}`),
+            fetchJson(`${BASE_URL}/surah/${surahNumber}/${normalizedTranslationId}`),
+            fetchJson(transliterationUrl).catch(() => null)
+        ]);
+
+        const transliterationByAyah = transliterationPayload?.data?.ayahs
+            ? new Map(
+                transliterationPayload.data.ayahs.map((ayah) => [Number(ayah.numberInSurah), ayah.text || ''])
+            )
+            : null;
+
+        const surahData = buildSurahData(
+            surahNumber,
+            arabicPayload,
+            translationPayload,
+            transliterationByAyah
+        );
+
+        if (!hasMatchingSurahNumber(surahData, surahNumber)) {
+            throw new Error(`Al Quran Cloud returned wrong surah: expected ${surahNumber}, got ${surahData.number}`);
+        }
+
+        cacheSurah(cacheKey, surahData);
+        return surahData;
     } catch (error) {
         logger.error('Quran API error:', error);
-        
-        // Try to return expired cache if available
+
         try {
-            const cached = storageService.getItem(cacheKey);
-            if (cached) {
+            const storageKey = `${SURAH_CACHE_PREFIX}${cacheKey}`;
+            const expiredCache = storageService.getItem(storageKey);
+            if (expiredCache?.data && hasMatchingSurahNumber(expiredCache.data, surahNumber)) {
                 logger.log(`[Quran] Using expired cache for surah ${surahNumber} (offline fallback)`);
-                return cached.data;
+                return expiredCache.data;
+            }
+
+            if (expiredCache?.data && !hasMatchingSurahNumber(expiredCache.data, surahNumber)) {
+                storageService.removeItem(storageKey);
             }
         } catch {
-            // Ignore
+            // Ignore offline fallback cache errors.
         }
-        
+
         return null;
     }
 };
 
 export const getAvailableTranslations = async () => {
     try {
-        // Start with Turkish translations
-        const response = await fetch(`${BASE_URL}/edition?language=tr`);
+        const response = await fetch(`${BASE_URL}/edition?language=tr`, FETCH_OPTIONS);
         const data = await response.json();
-        
-        let translations = [];
-        
+
+        const fallbackTurkishTranslation = {
+            identifier: DEFAULT_TURKISH_TRANSLATION_ID,
+            name: 'Diyanet Vakfı (Türkçe)',
+            language: 'tr',
+            type: 'translation'
+        };
+
+        let translations = [fallbackTurkishTranslation];
+
         if (data.code === 200) {
-            translations = data.data.filter(edition => edition.type === 'translation');
-            
-            // Rename common Turkish ones
-            translations = translations.map(t => {
-                if (t.identifier === 'tr.vakfi') t.name = 'Diyanet Vakfı (Türkçe)';
-                if (t.identifier === 'tr.diyanet') t.name = 'Diyanet İşleri (Türkçe)';
-                return t;
-            });
+            const vakfiTranslation = data.data.find(
+                (edition) => edition.type === 'translation' && edition.identifier === DEFAULT_TURKISH_TRANSLATION_ID
+            );
+
+            if (vakfiTranslation) {
+                translations = [
+                    {
+                        ...vakfiTranslation,
+                        name: 'Diyanet Vakfı (Türkçe)'
+                    }
+                ];
+            }
         }
 
-        // Manually add English and Arabic options
-        // We add them manually to ensure they are exactly what we want and to avoid fetching all languages
         const extraTranslations = [
             {
                 identifier: 'en.sahih',
@@ -253,16 +283,13 @@ export const getAvailableTranslations = async () => {
                 identifier: 'ar.jalalayn',
                 name: 'Tafsir Al-Jalalayn (العربية)',
                 language: 'ar',
-                type: 'tafsir' // It's technically a tafsir, but we treat it as translation text
+                type: 'tafsir'
             }
         ];
 
-        const allTranslations = [...translations, ...extraTranslations];
+        const priorityIds = [DEFAULT_TURKISH_TRANSLATION_ID, 'en.sahih', 'ar.jalalayn'];
 
-        // Priority sorting
-        const priorityIds = ['tr.vakfi', 'tr.diyanet', 'en.sahih', 'ar.jalalayn'];
-
-        return allTranslations.sort((a, b) => {
+        return [...translations, ...extraTranslations].sort((a, b) => {
             const aIndex = priorityIds.indexOf(a.identifier);
             const bIndex = priorityIds.indexOf(b.identifier);
 
@@ -271,108 +298,78 @@ export const getAvailableTranslations = async () => {
             if (bIndex !== -1) return 1;
             return a.name.localeCompare(b.name);
         });
-
     } catch (error) {
         logger.error('Translations fetch error:', error);
-        // Fallback list if fetch fails
         return [
-            { identifier: 'tr.vakfi', name: 'Diyanet Vakfı (Türkçe)', language: 'tr' },
+            { identifier: DEFAULT_TURKISH_TRANSLATION_ID, name: 'Diyanet Vakfı (Türkçe)', language: 'tr', type: 'translation' },
             { identifier: 'en.sahih', name: 'Sahih International (English)', language: 'en' },
             { identifier: 'ar.jalalayn', name: 'Tafsir Al-Jalalayn (العربية)', language: 'ar' }
         ];
     }
 };
 
-// Ses URL'i oluştur (sure bazlı) - Al Quran Cloud API kullanarak
 export const getAudioUrl = async (surahNumber, reciterId = 'ar.alafasy') => {
     try {
-        // Al Quran Cloud API'den audio URL'ini al
         const response = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/${reciterId}`);
         const data = await response.json();
 
         if (data.code === 200 && data.data && data.data.ayahs && data.data.ayahs.length > 0) {
-            // İlk ayetin audio URL'ini al ve sure bazlı URL'e çevir
             const firstAyahAudio = data.data.ayahs[0].audio;
             if (firstAyahAudio) {
-                // Sure bazlı URL formatına çevir
-                // Örnek: https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3 -> https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/1.mp3
-                return firstAyahAudio.replace('/audio/', '/audio-surah/').replace(/\/(\d+)\.mp3$/, `/${surahNumber}.mp3`);
+                return firstAyahAudio
+                    .replace('/audio/', '/audio-surah/')
+                    .replace(/\/(\d+)\.mp3$/, `/${surahNumber}.mp3`);
             }
         }
 
-        // Fallback: Direkt URL formatı (bazı hafızlar için çalışabilir)
         return `https://cdn.islamic.network/quran/audio-surah/128/${reciterId}/${surahNumber}.mp3`;
     } catch (error) {
         logger.error('Audio URL fetch error:', error);
-        // Fallback URL
         return `https://cdn.islamic.network/quran/audio-surah/128/${reciterId}/${surahNumber}.mp3`;
     }
 };
 
-
-
-// Senkron versiyon (hızlı erişim için) - Al Quran Cloud API formatı
 export const getAudioUrlSync = (surahNumber, reciterId = 'ar.alafasy') => {
     const surahNum = String(surahNumber).padStart(3, '0');
 
-    // Her hafız için doğru URL formatları
-    // Bazı hafızlar için farklı sunucular kullanılıyor
     const urlFormats = {
         'ar.alafasy': `https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${surahNumber}.mp3`,
         'ar.abdulbasitmurattal': `https://cdn.islamic.network/quran/audio-surah/128/ar.abdulbasitmurattal/${surahNumber}.mp3`,
-        // Husary, Minshawi ve Sudais için alternatif URL formatları
         'ar.husary': `https://server7.mp3quran.net/husary/${surahNum}.mp3`,
         'ar.minshawi': `https://server7.mp3quran.net/minshawi/${surahNum}.mp3`,
         'ar.abdurrahmaansudais': `https://server7.mp3quran.net/sudais/${surahNum}.mp3`
     };
 
-    // Fallback: Use the reciterId in the standard Islamic Network URL pattern
-    // This works for most reciters from Al Quran Cloud (Shuraim, Ajmy, etc.)
-    const url = urlFormats[reciterId] || `https://cdn.islamic.network/quran/audio-surah/128/${reciterId}/${surahNumber}.mp3`;
-
-
-    return url;
+    return urlFormats[reciterId] || `https://cdn.islamic.network/quran/audio-surah/128/${reciterId}/${surahNumber}.mp3`;
 };
 
-
-// Ayet ayet ses URL'i
 export const getAyahAudioUrl = (surahNumber, ayahNumber, reciterId = 'ar.alafasy') => {
-    // Bazı hafızlar (özellikle Alafasy) global ayet numarası kullanıyor olabilir.
-    // api.alquran.cloud/v1/ayah/1:1/ar.alafasy -> audio: .../1.mp3 (Global ID)
-
-    // Global Ayet Numarasını Hesapla
     let globalAyahNumber = 0;
-    for (let i = 1; i < surahNumber; i++) {
-        const surah = surahList.find(s => s.number === i);
+
+    for (let i = 1; i < surahNumber; i += 1) {
+        const surah = surahList.find((item) => item.number === i);
         if (surah) {
             globalAyahNumber += surah.ayahCount;
         }
     }
-    globalAyahNumber += ayahNumber;
 
-    // Alafasy ve diğerleri için global ID kullanımı
-    // Diğer hafızlar için format farklı olabilir, ancak şimdilik bu yapıyı deniyoruz.
-    // Eğer reciterId 'ar.alafasy' ise kesinlikle global ID kullanıyor.
-    
-    // Note: For other reciters, we might need to check if they support global ID or surah:ayah format
-    // But for now, we keep the existing logic.
+    globalAyahNumber += ayahNumber;
 
     return `https://cdn.islamic.network/quran/audio/128/${reciterId}/${globalAyahNumber}.mp3`;
 };
 
-// Hafız listesi
 export const getReciters = () => {
     return [
-        { id: 'ar.alafasy', name: 'Mishary Rashid Alafasy', country: '🇰🇼 Kuveyt' },
-        { id: 'ar.abdulbasitmurattal', name: 'Abdul Basit (Murattal)', country: '🇪🇬 Mısır' },
-        { id: 'ar.husary', name: 'Mahmoud Khalil Al-Husary', country: '🇪🇬 Mısır' },
-        { id: 'ar.minshawi', name: 'Mohamed Siddiq Al-Minshawi', country: '🇪🇬 Mısır' },
-        { id: 'ar.abdurrahmaansudais', name: 'Abdurrahman As-Sudais', country: '🇸🇦 S. Arabistan' },
-        { id: 'ar.shuraim', name: 'Saud Al-Shuraim', country: '🇸🇦 S. Arabistan' },
-        { id: 'ar.mahermuaiqly', name: 'Maher Al-Muaiqly', country: '🇸🇦 S. Arabistan' },
-        { id: 'ar.basfar', name: 'Abdullah Basfar', country: '🇸🇦 S. Arabistan' },
-        { id: 'ar.ahmedajamy', name: 'Ahmed Al-Ajmy', country: '🇸🇦 S. Arabistan' },
-        { id: 'ar.nasserqatami', name: 'Nasser Al-Qatami', country: '🇸🇦 S. Arabistan' },
-        { id: 'ar.yasseraldossari', name: 'Yasser Al-Dosari', country: '🇸🇦 S. Arabistan' }
+        { id: 'ar.alafasy', name: 'Mishary Rashid Alafasy', country: 'ğŸ‡°ğŸ‡¼ Kuveyt' },
+        { id: 'ar.abdulbasitmurattal', name: 'Abdul Basit (Murattal)', country: 'ğŸ‡ªğŸ‡¬ MÄ±sÄ±r' },
+        { id: 'ar.husary', name: 'Mahmoud Khalil Al-Husary', country: 'ğŸ‡ªğŸ‡¬ MÄ±sÄ±r' },
+        { id: 'ar.minshawi', name: 'Mohamed Siddiq Al-Minshawi', country: 'ğŸ‡ªğŸ‡¬ MÄ±sÄ±r' },
+        { id: 'ar.abdurrahmaansudais', name: 'Abdurrahman As-Sudais', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
+        { id: 'ar.shuraim', name: 'Saud Al-Shuraim', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
+        { id: 'ar.mahermuaiqly', name: 'Maher Al-Muaiqly', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
+        { id: 'ar.basfar', name: 'Abdullah Basfar', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
+        { id: 'ar.ahmedajamy', name: 'Ahmed Al-Ajmy', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
+        { id: 'ar.nasserqatami', name: 'Nasser Al-Qatami', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
+        { id: 'ar.yasseraldossari', name: 'Yasser Al-Dosari', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' }
     ];
 };

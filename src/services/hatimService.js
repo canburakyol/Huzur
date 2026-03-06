@@ -17,6 +17,13 @@ import { logger } from '../utils/logger';
 
 const COLLECTION_HATIMS = 'hatims';
 
+const generateJoinCode = (length = 6) => {
+  const charset = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const bytes = new Uint8Array(length);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes).map((b) => charset[b % charset.length]).join('');
+};
+
 export const hatimService = {
   /**
    * Yeni bir Grup Hatim oluştur
@@ -29,8 +36,8 @@ export const hatimService = {
     if (!userId) throw new Error('User not authenticated');
 
     try {
-      // Benzersiz ve kısa bir katılım kodu oluştur (6 haneli)
-      const joinCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+      // Cryptographically secure join code
+      const joinCode = generateJoinCode(6);
       
       const newHatimRef = doc(collection(db, COLLECTION_HATIMS));
       const hatimId = newHatimRef.id;

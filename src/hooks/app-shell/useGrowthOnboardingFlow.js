@@ -34,12 +34,17 @@ export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNot
     await i18n.changeLanguage(selectedLang);
   };
 
-  const handleGrowthLocationRequest = async () => {
-    await handleLocationConsent(true);
+  const handleGrowthLocationRequest = async (accepted = true) => {
+    await handleLocationConsent(accepted);
   };
 
-  const handleGrowthNotificationRequest = async () => {
-    await handleEnableNotifications();
+  const handleGrowthNotificationRequest = async (accepted = true) => {
+    if (accepted) {
+      await handleEnableNotifications();
+      return;
+    }
+
+    storageService.setBoolean(STORAGE_KEYS.HAS_SEEN_WELCOME, true);
   };
 
   const handleGrowthComplete = () => {
@@ -54,7 +59,7 @@ export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNot
       markFirstIbadahCompletedForReferral();
     }
 
-    setActiveTab('prayers');
+    setActiveTab('home');
   };
 
   return {

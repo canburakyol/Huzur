@@ -1,32 +1,34 @@
 import { useState } from 'react';
 import {
-  X, 
   Plus, 
   CheckCircle2,
   Circle,
   Trash2,
   Edit2,
-  Clock,
   Calendar,
   Heart,
   Sparkles,
-  Bell
+  ChevronRight,
+  Info
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useGamification } from '../hooks/useGamification';
-import './DuaTracker.css';
+import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
+import './DuaTracker.css';
+import './Navigation.css';
 
 // Dua kategorileri
 const DUA_CATEGORIES = [
-  { id: 'health', name: 'Sağlık', icon: '💚', color: '#22c55e' },
+  { id: 'health', name: 'Sağlık', icon: '💚', color: '#10b981' },
   { id: 'exam', name: 'Sınav', icon: '📚', color: '#3b82f6' },
   { id: 'work', name: 'İş', icon: '💼', color: '#f59e0b' },
-  { id: 'family', name: 'Aile', icon: '👨‍👩‍👧‍👦', color: '#ec4899' },
+  { id: 'family', name: 'Aile', icon: '👨‍👩‍👧', color: '#ec4899' },
   { id: 'marriage', name: 'Evlilik', icon: '💍', color: '#8b5cf6' },
-  { id: 'children', name: 'Çocuk', icon: '👶', color: '#f97316' },
-  { id: 'travel', name: 'Seyahat', icon: '✈️', color: '#14b8a6' },
+  { id: 'children', name: 'Çocuk', icon: '👶', color: '#14b8a6' },
+  { id: 'travel', name: 'Seyahat', icon: '✈️', color: '#f97316' },
   { id: 'forgiveness', name: 'Af', icon: '🙏', color: '#ef4444' },
-  { id: 'general', name: 'Genel', icon: '🤲', color: '#6b7280' }
+  { id: 'general', name: 'Genel', icon: '🤲', color: 'var(--nav-text-muted)' }
 ];
 
 // Önerilen dualar
@@ -35,16 +37,13 @@ const SUGGESTED_DUAS = [
   { text: 'Sınavımı başarıyla geçmeyi nasip et', category: 'exam' },
   { text: 'Hastalığımdan şifa ver', category: 'health' },
   { text: 'İşimde başarılı olmayı nasip et', category: 'work' },
-  { text: 'Ailemi koru ve bağışla', category: 'family' },
-  { text: 'Çocuklarımı hayırlı evlatlar eyle', category: 'children' },
-  { text: 'Günahlarımı affet', category: 'forgiveness' },
-  { text: 'Yolculuğumu kolaylaştır', category: 'travel' }
+  { text: 'Ailemi koru ve bağışla', category: 'family' }
 ];
 
-// Storage key
 const STORAGE_KEY = 'huzur_dua_tracker';
 
 export function DuaTracker({ onClose }) {
+  const { t } = useTranslation();
   const { addXP } = useGamification();
   const initialData = storageService.getItem(STORAGE_KEY, null);
   const [newDua, setNewDua] = useState('');
@@ -53,117 +52,78 @@ export function DuaTracker({ onClose }) {
   const [editingDua, setEditingDua] = useState(null);
   const [filter, setFilter] = useState('all');
   
-  // Load duas from storage - using initial state instead of useEffect setState
   const [data] = useState(() => {
     if (initialData) {
-      const parsed = initialData;
       return {
-        duas: parsed.duas || [],
-        stats: parsed.stats || { total: 0, completed: 0, streak: 0 }
+        duas: initialData.duas || [],
+        stats: initialData.stats || { total: 0, completed: 0, streak: 0 }
       };
     }
-    return {
-      duas: [],
-      stats: { total: 0, completed: 0, streak: 0 }
-    };
+    return { duas: [], stats: { total: 0, completed: 0, streak: 0 } };
   });
   
   const [duas, setDuas] = useState(data.duas);
   const [stats, setStats] = useState(data.stats);
 
-  // Save duas to storage
   const saveDuas = (newDuas, newStats) => {
-    const data = {
+    storageService.setItem(STORAGE_KEY, {
       duas: newDuas,
       stats: newStats,
       lastUpdated: new Date().toISOString()
-    };
-    storageService.setItem(STORAGE_KEY, data);
+    });
   };
 
-  // Add new dua
   const addDua = () => {
     if (!newDua.trim()) return;
-
     const dua = {
       id: Date.now().toString(),
       text: newDua.trim(),
       category: selectedCategory,
       completed: false,
       completedAt: null,
-      createdAt: new Date().toISOString(),
-      reminder: null
+      createdAt: new Date().toISOString()
     };
-
     const newDuas = [dua, ...duas];
-    const newStats = {
-      ...stats,
-      total: stats.total + 1
-    };
-
+    const newStats = { ...stats, total: newDuas.length };
     setDuas(newDuas);
     setStats(newStats);
     saveDuas(newDuas, newStats);
-    
     setNewDua('');
     setShowAddForm(false);
     addXP(5);
   };
 
-  // Toggle dua completion
   const toggleDua = (id) => {
     const newDuas = duas.map(dua => {
       if (dua.id === id) {
         const completed = !dua.completed;
-        return {
-          ...dua,
-          completed,
-          completedAt: completed ? new Date().toISOString() : null
-        };
+        return { ...dua, completed, completedAt: completed ? new Date().toISOString() : null };
       }
       return dua;
     });
-
     const completedCount = newDuas.filter(d => d.completed).length;
-    const newStats = {
-      ...stats,
-      completed: completedCount
-    };
-
+    const newStats = { ...stats, completed: completedCount };
     setDuas(newDuas);
     setStats(newStats);
     saveDuas(newDuas, newStats);
-
-    if (completedCount > stats.completed) {
-      addXP(10);
-    }
+    if (completedCount > stats.completed) addXP(10);
   };
 
-  // Delete dua
   const deleteDua = (id) => {
     const newDuas = duas.filter(d => d.id !== id);
-    const newStats = {
-      ...stats,
-      total: newDuas.length,
-      completed: newDuas.filter(d => d.completed).length
-    };
-
+    const newStats = { ...stats, total: newDuas.length, completed: newDuas.filter(d => d.completed).length };
     setDuas(newDuas);
     setStats(newStats);
     saveDuas(newDuas, newStats);
   };
 
-  // Edit dua
   const updateDua = (id, newText, newCategory) => {
-    const newDuas = duas.map(dua => 
-      dua.id === id ? { ...dua, text: newText, category: newCategory } : dua
-    );
+    const newDuas = duas.map(dua => dua.id === id ? { ...dua, text: newText, category: newCategory } : dua);
     setDuas(newDuas);
     saveDuas(newDuas, stats);
     setEditingDua(null);
   };
 
-  // Filter duas
   const filteredDuas = duas.filter(dua => {
     if (filter === 'all') return true;
     if (filter === 'completed') return dua.completed;
@@ -171,262 +131,187 @@ export function DuaTracker({ onClose }) {
     return dua.category === filter;
   });
 
-  // Get category info
-  const getCategoryInfo = (categoryId) => {
-    return DUA_CATEGORIES.find(c => c.id === categoryId) || DUA_CATEGORIES[8];
-  };
+  const getCategoryInfo = (categoryId) => DUA_CATEGORIES.find(c => c.id === categoryId) || DUA_CATEGORIES[8];
 
   return (
-    <div className="dua-tracker-container">
+    <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
       {/* Header */}
-      <div className="dua-header">
-        <button className="back-btn" onClick={onClose}>
-          <X size={24} />
-        </button>
-        <div className="header-content">
-          <h1>Dua Takipçisi</h1>
-          <p>Dualarınızı kaydedin ve takip edin</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+        <IslamicBackButton onClick={onClose} size="medium" />
+        <div>
+            <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                {t('dua.tracker_title', 'Dua Takipçisi')}
+            </h2>
+            <p className="settings-desc">{t('dua.tracker_subtitle', 'Dualarınızı kaydedin ve takip edin')}</p>
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="dua-stats">
-        <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(34, 197, 94, 0.2)', color: '#22c55e' }}>
-            <CheckCircle2 size={20} />
-          </div>
-          <div className="stat-info">
-            <span className="stat-value">{stats.completed}</span>
-            <span className="stat-label">Kabul</span>
-          </div>
+      {/* Stats Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '32px' }}>
+        <div className="settings-card" style={{ flexDirection: 'column', padding: '16px', textAlign: 'center', gap: '8px', background: 'rgba(16, 185, 129, 0.05)', border: '1px solid rgba(16, 185, 129, 0.1)' }}>
+            <CheckCircle2 size={24} color="#10b981" />
+            <div style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.completed}</div>
+            <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>KABUL</div>
         </div>
-        
-        <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(245, 158, 11, 0.2)', color: '#f59e0b' }}>
-            <Sparkles size={20} />
-          </div>
-          <div className="stat-info">
-            <span className="stat-value">{stats.total}</span>
-            <span className="stat-label">Toplam</span>
-          </div>
+        <div className="settings-card" style={{ flexDirection: 'column', padding: '16px', textAlign: 'center', gap: '8px', background: 'rgba(245, 158, 11, 0.05)', border: '1px solid rgba(245, 158, 11, 0.1)' }}>
+            <Sparkles size={24} color="#f59e0b" />
+            <div style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.total}</div>
+            <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>TOPLAM</div>
         </div>
-        
-        <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(236, 72, 153, 0.2)', color: '#ec4899' }}>
-            <Heart size={20} />
-          </div>
-          <div className="stat-info">
-            <span className="stat-value">{stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0}%</span>
-            <span className="stat-label">Oran</span>
-          </div>
+        <div className="settings-card" style={{ flexDirection: 'column', padding: '16px', textAlign: 'center', gap: '8px', background: 'rgba(236, 72, 153, 0.05)', border: '1px solid rgba(236, 72, 153, 0.1)' }}>
+            <Heart size={24} color="#ec4899" />
+            <div style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0}%</div>
+            <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>ORAN</div>
         </div>
       </div>
 
       {/* Filter Tabs */}
-      <div className="filter-tabs">
-        <button 
-          className={`filter-tab ${filter === 'all' ? 'active' : ''}`}
-          onClick={() => setFilter('all')}
-        >
-          Tümü
-        </button>
-        <button 
-          className={`filter-tab ${filter === 'pending' ? 'active' : ''}`}
-          onClick={() => setFilter('pending')}
-        >
-          Bekleyen
-        </button>
-        <button 
-          className={`filter-tab ${filter === 'completed' ? 'active' : ''}`}
-          onClick={() => setFilter('completed')}
-        >
-          Kabul
-        </button>
+      <div className="velocity-target-grid" style={{ marginBottom: '24px' }}>
+        <button className={`velocity-target-btn ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>Tümü</button>
+        <button className={`velocity-target-btn ${filter === 'pending' ? 'active' : ''}`} onClick={() => setFilter('pending')}>Bekleyen</button>
+        <button className={`velocity-target-btn ${filter === 'completed' ? 'active' : ''}`} onClick={() => setFilter('completed')}>Kabul</button>
       </div>
 
-      {/* Add Dua Button */}
-      <button 
-        className="add-dua-btn"
-        onClick={() => setShowAddForm(!showAddForm)}
-      >
-        <Plus size={20} />
-        Yeni Dua Ekle
-      </button>
+      {/* Add Dua Section */}
+      <div className="settings-group">
+        <button 
+            className="settings-card" 
+            style={{ width: '100%', justifyContent: 'center', gap: '12px', border: '2px dashed var(--nav-border)', background: 'transparent', padding: '20px' }}
+            onClick={() => setShowAddForm(!showAddForm)}
+        >
+            <Plus size={20} color="var(--nav-accent)" />
+            <span style={{ fontWeight: '800', color: 'var(--nav-text)' }}>Yeni Dua Ekle</span>
+        </button>
 
-      {/* Add Dua Form */}
-      {showAddForm && (
-        <div className="add-dua-form">
-          <textarea
-            value={newDua}
-            onChange={(e) => setNewDua(e.target.value)}
-            placeholder="Duanızı yazın..."
-            className="dua-input"
-            rows={3}
-          />
-          
-          <div className="category-selector">
-            <span>Kategori:</span>
-            <div className="category-options">
-              {DUA_CATEGORIES.map(cat => (
-                <button
-                  key={cat.id}
-                  className={`category-option ${selectedCategory === cat.id ? 'selected' : ''}`}
-                  style={{ 
-                    backgroundColor: selectedCategory === cat.id ? cat.color : 'transparent',
-                    borderColor: cat.color
-                  }}
-                  onClick={() => setSelectedCategory(cat.id)}
+        {showAddForm && (
+            <div className="settings-card reveal-stagger" style={{ flexDirection: 'column', gap: '20px', padding: '24px', marginTop: '16px', background: 'var(--nav-hover)' }}>
+                <textarea
+                    value={newDua}
+                    onChange={(e) => setNewDua(e.target.value)}
+                    placeholder="Duanızı yazın..."
+                    className="dua-modern-textarea"
+                />
+                
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {DUA_CATEGORIES.map(cat => (
+                        <button
+                            key={cat.id}
+                            className={`category-pill ${selectedCategory === cat.id ? 'active' : ''}`}
+                            onClick={() => setSelectedCategory(cat.id)}
+                            style={{ '--cat-color': cat.color }}
+                        >
+                            {cat.icon} {cat.name}
+                        </button>
+                    ))}
+                </div>
+
+                <div className="suggested-container">
+                    <p style={{ margin: '0 0 12px', fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)' }}>ÖNERİLENLER</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {SUGGESTED_DUAS.map((suggested, index) => (
+                            <button
+                                key={index}
+                                className="suggested-pill"
+                                onClick={() => { setNewDua(suggested.text); setSelectedCategory(suggested.category); }}
+                            >
+                                {suggested.text}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                <button 
+                    className="velocity-action-btn"
+                    onClick={addDua}
+                    disabled={!newDua.trim()}
+                    style={{ width: '100%' }}
                 >
-                  {cat.icon} {cat.name}
+                    Kaydet
                 </button>
-              ))}
             </div>
-          </div>
-
-          <div className="suggested-duas">
-            <span>Önerilen Dualar:</span>
-            <div className="suggested-list">
-              {SUGGESTED_DUAS.map((suggested, index) => (
-                <button
-                  key={index}
-                  className="suggested-item"
-                  onClick={() => {
-                    setNewDua(suggested.text);
-                    setSelectedCategory(suggested.category);
-                  }}
-                >
-                  {suggested.text}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <button 
-            className="save-dua-btn"
-            onClick={addDua}
-            disabled={!newDua.trim()}
-          >
-            Kaydet
-          </button>
-        </div>
-      )}
-
-      {/* Dua List */}
-      <div className="dua-list">
-        {filteredDuas.length === 0 ? (
-          <div className="empty-state">
-            <Heart size={48} style={{ opacity: 0.3, marginBottom: '16px' }} />
-            <p>Henüz dua eklenmemiş</p>
-            <p className="empty-hint">Yeni bir dua ekleyerek başlayın</p>
-          </div>
-        ) : (
-          filteredDuas.map(dua => {
-            const category = getCategoryInfo(dua.category);
-            
-            return (
-              <div 
-                key={dua.id}
-                className={`dua-card ${dua.completed ? 'completed' : ''}`}
-              >
-                {editingDua === dua.id ? (
-                  <div className="edit-form">
-                    <textarea
-                      defaultValue={dua.text}
-                      id={`edit-text-${dua.id}`}
-                      className="edit-input"
-                      rows={2}
-                    />
-                    <select 
-                      defaultValue={dua.category}
-                      id={`edit-cat-${dua.id}`}
-                      className="edit-select"
-                    >
-                      {DUA_CATEGORIES.map(cat => (
-                        <option key={cat.id} value={cat.id}>
-                          {cat.icon} {cat.name}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="edit-actions">
-                      <button 
-                        className="save-btn"
-                        onClick={() => {
-                          const text = document.getElementById(`edit-text-${dua.id}`).value;
-                          const cat = document.getElementById(`edit-cat-${dua.id}`).value;
-                          updateDua(dua.id, text, cat);
-                        }}
-                      >
-                        Kaydet
-                      </button>
-                      <button 
-                        className="cancel-btn"
-                        onClick={() => setEditingDua(null)}
-                      >
-                        İptal
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <div className="dua-content">
-                      <button 
-                        className={`completion-btn ${dua.completed ? 'completed' : ''}`}
-                        onClick={() => toggleDua(dua.id)}
-                      >
-                        {dua.completed ? <CheckCircle2 size={24} /> : <Circle size={24} />}
-                      </button>
-                      
-                      <div className="dua-info">
-                        <p className="dua-text">{dua.text}</p>
-                        <div className="dua-meta">
-                          <span 
-                            className="dua-category"
-                            style={{ color: category.color }}
-                          >
-                            {category.icon} {category.name}
-                          </span>
-                          {dua.completed && dua.completedAt && (
-                            <span className="completed-date">
-                              <Calendar size={12} />
-                              {new Date(dua.completedAt).toLocaleDateString('tr-TR')}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="dua-actions">
-                      <button 
-                        className="action-btn"
-                        onClick={() => setEditingDua(dua.id)}
-                      >
-                        <Edit2 size={16} />
-                      </button>
-                      <button 
-                        className="action-btn delete"
-                        onClick={() => deleteDua(dua.id)}
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-            );
-          })
         )}
       </div>
 
-      {/* Info Section */}
-      <div className="dua-info-section">
-        <h3>💡 Dua Hakkında</h3>
-        <ul>
-          <li>Dua, kulun Rabbi ile olan iletişimidir.</li>
-          <li>Allah duaları işitir ve karşılık verir.</li>
-          <li>Dualarınızı düzenli olarak tekrarlayın.</li>
-          <li>Kabul olan dualarınızı işaretleyin.</li>
-          <li>Dualarınızı başkalarıyla paylaşmayın.</li>
-        </ul>
+      {/* Dua List */}
+      <div className="settings-group" style={{ marginTop: '32px' }}>
+        <div className="settings-group-title">Dua Listesi</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {filteredDuas.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '48px 24px', opacity: 0.5 }}>
+                    <Heart size={48} style={{ marginBottom: '16px' }} />
+                    <p style={{ fontWeight: '700', margin: 0 }}>Henüz dua bulunmuyor</p>
+                </div>
+            ) : (
+                filteredDuas.map((dua) => {
+                    const category = getCategoryInfo(dua.category);
+                    const isEditing = editingDua === dua.id;
+
+                    return (
+                        <div key={dua.id} className={`settings-card ${dua.completed ? 'completed-dua' : ''}`} style={{ flexDirection: 'column', padding: '20px', gap: '16px' }}>
+                            {isEditing ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
+                                    <textarea 
+                                        defaultValue={dua.text} 
+                                        id={`edit-text-${dua.id}`}
+                                        className="dua-modern-textarea"
+                                    />
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        <button className="velocity-action-btn" style={{ flex: 1 }} onClick={() => {
+                                            const text = document.getElementById(`edit-text-${dua.id}`).value;
+                                            updateDua(dua.id, text, dua.category);
+                                        }}>Kaydet</button>
+                                        <button className="velocity-target-btn" style={{ flex: 1 }} onClick={() => setEditingDua(null)}>İptal</button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', width: '100%' }}>
+                                        <button 
+                                            className={`dua-check-btn ${dua.completed ? 'active' : ''}`}
+                                            onClick={() => toggleDua(dua.id)}
+                                        >
+                                            {dua.completed ? <CheckCircle2 size={24} /> : <Circle size={24} />}
+                                        </button>
+                                        <div style={{ flex: 1 }}>
+                                            <p style={{ margin: 0, fontWeight: '700', color: 'var(--nav-text)', fontSize: '1rem', textDecoration: dua.completed ? 'line-through' : 'none', opacity: dua.completed ? 0.6 : 1 }}>
+                                                {dua.text}
+                                            </p>
+                                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginTop: '8px' }}>
+                                                <span style={{ fontSize: '0.7rem', fontWeight: '800', color: category.color, background: `${category.color}15`, padding: '4px 8px', borderRadius: '6px' }}>
+                                                    {category.icon} {category.name}
+                                                </span>
+                                                {dua.completed && dua.completedAt && (
+                                                    <span style={{ fontSize: '0.7rem', fontWeight: '600', color: 'var(--nav-text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                                        <Calendar size={10} /> {new Date(dua.completedAt).toLocaleDateString('tr-TR')}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div style={{ display: 'flex', gap: '8px' }}>
+                                            <button className="icon-btn-small" onClick={() => setEditingDua(dua.id)}><Edit2 size={14} /></button>
+                                            <button className="icon-btn-small delete" onClick={() => deleteDua(dua.id)}><Trash2 size={14} /></button>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    );
+                })
+            )}
+        </div>
+      </div>
+
+      {/* Tips */}
+      <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+            <Info size={18} color="var(--nav-accent)" />
+            <div style={{ flex: 1 }}>
+                <p style={{ margin: '0 0 8px', fontSize: '0.85rem', fontWeight: '800', color: 'var(--nav-text)' }}>Dua Adabı</p>
+                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                    Dualarınızı ihlasla, düzenli olarak tekrarlayın ve her türlü hayırlı isteğiniz için Rabbimize sığının.
+                </p>
+            </div>
+        </div>
       </div>
     </div>
   );

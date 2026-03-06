@@ -7,14 +7,11 @@
 import { PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import i18n from '../i18n';
 import { storageService } from './storageService';
 import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 import {
-    createNotificationChannels as ensureNotificationChannels,
-    clearPrayerNotificationsInRange,
-    NOTIFICATION_CHANNELS
+    createNotificationChannels as ensureNotificationChannels
 } from './notificationPlatformService';
 
 // FCM Token storage key
@@ -22,38 +19,7 @@ const FCM_TOKEN_KEY = 'fcm_token';
 
 const SUPPORTED_PRAYER_KEYS = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 
-const getLocalizedPrayerName = (key) => {
-    const map = {
-        Fajr: i18n.t('prayer.fajr', { defaultValue: 'Fajr' }),
-        Dhuhr: i18n.t('prayer.dhuhr', { defaultValue: 'Dhuhr' }),
-        Asr: i18n.t('prayer.asr', { defaultValue: 'Asr' }),
-        Maghrib: i18n.t('prayer.maghrib', { defaultValue: 'Maghrib' }),
-        Isha: i18n.t('prayer.isha', { defaultValue: 'Isha' })
-    };
 
-    return map[key] || key;
-};
-
-const getNotificationText = (name, preAlertMinutes) => ({
-    mainTitle: i18n.t('notifications.prayer.mainTitle', {
-        prayer: name,
-        defaultValue: `🕌 ${name} Prayer Time`
-    }),
-    mainBody: i18n.t('notifications.prayer.mainBody', {
-        prayer: name,
-        defaultValue: `It's time for ${name} prayer.`
-    }),
-    preTitle: i18n.t('notifications.prayer.preTitle', {
-        prayer: name,
-        minutes: preAlertMinutes,
-        defaultValue: `⏰ ${name} in ${preAlertMinutes} min`
-    }),
-    preBody: i18n.t('notifications.prayer.preBody', {
-        prayer: name,
-        minutes: preAlertMinutes,
-        defaultValue: `${preAlertMinutes} minutes left until ${name} prayer.`
-    })
-});
 
 /**
  * FCM Service Object
@@ -186,100 +152,12 @@ export const FCMService = {
 };
 
 /**
- * Schedule prayer notifications using exact alarms
- * This function schedules local notifications with exact timing
+ * Schedule prayer notifications
+ * Redirection to centralized smartNotificationService
  */
-export const schedulePrayerAlarms = async (prayerTimes, settings = {}) => {
-    if (!Capacitor.isNativePlatform()) {
-        logger.log('[Alarm] Web platform - using fallback');
-        return;
-    }
-
-    const { 
-        preAlertMinutes = 15, 
-        enablePreAlert = true,
-        enableMainAlert = true 
-    } = settings;
-    
-    const notifications = [];
-    let idCounter = 3000; // Different range from other notifications
-
-    // Cancel existing scheduled notifications first
-    await clearPrayerNotificationsInRange();
-
-    Object.entries(prayerTimes).forEach(([key, timeStr]) => {
-        if (!timeStr || !SUPPORTED_PRAYER_KEYS.includes(key)) return;
-
-        const name = getLocalizedPrayerName(key);
-        const [hours, minutes] = timeStr.split(':').map(Number);
-        const texts = getNotificationText(name, preAlertMinutes);
-        
-        // Schedule for today and tomorrow
-        for (let dayOffset = 0; dayOffset <= 1; dayOffset++) {
-            const prayerDate = new Date();
-            prayerDate.setDate(prayerDate.getDate() + dayOffset);
-            prayerDate.setHours(hours, minutes, 0, 0);
-
-            // Skip if time has passed
-            if (prayerDate <= new Date()) continue;
-
-            // 1. Main Prayer Time Notification
-            if (enableMainAlert) {
-                notifications.push({
-                    id: idCounter++,
-                    title: texts.mainTitle,
-                    body: texts.mainBody,
-                    schedule: { 
-                        at: prayerDate,
-                        allowWhileIdle: true // Critical for Doze Mode
-                    },
-                    sound: 'default',
-                    channelId: NOTIFICATION_CHANNELS.PRAYER.id,
-                    smallIcon: 'ic_stat_icon',
-                    largeIcon: 'ic_launcher'
-                });
-            }
-
-            // 2. Pre-alert notification
-            if (enablePreAlert && preAlertMinutes > 0) {
-                const preAlertDate = new Date(prayerDate.getTime() - (preAlertMinutes * 60000));
-                
-                if (preAlertDate > new Date()) {
-                    notifications.push({
-                        id: idCounter++,
-                        title: texts.preTitle,
-                        body: texts.preBody,
-                        schedule: { 
-                            at: preAlertDate,
-                            allowWhileIdle: true
-                        },
-                        sound: 'default',
-                        channelId: NOTIFICATION_CHANNELS.PRAYER_REMINDER.id,
-                        smallIcon: 'ic_stat_icon'
-                    });
-                }
-            }
-        }
-    });
-
-    if (notifications.length === 0) {
-        logger.log('[Alarm] No notifications to schedule');
-        return;
-    }
-
-    try {
-        await LocalNotifications.schedule({ notifications });
-        logger.log(`[Alarm] Scheduled ${notifications.length} prayer notifications`);
-        
-        // Store scheduling info
-        storageService.setItem(STORAGE_KEYS.LAST_PRAYER_SCHEDULE, {
-            timestamp: new Date().toISOString(),
-            count: notifications.length,
-            settings: { preAlertMinutes, enablePreAlert, enableMainAlert }
-        });
-    } catch (error) {
-        logger.error('[Alarm] Failed to schedule notifications:', error);
-    }
+export const schedulePrayerAlarms = async (prayerTimes) => {
+    const { schedulePrayerNotifications } = await import('./smartNotificationService');
+    return schedulePrayerNotifications(prayerTimes);
 };
 
 /**

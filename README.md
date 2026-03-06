@@ -19,7 +19,7 @@ Modern, kullanıcı dostu İslami mobil uygulama. Namaz vakitleri, Kuran-ı Keri
 
 ### Gereksinimler
 
-- Node.js 18+ 
+- Node.js 22 LTS (önerilen: 22.x)
 - npm veya yarn
 - Android Studio (Android build için)
 - Java JDK 11+

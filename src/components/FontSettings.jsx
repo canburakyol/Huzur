@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Type, Minus, Plus, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Type, Minus, Plus, Check, RotateCcw, AlignLeft } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
 
@@ -22,18 +23,18 @@ const DEFAULT_SETTINGS = {
 };
 
 const FontSettings = ({ onClose }) => {
+  const { t } = useTranslation();
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    // Kayıtlı ayarları yükle
     const savedSettings = storageService.getString(STORAGE_KEY, '');
     if (savedSettings) {
       try {
         // eslint-disable-next-line
         setSettings(JSON.parse(savedSettings));
-      } catch (e) {
-        console.warn('Font settings parse error:', e);
+      } catch {
+        // Hata sessizce yönetiliyor
       }
     }
   }, []);
@@ -42,11 +43,8 @@ const FontSettings = ({ onClose }) => {
     const newSettings = { ...settings, [key]: value };
     setSettings(newSettings);
     storageService.setItem(STORAGE_KEY, newSettings);
-    
-    // CSS değişkenlerini güncelle
     applyFontSettings(newSettings);
     
-    // Kayıt göstergesi
     setSaved(true);
     setTimeout(() => setSaved(false), 1500);
   };
@@ -58,7 +56,6 @@ const FontSettings = ({ onClose }) => {
     document.documentElement.style.setProperty('--quran-line-height', s.lineHeight);
   };
 
-  // Sayfa yüklendiğinde ayarları uygula
   useEffect(() => {
     applyFontSettings(settings);
   }, [settings]);
@@ -77,441 +74,259 @@ const FontSettings = ({ onClose }) => {
   };
 
   return (
-    <div className="font-settings-container">
+    <div className="settings-container reveal-stagger" style={{ paddingBottom: '120px' }}>
       {/* Header */}
-      <div className="font-settings-header">
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
         <IslamicBackButton onClick={onClose} size="medium" />
-        <div className="header-content">
-          <h1>Yazı Tipi Ayarları</h1>
-          <p className="subtitle">Arapça ve Türkçe metin görünümünü özelleştirin</p>
+        <div style={{ flex: 1 }}>
+          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+            {t('fontSettings.title', 'Yazı Ayarları')}
+          </h2>
+          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+            {t('fontSettings.subtitle', 'Metin görünümünü kişiselleştir')}
+          </p>
         </div>
         {saved && (
-          <div className="save-indicator animate-fadeIn">
-            <Check size={16} />
-            Kaydedildi
+          <div className="save-indicator-badge">
+            <Check size={14} />
+            {t('common.saved', 'Kaydedildi')}
           </div>
         )}
       </div>
 
       {/* Preview Card */}
-      <div className="glass-card preview-card">
-        <h3>Önizleme</h3>
-        <div 
-          className="preview-arabic"
-          style={{ 
-            fontFamily: `var(--arabic-font-family)`,
-            fontSize: `${settings.arabicFontSize}px`,
-            lineHeight: settings.lineHeight
-          }}
-        >
-          بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ
+      <div className="settings-card reveal-stagger" style={{ 
+          padding: '24px', marginBottom: '32px', flexDirection: 'column', alignItems: 'stretch',
+          background: 'var(--nav-hover)', border: '1px solid var(--nav-border)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+            <div style={{ width: '4px', height: '16px', background: 'var(--nav-accent)', borderRadius: '2px' }}></div>
+            <h3 style={{ margin: 0, fontSize: '0.9rem', fontWeight: '900', color: 'var(--nav-text)', textTransform: 'uppercase' }}>
+                {t('fontSettings.preview', 'Önizleme')}
+            </h3>
         </div>
-        <div 
-          className="preview-turkish"
-          style={{ 
-            fontSize: `${settings.turkishFontSize}px`,
-            lineHeight: settings.lineHeight 
-          }}
-        >
-          Rahman ve Rahim olan Allah'ın adıyla
-        </div>
-      </div>
-
-      {/* Arabic Font Size */}
-      <div className="glass-card setting-card">
-        <div className="setting-header">
-          <Type size={20} />
-          <div>
-            <h4>Arapça Yazı Boyutu</h4>
-            <span className="setting-value">{settings.arabicFontSize}px</span>
-          </div>
-        </div>
-        <div className="size-controls">
-          <button 
-            className="size-btn" 
-            onClick={() => adjustSize('arabicFontSize', -1)}
-            disabled={settings.arabicFontSize <= 16}
-          >
-            <Minus size={20} />
-          </button>
-          <div className="size-slider">
-            <input
-              type="range"
-              min="16"
-              max="40"
-              step="2"
-              value={settings.arabicFontSize}
-              onChange={(e) => updateSetting('arabicFontSize', parseInt(e.target.value))}
-            />
-          </div>
-          <button 
-            className="size-btn" 
-            onClick={() => adjustSize('arabicFontSize', 1)}
-            disabled={settings.arabicFontSize >= 40}
-          >
-            <Plus size={20} />
-          </button>
-        </div>
-      </div>
-
-      {/* Turkish Font Size */}
-      <div className="glass-card setting-card">
-        <div className="setting-header">
-          <Type size={20} />
-          <div>
-            <h4>Türkçe Yazı Boyutu</h4>
-            <span className="setting-value">{settings.turkishFontSize}px</span>
-          </div>
-        </div>
-        <div className="size-controls">
-          <button 
-            className="size-btn" 
-            onClick={() => adjustSize('turkishFontSize', -1)}
-            disabled={settings.turkishFontSize <= 12}
-          >
-            <Minus size={20} />
-          </button>
-          <div className="size-slider">
-            <input
-              type="range"
-              min="12"
-              max="24"
-              step="2"
-              value={settings.turkishFontSize}
-              onChange={(e) => updateSetting('turkishFontSize', parseInt(e.target.value))}
-            />
-          </div>
-          <button 
-            className="size-btn" 
-            onClick={() => adjustSize('turkishFontSize', 1)}
-            disabled={settings.turkishFontSize >= 24}
-          >
-            <Plus size={20} />
-          </button>
-        </div>
-      </div>
-
-      {/* Line Height */}
-      <div className="glass-card setting-card">
-        <div className="setting-header">
-          <span style={{ fontSize: '20px' }}>↕️</span>
-          <div>
-            <h4>Satır Aralığı</h4>
-            <span className="setting-value">{settings.lineHeight.toFixed(1)}</span>
-          </div>
-        </div>
-        <div className="size-controls">
-          <button 
-            className="size-btn" 
-            onClick={() => adjustSize('lineHeight', -1)}
-            disabled={settings.lineHeight <= 1.4}
-          >
-            <Minus size={20} />
-          </button>
-          <div className="size-slider">
-            <input
-              type="range"
-              min="1.4"
-              max="2.5"
-              step="0.1"
-              value={settings.lineHeight}
-              onChange={(e) => updateSetting('lineHeight', parseFloat(e.target.value))}
-            />
-          </div>
-          <button 
-            className="size-btn" 
-            onClick={() => adjustSize('lineHeight', 1)}
-            disabled={settings.lineHeight >= 2.5}
-          >
-            <Plus size={20} />
-          </button>
-        </div>
-      </div>
-
-      {/* Arabic Font Family */}
-      <div className="glass-card font-family-card">
-        <h4>Arapça Yazı Tipi</h4>
-        <div className="font-options">
-          {ARABIC_FONTS.map((font) => (
-            <div
-              key={font.id}
-              className={`font-option ${settings.arabicFontFamily === font.id ? 'selected' : ''}`}
-              onClick={() => updateSetting('arabicFontFamily', font.id)}
-            >
-              <div 
-                className="font-preview"
-                style={{ fontFamily: `'${font.id}', serif` }}
-              >
-                {font.preview}
-              </div>
-              <div className="font-info">
-                <span className="font-name">{font.name}</span>
-                <span className="font-desc">{font.description}</span>
-              </div>
-              {settings.arabicFontFamily === font.id && (
-                <div className="selected-indicator">
-                  <Check size={18} />
-                </div>
-              )}
+        
+        <div style={{ 
+            background: 'var(--nav-bg)', padding: '24px', borderRadius: '16px',
+            border: '1px solid var(--nav-border)', textAlign: 'center'
+        }}>
+            <div style={{ 
+                fontFamily: `'${settings.arabicFontFamily}', serif`,
+                fontSize: `${settings.arabicFontSize}px`,
+                lineHeight: settings.lineHeight,
+                color: 'var(--nav-text)',
+                marginBottom: '16px',
+                direction: 'rtl'
+            }}>
+                بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ
             </div>
-          ))}
+            <div style={{ 
+                fontSize: `${settings.turkishFontSize}px`,
+                lineHeight: settings.lineHeight,
+                color: 'var(--nav-text-muted)',
+                fontWeight: '600'
+            }}>
+                Rahman ve Rahim olan Allah'ın adıyla
+            </div>
         </div>
       </div>
 
-      {/* Reset Button */}
-      <button 
-        className="reset-btn"
-        onClick={() => {
-          setSettings(DEFAULT_SETTINGS);
-          storageService.setItem(STORAGE_KEY, DEFAULT_SETTINGS);
-          applyFontSettings(DEFAULT_SETTINGS);
-          setSaved(true);
-          setTimeout(() => setSaved(false), 1500);
-        }}
-      >
-        Varsayılana Sıfırla
-      </button>
+      {/* Font Selection Section */}
+      <div className="reveal-stagger" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        
+        {/* Arabic Font Family */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '0 8px' }}>
+                <AlignLeft size={18} color="var(--nav-accent)" />
+                <span style={{ fontSize: '0.9rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                    {t('fontSettings.arabicFamily', 'Arapça Yazı Tipi')}
+                </span>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
+                {ARABIC_FONTS.map((font) => (
+                    <button
+                        key={font.id}
+                        onClick={() => updateSetting('arabicFontFamily', font.id)}
+                        className="settings-card"
+                        style={{
+                            padding: '16px', flexDirection: 'column', gap: '8px',
+                            background: settings.arabicFontFamily === font.id ? 'rgba(79, 70, 229, 0.1)' : 'var(--nav-hover)',
+                            border: settings.arabicFontFamily === font.id ? '2px solid var(--nav-accent)' : '1px solid var(--nav-border)',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                        }}
+                    >
+                        <div style={{ 
+                            fontSize: '1.5rem', color: 'var(--nav-text)', 
+                            fontFamily: `'${font.id}', serif`, direction: 'rtl',
+                            marginBottom: '4px'
+                        }}>بِسْمِ اللهِ</div>
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{ fontSize: '0.85rem', fontWeight: '900', color: 'var(--nav-text)' }}>{font.name}</div>
+                        </div>
+                        {settings.arabicFontFamily === font.id && (
+                            <div className="settings-selected-dot" style={{ top: '8px', right: '8px' }}>
+                                <Check size={12} color="white" />
+                            </div>
+                        )}
+                    </button>
+                ))}
+            </div>
+        </div>
+
+        {/* Size Controls */}
+        <div className="settings-card" style={{ padding: '24px', flexDirection: 'column', alignItems: 'stretch', gap: '24px' }}>
+            
+            {/* Arabic Size */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Type size={18} color="var(--nav-accent)" />
+                        <span style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                            {t('fontSettings.arabicSize', 'Arapça Boyutu')}
+                        </span>
+                    </div>
+                    <span style={{ fontSize: '1rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{settings.arabicFontSize}px</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <button className="settings-icon-box" onClick={() => adjustSize('arabicFontSize', -1)} disabled={settings.arabicFontSize <= 16}>
+                        <Minus size={16} />
+                    </button>
+                    <input type="range" min="16" max="40" value={settings.arabicFontSize} 
+                           onChange={(e) => updateSetting('arabicFontSize', parseInt(e.target.value))}
+                           style={{ flex: 1, accentColor: 'var(--nav-accent)' }} />
+                    <button className="settings-icon-box" onClick={() => adjustSize('arabicFontSize', 1)} disabled={settings.arabicFontSize >= 40}>
+                        <Plus size={16} />
+                    </button>
+                </div>
+            </div>
+
+            <div style={{ height: '1px', background: 'var(--nav-border)', opacity: 0.5 }}></div>
+
+            {/* Turkish Size */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <Type size={18} color="var(--nav-accent)" />
+                        <span style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                            {t('fontSettings.turkishSize', 'Türkçe Boyutu')}
+                        </span>
+                    </div>
+                    <span style={{ fontSize: '1rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{settings.turkishFontSize}px</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <button className="settings-icon-box" onClick={() => adjustSize('turkishFontSize', -1)} disabled={settings.turkishFontSize <= 12}>
+                        <Minus size={16} />
+                    </button>
+                    <input type="range" min="12" max="24" value={settings.turkishFontSize} 
+                           onChange={(e) => updateSetting('turkishFontSize', parseInt(e.target.value))}
+                           style={{ flex: 1, accentColor: 'var(--nav-accent)' }} />
+                    <button className="settings-icon-box" onClick={() => adjustSize('turkishFontSize', 1)} disabled={settings.turkishFontSize >= 24}>
+                        <Plus size={16} />
+                    </button>
+                </div>
+            </div>
+
+            <div style={{ height: '1px', background: 'var(--nav-border)', opacity: 0.5 }}></div>
+
+            {/* Line Height */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <AlignLeft size={18} color="var(--nav-accent)" />
+                        <span style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                            {t('fontSettings.lineHeight', 'Satır Aralığı')}
+                        </span>
+                    </div>
+                    <span style={{ fontSize: '1rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{settings.lineHeight.toFixed(1)}</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <button className="settings-icon-box" onClick={() => adjustSize('lineHeight', -1)} disabled={settings.lineHeight <= 1.4}>
+                        <Minus size={16} />
+                    </button>
+                    <input type="range" min="1.4" max="2.5" step="0.1" value={settings.lineHeight} 
+                           onChange={(e) => updateSetting('lineHeight', parseFloat(e.target.value))}
+                           style={{ flex: 1, accentColor: 'var(--nav-accent)' }} />
+                    <button className="settings-icon-box" onClick={() => adjustSize('lineHeight', 1)} disabled={settings.lineHeight >= 2.5}>
+                        <Plus size={16} />
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {/* Reset Button */}
+        <button 
+            className="settings-card"
+            onClick={() => {
+                setSettings(DEFAULT_SETTINGS);
+                storageService.setItem(STORAGE_KEY, DEFAULT_SETTINGS);
+                applyFontSettings(DEFAULT_SETTINGS);
+                setSaved(true);
+                setTimeout(() => setSaved(false), 1500);
+            }}
+            style={{ 
+                padding: '16px', background: 'transparent', border: '1px dashed var(--nav-border)',
+                justifyContent: 'center', gap: '10px', color: 'var(--nav-text-muted)'
+            }}
+        >
+            <RotateCcw size={16} />
+            <span style={{ fontSize: '0.9rem', fontWeight: '800' }}>{t('fontSettings.reset', 'Varsayılana Sıfırla')}</span>
+        </button>
+      </div>
 
       <style>{`
-        .font-settings-container {
-          min-height: 100vh;
-          padding: 0 0 100px 0;
-          background: var(--bg-gradient-start);
+        .save-indicator-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .font-settings-header {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 20px;
-          background: rgba(0,0,0,0.1);
-          backdrop-filter: blur(10px);
-          position: sticky;
-          top: 0;
-          z-index: 10;
+        .settings-selected-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--nav-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
         }
 
-        .header-content h1 {
-          font-size: 1.4rem;
-          margin: 0;
-          color: var(--text-color);
+        input[type="range"] {
+            -webkit-appearance: none;
+            height: 6px;
+            background: var(--nav-border);
+            border-radius: 3px;
+            outline: none;
         }
 
-        .subtitle {
-          font-size: 0.85rem;
-          color: var(--text-color-muted);
-          margin: 4px 0 0 0;
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--nav-accent);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(79, 70, 229, 0.4);
+            transition: all 0.2s;
         }
 
-        .save-indicator {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 6px 12px;
-          background: rgba(16, 185, 129, 0.2);
-          color: #10b981;
-          border-radius: 20px;
-          font-size: 12px;
-          font-weight: 600;
-          margin-left: auto;
-        }
-
-        .preview-card {
-          margin: 16px;
-          text-align: center;
-          background: var(--card-bg);
-          border: 1px solid var(--glass-border);
-        }
-
-        .preview-card h3 {
-          font-size: 14px;
-          color: var(--text-color-muted);
-          margin-bottom: 16px;
-        }
-
-        .preview-arabic {
-          color: var(--text-color);
-          margin-bottom: 12px;
-          direction: rtl;
-        }
-
-        .preview-turkish {
-          color: var(--text-color-muted);
-          font-style: italic;
-        }
-
-        .setting-card {
-          margin: 0 16px 12px;
-          padding: 16px;
-          background: var(--card-bg);
-          border: 1px solid var(--glass-border);
-        }
-
-        .setting-header {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 16px;
-        }
-
-        .setting-header svg, .setting-header span:first-child {
-          color: var(--primary-color);
-        }
-
-        .setting-header h4 {
-          margin: 0;
-          font-size: 15px;
-          color: var(--text-color);
-        }
-
-        .setting-value {
-          font-size: 12px;
-          color: var(--primary-color);
-          font-weight: 600;
-        }
-
-        .size-controls {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .size-btn {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          border: 1px solid var(--glass-border);
-          background: rgba(255,255,255,0.05);
-          color: var(--text-color);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .size-btn:disabled {
-          opacity: 0.4;
-          cursor: not-allowed;
-        }
-
-        .size-btn:not(:disabled):active {
-          transform: scale(0.9);
-          background: var(--primary-color);
-        }
-
-        .size-slider {
-          flex: 1;
-        }
-
-        .size-slider input[type="range"] {
-          width: 100%;
-          height: 6px;
-          border-radius: 3px;
-          background: rgba(255,255,255,0.1);
-          outline: none;
-          -webkit-appearance: none;
-        }
-
-        .size-slider input[type="range"]::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: var(--primary-color);
-          cursor: pointer;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-
-        .font-family-card {
-          margin: 0 16px 12px;
-          padding: 16px;
-          background: var(--card-bg);
-          border: 1px solid var(--glass-border);
-        }
-
-        .font-family-card h4 {
-          margin: 0 0 16px 0;
-          font-size: 15px;
-          color: var(--text-color);
-        }
-
-        .font-options {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        .font-option {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 12px;
-          background: rgba(255,255,255,0.03);
-          border: 1px solid var(--glass-border);
-          border-radius: 12px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .font-option:active {
-          transform: scale(0.98);
-        }
-
-        .font-option.selected {
-          background: rgba(212, 175, 55, 0.1);
-          border-color: var(--primary-color);
-        }
-
-        .font-preview {
-          font-size: 20px;
-          color: var(--text-color);
-          width: 80px;
-          text-align: right;
-          direction: rtl;
-        }
-
-        .font-info {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-
-        .font-name {
-          font-size: 14px;
-          font-weight: 600;
-          color: var(--text-color);
-        }
-
-        .font-description {
-          font-size: 11px;
-          color: var(--text-color-muted);
-        }
-
-        .selected-indicator {
-          color: var(--primary-color);
-        }
-
-        .reset-btn {
-          display: block;
-          margin: 24px auto;
-          padding: 12px 24px;
-          background: transparent;
-          border: 1px solid var(--glass-border);
-          color: var(--text-color-muted);
-          border-radius: 20px;
-          font-size: 14px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .reset-btn:active {
-          transform: scale(0.95);
-          background: rgba(255,255,255,0.05);
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
         }
       `}</style>
-
     </div>
   );
 };

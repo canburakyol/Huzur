@@ -21,7 +21,7 @@ const FeatureSlider = memo(({ onSelectFeature }) => {
             {features.map((feature) => (
                 <div 
                     key={feature.id} 
-                    className="feature-chip" 
+                    className="feature-chip hover-lift premium-glass" 
                     onClick={() => onSelectFeature && onSelectFeature(feature.action)}
                 >
                     {feature.icon}

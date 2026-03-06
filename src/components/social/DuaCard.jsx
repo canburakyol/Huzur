@@ -1,61 +1,43 @@
 import { memo } from 'react';
+import { Heart, Users } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Memoized Dua Card Component
  * Prevents unnecessary re-renders when parent list updates
  */
 const DuaCard = memo(({ dua, isPrayed, onPray }) => {
+  const { t } = useTranslation();
+
   return (
-    <div 
-      className="glass-card"
-      style={{ 
-        padding: '20px', 
-        border: '1px solid var(--glass-border)',
-        boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-        transition: 'transform 0.2s ease'
-      }}
-    >
-      <p style={{ 
-        margin: '0 0 16px 0', 
-        fontSize: '16px', 
-        lineHeight: '1.6',
-        color: 'var(--text-color)',
-        fontFamily: 'var(--font-main)',
-        fontStyle: 'italic',
-        opacity: 0.9
-      }}>
-        "{dua.text}"
-      </p>
-      
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '15px' }}>
-        <span style={{ fontSize: '13px', color: 'var(--text-color-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ opacity: 0.7 }}>👤</span> {dua.isAnonymous ? 'Bir Mümin' : dua.authorName}
-        </span>
-        
-        <button 
-          onClick={() => onPray(dua.id)}
-          disabled={isPrayed}
-          style={{
-            background: isPrayed ? 'var(--success-color)' : 'rgba(255,255,255,0.05)',
-            border: isPrayed ? 'none' : '1px solid var(--primary-color)',
-            borderRadius: '20px',
-            padding: '8px 16px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            color: isPrayed ? 'white' : 'var(--primary-color)',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: isPrayed ? 'default' : 'pointer',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            boxShadow: isPrayed ? '0 2px 10px rgba(46, 204, 113, 0.3)' : 'none'
-          }}
-        >
-          <span>🤲</span>
-          <span>
-            {isPrayed ? 'Amin denildi' : 'Amin'} ({dua.aminCount || 0})
-          </span>
-        </button>
+    <div className="settings-card reveal-stagger sanctuary-card dua-card">
+      <div className="dua-left-border"></div>
+
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+        <div style={{ flex: 1 }}>
+          <p className="dua-text">
+            "{dua.text}"
+          </p>
+          
+          <div className="dua-footer">
+            <div className="dua-author-pill">
+              <Users size={14} />
+              {dua.isAnonymous ? t('community.anonymous') : dua.authorName}
+            </div>
+            
+            <button 
+              onClick={() => onPray(dua.id)}
+              disabled={isPrayed}
+              className={`dua-pray-btn ${isPrayed ? 'is-prayed' : ''}`}
+            >
+              <Heart size={16} fill={isPrayed ? 'currentColor' : 'none'} />
+              {isPrayed ? t('community.buttons.aminDone', 'Amin denildi') : t('community.buttons.amin', 'Amin')} 
+              <span className="dua-count">
+                {dua.aminCount || 0}
+              </span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

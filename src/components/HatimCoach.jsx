@@ -64,32 +64,40 @@ const HatimCoach = ({ onClose }) => {
 
     const renderWizard = () => {
         return (
-            <div className="glass-card" style={{ padding: '30px 20px', textAlign: 'center', minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div className="reveal-stagger" style={{ 
+                padding: '10px 0', 
+                textAlign: 'center', 
+                minHeight: '400px', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'center' 
+            }}>
                 {step === 1 && (
-                    <div className="animate-fade-in">
-                        <div style={{ 
-                            width: '100px', height: '100px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
-                            borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            margin: '0 auto 25px', color: 'white', boxShadow: '0 10px 25px rgba(16, 185, 129, 0.3)'
+                    <div className="reveal-stagger">
+                        <div className="settings-icon-box" style={{ 
+                            width: '100px', height: '100px', 
+                            background: 'linear-gradient(135deg, var(--nav-accent), #f59e0b)',
+                            borderRadius: '50%', margin: '0 auto 32px', color: 'white', 
+                            boxShadow: '0 12px 24px rgba(var(--nav-accent-rgb, 249, 115, 22), 0.3)'
                         }}>
                             <BookOpen size={48} />
                         </div>
-                        <h2 style={{ color: 'var(--text-color)', marginBottom: '15px', fontSize: '24px' }}>{t('hatimCoach.welcomeTitle')}</h2>
-                        <p style={{ color: 'var(--text-color-muted)', marginBottom: '30px', lineHeight: 1.6 }}>
+                        <h2 style={{ color: 'var(--nav-text)', marginBottom: '16px', fontSize: '1.75rem', fontWeight: '950' }}>{t('hatimCoach.welcomeTitle')}</h2>
+                        <p style={{ color: 'var(--nav-text-muted)', marginBottom: '40px', lineHeight: 1.6, fontSize: '1rem', fontWeight: '600' }}>
                             {t('hatimCoach.welcomeDesc')}
                         </p>
-                        <button onClick={() => setStep(2)} className="btn btn-primary" style={{ width: '100%', padding: '16px' }}>
+                        <button onClick={() => setStep(2)} className="velocity-target-btn" style={{ width: '100%', padding: '20px', justifyContent: 'center', fontSize: '1.1rem' }}>
                             {t('hatimCoach.startSetup')}
                         </button>
                     </div>
                 )}
 
                 {step === 2 && (
-                    <div className="animate-fade-in">
-                        <h3 style={{ marginBottom: '25px' }}>{t('hatimCoach.selectTarget')}</h3>
+                    <div className="reveal-stagger">
+                        <h3 style={{ marginBottom: '32px', fontSize: '1.5rem', fontWeight: '950', color: 'var(--nav-text)' }}>{t('hatimCoach.selectTarget')}</h3>
                         
-                        <div style={{ textAlign: 'left', marginBottom: '25px' }}>
-                            <label style={{ display: 'block', marginBottom: '10px', fontWeight: '600', color: 'var(--text-color)' }}>
+                        <div style={{ textAlign: 'left', marginBottom: '32px' }}>
+                            <label style={{ display: 'block', marginBottom: '12px', fontWeight: '800', color: 'var(--nav-text-muted)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
                                 {t('hatimCoach.targetDateLabel')}
                             </label>
                             <input 
@@ -98,25 +106,27 @@ const HatimCoach = ({ onClose }) => {
                                 onChange={(e) => setTargetDate(e.target.value)}
                                 min={new Date().toISOString().split('T')[0]}
                                 style={{
-                                    width: '100%', padding: '16px', borderRadius: '12px',
-                                    border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.8)',
-                                    fontSize: '18px', color: '#2c3e50'
+                                    width: '100%', padding: '18px', borderRadius: '20px',
+                                    border: '1px solid var(--nav-border)', background: 'var(--nav-hover)',
+                                    fontSize: '1.1rem', color: 'var(--nav-text)', fontWeight: '700'
                                 }}
                             />
                         </div>
 
                         {/* Quick Suggestions */}
-                        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '30px' }}>
+                        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '40px' }}>
                             {getSuggestedDates().map((s, i) => (
                                 <button 
                                     key={i}
                                     onClick={() => setTargetDate(s.date)}
-                                    className="glass-card"
+                                    className="settings-card"
                                     style={{ 
-                                        padding: '8px 12px', fontSize: '12px', margin: 0,
-                                        background: targetDate === s.date ? 'var(--primary-color)' : 'rgba(255,255,255,0.5)',
-                                        color: targetDate === s.date ? 'white' : 'var(--text-color)',
-                                        border: 'none'
+                                        padding: '10px 16px', fontSize: '0.8rem', margin: 0,
+                                        background: targetDate === s.date ? 'var(--nav-accent)' : 'var(--nav-hover)',
+                                        color: targetDate === s.date ? 'white' : 'var(--nav-text)',
+                                        border: 'none',
+                                        fontWeight: '800',
+                                        borderRadius: '12px'
                                     }}
                                 >
                                     {s.label}
@@ -124,13 +134,13 @@ const HatimCoach = ({ onClose }) => {
                             ))}
                         </div>
 
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                            <button onClick={() => setStep(1)} className="btn" style={{ flex: 1 }}>{t('common.back')}</button>
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                            <button className="velocity-target-btn" style={{ flex: 1, justifyContent: 'center', background: 'var(--nav-hover)', color: 'var(--nav-text-muted)' }} onClick={() => setStep(1)}>{t('common.back')}</button>
                             <button 
                                 onClick={() => targetDate && setStep(3)} 
                                 disabled={!targetDate}
-                                className="btn btn-primary" 
-                                style={{ flex: 1, opacity: targetDate ? 1 : 0.5 }}
+                                className="velocity-target-btn" 
+                                style={{ flex: 1, justifyContent: 'center', opacity: targetDate ? 1 : 0.5, background: 'var(--nav-accent)', color: 'white' }}
                             >
                                 {t('common.next')}
                             </button>
@@ -139,25 +149,29 @@ const HatimCoach = ({ onClose }) => {
                 )}
 
                 {step === 3 && stats && (
-                    <div className="animate-fade-in">
-                        <h3 style={{ marginBottom: '20px' }}>{t('hatimCoach.summary')}</h3>
+                    <div className="reveal-stagger">
+                        <h3 style={{ marginBottom: '24px', fontSize: '1.5rem', fontWeight: '950', color: 'var(--nav-text)' }}>{t('hatimCoach.summary')}</h3>
                         
-                        <div className="glass-card" style={{ 
-                            background: 'rgba(16, 185, 129, 0.1)', border: '1px solid #10b981',
-                            padding: '20px', marginBottom: '30px'
+                        <div className="settings-card" style={{ 
+                            background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.05)', 
+                            border: '1px solid var(--nav-accent)',
+                            flexDirection: 'column',
+                            padding: '32px 24px', 
+                            marginBottom: '40px',
+                            textAlign: 'center'
                         }}>
-                            <div style={{ fontSize: '14px', color: '#059669', marginBottom: '5px' }}>{t('hatimCoach.dailyGoal')}</div>
-                            <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#059669' }}>
-                                {stats.dailyTarget} <span style={{ fontSize: '16px' }}>{t('hatimCoach.pages')}</span>
+                            <div style={{ fontSize: '0.8rem', color: 'var(--nav-accent)', fontWeight: '900', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '1px' }}>{t('hatimCoach.dailyGoal')}</div>
+                            <div style={{ fontSize: '3.5rem', fontWeight: '950', color: 'var(--nav-accent)', lineHeight: 1 }}>
+                                {stats.dailyTarget} <span style={{ fontSize: '1.1rem', fontWeight: '800' }}>{t('hatimCoach.pages')}</span>
                             </div>
-                            <div style={{ fontSize: '12px', color: '#059669', marginTop: '5px' }}>
+                            <div className="hamburger-level-badge" style={{ marginTop: '16px', background: 'var(--nav-accent)', color: 'white', alignSelf: 'center' }}>
                                 {stats.daysLeft} {t('hatimCoach.days')} • {TOTAL_PAGES} {t('hatimCoach.pagesTotal')}
                             </div>
                         </div>
 
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                            <button onClick={() => setStep(2)} className="btn" style={{ flex: 1 }}>{t('common.back')}</button>
-                            <button onClick={handleSaveSetup} className="btn btn-primary" style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                            <button className="velocity-target-btn" style={{ flex: 1, justifyContent: 'center', background: 'var(--nav-hover)', color: 'var(--nav-text-muted)' }} onClick={() => setStep(2)}>{t('common.back')}</button>
+                            <button onClick={handleSaveSetup} className="velocity-target-btn" style={{ flex: 1, justifyContent: 'center', background: 'var(--nav-accent)', color: 'white' }}>
                                 {t('hatimCoach.confirmStart')}
                             </button>
                         </div>
@@ -176,147 +190,169 @@ const HatimCoach = ({ onClose }) => {
         const currentJuz = Math.ceil((currentPage + 1) / 20);
 
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '30px' }}>
-                {/* Main Progress Card */}
-                <div className="glass-card" style={{ 
-                    background: 'linear-gradient(135deg, #10b981 0%, #047857 100%)',
-                    color: 'white', padding: '25px', position: 'relative', overflow: 'hidden',
-                    boxShadow: '0 10px 30px rgba(16, 185, 129, 0.4)'
+            <div className="reveal-stagger" style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '30px' }}>
+                {/* Main Progress Card - Velocity Style */}
+                <div className="settings-card" style={{ 
+                    background: 'linear-gradient(135deg, var(--nav-accent), #f59e0b)',
+                    color: 'white', padding: '32px 24px', position: 'relative', overflow: 'hidden',
+                    boxShadow: '0 12px 32px rgba(var(--nav-accent-rgb, 249, 115, 22), 0.3)',
+                    border: 'none',
+                    minHeight: '200px'
                 }}>
-                    <div style={{ position: 'relative', zIndex: 2 }}>
+                    <div style={{ position: 'relative', zIndex: 2, width: '100%' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                             <div>
-                                <div style={{ fontSize: '14px', opacity: 0.9, marginBottom: '4px' }}>{t('hatimCoach.dailyGoal')}</div>
-                                <div style={{ fontSize: '48px', fontWeight: '800', lineHeight: 1, letterSpacing: '-1px' }}>
+                                <div style={{ fontSize: '0.8rem', opacity: 0.9, marginBottom: '8px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px' }}>{t('hatimCoach.dailyGoal')}</div>
+                                <div style={{ fontSize: '4rem', fontWeight: '950', lineHeight: 1, letterSpacing: '-2px' }}>
                                     {stats.dailyTarget}
-                                    <span style={{ fontSize: '16px', fontWeight: 'normal', marginLeft: '4px', opacity: 0.9 }}>{t('hatimCoach.pages')}</span>
+                                    <span style={{ fontSize: '1.2rem', fontWeight: '800', marginLeft: '8px', opacity: 0.9 }}>{t('hatimCoach.pages')}</span>
                                 </div>
                             </div>
-                            <div style={{ 
-                                background: 'rgba(255,255,255,0.2)', padding: '6px 12px', borderRadius: '20px',
-                                fontSize: '12px', fontWeight: '600', backdropFilter: 'blur(4px)'
+                            <div className="hamburger-level-badge" style={{ 
+                                background: 'rgba(255,255,255,0.2)', color: 'white',
+                                fontSize: '0.8rem', fontWeight: '900'
                             }}>
                                 {currentJuz}. {t('hatimCoach.juz')}
                             </div>
                         </div>
                         
-                        <div style={{ marginTop: '20px', display: 'flex', gap: '20px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                <Clock size={16} style={{ opacity: 0.8 }} />
-                                <span style={{ fontWeight: '600' }}>{stats.daysLeft}</span>
-                                <span style={{ fontSize: '12px', opacity: 0.8 }}>{t('hatimCoach.daysLeft')}</span>
+                        <div style={{ marginTop: '32px', display: 'flex', gap: '24px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <Clock size={18} style={{ opacity: 0.8 }} />
+                                <span style={{ fontWeight: '900', fontSize: '1.1rem' }}>{stats.daysLeft}</span>
+                                <span style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: '700' }}>{t('hatimCoach.daysLeft')}</span>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                <BookOpen size={16} style={{ opacity: 0.8 }} />
-                                <span style={{ fontWeight: '600' }}>{stats.pagesLeft}</span>
-                                <span style={{ fontSize: '12px', opacity: 0.8 }}>{t('hatimCoach.pagesLeft')}</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <BookOpen size={18} style={{ opacity: 0.8 }} />
+                                <span style={{ fontWeight: '900', fontSize: '1.1rem' }}>{stats.pagesLeft}</span>
+                                <span style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: '700' }}>{t('hatimCoach.pagesLeft')}</span>
                             </div>
                         </div>
                     </div>
                     
                     {/* Decorative Background Pattern */}
                     <div style={{ 
-                        position: 'absolute', right: -20, bottom: -20, opacity: 0.1,
-                        transform: 'rotate(-15deg)'
+                        position: 'absolute', right: -30, bottom: -30, opacity: 0.15,
+                        transform: 'rotate(-15deg)', color: 'white'
                     }}>
-                        <Target size={140} />
+                        <Target size={180} />
                     </div>
                 </div>
 
-                {/* Progress Control */}
-                <div className="glass-card" style={{ padding: '25px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-                        <h3 style={{ margin: 0, fontSize: '18px' }}>{t('hatimCoach.progress')}</h3>
-                        <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>%{Math.round(progressPercent)}</span>
+                {/* Progress Control - Velocity Style */}
+                <div className="settings-card" style={{ padding: '24px', flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', width: '100%' }}>
+                        <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: '950', color: 'var(--nav-text)' }}>{t('hatimCoach.progress')}</h3>
+                        <div className="hamburger-level-badge" style={{ background: 'var(--nav-accent)', color: 'white' }}>%{Math.round(progressPercent)}</div>
                     </div>
 
                     {/* Progress Bar */}
-                    <div style={{ height: '12px', background: '#f1f5f9', borderRadius: '6px', overflow: 'hidden', marginBottom: '25px' }}>
+                    <div style={{ width: '100%', height: '14px', background: 'var(--nav-hover)', borderRadius: '7px', overflow: 'hidden', marginBottom: '32px' }}>
                         <div style={{ 
                             width: `${progressPercent}%`, height: '100%', 
-                            background: 'linear-gradient(90deg, #10b981, #34d399)', 
-                            borderRadius: '6px', transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)' 
+                            background: 'linear-gradient(90deg, var(--nav-accent), #f59e0b)', 
+                            borderRadius: '7px', transition: 'width 0.8s cubic-bezier(0.16, 1, 0.3, 1)' 
                         }} />
                     </div>
 
                     {/* Controls */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '15px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px', width: '100%' }}>
                         <button 
                             onClick={() => handleUpdateProgress(currentPage - 1)}
-                            className="btn"
+                            className="settings-icon-box"
                             style={{ 
-                                width: '56px', height: '56px', borderRadius: '16px', padding: 0, 
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                background: '#f8fafc', border: '1px solid #e2e8f0'
+                                width: '64px', height: '64px', borderRadius: '20px', padding: 0, 
+                                background: 'var(--nav-hover)', border: '1px solid var(--nav-border)',
+                                cursor: 'pointer'
                             }}
                         >
-                            <span style={{ fontSize: '24px', color: '#64748b' }}>−</span>
+                            <span style={{ fontSize: '28px', color: 'var(--nav-text)', fontWeight: '300' }}>−</span>
                         </button>
 
                         <div style={{ flex: 1, textAlign: 'center' }}>
-                            <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: '900', marginBottom: '4px' }}>
                                 {t('hatimCoach.currentPage')}
                             </div>
-                            <div style={{ fontSize: '32px', fontWeight: '800', color: 'var(--text-color)' }}>
+                            <div style={{ fontSize: '2.5rem', fontWeight: '950', color: 'var(--nav-text)', lineHeight: 1 }}>
                                 {currentPage}
                             </div>
                         </div>
 
                         <button 
                             onClick={() => handleUpdateProgress(currentPage + 1)}
-                            className="btn btn-primary"
+                            className="settings-icon-box"
                             style={{ 
-                                width: '56px', height: '56px', borderRadius: '16px', padding: 0, 
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+                                width: '64px', height: '64px', borderRadius: '20px', padding: 0, 
+                                background: 'var(--nav-accent)', color: 'white',
+                                boxShadow: '0 8px 16px rgba(var(--nav-accent-rgb, 249, 115, 22), 0.3)',
+                                cursor: 'pointer',
+                                border: 'none'
                             }}
                         >
-                            <span style={{ fontSize: '24px' }}>+</span>
+                            <span style={{ fontSize: '28px', fontWeight: '300' }}>+</span>
                         </button>
                     </div>
                 </div>
 
                 {/* Stats & Motivation */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
-                    <div className="glass-card" style={{ padding: '15px', textAlign: 'center', margin: 0 }}>
-                        <TrendingUp size={24} color="#f59e0b" style={{ marginBottom: '8px' }} />
-                        <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>{t('hatimCoach.avgSpeed')}</div>
-                        <div style={{ fontWeight: 'bold', color: 'var(--text-color)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div className="settings-card" style={{ padding: '20px', textAlign: 'center', flexDirection: 'column', gap: '8px' }}>
+                        <div className="settings-icon-box" style={{ background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', width: '40px', height: '40px', marginBottom: '8px' }}>
+                            <TrendingUp size={20} />
+                        </div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '800' }}>{t('hatimCoach.avgSpeed')}</div>
+                        <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '0.95rem' }}>
                             {Math.round(currentPage / Math.max(1, (new Date() - new Date(data.startDate)) / (1000 * 60 * 60 * 24)))} {t('hatimCoach.pagesDay')}
                         </div>
                     </div>
-                    <div className="glass-card" style={{ padding: '15px', textAlign: 'center', margin: 0 }}>
-                        <Award size={24} color="#8b5cf6" style={{ marginBottom: '8px' }} />
-                        <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>{t('hatimCoach.streak')}</div>
-                        <div style={{ fontWeight: 'bold', color: 'var(--text-color)' }}>3 {t('hatimCoach.days')}</div>
+                    <div className="settings-card" style={{ padding: '20px', textAlign: 'center', flexDirection: 'column', gap: '8px' }}>
+                        <div className="settings-icon-box" style={{ background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6', width: '40px', height: '40px', marginBottom: '8px' }}>
+                            <Award size={20} />
+                        </div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '800' }}>{t('hatimCoach.streak')}</div>
+                        <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '0.95rem' }}>3 {t('hatimCoach.days')}</div>
                     </div>
                 </div>
 
                 {/* Settings / Reset */}
-                <div className="glass-card" style={{ padding: '15px' }}>
-                    <button 
-                        onClick={handleReset}
-                        style={{ 
-                            width: '100%', background: 'none', border: 'none', color: '#ef4444', 
-                            fontSize: '14px', display: 'flex', alignItems: 'center', 
-                            justifyContent: 'center', gap: '8px', cursor: 'pointer', padding: '10px'
-                        }}
-                    >
-                        <RefreshCw size={16} /> {t('hatimCoach.resetPlan')}
-                    </button>
-                </div>
+                <button 
+                    onClick={handleReset}
+                    className="velocity-target-btn"
+                    style={{ 
+                        marginTop: '12px',
+                        width: '100%', 
+                        background: 'var(--nav-hover)', 
+                        color: '#ef4444', 
+                        borderColor: 'transparent',
+                        justifyContent: 'center',
+                        gap: '8px'
+                    }}
+                >
+                    <RefreshCw size={16} /> {t('hatimCoach.resetPlan')}
+                </button>
             </div>
         );
     };
 
     return (
-        <div className="app-container" style={{ paddingBottom: '100px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '20px' }}>
+        <div className="settings-container reveal-stagger">
+            {/* Header - Velocity Style */}
+            <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '16px', 
+                marginBottom: '32px'
+            }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
-                <h2 style={{ margin: 0, fontSize: '20px', color: 'var(--text-color)' }}>{t('hatimCoach.title')}</h2>
+                <h2 style={{ 
+                    margin: 0, 
+                    fontSize: '1.75rem', 
+                    color: 'var(--nav-text)',
+                    fontWeight: '950'
+                }}>{t('hatimCoach.title')}</h2>
             </div>
 
-            <div style={{ padding: '0 20px' }}>
+            <div style={{ padding: 0 }}>
                 {!data ? renderWizard() : renderDashboard()}
             </div>
         </div>

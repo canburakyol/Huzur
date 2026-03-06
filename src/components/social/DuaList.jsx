@@ -5,6 +5,8 @@ import CreateDuaModal from './CreateDuaModal';
 import DuaCard from './DuaCard';
 import { getCurrentUserId } from '../../services/authService';
 import { logger } from '../../utils/logger';
+import { Heart, RefreshCw, Plus } from 'lucide-react';
+import './Social.css';
 
 const DuaList = () => {
   const { t } = useTranslation();
@@ -28,14 +30,19 @@ const DuaList = () => {
   };
 
   if (loading && duas.length === 0) {
-    return <div style={{ color: 'var(--text-color)', textAlign: 'center', marginTop: '20px' }}>Yükleniyor...</div>;
+    return (
+      <div className="settings-card reveal-stagger" style={{ justifyContent: 'center', padding: '40px' }}>
+         <div className="spin"><RefreshCw size={32} color="var(--nav-accent)" /></div>
+         <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{t('common.loading')}</p>
+      </div>
+    );
   }
 
   if (error) {
     return (
-      <div className="glass-card" style={{ padding: '20px', textAlign: 'center', color: '#ef4444' }}>
-        <p style={{ margin: '0 0 8px' }}>⚠️ Firebase bağlantı/izin hatası</p>
-        <p style={{ fontSize: '12px', margin: 0 }}>{error}</p>
+      <div className="settings-card reveal-stagger" style={{ borderColor: '#ef4444', flexDirection: 'column', gap: '8px' }}>
+        <p style={{ margin: 0, fontSize: '1rem', fontWeight: '800', color: '#ef4444' }}>⚠️ {t('common.error')}</p>
+        <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{error}</p>
       </div>
     );
   }
@@ -43,18 +50,19 @@ const DuaList = () => {
   return (
     <div className="dua-list">
       {/* Actions */}
-      <div style={{ marginBottom: '24px' }}>
-        <button 
-          className="btn btn-primary"
+      <div className="reveal-stagger" style={{ marginBottom: '24px' }}>
+        <button
+          className="sanctuary-btn-primary"
           onClick={() => setShowCreateModal(true)}
-          style={{ width: '100%', padding: '14px', borderRadius: '12px' }}
+          style={{ width: '100%' }}
         >
-          ✍️ {t('dua.create', 'Dua İste')}
+          <Plus size={20} />
+          {t('dua.create')}
         </button>
       </div>
 
       {/* List - Using memoized DuaCard */}
-      <div className="dua-grid" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      <div className="dua-grid reveal-stagger" style={{ '--delay': '0.5s', display: 'flex', flexDirection: 'column', gap: '15px' }}>
         {duas.map(dua => (
           <DuaCard 
             key={dua.id}
@@ -65,15 +73,11 @@ const DuaList = () => {
         ))}
 
         {duas.length === 0 && !loading && (
-           <div style={{ 
-             textAlign: 'center', 
-             color: 'var(--text-color-muted)', 
-             padding: '40px 20px',
-             background: 'var(--glass-bg)',
-             borderRadius: '12px',
-             border: '1px solid var(--glass-border)'
-           }}>
-             Henüz hiç dua isteği yok. İlk isteyen siz olun.
+           <div className="settings-card reveal-stagger sanctuary-empty" style={{ flexDirection: 'column', alignItems: 'center', padding: '60px 20px', gap: '16px' }}>
+              <Heart size={48} color="var(--hb-accent)" />
+              <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--nav-text-muted)', fontWeight: '700', textAlign: 'center' }}>
+                {t('community.messages.noDuas')}
+              </p>
            </div>
         )}
       </div>

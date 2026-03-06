@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getPrayerTimes, getNextPrayer } from '../services/prayerService';
-import { schedulePrayerAlarms, createNotificationChannels, FCMService } from '../services/fcmService';
+import { createNotificationChannels, FCMService } from '../services/fcmService';
 import smartNotificationService, { showStickyNotification, cancelStickyNotification, requestNotificationPermission } from '../services/smartNotificationService';
 import { updateWidget as updateAndroidWidget, scheduleWidgetAlarms } from '../services/widgetService';
 import { storageService } from '../services/storageService';
@@ -38,19 +38,13 @@ export const usePrayerTimes = () => {
         setTimings(data.timings);
         setNextPrayer(getNextPrayer(data.timings));
 
-        // Schedule prayer notifications with exact alarms
-        const notificationSettings = {
-          preAlertMinutes: storageService.getNumber(STORAGE_KEYS.PRE_ALERT_MINUTES, 15),
-          enablePreAlert: storageService.getBoolean(STORAGE_KEYS.ENABLE_PRE_ALERT, true),
-          enableMainAlert: storageService.getBoolean(STORAGE_KEYS.ENABLE_MAIN_ALERT, true)
-        };
 
         try {
-          await schedulePrayerAlarms(data.timings, notificationSettings);
+          await smartNotificationService.initializeSmartNotifications({ prayerTimes: data.timings });
           await scheduleWidgetAlarms(data.timings);
-          logger.log('[usePrayerTimes] Prayer alarms scheduled');
+          logger.log('[usePrayerTimes] Smart notifications and widget alarms scheduled');
         } catch (scheduleError) {
-          logger.warn('[usePrayerTimes] Failed to schedule prayer alarms:', scheduleError);
+          logger.warn('[usePrayerTimes] Failed to schedule notifications:', scheduleError);
         }
       } else {
         setError('Namaz vakitleri yüklenemedi. Lütfen internet bağlantınızı kontrol edin.');
@@ -131,35 +125,6 @@ export const usePrayerTimes = () => {
     return () => clearInterval(timer);
   }, [timings]);
 
-  // Prayer time notification check
-  useEffect(() => {
-    if (!timings || !permissionGranted) return;
-
-    const checkPrayerTime = () => {
-      const now = new Date();
-      const timeStr = now.toTimeString().slice(0, 5);
-
-      Object.entries(timings).forEach(([name, time]) => {
-        if (typeof time !== 'string') return;
-        const [h, m] = time.split(':').map(Number);
-        let targetM = m - 10;
-        let targetH = h;
-        if (targetM < 0) {
-          targetM += 60;
-          targetH -= 1;
-        }
-        const checkTime = `${String(targetH).padStart(2, '0')}:${String(targetM).padStart(2, '0')}`;
-
-        if (timeStr === checkTime) {
-          smartNotificationService.showInstantNotification("Vakit Yaklaşıyor", `${name} vaktine 10 dakika kaldı.`);
-        }
-      });
-    };
-
-    const interval = setInterval(checkPrayerTime, TIMING.REFRESH_INTERVAL_MS);
-    checkPrayerTime();
-    return () => clearInterval(interval);
-  }, [timings, permissionGranted]);
 
   // Handle notification permission
   const handleEnableNotifications = async () => {

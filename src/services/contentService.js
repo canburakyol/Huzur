@@ -5,7 +5,7 @@ import { ESMA_UL_HUSNA } from '../data/esmaUlHusnaData';
 import { getActiveCampaign } from './campaignService';
 
 // API Endpoints
-const ASMA_AL_HUSNA_API = 'http://api.aladhan.com/v1/asmaAlHusna';
+const ASMA_AL_HUSNA_API = 'https://api.aladhan.com/v1/asmaAlHusna';
 const HADITH_API_EN = 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/eng-nawawi.min.json';
 
 // Daily Verses Data (Fallback/Local)

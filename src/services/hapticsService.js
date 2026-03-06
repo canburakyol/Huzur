@@ -1,4 +1,5 @@
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { logger } from '../utils/logger';
 
 class HapticsService {
   constructor() {
@@ -11,7 +12,7 @@ class HapticsService {
       const result = await Haptics.isSupported();
       this.supported = result.value;
     } catch (e) {
-      console.warn('Haptics support check failed:', e);
+      logger.warn('Haptics support check failed:', e);
       this.supported = false;
     }
   }
@@ -25,7 +26,7 @@ class HapticsService {
         navigator.vibrate(10);
       }
     } catch (e) {
-      console.warn('Haptics light failed', e);
+      logger.warn('Haptics light failed', e);
     }
   }
 
@@ -38,7 +39,7 @@ class HapticsService {
         navigator.vibrate(30);
       }
     } catch (e) {
-      console.warn('Haptics medium failed', e);
+      logger.warn('Haptics medium failed', e);
     }
   }
 
@@ -51,7 +52,7 @@ class HapticsService {
         navigator.vibrate([100, 50, 100]);
       }
     } catch (e) {
-      console.warn('Haptics heavy failed', e);
+      logger.warn('Haptics heavy failed', e);
     }
   }
 
@@ -64,7 +65,7 @@ class HapticsService {
         navigator.vibrate([50, 50, 100]);
       }
     } catch (e) {
-      console.warn('Haptics success failed', e);
+      logger.warn('Haptics success failed', e);
     }
   }
 
@@ -77,7 +78,7 @@ class HapticsService {
         navigator.vibrate([50, 100, 50]);
       }
     } catch (e) {
-      console.warn('Haptics error failed', e);
+      logger.warn('Haptics error failed', e);
     }
   }
 

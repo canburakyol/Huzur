@@ -6,10 +6,11 @@ import { detectAndSetLanguage } from '../services/languageService';
 import { adMobService } from '../services/admobService';
 import { syncProStatusFromServer } from '../services/subscriptionSyncService';
 import { VAKIT_THEMES } from '../data/vakitThemes';
-import { THEMES } from '../components/ThemeSelector';
+import { THEMES } from '../data/themes';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { storageService } from '../services/storageService';
 import { logger } from '../utils/logger';
+import { recordAppOpen } from '../services/userActivityTracker';
 
 /**
  * Apply theme colors to document
@@ -17,11 +18,15 @@ import { logger } from '../utils/logger';
 const applyThemeColors = (theme) => {
   if (!theme) return;
   const root = document.documentElement;
-  Object.entries(theme.colors).forEach(([property, value]) => {
-    root.style.setProperty(property, value);
-  });
-  document.body.style.background = theme.bodyGradient;
-  document.body.style.backgroundAttachment = 'fixed';
+  if (theme.colors) {
+    Object.entries(theme.colors).forEach(([property, value]) => {
+      root.style.setProperty(property, value);
+    });
+  }
+  if (theme.bodyGradient) {
+    document.body.style.background = theme.bodyGradient;
+    document.body.style.backgroundAttachment = 'fixed';
+  }
 };
 
 /**
@@ -56,12 +61,8 @@ const getVakitTheme = (timings) => {
 /**
  * App Initialization Hook
  * Handles streak, RevenueCat, theme and AdMob initialization
- * 
- * @param {Object} timings - Prayer timings for dynamic theme
- * @returns {Object} App state (streak, pro status, badge)
  */
 export const useAppInit = (timings) => {
-  // Calculate streak ONCE on initial render (prevents double calculation)
   const [{ streakData, newBadge: initialBadge }] = useState(() => {
     const result = checkAndUpdateStreak();
     return {
@@ -73,40 +74,103 @@ export const useAppInit = (timings) => {
   const [newBadge, setNewBadge] = useState(initialBadge);
   const [isProUser, setIsProUser] = useState(() => checkIsPro());
 
+  // Pro Status Change Handler
+  const handleProStatusChange = (event) => {
+    logger.log('[useAppInit] Pro status changed:', event.detail);
+    if (event.detail && typeof event.detail.active !== 'undefined') {
+      setIsProUser(event.detail.active);
+    } else {
+      setIsProUser(checkIsPro());
+    }
+  };
 
-  // Initialize on mount: RevenueCat, Language Detection, Event listeners
+  // Initialization Effect
   useEffect(() => {
-    // Initialize RevenueCat, then verify Pro integrity
-    initializeRevenueCat().then(() => {
-      verifyProStatus().then(isValid => {
-        if (isValid) setIsProUser(true);
-      });
+    // Aktivite saatini kaydet (akıllı bildirim zamanlaması için)
+    recordAppOpen();
 
-      // Server-authoritative sync (best-effort)
-      syncProStatusFromServer().then((serverState) => {
-        if (serverState && typeof serverState.isPro === 'boolean') {
-          setIsProUser(serverState.isPro);
+    const initializeServices = async () => {
+      try {
+        // RevenueCat ve Language işlemlerini paralel başlat (biri diğerine bağlı değil)
+        const initResults = await Promise.allSettled([
+          initializeRevenueCat(),
+          detectAndSetLanguage()
+        ]);
+
+        // Hata kontrolü (sadece loglama, uygulamayı çökertmemek için)
+        initResults.forEach((result, index) => {
+          if (result.status === 'rejected') {
+            const serviceName = index === 0 ? 'RevenueCat' : 'Language Detection';
+            logger.warn(`[useAppInit] ${serviceName} başlatılamadı:`, result.reason);
+          } else if (index === 1 && result.value) {
+            logger.log('[useAppInit] Device language detected and set:', result.value);
+          }
+        });
+
+        // Pro Status doğrulamasını ve senkronizasyonunu RevenueCat inisiyalizasyonundan sonra yap
+        if (initResults[0].status === 'fulfilled') {
+          const proResults = await Promise.allSettled([
+            verifyProStatus(),
+            syncProStatusFromServer()
+          ]);
+
+          let activeProStatus = false;
+          let hasProResult = false;
+
+          if (proResults[0].status === 'fulfilled') {
+            activeProStatus = proResults[0].value;
+            hasProResult = true;
+          } else {
+            logger.warn('[useAppInit] verifyProStatus failed:', proResults[0].reason);
+          }
+
+          if (proResults[1].status === 'fulfilled' && proResults[1].value && typeof proResults[1].value.isPro === 'boolean') {
+            activeProStatus = proResults[1].value.isPro;
+            hasProResult = true;
+          } else if (proResults[1].status === 'rejected') {
+             logger.warn('[useAppInit] syncProStatusFromServer failed:', proResults[1].reason);
+          }
+
+          if (hasProResult) {
+            setIsProUser(activeProStatus);
+          }
         }
-      });
-    });
-
-    // Detect and set device language
-    detectAndSetLanguage().then((lang) => {
-      logger.log('[useAppInit] Device language detected and set:', lang);
-    });
-
-    // Pro Status Change Listener
-    const handleProStatusChange = (event) => {
-      logger.log('[useAppInit] Pro status changed:', event.detail);
-      if (event.detail && typeof event.detail.active !== 'undefined') {
-        setIsProUser(event.detail.active);
-      } else {
-        setIsProUser(checkIsPro());
+      } catch (error) {
+        logger.error('[useAppInit] Critical initialization error:', error);
       }
     };
-    window.addEventListener('proStatusChanged', handleProStatusChange);
 
-    // Theme Change Listener
+    initializeServices();
+
+    // Initial Theme & Accent Load
+    const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
+    const savedAccent = storageService.getString('app_accent_color') || 'orange';
+    const accentMap = {
+      orange: '#f97316',
+      emerald: '#10b981',
+      blue: '#3b82f6',
+      purple: '#8b5cf6',
+      gold: '#eab308'
+    };
+
+    if (accentMap[savedAccent]) {
+      document.documentElement.style.setProperty('--nav-accent', accentMap[savedAccent]);
+    }
+
+    if (savedTheme) {
+      let targetTheme = savedTheme;
+      if (savedTheme === 'system') {
+        targetTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', targetTheme);
+    }
+
+    window.addEventListener('proStatusChanged', handleProStatusChange);
+    return () => window.removeEventListener('proStatusChanged', handleProStatusChange);
+  }, []);
+
+  // Theme & Event Listeners Effect
+  useEffect(() => {
     const handleThemeChange = (e) => {
       const { themeId } = e.detail;
       if (themeId === 'auto-vakit') {
@@ -116,11 +180,29 @@ export const useAppInit = (timings) => {
         if (theme) applyThemeColors(theme);
       }
     };
+
+    const handleThemeModeChange = (e) => {
+      const { mode } = e.detail;
+      let targetTheme = mode;
+      if (mode === 'system') {
+        targetTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', targetTheme);
+    };
+
+    const handleAccentChange = (e) => {
+      const { color } = e.detail;
+      document.documentElement.style.setProperty('--nav-accent', color);
+    };
+
     window.addEventListener('appThemeChanged', handleThemeChange);
+    window.addEventListener('themeModeChanged', handleThemeModeChange);
+    window.addEventListener('accentColorChanged', handleAccentChange);
 
     return () => {
       window.removeEventListener('appThemeChanged', handleThemeChange);
-      window.removeEventListener('proStatusChanged', handleProStatusChange);
+      window.removeEventListener('themeModeChanged', handleThemeModeChange);
+      window.removeEventListener('accentColorChanged', handleAccentChange);
     };
   }, [timings]);
 
@@ -132,10 +214,9 @@ export const useAppInit = (timings) => {
     }
   }, [timings]);
 
-  // Initialize AdMob (skip for Pro users)
+  // Initialize AdMob
   useEffect(() => {
     if (isProUser) {
-      logger.log('[useAppInit] Pro user detected - stopping all ads');
       adMobService.stopAds();
       return;
     }
@@ -146,22 +227,15 @@ export const useAppInit = (timings) => {
     };
 
     const timeoutId = setTimeout(() => {
-      logger.log('[useAppInit] Initializing AdMob (delayed)...');
       initAdMob();
     }, TIMING.ADMOB_DELAY_MS);
 
     return () => clearTimeout(timeoutId);
   }, [isProUser]);
 
-  // Clear new badge
   const clearBadge = () => setNewBadge(null);
 
-  return {
-    streakData,
-    newBadge,
-    clearBadge,
-    isProUser
-  };
+  return { streakData, newBadge, clearBadge, isProUser };
 };
 
 export default useAppInit;

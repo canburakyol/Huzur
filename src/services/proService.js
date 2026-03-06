@@ -24,6 +24,12 @@ const FREE_LIMITS = {
 // Ücretsiz Word-by-Word sureleri
 export const FREE_WORD_BY_WORD_SURAHS = [1, 112, 113, 114]; // Fatiha, İhlas, Felak, Nas
 
+const PRO_SERVER_SYNC_TTL_MS = 5 * 60 * 1000;
+const TRUSTED_STATUS_CACHE_MS = 60 * 1000;
+let lastTrustedCheckAt = 0;
+let lastTrustedResult = false;
+
+
 /**
  * Bugünün tarihini YYYY-MM-DD formatında döndürür
  */
@@ -52,6 +58,54 @@ export const isPro = () => {
   } catch {
     return false;
   }
+};
+
+const getRecentServerSyncResult = () => {
+  try {
+    const sync = storageService.getItem(STORAGE_KEYS.PRO_SERVER_SYNC, null);
+    if (!sync || typeof sync !== 'object') return null;
+
+    const parsed = Date.parse(sync.timestamp || '');
+    if (!Number.isFinite(parsed)) return null;
+
+    const ageMs = Date.now() - parsed;
+    if (ageMs < 0 || ageMs > PRO_SERVER_SYNC_TTL_MS) return null;
+
+    return sync.isPro === true;
+  } catch {
+    return null;
+  }
+};
+
+const getTrustedProStatus = async () => {
+  const now = Date.now();
+  if (now - lastTrustedCheckAt <= TRUSTED_STATUS_CACHE_MS) {
+    return lastTrustedResult;
+  }
+
+  const recentServerResult = getRecentServerSyncResult();
+  if (recentServerResult !== null) {
+    lastTrustedResult = recentServerResult;
+    lastTrustedCheckAt = now;
+    return recentServerResult;
+  }
+
+  try {
+    const { syncProStatusFromServer } = await import('./subscriptionSyncService');
+    const serverResult = await syncProStatusFromServer();
+    if (serverResult && typeof serverResult.isPro === 'boolean') {
+      lastTrustedResult = serverResult.isPro === true;
+      lastTrustedCheckAt = Date.now();
+      return lastTrustedResult;
+    }
+  } catch {
+    logger.warn('[ProService] Server authoritative sync unavailable');
+  }
+
+  const verifiedFallback = await verifyProStatus();
+  lastTrustedResult = verifiedFallback === true;
+  lastTrustedCheckAt = Date.now();
+  return lastTrustedResult;
 };
 
 /**
@@ -155,7 +209,7 @@ const saveDailyLimits = async (limits) => {
  */
 export const checkLimit = async (feature) => {
   // Pro kullanıcılar için sınırsız
-  if (isPro()) {
+  if (await getTrustedProStatus()) {
     return {
       allowed: true,
       remaining: Infinity,
@@ -184,7 +238,7 @@ export const checkLimit = async (feature) => {
  */
 export const consumeLimit = async (feature) => {
   // Pro kullanıcılar için limit yok
-  if (isPro()) {
+  if (await getTrustedProStatus()) {
     return true;
   }
   
@@ -239,7 +293,7 @@ export const PRO_FEATURES = [
  */
 export const getDailyLimitStatus = async () => {
   const limits = await getDailyLimits();
-  const pro = isPro();
+  const pro = await getTrustedProStatus();
   
   return {
     isPro: pro,
@@ -269,3 +323,4 @@ export default {
   PRO_FEATURES,
   FREE_WORD_BY_WORD_SURAHS
 };
+

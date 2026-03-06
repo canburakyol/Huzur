@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Users, Heart, Plus, MessageCircle, ThumbsUp } from 'lucide-react';
+import { Users, Heart, Plus, ThumbsUp, MessageSquare, Hand, Sparkles } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
 
@@ -29,7 +29,6 @@ const PrayerCircle = ({ onClose }) => {
       }
       return req;
     }));
-    // In a real app, we would send this to the backend
   };
 
   const handleSubmit = (e) => {
@@ -38,7 +37,7 @@ const PrayerCircle = ({ onClose }) => {
 
     const request = {
       id: Date.now(),
-      user: 'Ben', // Or user's name if available
+      user: t('prayerCircle.me', 'Ben'),
       text: newRequest,
       count: 0,
       prayed: false,
@@ -48,7 +47,6 @@ const PrayerCircle = ({ onClose }) => {
     const updatedRequests = [request, ...requests];
     setRequests(updatedRequests);
     
-    // Save my requests
     const myRequests = updatedRequests.filter(r => r.isMine);
     storageService.setItem(PRAYER_REQUESTS_KEY, myRequests);
     
@@ -57,73 +55,89 @@ const PrayerCircle = ({ onClose }) => {
   };
 
   return (
-    <div className="app-container" style={{ minHeight: '100vh', padding: '20px', background: 'var(--bg-color)' }}>
+    <div className="settings-container reveal-stagger" style={{ paddingBottom: '100px' }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <IslamicBackButton onClick={onClose} />
-          <h2 style={{ margin: 0, fontSize: '22px', color: 'var(--primary-color)' }}>
-            🤲 {t('prayerCircle.title')}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+        <IslamicBackButton onClick={onClose} size="medium" />
+        <div style={{ flex: 1 }}>
+          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+            {t('prayerCircle.title', 'Dua Halkası')}
           </h2>
+          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+            {t('prayerCircle.subtitle', 'Dualarda buluşalım')}
+          </p>
         </div>
         <button 
           onClick={() => setShowForm(!showForm)}
-          style={{
-            background: 'var(--primary-color)', color: 'white',
-            border: 'none', borderRadius: '50%', width: '40px', height: '40px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', boxShadow: '0 4px 10px rgba(46, 204, 113, 0.3)'
-          }}
+          className="velocity-add-btn"
         >
-          <Plus size={24} />
+          {showForm ? <Sparkles size={20} /> : <Plus size={20} />}
         </button>
       </div>
 
-      {/* Intro */}
-      <div className="glass-card" style={{ padding: '15px', marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
-        <Users size={24} color="var(--primary-color)" />
-        <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-color)' }}>
-          {t('prayerCircle.intro')}
+      {/* Intro Info */}
+      <div className="settings-card" style={{ 
+          marginBottom: '24px', padding: '16px', background: 'rgba(79, 70, 229, 0.05)', 
+          border: '1px dashed var(--nav-accent)', gap: '12px' 
+      }}>
+        <div className="settings-icon-box" style={{ width: '32px', height: '32px', background: 'transparent', color: 'var(--nav-accent)' }}>
+            <Users size={18} />
+        </div>
+        <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>
+          {t('prayerCircle.intro', 'Birbirimize dua ederek manevi bağımızı güçlendiriyoruz.')}
         </p>
       </div>
 
       {/* Add Request Form */}
       {showForm && (
-        <form onSubmit={handleSubmit} style={{ marginBottom: '20px', animation: 'fadeIn 0.3s ease' }}>
+        <form onSubmit={handleSubmit} className="settings-card reveal-stagger" style={{ 
+            flexDirection: 'column', padding: '24px', marginBottom: '24px', 
+            background: 'var(--nav-hover)', border: '1px solid var(--nav-accent)' 
+        }}>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: '1rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+            {t('prayerCircle.askForPrayer', 'Dua İste')}
+          </h3>
           <textarea
             value={newRequest}
             onChange={(e) => setNewRequest(e.target.value)}
-            placeholder={t('prayerCircle.placeholder')}
-            style={{
-              width: '100%', padding: '15px', borderRadius: '12px',
-              border: '1px solid var(--glass-border)', background: 'var(--glass-bg)',
-              minHeight: '100px', marginBottom: '10px', resize: 'vertical'
-            }}
+            placeholder={t('prayerCircle.placeholder', 'Niyetinizi yazın...')}
+            className="velocity-textarea"
           />
           <button 
             type="submit"
-            className="btn btn-primary"
-            style={{ width: '100%' }}
+            className="velocity-btn-primary"
+            style={{ width: '100%', padding: '14px' }}
           >
-            {t('prayerCircle.submit')}
+            <Hand size={18} style={{ marginRight: '8px' }} />
+            {t('prayerCircle.submit', 'Dua İsteğini Paylaş')}
           </button>
         </form>
       )}
 
       {/* Requests List */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        {requests.map(req => (
-          <div key={req.id} className="glass-card" style={{ padding: '15px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-              <span style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '14px' }}>
-                {req.user} {req.isMine && <span style={{ fontSize: '10px', background: '#e74c3c', color: 'white', padding: '2px 6px', borderRadius: '10px', marginLeft: '5px' }}>{t('prayerCircle.me')}</span>}
-              </span>
-              <span style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
-                {req.count} {t('prayerCircle.prayers')}
-              </span>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {requests.map((req, index) => (
+          <div key={req.id} className="settings-card" style={{ 
+              flexDirection: 'column', padding: '20px',
+              '--delay': `${index * 0.1}s` 
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: req.isMine ? 'var(--nav-accent)' : '#10b981' }}></div>
+                <span style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
+                  {req.user}
+                </span>
+                {req.isMine && (
+                  <span className="me-badge">{t('prayerCircle.me', 'BEN')}</span>
+                )}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--nav-accent)', fontWeight: '950', fontSize: '0.9rem' }}>
+                <Heart size={14} fill={req.count > 0 ? "var(--nav-accent)" : "transparent"} />
+                {req.count}
+              </div>
             </div>
             
-            <p style={{ margin: '0 0 15px 0', fontSize: '14px', color: 'var(--text-color)', lineHeight: '1.5' }}>
+            <p style={{ margin: '0 0 16px 0', fontSize: '0.95rem', color: 'var(--nav-text)', fontWeight: '600', lineHeight: '1.6' }}>
               {req.text}
             </p>
 
@@ -131,25 +145,99 @@ const PrayerCircle = ({ onClose }) => {
               <button
                 onClick={() => handlePray(req.id)}
                 disabled={req.prayed}
-                style={{
-                  padding: '8px 16px',
-                  borderRadius: '20px',
-                  background: req.prayed ? '#2ecc71' : 'var(--glass-bg)',
-                  color: req.prayed ? 'white' : 'var(--primary-color)',
-                  border: req.prayed ? 'none' : '1px solid var(--primary-color)',
-                  cursor: req.prayed ? 'default' : 'pointer',
-                  display: 'flex', alignItems: 'center', gap: '6px',
-                  fontSize: '13px', fontWeight: '600',
-                  transition: 'all 0.2s ease'
-                }}
+                className={`pray-button ${req.prayed ? 'prayed' : ''}`}
               >
-                {req.prayed ? <ThumbsUp size={16} /> : <Heart size={16} />}
-                {req.prayed ? t('prayerCircle.prayed') : t('prayerCircle.pray')}
+                {req.prayed ? <ThumbsUp size={14} /> : <Hand size={14} />}
+                <span>{req.prayed ? t('prayerCircle.prayed', 'Amin') : t('prayerCircle.pray', 'Dua Et')}</span>
               </button>
             </div>
           </div>
         ))}
       </div>
+
+      <style>{`
+        .velocity-add-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: var(--nav-accent);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .velocity-add-btn:active { transform: scale(0.9); }
+
+        .velocity-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 16px;
+            background: var(--nav-bg);
+            border: 1px solid var(--nav-border);
+            border-radius: 14px;
+            color: var(--nav-text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .velocity-textarea:focus { border-color: var(--nav-accent); }
+
+        .velocity-btn-primary {
+            background: var(--nav-accent);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .me-badge {
+            font-size: 0.65rem;
+            background: var(--nav-accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 900;
+        }
+
+        .pray-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--nav-hover);
+            color: var(--nav-accent);
+            border: 1px solid var(--nav-accent);
+        }
+
+        .pray-button.prayed {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .pray-button:not(.prayed):active { transform: scale(0.95); background: var(--nav-accent); color: white; }
+      `}</style>
     </div>
   );
 };

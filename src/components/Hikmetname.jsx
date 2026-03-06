@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Share2, RefreshCw, Heart, ChevronRight } from 'lucide-react';
+import { Share2, RefreshCw, Heart, ChevronRight, Sparkles, Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
 import { HIKMET_CATEGORIES, HIKMETLER, getDailyHikmet, getHikmetByCategory, getRandomHikmet } from '../data/hikmetData';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
+import './Hikmetname.css';
+import './Navigation.css';
 
 const HIKMET_FAVORITES_KEY = 'hikmet_favorites';
 
@@ -17,21 +19,19 @@ function Hikmetname({ onClose }) {
         return storageService.getItem(HIKMET_FAVORITES_KEY, []);
     });
 
-    // Toggle favorite
     const toggleFavorite = (hikmetId) => {
         const newFavorites = favorites.includes(hikmetId)
             ? favorites.filter(id => id !== hikmetId)
             : [...favorites, hikmetId];
         setFavorites(newFavorites);
         storageService.setItem(HIKMET_FAVORITES_KEY, newFavorites);
+        if (navigator.vibrate) navigator.vibrate(20);
     };
 
-    // Get new random hikmet
     const getNewRandom = () => {
         setDailyHikmet(getRandomHikmet());
     };
 
-    // Share hikmet
     const shareHikmet = async (hikmet) => {
         const text = t('hikmet.shareText', {
             text: t(hikmet.text),
@@ -42,25 +42,18 @@ function Hikmetname({ onClose }) {
 
         try {
             if (Capacitor.isNativePlatform()) {
-                await Share.share({
-                    text,
-                    dialogTitle: t('hikmet.share', 'Paylaş')
-                });
+                await Share.share({ text, dialogTitle: t('hikmet.share', 'Paylaş') });
                 return;
             }
-
             if (navigator.share) {
                 await navigator.share({ text });
             } else {
                 navigator.clipboard.writeText(text);
-                alert(t('hikmet.copied'));
+                alert(t('common.copied', 'Panoya kopyalandı!'));
             }
-        } catch (err) {
-            console.error('Share error:', err);
-        }
+        } catch (err) { console.error('Share error:', err); }
     };
 
-    // Go back
     const goBack = () => {
         if (activeCategory) {
             setActiveCategory(null);
@@ -69,287 +62,115 @@ function Hikmetname({ onClose }) {
         }
     };
 
-    // Render main view
     const renderMainView = () => (
-        <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
-            {/* Daily Hikmet */}
-            <div className="glass-card" style={{
-                padding: '24px',
-                marginBottom: '20px',
-                background: 'linear-gradient(135deg, rgba(155, 89, 182, 0.2) 0%, rgba(142, 68, 173, 0.1) 100%)',
-                textAlign: 'center'
+        <div className="reveal-stagger">
+            {/* Daily Hikmet Card */}
+            <div className="settings-card" style={{ 
+                flexDirection: 'column', 
+                background: 'linear-gradient(135deg, #8e44ad, #9b59b6)', 
+                border: 'none', 
+                padding: '32px', 
+                textAlign: 'center', 
+                color: 'white', 
+                marginBottom: '32px',
+                boxShadow: '0 12px 24px rgba(142, 68, 173, 0.2)',
+                gap: '24px'
             }}>
-                <div style={{
-                    fontSize: '12px',
-                    color: 'var(--text-color-muted)',
-                    marginBottom: '16px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px'
-                }}>
-                    ✨ {t('hikmet.daily')}
+                <div style={{ fontSize: '0.7rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.9, display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}>
+                    <Sparkles size={14} fill="white" /> {t('hikmet.daily', 'Günün Hikmeti')}
                 </div>
 
-                <div style={{
-                    fontSize: '18px',
-                    color: 'var(--text-color)',
-                    fontStyle: 'italic',
-                    lineHeight: '1.7',
-                    marginBottom: '16px'
-                }}>
+                <div style={{ fontSize: '1.25rem', color: 'white', fontStyle: 'italic', lineHeight: '1.7', fontWeight: '500' }}>
                     "{t(dailyHikmet.text)}"
                 </div>
 
-                <div style={{
-                    fontSize: '13px',
-                    color: 'var(--primary-color)',
-                    fontWeight: '600'
-                }}>
-                    — {t(dailyHikmet.source)}
+                <div>
+                    <div style={{ fontSize: '1rem', fontWeight: '800' }}>— {t(dailyHikmet.source)}</div>
+                    {dailyHikmet.reference && (
+                        <div style={{ fontSize: '0.75rem', opacity: 0.8, marginTop: '4px' }}>{t(dailyHikmet.reference)}</div>
+                    )}
                 </div>
-                {dailyHikmet.reference && (
-                    <div style={{
-                        fontSize: '11px',
-                        color: 'var(--text-color-muted)',
-                        marginTop: '4px'
-                    }}>
-                        {t(dailyHikmet.reference)}
-                    </div>
-                )}
 
-                {/* Action buttons */}
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    gap: '12px',
-                    marginTop: '20px'
-                }}>
-                    <button
-                        onClick={() => toggleFavorite(dailyHikmet.id)}
-                        style={{
-                            padding: '10px 20px',
-                            background: favorites.includes(dailyHikmet.id) ? 'rgba(231, 76, 60, 0.2)' : 'rgba(255,255,255,0.1)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '20px',
-                            color: favorites.includes(dailyHikmet.id) ? '#e74c3c' : 'var(--text-color)',
-                            fontSize: '12px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px'
-                        }}
-                    >
-                        <Heart size={14} fill={favorites.includes(dailyHikmet.id) ? '#e74c3c' : 'transparent'} />
-                        {t('hikmet.favorite')}
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                    <button className={`velocity-target-btn ${favorites.includes(dailyHikmet.id) ? 'active' : ''}`} style={{ background: 'rgba(255,255,255,0.2)', borderColor: 'transparent', color: 'white' }} onClick={() => toggleFavorite(dailyHikmet.id)}>
+                        <Heart size={18} fill={favorites.includes(dailyHikmet.id) ? 'white' : 'transparent'} />
                     </button>
-                    <button
-                        onClick={() => shareHikmet(dailyHikmet)}
-                        style={{
-                            padding: '10px 20px',
-                            background: 'var(--primary-color)',
-                            border: 'none',
-                            borderRadius: '20px',
-                            color: '#fff',
-                            fontSize: '12px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px'
-                        }}
-                    >
-                        <Share2 size={14} /> {t('hikmet.share')}
+                    <button className="velocity-target-btn" style={{ background: 'rgba(255,255,255,0.2)', borderColor: 'transparent', color: 'white' }} onClick={() => shareHikmet(dailyHikmet)}>
+                        <Share2 size={18} />
                     </button>
-                    <button
-                        onClick={getNewRandom}
-                        style={{
-                            padding: '10px 20px',
-                            background: 'rgba(255,255,255,0.1)',
-                            border: '1px solid var(--glass-border)',
-                            borderRadius: '20px',
-                            color: 'var(--text-color)',
-                            fontSize: '12px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px'
-                        }}
-                    >
-                        <RefreshCw size={14} /> {t('hikmet.new')}
+                    <button className="velocity-target-btn" style={{ background: 'rgba(255,255,255,0.2)', borderColor: 'transparent', color: 'white' }} onClick={getNewRandom}>
+                        <RefreshCw size={18} />
                     </button>
                 </div>
             </div>
 
             {/* Categories */}
-            <h3 style={{
-                fontSize: '14px',
-                color: 'var(--primary-color)',
-                marginBottom: '12px'
-            }}>
-                {t('hikmet.categoriesTitle')}
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
-                {HIKMET_CATEGORIES.map(category => (
-                    <div
-                        key={category.id}
-                        className="glass-card"
-                        style={{
-                            padding: '16px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '16px'
-                        }}
-                        onClick={() => setActiveCategory(category.id)}
-                    >
-                        <span style={{ fontSize: '28px' }}>{category.icon}</span>
-                        <div style={{ flex: 1 }}>
-                            <div style={{
-                                fontWeight: '600',
-                                fontSize: '15px',
-                                color: 'var(--primary-color)'
-                            }}>
-                                {t(category.title)}
+            <div className="settings-group">
+                <div className="settings-group-title">{t('hikmet.categoriesTitle')}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {HIKMET_CATEGORIES.map(category => (
+                        <div key={category.id} className="settings-card" onClick={() => setActiveCategory(category.id)} style={{ padding: '20px', cursor: 'pointer' }}>
+                            <div className="settings-icon-box" style={{ background: 'var(--nav-hover)', fontSize: '1.5rem' }}>
+                                {category.icon}
                             </div>
-                            <div style={{
-                                fontSize: '12px',
-                                color: 'var(--text-color-muted)'
-                            }}>
-                                {t(category.description)}
+                            <div style={{ flex: 1 }}>
+                                <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '1rem' }}>{t(category.title)}</div>
+                                <div className="settings-desc">{t(category.description)}</div>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <span style={{ fontSize: '0.7rem', fontWeight: '900', color: 'var(--nav-text-muted)', background: 'var(--nav-hover)', padding: '4px 10px', borderRadius: '10px' }}>
+                                    {getHikmetByCategory(category.id).length}
+                                </span>
+                                <ChevronRight size={18} color="var(--nav-text-muted)" />
                             </div>
                         </div>
-                        <div style={{
-                            padding: '4px 10px',
-                            background: 'rgba(255,255,255,0.1)',
-                            borderRadius: '12px',
-                            fontSize: '11px',
-                            color: 'var(--text-color-muted)'
-                        }}>
-                            {getHikmetByCategory(category.id).length}
-                        </div>
-                        <ChevronRight size={20} color="var(--text-color-muted)" />
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
-            {/* Favorites Section */}
+            {/* Favorites Summary */}
             {favorites.length > 0 && (
-                <>
-                    <h3 style={{
-                        fontSize: '14px',
-                        color: 'var(--primary-color)',
-                        marginBottom: '12px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px'
-                    }}>
-                        <Heart size={16} fill="#e74c3c" color="#e74c3c" /> {t('hikmet.favorites')} ({favorites.length})
-                    </h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        {HIKMETLER.filter(h => favorites.includes(h.id)).slice(0, 3).map(hikmet => (
-                            <div
-                                key={hikmet.id}
-                                className="glass-card"
-                                style={{ padding: '14px' }}
-                            >
-                                <div style={{
-                                    fontSize: '13px',
-                                    color: 'var(--text-color)',
-                                    fontStyle: 'italic',
-                                    marginBottom: '8px'
-                                }}>
-                                    "{t(hikmet.text)}"
-                                </div>
-                                <div style={{
-                                    fontSize: '11px',
-                                    color: 'var(--text-color-muted)'
-                                }}>
-                                    — {t(hikmet.source)}
-                                </div>
+                <div className="settings-group" style={{ marginTop: '32px' }}>
+                    <div className="settings-group-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Heart size={16} fill="#ef4444" color="#ef4444" /> {t('hikmet.favorites')} ({favorites.length})
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {HIKMETLER.filter(h => favorites.includes(h.id)).slice(0, 2).map(hikmet => (
+                            <div key={hikmet.id} className="settings-card" style={{ padding: '16px', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}>
+                                <div style={{ fontSize: '0.9rem', color: 'var(--nav-text)', fontStyle: 'italic', lineHeight: '1.5' }}>"{t(hikmet.text)}"</div>
+                                <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-accent)' }}>— {t(hikmet.source)}</div>
                             </div>
                         ))}
                     </div>
-                </>
+                </div>
             )}
         </div>
     );
 
-    // Render category view
     const renderCategoryView = () => {
         const category = HIKMET_CATEGORIES.find(c => c.id === activeCategory);
         const hikmetler = getHikmetByCategory(activeCategory);
 
         return (
-            <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
-                <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
-                    {t(category?.description)}
-                </p>
-
+            <div className="reveal-stagger">
+                <p className="settings-desc" style={{ marginBottom: '24px' }}>{t(category?.description)}</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {hikmetler.map(hikmet => (
-                        <div
-                            key={hikmet.id}
-                            className="glass-card"
-                            style={{ padding: '16px' }}
-                        >
-                            <div style={{
-                                fontSize: '15px',
-                                color: 'var(--text-color)',
-                                lineHeight: '1.7',
-                                marginBottom: '12px'
-                            }}>
+                        <div key={hikmet.id} className="settings-card" style={{ flexDirection: 'column', gap: '16px', padding: '24px' }}>
+                            <div style={{ fontSize: '1.05rem', color: 'var(--nav-text)', lineHeight: '1.7', fontStyle: 'italic' }}>
                                 "{t(hikmet.text)}"
                             </div>
-                            <div style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center'
-                            }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                                 <div>
-                                    <div style={{
-                                        fontSize: '12px',
-                                        color: 'var(--primary-color)',
-                                        fontWeight: '600'
-                                    }}>
-                                        — {t(hikmet.source)}
-                                    </div>
-                                    {hikmet.reference && (
-                                        <div style={{
-                                            fontSize: '10px',
-                                            color: 'var(--text-color-muted)'
-                                        }}>
-                                            {t(hikmet.reference)}
-                                        </div>
-                                    )}
+                                    <div style={{ fontWeight: '800', color: 'var(--nav-accent)', fontSize: '0.9rem' }}>— {t(hikmet.source)}</div>
+                                    {hikmet.reference && <div style={{ fontSize: '0.7rem', color: 'var(--nav-text-muted)', marginTop: '2px' }}>{t(hikmet.reference)}</div>}
                                 </div>
                                 <div style={{ display: 'flex', gap: '8px' }}>
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); toggleFavorite(hikmet.id); }}
-                                        style={{
-                                            padding: '8px',
-                                            background: 'rgba(255,255,255,0.1)',
-                                            border: 'none',
-                                            borderRadius: '50%',
-                                            cursor: 'pointer'
-                                        }}
-                                    >
-                                        <Heart
-                                            size={16}
-                                            color={favorites.includes(hikmet.id) ? '#e74c3c' : 'var(--text-color-muted)'}
-                                            fill={favorites.includes(hikmet.id) ? '#e74c3c' : 'transparent'}
-                                        />
+                                    <button className="icon-btn-small" onClick={() => toggleFavorite(hikmet.id)}>
+                                        <Heart size={16} fill={favorites.includes(hikmet.id) ? '#ef4444' : 'transparent'} color={favorites.includes(hikmet.id) ? '#ef4444' : 'var(--nav-text-muted)'} />
                                     </button>
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); shareHikmet(hikmet); }}
-                                        style={{
-                                            padding: '8px',
-                                            background: 'rgba(255,255,255,0.1)',
-                                            border: 'none',
-                                            borderRadius: '50%',
-                                            cursor: 'pointer'
-                                        }}
-                                    >
-                                        <Share2 size={16} color="var(--text-color-muted)" />
+                                    <button className="icon-btn-small" onClick={() => shareHikmet(hikmet)}>
+                                        <Share2 size={16} />
                                     </button>
                                 </div>
                             </div>
@@ -360,39 +181,26 @@ function Hikmetname({ onClose }) {
         );
     };
 
-    // Get title
-    const getTitle = () => {
-        if (activeCategory) {
-            const category = HIKMET_CATEGORIES.find(c => c.id === activeCategory);
-            return category ? t(category.title) : t('hikmet.title');
-        }
-        return t('hikmet.title');
-    };
-
     return (
-        <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '100px' }}>
+        <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
             {/* Header */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '20px',
-                paddingTop: '20px'
-            }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
                 <IslamicBackButton onClick={goBack} size="medium" />
-                <h1 style={{
-                    margin: 0,
-                    fontSize: '22px',
-                    color: 'var(--primary-color)',
-                    fontWeight: '700'
-                }}>
-                    📜 {getTitle()}
+                <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                    {activeCategory ? t(HIKMET_CATEGORIES.find(c => c.id === activeCategory)?.title) : t('hikmet.title')}
                 </h1>
             </div>
 
-            {/* Content */}
-            {!activeCategory && renderMainView()}
-            {activeCategory && renderCategoryView()}
+            {activeCategory ? renderCategoryView() : renderMainView()}
+
+            <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                    <Info size={18} color="var(--nav-accent)" />
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                        {t('hikmet.info_note', "Hikmetname, İslam düşünce dünyasından seçilmiş veciz sözler, hikmetli ifadeler ve ders verici nükteler içermektedir. Ruhunuzu dinlendirecek ve yolunuzu aydınlatacak bilgileri burada bulabilirsiniz.")}
+                    </p>
+                </div>
+            </div>
         </div>
     );
 }

@@ -6,7 +6,12 @@ import {
   requestNotificationPermission
 } from '../services/smartNotificationService';
 import { useTranslation } from 'react-i18next';
-import './NotificationSettings.css'; // Stil dosyasını oluşturmamız gerekebilir veya inline kullanabiliriz
+import { 
+    BellRing, Bell, Flame, Megaphone, Moon, 
+    AlertCircle, ChevronDown, Clock
+} from 'lucide-react';
+import './Navigation.css';
+import './NotificationSettings.css';
 
 const NotificationSettings = () => {
   const { t } = useTranslation();
@@ -29,9 +34,6 @@ const NotificationSettings = () => {
     };
 
     const checkPermission = async () => {
-      // Bu metod SmartNotificationService içinde public değilse,
-      // basitçe Notification API kontrolü veya bir wrapper kullanabiliriz.
-      // Şimdilik varsayım olarak:
       if ('Notification' in window) {
         setPermissionGranted(Notification.permission === 'granted');
       }
@@ -66,165 +68,160 @@ const NotificationSettings = () => {
   };
 
   return (
-    <div className="notification-settings-container p-4">
-      <h2 className="text-xl font-bold mb-4 flex items-center">
-        <span className="text-2xl mr-2">🔔</span> {t('settings.notificationSettingsTitle', 'Bildirim Ayarları')}
-      </h2>
+    <div className="notification-settings-section">
+      <div className="settings-group-title" style={{ marginTop: '24px' }}>{t('settings.notificationSettingsTitle', 'Bildirim Kanalları')}</div>
 
       {!permissionGranted && (
-        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
-          <p className="font-bold">{t('settings.notificationPermissionRequiredTitle', 'Bildirim İzni Gerekli')}</p>
-          <p>{t('settings.notificationPermissionRequiredDesc', 'Bildirimleri alabilmek için lütfen izin verin.')}</p>
+        <div className="settings-card" style={{ background: '#fffbeb', borderColor: '#fef3c7', flexDirection: 'column', alignItems: 'flex-start', gap: '12px' }}>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <AlertCircle size={24} color="#f59e0b" />
+            <div>
+              <div className="settings-label" style={{ color: '#92400e' }}>{t('settings.notificationPermissionRequiredTitle')}</div>
+              <div className="settings-desc" style={{ color: '#b45309' }}>{t('settings.notificationPermissionRequiredDesc')}</div>
+            </div>
+          </div>
           <button 
             onClick={requestPermission}
-            className="mt-2 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
+            className="hamburger-pro-badge"
+            style={{ width: '100%', justifyContent: 'center' }}
           >
-            {t('settings.allowPermission', 'İzin Ver')}
+            {t('settings.allowPermission')}
           </button>
         </div>
       )}
 
-      <div className="space-y-4">
+      <div className="settings-group">
         {/* Ezan Vakitleri */}
-        <div className="glass-card notification-card" style={{ borderLeft: '4px solid #FBBF24' }}>
-          <div className="flex justify-between items-center mb-2">
-            <div className="flex items-center">
-              <span className="text-xl mr-3">🕌</span>
-              <div>
-                <h3 className="setting-title">{t('notifications.channels.prayer.name', NOTIFICATION_CHANNELS.PRAYER.name)}</h3>
-                <p className="setting-desc">{t('notifications.channels.prayer.description', NOTIFICATION_CHANNELS.PRAYER.description)}</p>
-              </div>
+        <div className="settings-card" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} onClick={() => handleToggle('prayer')}>
+            <div className="settings-card-left">
+                <div className="settings-icon-box" style={{ background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
+                    <BellRing size={20} />
+                </div>
+                <div>
+                    <div className="settings-label">{t('notifications.channels.prayer.name', NOTIFICATION_CHANNELS.PRAYER.name)}</div>
+                    <div className="settings-desc">{t('notifications.channels.prayer.description', NOTIFICATION_CHANNELS.PRAYER.description)}</div>
+                </div>
             </div>
-            <label className="toggle-switch">
-              <input 
-                type="checkbox" 
-                checked={prefs.prayer} 
-                onChange={() => handleToggle('prayer')}
-              />
-              <span className="slider round"></span>
-            </label>
+            <div className={`velocity-switch ${prefs.prayer ? 'active' : ''}`}>
+                <div className="velocity-knob" />
+            </div>
           </div>
           
           {prefs.prayer && (
-            <div className="mt-3 pl-8 text-sm val-selection">
-              <label className="flex items-center justify-between">
-                <span>{t('settings.preAlertMinutes', 'Vakit Öncesi Uyarı (dk):')}</span>
-                <select 
-                  value={prefs.preAlertMinutes} 
-                  onChange={handleTimeChange}
-                  className="themed-select-min"
-                >
-                  <option value="15">{t('settings.minutesValue', { count: 15, defaultValue: '15 dk' })}</option>
-                  <option value="30">{t('settings.minutesValue', { count: 30, defaultValue: '30 dk' })}</option>
-                  <option value="45">{t('settings.minutesValue', { count: 45, defaultValue: '45 dk' })}</option>
-                  <option value="0">{t('settings.off', 'Kapalı')}</option>
-                </select>
-              </label>
+            <div className="val-selection" style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid var(--nav-border)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span className="settings-desc" style={{ fontSize: '14px', color: 'var(--nav-text)' }}>{t('settings.preAlertMinutes')}</span>
+                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                    <select 
+                        value={prefs.preAlertMinutes} 
+                        onChange={handleTimeChange}
+                        className="themed-select-min"
+                        style={{ paddingRight: '24px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '8px', color: 'var(--nav-text)', appearance: 'none' }}
+                    >
+                        <option value="15">15 {t('common.minutes', 'dk')}</option>
+                        <option value="30">30 {t('common.minutes', 'dk')}</option>
+                        <option value="45">45 {t('common.minutes', 'dk')}</option>
+                        <option value="0">{t('settings.off', 'Kapalı')}</option>
+                    </select>
+                    <ChevronDown size={14} style={{ position: 'absolute', right: '8px', pointerEvents: 'none', color: 'var(--nav-text-muted)' }} />
+                </div>
+              </div>
             </div>
           )}
         </div>
 
         {/* Günlük Hatırlatıcılar */}
-        <div className="glass-card notification-card" style={{ borderLeft: '4px solid #10B981' }}>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <span className="text-xl mr-3">📿</span>
-              <div>
-                <h3 className="setting-title">{t('notifications.channels.reminder.name', NOTIFICATION_CHANNELS.REMINDER.name)}</h3>
-                <p className="setting-desc">{t('notifications.channels.reminder.description', NOTIFICATION_CHANNELS.REMINDER.description)}</p>
+        <div className="settings-card" onClick={() => handleToggle('reminder')}>
+          <div className="settings-card-left">
+              <div className="settings-icon-box" style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
+                  <Bell size={20} />
               </div>
-            </div>
-            <label className="toggle-switch">
-              <input 
-                type="checkbox" 
-                checked={prefs.reminder} 
-                onChange={() => handleToggle('reminder')}
-              />
-              <span className="slider round"></span>
-            </label>
+              <div>
+                  <div className="settings-label">{t('notifications.channels.reminder.name', NOTIFICATION_CHANNELS.REMINDER.name)}</div>
+                  <div className="settings-desc">{t('notifications.channels.reminder.description', NOTIFICATION_CHANNELS.REMINDER.description)}</div>
+              </div>
+          </div>
+          <div className={`velocity-switch ${prefs.reminder ? 'active' : ''}`}>
+              <div className="velocity-knob" />
           </div>
         </div>
 
         {/* Seri Koruması */}
-        <div className="glass-card notification-card" style={{ borderLeft: '4px solid #F59E0B' }}>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <span className="text-xl mr-3">🔥</span>
-              <div>
-                <h3 className="setting-title">{t('notifications.channels.streak.name', NOTIFICATION_CHANNELS.STREAK.name)}</h3>
-                <p className="setting-desc">{t('notifications.channels.streak.description', NOTIFICATION_CHANNELS.STREAK.description)}</p>
+        <div className="settings-card" onClick={() => handleToggle('streak')}>
+          <div className="settings-card-left">
+              <div className="settings-icon-box" style={{ background: 'rgba(249, 115, 22, 0.1)', color: '#f97316' }}>
+                  <Flame size={20} />
               </div>
-            </div>
-            <label className="toggle-switch">
-              <input 
-                type="checkbox" 
-                checked={prefs.streak} 
-                onChange={() => handleToggle('streak')}
-              />
-              <span className="slider round"></span>
-            </label>
+              <div>
+                  <div className="settings-label">{t('notifications.channels.streak.name', NOTIFICATION_CHANNELS.STREAK.name)}</div>
+                  <div className="settings-desc">{t('notifications.channels.streak.description', NOTIFICATION_CHANNELS.STREAK.description)}</div>
+              </div>
+          </div>
+          <div className={`velocity-switch ${prefs.streak ? 'active' : ''}`}>
+              <div className="velocity-knob" />
           </div>
         </div>
 
         {/* Güncellemeler */}
-        <div className="glass-card notification-card" style={{ borderLeft: '4px solid #3B82F6' }}>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <span className="text-xl mr-3">📢</span>
-              <div>
-                <h3 className="setting-title">{t('notifications.channels.updates.name', NOTIFICATION_CHANNELS.UPDATES.name)}</h3>
-                <p className="setting-desc">{t('notifications.channels.updates.description', NOTIFICATION_CHANNELS.UPDATES.description)}</p>
+        <div className="settings-card" onClick={() => handleToggle('updates')}>
+          <div className="settings-card-left">
+              <div className="settings-icon-box" style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
+                  <Megaphone size={20} />
               </div>
-            </div>
-            <label className="toggle-switch">
-              <input 
-                type="checkbox" 
-                checked={prefs.updates} 
-                onChange={() => handleToggle('updates')}
-              />
-              <span className="slider round"></span>
-            </label>
+              <div>
+                  <div className="settings-label">{t('notifications.channels.updates.name', NOTIFICATION_CHANNELS.UPDATES.name)}</div>
+                  <div className="settings-desc">{t('notifications.channels.updates.description', NOTIFICATION_CHANNELS.UPDATES.description)}</div>
+              </div>
+          </div>
+          <div className={`velocity-switch ${prefs.updates ? 'active' : ''}`}>
+              <div className="velocity-knob" />
           </div>
         </div>
 
         {/* Sessiz Saatler */}
-        <div className="glass-card notification-card" style={{ borderLeft: '4px solid #8B5CF6' }}>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <span className="text-xl mr-3">🌙</span>
-              <div>
-                <h3 className="setting-title">{t('settings.quietHoursTitle', 'Sessiz Saatler')}</h3>
-                <p className="setting-desc">{t('settings.quietHoursDesc', 'Bu aralıkta push bildirim gönderilmez')}</p>
-              </div>
+        <div className="settings-card" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} onClick={() => handleToggle('quietHoursEnabled')}>
+            <div className="settings-card-left">
+                <div className="settings-icon-box" style={{ background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6' }}>
+                    <Moon size={20} />
+                </div>
+                <div>
+                    <div className="settings-label">{t('settings.quietHoursTitle')}</div>
+                    <div className="settings-desc">{t('settings.quietHoursDesc')}</div>
+                </div>
             </div>
-            <label className="toggle-switch">
-              <input
-                type="checkbox"
-                checked={prefs.quietHoursEnabled}
-                onChange={() => handleToggle('quietHoursEnabled')}
-              />
-              <span className="slider round"></span>
-            </label>
+            <div className={`velocity-switch ${prefs.quietHoursEnabled ? 'active' : ''}`}>
+                <div className="velocity-knob" />
+            </div>
           </div>
 
           {prefs.quietHoursEnabled && (
-            <div className="quiet-hours-grid mt-3 text-sm text-gray-600 dark:text-gray-300">
-              <label className="quiet-hours-item">
-                <span>{t('settings.start', 'Başlangıç')}</span>
-                <input
-                  type="time"
-                  value={prefs.quietHoursStart}
-                  onChange={(e) => handleQuietHoursTimeChange('quietHoursStart', e.target.value)}
-                />
-              </label>
-              <label className="quiet-hours-item">
-                <span>{t('settings.end', 'Bitiş')}</span>
-                <input
-                  type="time"
-                  value={prefs.quietHoursEnd}
-                  onChange={(e) => handleQuietHoursTimeChange('quietHoursEnd', e.target.value)}
-                />
-              </label>
+            <div className="quiet-hours-grid" style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid var(--nav-border)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <span className="settings-desc" style={{ fontWeight: '700' }}>{t('settings.start')}</span>
+                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                    <input
+                        type="time"
+                        value={prefs.quietHoursStart}
+                        onChange={(e) => handleQuietHoursTimeChange('quietHoursStart', e.target.value)}
+                        style={{ width: '100%', padding: '10px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '8px', color: 'var(--nav-text)', outline: 'none' }}
+                    />
+                    <Clock size={14} style={{ position: 'absolute', right: '10px', pointerEvents: 'none', color: 'var(--nav-text-muted)' }} />
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <span className="settings-desc" style={{ fontWeight: '700' }}>{t('settings.end')}</span>
+                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                    <input
+                        type="time"
+                        value={prefs.quietHoursEnd}
+                        onChange={(e) => handleQuietHoursTimeChange('quietHoursEnd', e.target.value)}
+                        style={{ width: '100%', padding: '10px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '8px', color: 'var(--nav-text)', outline: 'none' }}
+                    />
+                    <Clock size={14} style={{ position: 'absolute', right: '10px', pointerEvents: 'none', color: 'var(--nav-text-muted)' }} />
+                </div>
+              </div>
             </div>
           )}
         </div>

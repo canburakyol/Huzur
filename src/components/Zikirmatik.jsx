@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { RotateCcw, Volume2, VolumeX, ChevronLeft, BarChart3, Maximize, Minimize, Sparkles } from 'lucide-react';
+import { RotateCcw, Volume2, VolumeX, ChevronLeft, BarChart3, Maximize, Minimize, Sparkles, Plus, Minus, Info, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { useFocus } from '../context/FocusContext';
 import { useGamification } from '../hooks/useGamification';
 import { storageService } from '../services/storageService';
+import './Zikirmatik.css';
+import './Navigation.css';
 
 const ZIKIRMATIK_KEYS = {
     FREE_NAME: 'freeDhikrName',
@@ -13,7 +15,6 @@ const ZIKIRMATIK_KEYS = {
     STATS: 'zikirStats'
 };
 
-// Önceden tanımlı zikir listesi
 const DHIKR_LIST = [
     { id: 'free', name: 'Serbest Zikir', arabic: '∞', meaning: 'İstediğiniz zikri çekin', defaultTarget: 9999 },
     { id: 'subhanallah', name: 'Sübhanallah', arabic: 'سُبْحَانَ اللهِ', meaning: 'Allah\'ı tüm eksikliklerden tenzih ederim', defaultTarget: 33 },
@@ -31,14 +32,12 @@ const Zikirmatik = ({ onClose }) => {
     const { isFocusMode, toggleFocusMode } = useFocus();
     const { checkQuestProgress } = useGamification();
     
-    // Görünüm modu: 'list' veya 'counter'
     const [view, setView] = useState('list');
     const [selectedDhikr, setSelectedDhikr] = useState(null);
     const [freeDhikrName, setFreeDhikrName] = useState(() => {
         return storageService.getString(ZIKIRMATIK_KEYS.FREE_NAME, 'Serbest Zikir');
     });
 
-    // Sayaç durumları
     const [counts, setCounts] = useState(() => {
         return storageService.getItem(ZIKIRMATIK_KEYS.COUNTS, {});
     });
@@ -53,7 +52,6 @@ const Zikirmatik = ({ onClose }) => {
     const [vibrateEnabled, setVibrateEnabled] = useState(true);
     const [isPressed, setIsPressed] = useState(false);
 
-    // İstatistikler
     const [stats, setStats] = useState(() => {
         const savedStats = storageService.getItem(ZIKIRMATIK_KEYS.STATS, { today: 0, total: 0, history: [] });
         const today = new Date().toDateString();
@@ -66,21 +64,18 @@ const Zikirmatik = ({ onClose }) => {
     const [showStats, setShowStats] = useState(false);
     const [showSuccessAnim, setShowSuccessAnim] = useState(false);
 
-    // Serbest zikir adını kaydet
     const handleFreeNameChange = (e) => {
         const name = e.target.value;
         setFreeDhikrName(name);
         storageService.setString(ZIKIRMATIK_KEYS.FREE_NAME, name);
     };
 
-    // Sayacı kaydet
     const saveCount = (dhikrId, newCount) => {
         const newCounts = { ...counts, [dhikrId]: newCount };
         setCounts(newCounts);
         storageService.setItem(ZIKIRMATIK_KEYS.COUNTS, newCounts);
     };
 
-    // İstatistikleri güncelle
     const updateStats = (increment = 1) => {
         const today = new Date().toDateString();
         const newStats = {
@@ -104,15 +99,12 @@ const Zikirmatik = ({ onClose }) => {
         saveCount(selectedDhikr.id, newCount);
         updateStats(1);
         
-        // Quest Progress Check - Gamification entegrasyonu
         checkQuestProgress('zikir', selectedDhikr.id, 1);
 
-        // Titreşim
         if (vibrateEnabled && navigator.vibrate) {
             navigator.vibrate(30);
         }
 
-        // Hedefe ulaşıldıysa
         const target = targets[selectedDhikr.id];
         if (target && newCount === target) {
             setShowSuccessAnim(true);
@@ -142,291 +134,203 @@ const Zikirmatik = ({ onClose }) => {
         return Math.min((count / target) * 100, 100);
     };
 
-    // Liste Görünümü
     if (view === 'list') {
         return (
-            <div className="app-container" style={{
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '20px'
-            }}>
+            <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
                 {/* Header */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-                    <IslamicBackButton onClick={onClose} size="medium" />
-                    <h2 style={{ margin: 0, color: 'var(--primary-color)', fontSize: '22px', flex: 1 }}>📿 {t('menu.zikirmatik')}</h2>
-                    <button onClick={() => setShowStats(!showStats)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-color)' }}>
-                        <BarChart3 size={24} />
-                    </button>
-                    <button onClick={toggleFocusMode} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-color)', marginLeft: '8px' }}>
-                        {isFocusMode ? <Minimize size={24} /> : <Maximize size={24} />}
-                    </button>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                        <IslamicBackButton onClick={onClose} size="medium" />
+                        <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                            {t('menu.zikirmatik', 'Zikirmatik')}
+                        </h2>
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                        <button 
+                            onClick={() => setShowStats(!showStats)}
+                            style={{ background: showStats ? 'var(--nav-accent)' : 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '12px', padding: '10px', color: showStats ? 'white' : 'var(--nav-text-muted)', cursor: 'pointer', transition: 'all 0.2s' }}
+                        >
+                            <BarChart3 size={20} />
+                        </button>
+                    </div>
                 </div>
 
-                {/* İstatistikler */}
+                {/* Stats Dashboard */}
                 {showStats && (
-                    <div className="glass-card" style={{
-                        background: 'var(--primary-color)',
-                        borderRadius: '16px',
-                        padding: '20px',
-                        marginBottom: '20px',
-                        color: 'white'
-                    }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
-                            <div>
-                                <div style={{ fontSize: '28px', fontWeight: 'bold' }}>{stats.today}</div>
-                                <div style={{ fontSize: '12px', opacity: 0.9 }}>Bugün</div>
-                            </div>
-                            <div style={{ width: '1px', background: 'rgba(255,255,255,0.3)' }}></div>
-                            <div>
-                                <div style={{ fontSize: '28px', fontWeight: 'bold' }}>{stats.total}</div>
-                                <div style={{ fontSize: '12px', opacity: 0.9 }}>Toplam</div>
-                            </div>
+                    <div className="settings-card reveal-stagger" style={{ background: 'linear-gradient(135deg, var(--primary-color), var(--primary-dark))', border: 'none', padding: '24px', marginBottom: '24px', color: 'white' }}>
+                        <div style={{ flex: 1, textAlign: 'center' }}>
+                            <div style={{ fontSize: '2.5rem', fontWeight: '900' }}>{stats.today}</div>
+                            <div style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, textTransform: 'uppercase', letterSpacing: '1px' }}>Bugünkü Zikir</div>
+                        </div>
+                        <div style={{ width: '1px', background: 'rgba(255,255,255,0.2)', height: '40px' }}></div>
+                        <div style={{ flex: 1, textAlign: 'center' }}>
+                            <div style={{ fontSize: '2.5rem', fontWeight: '900' }}>{stats.total}</div>
+                            <div style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, textTransform: 'uppercase', letterSpacing: '1px' }}>Toplam Zikir</div>
                         </div>
                     </div>
                 )}
 
                 {/* Zikir Listesi */}
-                <div style={{ flex: 1, overflowY: 'auto' }}>
-                    {DHIKR_LIST.map(dhikr => {
-                        const count = counts[dhikr.id] || 0;
-                        const target = targets[dhikr.id] || dhikr.defaultTarget;
-                        const progress = getProgress(dhikr.id);
-                        const isComplete = count >= target;
-                        const displayName = dhikr.id === 'free' ? freeDhikrName : dhikr.name;
+                <div className="settings-group">
+                    <div className="settings-group-title premium-text">{t('zikirmatik.popularChoices', 'Popüler Zikirler')}</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {DHIKR_LIST.map((dhikr, index) => {
+                            const count = counts[dhikr.id] || 0;
+                            const target = targets[dhikr.id] || dhikr.defaultTarget;
+                            const progress = getProgress(dhikr.id);
+                            const isComplete = count >= target;
+                            const displayName = dhikr.id === 'free' ? freeDhikrName : dhikr.name;
 
-                        return (
-                            <div
-                                key={dhikr.id}
-                                onClick={() => selectDhikr(dhikr)}
-                                className="glass-card"
-                                style={{
-                                    background: isComplete ? 'rgba(39, 174, 96, 0.15)' : 'var(--card-bg)',
-                                    borderRadius: '16px',
-                                    padding: '16px',
-                                    marginBottom: '12px',
-                                    cursor: 'pointer',
-                                    border: isComplete ? '2px solid #27ae60' : '1px solid var(--glass-border)',
-                                    transition: 'all 0.2s ease'
-                                }}
-                            >
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <div>
-                                        <div style={{ fontWeight: '600', color: 'var(--text-color)', fontSize: '16px' }}>{displayName}</div>
-                                        <div style={{ fontFamily: 'serif', fontSize: '20px', color: 'var(--primary-color)', marginTop: '4px' }}>{dhikr.arabic}</div>
-                                    </div>
-                                    <div style={{ textAlign: 'right' }}>
-                                        <div style={{ fontSize: '24px', fontWeight: 'bold', color: isComplete ? '#27ae60' : 'var(--text-color)' }}>
-                                            {count}
+                            return (
+                                <div
+                                    key={dhikr.id}
+                                    onClick={() => selectDhikr(dhikr)}
+                                    className="settings-card reveal-stagger premium-glass hover-lift"
+                                    style={{ 
+                                        '--delay': `${0.1 + index * 0.05}s`,
+                                        padding: '16px',
+                                        background: isComplete ? 'rgba(15, 118, 110, 0.05)' : 'var(--nav-bg)',
+                                        border: isComplete ? '1px solid rgba(15, 118, 110, 0.4)' : '1px solid var(--nav-border)'
+                                    }}
+                                >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <div>
+                                                <div style={{ fontWeight: '800', fontSize: '1.1rem', color: isComplete ? 'var(--bg-emerald-light)' : 'var(--nav-text)' }}>
+                                                    {displayName}
+                                                </div>
+                                                <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontFamily: 'var(--arabic-font)' }}>
+                                                    {dhikr.arabic}
+                                                </div>
+                                            </div>
+                                            <div style={{ textAlign: 'right' }}>
+                                                <div style={{ fontWeight: '900', fontSize: '1.1rem' }}>
+                                                    {count} <span style={{ fontSize: '0.8rem', opacity: 0.5 }}>/ {target}</span>
+                                                </div>
+                                                {isComplete && <div style={{ fontSize: '0.7rem', color: 'var(--bg-emerald-light)', fontWeight: '800' }}>{t('common.completed', 'TAMAMLANDI')}</div>}
+                                            </div>
                                         </div>
-                                        <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>/ {target}</div>
+                                        {/* Progress Bar */}
+                                        <div style={{ height: '6px', background: 'var(--nav-hover)', borderRadius: '3px', overflow: 'hidden' }}>
+                                            <div style={{ 
+                                                width: `${progress}%`, 
+                                                height: '100%', 
+                                                background: isComplete ? 'var(--bg-emerald-light)' : 'var(--nav-accent)',
+                                                transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+                                            }} />
+                                        </div>
                                     </div>
                                 </div>
-
-                                {/* İlerleme çubuğu */}
-                                <div style={{
-                                    height: '4px',
-                                    background: 'var(--glass-border)',
-                                    borderRadius: '2px',
-                                    marginTop: '12px',
-                                    overflow: 'hidden'
-                                }}>
-                                    <div style={{
-                                        height: '100%',
-                                        width: `${progress}%`,
-                                        background: isComplete ? '#27ae60' : 'var(--primary-color)',
-                                        borderRadius: '2px',
-                                        transition: 'width 0.3s ease'
-                                    }}></div>
-                                </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         );
     }
 
-    // Sayaç Görünümü
+    const currentDhikrCount = counts[selectedDhikr?.id] || 0;
+    const currentDhikrTarget = targets[selectedDhikr?.id] || 33;
+    const scrollProgress = getProgress(selectedDhikr?.id);
+    const dashCircum = 829.38; 
+    const dashOffset = dashCircum - (scrollProgress * dashCircum / 100);
+
     return (
-        <div className="app-container" style={{
-            textAlign: 'center',
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: '30px 20px',
-            paddingBottom: '40px'
-        }}>
+        <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px', background: isFocusMode ? 'var(--nav-bg)' : 'transparent' }}>
             {/* Header */}
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <button onClick={() => setView('list')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <ChevronLeft size={24} />
-                    <span style={{ fontSize: '14px' }}>{t('common.back')}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+                <button 
+                    onClick={() => setView('list')}
+                    style={{ background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '12px', padding: '10px', color: 'var(--nav-text)', cursor: 'pointer' }}
+                >
+                    <ChevronLeft size={20} />
                 </button>
-                <button onClick={() => setVibrateEnabled(!vibrateEnabled)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-color-muted)' }}>
-                    {vibrateEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
-                </button>
-                <button onClick={toggleFocusMode} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-color-muted)', marginLeft: '10px' }}>
-                    {isFocusMode ? <Minimize size={24} /> : <Maximize size={24} />}
-                </button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <button 
+                        onClick={() => setVibrateEnabled(!vibrateEnabled)}
+                        style={{ background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '12px', padding: '10px', color: vibrateEnabled ? 'var(--nav-accent)' : 'var(--nav-text-muted)', cursor: 'pointer' }}
+                    >
+                        {vibrateEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
+                    </button>
+                    <button 
+                        onClick={toggleFocusMode}
+                        style={{ background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '12px', padding: '10px', color: isFocusMode ? 'var(--nav-accent)' : 'var(--nav-text-muted)', cursor: 'pointer' }}
+                    >
+                        {isFocusMode ? <Minimize size={20} /> : <Maximize size={20} />}
+                    </button>
+                </div>
             </div>
 
-            {/* Zikir Bilgisi - Yukarıda sabit */}
-            <div style={{ marginTop: '20px', marginBottom: '10px', width: '100%' }}>
+            {/* Dhikr Content */}
+            <div className="settings-card" style={{ flexDirection: 'column', padding: '32px', textAlign: 'center', gap: '12px', background: 'var(--nav-hover)', border: 'none' }}>
                 {selectedDhikr?.id === 'free' ? (
                     <input
                         type="text"
+                        className="dhikr-input-custom"
+                        style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--nav-accent)', color: 'var(--nav-text)', fontSize: '1.5rem', fontWeight: '800', textAlign: 'center', width: '100%', outline: 'none', padding: '8px' }}
                         value={freeDhikrName}
                         onChange={handleFreeNameChange}
-                        placeholder="Zikir Adı Giriniz"
-                        style={{
-                            fontSize: '18px',
-                            fontWeight: '600',
-                            color: 'var(--text-color)',
-                            border: 'none',
-                            borderBottom: '2px solid var(--primary-color)',
-                            background: 'transparent',
-                            textAlign: 'center',
-                            width: '80%',
-                            outline: 'none',
-                            padding: '5px'
-                        }}
+                        placeholder="Zikir Adı"
                     />
                 ) : (
-                    <div style={{ fontSize: '18px', fontWeight: '600', color: 'var(--text-color)' }}>{selectedDhikr?.name}</div>
+                    <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{selectedDhikr?.name}</h3>
                 )}
-                <div style={{ fontFamily: 'serif', fontSize: '28px', color: 'var(--primary-color)', marginTop: '8px' }}>{selectedDhikr?.arabic}</div>
-                <div style={{ fontSize: '13px', color: 'var(--text-color-muted)', marginTop: '8px', fontStyle: 'italic' }}>{selectedDhikr?.meaning}</div>
+                <div style={{ fontSize: '2rem', fontFamily: 'var(--arabic-font)', color: 'var(--nav-text)', margin: '16px 0' }}>{selectedDhikr?.arabic}</div>
+                <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontStyle: 'italic', lineHeight: '1.4' }}>{selectedDhikr?.meaning}</p>
             </div>
 
-            {/* Spacer - Butonu aşağıya itmek için */}
-            <div style={{ flex: 1, minHeight: '20px' }}></div>
-
-            {/* Ana Sayaç Butonu - Aşağıda, ergonomik konumda */}
-            <div
-                onClick={handleIncrement}
-                style={{
-                    width: '220px',
-                    height: '220px',
-                    borderRadius: '50%',
-                    background: 'var(--primary-color)',
-                    boxShadow: isPressed
-                        ? 'inset 10px 10px 20px rgba(0,0,0,0.3)'
-                        : '15px 15px 40px rgba(var(--primary-rgb), 0.4), -10px -10px 30px var(--card-bg)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    transition: 'all 0.1s ease',
-                    transform: isPressed ? 'scale(0.97)' : 'scale(1)',
-                    border: '6px solid rgba(255,255,255,0.3)'
-                }}
-            >
-                <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)', marginBottom: '5px' }}>TOPLAM</div>
-                <div style={{
-                    fontSize: '64px',
-                    fontWeight: 'bold',
-                    color: '#fff',
-                    fontFamily: 'monospace',
-                    textShadow: '0 2px 10px rgba(0,0,0,0.2)'
-                }}>
-                    {counts[selectedDhikr?.id] || 0}
-                </div>
-                <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)', marginTop: '5px' }}>
-                    Hedef: {targets[selectedDhikr?.id] || 33}
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '40px 0' }}>
+                <div className="velocity-dial-wrapper" onClick={handleIncrement}>
+                    <svg className="velocity-dial-svg">
+                        <circle className="velocity-dial-bg" cx="140" cy="140" r="132" />
+                        <circle
+                            className="velocity-dial-progress"
+                            cx="140"
+                            cy="140"
+                            r="132"
+                            style={{
+                                strokeDasharray: dashCircum,
+                                strokeDashoffset: dashOffset
+                            }}
+                        />
+                    </svg>
+                    <div className="velocity-dial-button" style={{ transform: isPressed ? 'scale(0.92)' : 'scale(1)' }}>
+                        <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase', letterSpacing: '2px' }}>OKUNAN</div>
+                        <div style={{ fontSize: '4rem', fontWeight: '900', color: 'var(--nav-text)', margin: '8px 0', lineHeight: 1 }}>{currentDhikrCount}</div>
+                        <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--nav-accent)' }}>Hedef: {currentDhikrTarget}</div>
+                    </div>
                 </div>
             </div>
 
-            {/* İlerleme göstergesi */}
-            <div style={{ width: '80%', marginTop: '20px' }}>
-                <div style={{
-                    height: '8px',
-                    background: 'var(--glass-border)',
-                    borderRadius: '4px',
-                    overflow: 'hidden'
-                }}>
-                    <div style={{
-                        height: '100%',
-                        width: `${getProgress(selectedDhikr?.id)}%`,
-                        background: 'var(--primary-color)',
-                        borderRadius: '4px',
-                        transition: 'width 0.3s ease'
-                    }}></div>
-                </div>
-            </div>
-
-            {/* Hedef Seçenekleri */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
+            {/* Target Options */}
+            <div className="settings-card" style={{ gap: '8px', padding: '24px', background: 'var(--nav-hover)', border: 'none', justifyContent: 'center' }}>
                 {[33, 99, 100, 500].map(val => (
                     <button
                         key={val}
+                        className={`velocity-target-btn ${currentDhikrTarget === val ? 'active' : ''}`}
                         onClick={() => {
                             const newTargets = { ...targets, [selectedDhikr.id]: val };
                             setTargets(newTargets);
                             storageService.setItem(ZIKIRMATIK_KEYS.TARGETS, newTargets);
                         }}
-                        style={{
-                            padding: '8px 16px',
-                            borderRadius: '20px',
-                            border: 'none',
-                            background: targets[selectedDhikr?.id] === val ? 'var(--primary-color)' : 'var(--glass-bg)',
-                            color: targets[selectedDhikr?.id] === val ? 'white' : 'var(--text-color)',
-                            cursor: 'pointer',
-                            fontWeight: '600',
-                            fontSize: '14px'
-                        }}
                     >
                         {val}
                     </button>
                 ))}
+                <button 
+                    onClick={handleReset}
+                    style={{ background: 'var(--nav-bg)', border: '1px solid var(--nav-border)', borderRadius: '12px', padding: '12px', color: 'var(--nav-text-muted)', cursor: 'pointer', transition: 'all 0.2s', marginLeft: 'auto' }}
+                >
+                    <RotateCcw size={20} />
+                </button>
             </div>
 
-            {/* Sıfırla Butonu */}
-            <button
-                onClick={handleReset}
-                style={{
-                    background: '#e74c3c',
-                    color: 'white',
-                    border: 'none',
-                    padding: '14px 40px',
-                    borderRadius: '12px',
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '10px',
-                    width: '80%',
-                    boxShadow: '0 4px 15px rgba(231, 76, 60, 0.3)',
-                    cursor: 'pointer',
-                    marginTop: '20px'
-                }}
-            >
-                <RotateCcw size={18} />
-                Sıfırla
-            </button>
-
-            {/* Success Animation Overlay */}
             {showSuccessAnim && (
-                <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    pointerEvents: 'none',
-                    zIndex: 100,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    <Sparkles 
-                        size={80}
-                        className="zikir-sparkle"
-                        style={{ color: '#FFD700', animation: 'pulse 1.5s ease-in-out infinite' }}
-                    />
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(4px)' }}>
+                    <div style={{ textAlign: 'center', animation: 'scaleUp 0.5s ease-out' }}>
+                        <Sparkles size={120} color="var(--nav-accent)" />
+                        <h2 style={{ color: 'var(--nav-accent)', fontWeight: '900', textShadow: '0 4px 12px rgba(180, 83, 9, 0.4)' }}>TEBRİKLER!</h2>
+                    </div>
                 </div>
             )}
         </div>

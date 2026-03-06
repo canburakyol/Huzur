@@ -1,4 +1,4 @@
-import { ExternalLink, Music, Book, Globe, Code, Heart } from 'lucide-react';
+import { ExternalLink, Music, Book, Globe, Code, Heart, Info, AlertTriangle, Sparkles } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { useTranslation } from 'react-i18next';
 
@@ -12,7 +12,7 @@ const LicensesCredits = ({ onClose }) => {
     const sources = [
         {
             category: t('licenses.categories.quranData'),
-            icon: <Book size={20} color="var(--primary-color)" />,
+            icon: <Book size={18} />,
             items: [
                 {
                     name: 'Al Quran Cloud API',
@@ -36,7 +36,7 @@ const LicensesCredits = ({ onClose }) => {
         },
         {
             category: t('licenses.categories.recitations'),
-            icon: <Music size={20} color="var(--primary-color)" />,
+            icon: <Music size={18} />,
             items: [
                 {
                     name: 'Mishary Rashid Alafasy',
@@ -52,27 +52,12 @@ const LicensesCredits = ({ onClose }) => {
                     name: 'Mahmoud Khalil Al-Husary',
                     description: 'Mısır - Klasik kayıtlar',
                     license: 'Public Domain'
-                },
-                {
-                    name: 'Abdurrahman As-Sudais',
-                    description: 'Suudi Arabistan - Harem-i Şerif İmamı',
-                    license: 'Streaming'
-                },
-                {
-                    name: 'Saud Al-Shuraim',
-                    description: 'Suudi Arabistan - Harem-i Şerif İmamı',
-                    license: 'Streaming'
-                },
-                {
-                    name: 'Maher Al-Muaiqly',
-                    description: 'Suudi Arabistan - Harem-i Şerif İmamı',
-                    license: 'Streaming'
                 }
             ]
         },
         {
             category: t('licenses.categories.prayerTimes'),
-            icon: <Globe size={20} color="var(--primary-color)" />,
+            icon: <Globe size={18} />,
             items: [
                 {
                     name: 'Aladhan API',
@@ -90,7 +75,7 @@ const LicensesCredits = ({ onClose }) => {
         },
         {
             category: t('licenses.categories.openSource'),
-            icon: <Code size={20} color="var(--primary-color)" />,
+            icon: <Code size={18} />,
             items: [
                 {
                     name: 'React',
@@ -109,155 +94,222 @@ const LicensesCredits = ({ onClose }) => {
                     description: 'İkon kütüphanesi',
                     url: 'https://lucide.dev',
                     license: 'ISC'
-                },
-                {
-                    name: 'i18next',
-                    description: 'Çoklu dil desteği',
-                    url: 'https://i18next.com',
-                    license: 'MIT'
                 }
             ]
         }
     ];
 
     return (
-        <div className="app-container" style={{ 
-            minHeight: '100vh', 
-            paddingBottom: '40px',
-            background: 'var(--bg-gradient-start)'
-        }}>
+        <div className="settings-container reveal-stagger" style={{ paddingBottom: '100px' }}>
             {/* Header */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '20px',
-                paddingTop: 'calc(20px + env(safe-area-inset-top))',
-                paddingLeft: '16px'
-            }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
-                <h1 style={{
-                    margin: 0,
-                    fontSize: '20px',
-                    color: 'var(--text-color)',
-                    fontWeight: '700'
-                }}>
-                    📜 {t('licenses.title')}
-                </h1>
+                <div style={{ flex: 1 }}>
+                    <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+                        {t('licenses.title', 'Lisanslar & Kaynaklar')}
+                    </h2>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+                        Huzur'u mümkün kılan teknoloji ve içerikler
+                    </p>
+                </div>
+                <div className="settings-icon-box" style={{ background: 'rgba(79, 70, 229, 0.1)', color: 'var(--nav-accent)' }}>
+                    <Info size={20} />
+                </div>
             </div>
 
             {/* Intro */}
-            <div className="glass-card" style={{ 
-                margin: '0 16px 16px', 
-                padding: '16px'
-            }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                    <Heart size={18} color="#e74c3c" />
-                    <span style={{ fontWeight: '600', color: 'var(--primary-color)' }}>
-                        {t('licenses.thanks')}
-                    </span>
+            <div className="settings-card thanks-banner" style={{ marginBottom: '32px', padding: '24px', gap: '16px' }}>
+                <div className="heart-box">
+                    <Heart size={24} fill="#ef4444" color="#ef4444" />
                 </div>
-                <p style={{ 
-                    fontSize: '13px', 
-                    color: 'var(--text-color-muted)', 
-                    margin: 0,
-                    lineHeight: '1.6'
-                }}>
-                    {t('licenses.thanksDesc')}
-                </p>
+                <div style={{ flex: 1 }}>
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '1rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                        {t('licenses.thanks', 'Teşekkürler')}
+                    </h4>
+                    <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.5' }}>
+                        {t('licenses.thanksDesc', 'Bu uygulamanın geliştirilmesine katkıda bulunan tüm açık kaynak projelerine ve veri sağlayıcılarına teşekkür ederiz.')}
+                    </p>
+                </div>
             </div>
 
-            {/* Sources */}
-            <div style={{ padding: '0 16px' }}>
+            {/* Sources List */}
+            <div className="sources-list">
               {sources.map((section, sectionIndex) => (
-                  <div key={sectionIndex} className="glass-card" style={{ marginBottom: '12px', padding: '16px' }}>
-                      <div style={{ 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: '10px', 
-                          marginBottom: '14px',
-                          paddingBottom: '10px',
-                          borderBottom: '1px solid var(--glass-border)'
-                      }}>
-                          {section.icon}
-                          <span style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>
-                              {section.category}
-                          </span>
+                  <div 
+                    key={sectionIndex} 
+                    className="settings-card source-section" 
+                    style={{ '--delay': `${sectionIndex * 0.1}s`, flexDirection: 'column', gap: '0' }}
+                  >
+                      <div className="section-header">
+                          <div className="category-icon-box">{section.icon}</div>
+                          <span className="category-title">{section.category}</span>
                       </div>
 
-                      {section.items.map((item, itemIndex) => (
-                          <div 
-                              key={itemIndex}
-                              style={{ 
-                                  padding: '10px 0',
-                                  borderBottom: itemIndex < section.items.length - 1 ? '1px solid var(--glass-border)' : 'none'
-                              }}
-                          >
-                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                  <div style={{ flex: 1 }}>
-                                      <div style={{ 
-                                          fontWeight: '600', 
-                                          fontSize: '14px', 
-                                          color: 'var(--primary-color)',
-                                          marginBottom: '2px'
-                                      }}>
-                                          {item.name}
-                                      </div>
-                                      <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
-                                          {item.description}
-                                      </div>
-                                  </div>
-                                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                      <span style={{
-                                          fontSize: '11px',
-                                          padding: '3px 8px',
-                                          background: 'rgba(212, 175, 55, 0.1)',
-                                          color: 'var(--primary-color)',
-                                          borderRadius: '10px',
-                                          fontWeight: '500'
-                                      }}>
-                                          {item.license}
-                                      </span>
-                                      {item.url && (
-                                          <button
-                                              onClick={() => openLink(item.url)}
-                                              style={{
-                                                  background: 'none',
-                                                  border: 'none',
-                                                  cursor: 'pointer',
-                                                  padding: '4px',
-                                                  color: 'var(--text-color-muted)'
-                                              }}
-                                          >
-                                              <ExternalLink size={14} />
-                                          </button>
-                                      )}
-                                  </div>
-                              </div>
-                          </div>
-                      ))}
+                      <div className="items-grid">
+                        {section.items.map((item, itemIndex) => (
+                            <div key={itemIndex} className="source-item">
+                                <div className="item-main">
+                                    <div className="item-info">
+                                        <h5 className="item-name">{item.name}</h5>
+                                        <p className="item-desc">{item.description}</p>
+                                    </div>
+                                    <div className="item-actions">
+                                        <span className="license-chip">{item.license}</span>
+                                        {item.url && (
+                                            <button className="link-btn" onClick={() => openLink(item.url)}>
+                                                <ExternalLink size={14} />
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                      </div>
                   </div>
               ))}
             </div>
 
             {/* Disclaimer */}
-            <div className="glass-card" style={{ 
-                margin: '12px 16px',
-                padding: '14px',
-                background: 'rgba(231, 76, 60, 0.05)',
-                border: '1px solid rgba(231, 76, 60, 0.2)'
-            }}>
-                <div style={{ 
-                    fontSize: '12px', 
-                    color: 'var(--text-color-muted)',
-                    lineHeight: '1.6'
-                }}>
-                    <strong style={{ color: '#e74c3c' }}>⚠️ {t('licenses.disclaimer')}</strong> 
-                    {' '}{t('licenses.disclaimerDesc')}
-                </div>
+            <div className="settings-card disclaimer-banner" style={{ marginTop: '32px' }}>
+                <AlertTriangle size={20} color="#f59e0b" style={{ flexShrink: 0 }} />
+                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '700', lineHeight: '1.6' }}>
+                    <span style={{ color: '#f59e0b', marginRight: '6px' }}>{t('licenses.disclaimer', 'UYARI:')}</span>
+                    {t('licenses.disclaimerDesc', 'Uygulama üzerinden sağlanan veriler bilgilendirme amaçlıdır. Önemli dini tercihleriniz için resmi kurumların verilerini teyit etmenizi öneririz.')}
+                </p>
             </div>
-        </div>
 
+            <style>{`
+                .thanks-banner {
+                    background: rgba(239, 68, 68, 0.03);
+                    border: 1px dashed rgba(239, 68, 68, 0.2);
+                    display: flex;
+                    align-items: center;
+                }
+
+                .heart-box {
+                    width: 48px; height: 48px;
+                    display: flex; align-items: center; justify-content: center;
+                    background: rgba(239, 68, 68, 0.1);
+                    border-radius: 14px;
+                }
+
+                .sources-list { display: flex; flex-direction: column; gap: 16px; }
+
+                .source-section {
+                    padding: 24px;
+                    animation: reveal 0.5s ease backwards;
+                    animation-delay: var(--delay);
+                    display: flex;
+                }
+
+                @keyframes reveal {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+
+                .section-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    margin-bottom: 20px;
+                    padding-bottom: 16px;
+                    border-bottom: 1px solid var(--nav-border);
+                    width: 100%;
+                }
+
+                .category-icon-box {
+                    color: var(--nav-accent);
+                    opacity: 0.8;
+                }
+
+                .category-title {
+                    font-size: 0.75rem;
+                    font-weight: 950;
+                    color: var(--nav-accent);
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+
+                .items-grid { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+
+                .source-item {
+                    padding: 12px 0;
+                }
+
+                .source-item:not(:last-child) {
+                    border-bottom: 1px solid var(--nav-border-muted);
+                }
+
+                .item-main {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 16px;
+                }
+
+                .item-info { flex: 1; }
+
+                .item-name {
+                    margin: 0 0 4px 0;
+                    font-size: 0.95rem;
+                    font-weight: 800;
+                    color: var(--nav-text);
+                }
+
+                .item-desc {
+                    margin: 0;
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    color: var(--nav-text-muted);
+                }
+
+                .item-actions {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                }
+
+                .license-chip {
+                    padding: 4px 10px;
+                    background: var(--nav-hover);
+                    border: 1px solid var(--nav-border);
+                    border-radius: 10px;
+                    font-size: 0.65rem;
+                    font-weight: 800;
+                    color: var(--nav-text-muted);
+                    white-space: nowrap;
+                }
+
+                .link-btn {
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: transparent;
+                    border: 1px solid var(--nav-border);
+                    border-radius: 8px;
+                    color: var(--nav-text-muted);
+                    cursor: pointer;
+                    transition: all 0.2s;
+                }
+
+                .link-btn:hover {
+                    color: var(--nav-accent);
+                    border-color: var(--nav-accent);
+                    background: var(--nav-hover);
+                }
+
+                .disclaimer-banner {
+                    padding: 20px;
+                    background: rgba(245, 158, 11, 0.03);
+                    border: 1px solid rgba(245, 158, 11, 0.2);
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                }
+            `}</style>
+        </div>
     );
 };
 

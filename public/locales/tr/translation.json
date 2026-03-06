@@ -576,6 +576,10 @@
       "duas": "Dualar",
       "hatims": "Hatimler"
     },
+    "sanctuary": "Topluluk Sığınağı",
+    "hatimDesc": "Sevdiklerinizle veya toplulukla beraber hatim halkaları oluşturun.",
+    "duaDesc": "Müslüman kardeşlerinizin dualarına amin diyebilir veya dua isteğinde bulunabilirsiniz.",
+    "groupHatim": "Topluluk Hatmi",
     "buttons": {
       "cancel": "Vazgeç",
       "requestDua": "Dua İste / Not Bırak",
@@ -613,6 +617,9 @@
     "joinDesc": "Hatim sahibinden aldığınız 8 haneli kodu girin.",
     "placeholderCode": "KODU GİRİN",
     "join": "Katıl",
+    "joined": "Katıldın",
+    "locked": "Kilitli",
+    "tapToJoin": "Katılmak için dokunun",
     "lockedTitle": "Kilitli Hatim",
     "lockedDesc": "\"{{title}}\" hatimine katılmak için erişim kodunu girmelisiniz.",
     "placeholderShortCode": "KOD",

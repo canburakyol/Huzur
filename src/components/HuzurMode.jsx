@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Volume2, Moon, Clock } from 'lucide-react';
+import { Play, Pause, Volume2, Moon, Clock, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { SLEEP_SOUNDS, CATEGORIES } from '../data/sleepModeData';
+import './HuzurMode.css';
+import './Navigation.css';
 
 const HuzurMode = ({ onClose }) => {
     const { t } = useTranslation();
@@ -13,7 +15,7 @@ const HuzurMode = ({ onClose }) => {
     const [volume, setVolume] = useState(0.5);
     const [timer, setTimer] = useState(null);
     const [timeLeft, setTimeLeft] = useState(null);
-    const [isSleepMode, setIsSleepMode] = useState(false); // Ekran karartma modu
+    const [isSleepMode, setIsSleepMode] = useState(false);
 
     const audioRef = useRef(null);
     const timerRef = useRef(null);
@@ -35,7 +37,6 @@ const HuzurMode = ({ onClose }) => {
         if (!audioRef.current) return;
 
         if (activeSound && isPlaying) {
-            // Eğer aynı ses değilse kaynağı değiştir
             if (!audioRef.current.src.includes(activeSound.url)) {
                 audioRef.current.src = activeSound.url;
                 audioRef.current.load();
@@ -71,12 +72,6 @@ const HuzurMode = ({ onClose }) => {
         }
     };
 
-    useEffect(() => {
-        return () => {
-            if (timerRef.current) clearInterval(timerRef.current);
-        };
-    }, []);
-
     const formatTime = (seconds) => {
         const m = Math.floor(seconds / 60);
         const s = seconds % 60;
@@ -85,7 +80,6 @@ const HuzurMode = ({ onClose }) => {
 
     const togglePlay = () => {
         if (!activeSound) {
-            // Varsayılan olarak ilk sesi seç
             const defaultSound = SLEEP_SOUNDS.find(s => s.category === activeCategory) || SLEEP_SOUNDS[0];
             setActiveSound(defaultSound);
             setIsPlaying(true);
@@ -94,240 +88,145 @@ const HuzurMode = ({ onClose }) => {
         }
     };
 
-    // Sleep Mode Toggle
     const toggleSleepMode = () => {
         setIsSleepMode(!isSleepMode);
     };
 
     return (
-        <div style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 2000,
-            background: isSleepMode ? '#000' : 'linear-gradient(to bottom, #0f2027, #203a43, #2c5364)',
-            color: 'white',
-            display: 'flex',
-            flexDirection: 'column',
-            overflowY: 'auto',
-            transition: 'background 0.5s ease'
-        }}>
+        <div className={`huzur-mode-overlay ${isSleepMode ? 'sleep-active' : ''}`}>
             {/* Sleep Mode Overlay (Click to wake) */}
             {isSleepMode && (
-                <div 
-                    onClick={toggleSleepMode}
-                    style={{
-                        position: 'absolute',
-                        top: 0, left: 0, right: 0, bottom: 0,
-                        zIndex: 2001,
-                        background: 'black',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer'
-                    }}
-                >
-                    <div style={{ textAlign: 'center', opacity: 0.3 }}>
-                        <Moon size={48} />
-                        <p>Uyandırmak için dokun</p>
+                <div onClick={toggleSleepMode} className="sleep-screen">
+                    <div className="sleep-indicator">
+                        <Moon size={64} className="floating" />
+                        <p>{t('huzurMode.wake_hint', 'Uyandırmak için dokun')}</p>
                     </div>
                 </div>
             )}
 
-            {/* Header */}
-            <div style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '12px', opacity: isSleepMode ? 0 : 1 }}>
-                <IslamicBackButton onClick={onClose} size="medium" />
-                <h2 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <Moon size={24} color="#f1c40f" />
-                    {t('menu.huzurMode')}
-                </h2>
-                <button 
-                    onClick={toggleSleepMode}
-                    style={{ 
-                        marginLeft: 'auto', 
-                        background: 'rgba(255,255,255,0.1)', 
-                        border: 'none', 
-                        borderRadius: '20px', 
-                        padding: '8px 16px',
-                        color: 'white',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px'
-                    }}
-                >
-                    <Moon size={16} />
-                    Gece Modu
-                </button>
-            </div>
-
-            {/* Main Visual / Timer */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '200px', opacity: isSleepMode ? 0 : 1 }}>
-                <div style={{
-                    width: '150px',
-                    height: '150px',
-                    borderRadius: '50%',
-                    border: '4px solid rgba(255,255,255,0.1)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    position: 'relative',
-                    marginBottom: '30px'
-                }}>
-                    {isPlaying && (
-                        <div style={{
-                            position: 'absolute',
-                            top: 0, left: 0, right: 0, bottom: 0,
-                            borderRadius: '50%',
-                            background: 'rgba(255,255,255,0.05)',
-                            animation: 'pulse 3s infinite'
-                        }}></div>
-                    )}
-
-                    <button
-                        onClick={togglePlay}
-                        style={{
-                            width: '80px',
-                            height: '80px',
-                            borderRadius: '50%',
-                            background: isPlaying ? 'rgba(255,255,255,0.2)' : 'white',
-                            border: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s',
-                            zIndex: 2
-                        }}
+            <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px', opacity: isSleepMode ? 0 : 1 }}>
+                {/* Header */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+                    <IslamicBackButton onClick={onClose} size="medium" />
+                    <div>
+                        <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <Moon size={24} color="var(--nav-accent)" />
+                            {t('menu.huzurMode')}
+                        </h2>
+                    </div>
+                    <button 
+                        onClick={toggleSleepMode}
+                        className="gece-modu-btn"
                     >
-                        {isPlaying ? <Pause size={32} color="white" /> : <Play size={32} color="#2c3e50" style={{ marginLeft: '4px' }} />}
+                        <Moon size={16} />
+                        {t('huzurMode.night_mode', 'Gece Modu')}
                     </button>
                 </div>
 
-                {timeLeft !== null && (
-                    <div style={{ fontSize: '32px', fontFamily: 'monospace', fontWeight: 'bold', marginBottom: '10px' }}>
-                        {formatTime(timeLeft)}
+                {/* Main Visual / Timer */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin: '40px 0' }}>
+                    <div className="huzur-visual-container">
+                        {isPlaying && <div className="huzur-pulse"></div>}
+                        <button
+                            onClick={togglePlay}
+                            className={`huzur-play-btn ${isPlaying ? 'playing' : ''}`}
+                        >
+                            {isPlaying ? <Pause size={40} /> : <Play size={40} style={{ marginLeft: '6px' }} />}
+                        </button>
                     </div>
-                )}
 
-                {/* Timer Selection */}
-                <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-                    {[15, 30, 60].map(m => (
-                        <button
-                            key={m}
-                            onClick={() => handleTimerSet(m)}
-                            style={{
-                                background: timer === m ? '#f1c40f' : 'rgba(255,255,255,0.1)',
-                                color: timer === m ? '#2c3e50' : 'white',
-                                border: 'none',
-                                padding: '8px 16px',
-                                borderRadius: '20px',
-                                fontSize: '12px',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '4px'
-                            }}
-                        >
-                            <Clock size={14} />
-                            {m} {t('huzurMode.minutes')}
-                        </button>
-                    ))}
-                </div>
-            </div>
+                    {timeLeft !== null && (
+                        <div className="huzur-timer-display">
+                            {formatTime(timeLeft)}
+                        </div>
+                    )}
 
-            {/* Controls & Categories */}
-            <div style={{ background: 'rgba(0,0,0,0.3)', padding: '20px', borderRadius: '30px 30px 0 0', opacity: isSleepMode ? 0 : 1 }}>
-                
-                {/* Categories */}
-                <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', overflowX: 'auto', paddingBottom: '5px' }}>
-                    {CATEGORIES.map(cat => (
-                        <button
-                            key={cat.id}
-                            onClick={() => setActiveCategory(cat.id)}
-                            style={{
-                                background: activeCategory === cat.id ? 'rgba(255,255,255,0.2)' : 'transparent',
-                                border: '1px solid rgba(255,255,255,0.2)',
-                                borderRadius: '20px',
-                                padding: '8px 16px',
-                                color: 'white',
-                                cursor: 'pointer',
-                                whiteSpace: 'nowrap',
-                                fontSize: '13px'
-                            }}
-                        >
-                            {t(cat.nameKey)}
-                        </button>
-                    ))}
+                    {/* Timer Selection */}
+                    <div className="velocity-target-grid" style={{ maxWidth: '300px', margin: '0 auto 24px' }}>
+                        {[15, 30, 60].map(m => (
+                            <button
+                                key={m}
+                                onClick={() => handleTimerSet(m)}
+                                className={`velocity-target-btn ${timer === m ? 'active' : ''}`}
+                                style={{ padding: '10px' }}
+                            >
+                                {m}m
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
-                {/* Sounds List */}
-                <div style={{ marginBottom: '25px' }}>
-                    <div style={{ display: 'flex', gap: '15px', overflowX: 'auto', paddingBottom: '10px' }}>
+                {/* Controls & Categories */}
+                <div className="settings-group">
+                    <div className="settings-group-title">{t('huzurMode.categories', 'Kategoriler')}</div>
+                    <div className="velocity-target-grid" style={{ marginBottom: '24px' }}>
+                        {CATEGORIES.map(cat => (
+                            <button
+                                key={cat.id}
+                                onClick={() => setActiveCategory(cat.id)}
+                                className={`velocity-target-btn ${activeCategory === cat.id ? 'active' : ''}`}
+                            >
+                                {t(cat.nameKey)}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="settings-group-title">{t('huzurMode.sounds', 'Sesler')}</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
                         {SLEEP_SOUNDS.filter(s => s.category === activeCategory).map(sound => {
                             const Icon = sound.icon;
+                            const isActive = activeSound?.id === sound.id;
                             return (
                                 <div key={sound.id}
                                     onClick={() => {
-                                        setActiveSound(activeSound?.id === sound.id ? null : sound);
-                                        if (!isPlaying && activeSound?.id !== sound.id) setIsPlaying(true);
+                                        setActiveSound(isActive ? null : sound);
+                                        if (!isPlaying && !isActive) setIsPlaying(true);
                                     }}
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        gap: '8px',
-                                        cursor: 'pointer',
-                                        opacity: activeSound?.id === sound.id ? 1 : 0.5,
-                                        transition: 'opacity 0.3s',
-                                        minWidth: '70px'
-                                    }}
+                                    className={`huzur-sound-card ${isActive ? 'active' : ''}`}
                                 >
-                                    <div style={{
-                                        width: '60px',
-                                        height: '60px',
-                                        borderRadius: '20px',
-                                        background: activeSound?.id === sound.id ? '#f1c40f' : 'rgba(255,255,255,0.1)',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: activeSound?.id === sound.id ? '#2c3e50' : 'white'
-                                    }}>
+                                    <div className="huzur-sound-icon">
                                         <Icon size={24} />
                                     </div>
-                                    <span style={{ fontSize: '11px', textAlign: 'center' }}>{t(sound.nameKey)}</span>
+                                    <span style={{ fontSize: '0.65rem', fontWeight: '800', textAlign: 'center', color: isActive ? 'var(--nav-text)' : 'var(--nav-text-muted)' }}>
+                                        {t(sound.nameKey)}
+                                    </span>
                                 </div>
                             );
                         })}
                     </div>
-                    
-                    {/* Volume Control */}
-                    {activeSound && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '20px' }}>
-                            <Volume2 size={16} />
-                            <input
-                                type="range"
-                                min="0"
-                                max="1"
-                                step="0.1"
-                                value={volume}
-                                onChange={(e) => setVolume(parseFloat(e.target.value))}
-                                style={{ flex: 1, accentColor: '#f1c40f' }}
-                            />
+                </div>
+
+                {/* Volume Control */}
+                {activeSound && (
+                    <div className="settings-card" style={{ marginTop: '32px', padding: '24px', flexDirection: 'column', gap: '16px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--nav-text)' }}>
+                                <Volume2 size={20} />
+                                <span style={{ fontWeight: '800', fontSize: '0.9rem' }}>{t('huzurMode.volume', 'Ses Seviyesi')}</span>
+                            </div>
+                            <span style={{ fontWeight: '900', color: 'var(--nav-accent)' }}>{Math.round(volume * 100)}%</span>
                         </div>
-                    )}
+                        <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={volume}
+                            onChange={(e) => setVolume(parseFloat(e.target.value))}
+                            className="velocity-slider"
+                        />
+                    </div>
+                )}
+
+                <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                        <Sparkles size={18} color="var(--nav-accent)" />
+                        <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                            {t('huzurMode.info_note', 'Huzur Modu, rahatlamanıza ve daha kaliteli bir uyku çekmenize yardımcı olacak asude sesler sunar. Zamanlayıcıyı kurarak cihazınızın pilinden tasarruf edebilirsiniz.')}
+                        </p>
+                    </div>
                 </div>
             </div>
-
-            <style>{`
-                @keyframes pulse {
-                    0% { transform: scale(1); opacity: 0.5; }
-                    50% { transform: scale(1.2); opacity: 0; }
-                    100% { transform: scale(1); opacity: 0; }
-                }
-            `}</style>
         </div>
     );
 };

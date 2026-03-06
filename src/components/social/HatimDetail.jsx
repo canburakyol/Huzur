@@ -1,25 +1,47 @@
 import { useState } from 'react';
 import { useGroupHatim } from '../../hooks/useGroupHatim';
 import { getCurrentUserId } from '../../services/authService';
+import { useTranslation } from 'react-i18next';
+import { ArrowLeft, Copy, Share2, Info, CheckCircle, RefreshCw } from 'lucide-react';
+import './Social.css';
 
 const HatimDetail = ({ hatimId, onBack }) => {
+  const { t } = useTranslation();
   const { hatimDetails, loading, error, takePart, releasePart, completePart } = useGroupHatim(hatimId);
   const currentUserId = getCurrentUserId();
   
   // Local state to track which part is being interacted with (for loading states)
   const [processingPart, setProcessingPart] = useState(null);
 
-  if (loading && !hatimDetails) return <div style={{ color: 'var(--text-color)', padding: '20px', textAlign: 'center' }}>Yükleniyor...</div>;
-  if (error) return <div style={{ color: 'red', padding: '20px' }}>Hata: {error}</div>;
+  if (loading && !hatimDetails) {
+    return (
+      <div className="settings-card reveal-stagger" style={{ justifyContent: 'center', padding: '40px' }}>
+         <div className="spin"><RefreshCw size={32} color="var(--nav-accent)" /></div>
+         <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{t('common.loading')}</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="manuscript-card reveal-stagger" style={{ borderColor: '#ef4444' }}>
+        <p className="lesson-title">⚠️ {t('common.error')}</p>
+        <p className="lesson-desc">{error}</p>
+      </div>
+    );
+  }
   if (!hatimDetails) return null;
 
   // Extra security: If user somehow got here without being a member
   const isMember = hatimDetails.readers?.includes(currentUserId);
   if (!isMember) {
     return (
-      <div style={{ padding: '40px 20px', textAlign: 'center', color: 'var(--text-color)' }}>
-        <p>⚠️ Bu hatimin detaylarını görmek için önce katılmalısınız.</p>
-        <button onClick={onBack} className="btn btn-primary" style={{ marginTop: '20px' }}>Geri Dön</button>
+      <div className="manuscript-card reveal-stagger" style={{ textAlign: 'center' }}>
+        <Info size={48} color="var(--soc-teal-dark)" style={{ marginBottom: '15px' }} />
+        <p className="lesson-desc">⚠️ {t('hatim.membershipRequired', 'Bu hatimin detaylarını görmek için önce katılmalısınız.')}</p>
+        <button onClick={onBack} className="sanctuary-btn-primary" style={{ marginTop: '20px', width: '100%' }}>
+          {t('common.back')}
+        </button>
       </div>
     );
   }
@@ -61,64 +83,70 @@ const HatimDetail = ({ hatimId, onBack }) => {
     }
   };
 
-  const getPartColor = (status, isMine) => {
-    if (status === 'completed') return 'var(--success-color)'; // Green
-    if (status === 'taken') return isMine ? 'var(--warning-color)' : 'rgba(255,255,255,0.3)'; // Orange if mine, gray transparent if others
-    return 'rgba(255,255,255,0.1)'; // Empty
-  };
-
-  const getPartBorder = (status, isMine) => {
-    if (status === 'taken' && isMine) return '2px solid var(--warning-color)';
-    if (status === 'completed') return '2px solid var(--success-color)';
-    return '1px solid var(--glass-border)';
-  };
 
   return (
-    <div className="hatim-detail" style={{ animation: 'fadeIn 0.3s' }}>
+    <div className="hatim-detail reveal-stagger">
       {/* Header */}
-      <div className="glass-card" style={{ padding: '15px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-        <button onClick={onBack} className="btn-icon" style={{ color: 'var(--text-color)', background: 'none', border: 'none', fontSize: '20px' }}>←</button>
+      <div className="settings-card" style={{ padding: '20px 24px', display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px', border: '1px solid var(--hb-border)' }}>
+        <button onClick={onBack} className="premium-icon-btn" style={{ background: 'var(--hb-hover)', color: 'var(--hb-accent)', width: '44px', height: '44px', borderRadius: '14px' }}>
+          <ArrowLeft size={20} />
+        </button>
         <div style={{ flex: 1 }}>
-          <h3 style={{ margin: 0, color: 'var(--primary-color)' }}>{hatimDetails.name}</h3>
-          <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-color-muted)' }}>Kod: {hatimDetails.joinCode} (Dokunarak Kopyala)</p>
+          <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '950', color: 'var(--hb-bg)', letterSpacing: '-0.5px' }}>
+            {hatimDetails.name}
+          </h3>
+          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--hb-accent)', fontWeight: '900', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Hash size={14} /> {hatimDetails.joinCode}
+          </p>
         </div>
+        <button 
+          className="premium-icon-btn" 
+          style={{ background: 'rgba(180, 83, 9, 0.1)', color: 'var(--hb-accent)', width: '44px', height: '44px', borderRadius: '14px', border: '1px solid rgba(180, 83, 9, 0.2)' }}
+          onClick={() => {
+            navigator.clipboard.writeText(hatimDetails.joinCode);
+            alert(t('hatim.messages.codeCopied'));
+          }}
+        >
+          <Copy size={20} />
+        </button>
       </div>
 
       {/* Grid */}
-      <div className="glass-card" style={{ padding: '15px' }}>
-         <h4 style={{ marginTop: 0, marginBottom: '15px', color: 'var(--text-color)' }}>Cüz Durumları</h4>
-         <div style={{
-           display: 'grid',
-           gridTemplateColumns: 'repeat(5, 1fr)',
-           gap: '8px'
-         }}>
+      <div className="settings-card" style={{ flexDirection: 'column', padding: '24px', border: '1px solid var(--hb-border)' }}>
+         <h4 style={{ margin: '0 0 24px 0', fontSize: '0.75rem', fontWeight: '900', color: 'var(--hb-bg)', opacity: 0.5, textTransform: 'uppercase', letterSpacing: '1px' }}>
+            {t('hatim.statusGrid', 'Cüz Durumları')}
+         </h4>
+         <div className="sanctuary-grid">
            {Array.from({ length: 30 }, (_, i) => i + 1).map(num => {
              const part = hatimDetails.parts?.[num] || { status: 'free' };
              const isMine = part.takenBy?.uid === currentUserId;
              const isLoading = processingPart === num;
+
+             let statusClass = 'free';
+             if (part.status === 'completed') statusClass = 'completed';
+             else if (part.status === 'taken') statusClass = isMine ? 'taken-mine' : 'taken-others';
 
              return (
                <button
                  key={num}
                  onClick={() => handlePartClick(num, part)}
                  disabled={isLoading}
+                 className={`part-btn ${statusClass}`}
                  style={{
-                   aspectRatio: '1',
-                   borderRadius: '8px',
-                   border: getPartBorder(part.status, isMine),
-                   background: getPartColor(part.status, isMine),
-                   color: 'var(--text-color)',
-                   fontWeight: 'bold',
-                   display: 'flex',
-                   alignItems: 'center',
-                   justifyContent: 'center',
-                   position: 'relative',
-                   fontSize: '14px'
+                   borderRadius: '14px',
+                   border: '1px solid rgba(0,0,0,0.05)',
+                   fontWeight: '900',
+                   transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
                  }}
                >
-                 {isLoading ? '...' : num}
+                 {isLoading ? <RefreshCw size={16} className="spin" /> : num}
                  {isMine && part.status === 'taken' && (
-                   <span style={{ position: 'absolute', bottom: '2px', fontSize: '8px' }}>SİZDE</span>
+                   <span className="part-label-mini" style={{ color: 'var(--hb-accent)', fontWeight: '950' }}>{t('hatim.mine', 'SİZDE')}</span>
+                 )}
+                 {part.status === 'completed' && (
+                   <span className="part-label-mini" style={{ color: 'white', opacity: 0.7 }}>
+                     <CheckCircle size={12} fill="white" />
+                   </span>
                  )}
                </button>
              );
@@ -126,38 +154,41 @@ const HatimDetail = ({ hatimId, onBack }) => {
          </div>
 
          {/* Legend */}
-         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '20px', fontSize: '12px', color: 'var(--text-color-muted)' }}>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-             <div style={{ width: '10px', height: '10px', background: 'rgba(255,255,255,0.1)', border: '1px solid var(--glass-border)' }}></div> Boş
-           </div>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <div style={{ width: '10px', height: '10px', background: 'var(--warning-color)' }}></div> Sizde
-           </div>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <div style={{ width: '10px', height: '10px', background: 'rgba(255,255,255,0.3)' }}></div> Başkasında
-           </div>
-           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <div style={{ width: '10px', height: '10px', background: 'var(--success-color)' }}></div> Okundu
-           </div>
+         <div style={{ 
+            display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', 
+            marginTop: '32px', padding: '18px', background: 'rgba(0,0,0,0.03)', borderRadius: '18px' 
+         }}>
+            <div className="legend-item" style={{ fontSize: '0.75rem', fontWeight: '900', color: 'var(--hb-bg)', opacity: 0.6 }}>
+              <div style={{ width: '12px', height: '12px', borderRadius: '4px', background: 'white', border: '1.5px solid rgba(0,0,0,0.1)' }}></div>
+              {t('hatim.free', 'Boş')}
+            </div>
+            <div className="legend-item" style={{ fontSize: '0.75rem', fontWeight: '900', color: 'var(--hb-bg)', opacity: 0.6 }}>
+              <div style={{ width: '12px', height: '12px', borderRadius: '4px', background: 'var(--hb-emerald-light)', border: '1px solid var(--hb-bg)' }}></div>
+              {t('hatim.mine', 'Sizde')}
+            </div>
+            <div className="legend-item" style={{ fontSize: '0.75rem', fontWeight: '900', color: 'var(--hb-bg)', opacity: 0.6 }}>
+              <div style={{ width: '12px', height: '12px', borderRadius: '4px', background: '#f1f5f9', border: '1.5px solid rgba(0,0,0,0.05)' }}></div>
+              {t('hatim.others', 'Başkasında')}
+            </div>
+            <div className="legend-item" style={{ fontSize: '0.75rem', fontWeight: '900', color: 'var(--hb-bg)', opacity: 0.6 }}>
+              <div style={{ width: '12px', height: '12px', borderRadius: '4px', background: 'var(--hb-bg)' }}></div>
+              {t('hatim.completed', 'Okundu')}
+            </div>
          </div>
       </div>
      
       {/* Share Button */}
       <button 
-        className="btn btn-primary"
+        className="sanctuary-btn-primary reveal-stagger"
+        style={{ width: '100%', marginTop: '24px', padding: '18px', borderRadius: '20px' }}
         onClick={() => {
-          navigator.clipboard.writeText(hatimDetails.joinCode);
-          alert('Davet kodu kopyalandı!');
-        }}
-        style={{ 
-          width: '100%', 
-          marginTop: '20px', 
-          padding: '14px', 
-          borderRadius: '12px',
-          fontWeight: 'bold'
+          const shareText = t('hatim.shareText', { title: hatimDetails.name, code: hatimDetails.joinCode });
+          navigator.clipboard.writeText(shareText);
+          alert(t('hatim.messages.inviteCopied'));
         }}
       >
-        Davet Kodunu Kopyala
+        <Share2 size={20} />
+        {t('hatim.share', 'Davet Kodunu Paylaş')}
       </button>
 
     </div>

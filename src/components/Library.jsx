@@ -1,10 +1,11 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, ChevronDown, Book, Search, Volume2, X, Lock, Play, Pause, Crown, Sparkles } from 'lucide-react';
+import { ChevronRight, ChevronDown, Book, Search, Volume2, X, Lock, Play, Pause, Crown, Sparkles, BookOpen, Headphones, Video, FileText, Star, Compass } from 'lucide-react';
 import { getReciters, getAudioUrlSync } from '../services/quranService';
 import { surahList } from '../data/surahList';
 import { isPro } from '../services/proService';
 import IslamicBackButton from './shared/IslamicBackButton';
+import './Library.css';
 
 function Library({ onClose, onShowPro }) {
     const { t } = useTranslation();
@@ -277,116 +278,129 @@ function Library({ onClose, onShowPro }) {
 
     // Render category list (main view)
     const renderCategories = () => (
-        <div>
-            <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '20px' }}>
-                İslami bilgi kaynakları ve referanslar
+        <div className="reveal-stagger">
+            <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600' }}>
+                {t('library.subtitle', 'İslami bilgi kaynakları ve referanslar')}
             </p>
 
             {/* Search Box */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '12px 16px',
-                background: 'var(--glass-bg)',
-                border: '1px solid var(--glass-border)',
-                borderRadius: '12px',
-                marginBottom: '20px'
-            }}>
-                <Search size={20} color="var(--text-color-muted)" />
+            <div className="library-search-section" style={{ marginBottom: '32px' }}>
+                <Search size={20} className="search-icon-library" style={{ color: 'var(--nav-accent)' }} />
                 <input
                     type="text"
-                    placeholder="Ara... (örn: namaz, oruç, Hz. Ömer)"
+                    className="library-search-input"
+                    style={{
+                        background: 'var(--nav-hover)',
+                        border: '1px solid var(--nav-border)',
+                        borderRadius: '20px',
+                        padding: '16px 16px 16px 48px',
+                        fontSize: '1rem',
+                        color: 'var(--nav-text)'
+                    }}
+                    placeholder={t('library.search_placeholder', 'Ara... (örn: namaz, oruç)')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{
-                        flex: 1,
-                        background: 'transparent',
-                        border: 'none',
-                        outline: 'none',
-                        color: 'var(--text-color)',
-                        fontSize: '14px'
-                    }}
                 />
                 {searchQuery && (
                     <button
                         onClick={() => setSearchQuery('')}
                         style={{
+                            position: 'absolute',
+                            right: '16px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
                             background: 'none',
                             border: 'none',
-                            cursor: 'pointer',
-                            padding: '4px'
+                            cursor: 'pointer'
                         }}
                     >
-                        <X size={18} color="var(--text-color-muted)" />
+                        <X size={18} color="var(--nav-text-muted)" />
                     </button>
                 )}
             </div>
 
             {/* Search Results */}
             {searchQuery.length >= 2 && (
-                <div style={{ marginBottom: '20px' }}>
-                    <p style={{ color: 'var(--text-color-muted)', fontSize: '13px', marginBottom: '10px' }}>
+                <div style={{ marginBottom: '32px' }} className="reveal-stagger">
+                    <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.8rem', marginBottom: '12px', fontWeight: '800', textTransform: 'uppercase' }}>
                         {searchResults.length > 0
-                            ? `${searchResults.length} sonuç bulundu`
-                            : 'Sonuç bulunamadı'}
+                            ? t('library.results_found', { count: searchResults.length })
+                            : t('library.no_results')}
                     </p>
                     {searchResults.map((result, index) => (
                         <div
                             key={index}
-                            className="glass-card"
-                            style={{ marginBottom: '8px', padding: '14px', cursor: 'pointer' }}
+                            className="settings-card reveal-stagger premium-glass hover-lift"
+                            style={{ marginBottom: '12px', cursor: 'pointer' }}
                             onClick={() => handleSearchResultClick(result)}
                         >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <span style={{ fontSize: '24px' }}>{result.icon}</span>
-                                <div style={{ flex: 1 }}>
-                                    <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '14px' }}>
+                            <div className="settings-card-left">
+                                <div className="settings-icon-box" style={{ background: 'var(--nav-hover)', color: 'var(--nav-accent)' }}>
+                                    <span style={{ fontSize: '1.2rem' }}>{result.icon}</span>
+                                </div>
+                                <div className="settings-user-info">
+                                    <div className="settings-label">
                                         {result.match || result.item.title || result.item.category}
                                     </div>
-                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                    <div className="settings-desc">
                                         {result.category}
                                     </div>
                                 </div>
-                                <ChevronRight size={18} color="var(--text-color-muted)" />
                             </div>
+                            <ChevronRight size={18} color="var(--nav-text-muted)" />
                         </div>
                     ))}
                 </div>
             )}
 
-            {/* Category Cards - only show when not searching */}
-            {searchQuery.length < 2 && LIBRARY_CATEGORIES.map(category => (
-                <div
-                    key={category.id}
-                    className="glass-card"
-                    style={{ marginBottom: '12px', padding: '20px', cursor: 'pointer' }}
-                    onClick={() => {
-                        if (category.isPro && !userIsPro) {
-                            setShowPaywall(true);
-                        } else {
-                            loadLibraryData();
-                            setActiveCategory(category.id);
-                        }
-                    }}
-                >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                        <span style={{ fontSize: '40px' }}>{category.icon}</span>
-                        <div style={{ flex: 1 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '18px' }}>
-                                    {category.title}
+            {/* Category Grid */}
+            {searchQuery.length < 2 && (
+                <div className="category-grid-library" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+                    {LIBRARY_CATEGORIES.map((category) => (
+                        <div
+                            key={category.id}
+                            className="settings-card reveal-stagger premium-glass hover-lift"
+                            style={{ 
+                                flexDirection: 'column', 
+                                alignItems: 'center', 
+                                textAlign: 'center',
+                                padding: '24px 16px',
+                                borderRadius: '24px',
+                                gap: '12px',
+                                cursor: 'pointer',
+                                height: 'auto',
+                                position: 'relative'
+                            }}
+                            onClick={() => {
+                                if (category.isPro && !userIsPro) {
+                                    setShowPaywall(true);
+                                } else {
+                                    loadLibraryData();
+                                    setActiveCategory(category.id);
+                                }
+                            }}
+                        >
+                            <div className="settings-icon-box" style={{ 
+                                width: '64px', 
+                                height: '64px', 
+                                background: 'var(--nav-hover)', 
+                                color: 'var(--nav-accent)',
+                                borderRadius: '20px'
+                            }}>
+                                <span style={{ fontSize: '2rem' }}>{category.icon}</span>
+                            </div>
+                            <div className="settings-label" style={{ fontSize: '0.95rem', fontWeight: '800' }}>
+                                {category.title}
+                            </div>
+                            {category.isPro && (
+                                <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
+                                    <Crown size={14} color="#f59e0b" fill="#f59e0b" />
                                 </div>
-                                {category.isPro && <Lock size={14} color="var(--primary-color)" />}
-                            </div>
-                            <div style={{ fontSize: '13px', color: 'var(--text-color-muted)', marginTop: '4px' }}>
-                                {libraryData ? `${category.data.length} içerik` : 'İçerikler yükleniyor...'}
-                            </div>
+                            )}
                         </div>
-                        <ChevronRight size={24} color="var(--text-color-muted)" />
-                    </div>
+                    ))}
                 </div>
-            ))}
+            )}
         </div>
     );
 
@@ -394,8 +408,8 @@ function Library({ onClose, onShowPro }) {
     const renderCategoryItems = () => {
         if (!libraryData) {
             return (
-                <div className="glass-card" style={{ padding: '18px', color: 'var(--text-color-muted)' }}>
-                    Kütüphane içeriği yükleniyor...
+                <div className="library-loading">
+                    <div className="spinner premium"></div>
                 </div>
             );
         }
@@ -413,37 +427,51 @@ function Library({ onClose, onShowPro }) {
         }
 
         return (
-            <div>
-                {items.map(item => (
-                    <div
-                        key={item.id}
-                        className="glass-card"
-                        style={{ marginBottom: '12px', padding: '16px', cursor: 'pointer' }}
-                        onClick={() => {
-                            if (item.isPro && !userIsPro) {
-                                setShowPaywall(true);
-                            } else {
-                                setActiveItem(item);
-                            }
-                        }}
-                    >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                            <span style={{ fontSize: '32px' }}>{item.icon}</span>
-                            <div style={{ flex: 1 }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '16px' }}>
+            <div className="content-list-library reveal-stagger">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {items.map((item) => (
+                        <div
+                            key={item.id}
+                            className="settings-card reveal-stagger premium-glass hover-lift"
+                            style={{ 
+                                padding: '16px',
+                                cursor: 'pointer',
+                                border: item.isPro && !userIsPro ? '1px dashed var(--nav-border)' : ''
+                            }}
+                            onClick={() => {
+                                if (item.isPro && !userIsPro) {
+                                    setShowPaywall(true);
+                                } else {
+                                    setActiveItem(item);
+                                }
+                            }}
+                        >
+                            <div className="settings-card-left">
+                                <div className="settings-icon-box" style={{ 
+                                    background: 'var(--nav-hover)', 
+                                    color: 'var(--nav-accent)',
+                                    width: '52px',
+                                    height: '52px',
+                                    borderRadius: '16px'
+                                }}>
+                                    {item.icon || <BookOpen size={24} />}
+                                </div>
+                                <div className="settings-user-info">
+                                    <div className="settings-label">
                                         {item.title ? (item.type === 'prayer' ? t(item.title, { ns: 'prayers' }) : item.title) : item.category}
                                     </div>
-                                    {item.isPro && <Lock size={14} color="var(--primary-color)" />}
-                                </div>
-                                <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginTop: '2px' }}>
-                                    {item.description}
+                                    <div className="settings-desc">
+                                        {item.description}
+                                    </div>
                                 </div>
                             </div>
-                            <ChevronRight size={20} color="var(--text-color-muted)" />
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                {item.isPro && <Crown size={14} color="#f59e0b" fill="#f59e0b" />}
+                                <ChevronRight size={18} color="var(--nav-text-muted)" />
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         );
     };
@@ -453,53 +481,60 @@ function Library({ onClose, onShowPro }) {
         if (!activeReciter) return null;
 
         return (
-            <div>
-                <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
-                    {activeReciter.name} - Hatim Seti
-                </p>
-                {surahList.map((surah, index) => {
-                    const audioUrl = getAudioUrlSync(surah.number, activeReciter.id);
-                    const isPlaying = playingIndex === index;
+            <div className="reveal-stagger">
+                <div className="settings-group">
+                    <div className="settings-group-title premium-text">
+                        {activeReciter.name} - Hatim Seti
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        {surahList.map((surah, index) => {
+                            const audioUrl = getAudioUrlSync(surah.number, activeReciter.id);
+                            const isPlaying = playingIndex === index;
 
-                    return (
-                        <div
-                            key={surah.number}
-                            className="glass-card"
-                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
-                            onClick={(e) => toggleAudio(audioUrl, index, e)}
-                        >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <button
-                                    style={{
-                                        background: isPlaying ? 'var(--primary-color)' : 'rgba(212, 175, 55, 0.2)',
-                                        border: 'none',
-                                        borderRadius: '50%',
-                                        width: '40px',
-                                        height: '40px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
+                            return (
+                                <div
+                                    key={surah.number}
+                                    className="settings-card reveal-stagger premium-glass hover-lift"
+                                    style={{ 
+                                        padding: '12px 16px', 
                                         cursor: 'pointer',
-                                        transition: 'all 0.2s'
+                                        background: isPlaying ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.05)' : '',
+                                        borderColor: isPlaying ? 'var(--nav-accent)' : ''
                                     }}
+                                    onClick={(e) => toggleAudio(audioUrl, index, e)}
                                 >
-                                    {isPlaying ? 
-                                        <Pause size={20} color={isPlaying ? '#fff' : 'var(--primary-color)'} /> : 
-                                        <Play size={20} color={isPlaying ? '#fff' : 'var(--primary-color)'} />
-                                    }
-                                </button>
-                                <div style={{ flex: 1 }}>
-                                    <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '15px' }}>
-                                        {surah.number}. {surah.name}
+                                    <div className="settings-card-left">
+                                        <div 
+                                            className="settings-icon-box"
+                                            style={{
+                                                background: isPlaying ? 'var(--nav-accent)' : 'var(--nav-hover)',
+                                                color: isPlaying ? 'white' : 'var(--nav-accent)',
+                                                width: '44px',
+                                                height: '44px',
+                                                borderRadius: '50%'
+                                            }}
+                                        >
+                                            {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+                                        </div>
+                                        <div className="settings-user-info">
+                                            <div className="settings-label" style={{ color: isPlaying ? 'var(--nav-accent)' : '' }}>
+                                                {surah.number}. {surah.name}
+                                            </div>
+                                            <div className="settings-desc">
+                                                {surah.nameTranslation} • {surah.ayahCount} Ayet
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
-                                        {surah.nameTranslation} • {surah.ayahCount} Ayet
-                                    </div>
+                                    {isPlaying && (
+                                        <div className="audio-wave">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
-                        </div>
-                    );
-                })}
+                            );
+                        })}
+                    </div>
+                </div>
             </div>
         );
     };
@@ -514,43 +549,41 @@ function Library({ onClose, onShowPro }) {
 
             const reciters = getReciters();
             return (
-                <div>
-                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                <div className="reveal-stagger">
+                    <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                         {activeItem.description}
                     </p>
-                    {reciters.map((reciter) => (
-                        <div
-                            key={reciter.id}
-                            className="glass-card"
-                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
-                            onClick={() => setActiveReciter(reciter)}
-                        >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <div style={{
-                                    width: '40px',
-                                    height: '40px',
-                                    borderRadius: '50%',
-                                    background: 'var(--primary-color)',
-                                    color: '#fff',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    fontSize: '18px'
-                                }}>
-                                    🎤
-                                </div>
-                                <div style={{ flex: 1 }}>
-                                    <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '15px' }}>
-                                        {reciter.name}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {reciters.map((reciter) => (
+                            <div
+                                key={reciter.id}
+                                className="settings-card reveal-stagger premium-glass hover-lift"
+                                style={{ padding: '16px', cursor: 'pointer' }}
+                                onClick={() => setActiveReciter(reciter)}
+                            >
+                                <div className="settings-card-left">
+                                    <div className="settings-icon-box" style={{ 
+                                        width: '48px', 
+                                        height: '48px', 
+                                        borderRadius: '50%',
+                                        background: 'var(--nav-hover)',
+                                        color: 'var(--nav-accent)'
+                                    }}>
+                                        <Mic size={20} />
                                     </div>
-                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
-                                        {reciter.country}
+                                    <div className="settings-user-info">
+                                        <div className="settings-label">
+                                            {reciter.name}
+                                        </div>
+                                        <div className="settings-desc">
+                                            {reciter.country}
+                                        </div>
                                     </div>
                                 </div>
-                                <ChevronRight size={18} color="var(--text-color-muted)" />
+                                <ChevronRight size={18} color="var(--nav-text-muted)" />
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             );
         }
@@ -558,48 +591,53 @@ function Library({ onClose, onShowPro }) {
         // Audio Library - Playlist
         if (activeItem.type === 'playlist') {
             return (
-                <div>
-                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                <div className="reveal-stagger">
+                    <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                         {activeItem.description}
                     </p>
-                    {activeItem.items.map((track, index) => (
-                        <div
-                            key={index}
-                            className="glass-card"
-                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
-                            onClick={(e) => toggleAudio(track.url, index, e)}
-                        >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <button
-                                    style={{
-                                        background: playingIndex === index ? 'var(--primary-color)' : 'rgba(212, 175, 55, 0.2)',
-                                        border: 'none',
-                                        borderRadius: '50%',
-                                        width: '40px',
-                                        height: '40px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        {activeItem.items.map((track, index) => {
+                            const isPlaying = playingIndex === index;
+                            return (
+                                <div
+                                    key={index}
+                                    className="settings-card reveal-stagger premium-glass hover-lift"
+                                    style={{ 
+                                        padding: '16px', 
                                         cursor: 'pointer',
-                                        transition: 'all 0.2s'
+                                        background: isPlaying ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.05)' : '',
+                                        borderColor: isPlaying ? 'var(--nav-accent)' : ''
                                     }}
+                                    onClick={(e) => toggleAudio(track.url, index, e)}
                                 >
-                                    {playingIndex === index ? 
-                                        <Pause size={20} color={playingIndex === index ? '#fff' : 'var(--primary-color)'} /> : 
-                                        <Play size={20} color={playingIndex === index ? '#fff' : 'var(--primary-color)'} />
-                                    }
-                                </button>
-                                <div style={{ flex: 1 }}>
-                                    <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '15px' }}>
-                                        {track.title}
+                                    <div className="settings-card-left">
+                                        <div className="settings-icon-box" style={{ 
+                                            width: '44px', 
+                                            height: '44px', 
+                                            borderRadius: '50%',
+                                            background: isPlaying ? 'var(--nav-accent)' : 'var(--nav-hover)',
+                                            color: isPlaying ? 'white' : 'var(--nav-accent)'
+                                        }}>
+                                            {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+                                        </div>
+                                        <div className="settings-user-info">
+                                            <div className="settings-label" style={{ color: isPlaying ? 'var(--nav-accent)' : '' }}>
+                                                {track.title}
+                                            </div>
+                                            <div className="settings-desc">
+                                                {track.duration}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
-                                        {track.duration}
-                                    </div>
+                                    {isPlaying && (
+                                        <div className="audio-wave">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
-                        </div>
-                    ))}
+                            );
+                        })}
+                    </div>
                 </div>
             );
         }
@@ -608,73 +646,81 @@ function Library({ onClose, onShowPro }) {
 
         // Prophet Prayers
         if (activeItem.type === 'prayer') {
-
             return (
-                <div>
-                    <div className="glass-card" style={{ padding: '24px', textAlign: 'center' }}>
+                <div className="reveal-stagger">
+                    <div className="settings-card premium-glass hover-lift" style={{ 
+                        padding: '32px 24px', 
+                        flexDirection: 'column', 
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        gap: '24px'
+                    }}>
                         {activeItem.prophet && (
-                            <div style={{ 
-                                fontSize: '14px', 
-                                color: 'var(--primary-color)', 
-                                fontWeight: '600',
-                                marginBottom: '8px',
-                                textTransform: 'uppercase',
-                                letterSpacing: '1px'
+                            <div className="hamburger-level-badge" style={{ 
+                                background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1)', 
+                                color: 'var(--nav-accent)',
+                                fontWeight: '900',
+                                border: '1px solid var(--nav-accent)'
                             }}>
                                 {activeItem.prophet}
                             </div>
                         )}
                         
                         <h2 style={{ 
-                            fontSize: '24px', 
-                            color: 'var(--text-color)', 
-                            marginBottom: '16px',
-                            fontWeight: '700'
+                            fontSize: '1.75rem', 
+                            color: 'var(--nav-text)', 
+                            margin: 0,
+                            fontWeight: '900',
+                            lineHeight: '1.2'
                         }}>
                             {t(activeItem.title)}
                         </h2>
 
                         {activeItem.situation && (
                             <div style={{ 
-                                fontSize: '14px', 
-                                color: 'var(--text-color-muted)',
-                                marginBottom: '24px',
-                                fontStyle: 'italic'
+                                fontSize: '0.9rem', 
+                                color: 'var(--nav-text-muted)',
+                                fontStyle: 'italic',
+                                padding: '0 16px'
                             }}>
                                 "{activeItem.situation}"
                             </div>
                         )}
 
                         <div style={{ 
-                            background: 'rgba(212, 175, 55, 0.05)', 
-                            padding: '24px', 
-                            borderRadius: '16px',
-                            marginBottom: '24px'
+                            background: 'var(--nav-hover)', 
+                            padding: '32px 24px', 
+                            borderRadius: '32px',
+                            width: '100%',
+                            border: '1px solid var(--nav-border)'
                         }}>
                             <div style={{ 
                                 fontFamily: 'var(--arabic-font-family)', 
-                                fontSize: '28px', 
-                                color: 'var(--text-color)', 
-                                lineHeight: '2',
-                                marginBottom: '20px',
+                                fontSize: '2rem', 
+                                color: 'var(--nav-text)', 
+                                lineHeight: '1.8',
+                                marginBottom: '24px',
                                 direction: 'rtl'
                             }}>
                                 {activeItem.arabic}
                             </div>
                             
                             <div style={{ 
-                                fontSize: '16px', 
-                                color: 'var(--text-color-muted)', 
-                                marginBottom: '16px',
-                                lineHeight: '1.6'
+                                fontSize: '1rem', 
+                                color: 'var(--nav-text-muted)', 
+                                marginBottom: '20px',
+                                lineHeight: '1.6',
+                                fontWeight: '600'
                             }}>
                                 {activeItem.transliteration || activeItem.turkish}
                             </div>
 
+                            <hr style={{ border: 'none', borderTop: '1px solid var(--nav-border)', margin: '20px 0' }} />
+
                             <div style={{ 
-                                fontSize: '18px', 
-                                color: 'var(--primary-color)', 
-                                fontWeight: '500',
+                                fontSize: '1.1rem', 
+                                color: 'var(--nav-accent)', 
+                                fontWeight: '800',
                                 lineHeight: '1.6'
                             }}>
                                 {t(activeItem.meaning)}
@@ -682,8 +728,13 @@ function Library({ onClose, onShowPro }) {
                         </div>
 
                         {activeItem.source && (
-                            <div style={{ fontSize: '12px', color: 'var(--text-color-muted)', marginTop: '24px', textAlign: 'center' }}>
-                                Kaynak: {activeItem.source}
+                            <div style={{ 
+                                fontSize: '0.75rem', 
+                                color: 'var(--nav-text-muted)', 
+                                fontWeight: '700',
+                                opacity: 0.8
+                            }}>
+                                Source: {activeItem.source}
                             </div>
                         )}
                     </div>
@@ -694,86 +745,100 @@ function Library({ onClose, onShowPro }) {
         // Video Library - İslami Akademi Episodes
         if (activeItem.type === 'video') {
             return (
-                <div>
-                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                <div className="reveal-stagger">
+                    <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                         {activeItem.description}
                     </p>
                     
-                    {/* Series Info */}
-                    <div className="glass-card" style={{ 
-                        marginBottom: '16px', 
-                        padding: '16px',
-                        background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(155, 89, 182, 0.1))'
+                    {/* Series Header */}
+                    <div className="settings-card premium-glass hover-lift" style={{ 
+                        marginBottom: '24px', 
+                        padding: '24px',
+                        background: 'linear-gradient(135deg, rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1), rgba(59, 130, 246, 0.1))',
+                        border: '1px solid var(--nav-accent)'
                     }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <span style={{ fontSize: '36px' }}>{activeItem.icon}</span>
-                            <div>
-                                <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '16px' }}>
-                                    {activeItem.episodes?.length || 0} Bölüm
+                        <div className="settings-card-left">
+                            <div className="settings-icon-box" style={{ width: '72px', height: '72px', background: 'white' }}>
+                                <span style={{ fontSize: '2.5rem' }}>{activeItem.icon}</span>
+                            </div>
+                            <div className="settings-user-info">
+                                <div className="settings-label" style={{ fontSize: '1.1rem', color: 'var(--nav-accent)' }}>
+                                    {activeItem.episodes?.length || 0} {t('library.episodes', 'Bölüm')}
                                 </div>
-                                <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
-                                    Premium İçerik • Video Serisi
+                                <div className="settings-desc" style={{ fontWeight: '800' }}>
+                                    {t('library.premium_video', 'Premium Video Akademi')}
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* Episode List */}
-                    {activeItem.episodes?.map((episode, index) => (
-                        <div
-                            key={index}
-                            className="glass-card"
-                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
-                        >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <div style={{
-                                    width: '56px',
-                                    height: '40px',
-                                    borderRadius: '8px',
-                                    background: 'linear-gradient(135deg, rgba(155, 89, 182, 0.3), rgba(52, 152, 219, 0.3))',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    fontSize: '20px',
-                                    position: 'relative'
-                                }}>
-                                    {episode.thumbnail}
-                                    <div style={{
-                                        position: 'absolute',
-                                        bottom: '-4px',
-                                        right: '-4px',
-                                        background: 'var(--primary-color)',
-                                        borderRadius: '50%',
-                                        width: '20px',
-                                        height: '20px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}>
-                                        <Play size={10} color="#fff" />
+                    <div className="settings-group">
+                        <div className="settings-group-title premium-text">{t('library.episode_list', 'Bölüm Listesi')}</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            {activeItem.episodes?.map((episode, index) => (
+                                <div
+                                    key={index}
+                                    className="settings-card reveal-stagger premium-glass hover-lift"
+                                    style={{ padding: '16px', cursor: 'pointer' }}
+                                >
+                                    <div className="settings-card-left">
+                                        <div style={{
+                                            width: '64px',
+                                            height: '44px',
+                                            borderRadius: '12px',
+                                            background: 'var(--nav-hover)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '1.2rem',
+                                            position: 'relative',
+                                            border: '1px solid var(--nav-border)'
+                                        }}>
+                                            {episode.thumbnail}
+                                            <div style={{
+                                                position: 'absolute',
+                                                top: '50%',
+                                                left: '50%',
+                                                transform: 'translate(-50%, -50%)',
+                                                background: 'var(--nav-accent)',
+                                                borderRadius: '50%',
+                                                width: '24px',
+                                                height: '24px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
+                                            }}>
+                                                <Play size={12} color="#fff" fill="white" />
+                                            </div>
+                                        </div>
+                                        <div className="settings-user-info">
+                                            <div className="settings-label" style={{ fontSize: '0.9rem' }}>
+                                                {episode.number}. {episode.title}
+                                            </div>
+                                            <div className="settings-desc">
+                                                ⏱️ {episode.duration}
+                                            </div>
+                                        </div>
                                     </div>
+                                    <ChevronRight size={18} color="var(--nav-text-muted)" />
                                 </div>
-                                <div style={{ flex: 1 }}>
-                                    <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '14px' }}>
-                                        {episode.number}. {episode.title}
-                                    </div>
-                                    <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
-                                        ⏱️ {episode.duration}
-                                    </div>
-                                </div>
-                                <ChevronRight size={18} color="var(--text-color-muted)" />
-                            </div>
+                            ))}
                         </div>
-                    ))}
+                    </div>
 
                     {/* Coming Soon Notice */}
-                    <div style={{ 
-                        textAlign: 'center', 
-                        padding: '20px',
-                        color: 'var(--text-color-muted)',
-                        fontSize: '13px'
+                    <div className="settings-card" style={{ 
+                        marginTop: '32px',
+                        padding: '24px',
+                        justifyContent: 'center',
+                        background: 'var(--nav-hover)',
+                        border: '1px dashed var(--nav-border)'
                     }}>
-                        🎬 Video içerikler yakında eklenecek
+                        <div style={{ textAlign: 'center', color: 'var(--nav-text-muted)', fontSize: '0.85rem', fontWeight: '700' }}>
+                            🎬 Video içerikler yakında eklenecek
+                        </div>
                     </div>
                 </div>
             );
@@ -790,154 +855,112 @@ function Library({ onClose, onShowPro }) {
                 : null;
 
             return (
-                <div>
-                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                <div className="reveal-stagger">
+                    <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                         {activeItem.description}
                     </p>
                     
-                    {/* Source Info */}
-                    <div className="glass-card" style={{ 
-                        marginBottom: '16px', 
-                        padding: '16px',
-                        background: 'linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(155, 89, 182, 0.1))'
+                    {/* Source Card */}
+                    <div className="settings-card" style={{ 
+                        marginBottom: '24px', 
+                        padding: '20px',
+                        background: 'linear-gradient(135deg, #ff0000 0%, #cc0000 100%)',
+                        color: 'white',
+                        border: 'none'
                     }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <div style={{
-                                width: '48px',
-                                height: '48px',
-                                borderRadius: '12px',
-                                background: '#ff0000',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}>
-                                <Play size={24} color="#fff" />
+                        <div className="settings-card-left">
+                            <div className="settings-icon-box" style={{ width: '56px', height: '56px', background: 'rgba(255,255,255,0.2)', color: 'white' }}>
+                                <Youtube size={28} fill="white" />
                             </div>
-                            <div style={{ flex: 1 }}>
-                                <div style={{ fontWeight: '700', color: 'var(--primary-color)', fontSize: '15px' }}>
+                            <div className="settings-user-info">
+                                <div className="settings-label" style={{ color: 'white', fontSize: '1.1rem' }}>
                                     {activeItem.source}
                                 </div>
-                                <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
+                                <div className="settings-desc" style={{ color: 'rgba(255,255,255,0.8)', fontWeight: '700' }}>
                                     YouTube Kanalı • {activeItem.topics?.length || 0} Konu
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Topics List */}
-                    <div style={{ marginBottom: '16px' }}>
-                        <div style={{ 
-                            fontSize: '13px', 
-                            fontWeight: '600', 
-                            color: 'var(--text-color-muted)',
-                            marginBottom: '10px'
-                        }}>
-                            📚 İçerik Konuları
-                        </div>
+                    {/* Topics Row */}
+                    <div className="settings-group" style={{ marginBottom: '24px' }}>
+                        <div className="settings-group-title">📚 {t('library.topics', 'İçerik Konuları')}</div>
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                             {activeItem.topics?.map((topic, index) => (
-                                <span 
+                                <div 
                                     key={index}
                                     style={{
-                                        padding: '6px 12px',
-                                        background: 'rgba(212, 175, 55, 0.1)',
-                                        borderRadius: '20px',
-                                        fontSize: '12px',
-                                        color: 'var(--primary-color)'
+                                        padding: '8px 16px',
+                                        background: 'var(--nav-hover)',
+                                        borderRadius: '24px',
+                                        fontSize: '0.8rem',
+                                        color: 'var(--nav-accent)',
+                                        fontWeight: '800',
+                                        border: '1px solid var(--nav-border)'
                                     }}
                                 >
                                     {topic}
-                                </span>
+                                </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Action Buttons */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {/* Actions */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {activeItem.channelUrl && (
                             <button
                                 onClick={() => openYouTube(activeItem.channelUrl)}
-                                style={{
-                                    width: '100%',
-                                    padding: '14px',
-                                    background: '#ff0000',
-                                    border: 'none',
-                                    borderRadius: '12px',
-                                    color: '#fff',
-                                    fontSize: '15px',
-                                    fontWeight: '600',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
+                                className="velocity-target-btn"
+                                style={{ 
+                                    width: '100%', 
+                                    background: '#ff0000', 
+                                    color: 'white', 
+                                    borderColor: 'transparent',
                                     justifyContent: 'center',
-                                    gap: '8px'
+                                    fontWeight: '900'
                                 }}
                             >
-                                <Play size={18} />
-                                YouTube Kanalına Git
+                                <Play size={20} fill="white" /> {t('library.go_to_channel', 'YouTube Kanalına Git')}
                             </button>
                         )}
 
                         {activeItem.playlistUrl && (
                             <button
                                 onClick={() => openYouTube(activeItem.playlistUrl)}
-                                style={{
-                                    width: '100%',
-                                    padding: '14px',
-                                    background: 'transparent',
-                                    border: '2px solid #ff0000',
-                                    borderRadius: '12px',
+                                className="velocity-target-btn"
+                                style={{ 
+                                    width: '100%', 
+                                    background: 'var(--nav-hover)', 
+                                    borderColor: '#ff0000',
                                     color: '#ff0000',
-                                    fontSize: '15px',
-                                    fontWeight: '600',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: '8px'
+                                    justifyContent: 'center'
                                 }}
                             >
-                                📋 Oynatma Listelerini Gör
+                                <ListVideo size={20} /> {t('library.view_playlists', 'Oynatma Listelerini Gör')}
                             </button>
                         )}
 
                         {youtubeSearchUrl && (
                             <button
                                 onClick={() => openYouTube(youtubeSearchUrl)}
-                                style={{
-                                    width: '100%',
-                                    padding: '14px',
-                                    background: 'var(--glass-bg)',
-                                    border: '1px solid var(--glass-border)',
-                                    borderRadius: '12px',
-                                    color: 'var(--text-color)',
-                                    fontSize: '14px',
-                                    fontWeight: '500',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
+                                className="velocity-target-btn"
+                                style={{ 
+                                    width: '100%', 
+                                    background: 'transparent', 
+                                    color: 'var(--nav-text-muted)',
                                     justifyContent: 'center',
-                                    gap: '8px'
+                                    borderColor: 'var(--nav-border)'
                                 }}
                             >
-                                <Search size={16} />
-                                YouTube'da Ara
+                                <Search size={18} /> {t('library.search_on_youtube', "YouTube'da Ara")}
                             </button>
                         )}
                     </div>
 
-                    {/* Info Note */}
-                    <div style={{ 
-                        textAlign: 'center', 
-                        padding: '16px',
-                        marginTop: '16px',
-                        color: 'var(--text-color-muted)',
-                        fontSize: '12px',
-                        lineHeight: '1.5'
-                    }}>
-                        ℹ️ Video içerikler harici kaynaklardan sağlanmaktadır. 
-                        YouTube uygulamasına yönlendirileceksiniz.
-                    </div>
+                    <p style={{ textAlign: 'center', color: 'var(--nav-text-muted)', fontSize: '0.75rem', marginTop: '24px', padding: '0 20px', lineHeight: '1.5', fontWeight: '600' }}>
+                        ℹ️ {t('library.external_notice', 'Video içerikler harici kaynaklardan sağlanmaktadır. YouTube uygulamasına yönlendirileceksiniz.')}
+                    </p>
                 </div>
             );
         }
@@ -945,186 +968,274 @@ function Library({ onClose, onShowPro }) {
         // Books with chapters
         if (activeItem.chapters) {
             return (
-                <div>
-                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                <div className="reveal-stagger">
+                    <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                         {activeItem.description}
                     </p>
-                    {activeItem.chapters.map((chapter, index) => (
-                        <div
-                            key={index}
-                            className="glass-card"
-                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
-                            onClick={() => setExpandedChapter(expandedChapter === index ? null : index)}
-                        >
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '15px' }}>
-                                    {chapter.title}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {activeItem.chapters.map((chapter, index) => {
+                            const isExpanded = expandedChapter === index;
+                            return (
+                                <div
+                                    key={index}
+                                    className="settings-card reveal-stagger"
+                                    style={{ 
+                                        padding: '16px', 
+                                        cursor: 'pointer', 
+                                        flexDirection: 'column',
+                                        background: isExpanded ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.03)' : '',
+                                        borderColor: isExpanded ? 'var(--nav-accent)' : ''
+                                    }}
+                                    onClick={() => setExpandedChapter(isExpanded ? null : index)}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                            <div className="settings-icon-box" style={{ 
+                                                width: '32px', 
+                                                height: '32px', 
+                                                borderRadius: '8px',
+                                                background: isExpanded ? 'var(--nav-accent)' : 'var(--nav-hover)',
+                                                color: isExpanded ? 'white' : 'var(--nav-accent)'
+                                            }}>
+                                                <Book size={16} />
+                                            </div>
+                                            <div className="settings-label" style={{ fontWeight: '800', color: isExpanded ? 'var(--nav-accent)' : '' }}>
+                                                {chapter.title}
+                                            </div>
+                                        </div>
+                                        {isExpanded ? <ChevronDown size={18} color="var(--nav-accent)" /> : <ChevronRight size={18} color="var(--nav-text-muted)" />}
+                                    </div>
+                                    {isExpanded && (
+                                        <div style={{
+                                            marginTop: '16px',
+                                            padding: '20px',
+                                            borderRadius: '16px',
+                                            background: 'var(--nav-hover)',
+                                            fontSize: '1rem',
+                                            lineHeight: '1.8',
+                                            color: 'var(--nav-text)',
+                                            whiteSpace: 'pre-wrap',
+                                            border: '1px solid var(--nav-border)'
+                                        }}>
+                                            {chapter.content}
+                                        </div>
+                                    )}
                                 </div>
-                                {expandedChapter === index ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-                            </div>
-                            {expandedChapter === index && (
-                                <div style={{
-                                    marginTop: '12px',
-                                    paddingTop: '12px',
-                                    borderTop: '1px solid var(--glass-border)',
-                                    fontSize: '14px',
-                                    lineHeight: '1.7',
-                                    color: 'var(--text-color)'
-                                }}>
-                                    {chapter.content}
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                            );
+                        })}
+                    </div>
                 </div>
             );
         }
 
-        // Religious texts with items
+        // Religious texts with items (Asmaul Husna items etc.)
         if (activeItem.items) {
             return (
-                <div>
-                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                <div className="reveal-stagger">
+                    <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                         {activeItem.description}
                     </p>
-                    {activeItem.items.map((item, index) => (
-                        <div
-                            key={index}
-                            className="glass-card"
-                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
-                            onClick={() => setExpandedChapter(expandedChapter === index ? null : index)}
-                        >
-                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                                <span style={{
-                                    background: 'var(--primary-color)',
-                                    color: '#fff',
-                                    width: '28px',
-                                    height: '28px',
-                                    borderRadius: '50%',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    fontSize: '12px',
-                                    fontWeight: '700',
-                                    flexShrink: 0
-                                }}>
-                                    {item.number}
-                                </span>
-                                <div style={{ flex: 1 }}>
-                                    <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '14px' }}>
-                                        {item.title || item.name || item.text}
-                                    </div>
-                                    {item.arabic && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {activeItem.items.map((item, index) => {
+                            const isExpanded = expandedChapter === index;
+                            return (
+                                <div
+                                    key={index}
+                                    className="settings-card reveal-stagger"
+                                    style={{ 
+                                        padding: '16px', 
+                                        cursor: 'pointer', 
+                                        flexDirection: 'column',
+                                        background: isExpanded ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.03)' : '',
+                                        borderColor: isExpanded ? 'var(--nav-accent)' : ''
+                                    }}
+                                    onClick={() => setExpandedChapter(isExpanded ? null : index)}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
                                         <div style={{
+                                            background: isExpanded ? 'var(--nav-accent)' : 'var(--nav-hover)',
+                                            color: isExpanded ? 'white' : 'var(--nav-accent)',
+                                            width: '36px',
+                                            height: '36px',
+                                            borderRadius: '50%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '0.85rem',
+                                            fontWeight: '900',
+                                            flexShrink: 0
+                                        }}>
+                                            {item.number}
+                                        </div>
+                                        <div style={{ flex: 1 }}>
+                                            <div style={{ 
+                                                fontWeight: '800', 
+                                                color: isExpanded ? 'var(--nav-accent)' : 'var(--nav-text)',
+                                                fontSize: '1rem'
+                                            }}>
+                                                {item.title || item.name || item.text}
+                                            </div>
+                                        </div>
+                                        {isExpanded ? <ChevronDown size={18} color="var(--nav-accent)" /> : <ChevronRight size={18} color="var(--nav-text-muted)" />}
+                                    </div>
+
+                                    {item.arabic && !isExpanded && (
+                                        <div style={{
+                                            width: '100%',
                                             fontFamily: "var(--arabic-font-family)",
-                                            fontSize: '18px',
+                                            fontSize: '1.5rem',
                                             textAlign: 'right',
                                             direction: 'rtl',
-                                            color: 'var(--primary-color)',
-                                            marginTop: '8px'
+                                            color: 'var(--nav-text-muted)',
+                                            marginTop: '8px',
+                                            opacity: 0.6
                                         }}>
                                             {item.arabic}
                                         </div>
                                     )}
-                                    {expandedChapter === index && (
-                                        <div style={{
-                                            marginTop: '10px',
-                                            fontSize: '13px',
-                                            lineHeight: '1.6',
-                                            color: 'var(--text-color-muted)'
-                                        }}>
-                                            {item.text && (
-                                                <div style={{ fontWeight: '600', marginBottom: '4px', color: 'var(--text-color)' }}>
-                                                    Okunuşu: <span style={{ fontWeight: '400' }}>{item.text}</span>
+
+                                    {isExpanded && (
+                                        <div style={{ marginTop: '16px', width: '100%' }}>
+                                            {item.arabic && (
+                                                <div style={{
+                                                    fontFamily: "var(--arabic-font-family)",
+                                                    fontSize: '2.2rem',
+                                                    textAlign: 'center',
+                                                    direction: 'rtl',
+                                                    color: 'var(--nav-text)',
+                                                    padding: '24px',
+                                                    background: 'var(--nav-hover)',
+                                                    borderRadius: '24px',
+                                                    marginBottom: '16px',
+                                                    lineHeight: '1.5'
+                                                }}>
+                                                    {item.arabic}
                                                 </div>
                                             )}
-                                            {item.explanation || item.meaning || item.description}
+                                            <div style={{
+                                                padding: '20px',
+                                                borderRadius: '24px',
+                                                background: 'var(--nav-hover)',
+                                                fontSize: '0.95rem',
+                                                lineHeight: '1.7',
+                                                color: 'var(--nav-text)',
+                                                border: '1px solid var(--nav-border)'
+                                            }}>
+                                                {item.text && (
+                                                    <div style={{ fontWeight: '800', marginBottom: '8px', color: 'var(--nav-accent)' }}>
+                                                        {t('library.pronunciation', 'Okunuşu')}: <span style={{ fontWeight: '600', color: 'var(--nav-text)' }}>{item.text}</span>
+                                                    </div>
+                                                )}
+                                                <div style={{ fontWeight: '600' }}>
+                                                    {item.explanation || item.meaning || item.description}
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
-                                {expandedChapter === index ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-                            </div>
-                        </div>
-                    ))}
+                            );
+                        })}
+                    </div>
                 </div>
             );
         }
 
-        // Education with topics
+        // Education with topics (ElifBa etc.)
         if (activeItem.topics) {
             return (
-                <div>
-                    <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '16px' }}>
+                <div className="reveal-stagger">
+                    <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                         {activeItem.description}
                     </p>
-                    {activeItem.topics.map((topic, index) => (
-                        <div
-                            key={index}
-                            className="glass-card"
-                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
-                            onClick={() => setExpandedChapter(expandedChapter === index ? null : index)}
-                        >
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                    {topic.letter && (
-                                        <span style={{
-                                            fontSize: '28px',
-                                            fontFamily: "var(--arabic-font-family)",
-                                            color: 'var(--primary-color)',
-                                            width: '40px',
-                                            textAlign: 'center'
-                                        }}>
-                                            {topic.letter}
-                                        </span>
-                                    )}
-                                    <div>
-                                        <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '15px' }}>
-                                            {topic.title || topic.name}
-                                        </div>
-                                        {topic.pronunciation && (
-                                            <div style={{ fontSize: '12px', color: 'var(--text-color-muted)' }}>
-                                                Okunuşu: {topic.pronunciation}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        {activeItem.topics.map((topic, index) => {
+                            const isExpanded = expandedChapter === index;
+                            const isPlaying = playingIndex === index;
+                            return (
+                                <div
+                                    key={index}
+                                    className="settings-card reveal-stagger"
+                                    style={{ 
+                                        padding: '16px', 
+                                        cursor: 'pointer',
+                                        flexDirection: 'column',
+                                        background: isExpanded ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.03)' : '',
+                                        borderColor: isPlaying ? 'var(--nav-accent)' : (isExpanded ? 'var(--nav-accent)' : '')
+                                    }}
+                                    onClick={() => setExpandedChapter(isExpanded ? null : index)}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                            {topic.letter && (
+                                                <div style={{
+                                                    fontSize: '2.5rem',
+                                                    fontFamily: "var(--arabic-font-family)",
+                                                    color: isPlaying ? 'var(--nav-accent)' : 'var(--nav-text)',
+                                                    width: '48px',
+                                                    height: '48px',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    background: 'var(--nav-hover)',
+                                                    borderRadius: '12px',
+                                                    transition: 'all 0.3s'
+                                                }}>
+                                                    {topic.letter}
+                                                </div>
+                                            )}
+                                            <div>
+                                                <div style={{ fontWeight: '800', color: isExpanded ? 'var(--nav-accent)' : 'var(--nav-text)', fontSize: '1.1rem' }}>
+                                                    {topic.title || topic.name}
+                                                </div>
+                                                {topic.pronunciation && (
+                                                    <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+                                                        {t('library.pronunciation', 'Okunuşu')}: {topic.pronunciation}
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                            {topic.letter && (
+                                                <button
+                                                    onClick={(e) => speakArabic(topic.letter, index, e)}
+                                                    style={{
+                                                        background: isPlaying ? 'var(--nav-accent)' : 'var(--nav-hover)',
+                                                        border: 'none',
+                                                        borderRadius: '50%',
+                                                        width: '40px',
+                                                        height: '40px',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s',
+                                                        boxShadow: isPlaying ? '0 0 12px rgba(var(--nav-accent-rgb), 0.3)' : 'none'
+                                                    }}
+                                                >
+                                                    <Volume2 size={20} color={isPlaying ? '#fff' : 'var(--nav-accent)'} />
+                                                </button>
+                                            )}
+                                            {isExpanded ? <ChevronDown size={18} color="var(--nav-accent)" /> : <ChevronRight size={18} color="var(--nav-text-muted)" />}
+                                        </div>
                                     </div>
-                                </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    {topic.letter && (
-                                        <button
-                                            onClick={(e) => speakArabic(topic.letter, index, e)}
-                                            style={{
-                                                background: playingIndex === index ? 'var(--primary-color)' : 'rgba(212, 175, 55, 0.2)',
-                                                border: 'none',
-                                                borderRadius: '50%',
-                                                width: '36px',
-                                                height: '36px',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                cursor: 'pointer',
-                                                transition: 'all 0.2s'
-                                            }}
-                                        >
-                                            <Volume2 size={18} color={playingIndex === index ? '#fff' : 'var(--primary-color)'} />
-                                        </button>
+                                    {isExpanded && (
+                                        <div style={{
+                                            marginTop: '16px',
+                                            padding: '20px',
+                                            borderRadius: '24px',
+                                            background: 'var(--nav-hover)',
+                                            fontSize: '0.95rem',
+                                            lineHeight: '1.8',
+                                            color: 'var(--nav-text)',
+                                            border: '1px solid var(--nav-border)'
+                                        }}>
+                                            {topic.content || topic.description}
+                                        </div>
                                     )}
-                                    {expandedChapter === index ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
                                 </div>
-                            </div>
-                            {expandedChapter === index && (
-                                <div style={{
-                                    marginTop: '12px',
-                                    paddingTop: '12px',
-                                    borderTop: '1px solid var(--glass-border)',
-                                    fontSize: '14px',
-                                    lineHeight: '1.7',
-                                    color: 'var(--text-color)'
-                                }}>
-                                    {topic.content || topic.description}
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                            );
+                        })}
+                    </div>
                 </div>
             );
         }
@@ -1132,34 +1243,47 @@ function Library({ onClose, onShowPro }) {
         // FAQ with questions
         if (activeItem.questions) {
             return (
-                <div>
-                    {activeItem.questions.map((qa, index) => (
-                        <div
-                            key={index}
-                            className="glass-card"
-                            style={{ marginBottom: '10px', padding: '14px', cursor: 'pointer' }}
-                            onClick={() => setExpandedChapter(expandedChapter === index ? null : index)}
-                        >
-                            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                                <div style={{ fontWeight: '600', color: 'var(--primary-color)', fontSize: '14px', flex: 1 }}>
-                                    {qa.q}
+                <div className="reveal-stagger">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {activeItem.questions.map((qa, index) => {
+                            const isExpanded = expandedChapter === index;
+                            return (
+                                <div
+                                    key={index}
+                                    className="settings-card reveal-stagger"
+                                    style={{ 
+                                        padding: '16px', 
+                                        cursor: 'pointer', 
+                                        flexDirection: 'column',
+                                        background: isExpanded ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.03)' : '',
+                                        borderColor: isExpanded ? 'var(--nav-accent)' : ''
+                                    }}
+                                    onClick={() => setExpandedChapter(isExpanded ? null : index)}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', width: '100%', gap: '16px' }}>
+                                        <div style={{ fontWeight: '800', color: isExpanded ? 'var(--nav-accent)' : 'var(--nav-text)', fontSize: '0.95rem', flex: 1 }}>
+                                            {qa.q}
+                                        </div>
+                                        {isExpanded ? <ChevronDown size={18} color="var(--nav-accent)" /> : <ChevronRight size={18} color="var(--nav-text-muted)" />}
+                                    </div>
+                                    {isExpanded && (
+                                        <div style={{
+                                            marginTop: '16px',
+                                            padding: '20px',
+                                            borderRadius: '24px',
+                                            background: 'var(--nav-hover)',
+                                            fontSize: '0.95rem',
+                                            lineHeight: '1.7',
+                                            color: 'var(--nav-text)',
+                                            border: '1px solid var(--nav-border)'
+                                        }}>
+                                            {qa.a}
+                                        </div>
+                                    )}
                                 </div>
-                                {expandedChapter === index ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-                            </div>
-                            {expandedChapter === index && (
-                                <div style={{
-                                    marginTop: '12px',
-                                    paddingTop: '12px',
-                                    borderTop: '1px solid var(--glass-border)',
-                                    fontSize: '14px',
-                                    lineHeight: '1.7',
-                                    color: 'var(--text-color)'
-                                }}>
-                                    {qa.a}
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                            );
+                        })}
+                    </div>
                 </div>
             );
         }
@@ -1168,163 +1292,152 @@ function Library({ onClose, onShowPro }) {
     };
 
     return (
-        <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '80px' }}>
+        <div className="settings-container">
             {/* Header */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '20px',
-                paddingTop: '20px'
+            <div className="library-header reveal-stagger" style={{ 
+                '--delay': '0s',
+                marginBottom: '24px',
+                padding: '0 4px'
             }}>
                 <IslamicBackButton onClick={goBack} size="medium" />
-                <h1 style={{
-                    margin: 0,
-                    fontSize: '22px',
-                    color: 'var(--primary-color)',
-                    fontWeight: '700'
+                <h1 className="library-title" style={{ 
+                    fontSize: '1.5rem', 
+                    fontWeight: '900', 
+                    color: 'var(--nav-text)',
+                    margin: 0
                 }}>
-                    📚 {getTitle()}
+                    {getTitle()}
                 </h1>
+                <div style={{ flex: 1 }}></div>
+                {userIsPro ? (
+                    <div className="hamburger-level-badge" style={{ 
+                        background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1)', 
+                        color: 'var(--nav-accent)',
+                        borderColor: 'var(--nav-accent)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '6px 12px',
+                        borderRadius: '12px'
+                    }}>
+                        <Crown size={14} fill="var(--nav-accent)" />
+                        <span style={{ fontSize: '11px', fontWeight: '900' }}>PRO</span>
+                    </div>
+                ) : (
+                    <div 
+                        onClick={() => setShowPaywall(true)}
+                        style={{ 
+                            background: 'var(--nav-hover)', 
+                            color: 'var(--nav-text-muted)',
+                            padding: '8px',
+                            borderRadius: '12px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        <Crown size={18} />
+                    </div>
+                )}
             </div>
 
-            {/* Content */}
-            <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
+            {/* Content Area */}
+            <div className="reveal-stagger" style={{ '--delay': '0.1s' }}>
                 {!activeCategory && renderCategories()}
                 {activeCategory && !activeItem && renderCategoryItems()}
                 {activeItem && renderItemContent()}
             </div>
 
-            {/* Paywall Modal */}
+            {/* Premium / Paywall Modal */}
             {showPaywall && (
-                <div style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: 'rgba(0, 0, 0, 0.8)',
-                    backdropFilter: 'blur(var(--surface-blur))',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 1000,
-                    padding: '20px'
-                }}>
-                    <div style={{
-                        background: 'var(--card-bg)',
-                        borderRadius: '24px',
-                        padding: '32px 24px',
-                        maxWidth: '360px',
-                        width: '100%',
-                        textAlign: 'center',
-                        border: '1px solid var(--glass-border)',
-                        animation: 'fadeIn 0.3s ease-out'
-                    }}>
-                        {/* Premium Badge */}
+                <div 
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'rgba(0,0,0,0.8)',
+                        backdropFilter: 'blur(20px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 3000,
+                        padding: '24px'
+                    }}
+                    onClick={() => setShowPaywall(false)}
+                >
+                    <div 
+                        className="settings-card" 
+                        style={{ 
+                            padding: '40px 24px', 
+                            maxWidth: '400px',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                            gap: '24px',
+                            background: 'var(--nav-bg)',
+                            border: '1px solid var(--nav-accent)',
+                            boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
+                            borderRadius: '40px',
+                            animation: 'modalOpen 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
+                        }}
+                        onClick={e => e.stopPropagation()}
+                    >
                         <div style={{
                             width: '80px',
                             height: '80px',
-                            borderRadius: '50%',
-                            background: 'linear-gradient(135deg, #d4af37 0%, #f4d03f 50%, #d4af37 100%)',
+                            background: 'linear-gradient(135deg, var(--nav-accent) 0%, #f59e0b 100%)',
+                            borderRadius: '30px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            margin: '0 auto 20px',
-                            boxShadow: '0 8px 32px rgba(212, 175, 55, 0.3)'
+                            boxShadow: '0 12px 24px rgba(var(--nav-accent-rgb), 0.4)'
                         }}>
-                            <Crown size={40} color="#fff" />
+                            <Crown size={40} color="white" fill="white" />
                         </div>
 
-                        <h2 style={{ 
-                            color: 'var(--primary-color)', 
-                            margin: '0 0 12px',
-                            fontSize: '22px',
-                            fontWeight: '700'
-                        }}>
-                            Premium İçerik
-                        </h2>
+                        <div>
+                            <h2 style={{ fontSize: '1.75rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: '8px' }}>
+                                Huzur Pro
+                            </h2>
+                            <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.95rem', fontWeight: '600', lineHeight: '1.5' }}>
+                                {t('library.paywall_desc', 'Tüm kütüphane içeriğine ve premium özelliklere sınırsız erişim sağlayın.')}
+                            </p>
+                        </div>
 
-                        <p style={{ 
-                            color: 'var(--text-color-muted)', 
-                            fontSize: '14px',
-                            lineHeight: '1.6',
-                            margin: '0 0 24px'
-                        }}>
-                            Bu içerik Huzur Pro aboneliklerine özeldir. 
-                            Tüm premium özelliklere erişmek için Pro'ya yükseltin.
-                        </p>
-
-                        {/* Features */}
-                        <div style={{ 
-                            display: 'flex', 
-                            flexDirection: 'column', 
-                            gap: '10px',
-                            marginBottom: '24px',
-                            textAlign: 'left'
-                        }}>
+                        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                             {[
-                                { icon: '🎧', text: 'Ünlü hafızlardan hatim setleri' },
-                                { icon: '📚', text: 'Sesli kitap ve sohbetler' },
-                                { icon: '🎬', text: 'İslami Akademi video serileri' },
-                                { icon: '✨', text: 'Reklamsız deneyim' }
+                                { icon: '🎧', text: t('library.feature_audio', 'Ünlü hafızlardan hatim setleri') },
+                                { icon: '🎬', text: t('library.feature_video', 'İslami Akademi video serileri') },
+                                { icon: '📚', text: t('library.feature_books', 'Özel dini kaynaklar ve kitaplar') }
                             ].map((feature, i) => (
-                                <div key={i} style={{ 
-                                    display: 'flex', 
-                                    alignItems: 'center', 
-                                    gap: '10px',
-                                    padding: '10px 12px',
-                                    background: 'rgba(212, 175, 55, 0.1)',
-                                    borderRadius: '10px'
-                                }}>
-                                    <span style={{ fontSize: '18px' }}>{feature.icon}</span>
-                                    <span style={{ fontSize: '13px', color: 'var(--text-color)' }}>
+                                <div key={i} className="settings-card" style={{ padding: '12px 16px', background: 'var(--nav-hover)', border: 'none', justifyContent: 'flex-start', gap: '12px' }}>
+                                    <span style={{ fontSize: '1.25rem' }}>{feature.icon}</span>
+                                    <span style={{ fontSize: '0.85rem', color: 'var(--nav-text)', fontWeight: '700', textAlign: 'left' }}>
                                         {feature.text}
                                     </span>
                                 </div>
                             ))}
                         </div>
 
-                        {/* CTA Button */}
-                        <button
-                            onClick={() => {
-                                setShowPaywall(false);
-                                if (onShowPro) onShowPro();
-                            }}
-                            style={{
-                                width: '100%',
-                                padding: '16px',
-                                background: 'linear-gradient(135deg, #d4af37 0%, #f4d03f 100%)',
-                                border: 'none',
-                                borderRadius: '14px',
-                                color: '#000',
-                                fontSize: '16px',
-                                fontWeight: '700',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                marginBottom: '12px'
-                            }}
-                        >
-                            <Sparkles size={18} />
-                            Pro'ya Yükselt
-                        </button>
+                        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '8px' }}>
+                            <button
+                                className="velocity-target-btn"
+                                style={{ width: '100%', background: 'var(--nav-accent)', color: 'white', borderColor: 'transparent', height: '64px', fontSize: '1.1rem', fontWeight: '900', justifyContent: 'center' }}
+                                onClick={() => {
+                                    setShowPaywall(false);
+                                    if (onShowPro) onShowPro();
+                                }}
+                            >
+                                <Sparkles size={20} fill="white" /> {t('common.upgrade_pro', 'Pro\'ya Yükselt')}
+                            </button>
 
-                        <button
-                            onClick={() => setShowPaywall(false)}
-                            style={{
-                                background: 'transparent',
-                                border: 'none',
-                                color: 'var(--text-color-muted)',
-                                fontSize: '14px',
-                                cursor: 'pointer',
-                                padding: '8px'
-                            }}
-                        >
-                            Belki Daha Sonra
-                        </button>
+                            <button
+                                onClick={() => setShowPaywall(false)}
+                                style={{ background: 'transparent', border: 'none', color: 'var(--nav-text-muted)', fontSize: '0.9rem', cursor: 'pointer', fontWeight: '800' }}
+                            >
+                                {t('common.later', 'Belki Daha Sonra')}
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

@@ -4,6 +4,7 @@ import { X, Check, Crown } from 'lucide-react';
 import { getOfferings, purchasePackage, restorePurchases } from '../services/revenueCatService';
 import { setProStatus } from '../services/proService';
 import { logger } from '../utils/logger';
+import { getVariant, trackConversion, EXPERIMENTS } from '../services/abTestService';
 
 const ProUpgrade = ({ onClose }) => {
   const { t } = useTranslation();
@@ -12,6 +13,7 @@ const ProUpgrade = ({ onClose }) => {
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [restoreResult, setRestoreResult] = useState(null); // 'success' | 'not_found' | null
+  const [variant, setVariant] = useState('control');
 
   const loadOfferings = useCallback(async () => {
     // Platform kontrolü
@@ -59,6 +61,10 @@ const ProUpgrade = ({ onClose }) => {
   }, [t]);
 
   useEffect(() => {
+    // Assign A/B test variant
+    const assignedVariant = getVariant(EXPERIMENTS.PAYWALL_REDESIGN, ['control', 'variant_a'], [0.5, 0.5]);
+    setVariant(assignedVariant);
+    
     loadOfferings();
   }, [loadOfferings]);
 
@@ -85,6 +91,7 @@ const ProUpgrade = ({ onClose }) => {
       const success = await purchasePackage(pkg);
       if (success) {
         logger.log('[ProUpgrade] Purchase successful');
+        trackConversion(EXPERIMENTS.PAYWALL_REDESIGN, 'purchased_pro');
         onClose();
       } else {
         // Kullanıcı iptal etti veya hata - UI zaten error state'i gösterecek
@@ -135,31 +142,35 @@ const ProUpgrade = ({ onClose }) => {
           <div className="feature-item">
             <div className="feature-icon"><Check size={20} /></div>
             <div className="feature-text">
-              <strong>{t('pro.features.unlimitedAI')}</strong>
-              <p>{t('pro.features.unlimitedAIDesc')}</p>
+              <strong>{t('pro.features.unlimitedAI', 'Sınırsız Manevi Rehberlik')}</strong>
+              <p>{t('pro.features.unlimitedAIDesc', 'Yapay zeka asistanımızla 7/24 dini sorularınıza cevap bulun.')}</p>
             </div>
           </div>
           <div className="feature-item">
             <div className="feature-icon"><Check size={20} /></div>
             <div className="feature-text">
-              <strong>{t('pro.features.wordByWord')}</strong>
-              <p>{t('pro.features.wordByWordDesc')}</p>
+              <strong>{t('pro.features.wordByWord', 'Kelime Kelime Kur\'an')}</strong>
+              <p>{t('pro.features.wordByWordDesc', 'Anlam derinliğini keşfetmek için kelime kelime meallere erişin.')}</p>
             </div>
           </div>
           <div className="feature-item">
             <div className="feature-icon"><Check size={20} /></div>
             <div className="feature-text">
-              <strong>{t('pro.features.memorization')}</strong>
-              <p>{t('pro.features.memorizationDesc')}</p>
+              <strong>{t('pro.features.memorization', 'Akıllı Ezber Takibi')}</strong>
+              <p>{t('pro.features.memorizationDesc', 'Sure ve ayet ezberlerinizi yapay zeka desteğiyle yönetin.')}</p>
             </div>
           </div>
           <div className="feature-item">
             <div className="feature-icon"><Check size={20} /></div>
             <div className="feature-text">
-              <strong>{t('pro.features.adFree')}</strong>
-              <p>{t('pro.features.adFreeDesc')}</p>
+              <strong>{t('pro.features.adFree', 'Kesintisiz Odaklanma')}</strong>
+              <p>{t('pro.features.adFreeDesc', 'Reklamsız deneyimle sadece ibadetinize ve huzura odaklanın.')}</p>
             </div>
           </div>
+        </div>
+
+        <div className="social-proof">
+          <p>⭐️ {t('pro.socialProof', '100.000+ Müslüman tarafından sevildi.')}</p>
         </div>
 
         {error && <div className="error-msg">{error}</div>}
@@ -174,13 +185,15 @@ const ProUpgrade = ({ onClose }) => {
                 className={`package-card ${index === 1 ? 'popular' : ''}`}
                 onClick={() => handlePurchase(pkg)}
               >
-                {index === 1 && <div className="popular-tag">{t('pro.popular')}</div>}
+                {index === 1 && <div className="popular-tag"><span>🔥</span> {t('pro.popular', 'EN ÇOK TERCİH EDİLEN')}</div>}
                 <div className="package-title">{pkg?.product?.title || t('pro.package')}</div>
                 <div className="package-price">{pkg?.product?.priceString || '-'}</div>
                 <div className="package-desc">
                     {pkg?.identifier === 'yearly' 
-                      ? `3 gün ücretsiz deneyin. Deneme bitiminde ${pkg?.product?.priceString || ''}/yıl otomatik yenilenir.`
-                      : `${pkg?.product?.priceString || ''}/ay, her ay otomatik yenilenir.`}
+                      ? (variant === 'variant_a' 
+                          ? `${t('pro.trialInfo', '3 gün ücretsiz deneyin.')} ${t('pro.yearlyInfo', 'Sonra yıllık {{price}}.', { price: pkg?.product?.priceString })}`
+                          : `3 gün ücretsiz deneyin. Deneme bitiminde ${pkg?.product?.priceString || ''}/yıl otomatik yenilenir.`)
+                      : `${t('pro.monthlyInfo', 'Aylık {{price}}.', { price: pkg?.product?.priceString })}`}
                 </div>
               </div>
             ))
@@ -293,90 +306,51 @@ const ProUpgrade = ({ onClose }) => {
         .pro-header h2 {
           color: #d4af37;
           margin: 0 0 8px 0;
-          font-size: 24px;
-          text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+          font-size: 28px;
+          font-weight: 800;
+          text-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+          letter-spacing: -0.5px;
         }
 
-        .pro-header p {
-          color: #a3b18a;
+        .social-proof {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 12px;
+          padding: 8px 12px;
+          text-align: center;
+          margin-bottom: 24px;
+          border: 1px dashed rgba(212, 175, 55, 0.3);
+        }
+
+        .social-proof p {
           margin: 0;
-          font-size: 14px;
-          line-height: 1.5;
-        }
-
-        .features-list {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          margin-bottom: 32px;
-        }
-
-        .feature-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 12px;
-        }
-
-        .feature-icon {
-          background: rgba(212, 175, 55, 0.2);
           color: #d4af37;
-          padding: 6px;
-          border-radius: 10px;
-          display: flex;
-          border: 1px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .feature-text strong {
-          display: block;
-          color: #f0e68c;
-          font-size: 14px;
-          margin-bottom: 2px;
-        }
-
-        .feature-text p {
-          margin: 0;
-          color: #a3b18a;
-          font-size: 12px;
-        }
-
-        .packages-container {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          margin-bottom: 20px;
-        }
-
-        .package-card {
-          background: rgba(20, 70, 55, 0.8);
-          border: 1px solid rgba(212, 175, 55, 0.2);
-          border-radius: 16px;
-          padding: 16px;
-          cursor: pointer;
-          position: relative;
-          transition: all 0.2s ease;
-        }
-
-        .package-card:active {
-          transform: scale(0.98);
+          font-size: 13px;
+          font-weight: 600;
         }
 
         .package-card.popular {
-          background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1));
+          background: linear-gradient(135deg, rgba(212, 175, 55, 0.35), rgba(212, 175, 55, 0.15));
           border-color: #d4af37;
-          box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+          box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+          transform: scale(1.02);
         }
 
         .popular-tag {
           position: absolute;
-          top: -10px;
-          right: 16px;
+          top: -12px;
+          left: 50%;
+          transform: translateX(-50%);
           background: linear-gradient(135deg, #d4af37, #b8860b);
           color: #0f3d2e;
-          font-size: 10px;
-          font-weight: bold;
-          padding: 4px 10px;
-          border-radius: 10px;
-          box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+          font-size: 11px;
+          font-weight: 800;
+          padding: 6px 15px;
+          border-radius: 20px;
+          box-shadow: 0 4px 15px rgba(212, 175, 55, 0.5);
+          white-space: nowrap;
+          display: flex;
+          align-items: center;
+          gap: 5px;
         }
 
         .package-title {

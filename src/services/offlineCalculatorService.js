@@ -1,6 +1,6 @@
 import { logger } from '../utils/logger';
 import { format } from 'date-fns';
-import { Coordinates, CalculationMethod, PrayerTimes } from 'adhan';
+import { Coordinates, CalculationMethod, PrayerTimes, Madhab } from 'adhan';
 
 /**
  * Cihaz üzerinde internet olmadan namaz vakti hesaplayan servis
@@ -20,6 +20,8 @@ class OfflineCalculatorService {
             // Türkiye için standart Diyanet parametreleri
             // adhan kütüphanesinde CalculationMethod.Turkey() Diyanet'e en yakın olandır.
             const params = CalculationMethod.Turkey();
+            // Diyanet Hanefi mezhebine göre hesaplar (Asr vakti için kritik)
+            params.madhab = Madhab.Hanafi;
             
             const prayerTimes = new PrayerTimes(coordinates, date, params);
 

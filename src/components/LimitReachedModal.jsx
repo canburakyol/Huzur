@@ -1,4 +1,4 @@
-import { Crown, X } from 'lucide-react';
+import { Crown, X, Calendar, Zap, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -16,10 +16,10 @@ const LimitReachedModal = ({
   if (!isOpen) return null;
 
   const featureNames = {
-    nuzul_ai: t('limitModal.features.nuzul_ai', 'Revelation Reason Query'),
-    tajweed_ai: t('limitModal.features.tajweed_ai', 'Tajweed Check'),
-    word_by_word: t('limitModal.features.word_by_word', 'Word by Word Meaning'),
-    memorize: t('limitModal.features.memorize', 'Memorization Assistant')
+    nuzul_ai: t('limitModal.features.nuzul_ai', 'Esbab-ı Nüzul Sorgusu'),
+    tajweed_ai: t('limitModal.features.tajweed_ai', 'Tecvid Kontrolü'),
+    word_by_word: t('limitModal.features.word_by_word', 'Kelime Meali'),
+    memorize: t('limitModal.features.memorize', 'Ezber Asistanı')
   };
 
   const featureIcons = {
@@ -31,256 +31,241 @@ const LimitReachedModal = ({
 
   return (
     <div className="limit-modal-overlay" onClick={onClose}>
-      <div className="limit-modal glass-card" onClick={e => e.stopPropagation()}>
+      <div 
+        className="settings-card limit-modal-content reveal-stagger" 
+        onClick={e => e.stopPropagation()}
+        style={{ flexDirection: 'column', padding: '32px', maxWidth: '400px', width: '90%', position: 'relative' }}
+      >
         {/* Close Button */}
-        <button className="limit-modal-close" onClick={onClose}>
-          <X size={20} />
+        <button 
+          className="limit-modal-close" 
+          onClick={onClose}
+          style={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            background: 'var(--nav-hover)',
+            border: '1px solid var(--nav-border)',
+            borderRadius: '50%',
+            width: '32px',
+            height: '32px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: 'var(--nav-text-muted)',
+            zIndex: 10
+          }}
+        >
+          <X size={18} />
         </button>
 
-        {/* Icon */}
-        <div className="limit-modal-icon">
-          👑
+        {/* Hero Section */}
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+          <div className="crown-glow">
+            <Crown size={48} color="#fbbf24" fill="#fbbf24" />
+          </div>
+          <h2 style={{ margin: '16px 0 8px 0', fontSize: '1.5rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+            {t('limitModal.title', 'Günlük Limit Doldu')}
+          </h2>
+          <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+            {t('limitModal.usagePrefix', 'Bugünkü')} <strong>{maxCount}</strong> {t('limitModal.usageSuffix', 'ücretsiz kullanım hakkınızı bitirdiniz.')}
+          </p>
         </div>
 
-        {/* Title */}
-        <h2>{t('limitModal.title', 'Daily Limit Reached')}</h2>
-
-        {/* Feature Info */}
-        <div className="limit-feature-info">
-          <span className="limit-feature-icon">{featureIcons[feature]}</span>
-          <span>{featureNames[feature]}</span>
+        {/* Feature Tag */}
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          gap: '8px',
+          padding: '8px 16px',
+          background: 'var(--nav-hover)',
+          borderRadius: '12px',
+          marginBottom: '24px',
+          alignSelf: 'center'
+        }}>
+          <span style={{ fontSize: '1.2rem' }}>{featureIcons[feature]}</span>
+          <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--nav-text)' }}>{featureNames[feature]}</span>
         </div>
-
-        {/* Usage Info */}
-        <p className="limit-usage-text">
-          {t('limitModal.usagePrefix', 'You have used your')} <strong>{maxCount}</strong> {t('limitModal.usageSuffix', 'free uses for today!')}
-        </p>
 
         {/* Options */}
-        <div className="limit-options">
-          <div className="limit-option">
-            <span className="option-icon">⏰</span>
-            <span>{t('limitModal.tomorrowOption', 'You will have 2 new uses tomorrow')}</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '32px' }}>
+          <div className="limit-option-card">
+            <div className="option-icon-box" style={{ background: 'rgba(79, 70, 229, 0.1)', color: 'var(--nav-accent)' }}>
+              <Calendar size={18} />
+            </div>
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text)', fontWeight: '700' }}>
+                {t('limitModal.tomorrowOption', 'Yarın 2 yeni kullanım hakkınız olacak')}
+              </p>
+            </div>
           </div>
-          <div className="limit-option-divider">{t('limitModal.or', 'or')}</div>
-          <div className="limit-option pro">
-            <span className="option-icon">⭐</span>
-            <span>{t('limitModal.proOptionPrefix', 'Upgrade to Pro and use')} <strong>{t('limitModal.unlimited', 'unlimited')}</strong>!</span>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '4px 0' }}>
+            <div style={{ flex: 1, height: '1px', background: 'var(--nav-border-muted)' }}></div>
+            <span style={{ fontSize: '0.7rem', fontWeight: '900', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('limitModal.or', 'veya')}</span>
+            <div style={{ flex: 1, height: '1px', background: 'var(--nav-border-muted)' }}></div>
+          </div>
+
+          <div className="limit-option-card pro-card">
+            <div className="option-icon-box" style={{ background: 'rgba(251, 191, 36, 0.1)', color: '#fbbf24' }}>
+              <Zap size={18} fill="#fbbf24" />
+            </div>
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text)', fontWeight: '700' }}>
+                {t('limitModal.proOptionPrefix', 'Pro\'ya geçin ve')} <span style={{ color: '#fbbf24' }}>{t('limitModal.unlimited', 'sınırsız')}</span> {t('limitModal.proOptionSuffix', 'kullanın!')}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="limit-modal-buttons">
-          <button className="limit-upgrade-btn" onClick={onUpgrade}>
+        {/* Benefits List */}
+        <div style={{ 
+          background: 'var(--nav-hover)', 
+          borderRadius: '20px', 
+          padding: '20px', 
+          marginBottom: '32px',
+          border: '1px solid var(--nav-border)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+            <Sparkles size={16} color="#fbbf24" />
+            <span style={{ fontSize: '0.75rem', fontWeight: '950', color: 'var(--nav-text)', textTransform: 'uppercase' }}>{t('limitModal.proBenefits', 'PRO AVANTAJLARI')}</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div className="benefit-item">
+              <CheckCircle2 size={14} color="#10b981" />
+              <span>{t('limitModal.benefits.unlimitedAi', 'Sınırsız AI')}</span>
+            </div>
+            <div className="benefit-item">
+              <CheckCircle2 size={14} color="#10b981" />
+              <span>{t('limitModal.benefits.allSurahs', 'Tüm Sureler')}</span>
+            </div>
+            <div className="benefit-item">
+              <CheckCircle2 size={14} color="#10b981" />
+              <span>{t('limitModal.benefits.noAds', 'Reklamsız')}</span>
+            </div>
+            <div className="benefit-item">
+              <CheckCircle2 size={14} color="#10b981" />
+              <span>{t('limitModal.benefits.offline', 'Çevrimdışı')}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <button className="primary-btn upgrade-btn" onClick={onUpgrade}>
             <Crown size={18} />
-            {t('limitModal.upgradeButton', 'Upgrade to Pro')}
+            {t('limitModal.upgradeButton', 'Pro\'ya Yükselt')}
           </button>
-          <button className="limit-later-btn" onClick={onClose}>
-            {t('limitModal.laterButton', 'Okay, Got it')}
+          <button className="secondary-btn" onClick={onClose} style={{ padding: '14px', borderRadius: '16px', fontWeight: '800' }}>
+            {t('limitModal.laterButton', 'Tamam, Anladım')}
           </button>
-        </div>
-
-        {/* Pro Benefits Preview */}
-        <div className="pro-benefits-mini">
-          <span>{t('limitModal.proWith', 'With Pro:')}</span>
-          <ul>
-            <li>🤖 {t('limitModal.benefits.unlimitedAi', 'Unlimited AI queries')}</li>
-            <li>📖 {t('limitModal.benefits.allSurahs', 'All surahs')}</li>
-            <li>🚫 {t('limitModal.benefits.noAds', 'Ad-free')}</li>
-          </ul>
         </div>
       </div>
 
       <style>{`
         .limit-modal-overlay {
           position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.8);
-          backdrop-filter: blur(var(--surface-blur));
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(8px);
           display: flex;
           align-items: center;
           justify-content: center;
           z-index: 10000;
           padding: 20px;
-          animation: fadeIn 0.3s ease-out;
         }
 
-        .limit-modal {
+        .crown-glow {
+          width: 80px; height: 80px;
+          margin: 0 auto;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(251, 191, 36, 0.1);
+          border-radius: 24px;
           position: relative;
-          max-width: 360px;
-          width: 100%;
-          padding: 32px 24px;
-          text-align: center;
-          animation: slideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        .limit-modal-close {
+        .crown-glow::after {
+          content: '';
           position: absolute;
-          top: 12px;
-          right: 12px;
-          background: rgba(255,255,255,0.1);
-          border: none;
-          border-radius: 50%;
-          width: 32px;
-          height: 32px;
+          inset: -10px;
+          background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
+          border-radius: inherit;
+          animation: pulseCrown 2s infinite;
+        }
+
+        @keyframes pulseCrown {
+          0% { transform: scale(1); opacity: 0.5; }
+          50% { transform: scale(1.2); opacity: 0.8; }
+          100% { transform: scale(1); opacity: 0.5; }
+        }
+
+        .limit-option-card {
           display: flex;
           align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          color: var(--text-secondary);
-          transition: all 0.2s ease;
-        }
-
-        .limit-modal-close:hover {
-          background: rgba(255,255,255,0.2);
-        }
-
-        .limit-modal-icon {
-          font-size: 56px;
-          margin-bottom: 16px;
-          animation: bounce 0.6s ease-out;
-        }
-
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-
-        .limit-modal h2 {
-          font-size: 22px;
-          color: var(--primary-color);
-          margin: 0 0 16px 0;
-        }
-
-        .limit-feature-info {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 8px 16px;
-          background: rgba(255,255,255,0.1);
-          border-radius: 20px;
-          margin-bottom: 16px;
-          font-size: 14px;
-          color: var(--text-primary);
-        }
-
-        .limit-feature-icon {
-          font-size: 18px;
-        }
-
-        .limit-usage-text {
-          color: var(--text-secondary);
-          font-size: 15px;
-          margin: 0 0 20px 0;
-        }
-
-        .limit-options {
-          background: rgba(0,0,0,0.2);
-          border-radius: 12px;
+          gap: 16px;
           padding: 16px;
-          margin-bottom: 20px;
+          background: var(--nav-hover);
+          border: 1px solid var(--nav-border);
+          border-radius: 16px;
+          transition: all 0.3s ease;
         }
 
-        .limit-option {
+        .pro-card {
+          border-color: rgba(251, 191, 36, 0.3);
+          background: rgba(251, 191, 36, 0.02);
+        }
+
+        .option-icon-box {
+          width: 40px; height: 40px;
+          display: flex; align-items: center; justify-content: center;
+          border-radius: 12px;
+          flex-shrink: 0;
+        }
+
+        .benefit-item {
           display: flex;
           align-items: center;
-          gap: 10px;
-          font-size: 14px;
-          color: var(--text-secondary);
-          padding: 8px 0;
+          gap: 8px;
         }
 
-        .limit-option.pro {
-          color: var(--primary-color);
+        .benefit-item span {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: var(--nav-text-muted);
         }
 
-        .option-icon {
-          font-size: 16px;
-        }
-
-        .limit-option-divider {
-          color: var(--text-secondary);
-          font-size: 12px;
-          opacity: 0.7;
-          padding: 8px 0;
-        }
-
-        .limit-modal-buttons {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          margin-bottom: 20px;
-        }
-
-        .limit-upgrade-btn {
+        .upgrade-btn {
+          background: linear-gradient(135deg, #fbbf24, #f59e0b);
+          color: #000;
+          border: none;
+          padding: 16px;
+          border-radius: 16px;
+          font-weight: 900;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          width: 100%;
-          padding: 14px;
-          background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-          color: white;
-          border: none;
-          border-radius: 12px;
-          font-size: 16px;
-          font-weight: 600;
+          gap: 10px;
+          box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .limit-upgrade-btn:active {
-          transform: scale(0.98);
+        .upgrade-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
         }
 
-        .limit-later-btn {
-          width: 100%;
-          padding: 12px;
-          background: transparent;
-          color: var(--text-secondary);
-          border: 1px solid rgba(255,255,255,0.2);
-          border-radius: 12px;
-          font-size: 14px;
+        .secondary-btn {
+          background: var(--nav-hover);
+          border: 1px solid var(--nav-border);
+          color: var(--nav-text);
           cursor: pointer;
-          transition: all 0.2s ease;
         }
 
-        .limit-later-btn:hover {
-          background: rgba(255,255,255,0.05);
-        }
-
-        .pro-benefits-mini {
-          background: rgba(212, 175, 55, 0.1);
-          border: 1px solid rgba(212, 175, 55, 0.3);
-          border-radius: 12px;
-          padding: 12px 16px;
-          text-align: left;
-        }
-
-        .pro-benefits-mini span {
-          font-size: 12px;
-          color: var(--primary-color);
-          font-weight: 600;
-        }
-
-        .pro-benefits-mini ul {
-          list-style: none;
-          padding: 0;
-          margin: 8px 0 0 0;
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-        }
-
-        .pro-benefits-mini li {
-          font-size: 11px;
-          color: var(--text-secondary);
-          background: rgba(255,255,255,0.05);
-          padding: 4px 8px;
-          border-radius: 12px;
+        .secondary-btn:hover {
+          background: var(--nav-border-muted);
         }
       `}</style>
     </div>
