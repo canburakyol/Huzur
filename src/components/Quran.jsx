@@ -206,13 +206,14 @@ function Quran({ onClose }) {
 
         init();
 
+        const audio = audioRef.current;
         return () => {
-            if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.src = '';
+            if (audio) {
+                audio.pause();
+                audio.src = '';
             }
         };
-    }, [surahList.length]);
+    }, [loadSurah, surahList.length]);
 
     useEffect(() => {
         const nextTranslation = normalizeTranslationId(getInitialTranslation());
