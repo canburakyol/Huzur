@@ -6,11 +6,41 @@ import { detectAndSetLanguage } from '../services/languageService';
 import { adMobService } from '../services/admobService';
 import { syncProStatusFromServer } from '../services/subscriptionSyncService';
 import { VAKIT_THEMES } from '../data/vakitThemes';
-import { THEMES } from '../data/themes';
+import { THEMES, ACCENT_COLORS } from '../data/themes';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { storageService } from '../services/storageService';
 import { logger } from '../utils/logger';
 import { recordAppOpen } from '../services/userActivityTracker';
+
+const LEGACY_ACCENT_MAP = {
+  orange: 'amber',
+  gold: 'antique-gold',
+  blue: 'deep-emerald',
+  purple: 'olive-gold',
+};
+
+const resolveAccent = (accentId) => {
+  const normalized = LEGACY_ACCENT_MAP[accentId] || accentId;
+  return ACCENT_COLORS.find((accent) => accent.id === normalized) || ACCENT_COLORS[0];
+};
+
+const applyAccent = (accent) => {
+  if (!accent) return;
+  const root = document.documentElement;
+  root.style.setProperty('--nav-accent', accent.color);
+  root.style.setProperty('--primary-color', accent.color);
+  root.style.setProperty('--accent-color', accent.color);
+  root.style.setProperty('--accent-vibrant', accent.color);
+  root.style.setProperty('--accent-gold-light', accent.color);
+
+  if (accent.dark) {
+    root.style.setProperty('--primary-dark', accent.dark);
+    root.style.setProperty('--accent-gold', accent.dark);
+  }
+  if (accent.rgb) {
+    root.style.setProperty('--nav-accent-rgb', accent.rgb);
+  }
+};
 
 /**
  * Apply theme colors to document
@@ -144,18 +174,8 @@ export const useAppInit = (timings) => {
 
     // Initial Theme & Accent Load
     const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
-    const savedAccent = storageService.getString('app_accent_color') || 'orange';
-    const accentMap = {
-      orange: '#f97316',
-      emerald: '#10b981',
-      blue: '#3b82f6',
-      purple: '#8b5cf6',
-      gold: '#eab308'
-    };
-
-    if (accentMap[savedAccent]) {
-      document.documentElement.style.setProperty('--nav-accent', accentMap[savedAccent]);
-    }
+    const savedAccent = storageService.getString('app_accent_color') || 'amber';
+    applyAccent(resolveAccent(savedAccent));
 
     if (savedTheme) {
       let targetTheme = savedTheme;
@@ -191,8 +211,13 @@ export const useAppInit = (timings) => {
     };
 
     const handleAccentChange = (e) => {
-      const { color } = e.detail;
-      document.documentElement.style.setProperty('--nav-accent', color);
+      const { accentId, color, dark, rgb } = e.detail;
+      if (accentId) {
+        applyAccent(resolveAccent(accentId));
+        return;
+      }
+
+      applyAccent({ color, dark, rgb });
     };
 
     window.addEventListener('appThemeChanged', handleThemeChange);

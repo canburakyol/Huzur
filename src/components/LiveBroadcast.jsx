@@ -10,7 +10,7 @@ const LIVE_CHANNELS = [
         icon: '🕋',
         youtubeUrl: 'https://www.youtube.com/results?search_query=makkah+live+now&sp=EgJAAQ%253D%253D',
         category: 'harem',
-        gradient: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)'
+        gradient: 'linear-gradient(135deg, var(--bg-emerald-deep) 0%, var(--bg-emerald-med) 100%)'
     },
     {
         id: 'madinah',
@@ -19,7 +19,7 @@ const LIVE_CHANNELS = [
         icon: '🕌',
         youtubeUrl: 'https://www.youtube.com/results?search_query=madinah+live+now&sp=EgJAAQ%253D%253D',
         category: 'harem',
-        gradient: 'linear-gradient(135deg, #064e3b 0%, #065f46 100%)'
+        gradient: 'linear-gradient(135deg, var(--bg-emerald-med) 0%, var(--bg-gradient-end) 100%)'
     },
     {
         id: 'quran-tv',
@@ -28,7 +28,7 @@ const LIVE_CHANNELS = [
         icon: '📖',
         youtubeUrl: 'https://www.youtube.com/results?search_query=quran+live+recitation&sp=EgJAAQ%253D%253D',
         category: 'quran',
-        gradient: 'linear-gradient(135deg, #4338ca 0%, #3730a3 100%)'
+        gradient: 'linear-gradient(135deg, var(--bg-emerald-light) 0%, var(--accent-gold) 100%)'
     },
     {
         id: 'makkah-hd',
@@ -37,7 +37,7 @@ const LIVE_CHANNELS = [
         icon: '🇸🇦',
         youtubeUrl: 'https://www.youtube.com/@SaudiQuranTv/live',
         category: 'quran',
-        gradient: 'linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)'
+        gradient: 'linear-gradient(135deg, var(--accent-gold-light) 0%, var(--primary-dark) 100%)'
     }
 ];
 
@@ -62,7 +62,7 @@ function LiveBroadcast({ onClose }) {
                         Kutsal mekanlardan 7/24 kesintisiz bağlantı
                     </p>
                 </div>
-                <div className="settings-icon-box" style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444' }}>
+                <div className="settings-icon-box" style={{ background: 'var(--nav-hover)', color: 'var(--nav-accent)' }}>
                     <Tv size={20} />
                 </div>
             </div>
@@ -121,8 +121,8 @@ function LiveBroadcast({ onClose }) {
                             <div className="channel-info">
                                 <h4 className="channel-title">{channel.title}</h4>
                                 <p className="channel-desc">{channel.description}</p>
-                                <div className="live-status" style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
-                                    <div className="live-dot" style={{ background: '#10b981' }} />
+                                <div className="live-status" style={{ background: 'rgba(var(--nav-accent-rgb, 245, 158, 11), 0.12)', color: 'var(--nav-accent)' }}>
+                                    <div className="live-dot" style={{ background: 'var(--nav-accent)' }} />
                                     <span>AKTİF</span>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@ function LiveBroadcast({ onClose }) {
 
             <style>{`
                 .info-banner {
-                    background: rgba(79, 70, 229, 0.05);
+                    background: rgba(15, 118, 110, 0.08);
                     border: 1px dashed var(--nav-accent);
                 }
 
@@ -206,18 +206,18 @@ function LiveBroadcast({ onClose }) {
                     align-items: center;
                     gap: 6px;
                     padding: 4px 10px;
-                    background: rgba(239, 68, 68, 0.1);
+                    background: rgba(var(--nav-accent-rgb, 245, 158, 11), 0.12);
                     border-radius: 20px;
                     font-size: 0.65rem;
                     font-weight: 900;
-                    color: #ef4444;
+                    color: var(--nav-accent);
                     letter-spacing: 0.5px;
                 }
 
                 .live-dot {
                     width: 6px;
                     height: 6px;
-                    background: #ef4444;
+                    background: var(--nav-accent);
                     border-radius: 50%;
                     animation: pulse 1.5s infinite;
                 }
@@ -231,7 +231,7 @@ function LiveBroadcast({ onClose }) {
                     width: 44px;
                     height: 44px;
                     border-radius: 50%;
-                    background: #ef4444;
+                    background: var(--nav-accent);
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -246,3 +246,4 @@ function LiveBroadcast({ onClose }) {
 }
 
 export default LiveBroadcast;
+

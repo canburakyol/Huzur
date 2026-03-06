@@ -7,6 +7,19 @@ import { STORAGE_KEYS } from '../constants';
 import { ACCENT_COLORS } from '../data/themes';
 import './Navigation.css';
 
+const LEGACY_ACCENT_MAP = {
+    orange: 'amber',
+    gold: 'antique-gold',
+    blue: 'deep-emerald',
+    purple: 'olive-gold',
+};
+
+const normalizeAccentId = (id) => {
+    if (!id) return 'amber';
+    const normalized = LEGACY_ACCENT_MAP[id] || id;
+    return ACCENT_COLORS.some((accent) => accent.id === normalized) ? normalized : 'amber';
+};
+
 function ThemeSelector({ onClose }) {
     const { t } = useTranslation();
     
@@ -15,7 +28,8 @@ function ThemeSelector({ onClose }) {
     });
 
     const [accentColor, setAccentColor] = useState(() => {
-        return storageService.getString('app_accent_color') || 'orange';
+        const stored = storageService.getString('app_accent_color');
+        return normalizeAccentId(stored);
     });
 
     const handleThemeModeChange = (mode) => {
@@ -39,7 +53,21 @@ function ThemeSelector({ onClose }) {
         storageService.setString('app_accent_color', accentId);
         
         document.documentElement.style.setProperty('--nav-accent', accent.color);
-        window.dispatchEvent(new CustomEvent('accentColorChanged', { detail: { color: accent.color } }));
+        document.documentElement.style.setProperty('--primary-color', accent.color);
+        document.documentElement.style.setProperty('--accent-color', accent.color);
+        document.documentElement.style.setProperty('--accent-vibrant', accent.color);
+        document.documentElement.style.setProperty('--accent-gold-light', accent.color);
+        if (accent.dark) {
+            document.documentElement.style.setProperty('--primary-dark', accent.dark);
+            document.documentElement.style.setProperty('--accent-gold', accent.dark);
+        }
+        if (accent.rgb) {
+            document.documentElement.style.setProperty('--nav-accent-rgb', accent.rgb);
+        }
+
+        window.dispatchEvent(new CustomEvent('accentColorChanged', {
+            detail: { color: accent.color, dark: accent.dark, rgb: accent.rgb, accentId }
+        }));
     };
 
     return (

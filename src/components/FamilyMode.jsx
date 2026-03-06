@@ -159,14 +159,14 @@ const FamilyMode = ({ onClose }) => {
             {/* Active Profile Banner */}
             {activeProfile && (
                 <div className="reveal-stagger" style={{ 
-                    background: 'linear-gradient(135deg, var(--nav-accent) 0%, #f59e0b 100%)',
+                    background: 'linear-gradient(135deg, var(--nav-accent) 0%, var(--accent-gold-light) 100%)',
                     color: 'white', 
                     padding: '32px 24px', 
                     display: 'flex', 
                     alignItems: 'center', 
                     gap: '20px',
                     borderRadius: '28px',
-                    boxShadow: '0 15px 35px rgba(249, 115, 22, 0.25)',
+                    boxShadow: '0 15px 35px rgba(var(--nav-accent-rgb, 245, 158, 11), 0.25)',
                     position: 'relative',
                     overflow: 'hidden',
                     marginBottom: '24px'
@@ -260,11 +260,11 @@ const FamilyMode = ({ onClose }) => {
                 }}>
                     <div className="settings-icon-box" style={{ 
                         width: '56px', height: '56px', 
-                        background: 'rgba(16, 185, 129, 0.1)', 
+                        background: 'rgba(15, 118, 110, 0.12)', 
                         borderRadius: '16px', 
-                        color: '#10b981' 
+                        color: 'var(--bg-emerald-light)' 
                     }}>
-                        <Heart size={28} fill="#10b981" />
+                        <Heart size={28} fill="var(--bg-emerald-light)" />
                     </div>
                     <div style={{ flex: 1 }}>
                         <div style={{ fontWeight: '900', marginBottom: '4px', color: 'var(--nav-text)', fontSize: '1.05rem' }}>
@@ -283,11 +283,11 @@ const FamilyMode = ({ onClose }) => {
                             <div style={{ 
                                 width: '45%', 
                                 height: '100%', 
-                                background: 'linear-gradient(90deg, #10b981, #34d399)',
+                                background: 'linear-gradient(90deg, var(--bg-emerald-light), var(--bg-emerald-light))',
                                 borderRadius: '10px'
                             }} />
                         </div>
-                        <div style={{ marginTop: '8px', fontSize: '0.75rem', fontWeight: '800', color: '#10b981' }}>
+                        <div style={{ marginTop: '8px', fontSize: '0.75rem', fontWeight: '800', color: 'var(--bg-emerald-light)' }}>
                             %45 Tamamlandı
                         </div>
                     </div>
@@ -311,9 +311,9 @@ const FamilyMode = ({ onClose }) => {
                 }}>
                     <div className="settings-icon-box" style={{ 
                         width: '48px', height: '48px', 
-                        background: 'rgba(59, 130, 246, 0.1)', 
+                        background: 'rgba(6, 95, 70, 0.12)', 
                         borderRadius: '14px', 
-                        color: '#3b82f6' 
+                        color: 'var(--bg-emerald-med)' 
                     }}>
                         <MessageCircle size={24} />
                     </div>
@@ -337,7 +337,7 @@ const FamilyMode = ({ onClose }) => {
                 >
                     <div className="settings-icon-box" style={{ 
                         width: '48px', height: '48px', 
-                        background: 'rgba(249, 115, 22, 0.1)', 
+                        background: 'rgba(var(--nav-accent-rgb, 245, 158, 11), 0.1)', 
                         borderRadius: '14px', 
                         color: 'var(--nav-accent)' 
                     }}>
@@ -365,7 +365,7 @@ const FamilyMode = ({ onClose }) => {
                     borderTopRightRadius: '24px'
                 }}>
                     <h3 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--nav-text)', fontWeight: '900' }}>
-                        <Trophy size={20} color="#f59e0b" /> {t('family.leaderboard')}
+                        <Trophy size={20} color="var(--accent-gold-light)" /> {t('family.leaderboard')}
                     </h3>
                     <button onClick={() => setView('create')} className="velocity-target-btn" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>
                         <UserPlus size={16} /> {t('common.add')}
@@ -403,10 +403,10 @@ const FamilyMode = ({ onClose }) => {
                                         width: '32px', 
                                         textAlign: 'center', 
                                         fontWeight: '950', 
-                                        color: index < 3 ? '#f59e0b' : 'var(--nav-text-muted)',
+                                        color: index < 3 ? 'var(--accent-gold-light)' : 'var(--nav-text-muted)',
                                         fontSize: index < 3 ? '1.2rem' : '1rem'
                                     }}>
-                                        {index === 0 ? <Crown size={24} color="#f59e0b" fill="#f59e0b" /> : index + 1}
+                                        {index === 0 ? <Crown size={24} color="var(--accent-gold-light)" fill="var(--accent-gold-light)" /> : index + 1}
                                     </div>
                                     <div className="settings-icon-box" style={{ 
                                         width: '48px', 
@@ -439,7 +439,7 @@ const FamilyMode = ({ onClose }) => {
         <div className="reveal-stagger">
             <div className="settings-card" style={{ padding: '24px', flexDirection: 'column', alignItems: 'stretch' }}>
                 <h3 style={{ marginTop: 0, marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--nav-text)', fontWeight: '950' }}>
-                    <Activity size={20} color="#8b5cf6" /> {t('family.recentActivity')}
+                    <Activity size={20} color="var(--bg-emerald-med)" /> {t('family.recentActivity')}
                 </h3>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -483,10 +483,10 @@ const FamilyMode = ({ onClose }) => {
                 <div className="settings-card" style={{ padding: '32px 24px', textAlign: 'center', flexDirection: 'column', alignItems: 'stretch' }}>
                     <div className="settings-icon-box" style={{ 
                         width: '84px', height: '84px', 
-                        background: 'rgba(79, 70, 229, 0.1)', 
+                        background: 'rgba(6, 78, 59, 0.12)', 
                         borderRadius: '24px', 
                         margin: '0 auto 16px', 
-                        color: '#4f46e5' 
+                        color: 'var(--bg-emerald-deep)' 
                     }}>
                         <Users size={40} />
                     </div>
@@ -558,8 +558,8 @@ const FamilyMode = ({ onClose }) => {
                     {isGroupAdmin && currentGroup.pendingMembers && currentGroup.pendingMembers.length > 0 && (
                         <div style={{ textAlign: 'left', marginTop: '32px', paddingTop: '24px', borderTop: '2px dashed var(--nav-border)' }}>
                             <h4 style={{ marginBottom: '16px', color: 'var(--nav-text)', display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '900' }}>
-                                <Clock size={18} color="#f59e0b" /> {t('family.groups.pendingRequests')}
-                                <span style={{ background: '#f59e0b', color: 'white', padding: '2px 8px', borderRadius: '10px', fontSize: '0.7rem' }}>
+                                <Clock size={18} color="var(--accent-gold-light)" /> {t('family.groups.pendingRequests')}
+                                <span style={{ background: 'var(--accent-gold-light)', color: 'white', padding: '2px 8px', borderRadius: '10px', fontSize: '0.7rem' }}>
                                     {currentGroup.pendingMembers.length}
                                 </span>
                             </h4>
@@ -570,9 +570,9 @@ const FamilyMode = ({ onClose }) => {
                                         alignItems: 'center', 
                                         gap: '14px', 
                                         padding: '16px', 
-                                        background: 'rgba(245, 158, 11, 0.05)', 
+                                        background: 'rgba(var(--nav-accent-rgb, 245, 158, 11), 0.08)', 
                                         borderRadius: '16px',
-                                        border: '1px solid rgba(245, 158, 11, 0.2)'
+                                        border: '1px solid rgba(var(--nav-accent-rgb, 245, 158, 11), 0.24)'
                                     }}>
                                         <div style={{ fontSize: '1.5rem' }}>{member.avatar}</div>
                                         <div style={{ flex: 1 }}>
@@ -585,14 +585,14 @@ const FamilyMode = ({ onClose }) => {
                                             <button 
                                                 onClick={() => handleApprove(member.id)} 
                                                 className="settings-icon-box"
-                                                style={{ background: '#10b981', color: 'white', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', border: 'none' }}
+                                                style={{ background: 'var(--bg-emerald-light)', color: 'white', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', border: 'none' }}
                                             >
                                                 <Check size={18} />
                                             </button>
                                             <button 
                                                 onClick={() => handleReject(member.id)} 
                                                 className="settings-icon-box"
-                                                style={{ background: '#ef4444', color: 'white', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', border: 'none' }}
+                                                style={{ background: 'var(--error-color)', color: 'white', width: '36px', height: '36px', borderRadius: '10px', cursor: 'pointer', border: 'none' }}
                                             >
                                                 <X size={18} />
                                             </button>
@@ -607,7 +607,7 @@ const FamilyMode = ({ onClose }) => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     <div className="settings-card" style={{ padding: '24px', flexDirection: 'column', alignItems: 'stretch' }}>
                         <h3 style={{ marginTop: 0, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--nav-text)', fontWeight: '950' }}>
-                            <UserPlus size={20} color="#10b981" /> {t('family.groups.create')}
+                            <UserPlus size={20} color="var(--bg-emerald-light)" /> {t('family.groups.create')}
                         </h3>
                         <div style={{ display: 'flex', gap: '10px' }}>
                             <input 
@@ -661,10 +661,10 @@ const FamilyMode = ({ onClose }) => {
                     
                     {groupSuccess && (
                         <div className="settings-card pulse" style={{ 
-                            color: '#10b981', 
+                            color: 'var(--bg-emerald-light)', 
                             padding: '16px', 
-                            background: 'rgba(16, 185, 129, 0.05)', 
-                            border: '1px solid rgba(16, 185, 129, 0.2)',
+                            background: 'rgba(15, 118, 110, 0.08)', 
+                            border: '1px solid rgba(15, 118, 110, 0.24)',
                             borderRadius: '16px', 
                             display: 'flex', 
                             alignItems: 'center', 
@@ -679,7 +679,7 @@ const FamilyMode = ({ onClose }) => {
                     
                     {groupError && (
                         <div className="settings-card" style={{ 
-                            color: '#ef4444', 
+                            color: 'var(--error-color)', 
                             padding: '16px', 
                             background: 'rgba(239, 68, 68, 0.05)', 
                             border: '1px solid rgba(239, 68, 68, 0.2)',
@@ -825,3 +825,4 @@ const FamilyMode = ({ onClose }) => {
 };
 
 export default FamilyMode;
+

@@ -58,13 +58,13 @@ const DailyTasks = ({ onClose }) => {
 
   const getCategoryColor = (category) => {
     const colors = {
-      namaz: '#22c55e',
-      kuran: '#3b82f6',
-      zikir: '#a855f7',
-      ilim: '#f59e0b',
-      iyilik: '#ec4899'
+      namaz: 'var(--bg-emerald-light)',
+      kuran: 'var(--accent-gold-light)',
+      zikir: 'var(--accent-gold-shimmer)',
+      ilim: 'var(--accent-gold)',
+      iyilik: 'var(--bg-emerald-med)'
     };
-    return colors[category] || '#6b7280';
+    return colors[category] || 'var(--text-secondary)';
   };
 
   const getCategoryName = (category) => {
@@ -90,11 +90,11 @@ const DailyTasks = ({ onClose }) => {
       <div className="settings-card reveal-stagger" style={{ 
         padding: '32px 24px', 
         marginBottom: '24px',
-        background: 'linear-gradient(135deg, var(--nav-accent) 0%, #10b981 100%)',
+        background: 'linear-gradient(135deg, var(--nav-accent) 0%, var(--primary-dark) 100%)',
         color: 'white',
         border: 'none',
         borderRadius: '28px',
-        boxShadow: '0 15px 35px rgba(79, 70, 229, 0.25)',
+        boxShadow: '0 15px 35px rgba(var(--nav-accent-rgb, 245, 158, 11), 0.25)',
         flexDirection: 'column',
         alignItems: 'stretch'
       }}>
@@ -212,8 +212,8 @@ const DailyTasks = ({ onClose }) => {
                 >
                   {getCategoryName(task.category)}
                 </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: '#f59e0b', fontWeight: '800' }}>
-                  <Star size={12} fill="#f59e0b" />
+                <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: 'var(--accent-gold-light)', fontWeight: '800' }}>
+                  <Star size={12} fill="var(--accent-gold-light)" />
                   +{task.points}
                 </span>
               </div>
@@ -269,9 +269,9 @@ const DailyTasks = ({ onClose }) => {
         <div className="celebration-overlay" onClick={() => setShowAllComplete(false)} style={{ backdropFilter: 'blur(10px)', zIndex: 2000 }}>
           <div style={{ textAlign: 'center' }} className="reveal-stagger">
             <div className="celebrate-animation" style={{ fontSize: '6rem', marginBottom: '20px' }}>🎉</div>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: '950', color: '#f59e0b', margin: '0 0 8px 0' }}>{t('dailyTasks.congrats')}</h2>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: '950', color: 'var(--accent-gold-light)', margin: '0 0 8px 0' }}>{t('dailyTasks.congrats')}</h2>
             <p style={{ fontSize: '1.25rem', fontWeight: '800', color: 'white', margin: '0 0 12px 0' }}>{t('dailyTasks.allTasksCompleted')}</p>
-            <p style={{ color: '#10b981', fontWeight: '950', fontSize: '1.5rem' }}>{t('dailyTasks.bonusPoints', { points: 50 })}</p>
+            <p style={{ color: 'var(--bg-emerald-light)', fontWeight: '950', fontSize: '1.5rem' }}>{t('dailyTasks.bonusPoints', { points: 50 })}</p>
           </div>
         </div>
       )}
@@ -311,3 +311,5 @@ const DailyTasks = ({ onClose }) => {
 };
 
 export default DailyTasks;
+
+

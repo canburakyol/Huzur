@@ -21,6 +21,19 @@
   --text-secondary: #d1d5db; /* Gray 300 */
   --text-gold: #fde68a; /* Soft Gold text for accents */
   --text-muted: rgba(209, 213, 219, 0.6);
+  --text-on-light-primary: #1f2937;
+  --text-on-light-muted: #4b5563;
+
+  /* Compatibility aliases used across feature modules */
+  --text-color: var(--text-primary);
+  --text-color-light: var(--text-secondary);
+  --text-color-muted: var(--text-muted);
+  --card-bg: var(--glass-bg);
+  --secondary-color: var(--accent-gold-shimmer);
+  --arabic-font-family: var(--font-arabic);
+  --nav-accent-rgb: 245, 158, 11;
+  --text-contrast-boost: 1;
+  --bg-color: var(--bg-gradient-start);
 
   --glass-bg: rgba(6, 78, 59, 0.65);
   --glass-border: rgba(180, 83, 9, 0.25);
@@ -37,6 +50,7 @@
 
   /* Refined Glassmorphism Tokens */
   --surface-blur: 16px;
+  --surface-blur-strong: 24px;
   --surface-saturate: 180%;
   --elevation-premium: 0 20px 50px rgba(0, 0, 0, 0.3);
 
@@ -52,10 +66,14 @@
 
 /* Dark Mode - Otomatik uyum */
 [data-theme='dark'] {
-  --bg-gradient-start: #2c3e50;
-  --bg-gradient-end: #34495e;
-  --text-color: #ecf0f1;
-  --glass-bg: rgba(44, 62, 80, 0.8);
+  --bg-gradient-start: #042f2e;
+  --bg-gradient-end: #022c22;
+  --text-color: #e5e7eb;
+  --text-color-light: #fde68a;
+  --text-color-muted: rgba(209, 213, 219, 0.72);
+  --card-bg: rgba(2, 44, 34, 0.88);
+  --bg-color: var(--bg-gradient-start);
+  --glass-bg: rgba(2, 44, 34, 0.82);
   /* ... diğer koyu mod ayarları ... */
 }
 

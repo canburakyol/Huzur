@@ -19,6 +19,7 @@ import { useRuntimeAutoLocalization } from './hooks/useRuntimeAutoLocalization';
 import AppOverlays from './components/app-shell/AppOverlays';
 import AppHomeTabContent from './components/app-shell/AppHomeTabContent';
 import AppTabRouter from './components/app-shell/AppTabRouter';
+import './components/Navigation.css';
 
 // Components - Lazy loaded for performance
 const FeatureManager = lazy(() => import('./components/FeatureManager'));

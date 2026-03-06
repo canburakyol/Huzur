@@ -121,7 +121,7 @@ const SpiritualCoach = ({ onClose }) => {
   };
 
   return (
-    <div className="app-container" style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--bg-color)' }}>
+    <div className="app-container" style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--bg-color, var(--bg-gradient-start))' }}>
       {/* Header */}
       <div style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '15px', borderBottom: '1px solid var(--glass-border)' }}>
         <IslamicBackButton onClick={onClose} />
@@ -131,7 +131,7 @@ const SpiritualCoach = ({ onClose }) => {
           </div>
           <div>
             <h2 style={{ margin: 0, fontSize: '18px', color: 'var(--primary-color)' }}>İslami Asistan</h2>
-            <div style={{ fontSize: '12px', color: '#2ecc71' }}>• Çevrimiçi</div>
+            <div style={{ fontSize: '12px', color: 'var(--bg-emerald-light)' }}>• Çevrimiçi</div>
           </div>
         </div>
       </div>
@@ -148,7 +148,7 @@ const SpiritualCoach = ({ onClose }) => {
           }}>
             <div style={{
               width: '32px', height: '32px', borderRadius: '50%', flexShrink: 0,
-              background: msg.sender === 'user' ? '#3498db' : 'var(--primary-color)',
+              background: msg.sender === 'user' ? 'var(--nav-accent)' : 'var(--primary-color)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white'
             }}>
               {msg.sender === 'user' ? <User size={16} /> : <Bot size={16} />}
@@ -158,8 +158,8 @@ const SpiritualCoach = ({ onClose }) => {
               borderRadius: '16px',
               borderTopLeftRadius: msg.sender === 'bot' ? '4px' : '16px',
               borderTopRightRadius: msg.sender === 'user' ? '4px' : '16px',
-              background: msg.sender === 'user' ? '#3498db' : 'var(--glass-bg)',
-              color: msg.sender === 'user' ? 'white' : 'var(--text-color)',
+              background: msg.sender === 'user' ? 'var(--nav-accent)' : 'var(--glass-bg)',
+              color: msg.sender === 'user' ? 'white' : 'var(--nav-text)' ,
               boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
               fontSize: '14px',
               lineHeight: '1.6',
@@ -229,7 +229,7 @@ const SpiritualCoach = ({ onClose }) => {
             disabled={isTyping || !inputText.trim()}
             style={{
               width: '46px', height: '46px', borderRadius: '50%',
-              background: isTyping || !inputText.trim() ? '#ccc' : 'var(--primary-color)', 
+              background: isTyping || !inputText.trim() ? 'var(--nav-border)' : 'var(--primary-color)', 
               border: 'none',
               color: 'white', cursor: isTyping ? 'default' : 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center'
@@ -244,7 +244,7 @@ const SpiritualCoach = ({ onClose }) => {
         .typing-indicator span {
           display: inline-block;
           width: 6px; height: 6px;
-          background-color: #aaa;
+          background-color: var(--nav-border);
           border-radius: 50%;
           margin: 0 2px;
           animation: typing 1s infinite;
@@ -261,4 +261,5 @@ const SpiritualCoach = ({ onClose }) => {
 };
 
 export default SpiritualCoach;
+
 

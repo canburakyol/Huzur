@@ -10,9 +10,11 @@ function Prayers({ onClose }) {
     const [selectedPrayer, setSelectedPrayer] = useState(null);
 
     // İslami renk paleti
-    const primaryGreen = '#047857';
-    const lightGreen = '#10b981';
-    const goldAccent = '#d97706';
+    const primaryGreen = 'var(--bg-emerald-deep)';
+    const lightGreen = 'var(--bg-emerald-light)';
+    const goldAccent = 'var(--accent-gold-light)';
+    const textOnLight = 'var(--text-on-light-primary)';
+    const textOnLightMuted = 'var(--text-on-light-muted)';
 
     // Category view
     if (!selectedCategory) {
@@ -23,7 +25,7 @@ function Prayers({ onClose }) {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: `linear-gradient(180deg, ${primaryGreen} 0%, #065f46 100%)`,
+                background: `linear-gradient(180deg, ${primaryGreen} 0%, var(--bg-emerald-med) 100%)`,
                 zIndex: 1000,
                 overflowY: 'auto',
                 padding: '20px',
@@ -137,7 +139,7 @@ function Prayers({ onClose }) {
                                 <p style={{ 
                                     margin: 0, 
                                     fontSize: '11px', 
-                                    color: '#6b7280',
+                                    color: textOnLightMuted,
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '4px'
@@ -164,7 +166,7 @@ function Prayers({ onClose }) {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: `linear-gradient(180deg, ${primaryGreen} 0%, #065f46 100%)`,
+                background: `linear-gradient(180deg, ${primaryGreen} 0%, var(--bg-emerald-med) 100%)`,
                 zIndex: 1000,
                 overflowY: 'auto',
                 padding: '20px',
@@ -244,7 +246,7 @@ function Prayers({ onClose }) {
                                 <h3 style={{
                                     margin: 0,
                                     fontSize: '15px',
-                                    color: '#1f2937',
+                                    color: textOnLight,
                                     fontWeight: '600'
                                 }}>
                                     {t(prayer.title)}
@@ -252,7 +254,7 @@ function Prayers({ onClose }) {
                                 <p style={{
                                     margin: '4px 0 0',
                                     fontSize: '12px',
-                                    color: '#6b7280',
+                                    color: textOnLightMuted,
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
                                     whiteSpace: 'nowrap'
@@ -262,7 +264,7 @@ function Prayers({ onClose }) {
                             </div>
                             <ChevronLeft
                                 size={18}
-                                color="#9ca3af"
+                                color="var(--text-on-light-muted)"
                                 style={{ transform: 'rotate(180deg)', flexShrink: 0 }}
                             />
                         </div>
@@ -281,7 +283,7 @@ function Prayers({ onClose }) {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: `linear-gradient(180deg, ${primaryGreen} 0%, #065f46 100%)`,
+                background: `linear-gradient(180deg, ${primaryGreen} 0%, var(--bg-emerald-med) 100%)`,
                 zIndex: 1000,
                 overflowY: 'auto',
                 padding: '20px',
@@ -373,7 +375,7 @@ function Prayers({ onClose }) {
                             margin: 0,
                             fontSize: '24px',
                             fontFamily: "var(--arabic-font-family)",
-                            color: '#1f2937',
+                            color: textOnLight,
                             lineHeight: '2',
                             fontWeight: '500',
                             direction: 'rtl'
@@ -403,7 +405,7 @@ function Prayers({ onClose }) {
                         <p style={{
                             margin: 0,
                             fontSize: '15px',
-                            color: '#374151',
+                            color: textOnLightMuted,
                             lineHeight: '1.6',
                             fontStyle: 'italic'
                         }}>
@@ -431,7 +433,7 @@ function Prayers({ onClose }) {
                         <p style={{
                             margin: 0,
                             fontSize: '15px',
-                            color: '#374151',
+                            color: textOnLightMuted,
                             lineHeight: '1.7'
                         }}>
                             {t(selectedPrayer.meaning)}
@@ -446,3 +448,4 @@ function Prayers({ onClose }) {
 }
 
 export default Prayers;
+
