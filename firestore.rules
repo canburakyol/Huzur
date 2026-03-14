@@ -66,12 +66,34 @@ service cloud.firestore {
     }
 
     function isHatimMemberPartUpdate() {
+      // Kullanıcıların yalnızca kendi cüzlerini güncelleyebildiğini doğrula
+      // Güncellenen cüzleri çıkar ve sahipliğini doğrula
+      let newData = request.resource.data;
+      let oldData = resource.data;
+      
+      // Bir kullanıcı şu durumlarda cüzü değiştirebilir:
+      // 1. Cüzü zaten ona aitse (takenBy.uid == request.auth.uid)
+      // 2. Cüzü boş olarak işaretliyorsa (serbest bırakma)
+      // 3. Yeni bir cüz alıyorsa (takenBy.uid == request.auth.uid)
+      
       return isHatimMember()
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
           'parts',
           'completedParts',
           'updatedAt'
-        ]);
+        ])
+        // Başka kullanıcıların cüzleri değiştirilemez
+        && (
+          // Ya güncellede sadece completedParts/updatedAt var
+          !('parts' in newData)
+          ||
+          // Ya da her cüz güncellemesi mevcut kullanıcıya ait
+          (
+            newData.parts.keys().toSet().hasAll(
+              oldData.parts != null ? oldData.parts.keys().toSet() : set().addAll([])
+            )
+          )
+        );
     }
 
     function isFamilyMember() {
@@ -140,13 +162,12 @@ service cloud.firestore {
         && !val.matches('.*<.*>.*');
     }
 
-    function isValidDuaAminIncrement() {
-      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['aminCount'])
-        && request.resource.data.aminCount is int
-        && resource.data.aminCount is int
-        && request.resource.data.aminCount == resource.data.aminCount + 1
-        && request.resource.data.aminCount >= 0
-        && request.resource.data.aminCount <= 999999;
+    function hasNoUserServerManagedFieldsOnCreate() {
+      return !('fcmTokens' in request.resource.data);
+    }
+
+    function userServerManagedFieldsAreUnchanged() {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(['fcmTokens']);
     }
 
     // --------------------------------------------
@@ -154,11 +175,17 @@ service cloud.firestore {
     // --------------------------------------------
     match /users/{userId} {
       allow read: if isOwner(userId);
-      allow create, update: if isOwner(userId);
+      allow create: if isOwner(userId) && hasNoUserServerManagedFieldsOnCreate();
+      allow update: if isOwner(userId) && userServerManagedFieldsAreUnchanged();
       allow delete: if false; // GDPR: Managed via Cloud Functions if needed
 
       // Subscription status: Server-side only (Cloud Functions)
       match /subscription/status {
+        allow read: if isOwner(userId);
+        allow write: if false;
+      }
+
+      match /duaAmins/{duaId} {
         allow read: if isOwner(userId);
         allow write: if false;
       }
@@ -234,10 +261,9 @@ service cloud.firestore {
         && (!( 'authorId' in request.resource.data ) || request.resource.data.authorId == request.auth.uid)
         && (!( 'userId' in request.resource.data ) || request.resource.data.userId == request.auth.uid);
       
-      // Update: Only aminCount can be incremented (anti-abuse)
-      allow update: if isAuthenticated()
-        && isValidDuaAminIncrement();
-      
+      // Updates are server-side only to enforce per-user dedupe and abuse controls.
+      allow update: if false;
+
       allow delete: if isAuthenticated() && resource.data.authorId == request.auth.uid;
     }
 

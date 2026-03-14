@@ -1,17 +1,35 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { getPrayerTimes, getNextPrayer } from '../services/prayerService';
-import { createNotificationChannels, FCMService } from '../services/fcmService';
-import smartNotificationService, { showStickyNotification, cancelStickyNotification, requestNotificationPermission } from '../services/smartNotificationService';
 import { updateWidget as updateAndroidWidget, scheduleWidgetAlarms } from '../services/widgetService';
 import { storageService } from '../services/storageService';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
+import { scheduleDeferredTask } from '../utils/startupScheduler';
+
+let smartNotificationModulePromise = null;
+let fcmModulePromise = null;
+
+const loadSmartNotificationModule = async () => {
+  if (!smartNotificationModulePromise) {
+    smartNotificationModulePromise = import('../services/smartNotificationService');
+  }
+
+  return smartNotificationModulePromise;
+};
+
+const loadFcmModule = async () => {
+  if (!fcmModulePromise) {
+    fcmModulePromise = import('../services/fcmService');
+  }
+
+  return fcmModulePromise;
+};
 
 /**
  * Prayer Times Management Hook
  * Handles fetching, caching, scheduling and updating prayer times
  * Also manages notifications and widget updates
- * 
+ *
  * @returns {Object} Prayer times state and functions
  */
 export const usePrayerTimes = () => {
@@ -21,8 +39,25 @@ export const usePrayerTimes = () => {
   const [error, setError] = useState(null);
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
+  const lastScheduledTimingsRef = useRef('');
+  const fcmModuleRef = useRef(null);
 
-  // Fetch prayer times
+  const schedulePrayerSideEffects = useCallback(async (prayerTimings) => {
+    try {
+      const smartNotificationModule = await loadSmartNotificationModule();
+      const smartNotificationService = smartNotificationModule.default;
+
+      await Promise.allSettled([
+        smartNotificationService.initializeSmartNotifications({ prayerTimes: prayerTimings }),
+        scheduleWidgetAlarms(prayerTimings)
+      ]);
+
+      logger.log('[usePrayerTimes] Smart notifications and widget alarms scheduled');
+    } catch (scheduleError) {
+      logger.warn('[usePrayerTimes] Failed to schedule notifications:', scheduleError);
+    }
+  }, []);
+
   const fetchPrayerTimes = useCallback(async (coords = null, isInitialLoad = false) => {
     try {
       if (isInitialLoad) {
@@ -38,13 +73,10 @@ export const usePrayerTimes = () => {
         setTimings(data.timings);
         setNextPrayer(getNextPrayer(data.timings));
 
-
-        try {
-          await smartNotificationService.initializeSmartNotifications({ prayerTimes: data.timings });
-          await scheduleWidgetAlarms(data.timings);
-          logger.log('[usePrayerTimes] Smart notifications and widget alarms scheduled');
-        } catch (scheduleError) {
-          logger.warn('[usePrayerTimes] Failed to schedule notifications:', scheduleError);
+        const timingsSignature = JSON.stringify(data.timings);
+        if (lastScheduledTimingsRef.current !== timingsSignature) {
+          lastScheduledTimingsRef.current = timingsSignature;
+          void schedulePrayerSideEffects(data.timings);
         }
       } else {
         setError('Namaz vakitleri yüklenemedi. Lütfen internet bağlantınızı kontrol edin.');
@@ -55,36 +87,49 @@ export const usePrayerTimes = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [schedulePrayerSideEffects]);
 
-  // Safety timeout for loading state
   useEffect(() => {
     const timer = setTimeout(() => {
       if (loading) {
         logger.warn('[usePrayerTimes] Loading timed out, forcing completion');
         setLoading(false);
         if (!timings) {
-            setError('Bağlantı zaman aşımına uğradı.');
+          setError('Bağlantı zaman aşımına uğradı.');
         }
       }
-    }, 10000); // 10 seconds timeout
+    }, 10000);
 
     return () => clearTimeout(timer);
   }, [loading, timings]);
 
-  // Initialize FCM and notification channels
   useEffect(() => {
+    let isCancelled = false;
+
     const initFCM = async () => {
       try {
-        await createNotificationChannels();
-        await FCMService.initialize();
-        logger.log('[usePrayerTimes] FCM and notification channels initialized');
+        const fcmModule = await loadFcmModule();
+        if (isCancelled) {
+          return;
+        }
+
+        fcmModuleRef.current = fcmModule;
+        await fcmModule.createNotificationChannels();
+        if (isCancelled) {
+          return;
+        }
+
+        await fcmModule.FCMService.initialize();
+        if (!isCancelled) {
+          logger.log('[usePrayerTimes] FCM and notification channels initialized');
+        }
       } catch (fcmError) {
-        logger.warn('[usePrayerTimes] FCM initialization failed:', fcmError);
+        if (!isCancelled) {
+          logger.warn('[usePrayerTimes] FCM initialization failed:', fcmError);
+        }
       }
     };
 
-    // Check notification permission
     if (typeof Notification !== 'undefined') {
       if (Notification.permission === 'granted') {
         setPermissionGranted(true);
@@ -96,22 +141,21 @@ export const usePrayerTimes = () => {
       }
     }
 
-    // Delay FCM initialization for better cold start
-    const timeoutId = setTimeout(initFCM, TIMING.FCM_DELAY_MS);
+    const cancelDeferredInit = scheduleDeferredTask(initFCM, TIMING.FCM_DELAY_MS);
 
     return () => {
-      clearTimeout(timeoutId);
-      FCMService.removeListeners().catch(() => {});
+      isCancelled = true;
+      cancelDeferredInit();
+      fcmModuleRef.current?.FCMService.removeListeners().catch(() => {});
     };
   }, []);
 
-  // Update next prayer periodically (unified timer)
   useEffect(() => {
     if (!timings) return;
 
     const updateNextPrayer = () => {
       const next = getNextPrayer(timings);
-      setNextPrayer(prev => {
+      setNextPrayer((prev) => {
         if (!prev || prev.key !== next.key || prev.time !== next.time || prev.isTomorrow !== next.isTomorrow) {
           return next;
         }
@@ -125,9 +169,8 @@ export const usePrayerTimes = () => {
     return () => clearInterval(timer);
   }, [timings]);
 
-
-  // Handle notification permission
   const handleEnableNotifications = async () => {
+    const { requestNotificationPermission } = await loadSmartNotificationModule();
     const granted = await requestNotificationPermission();
     setPermissionGranted(granted);
     setShowWelcome(false);
@@ -161,21 +204,26 @@ export const useStickyNotification = (timings, nextPrayer) => {
     if (!timings || !nextPrayer) return;
 
     let stickyInterval;
+    let isDisposed = false;
 
-    const updateStickyNotification = () => {
+    const updateStickyNotification = async () => {
+      const { showStickyNotification, cancelStickyNotification } = await loadSmartNotificationModule();
+      if (isDisposed) {
+        return;
+      }
+
       const isStickyEnabled = storageService.getBoolean(STORAGE_KEYS.STICKY_NOTIFICATION);
-
       if (!isStickyEnabled) {
-        cancelStickyNotification();
+        await cancelStickyNotification();
         if (stickyInterval) clearInterval(stickyInterval);
         return;
       }
 
-      const update = () => {
+      const pushStickyUpdate = async () => {
         const now = new Date();
         const prayerTime = timings[nextPrayer.key];
         if (!prayerTime) return;
-        
+
         const [h, m] = prayerTime.split(':').map(Number);
         const prayerDate = new Date();
         prayerDate.setHours(h, m, 0);
@@ -192,19 +240,26 @@ export const useStickyNotification = (timings, nextPrayer) => {
         const title = `${nextPrayer.name} Vaktine Kalan`;
         const body = `${timeLeft} kaldı.`;
 
-        showStickyNotification(title, body);
+        await showStickyNotification(title, body);
       };
 
-      update();
+      await pushStickyUpdate();
       if (stickyInterval) clearInterval(stickyInterval);
-      stickyInterval = setInterval(update, TIMING.REFRESH_INTERVAL_MS);
+      stickyInterval = setInterval(() => {
+        void pushStickyUpdate();
+      }, TIMING.REFRESH_INTERVAL_MS);
     };
 
-    window.addEventListener('stickyNotificationChanged', updateStickyNotification);
-    updateStickyNotification();
+    const handleStickyChange = () => {
+      void updateStickyNotification();
+    };
+
+    window.addEventListener('stickyNotificationChanged', handleStickyChange);
+    void updateStickyNotification();
 
     return () => {
-      window.removeEventListener('stickyNotificationChanged', updateStickyNotification);
+      isDisposed = true;
+      window.removeEventListener('stickyNotificationChanged', handleStickyChange);
       if (stickyInterval) clearInterval(stickyInterval);
     };
   }, [timings, nextPrayer]);
@@ -218,7 +273,6 @@ export const useAndroidWidget = (timings, nextPrayer, locationName) => {
   useEffect(() => {
     if (!timings || !nextPrayer) return;
 
-    // Widget update (native-safe wrapper)
     const updateWidget = async () => {
       try {
         const prayerTime = timings[nextPrayer.key];

@@ -32,7 +32,7 @@ const HatimList = ({ onSelectHatim }) => {
   };
 
   const handleHatimClick = (hatim) => {
-    const isMember = hatim.readers?.includes(userId);
+    const isMember = hatim.isMember === true || hatim.readers?.includes(userId);
     if (isMember) {
       onSelectHatim(hatim.id);
     } else {
@@ -123,7 +123,7 @@ const HatimList = ({ onSelectHatim }) => {
             key={hatim.id}
             hatim={hatim}
             onClick={() => handleHatimClick(hatim)}
-            isMember={hatim.readers?.includes(userId)}
+            isMember={hatim.isMember === true || hatim.readers?.includes(userId)}
           />
         ))}
 

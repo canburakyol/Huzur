@@ -1,41 +1,41 @@
-import { db } from './firebase';
-import { 
-  collection, 
-  addDoc, 
-  query, 
-  orderBy, 
-  limit, 
-  getDocs, 
-  doc, 
-  updateDoc, 
-  increment, 
-  serverTimestamp
+import {
+  addDoc,
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  serverTimestamp,
 } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
+import { db, getFunctionsInstance } from './firebase';
 import { getCurrentUserIdEnsured } from './authService';
 import { logger } from '../utils/logger';
 
 const COLLECTION_DUAS = 'duas';
 
+const callDuaFunction = async (name, payload) => {
+  const functions = await getFunctionsInstance();
+  const callable = httpsCallable(functions, name);
+  const result = await callable(payload);
+  return result.data;
+};
+
 export const duaService = {
-  /**
-   * Yeni bir dua isteği oluştur
-   * @param {string} text - Dua metni
-   * @param {boolean} isAnonymous - Anonim mi?
-   * @param {string} authorName - Yazar adı (Anonim değilse)
-   */
-  createDua: async (text, isAnonymous, authorName) => {
+  async createDua(text, isAnonymous, authorName) {
     const userId = await getCurrentUserIdEnsured();
-    if (!userId) throw new Error('User not authenticated');
+    if (!userId) {
+      throw new Error('User not authenticated');
+    }
 
     try {
       const duaData = {
         text,
         isAnonymous,
-        authorId: userId, // Güvenlik için tutulur ama client'a anonimse gönderilmemeli (UI'da gizlenmeli)
-        authorName: isAnonymous ? 'Bir Mümin' : (authorName || 'İsimsiz'),
+        authorId: userId,
+        authorName: isAnonymous ? 'Bir Mumin' : (authorName || 'Isimsiz'),
         createdAt: serverTimestamp(),
         aminCount: 0,
-        supporters: [] // Kimlerin dua ettiğini tutabiliriz (isteğe bağlı)
       };
 
       const docRef = await addDoc(collection(db, COLLECTION_DUAS), duaData);
@@ -47,22 +47,18 @@ export const duaService = {
     }
   },
 
-  /**
-   * Son eklenen duaları getir
-   * @param {number} limitCount - Kaç tane getirilsin
-   */
-  getRecentDuas: async (limitCount = 20) => {
+  async getRecentDuas(limitCount = 20) {
     try {
-      const q = query(
+      const duaQuery = query(
         collection(db, COLLECTION_DUAS),
         orderBy('createdAt', 'desc'),
         limit(limitCount)
       );
-      
-      const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
+
+      const querySnapshot = await getDocs(duaQuery);
+      return querySnapshot.docs.map((docSnapshot) => ({
+        id: docSnapshot.id,
+        ...docSnapshot.data(),
       }));
     } catch (error) {
       logger.error('[DuaService] Get duas error:', error);
@@ -70,31 +66,21 @@ export const duaService = {
     }
   },
 
-  /**
-   * Bir duaya "Amin" de (Destek ol)
-   * @param {string} duaId 
-   */
-  prayForDua: async (duaId) => {
+  async prayForDua(duaId) {
     const userId = await getCurrentUserIdEnsured();
-    if (!userId) throw new Error('User not authenticated');
+    if (!userId) {
+      throw new Error('User not authenticated');
+    }
 
     try {
-      const duaRef = doc(db, COLLECTION_DUAS, duaId);
-      
-      // Kullanıcının daha önce destek olup olmadığını kontrol etmek iyi olurdu
-      // Ancak basitlik adına şimdilik direkt increment yapıyoruz.
-      // İdealde 'supporters' subcollection veya array kullanılır.
-      
-      await updateDoc(duaRef, {
-        aminCount: increment(1),
-        // supporters: arrayUnion(userId) // Array limitlerine takılabilir, dikkat
-      });
-      
+      const result = await callDuaFunction('prayForDua', { duaId });
       logger.log('[DuaService] Prayed for dua:', duaId);
-      return true;
+      return result;
     } catch (error) {
       logger.error('[DuaService] Pray error:', error);
       throw error;
     }
-  }
+  },
 };
+
+export default duaService;

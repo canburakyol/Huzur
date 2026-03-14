@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { 
-  onSnapshot, 
-  collection, 
-  query, 
-  orderBy, 
-  limit 
+import { useEffect, useState } from 'react';
+import {
+  collection,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
 } from 'firebase/firestore';
 import { db } from '../services/firebase';
 import { duaService } from '../services/duaService';
@@ -17,8 +17,8 @@ export const useDua = () => {
   const [duas, setDuas] = useState([]);
   const [userId, setUserId] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [prayedDuaIds, setPrayedDuaIds] = useState(() => new Set());
 
-  // Auth initialization - Firebase Auth tamamlanmadan Firestore sorgusu başlamaz
   useEffect(() => {
     const initAuth = async () => {
       try {
@@ -27,35 +27,35 @@ export const useDua = () => {
         logger.log('[useDua] Auth initialized, userId:', uid);
       } catch (err) {
         logger.error('[useDua] Auth error:', err);
-        setError('Firebase kimlik doğrulaması başarısız. İnternetinizi kontrol edip tekrar deneyin.');
+        setError('Firebase kimlik dogrulamasi basarisiz. Internetinizi kontrol edip tekrar deneyin.');
       } finally {
         setAuthLoading(false);
       }
     };
+
     initAuth();
   }, []);
 
-  // Subscribe to recent duas - Auth tamamlandıktan sonra başlar
   useEffect(() => {
-    // Auth henüz tamamlanmadıysa bekle
     if (authLoading || !userId) {
-      return;
+      return undefined;
     }
 
     setLoading(true);
     setError(null);
-    
-    const q = query(
+
+    const duaQuery = query(
       collection(db, 'duas'),
       orderBy('createdAt', 'desc'),
       limit(50)
     );
 
-    const unsub = onSnapshot(q, 
+    return onSnapshot(
+      duaQuery,
       (snapshot) => {
-        const duaList = snapshot.docs.map(doc => ({ 
-          id: doc.id, 
-          ...doc.data() 
+        const duaList = snapshot.docs.map((docSnapshot) => ({
+          id: docSnapshot.id,
+          ...docSnapshot.data(),
         }));
         setDuas(duaList);
         setLoading(false);
@@ -63,15 +63,31 @@ export const useDua = () => {
       (err) => {
         logger.error('[useDua] Firestore error:', err);
         if (err.code === 'permission-denied') {
-          setError('Erişim izni hatası. Lütfen uygulamayı yeniden başlatın.');
+          setError('Erisim izni hatasi. Lutfen uygulamayi yeniden baslatin.');
         } else {
-          setError('Dualar yüklenemedi');
+          setError('Dualar yuklenemedi');
         }
         setLoading(false);
       }
     );
+  }, [authLoading, userId]);
 
-    return () => unsub();
+  useEffect(() => {
+    if (authLoading || !userId) {
+      return undefined;
+    }
+
+    const userAminQuery = query(collection(db, 'users', userId, 'duaAmins'));
+    return onSnapshot(
+      userAminQuery,
+      (snapshot) => {
+        const nextPrayedIds = new Set(snapshot.docs.map((docSnapshot) => docSnapshot.id));
+        setPrayedDuaIds(nextPrayedIds);
+      },
+      (err) => {
+        logger.error('[useDua] Dua amin state error:', err);
+      }
+    );
   }, [authLoading, userId]);
 
   const createDua = async (text, isAnonymous, authorName) => {
@@ -86,8 +102,13 @@ export const useDua = () => {
 
   const prayForDua = async (duaId) => {
     try {
-      await duaService.prayForDua(duaId);
-      return true;
+      const result = await duaService.prayForDua(duaId);
+      setPrayedDuaIds((current) => {
+        const next = new Set(current);
+        next.add(duaId);
+        return next;
+      });
+      return result;
     } catch (err) {
       logger.error('Pray action error:', err);
       throw err;
@@ -98,7 +119,11 @@ export const useDua = () => {
     loading,
     error,
     duas,
+    userId,
+    prayedDuaIds,
     createDua,
-    prayForDua
+    prayForDua,
   };
 };
+
+export default useDua;

@@ -76,15 +76,7 @@ export const useGroupHatim = (hatimId = null) => {
   const fetchAllPublicHatims = useCallback(async () => {
     setLoading(true);
     try {
-      const q = query(
-        collection(db, 'hatims'),
-        where('type', '==', 'group'),
-        limit(50)
-      );
-      const snapshot = await getDocs(q);
-      const hatims = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      // Sort by creation date
-      hatims.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      const hatims = await hatimService.listPublicHatims();
       setActiveHatims(hatims);
     } catch (err) {
       logger.error('Error fetching all hatims:', err);
@@ -179,6 +171,7 @@ export const useGroupHatim = (hatimId = null) => {
     error,
     activeHatims,
     hatimDetails,
+    userId,
     fetchMyHatims,
     fetchAllPublicHatims,
     createHatim,

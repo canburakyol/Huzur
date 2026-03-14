@@ -14,19 +14,46 @@ import {
     createNotificationChannels as ensureNotificationChannels
 } from './notificationPlatformService';
 
-// FCM Token storage key
-const FCM_TOKEN_KEY = 'fcm_token';
-
 const SUPPORTED_PRAYER_KEYS = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
-
-
 
 /**
  * FCM Service Object
  */
 export const FCMService = {
     token: null,
-    listenersSetup: false, // Prevents duplicate listener registration (memory leak fix)
+    listenersSetup: false,
+
+    async syncTokenWithServer(token) {
+        if (!Capacitor.isNativePlatform()) {
+            return false;
+        }
+
+        const normalizedToken = typeof token === 'string' ? token.trim() : '';
+        if (!normalizedToken) {
+            return false;
+        }
+
+        try {
+            const [{ getFunctionsInstance }, { getCurrentUserIdEnsured }, { httpsCallable }] = await Promise.all([
+                import('./firebase'),
+                import('./authService'),
+                import('firebase/functions')
+            ]);
+
+            const userId = await getCurrentUserIdEnsured();
+            if (!userId) {
+                return false;
+            }
+
+            const functions = await getFunctionsInstance();
+            const syncFcmToken = httpsCallable(functions, 'syncFcmToken');
+            await syncFcmToken({ token: normalizedToken });
+            return true;
+        } catch (error) {
+            logger.warn('[FCM] Token sync failed:', error);
+            return false;
+        }
+    },
 
     /**
      * Initialize FCM and request permissions
@@ -39,24 +66,20 @@ export const FCMService = {
         }
 
         try {
-            // Step 1: Request permission
             const permStatus = await PushNotifications.requestPermissions();
-            
+
             if (permStatus.receive !== 'granted') {
                 logger.warn('[FCM] Push notification permission denied');
                 return null;
             }
 
-            // Step 2: Register for push notifications
+            this.setupListeners();
             await PushNotifications.register();
 
-            // Step 3: Set up listeners
-            this.setupListeners();
-
-            // Step 4: Get stored token or wait for new one
             const storedToken = storageService.getString(STORAGE_KEYS.FCM_TOKEN);
             if (storedToken) {
                 this.token = storedToken;
+                await this.syncTokenWithServer(storedToken);
                 logger.log('[FCM] Using stored token');
                 return storedToken;
             }
@@ -74,35 +97,30 @@ export const FCMService = {
      * Includes guard to prevent duplicate listener registration (memory leak prevention)
      */
     setupListeners() {
-        // Prevent duplicate listener registration
         if (this.listenersSetup) {
             logger.log('[FCM] Listeners already setup, skipping');
             return;
         }
         this.listenersSetup = true;
 
-        // Registration success - get token
         PushNotifications.addListener('registration', (token) => {
             logger.sensitive('[FCM] Registration token received');
             this.token = token.value;
             storageService.setString(STORAGE_KEYS.FCM_TOKEN, token.value);
-            
-            // Dispatch event for other components
-            window.dispatchEvent(new CustomEvent('fcmTokenReceived', { 
-                detail: { token: token.value } 
+            this.syncTokenWithServer(token.value).catch(() => {});
+
+            window.dispatchEvent(new CustomEvent('fcmTokenReceived', {
+                detail: { token: token.value }
             }));
         });
 
-        // Registration error
         PushNotifications.addListener('registrationError', (error) => {
             logger.error('[FCM] Registration error:', error);
         });
 
-        // Push notification received (foreground)
         PushNotifications.addListener('pushNotificationReceived', async (notification) => {
             logger.log('[FCM] Push received (foreground)');
-            
-            // Show as local notification when app is in foreground
+
             await LocalNotifications.schedule({
                 notifications: [{
                     title: notification.title || 'Huzur',
@@ -115,15 +133,13 @@ export const FCMService = {
             });
         });
 
-        // Push notification action (user tapped)
         PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
             logger.log('[FCM] Push action performed');
-            
-            // Handle notification tap - navigate to relevant screen
+
             const data = notification.notification.data;
             if (data && data.action) {
-                window.dispatchEvent(new CustomEvent('pushNotificationAction', { 
-                    detail: data 
+                window.dispatchEvent(new CustomEvent('pushNotificationAction', {
+                    detail: data
                 }));
             }
         });

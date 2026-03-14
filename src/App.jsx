@@ -119,8 +119,10 @@ function App() {
     setActiveTab
   });
 
+  const hasBlockingOverlay = showSplash || showGrowthOnboarding;
+
   // Render Active Feature Overlay
-  if (activeFeature) {
+  if (activeFeature && !hasBlockingOverlay) {
     return (
       <div data-i18n-autolocalize="true">
         <Suspense fallback={<div className="loading-overlay">Yükleniyor...</div>}>
@@ -161,52 +163,56 @@ function App() {
           onUseProtectionToken={handleUseProtectionToken}
         />
 
-        <div className="app-container" style={{ position: 'relative', paddingBottom: '130px' }}>
-          {activeTab === 'home' && (
-            <AppHomeTabContent
-              loading={loading}
-              error={error}
-              fetchPrayerTimes={fetchPrayerTimes}
-              t={t}
-              timings={timings}
-              nextPrayer={nextPrayer}
-              locationName={locationName}
-              weather={weather}
-              streakData={streakData}
-              onOpenInvite={() => setShowInviteModal(true)}
-              dailyContent={dailyContent}
-              onSelectFeature={setActiveFeature}
+        {!hasBlockingOverlay && (
+          <div className="app-container" style={{ position: 'relative', paddingBottom: '130px' }}>
+            {activeTab === 'home' && (
+              <AppHomeTabContent
+                loading={loading}
+                error={error}
+                fetchPrayerTimes={fetchPrayerTimes}
+                t={t}
+                timings={timings}
+                nextPrayer={nextPrayer}
+                locationName={locationName}
+                weather={weather}
+                streakData={streakData}
+                onOpenInvite={() => setShowInviteModal(true)}
+                dailyContent={dailyContent}
+                onSelectFeature={setActiveFeature}
+              />
+            )}
+
+            <AppTabRouter
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
             />
-          )}
 
-          <AppTabRouter
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-          />
-
-          <Suspense fallback={null}>
-            <HamburgerMenu
-              onSelectFeature={setActiveFeature}
-              currentFeature={activeFeature}
-              externalOpen={showHamburgerMenu}
-              onClose={() => setShowHamburgerMenu(false)}
-              isPro={isProUser}
-            />
-          </Suspense>
-
-          {!isFocusMode && (
             <Suspense fallback={null}>
-              <BottomNav 
-                activeTab={activeTab} 
-                setActiveTab={setActiveTab} 
-                onShowMenu={() => setShowHamburgerMenu(true)} 
+              <HamburgerMenu
+                onSelectFeature={setActiveFeature}
+                currentFeature={activeFeature}
+                externalOpen={showHamburgerMenu}
+                onClose={() => setShowHamburgerMenu(false)}
+                isPro={isProUser}
               />
             </Suspense>
-          )}
-        </div>
+
+            {!isFocusMode && (
+              <Suspense fallback={null}>
+                <BottomNav 
+                  activeTab={activeTab} 
+                  setActiveTab={setActiveTab} 
+                  onShowMenu={() => setShowHamburgerMenu(true)} 
+                />
+              </Suspense>
+            )}
+          </div>
+        )}
       </div>
     </ErrorBoundary>
   );
 }
 
 export default App;
+
+

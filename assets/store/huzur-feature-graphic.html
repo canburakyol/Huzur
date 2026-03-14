@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huzur - Play Store Feature Graphic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1a1a2e;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .feature-graphic {
+            width: 1024px;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Gradient Background */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                #1A237E 0%,
+                #0D47A1 25%,
+                #00695C 50%,
+                #00838F 75%,
+                #40E0D0 100%
+            );
+        }
+
+        /* Geometric Patterns */
+        .patterns {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            background-image: 
+                radial-gradient(circle at 20% 80%, #D4AF37 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, #D4AF37 1px, transparent 1px),
+                radial-gradient(circle at 40% 40%, #D4AF37 1px, transparent 1px),
+                radial-gradient(circle at 60% 60%, #D4AF37 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Central Dome Silhouette */
+        .dome-container {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .dome {
+            width: 280px;
+            height: 200px;
+            position: relative;
+        }
+
+        .dome-main {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 140px;
+            background: linear-gradient(180deg, #D4AF37 0%, #B8860B 50%, #8B7355 100%);
+            border-radius: 90px 90px 0 0;
+            box-shadow: 
+                0 0 40px rgba(212, 175, 55, 0.5),
+                inset 0 -20px 40px rgba(139, 115, 85, 0.5);
+        }
+
+        .dome-top {
+            position: absolute;
+            bottom: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: #D4AF37;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+        }
+
+        .minaret {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            height: 160px;
+            background: linear-gradient(180deg, #D4AF37 0%, #8B7355 100%);
+        }
+
+        .minaret-left {
+            left: 20px;
+        }
+
+        .minaret-right {
+            right: 20px;
+        }
+
+        .minaret-top {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: #D4AF37;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        }
+
+        .minaret balcony {
+            position: absolute;
+            width: 30px;
+            height: 8px;
+            background: #D4AF37;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 40px;
+        }
+
+        /* Light/Nur Beams */
+        .beams {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 300px;
+            background: 
+                linear-gradient(
+                    180deg,
+                    rgba(255, 248, 231, 0.4) 0%,
+                    rgba(255, 248, 231, 0.2) 30%,
+                    transparent 70%
+                );
+            clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+            pointer-events: none;
+        }
+
+        .beam {
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(255, 248, 231, 0.6) 0%, transparent 100%);
+        }
+
+        .beam-1 { left: 30%; transform: rotate(-5deg); }
+        .beam-2 { left: 40%; }
+        .beam-3 { left: 50%; }
+        .beam-4 { left: 60%; transform: rotate(5deg); }
+        .beam-5 { left: 70%; transform: rotate(10deg); }
+
+        /* Corner Frames */
+        .corner {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-color: #D4AF37;
+            border-style: solid;
+            opacity: 0.8;
+        }
+
+        .corner-tl {
+            top: 20px;
+            left: 20px;
+            border-width: 3px 0 0 3px;
+        }
+
+        .corner-tr {
+            top: 20px;
+            right: 20px;
+            border-width: 3px 3px 0 0;
+        }
+
+        .corner-bl {
+            bottom: 20px;
+            left: 20px;
+            border-width: 0 0 3px 3px;
+        }
+
+        .corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-width: 0 3px 3px 0;
+        }
+
+        /* Text Elements */
+        .title {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 72px;
+            font-weight: 700;
+            color: #D4AF37;
+            text-shadow: 
+                0 0 20px rgba(212, 175, 55, 0.8),
+                0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 8px;
+            font-family: 'Traditional Arabic', 'Noto Naskh Arabic', serif;
+        }
+
+        .subtitle {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 22px;
+            color: #FFF8E7;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        /* Stars decoration */
+        .star {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #D4AF37;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        .star-1 { top: 15%; left: 10%; animation-delay: 0s; }
+        .star-2 { top: 25%; right: 15%; animation-delay: 0.5s; }
+        .star-3 { top: 10%; right: 25%; animation-delay: 1s; }
+        .star-4 { bottom: 30%; left: 8%; animation-delay: 1.5s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Bottom line decoration */
+        .bottom-line {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        }
+    </style>
+</head>
+<body>
+    <div class="feature-graphic">
+        <!-- Background -->
+        <div class="background"></div>
+        
+        <!-- Geometric Patterns -->
+        <div class="patterns"></div>
+        
+        <!-- Light Beams -->
+        <div class="beams">
+            <div class="beam beam-1"></div>
+            <div class="beam beam-2"></div>
+            <div class="beam beam-3"></div>
+            <div class="beam beam-4"></div>
+            <div class="beam beam-5"></div>
+        </div>
+        
+        <!-- Dome and Minarets -->
+        <div class="dome-container">
+            <div class="dome">
+                <div class="dome-top"></div>
+                <div class="dome-main"></div>
+                <div class="minaret minaret-left">
+                    <div class="minaret-top"></div>
+                </div>
+                <div class="minaret minaret-right">
+                    <div class="minaret-top"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Corner Frames -->
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+        
+        <!-- Stars -->
+        <div class="star star-1"></div>
+        <div class="star star-2"></div>
+        <div class="star star-3"></div>
+        <div class="star star-4"></div>
+        
+        <!-- Title -->
+        <div class="title">HUZUR</div>
+        
+        <!-- Subtitle -->
+        <div class="subtitle">İbadetleriniz Artık Tek Tık Uzağınızda</div>
+        
+        <!-- Bottom Line -->
+        <div class="bottom-line"></div>
+    </div>
+</body>
+</html>

@@ -1,17 +1,13 @@
-import { db } from './firebase';
-import { 
-  collection, 
-  doc, 
-  setDoc, 
-  getDoc, 
-  updateDoc, 
-  serverTimestamp, 
-  arrayUnion,
-  query,
-  where,
-  limit,
-  getDocs
+import { httpsCallable } from 'firebase/functions';
+import {
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp,
+  updateDoc
 } from 'firebase/firestore';
+import { db, getFunctionsInstance } from './firebase';
 import { getCurrentUserIdEnsured } from './authService';
 import { logger } from '../utils/logger';
 
@@ -21,54 +17,51 @@ const generateJoinCode = (length = 6) => {
   const charset = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const bytes = new Uint8Array(length);
   crypto.getRandomValues(bytes);
-  return Array.from(bytes).map((b) => charset[b % charset.length]).join('');
+  return Array.from(bytes).map((byte) => charset[byte % charset.length]).join('');
+};
+
+const callHatimFunction = async (name, payload = {}) => {
+  const functions = await getFunctionsInstance();
+  const callable = httpsCallable(functions, name);
+  const result = await callable(payload);
+  return result?.data || null;
 };
 
 export const hatimService = {
-  /**
-   * Yeni bir Grup Hatim oluştur
-   * @param {string} name - Hatim başlığı (Örn: "Babaannem için")
-   * @param {string} description - Açıklama
-   * @param {number} totalParts - Toplam parça (Genelde 30 Cüz)
-   */
   createGroupHatim: async (name, description, totalParts = 30) => {
     const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
-      // Cryptographically secure join code
       const joinCode = generateJoinCode(6);
-      
       const newHatimRef = doc(collection(db, COLLECTION_HATIMS));
       const hatimId = newHatimRef.id;
-
-      // Cüzlerin başlangıç durumu: hepsi boş
       const parts = {};
-      for (let i = 1; i <= totalParts; i++) {
+
+      for (let i = 1; i <= totalParts; i += 1) {
         parts[i] = {
-          status: 'free', // free, taken, completed
+          status: 'free',
           takenBy: null,
           takenAt: null,
           completedAt: null
         };
       }
 
-      const hatimData = {
+      await setDoc(newHatimRef, {
         id: hatimId,
-        type: 'group', // 'personal' or 'group'
+        type: 'group',
         name,
         description,
         createdBy: userId,
         createdAt: serverTimestamp(),
         joinCode,
         parts,
-        readers: [userId], // Katılımcı listesi
-        isPrivate: true, // Sadece link/kod ile erişilebilir
+        readers: [userId],
+        isPrivate: true,
         completedParts: 0,
         totalParts
-      };
+      });
 
-      await setDoc(newHatimRef, hatimData);
       logger.log('[HatimService] Group Hatim created:', hatimId);
       return { id: hatimId, joinCode };
     } catch (error) {
@@ -77,48 +70,22 @@ export const hatimService = {
     }
   },
 
-  /**
-   * Kod ile Hatime katıl
-   * @param {string} code 
-   */
   joinGroupHatim: async (code) => {
     const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
 
     try {
-      const q = query(
-        collection(db, COLLECTION_HATIMS), 
-        where('joinCode', '==', code.toUpperCase()),
-        limit(1)
-      );
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) {
-        throw new Error('Geçersiz hatim kodu');
-      }
-
-      const hatimDoc = querySnapshot.docs[0];
-      const hatimId = hatimDoc.id;
-
-      // Okuyucu listesine ekle
-      await updateDoc(hatimDoc.ref, {
-        readers: arrayUnion(userId)
-      });
-
-      return { id: hatimId, ...hatimDoc.data() };
+      const result = await callHatimFunction('joinHatimByCode', { code });
+      return {
+        id: result?.hatimId || null,
+        alreadyJoined: result?.alreadyJoined === true
+      };
     } catch (error) {
       logger.error('[HatimService] Join hatim error:', error);
       throw error;
     }
   },
 
-  /**
-   * Cüz al veya durumu güncelle
-   * @param {string} hatimId 
-   * @param {number} partNumber 
-   * @param {string} status - 'taken' | 'completed' | 'free'
-   * @param {object} userProfile - { name: 'Ali' }
-   */
   updatePartStatus: async (hatimId, partNumber, status, userProfile) => {
     const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');
@@ -126,26 +93,28 @@ export const hatimService = {
     try {
       const hatimRef = doc(db, COLLECTION_HATIMS, hatimId);
       const hatimDoc = await getDoc(hatimRef);
-      
-      if (!hatimDoc.exists()) throw new Error('Hatim bulunamadı');
+
+      if (!hatimDoc.exists()) throw new Error('Hatim bulunamadi');
 
       const currentData = hatimDoc.data();
       const currentPart = currentData.parts[partNumber];
 
-      // Kontrol: Başkası almışsa elleme (Admin hariç - şimdilik admin yok)
-      if (currentPart.status !== 'free' && currentPart.takenBy && currentPart.takenBy.uid !== userId && status === 'taken') {
-         throw new Error('Bu cüz başkası tarafından alınmış');
+      if (
+        currentPart.status !== 'free' &&
+        currentPart.takenBy &&
+        currentPart.takenBy.uid !== userId &&
+        status === 'taken'
+      ) {
+        throw new Error('Bu cuz baskasi tarafindan alinmis');
       }
 
-      // Yeni parça verisi
       const partUpdate = {
         status,
         takenBy: status === 'free' ? null : { uid: userId, name: userProfile?.name || 'Anonim' },
-        takenAt: status === 'taken' ? new Date().toISOString() : currentPart.takenAt, // Timestamp yerine ISO string güvenli
+        takenAt: status === 'taken' ? new Date().toISOString() : currentPart.takenAt,
         completedAt: status === 'completed' ? new Date().toISOString() : null
       };
 
-      // Nested update (Dot notation for map fields)
       await updateDoc(hatimRef, {
         [`parts.${partNumber}`]: partUpdate
       });
@@ -158,9 +127,6 @@ export const hatimService = {
     }
   },
 
-  /**
-   * Hatim detaylarını getir
-   */
   getHatimDetails: async (hatimId) => {
     try {
       const hatimDoc = await getDoc(doc(db, COLLECTION_HATIMS, hatimId));
@@ -170,5 +136,20 @@ export const hatimService = {
       logger.error('[HatimService] Get details error:', error);
       return null;
     }
+  },
+
+  listPublicHatims: async () => {
+    const userId = await getCurrentUserIdEnsured();
+    if (!userId) throw new Error('User not authenticated');
+
+    try {
+      const result = await callHatimFunction('listPublicHatims');
+      return Array.isArray(result?.hatims) ? result.hatims : [];
+    } catch (error) {
+      logger.error('[HatimService] List public hatims error:', error);
+      throw error;
+    }
   }
 };
+
+export default hatimService;

@@ -3,19 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { useDua } from '../../hooks/useDua';
 import CreateDuaModal from './CreateDuaModal';
 import DuaCard from './DuaCard';
-import { getCurrentUserId } from '../../services/authService';
 import { logger } from '../../utils/logger';
 import { Heart, RefreshCw, Plus } from 'lucide-react';
 import './Social.css';
 
 const DuaList = () => {
   const { t } = useTranslation();
-  const { duas, loading, error, prayForDua } = useDua();
+  const { duas, loading, error, prayForDua, prayedDuaIds } = useDua();
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const currentUserId = getCurrentUserId();
 
   const isPrayed = (dua) => {
-    return dua.aminBy && dua.aminBy.includes(currentUserId);
+    return prayedDuaIds.has(dua.id);
   };
 
   const handlePray = async (duaId) => {

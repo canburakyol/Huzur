@@ -1,171 +1,94 @@
-﻿# Huzur Android Release Readiness Checklist
+# Huzur Android Sürüm Hazırlık Kontrol Listesi
 
-Last update: 2026-02-23
-Scope: Android only (web out of scope)
+Son güncelleme: 2026-03-07
+Kapsam: Android production sürümü, repo + backend + gerekli manuel konsol kontrolleri
 
-## 1) Completed (Baseline)
-- [x] App is live on Google Play
-- [x] AdMob integration active
-- [x] RevenueCat integration active
-- [x] Android build/lint passing
+## Yayın Durumu
+- Otomatik repo/backend durumu: GEÇTİ
+- Manuel production konsol durumu: BEKLİYOR
+- Rollout önerisi: ŞARTLI OLARAK UYGUN
+- `%100` rollout önerisi: HAYIR, aşağıdaki manuel maddeler tamamlanmadan yapılmamalı
 
-## 2) Critical Remaining (P0)
-- [x] Firestore rule hardening:
-  - [x] Limit `duas` update fields with whitelist
-  - [x] Ensure only required fields can change
-- [x] Cloud Functions webhook hardening:
-  - [x] Code hardening completed
-  - [x] Reject request if `revenueCatWebhook` secret is missing
-  - [x] Accept only `POST`
-  - [x] Make error/log policy production-safe
-  - [x] Deploy hardened functions to production
-- [ ] Android crash/ANR tracking:
-  - [ ] Check last 30 days Play Vitals (ANR, crash-free users)
-  - [ ] Measure P95/P99 startup and critical screen transitions
+## 1) Otomatik Repo ve Backend Kapıları
+- [x] `npm run lint`
+- [x] `npm run test:unit` -> 18 test geçti
+- [x] `npm run test:backend` -> 14 test geçti
+- [x] `npm run test:all`
+- [x] `npm run build`
+- [x] `node -c functions/index.js`
+- [x] root altında `npm audit --omit=dev --json` -> production açık yok
+- [x] `functions/` altında `npm audit --omit=dev --json` -> production açık yok
 
-## 3) Important Remaining (P1)
-- [ ] Firebase security audit:
-  - [x] Verify no cross-user data read access (owner-only)
-  - [ ] Write/run rules test scenarios (allowed + denied)
-- [ ] Pro/subscription reliability:
-  - [ ] Review server-authoritative validation points for critical premium actions
-- [ ] Push reliability:
-  - [ ] Track token cleanup flow and failed-token ratio weekly
+## 2) Tamamlanan Güvenlik ve Güvenilirlik İyileştirmeleri
+- [x] RevenueCat webhook secret yönetimi sertleştirildi
+- [x] Premium durumu server-authoritative yapıya yaklaştırıldı
+- [x] Aileye kodla katılım akışı callable arkasına alındı
+- [x] Hatim keşif ve kodla katılım akışı callable arkasına alındı
+- [x] Analytics callable, App Check + admin claim arkasına alındı
+- [x] Push token senkronizasyonu server-managed callable akışına taşındı
+- [x] Firestore rules ile `fcmTokens` alanına direct client yazımı engellendi
+- [x] Dua amin akışı kullanıcı başına tekil callable akışına taşındı
+- [x] Firestore rules ile direct client amin artırımı kapatıldı
+- [x] Kritik allow/deny senaryoları için Firestore emulator rule testleri eklendi
+- [x] Kritik backend join/token/dua akışları için callable testleri eklendi
 
-## 4) Operational Readiness (P1-P2)
-- [ ] Incident runbook ready:
-  - [ ] Payment/subscription outage action plan
-  - [ ] Push notification outage action plan
-  - [ ] Firebase rules misconfig rollback plan
-- [ ] Rollout discipline:
-  - [ ] Use staged rollout for new releases (%5 -> %20 -> %50 -> %100)
-  - [ ] Validate crash/ANR/revenue metrics at each stage
+## 3) Staged Rollout Öncesi Zorunlu Manuel Maddeler
+- [ ] Firebase App Check: Android uygulaması production’da Play Integrity kullanıyor
+- [ ] Firebase App Check enforcement: Firestore, Functions, Storage ve Realtime Database için açık
+- [ ] Firebase Android API key sadece paket adı + SHA fingerprint ile kısıtlı
+- [ ] Firebase web API key kısıtları güncel proje ayarlarıyla uyumlu
+- [ ] Play Console vitals son 30 gün için incelendi
+- [ ] Crash-free users hedef eşiği karşılıyor
+- [ ] ANR oranı hedef eşiği karşılıyor
+- [ ] RevenueCat dashboard üzerinde purchase/restore/renewal/cancel kontrolleri tamamlandı
+- [ ] RevenueCat webhook test olayı production loglarında doğrulandı
+- [ ] AdMob serving, fill rate ve rewarded completion sağlığı kontrol edildi
+- [ ] Firestore, Functions, Auth ve gelir etkileyen hatalar için alerting doğrulandı
+- [ ] Production’da debug App Check provider token aktif değil
 
-## 5) Android Release Gate
-All must be YES before 100% rollout:
-- [ ] Crash-free users above target threshold
-- [ ] ANR rate below target threshold
-- [ ] Subscription purchase/restore stable in production
-- [ ] Ad serving/reward flow within expected range
-- [ ] No open critical security findings
-
-## 6) Notes
-- Web code exists but this checklist is Android-first.
-- AdMob and RevenueCat are treated as completed in this plan.
-- Firebase billing is enabled and required RevenueCat secrets are configured.
-
-## 7) Execution Plan (Android) - 2026-02-23 to 2026-03-08
-
-### Phase 1: Measurement and Test Baseline (2026-02-23 to 2026-02-27)
-- [ ] 2026-02-23: Collect baseline production metrics (last 30 days)
-  - [ ] Play Vitals: crash-free users, ANR, startup quality
-  - [ ] Revenue baseline: purchase, restore, renewal event counts
-  - [ ] Ads baseline: rewarded impression/show/reward completion rates
-- [ ] 2026-02-24: Performance measurement pass
-  - [ ] Measure cold start and warm start (P95/P99) on low/mid/high device tiers
-  - [ ] Record critical transition timings for top 5 screens
-- [ ] 2026-02-25: Firestore rule test coverage
-  - [ ] Add emulator tests for allow/deny scenarios
-  - [ ] Validate owner-only reads and restricted write paths
-- [ ] 2026-02-26: Subscription reliability audit
-  - [ ] Verify premium-critical actions use server-authoritative checks
-  - [ ] Run purchase/restore/cancel/expire scenario matrix
-- [ ] 2026-02-27: Push reliability instrumentation
-  - [ ] Track failed token ratio weekly
-  - [ ] Validate invalid token cleanup behavior
-
-### Phase 2: Operations and Controlled Rollout (2026-03-02 to 2026-03-08)
-- [ ] 2026-03-02: Incident runbooks finalized
-  - [ ] Payment/subscription outage runbook
-  - [ ] Push outage runbook
-  - [ ] Firestore rules rollback runbook
-- [ ] 2026-03-03: Pre-rollout QA gate
-  - [ ] End-to-end smoke: ads, rewarded ads, purchase, restore, webhook sync
-  - [ ] Confirm no open critical security findings
-- [ ] 2026-03-04: Staged rollout to 5%
-  - [ ] Watch crash/ANR/revenue/reward metrics for 24h
-- [ ] 2026-03-05: Increase rollout to 20% (if gates pass)
-- [ ] 2026-03-06: Increase rollout to 50% (if gates pass)
-- [ ] 2026-03-08: Increase rollout to 100% (if gates pass)
-
-### Release Gates (Numeric Targets)
+## 4) Rollout Eşikleri
 - [ ] Crash-free users >= 99.5%
-- [ ] ANR rate <= 0.30%
-- [ ] Purchase and restore success >= 98%
-- [ ] Rewarded ad completion >= 95%
-- [ ] No open critical security findings
+- [ ] ANR oranı <= 0.30%
+- [ ] Satın alma başarı oranı >= 98%
+- [ ] Restore başarı oranı >= 98%
+- [ ] Açık kritik güvenlik bulgusu yok
+- [ ] Rollout anında aktif billing/push incident yok
 
-## 8) Owner Split (Who Does What)
-- [ ] Manual console tasks (you)
-  - [ ] Play Console vitals checks and staged rollout actions
-  - [ ] RevenueCat dashboard verification and webhook test send
-  - [ ] AdMob dashboard checks for rewarded ad health
-- [ ] Repo and backend tasks (Codex)
-  - [ ] Firestore emulator rule tests and audit notes
-  - [ ] Runbook templates and rollback command checks
-  - [ ] Verification scripts/checklists for release gates
+## 5) Önerilen Rollout Sırası
+- [ ] Release candidate APK/AAB için internal smoke testi
+- [ ] %5 staged rollout
+- [ ] Vitals, purchase, restore, push ve ads için 24 saat izleme
+- [ ] Her şey yeşil kalırsa %20 rollout
+- [ ] Her şey yeşil kalırsa %50 rollout
+- [ ] Tüm manuel eşikler yeşil kalırsa %100 rollout
 
-## 9) Firebase + App Check Production Hardening (2026-03-05)
-Current status:
-- [x] Callable functions have `enforceAppCheck: true` (`checkProStatus`, `syncProStatus`)
-- [x] RevenueCat secrets read from Firebase Secrets Manager
-- [x] Local APK static scan: no JWT/Bearer/private key found
-- [x] Firebase CLI project access verified (`huzur-app-c01b7`)
-- [x] Firebase Android app registration + SHA-1/SHA-256 hashes verified via CLI (`com.huzurapp.android`)
-- [ ] Firebase Console level enforcement verified (manual)
-- [ ] Firestore rules emulator test suite completed (manual/JDK21 needed)
+## 6) Manuel Smoke Test Matrisi
+- [ ] Anonymous auth ve ilk açılış
+- [ ] Namaz vakitleri yükleme ve bildirim izin akışı
+- [ ] Push registration ve token sync
+- [ ] Pro satın alma
+- [ ] Pro restore
+- [ ] Play üzerinden abonelik iptali ve server sync davranışı
+- [ ] Davet kodu ile aileye katılım
+- [ ] Kod ile hatime katılım
+- [ ] Public hatim keşfi
+- [ ] İkinci hesap/cihaz ile dua oluşturma ve amin verme
 
-Manual console checklist (must-do before release):
-- [ ] App Check -> Apps -> Android app uses Play Integrity in production
-- [ ] App Check -> Enforce for Firestore, Functions, Storage, Realtime Database
-- [ ] Firebase API key restricted to Android app package + SHA-1/SHA-256 fingerprints
-- [ ] Web Firebase API key restrictions reviewed (local `.env` key differs from `firebase apps:sdkconfig WEB` output)
-- [ ] Remove/disable debug App Check provider tokens in production projects
-- [ ] Rotate RevenueCat webhook/API secrets if ever shared outside secure channel
-- [ ] Verify alerts are configured for Auth/Functions/Firestore error spikes
+## 7) Bloklamayan Bilinen Notlar
+- Vite build hâlâ `smartNotificationService.js` için mevcut chunk-splitting uyarısını veriyor
+- Vite build hâlâ `subscriptionSyncService.js` için mevcut chunk-splitting uyarısını veriyor
+- Dev dependency audit temiz değil; production dependency audit temiz
+- Bu makinede backend emulator test akışı Java 17 nedeniyle `firebase-tools@13.35.1` kullanıyor
 
-Repo-side checklist (done in this pass):
-- [x] Firestore hatim update permission narrowed (immutable fields + field whitelist)
-- [x] Functions dua notification trigger throttled to reduce amin-spam abuse
-- [x] Functions hatim notification trigger hardened against join-spam/noise
-- [x] Android exported receiver surface reduced (boot receiver isolated)
-- [x] Reverse-tabnabbing fixes applied for all `_blank` `window.open` calls
-- [x] `axios` upgraded in root and functions
-
-## 10) Push Preparation (Security-Only Strategy)
-Recommended: use two commits to avoid accidentally shipping unfinished UI/theme work.
-
-Commit A (safe backend/android/security baseline):
-- `git add android/app/src/main/AndroidManifest.xml`
-- `git add android/app/src/main/java/com/huzurapp/android/BootCompletedReceiver.java`
-- `git add android/app/src/main/java/com/huzurapp/android/WidgetAlarmReceiver.java`
-- `git add android/app/src/main/java/com/huzurapp/android/MainActivity.java`
-- `git add android/app/src/main/java/com/huzurapp/android/CrashlyticsPlugin.java`
-- `git add android/app/src/main/java/com/huzurapp/android/AdhanForegroundService.kt`
-- `git add android/app/src/main/res/xml/network_security_config.xml`
-- `git add android/app/src/main/res/xml/file_paths.xml`
-- `git add firestore.rules functions/index.js`
-- `git add package.json package-lock.json functions/package.json functions/package-lock.json`
-- `git add RELEASE_READINESS_CHECKLIST.md`
-- `git commit -m "security: harden android receivers, firestore/functions, and dependency surface"`
-
-Commit B (UI reverse-tabnabbing hardening; may include ongoing visual/theme edits in same files):
-- `git add src/services/browserService.js`
-- `git add src/components/LiveBroadcast.jsx src/components/Multimedia.jsx src/components/MosqueFinder.jsx src/components/WeeklySermon.jsx`
-- `git commit -m "security(ui): enforce noopener/noreferrer for external links"`
-
-Push:
-- `git push origin <branch-name>`
-
-## 11) Dependency Audit Classification (2026-03-05)
-Root app (`npm audit --omit=dev`):
-- [x] High/Critical: 0
-- [x] Moderate: 0
-- [x] Low: 0
-- Note: `vite-plugin-pwa` moved to `devDependencies` (build-time only), runtime prod surface reduced.
-
-Functions (`functions/npm audit --omit=dev`):
-- [x] High/Critical: 0
-- [x] Moderate: 0
-- [x] Low: 0
-- Note: Added `overrides` for `minimatch`, `@tootallnate/once`, and `qs` in `functions/package.json` to close transitive runtime findings without changing `firebase-admin@13.x` / `firebase-functions@7.x`.
+## 8) Sorumluluk Dağılımı
+- Codex
+- [x] Repo sertleştirmesi tamamlandı
+- [x] Otomatik doğrulamalar tamamlandı
+- [x] Emulator ve callable testleri eklendi
+- [x] Release checklist ve readiness raporu güncellendi
+- Sen
+- [ ] Firebase Console kontrolleri
+- [ ] Play Console vitals kontrolü
+- [ ] RevenueCat dashboard doğrulaması
+- [ ] AdMob dashboard doğrulaması
+- [ ] Nihai rollout yürütmesi

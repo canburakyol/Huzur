@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, Check, Crown } from 'lucide-react';
 import { getOfferings, purchasePackage, restorePurchases } from '../services/revenueCatService';
-import { setProStatus } from '../services/proService';
 import { logger } from '../utils/logger';
 import { getVariant, trackConversion, EXPERIMENTS } from '../services/abTestService';
 
@@ -75,14 +74,9 @@ const ProUpgrade = ({ onClose }) => {
     // Platform kontrolü
     const isNativePlatform = window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false;
     if (!isNativePlatform) {
-      // Browser Mock Purchase
-      logger.log('[ProUpgrade] Browser mock purchase...');
-      setTimeout(() => {
-         logger.log('[ProUpgrade] Mock purchase successful');
-         setProStatus(true); // Activate Pro
-         onClose();
-         setProcessing(false);
-      }, 1500);
+      logger.warn('[ProUpgrade] Purchase attempted on unsupported platform');
+      setError(t('pro.nativeOnly', 'Satın alma yalnızca mobil uygulamada destekleniyor.'));
+      setProcessing(false);
       return;
     }
 
@@ -108,6 +102,13 @@ const ProUpgrade = ({ onClose }) => {
   const handleRestore = async () => {
     setProcessing(true);
     setRestoreResult(null);
+    const isNativePlatform = window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false;
+    if (!isNativePlatform) {
+      setError(t('pro.nativeOnly', 'Satın alma yalnızca mobil uygulamada destekleniyor.'));
+      setProcessing(false);
+      return;
+    }
+
     try {
       const success = await restorePurchases();
       if (success) {

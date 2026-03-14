@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
     <!-- Permissions - MUST be before application tag -->
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -56,8 +54,6 @@
 
                 <data android:scheme="huzur" android:host="invite" />
             </intent-filter>
-
-
         </activity>
 
         <receiver android:name=".PrayerWidget" android:exported="true">
@@ -75,10 +71,7 @@
         </receiver>
 
         <!-- Widget Alarm Receiver - Namaz vakitlerinde widget'ı günceller -->
-        <receiver
-            android:name=".WidgetAlarmReceiver"
-            android:enabled="true"
-            android:exported="false">
+        <receiver android:name=".WidgetAlarmReceiver" android:enabled="true" android:exported="false">
             <intent-filter>
                 <action android:name="com.huzurapp.android.UPDATE_WIDGET" />
                 <action android:name="com.huzurapp.android.SCHEDULE_ALARMS" />
@@ -86,10 +79,7 @@
         </receiver>
 
         <!-- Adhan Alarm Receiver - Triggers ForegroundService for Adhan playback -->
-        <receiver
-            android:name=".AdhanAlarmReceiver"
-            android:enabled="true"
-            android:exported="false">
+        <receiver android:name=".AdhanAlarmReceiver" android:enabled="true" android:exported="false">
             <intent-filter>
                 <action android:name="com.huzurapp.android.ACTION_PLAY_ADHAN" />
             </intent-filter>
@@ -112,7 +102,8 @@
             android:name=".AdhanForegroundService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="mediaPlayback" />
+            android:foregroundServiceType="mediaPlayback"
+        />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -126,7 +117,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3074026744164717~7167273995"
-            tools:replace="android:value"/>
+            tools:replace="android:value"
+        />
     </application>
-
 </manifest>

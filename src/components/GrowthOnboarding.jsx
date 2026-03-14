@@ -102,7 +102,9 @@ function GrowthOnboarding({
       }
 
       if (step === totalSteps - 1) {
-        onComplete?.();
+        window.setTimeout(() => {
+          onComplete?.();
+        }, 0);
       }
     } finally {
       setLoading(false);
@@ -313,3 +315,5 @@ function GrowthOnboarding({
 }
 
 export default GrowthOnboarding;
+
+

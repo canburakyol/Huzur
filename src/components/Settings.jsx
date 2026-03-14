@@ -7,12 +7,13 @@ import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import LicensesCredits from './LicensesCredits';
 import IslamicBackButton from './shared/IslamicBackButton';
-import { Bell, Info, FileText, Shield, Clock, History, AlertCircle } from 'lucide-react';
+import { Bell, Info, FileText, Shield, Clock, History, AlertCircle, Sun, Moon } from 'lucide-react';
 import { storageService } from '../services/storageService';
 import { STORAGE_KEYS, APP_VERSION } from '../constants';
 import NotificationSettings from './NotificationSettings';
 import NotificationHistory from './NotificationHistory';
-import { isPro, setProStatus } from '../services/proService';
+import { isPro } from '../services/proService';
+import { syncProStatusFromServer } from '../services/subscriptionSyncService';
 import CancelFlowModal from './CancelFlowModal';
 
 const Settings = ({ onClose }) => {
@@ -71,11 +72,16 @@ const Settings = ({ onClose }) => {
     };
 
     const handleConfirmCancel = async () => {
-        // Here we would typically unsubscribe via RevenueCat or Store
-        await setProStatus(false);
+        window.open('https://play.google.com/store/account/subscriptions', '_blank', 'noopener,noreferrer');
+        // Kullanıcı Play Store'dan döndüğünde abonelik durumunu senkronize et
+        setTimeout(async () => {
+            try {
+                await syncProStatusFromServer();
+            } catch (err) {
+                console.warn('[Settings] Subscription sync failed:', err);
+            }
+        }, 2000);
         setShowCancelFlow(false);
-        // Force reload or re-render to reflect pro status change
-        // In a real app we might toast a success message here
     };
 
     if (showCancelFlow) {

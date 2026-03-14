@@ -1,119 +1,118 @@
-# Huzur - Namaz ve Dua Uygulaması
+# Huzur - Modern İslami Yaşam ve Üretkenlik Uygulaması
 
-Modern, kullanıcı dostu İslami mobil uygulama. Namaz vakitleri, Kuran-ı Kerim, dualar ve daha fazlası.
+<p align="center">
+  <img src="public/favicon.svg" width="128" height="128" alt="Huzur Logo">
+</p>
 
-## 🌟 Özellikler
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Active-success.svg" alt="Status">
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+  <img src="https://img.shields.io/badge/React-19-61dafb.svg" alt="React">
+  <img src="https://img.shields.io/badge/Vite-7-646cff.svg" alt="Vite">
+  <img src="https://img.shields.io/badge/Capacitor-7-119eff.svg" alt="Capacitor">
+  <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="PRs Welcome">
+</p>
 
-- ✅ **Namaz Vakitleri**: Günlük namaz vakitleri ve hatırlatmalar
-- ✅ **Kuran-ı Kerim**: 114 sure, Arapça metin ve Türkçe meal
-- ✅ **Dualar**: Kategorize edilmiş dua koleksiyonu
-- ✅ **Zikir Sayacı**: Günlük zikir takibi
-- ✅ **Kıble Pusulası**: Kıble yönünü bulma
-- ✅ **Cami Bulucu**: Yakındaki camileri bulma
-- ✅ **Namaz Takibi**: Kaza namazları takibi
-- ✅ **Günlük İçerik**: Esma-ül Hüsna, günün ayeti ve duası
-- ✅ **Hava Durumu**: Konum bazlı hava durumu
-- ✅ **Bildirimler**: Namaz vakitleri hatırlatmaları
+---
 
-## 🚀 Kurulum
+Huzur, modern müslümanların günlük dini vecibelerini takip etmelerine, Kuran-ı Kerim öğrenmelerine ve manevi gelişimlerini sürdürmelerine yardımcı olmak için tasarlanmış, çevrimdışı öncelikli (offline-first) bir üretkenlik uygulamasıdır. 
+
+React, Vite ve Capacitor kullanılarak geliştirilen bu uygulama, hem web hem de mobil platformlarda akıcı bir deneyim sunar.
+
+## ✨ Öne Çıkan Özellikler
+
+<p align="center">
+  <img src="portfolio_assets/huzur_main_screen_1772710722776.png" width="30%" alt="Ana Ekran">
+  <img src="portfolio_assets/huzur_quran_screen_1772710739172.png" width="30%" alt="Kuran Ekranı">
+  <img src="portfolio_assets/huzur_dhikr_screen_1772710763137.png" width="30%" alt="Zikir Ekranı">
+</p>
+
+- 🕌 **Akıllı Namaz Vakitleri**: Konum bazlı hassas vakitler ve özelleştirilebilir bildirimler.
+- 📖 **Kuran-ı Kerim**: 114 sure, interaktif okuma modları ve Türkçe meal desteği.
+- 🤲 **Dua ve Zikir**: Geniş dua kütüphanesi ve dijital zikirmatik.
+- 🧭 **Kıble Pusulası**: Hassas sensör destekli kıble yönü bulucu.
+- 📊 **İbadet Takibi**: Kaza namazları ve günlük hedefler için istatistiksel takip.
+- 🌦️ **Manevi Hava Durumu**: Esma-ül Hüsna, günün ayeti ve hadis-i şerifler ile günlük motivasyon.
+- 📱 **Modern Arayüz**: Emerald ve Gold temasıyla göz yormayan, premium tasarım.
+
+## 🛠️ Teknoloji Yığını
+
+Huzur, en güncel ve performanslı teknolojiler üzerine inşa edilmiştir:
+
+- **Frontend**: [React 19](https://reactjs.org/) + [Vite 7](https://vitejs.dev/)
+- **Mobil Köprü**: [Capacitor 7](https://capacitorjs.com/)
+- **İkon Seti**: [Lucide React](https://lucide.dev/)
+- **Veri Yönetimi**: Hooks ve Context API (Strict Mode uyumlu)
+- **Servisler**: Firebase (Opsiyonel), RevenueCat (Abonelik)
+- **Stil**: Modern Vanilla CSS (Premium tasarımlar ve mikro animasyonlar)
+
+## 🚀 Başlangıç
 
 ### Gereksinimler
 
-- Node.js 22 LTS (önerilen: 22.x)
-- npm veya yarn
-- Android Studio (Android build için)
-- Java JDK 11+
+- **Node.js**: v22.x (LTS) veya üzeri
+- **npm** veya **yarn**
+- **Android Studio**: Android çıktıları almak için gereklidir.
 
-### Adımlar
+### Kurulum
 
-1. **Bağımlılıkları yükleyin:**
-```bash
-npm install
-```
+1. **Depoyu klonlayın:**
+   ```bash
+   git clone https://github.com/canburakyol/Huzur.git
+   cd Huzur
+   ```
 
-2. **Geliştirme sunucusunu başlatın:**
-```bash
-npm run dev
-```
+2. **Bağımlılıkları yükleyin:**
+   ```bash
+   npm install
+   ```
 
-3. **Production build:**
-```bash
-npm run build
-```
+3. **Geliştirme modunda çalıştırın:**
+   ```bash
+   npm run dev
+   ```
 
-4. **Android build için:**
-```bash
-# Capacitor sync
-npx cap sync android
+4. **Production build oluşturun:**
+   ```bash
+   npm run build
+   ```
 
-# Android Studio'da aç
-npx cap open android
-```
+5. **Android cihazda test edin:**
+   ```bash
+   npx cap sync android
+   npx cap open android
+   ```
 
-## 📱 Android Build
+## 📂 Proje Yapısı
 
-### Release APK/AAB Oluşturma
-
-1. Android Studio'yu açın
-2. `Build > Generate Signed Bundle / APK` seçin
-3. Keystore oluşturun veya mevcut keystore'u kullanın
-4. Release build'i oluşturun
-
-### Play Store için Gereksinimler
-
-- ✅ App icon (512x512, 1024x1024)
-- ✅ Feature graphic (1024x500)
-- ✅ Screenshots (en az 2 adet)
-- ✅ Privacy Policy URL
-- ✅ Terms of Service URL
-- ✅ App description (kısa ve uzun)
-- ✅ Category seçimi
-
-## 🛠️ Teknolojiler
-
-- **React 19**: UI framework
-- **Vite 7**: Build tool
-- **Capacitor 7**: Native bridge
-- **Lucide React**: Icon library
-- **Axios**: HTTP client
-- **date-fns**: Date utilities
-
-## 📦 Proje Yapısı
-
-```
+```text
 src/
-├── components/      # React bileşenleri
-├── services/       # API servisleri
-├── data/          # Statik veriler
-└── App.jsx        # Ana uygulama
+├── components/      # Modüler ve yeniden kullanılabilir UI bileşenleri
+├── services/       # API entegrasyonları ve iş mantığı
+├── data/          # Statik dini veriler ve yerelleştirme dosyaları
+├── hooks/         # Özel React hookları
+└── App.jsx        # Uygulama ana giriş noktası
 ```
 
-## 🔧 Yapılandırma
+## 🤝 Katkıda Bulunma
 
-### API Endpoints
+Huzur'u daha iyi hale getirmek için katkılarınızı bekliyoruz! Lütfen önce [CONTRIBUTING.md](CONTRIBUTING.md) dosyasını inceleyin.
 
-- **Namaz Vakitleri**: Aladhan API
-- **Kuran**: Al Quran Cloud API
-- **Hava Durumu**: Open-Meteo API
-- **Konum**: BigDataCloud API
+1. Depoyu fork edin.
+2. Feature branch'inizi oluşturun (`git checkout -b feature/YeniOzellik`).
+3. Değişikliklerinizi commit edin (`git commit -m 'feat: Yeni özellik eklendi'`).
+4. Branch'inizi push edin (`git push origin feature/YeniOzellik`).
+5. Bir Pull Request açın.
 
-### İzinler
+## 📜 Lisans
 
-- `INTERNET`: API çağrıları için
-- `ACCESS_FINE_LOCATION`: Konum bazlı özellikler için
-- `POST_NOTIFICATIONS`: Bildirimler için
+Bu proje **MIT Lisansı** ile lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakabilirsiniz.
 
-## 📄 Lisans
+## ✉️ İletişim
 
-Bu proje özel bir projedir.
+**Can Burak AKYOL** - [@canburakyol](https://github.com/canburakyol)
 
-## 👥 İletişim
-
-Sorularınız için lütfen iletişime geçin.
-
-## 🔄 Versiyon Geçmişi
-
-### v1.0.0 (2024)
-- İlk release
-- Temel özellikler
-- Play Store hazırlığı
+---
+<p align="center">
+  Huzurla kalın. 🌙
+</p>

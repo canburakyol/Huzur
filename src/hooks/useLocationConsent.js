@@ -1,68 +1,138 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Geolocation } from '@capacitor/geolocation';
 import { storageService } from '../services/storageService';
 import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 
-// Default coordinates for Istanbul
 const DEFAULT_LAT = 41.0082;
 const DEFAULT_LON = 28.9784;
+const DEFAULT_LOCATION_NAME = 'İstanbul';
+const LOCATION_WEATHER_CACHE_PREFIX = 'location_weather_cache_';
+const LOCATION_WEATHER_CACHE_TTL_MS = 30 * 60 * 1000;
+
+const buildLocationCacheKey = (lat, lon) => {
+  return `${LOCATION_WEATHER_CACHE_PREFIX}${Number(lat).toFixed(3)}_${Number(lon).toFixed(3)}`;
+};
+
+const getCachedLocationSnapshot = (lat, lon) => {
+  try {
+    const cached = storageService.getItem(buildLocationCacheKey(lat, lon));
+    if (!cached || typeof cached !== 'object') {
+      return null;
+    }
+
+    const ageMs = Date.now() - Number(cached.timestamp || 0);
+    if (!Number.isFinite(ageMs) || ageMs < 0 || ageMs > LOCATION_WEATHER_CACHE_TTL_MS) {
+      return null;
+    }
+
+    return cached;
+  } catch {
+    return null;
+  }
+};
+
+const setCachedLocationSnapshot = (lat, lon, payload) => {
+  try {
+    storageService.setItem(buildLocationCacheKey(lat, lon), {
+      ...payload,
+      timestamp: Date.now()
+    });
+  } catch {
+    // no-op
+  }
+};
 
 /**
  * Location Consent and Weather Hook
  * Handles Google Play Prominent Disclosure requirement for location permission
- * 
+ *
  * @param {Function} onLocationUpdate - Callback when location is obtained
  * @returns {Object} Location consent state and functions
  */
 export const useLocationConsent = (onLocationUpdate) => {
   const [weather, setWeather] = useState(null);
   const [locationName, setLocationName] = useState('Konum...');
-  // Initialize showLocationPrompt based on stored consent (prevents cascading render)
   const [showLocationPrompt, setShowLocationPrompt] = useState(() => {
     return !storageService.getString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN);
   });
   const [locationConsentGiven, setLocationConsentGiven] = useState(() => {
     return storageService.getString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN) === 'true';
   });
+  const lastForwardedLocationRef = useRef('');
 
-  // Fetch weather data
+  const forwardLocationUpdate = useCallback((latitude, longitude) => {
+    if (!onLocationUpdate) {
+      return;
+    }
+
+    const signature = `${Number(latitude).toFixed(4)}:${Number(longitude).toFixed(4)}`;
+    if (lastForwardedLocationRef.current === signature) {
+      return;
+    }
+
+    lastForwardedLocationRef.current = signature;
+    onLocationUpdate({ latitude, longitude });
+  }, [onLocationUpdate]);
+
   const fetchWeatherData = useCallback(async (lat, lon, isDefault = false) => {
-    try {
-      // Weather (OpenMeteo - Free)
-      const weatherRes = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
-      );
-      const weatherData = await weatherRes.json();
-      setWeather(weatherData.current_weather);
+    const cachedSnapshot = getCachedLocationSnapshot(lat, lon);
+    if (cachedSnapshot) {
+      setWeather(cachedSnapshot.weather || null);
+      setLocationName(cachedSnapshot.locationName || (isDefault ? DEFAULT_LOCATION_NAME : 'Konum'));
+      return cachedSnapshot;
+    }
 
-      if (!isDefault) {
-        // Location Name (BigDataCloud - Free)
-        const locRes = await fetch(
-          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=tr`
-        );
-        const locData = await locRes.json();
-        const detectedCity = locData.city || locData.locality || locData.principalSubdivision || 'Konum';
-        setLocationName(detectedCity);
-        logger.log('[useLocationConsent] Detected city:', detectedCity);
-      } else {
-        setLocationName('İstanbul');
+    try {
+      const weatherPromise = fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+      ).then(async (response) => {
+        const weatherData = await response.json();
+        return weatherData.current_weather || null;
+      });
+
+      const locationPromise = isDefault
+        ? Promise.resolve(DEFAULT_LOCATION_NAME)
+        : fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=tr`
+          ).then(async (response) => {
+            const locationData = await response.json();
+            return locationData.city || locationData.locality || locationData.principalSubdivision || 'Konum';
+          });
+
+      const [weatherResult, locationResult] = await Promise.allSettled([weatherPromise, locationPromise]);
+
+      const nextWeather = weatherResult.status === 'fulfilled' ? weatherResult.value : null;
+      const nextLocationName = locationResult.status === 'fulfilled'
+        ? locationResult.value
+        : (isDefault ? DEFAULT_LOCATION_NAME : 'Konum');
+
+      setWeather(nextWeather);
+      setLocationName(nextLocationName);
+      setCachedLocationSnapshot(lat, lon, {
+        weather: nextWeather,
+        locationName: nextLocationName
+      });
+
+      if (!isDefault && nextLocationName) {
+        logger.log('[useLocationConsent] Detected city:', nextLocationName);
       }
+
+      return { weather: nextWeather, locationName: nextLocationName };
     } catch (error) {
       logger.error('[useLocationConsent] Weather/Location error:', error);
+      return null;
     }
   }, []);
 
-  // Handle location consent from user
   const handleLocationConsent = useCallback((accepted) => {
     return new Promise((resolve) => {
       setShowLocationPrompt(false);
-      
+
       if (accepted) {
         storageService.setString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN, 'true');
         setLocationConsentGiven(true);
 
-        // Request location after consent
         Geolocation.getCurrentPosition({
           enableHighAccuracy: true,
           timeout: 10000,
@@ -73,44 +143,38 @@ export const useLocationConsent = (onLocationUpdate) => {
           window.debugLat = latitude;
           window.debugLon = longitude;
 
-          fetchWeatherData(latitude, longitude).catch(err => logger.error(err));
-          if (onLocationUpdate) {
-            onLocationUpdate({ latitude, longitude });
-          }
+          void fetchWeatherData(latitude, longitude);
+          forwardLocationUpdate(latitude, longitude);
           resolve({ latitude, longitude });
         }).catch((error) => {
           logger.warn('[useLocationConsent] Location permission denied/error after consent:', error);
-          fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
+          void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
           window.debugLat = DEFAULT_LAT;
           window.debugLon = DEFAULT_LON;
-          if (onLocationUpdate) onLocationUpdate({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
+          forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
           resolve({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
         });
       } else {
         storageService.setString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN, 'declined');
-        fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-        if (onLocationUpdate) onLocationUpdate({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
+        void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
+        forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
         resolve({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
       }
     });
-  }, [fetchWeatherData, onLocationUpdate]);
+  }, [fetchWeatherData, forwardLocationUpdate]);
 
-  // Initial location check - fetch weather based on consent status
   useEffect(() => {
     const storedConsent = storageService.getString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN);
 
     if (!storedConsent) {
-      // First-time users - showLocationPrompt is already true from initial state
-      // Use fallback location until consent is given (but still load prayer times)
-      // eslint-disable-next-line
-      fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-      // Load prayer times with default location so app doesn't stay stuck on loading
-      if (onLocationUpdate) {
-        onLocationUpdate({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
-      }
-    } else if (storedConsent === 'true') {
+      void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
+      forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
+      return;
+    }
+
+    if (storedConsent === 'true') {
       Geolocation.getCurrentPosition({
-        enableHighAccuracy: true, // Increased accuracy for prayer times
+        enableHighAccuracy: true,
         timeout: 15000,
         maximumAge: 30000
       }).then((position) => {
@@ -118,29 +182,22 @@ export const useLocationConsent = (onLocationUpdate) => {
         logger.log('[useLocationConsent] Initial location obtained:', latitude, longitude);
         window.debugLat = latitude;
         window.debugLon = longitude;
-        fetchWeatherData(latitude, longitude);
-        // Notify parent about location update
-        if (onLocationUpdate) {
-          onLocationUpdate({ latitude, longitude });
-        }
+        void fetchWeatherData(latitude, longitude);
+        forwardLocationUpdate(latitude, longitude);
       }).catch((error) => {
         logger.warn('[useLocationConsent] Initial location error:', error);
         window.debugLat = DEFAULT_LAT;
         window.debugLon = DEFAULT_LON;
-        if (onLocationUpdate) onLocationUpdate({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
+        forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
       });
-    } else {
-      // Fallback to Istanbul (First time or Declined)
-      fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-      window.debugLat = DEFAULT_LAT;
-      window.debugLon = DEFAULT_LON;
-      
-      // Initialize with default location so the app can load
-      if (onLocationUpdate) {
-        onLocationUpdate({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
-      }
+      return;
     }
-  }, [fetchWeatherData, onLocationUpdate]);
+
+    void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
+    window.debugLat = DEFAULT_LAT;
+    window.debugLon = DEFAULT_LON;
+    forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
+  }, [fetchWeatherData, forwardLocationUpdate]);
 
   return {
     weather,

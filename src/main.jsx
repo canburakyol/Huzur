@@ -1,11 +1,8 @@
 import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import '@fontsource/noto-naskh-arabic/400.css'
-import '@fontsource/noto-naskh-arabic/700.css'
-import '@fontsource/scheherazade-new/400.css'
-import '@fontsource/scheherazade-new/700.css'
 import './index.css'
-import './i18n' // i18next initialization
+import './i18n'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
@@ -15,10 +12,10 @@ import { TimeProvider } from './context/TimeContext'
 import { FocusProvider } from './context/FocusContext'
 import { GamificationProvider } from './context/GamificationProvider'
 import { FamilyProvider } from './context/FamilyProvider.jsx'
+import { scheduleDeferredTask } from './utils/startupScheduler'
 
 const isDev = import.meta.env.DEV
 
-// Android WebView için netlik optimizasyon sınıfı
 const applyAndroidWebViewClass = () => {
   try {
     const capacitor = window?.Capacitor;
@@ -37,10 +34,16 @@ const applyAndroidWebViewClass = () => {
 
 applyAndroidWebViewClass();
 
-// ensureArabicFontHealth is removed to prevent aggressive fallback to system fonts
-// which may lack support for advanced Quranic characters.
+const loadDeferredTypography = () => {
+  void Promise.allSettled([
+    import('@fontsource/noto-naskh-arabic/700.css'),
+    import('@fontsource/scheherazade-new/400.css'),
+    import('@fontsource/scheherazade-new/700.css')
+  ]);
+};
 
-// Startup crash debug overlay (Android/WebView dahil erken hataları görünür yapar)
+scheduleDeferredTask(loadDeferredTypography, 400);
+
 const mountStartupDebugOverlay = (label, errorLike) => {
   try {
     const text = [
@@ -89,7 +92,6 @@ window.addEventListener('unhandledrejection', (event) => {
   }
 })
 
-// Tema ayarını uygula
 const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const theme = savedTheme || (prefersDark ? 'dark' : 'light');
@@ -99,19 +101,19 @@ try {
   createRoot(document.getElementById('root')).render(
     <StrictMode>
       <ErrorBoundary>
-      <TimeProvider>
-        <FocusProvider>
-          <GamificationProvider>
-            <FamilyProvider>
-              <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0f3d2e', color: '#a3b18a' }}>Yükleniyor...</div>}>
-                <BrowserRouter>
-                  <App />
-                </BrowserRouter>
-              </Suspense>
-            </FamilyProvider>
-          </GamificationProvider>
-        </FocusProvider>
-      </TimeProvider>
+        <TimeProvider>
+          <FocusProvider>
+            <GamificationProvider>
+              <FamilyProvider>
+                <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0f3d2e', color: '#a3b18a' }}>Yükleniyor...</div>}>
+                  <BrowserRouter>
+                    <App />
+                  </BrowserRouter>
+                </Suspense>
+              </FamilyProvider>
+            </GamificationProvider>
+          </FocusProvider>
+        </TimeProvider>
       </ErrorBoundary>
     </StrictMode>,
   )

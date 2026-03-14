@@ -25,6 +25,7 @@ const FREE_LIMITS = {
 export const FREE_WORD_BY_WORD_SURAHS = [1, 112, 113, 114]; // Fatiha, İhlas, Felak, Nas
 
 const PRO_SERVER_SYNC_TTL_MS = 5 * 60 * 1000;
+const LOCAL_SDK_TRUST_WINDOW_MS = 30 * 1000; // 30 seconds - daha sıkı güvenlik için
 const TRUSTED_STATUS_CACHE_MS = 60 * 1000;
 let lastTrustedCheckAt = 0;
 let lastTrustedResult = false;
@@ -44,6 +45,11 @@ const getTodayString = () => {
  */
 export const isPro = () => {
   try {
+    const recentServerResult = getRecentServerSyncResult();
+    if (recentServerResult !== null) {
+      return recentServerResult;
+    }
+
     const status = storageService.getItem(STORAGE_KEYS.PRO_STATUS);
     if (!status) return false;
     
@@ -53,8 +59,15 @@ export const isPro = () => {
       return false;
     }
     
-    // Integrity check (sync cache has _verified flag set by setProStatus)
-    return status.active === true && status._verified === true;
+    const updatedAtMs = Date.parse(status.updatedAt || '');
+    if (!Number.isFinite(updatedAtMs)) return false;
+
+    const ageMs = Date.now() - updatedAtMs;
+    const isRecentLocalSdkStatus = status.source === 'revenuecat_sdk'
+      && ageMs >= 0
+      && ageMs <= LOCAL_SDK_TRUST_WINDOW_MS;
+
+    return status.active === true && status._verified === true && isRecentLocalSdkStatus;
   } catch {
     return false;
   }
@@ -134,7 +147,8 @@ export const verifyProStatus = async () => {
       active: secureStatus.active,
       expiresAt: secureStatus.expiresAt,
       updatedAt: new Date().toISOString(),
-      _verified: true
+      _verified: true,
+      source: secureStatus.verifiedBy || 'secure_cache'
     });
     
     return secureStatus.active;
@@ -147,17 +161,18 @@ export const verifyProStatus = async () => {
  * Pro durumunu ayarla (RevenueCat callback'ten çağrılır)
  * Hem secureStorage (integrity hash ile) hem sync cache'e yazar
  */
-export const setProStatus = async (active, expiresAt = null) => {
+export const setProStatus = async (active, expiresAt = null, source = 'revenuecat_sdk') => {
   try {
     // Primary: secureStorage with integrity hash
-    await secureStorage.setProStatus(active, expiresAt, 'revenuecat');
+    await secureStorage.setProStatus(active, expiresAt, source);
     
     // Sync cache: fast reads for isPro()
     storageService.setItem(STORAGE_KEYS.PRO_STATUS, {
       active,
       expiresAt,
       updatedAt: new Date().toISOString(),
-      _verified: true
+      _verified: true,
+      source
     });
     
     // Notify listeners (App.jsx) about Pro status change

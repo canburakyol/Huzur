@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
 import { checkAndUpdateStreak, getStreakDisplay } from '../services/streakService';
 import { isPro as checkIsPro, verifyProStatus } from '../services/proService';
-import { initializeRevenueCat } from '../services/revenueCatService';
 import { detectAndSetLanguage } from '../services/languageService';
-import { adMobService } from '../services/admobService';
-import { syncProStatusFromServer } from '../services/subscriptionSyncService';
 import { VAKIT_THEMES } from '../data/vakitThemes';
 import { THEMES, ACCENT_COLORS } from '../data/themes';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { storageService } from '../services/storageService';
 import { logger } from '../utils/logger';
 import { recordAppOpen } from '../services/userActivityTracker';
+import { scheduleDeferredTask } from '../utils/startupScheduler';
 
 const LEGACY_ACCENT_MAP = {
   orange: 'amber',
@@ -64,10 +62,10 @@ const applyThemeColors = (theme) => {
  */
 const getVakitTheme = (timings) => {
   if (!timings) return VAKIT_THEMES.DAY;
-  
+
   const now = new Date();
   const timeStr = now.getHours() * 60 + now.getMinutes();
-  
+
   const getMinutes = (t) => {
     const [h, m] = t.split(':').map(Number);
     return h * 60 + m;
@@ -81,11 +79,11 @@ const getVakitTheme = (timings) => {
 
   if (timeStr >= fajr && timeStr < dhuhr) return VAKIT_THEMES.FAJR;
   if (timeStr >= dhuhr && timeStr < asr) return VAKIT_THEMES.DAY;
-  if (timeStr >= asr && timeStr < maghrib) return VAKIT_THEMES.DAY; // İkindi de gündüz teması
+  if (timeStr >= asr && timeStr < maghrib) return VAKIT_THEMES.DAY;
   if (timeStr >= maghrib && timeStr < isha) return VAKIT_THEMES.MAGHRIB;
   if (timeStr >= isha || timeStr < fajr) return VAKIT_THEMES.ISHA;
-  
-  return VAKIT_THEMES.NIGHT; // Fallback
+
+  return VAKIT_THEMES.NIGHT;
 };
 
 /**
@@ -100,11 +98,10 @@ export const useAppInit = (timings) => {
       newBadge: result.newBadge || null
     };
   });
-  
+
   const [newBadge, setNewBadge] = useState(initialBadge);
   const [isProUser, setIsProUser] = useState(() => checkIsPro());
 
-  // Pro Status Change Handler
   const handleProStatusChange = (event) => {
     logger.log('[useAppInit] Pro status changed:', event.detail);
     if (event.detail && typeof event.detail.active !== 'undefined') {
@@ -114,20 +111,31 @@ export const useAppInit = (timings) => {
     }
   };
 
-  // Initialization Effect
   useEffect(() => {
-    // Aktivite saatini kaydet (akıllı bildirim zamanlaması için)
+    let isCancelled = false;
+
     recordAppOpen();
 
-    const initializeServices = async () => {
+    const cancelServiceInitialization = scheduleDeferredTask(async () => {
       try {
-        // RevenueCat ve Language işlemlerini paralel başlat (biri diğerine bağlı değil)
+        const [{ initializeRevenueCat }, { syncProStatusFromServer }] = await Promise.all([
+          import('../services/revenueCatService'),
+          import('../services/subscriptionSyncService')
+        ]);
+
+        if (isCancelled) {
+          return;
+        }
+
         const initResults = await Promise.allSettled([
           initializeRevenueCat(),
           detectAndSetLanguage()
         ]);
 
-        // Hata kontrolü (sadece loglama, uygulamayı çökertmemek için)
+        if (isCancelled) {
+          return;
+        }
+
         initResults.forEach((result, index) => {
           if (result.status === 'rejected') {
             const serviceName = index === 0 ? 'RevenueCat' : 'Language Detection';
@@ -137,12 +145,15 @@ export const useAppInit = (timings) => {
           }
         });
 
-        // Pro Status doğrulamasını ve senkronizasyonunu RevenueCat inisiyalizasyonundan sonra yap
         if (initResults[0].status === 'fulfilled') {
           const proResults = await Promise.allSettled([
             verifyProStatus(),
             syncProStatusFromServer()
           ]);
+
+          if (isCancelled) {
+            return;
+          }
 
           let activeProStatus = false;
           let hasProResult = false;
@@ -158,7 +169,7 @@ export const useAppInit = (timings) => {
             activeProStatus = proResults[1].value.isPro;
             hasProResult = true;
           } else if (proResults[1].status === 'rejected') {
-             logger.warn('[useAppInit] syncProStatusFromServer failed:', proResults[1].reason);
+            logger.warn('[useAppInit] syncProStatusFromServer failed:', proResults[1].reason);
           }
 
           if (hasProResult) {
@@ -166,13 +177,12 @@ export const useAppInit = (timings) => {
           }
         }
       } catch (error) {
-        logger.error('[useAppInit] Critical initialization error:', error);
+        if (!isCancelled) {
+          logger.error('[useAppInit] Critical initialization error:', error);
+        }
       }
-    };
+    });
 
-    initializeServices();
-
-    // Initial Theme & Accent Load
     const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
     const savedAccent = storageService.getString('app_accent_color') || 'amber';
     applyAccent(resolveAccent(savedAccent));
@@ -186,17 +196,20 @@ export const useAppInit = (timings) => {
     }
 
     window.addEventListener('proStatusChanged', handleProStatusChange);
-    return () => window.removeEventListener('proStatusChanged', handleProStatusChange);
+    return () => {
+      isCancelled = true;
+      cancelServiceInitialization();
+      window.removeEventListener('proStatusChanged', handleProStatusChange);
+    };
   }, []);
 
-  // Theme & Event Listeners Effect
   useEffect(() => {
     const handleThemeChange = (e) => {
       const { themeId } = e.detail;
       if (themeId === 'auto-vakit') {
         if (timings) applyThemeColors(getVakitTheme(timings));
       } else {
-        const theme = THEMES.find(t => t.id === themeId);
+        const theme = THEMES.find((t) => t.id === themeId);
         if (theme) applyThemeColors(theme);
       }
     };
@@ -231,7 +244,6 @@ export const useAppInit = (timings) => {
     };
   }, [timings]);
 
-  // Dynamic Vakit Theme Update
   useEffect(() => {
     const savedTheme = storageService.getString(STORAGE_KEYS.APP_THEME);
     if (savedTheme === 'auto-vakit' && timings) {
@@ -239,23 +251,52 @@ export const useAppInit = (timings) => {
     }
   }, [timings]);
 
-  // Initialize AdMob
   useEffect(() => {
+    let isCancelled = false;
+
     if (isProUser) {
-      adMobService.stopAds();
-      return;
+      void import('../services/admobService')
+        .then(({ adMobService }) => {
+          if (!isCancelled) {
+            return adMobService.stopAds();
+          }
+          return null;
+        })
+        .catch((error) => {
+          if (!isCancelled) {
+            logger.warn('[useAppInit] AdMob stop failed:', error);
+          }
+        });
+
+      return () => {
+        isCancelled = true;
+      };
     }
 
-    const initAdMob = async () => {
-      await adMobService.initialize();
-      await adMobService.showRectangleBanner();
-    };
+    const cancelAdMobInitialization = scheduleDeferredTask(async () => {
+      try {
+        const { adMobService } = await import('../services/admobService');
+        if (isCancelled) {
+          return;
+        }
 
-    const timeoutId = setTimeout(() => {
-      initAdMob();
+        await adMobService.initialize();
+        if (isCancelled) {
+          return;
+        }
+
+        await adMobService.showRectangleBanner();
+      } catch (error) {
+        if (!isCancelled) {
+          logger.warn('[useAppInit] AdMob deferred init failed:', error);
+        }
+      }
     }, TIMING.ADMOB_DELAY_MS);
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      isCancelled = true;
+      cancelAdMobInitialization();
+    };
   }, [isProUser]);
 
   const clearBadge = () => setNewBadge(null);

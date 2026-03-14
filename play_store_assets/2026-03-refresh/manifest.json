@@ -1,0 +1,19 @@
+{
+  "generated_at": "2026-03-07",
+  "dimensions": {
+    "app_icon": "512x512",
+    "feature_graphic": "1024x500",
+    "phone_screenshots": "1240x2208"
+  },
+  "files": [
+    "app-icon-512.png",
+    "app-icon-master-1024.png",
+    "feature-graphic-1024x500.png",
+    "phone-01-prayer-times.png",
+    "phone-02-quran.png",
+    "phone-03-dhikr-counter.png",
+    "phone-04-adhkar.png",
+    "phone-05-qibla.png",
+    "phone-06-greeting-cards.png"
+  ]
+}

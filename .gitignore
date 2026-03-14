@@ -47,6 +47,7 @@ icons/
 .env.production
 .env.*.local
 google-services.json
+.secrets/
 
 # Android local properties
 android/local.properties

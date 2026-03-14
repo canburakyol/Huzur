@@ -2,22 +2,20 @@ import { memo } from 'react';
 import { Users, Lock, CheckCircle, Hash } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-/**
- * Memoized Hatim Card Component
- * Prevents unnecessary re-renders when parent list updates
- */
 const HatimCard = memo(({ hatim, onClick, isMember }) => {
   const { t } = useTranslation();
 
-  // Calculate progress
   const getProgress = () => {
+    if (Number.isFinite(hatim.progressPercent)) return hatim.progressPercent;
     if (!hatim.parts) return 0;
+
     const total = hatim.totalParts || 30;
-    const completed = Object.values(hatim.parts).filter(p => p.status === 'completed').length;
+    const completed = Object.values(hatim.parts).filter((part) => part.status === 'completed').length;
     return Math.round((completed / total) * 100);
   };
 
   const progress = getProgress();
+  const memberCount = hatim.memberCount || hatim.readers?.length || 1;
 
   return (
     <div
@@ -26,16 +24,10 @@ const HatimCard = memo(({ hatim, onClick, isMember }) => {
     >
       <div className="hatim-head">
         <div className="hatim-title-block">
-          <h4 className="hatim-name">
-            {hatim.name}
-          </h4>
-          <p className="hatim-description">
-            {hatim.description || t('community.groupHatim')}
-          </p>
+          <h4 className="hatim-name">{hatim.name}</h4>
+          <p className="hatim-description">{hatim.description || t('community.groupHatim')}</p>
         </div>
-        <div className="hatim-progress-badge">
-          {progress}%
-        </div>
+        <div className="hatim-progress-badge">{progress}%</div>
       </div>
 
       <div className="hatim-meta-row">
@@ -45,7 +37,7 @@ const HatimCard = memo(({ hatim, onClick, isMember }) => {
         </div>
         <div className="hatim-pill count">
           <Users size={16} />
-          {hatim.readers?.length || 1} {t('common.people', 'kişi')}
+          {memberCount} {t('common.people', 'kisi')}
         </div>
       </div>
 
@@ -58,7 +50,7 @@ const HatimCard = memo(({ hatim, onClick, isMember }) => {
         </div>
         <div className="hatim-progress-labels">
           <span>{progress === 100 ? t('hatim.completed') : t('hatim.reading')}</span>
-          {isMember && (
+          {isMember && hatim.joinCode && (
             <span className="hatim-code">
               <Hash size={14} /> {hatim.joinCode}
             </span>
@@ -66,11 +58,7 @@ const HatimCard = memo(({ hatim, onClick, isMember }) => {
         </div>
       </div>
 
-      {!isMember && (
-        <div className="hatim-join-hint">
-          {t('hatim.tapToJoin')}
-        </div>
-      )}
+      {!isMember && <div className="hatim-join-hint">{t('hatim.tapToJoin')}</div>}
     </div>
   );
 });

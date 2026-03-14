@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useGroupHatim } from '../../hooks/useGroupHatim';
 import { getCurrentUserId } from '../../services/authService';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Copy, Share2, Info, CheckCircle, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Copy, Share2, Info, CheckCircle, RefreshCw, Hash } from 'lucide-react';
 import './Social.css';
 
 const HatimDetail = ({ hatimId, onBack }) => {
@@ -196,3 +196,4 @@ const HatimDetail = ({ hatimId, onBack }) => {
 };
 
 export default HatimDetail;
+
