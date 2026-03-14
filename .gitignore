@@ -32,10 +32,16 @@ dist-ssr
 *.sln
 *.sw?
 
-# AI Agent files (not part of app)
-
-
-# Store assets & mockups (stored in Play Store Console)
+# AI Agent & Planning files (not part of app)
+.agent/
+.claude/
+.gemini/
+.kilocode/
+_bmad/
+.planning/
+_project_management/
+plans/
+scripts/# Store assets & mockups (stored in Play Store Console)
 mockups/
 playstore_images/
 store_assets/
