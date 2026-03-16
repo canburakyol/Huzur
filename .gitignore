@@ -41,11 +41,16 @@ _bmad/
 .planning/
 _project_management/
 plans/
-scripts/# Store assets & mockups (stored in Play Store Console)
+mcp-servers/
+canburakyol/
+canburakyol.github.io/
+
+# Store assets & mockups (stored in Play Store Console)
 mockups/
 playstore_images/
 store_assets/
 icons/
+play_store_assets/
 
 # Environment files (SECURITY: API keys, secrets)
 .env
