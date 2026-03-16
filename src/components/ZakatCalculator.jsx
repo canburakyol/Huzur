@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Calculator, Info, RefreshCw, DollarSign, Coins } from 'lucide-react';
+import { ArrowLeft, Calculator, Info, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 // Zekat nisab değerleri (gram cinsinden)
@@ -78,7 +78,26 @@ const ZakatCalculator = ({ onClose }) => {
                 marginBottom: '24px',
                 padding: '0 4px'
             }}>
-                <IslamicBackButton onClick={onClose} size="medium" />
+                <button
+                    type="button"
+                    onClick={onClose}
+                    aria-label={t('common.back', 'Geri')}
+                    style={{
+                        width: '44px',
+                        height: '44px',
+                        borderRadius: '14px',
+                        border: '1px solid var(--nav-border)',
+                        background: 'var(--nav-hover)',
+                        color: 'var(--nav-text)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        flexShrink: 0
+                    }}
+                >
+                    <ArrowLeft size={20} />
+                </button>
                 <h1 style={{
                     margin: 0,
                     fontSize: '1.5rem',

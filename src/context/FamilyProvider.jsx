@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { familyService } from '../services/familyService';
 import { onAuthChange } from '../services/authService';
 import { logger } from '../utils/logger';
@@ -6,10 +6,10 @@ import { FamilyContext } from './FamilyContext';
 
 export const FamilyProvider = ({ children }) => {
   const [family, setFamily] = useState(null);
+  const [publicFamilies, setPublicFamilies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Aile verilerini yenileme fonksiyonu
   const refreshFamily = async () => {
     setLoading(true);
     try {
@@ -24,15 +24,22 @@ export const FamilyProvider = ({ children }) => {
     }
   };
 
+  const refreshPublicFamilies = async () => {
+    try {
+      const families = await familyService.listPublicFamilies();
+      setPublicFamilies(Array.isArray(families) ? families : []);
+    } catch (err) {
+      logger.error('[FamilyContext] Public families error:', err);
+    }
+  };
+
   useEffect(() => {
-    // Auth durumunu dinle
     const unsubscribe = onAuthChange(async (user) => {
       if (user) {
-        // Kullanıcı giriş yaptıysa aile bilgisini çek
-        await refreshFamily();
+        await Promise.all([refreshFamily(), refreshPublicFamilies()]);
       } else {
-        // Çıkış yaptıysa temizle
         setFamily(null);
+        setPublicFamilies([]);
         setLoading(false);
       }
     });
@@ -43,7 +50,7 @@ export const FamilyProvider = ({ children }) => {
   const createFamily = async (name) => {
     try {
       await familyService.createFamily(name);
-      await refreshFamily();
+      await Promise.all([refreshFamily(), refreshPublicFamilies()]);
       return true;
     } catch (err) {
       setError(err.message);
@@ -54,7 +61,7 @@ export const FamilyProvider = ({ children }) => {
   const joinFamily = async (code) => {
     try {
       await familyService.joinFamily(code);
-      await refreshFamily();
+      await Promise.all([refreshFamily(), refreshPublicFamilies()]);
       return true;
     } catch (err) {
       setError(err.message);
@@ -63,14 +70,18 @@ export const FamilyProvider = ({ children }) => {
   };
 
   return (
-    <FamilyContext.Provider value={{
-      family,
-      loading,
-      error,
-      refreshFamily,
-      createFamily,
-      joinFamily
-    }}>
+    <FamilyContext.Provider
+      value={{
+        family,
+        publicFamilies,
+        loading,
+        error,
+        refreshFamily,
+        refreshPublicFamilies,
+        createFamily,
+        joinFamily
+      }}
+    >
       {children}
     </FamilyContext.Provider>
   );

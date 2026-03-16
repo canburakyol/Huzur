@@ -2,20 +2,143 @@ import {
     AdMob,
     BannerAdSize,
     BannerAdPosition,
+    BannerAdPluginEvents,
     RewardAdPluginEvents
 } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 import { logger } from '../utils/logger';
+import crashlyticsReporter from '../utils/crashlyticsReporter';
+import {
+    getAdRuntime,
+    getBannerAdUnitId,
+    getRewardedAdUnitId,
+    isRewardedConfigured
+} from './adEnvironmentService';
 
-// Test IDs (Google Official Test IDs - always work)
-const TEST_BANNER_ID = 'ca-app-pub-3940256099942544/6300978111';
+let isInitialized = false;
+let initializePromise = null;
+let listenersRegistered = false;
+const BOTTOM_BANNER_MARGIN = 0;
 
-// Real IDs - Huzur App (override with env for release channels)
-const REAL_BANNER_ID = import.meta.env.VITE_ADMOB_BANNER_ID || 'ca-app-pub-3074026744164717/3228028982';
+const isNativePlatform = () => Capacitor.getPlatform() !== 'web';
 
-// Development mode flag - uses Vite environment
-const isDev = import.meta.env.DEV;
-const BANNER_ID = isDev ? TEST_BANNER_ID : REAL_BANNER_ID;
+const adLog = async (...args) => {
+    const runtime = await getAdRuntime();
+    if (runtime.isDebugBuild) {
+        console.info(...args);
+    } else {
+        logger.log(...args);
+    }
+};
+
+const adWarn = async (...args) => {
+    const runtime = await getAdRuntime();
+    if (runtime.isDebugBuild) {
+        console.warn(...args);
+    } else {
+        logger.warn(...args);
+    }
+};
+
+const registerAdListeners = async () => {
+    if (listenersRegistered || !isNativePlatform()) {
+        return;
+    }
+
+    listenersRegistered = true;
+
+    await AdMob.addListener(BannerAdPluginEvents.Loaded, () => {
+        void adLog('[AdMob] banner loaded');
+        void crashlyticsReporter.logCrash('[AdMob] banner_loaded');
+    });
+
+    await AdMob.addListener(BannerAdPluginEvents.FailedToLoad, (info) => {
+        void adWarn('[AdMob] banner failed to load', info);
+        void crashlyticsReporter.logCrash(`[AdMob] banner_failed code=${info?.code ?? 'unknown'}`);
+    });
+
+    await AdMob.addListener(BannerAdPluginEvents.AdImpression, () => {
+        void adLog('[AdMob] banner impression');
+    });
+
+    await AdMob.addListener(RewardAdPluginEvents.Loaded, () => {
+        void adLog('[AdMob] rewarded loaded');
+    });
+
+    await AdMob.addListener(RewardAdPluginEvents.FailedToLoad, (info) => {
+        void adWarn('[AdMob] rewarded failed to load', info);
+        void crashlyticsReporter.logCrash(`[AdMob] rewarded_failed code=${info?.code ?? 'unknown'}`);
+    });
+};
+
+const ensureInitialized = async () => {
+    if (!isNativePlatform()) {
+        return false;
+    }
+
+    if (isInitialized) {
+        return true;
+    }
+
+    if (!initializePromise) {
+        initializePromise = (async () => {
+            try {
+                const runtime = await getAdRuntime();
+
+                try {
+                    await AdMob.setRequestConfiguration({
+                        maxAdContentRating: 'General',
+                        tagForChildDirectedTreatment: false,
+                        tagForUnderAgeOfConsent: false
+                    });
+                    await adLog('[AdMob] request configuration set');
+                } catch (configError) {
+                    await adWarn('[AdMob] request configuration failed', configError);
+                }
+
+                await AdMob.initialize({
+                    requestTrackingAuthorization: true,
+                    initializeForTesting: runtime.useTestAds,
+                });
+
+                const consentInfo = await AdMob.requestConsentInfo();
+                if (consentInfo.isConsentFormAvailable && consentInfo.status === 'REQUIRED') {
+                    await AdMob.showConsentForm();
+                }
+
+                await registerAdListeners();
+                isInitialized = true;
+                await adLog(`[AdMob] initialized useTestAds=${runtime.useTestAds}`);
+                void crashlyticsReporter.logCrash(`[AdMob] initialized useTestAds=${runtime.useTestAds}`);
+                return true;
+            } catch (e) {
+                await adWarn('[AdMob] init failed, trying fallback', e);
+
+                try {
+                    const runtime = await getAdRuntime();
+                    await AdMob.initialize({
+                        requestTrackingAuthorization: true,
+                        initializeForTesting: runtime.useTestAds,
+                    });
+                    await registerAdListeners();
+                    isInitialized = true;
+                    void crashlyticsReporter.logCrash(`[AdMob] initialized via fallback useTestAds=${runtime.useTestAds}`);
+                    return true;
+                } catch (fallbackError) {
+                    await adWarn('[AdMob] fallback init failed', fallbackError);
+                    void crashlyticsReporter.logExceptionWithContext(fallbackError, {
+                        surface: 'admob_init'
+                    });
+                    return false;
+                }
+            } finally {
+                initializePromise = null;
+            }
+        })();
+    }
+
+    return initializePromise;
+};
 
 export const adMobService = {
     /**
@@ -23,74 +146,40 @@ export const adMobService = {
      * Shows User Messaging Platform (UMP) consent form for EU users
      */
     initialize: async () => {
-        if (Capacitor.getPlatform() === 'web') {
+        if (!isNativePlatform()) {
             logger.log('AdMob: Web platform - skipped');
-            return;
+            return false;
         }
 
-        try {
-            // Step 1: Request consent info (checks if user is in GDPR region)
-            const consentInfo = await AdMob.requestConsentInfo();
-
-            // Step 2: Show consent form if required and available
-            if (consentInfo.isConsentFormAvailable && consentInfo.status === 'REQUIRED') {
-                await AdMob.showConsentForm();
-            }
-
-            // Step 3: Set request configuration for content filtering
-            // This helps filter out inappropriate ads for a religious application
-            try {
-                await AdMob.setRequestConfiguration({
-                    maxAdContentRating: 'General', // G (General Audiences) - Family friendly
-                    tagForChildDirectedTreatment: false,
-                    tagForUnderAgeOfConsent: false
-                });
-                logger.log('AdMob: Request configuration set (General rating)');
-            } catch (configError) {
-                logger.warn('AdMob: Could not set request configuration:', configError);
-            }
-
-            // Step 4: Initialize AdMob after consent handling
-            await AdMob.initialize({
-                requestTrackingAuthorization: true,
-                initializeForTesting: isDev,
-            });
-            logger.log('AdMob: Initialized successfully');
-        } catch (e) {
-            logger.error('AdMob: Init Error -', e);
-            // Fallback: Try to initialize anyway in case consent API fails
-            try {
-                await AdMob.initialize({
-                    requestTrackingAuthorization: true,
-                    initializeForTesting: isDev,
-                });
-            } catch (fallbackError) {
-                logger.error('AdMob: Fallback init also failed -', fallbackError);
-            }
-        }
+        return await ensureInitialized();
     },
 
     /**
      * Show banner at bottom of screen
      */
     showRectangleBanner: async () => {
-        if (Capacitor.getPlatform() === 'web') return;
+        if (!isNativePlatform()) return;
 
         try {
             if (!AdMob) {
-                logger.warn('AdMob: Plugin not available');
+                await adWarn('[AdMob] plugin not available for banner');
                 return;
             }
+            if (!(await ensureInitialized())) {
+                return;
+            }
+            const runtime = await getAdRuntime();
+            const bannerId = await getBannerAdUnitId();
             await AdMob.showBanner({
-                adId: BANNER_ID,
+                adId: bannerId,
                 adSize: BannerAdSize.BANNER, // Standard banner (320x50)
                 position: BannerAdPosition.BOTTOM_CENTER,
-                margin: 0,
-                isTesting: isDev
+                margin: BOTTOM_BANNER_MARGIN,
+                isTesting: runtime.useTestAds
             });
-            logger.log('AdMob: Bottom banner shown');
+            await adLog(`[AdMob] banner requested id=${bannerId} test=${runtime.useTestAds} margin=${BOTTOM_BANNER_MARGIN}`);
         } catch (e) {
-            logger.error('AdMob: Show Banner Error -', e);
+            await adWarn('[AdMob] show banner failed', e);
         }
     },
 
@@ -99,23 +188,28 @@ export const adMobService = {
      * Used for Popup Ad
      */
     showMediumRectangle: async () => {
-        if (Capacitor.getPlatform() === 'web') return;
+        if (!isNativePlatform()) return;
 
         try {
             if (!AdMob) {
-                logger.warn('AdMob: Plugin not available');
+                await adWarn('[AdMob] plugin not available for medium rectangle');
                 return;
             }
+            if (!(await ensureInitialized())) {
+                return;
+            }
+            const runtime = await getAdRuntime();
+            const bannerId = await getBannerAdUnitId();
             await AdMob.showBanner({
-                adId: BANNER_ID, // Using same ID for now (or use specific if available)
+                adId: bannerId, // Using same ID for now (or use specific if available)
                 adSize: BannerAdSize.MEDIUM_RECTANGLE, // 300x250
                 position: BannerAdPosition.CENTER,
                 margin: 0,
-                isTesting: isDev
+                isTesting: runtime.useTestAds
             });
-            logger.log('AdMob: Medium Rectangle shown');
+            await adLog(`[AdMob] medium rectangle requested id=${bannerId} test=${runtime.useTestAds}`);
         } catch (e) {
-            logger.error('AdMob: Show Medium Rect Error -', e);
+            await adWarn('[AdMob] show medium rectangle failed', e);
         }
     },
 
@@ -123,14 +217,14 @@ export const adMobService = {
      * Hide banner ad (works for both types as they are banners)
      */
     hideBanner: async () => {
-        if (Capacitor.getPlatform() === 'web') return;
+        if (!isNativePlatform()) return;
 
         try {
             await AdMob.hideBanner();
             await AdMob.removeBanner();
-            logger.log('AdMob: Banner hidden/removed');
+            await adLog('[AdMob] banner hidden and removed');
         } catch (e) {
-            logger.error('AdMob: Hide Banner Error -', e);
+            await adWarn('[AdMob] hide banner failed', e);
         }
     },
 
@@ -138,28 +232,29 @@ export const adMobService = {
      * Stop all ads (for Pro users)
      */
     stopAds: async () => {
-        if (Capacitor.getPlatform() === 'web') return;
+        if (!isNativePlatform()) return;
 
-        logger.log('AdMob: Stopping all ads...');
+        await adLog('[AdMob] stopping all ads');
         try {
             await AdMob.hideBanner();
         } catch (e) {
-            logger.warn('AdMob: Error hiding banner:', e);
+            await adWarn('[AdMob] hide banner during stop failed', e);
         }
 
         try {
             await AdMob.removeBanner();
         } catch (e) {
-            logger.warn('AdMob: Error removing banner:', e);
+            await adWarn('[AdMob] remove banner during stop failed', e);
         }
-        logger.log('AdMob: Ads stopped for Pro user');
+        try {
+            const { nativeAdService } = await import('./nativeAdService');
+            await nativeAdService.destroy();
+        } catch (e) {
+            await adWarn('[AdMob] destroy native ad during stop failed', e);
+        }
+        await adLog('[AdMob] ads stopped for pro user');
     }
 };
-
-// Rewarded Ad IDs
-const TEST_REWARDED_ID = 'ca-app-pub-3940256099942544/5224354917';
-const REAL_REWARDED_ID = import.meta.env.VITE_ADMOB_REWARDED_ID || 'ca-app-pub-3074026744164717/7167273995';
-const REWARDED_ID = isDev ? TEST_REWARDED_ID : REAL_REWARDED_ID;
 
 /**
  * Show Rewarded Ad for Streak Recovery
@@ -167,7 +262,7 @@ const REWARDED_ID = isDev ? TEST_REWARDED_ID : REAL_REWARDED_ID;
  * @returns {Promise<{success: boolean, reward?: object, error?: string}>}
  */
 export const showRewardedAd = async () => {
-    if (Capacitor.getPlatform() === 'web') {
+    if (!isNativePlatform()) {
         // Web simulation
         logger.log('AdMob: Web platform - rewarded ad simulated');
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -176,14 +271,26 @@ export const showRewardedAd = async () => {
 
     try {
         if (!AdMob) {
-            logger.warn('AdMob: Plugin not available');
+            await adWarn('[AdMob] plugin not available for rewarded');
             return { success: false, error: 'Plugin not available' };
         }
+        if (!(await isRewardedConfigured())) {
+            await adWarn('[AdMob] rewarded unit is not configured');
+            return { success: false, error: 'Rewarded ad unit is not configured' };
+        }
+        if (!(await ensureInitialized())) {
+            return { success: false, error: 'AdMob could not initialize' };
+        }
+
+        const runtime = await getAdRuntime();
+        const rewardedId = await getRewardedAdUnitId();
 
         await AdMob.prepareRewardVideoAd({
-            adId: REWARDED_ID,
-            isTesting: isDev
+            adId: rewardedId,
+            isTesting: runtime.useTestAds
         });
+
+        await adLog(`[AdMob] rewarded requested id=${rewardedId} test=${runtime.useTestAds}`);
 
         let rewardedItem = null;
         const rewardedListener = await AdMob.addListener(RewardAdPluginEvents.Rewarded, (item) => {
@@ -203,13 +310,17 @@ export const showRewardedAd = async () => {
         const type = rewardedItem?.type || 'streak_recovery';
 
         if (amount > 0) {
-            logger.log('AdMob: Reward granted', { type, amount });
+            await adLog('[AdMob] reward granted', { type, amount });
+            void crashlyticsReporter.logCrash(`[AdMob] rewarded_success type=${type} amount=${amount}`);
             return { success: true, reward: { type, amount } };
         }
 
         return { success: false, error: 'Reward not granted' };
     } catch (error) {
-        logger.error('AdMob: Rewarded Ad Error -', error);
+        await adWarn('[AdMob] rewarded ad failed', error);
+        void crashlyticsReporter.logExceptionWithContext(error, {
+            surface: 'rewarded_ad'
+        });
         return { success: false, error: error?.message || 'Rewarded ad failed' };
     }
 };

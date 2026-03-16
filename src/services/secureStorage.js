@@ -2,16 +2,12 @@ import { Preferences } from '@capacitor/preferences';
 import { logger } from '../utils/logger';
 
 /**
- * Secure Storage Service
- * Capacitor Preferences API kullanır (localStorage yerine)
- * - Android: EncryptedSharedPreferences
- * - iOS: Keychain
- * - Web: localStorage (fallback)
- * 
- * SECURITY: Use for sensitive data like Pro status, auth tokens
+ * Persistent cache service backed by Capacitor Preferences.
+ * This is useful for consistent native/web persistence, but it is not a
+ * dedicated encrypted vault and should be treated as app cache, not as a
+ * standalone security boundary.
  */
 
-// Storage keys for sensitive data
 const SECURE_STORAGE_KEYS = {
   PRO_STATUS: 'huzur_pro_status_secure',
   AUTH_TOKEN: 'huzur_auth_token',
@@ -19,9 +15,6 @@ const SECURE_STORAGE_KEYS = {
 };
 
 export const secureStorage = {
-  /**
-   * String değer kaydet
-   */
   async setString(key, value) {
     try {
       await Preferences.set({ key, value });
@@ -32,9 +25,6 @@ export const secureStorage = {
     }
   },
 
-  /**
-   * String değer oku
-   */
   async getString(key, defaultValue = null) {
     try {
       const { value } = await Preferences.get({ key });
@@ -45,9 +35,6 @@ export const secureStorage = {
     }
   },
 
-  /**
-   * Object/Array kaydet (JSON)
-   */
   async setItem(key, value) {
     try {
       const jsonValue = JSON.stringify(value);
@@ -59,9 +46,6 @@ export const secureStorage = {
     }
   },
 
-  /**
-   * Object/Array oku (JSON)
-   */
   async getItem(key, defaultValue = null) {
     try {
       const { value } = await Preferences.get({ key });
@@ -73,42 +57,27 @@ export const secureStorage = {
     }
   },
 
-  /**
-   * Boolean kaydet
-   */
   async setBoolean(key, value) {
     return this.setString(key, value ? 'true' : 'false');
   },
 
-  /**
-   * Boolean oku
-   */
   async getBoolean(key, defaultValue = false) {
     const value = await this.getString(key);
     if (value === null) return defaultValue;
     return value === 'true';
   },
 
-  /**
-   * Number kaydet
-   */
   async setNumber(key, value) {
     return this.setString(key, value.toString());
   },
 
-  /**
-   * Number oku
-   */
   async getNumber(key, defaultValue = 0) {
     const value = await this.getString(key);
     if (value === null) return defaultValue;
     const num = parseFloat(value);
-    return isNaN(num) ? defaultValue : num;
+    return Number.isNaN(num) ? defaultValue : num;
   },
 
-  /**
-   * Değer sil
-   */
   async removeItem(key) {
     try {
       await Preferences.remove({ key });
@@ -119,9 +88,6 @@ export const secureStorage = {
     }
   },
 
-  /**
-   * Tüm değerleri sil
-   */
   async clearAll() {
     try {
       await Preferences.clear();
@@ -132,9 +98,6 @@ export const secureStorage = {
     }
   },
 
-  /**
-   * Key var mı kontrol et
-   */
   async hasKey(key) {
     try {
       const { value } = await Preferences.get({ key });
@@ -144,9 +107,6 @@ export const secureStorage = {
     }
   },
 
-  /**
-   * Tüm key'leri listele
-   */
   async keys() {
     try {
       const { keys } = await Preferences.keys();
@@ -157,26 +117,28 @@ export const secureStorage = {
     }
   },
 
-  // ============================================================
-  // PRO STATUS SPECIFIC METHODS (Enhanced Security)
-  // ============================================================
-
-  /**
-   * Pro status kaydet (güvenli)
-   * @param {boolean} active - Pro aktif mi
-   * @param {string|null} expiresAt - ISO tarih veya null
-   * @param {string|null} verifiedBy - Doğrulama kaynağı (revenuecat, manual)
-   */
-  async setProStatus(active, expiresAt = null, verifiedBy = 'revenuecat') {
+  async setProStatus(activeOrState, expiresAt = null, source = 'revenuecat') {
     try {
-      const integrity = await this._generateIntegrityHash(active, expiresAt, verifiedBy);
+      const state = typeof activeOrState === 'object' && activeOrState !== null
+        ? activeOrState
+        : {
+            active: activeOrState,
+            expiresAt,
+            source
+          };
+
       const status = {
-        active,
-        expiresAt,
-        verifiedBy,
-        updatedAt: new Date().toISOString(),
-        _integrity: integrity
+        active: state.active === true,
+        expiresAt: state.expiresAt || null,
+        source: state.source || state.verifiedBy || source,
+        verifiedBy: state.source || state.verifiedBy || source,
+        verifiedAt: state.verifiedAt || null,
+        lastCheckAt: state.lastCheckAt || null,
+        verificationState: state.verificationState || (state.active ? 'verified' : 'inactive'),
+        updatedAt: new Date().toISOString()
       };
+
+      status._integrity = await this._generateIntegrityHash(status);
       await this.setItem(SECURE_STORAGE_KEYS.PRO_STATUS, status);
       return true;
     } catch {
@@ -185,33 +147,36 @@ export const secureStorage = {
     }
   },
 
-  /**
-   * Pro status oku (güvenli)
-   * @returns {{active: boolean, expiresAt: string|null, isValid: boolean}|null}
-   */
   async getProStatus() {
     try {
       const status = await this.getItem(SECURE_STORAGE_KEYS.PRO_STATUS);
       if (!status) return null;
 
-      // Expiry kontrolü
       if (status.expiresAt && new Date(status.expiresAt) < new Date()) {
         await this.removeItem(SECURE_STORAGE_KEYS.PRO_STATUS);
-        return { active: false, expiresAt: null, isValid: false };
+        return {
+          active: false,
+          expiresAt: status.expiresAt,
+          source: status.source || status.verifiedBy,
+          verifiedBy: status.verifiedBy,
+          verifiedAt: status.verifiedAt || status.updatedAt || null,
+          lastCheckAt: status.lastCheckAt || status.updatedAt || null,
+          verificationState: 'expired',
+          isValid: true
+        };
       }
 
-      // Integrity check (SHA-256)
-      const expectedHash = await this._generateIntegrityHash(
-        status.active, 
-        status.expiresAt, 
-        status.verifiedBy
-      );
+      const expectedHash = await this._generateIntegrityHash(status);
       const isValid = status._integrity === expectedHash;
 
       return {
-        active: status.active === true && isValid,
-        expiresAt: status.expiresAt,
+        active: status.active === true,
+        expiresAt: status.expiresAt || null,
+        source: status.source || status.verifiedBy,
         verifiedBy: status.verifiedBy,
+        verifiedAt: status.verifiedAt || status.updatedAt || null,
+        lastCheckAt: status.lastCheckAt || status.updatedAt || null,
+        verificationState: status.verificationState || (status.active ? 'verified' : 'inactive'),
         isValid
       };
     } catch {
@@ -220,34 +185,43 @@ export const secureStorage = {
     }
   },
 
-  /**
-   * Pro status sil
-   */
   async clearProStatus() {
     return await this.removeItem(SECURE_STORAGE_KEYS.PRO_STATUS);
   },
 
-  /**
-   * SHA-256 based integrity hash (tamper detection)
-   * Note: Client-side security layer; full security requires server-side validation via RevenueCat
-   */
-  async _generateIntegrityHash(active, expiresAt, verifiedBy) {
-    // Salt is NOT from VITE_ env (those get bundled into JS). 
-    // This constant is obfuscated by Terser in production builds.
-    const _s = [72, 122, 114, 80, 114, 111, 73, 110, 116, 71, 114, 100].map(c => String.fromCharCode(c)).join('');
-    const payload = `${active}|${expiresAt}|${verifiedBy}|${_s}`;
+  async _generateIntegrityHash(stateOrActive, expiresAt, source) {
+    const state = typeof stateOrActive === 'object' && stateOrActive !== null
+      ? stateOrActive
+      : {
+          active: stateOrActive,
+          expiresAt,
+          source
+        };
+
+    const salt = [72, 122, 114, 80, 114, 111, 73, 110, 116, 71, 114, 100]
+      .map((code) => String.fromCharCode(code))
+      .join('');
+
+    const payload = [
+      state.active === true,
+      state.expiresAt || '',
+      state.source || state.verifiedBy || '',
+      state.verifiedAt || '',
+      state.lastCheckAt || '',
+      state.verificationState || '',
+      salt
+    ].join('|');
 
     try {
       const encoder = new TextEncoder();
       const data = encoder.encode(payload);
       const hashBuffer = await crypto.subtle.digest('SHA-256', data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
     } catch {
-      // Fallback for environments without SubtleCrypto (very old WebViews)
       let hash = 0x811c9dc5;
-      for (let i = 0; i < payload.length; i++) {
-        hash ^= payload.charCodeAt(i);
+      for (let index = 0; index < payload.length; index += 1) {
+        hash ^= payload.charCodeAt(index);
         hash = Math.imul(hash, 0x01000193);
       }
       return (hash >>> 0).toString(16);
@@ -255,7 +229,6 @@ export const secureStorage = {
   }
 };
 
-// Export keys for external use
 export { SECURE_STORAGE_KEYS };
 
 export default secureStorage;

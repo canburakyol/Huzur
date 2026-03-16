@@ -104,4 +104,9 @@ localization_status_report.md
 # - README.md (repo documentation)
 # - vite.config.js (build config)
 # - eslint.config.js (linting config)
-# - .env.example (safe template)"bundle-stats.html" 
+# - .env.example (safe template)
+
+# Local planning and debug artifacts
+plans/
+tmp_*
+bundle-stats.html

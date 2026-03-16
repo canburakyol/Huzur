@@ -9,29 +9,33 @@ import './Social.css';
 
 const DuaList = () => {
   const { t } = useTranslation();
-  const { duas, loading, error, prayForDua, prayedDuaIds } = useDua();
+  const { duas, loading, error, prayForDua, prayedDuaIds, submittingDuaIds } = useDua();
   const [showCreateModal, setShowCreateModal] = useState(false);
 
+  const featuredDuas = duas.filter((dua) => dua.isSeed === true || dua.featured === true);
+  const communityDuas = duas.filter((dua) => dua.isSeed !== true && dua.featured !== true);
+
   const isPrayed = (dua) => {
-    return prayedDuaIds.has(dua.id);
+    return prayedDuaIds.has(dua.id) || submittingDuaIds.has(dua.id);
   };
 
   const handlePray = async (duaId) => {
-    const dua = duas.find(d => d.id === duaId);
-    if (isPrayed(dua)) return; 
-    
+    const dua = duas.find((item) => item.id === duaId);
+    if (isPrayed(dua)) return;
+
     try {
       await prayForDua(duaId);
     } catch (error) {
       logger.error('Amin error:', error);
+      alert(error?.message || t('community.messages.aminFailed', 'Amin gonderilemedi. Lutfen tekrar deneyin.'));
     }
   };
 
   if (loading && duas.length === 0) {
     return (
       <div className="settings-card reveal-stagger" style={{ justifyContent: 'center', padding: '40px' }}>
-         <div className="spin"><RefreshCw size={32} color="var(--nav-accent)" /></div>
-         <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{t('common.loading')}</p>
+        <div className="spin"><RefreshCw size={32} color="var(--nav-accent)" /></div>
+        <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{t('common.loading')}</p>
       </div>
     );
   }
@@ -45,50 +49,63 @@ const DuaList = () => {
     );
   }
 
+  const renderDuaCards = (items) => (
+    <div className="sanctuary-stack-list">
+      {items.map((dua) => (
+        <DuaCard key={dua.id} dua={dua} isPrayed={isPrayed(dua)} onPray={handlePray} />
+      ))}
+    </div>
+  );
+
   return (
     <div className="dua-list">
-      {/* Actions */}
       <div className="reveal-stagger" style={{ marginBottom: '24px' }}>
-        <button
-          className="sanctuary-btn-primary"
-          onClick={() => setShowCreateModal(true)}
-          style={{ width: '100%' }}
-        >
+        <button className="sanctuary-btn-primary" onClick={() => setShowCreateModal(true)} style={{ width: '100%' }}>
           <Plus size={20} />
-          {t('dua.create')}
+          {t('dua.create', 'Dua istegi ekle')}
         </button>
       </div>
 
-      {/* List - Using memoized DuaCard */}
-      <div className="dua-grid reveal-stagger" style={{ '--delay': '0.5s', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        {duas.map(dua => (
-          <DuaCard 
-            key={dua.id}
-            dua={dua}
-            isPrayed={isPrayed(dua)}
-            onPray={handlePray}
-          />
-        ))}
+      <div className="dua-grid reveal-stagger" style={{ '--delay': '0.5s', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        {featuredDuas.length > 0 && (
+          <div className="sanctuary-section-block">
+            <div className="sanctuary-section-header">
+              <div>
+                <h3 className="sanctuary-section-title">{t('community.featuredDuas', 'One cikan dualar')}</h3>
+                <p className="sanctuary-section-subtitle">{t('community.featuredDuasDesc', 'Toplulugu bir araya getiren niyetler ve Huzur onerileri')}</p>
+              </div>
+            </div>
+            {renderDuaCards(featuredDuas)}
+          </div>
+        )}
+
+        {communityDuas.length > 0 && (
+          <div className="sanctuary-section-block">
+            <div className="sanctuary-section-header">
+              <div>
+                <h3 className="sanctuary-section-title">{t('community.publicDuas', 'Topluluktan dualar')}</h3>
+                <p className="sanctuary-section-subtitle">{t('community.publicDuasDesc', 'Yeni dualari gor, amin de ve birlikte destek ol')}</p>
+              </div>
+            </div>
+            {renderDuaCards(communityDuas)}
+          </div>
+        )}
 
         {duas.length === 0 && !loading && (
-           <div className="settings-card reveal-stagger sanctuary-empty" style={{ flexDirection: 'column', alignItems: 'center', padding: '60px 20px', gap: '16px' }}>
-              <Heart size={48} color="var(--hb-accent)" />
-              <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--nav-text-muted)', fontWeight: '700', textAlign: 'center' }}>
-                {t('community.messages.noDuas')}
-              </p>
-           </div>
+          <div className="settings-card reveal-stagger sanctuary-empty" style={{ flexDirection: 'column', alignItems: 'center', padding: '60px 20px', gap: '16px' }}>
+            <Heart size={48} color="var(--hb-accent)" />
+            <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--nav-text-muted)', fontWeight: '700', textAlign: 'center' }}>
+              {t('community.messages.noDuas')}
+            </p>
+          </div>
         )}
       </div>
 
-      {/* Create Modal */}
       {showCreateModal && (
-        <CreateDuaModal 
-          onClose={() => setShowCreateModal(false)}
-        />
+        <CreateDuaModal onClose={() => setShowCreateModal(false)} />
       )}
     </div>
   );
 };
 
 export default DuaList;
-

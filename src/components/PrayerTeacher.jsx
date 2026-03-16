@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { BookOpen, Volume2, Clock, Award, AlertTriangle, HelpCircle, ChevronRight, ChevronDown, Check, X } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { Award, HelpCircle, ChevronRight, ChevronDown, Check, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import {
@@ -37,17 +37,21 @@ function PrayerTeacher({ onClose }) {
     const [score, setScore] = useState(0);
     const [quizFinished, setQuizFinished] = useState(false);
 
+    const currentQuizItem = useMemo(() => QUIZ_QUESTIONS[currentQuestion], [currentQuestion]);
+
     const handleAnswer = (index) => {
+        if (showResult) return;
         setSelectedAnswer(index);
         setShowResult(true);
-        if (index === QUIZ_QUESTIONS[currentQuestion].correctAnswer) {
-            setScore(score + 1);
+        if (index === currentQuizItem.correctAnswer) {
+            setScore(prev => prev + 1);
         }
     };
 
     const nextQuestion = () => {
+        if (!showResult) return;
         if (currentQuestion < QUIZ_QUESTIONS.length - 1) {
-            setCurrentQuestion(currentQuestion + 1);
+            setCurrentQuestion(prev => prev + 1);
             setSelectedAnswer(null);
             setShowResult(false);
         } else {
@@ -356,7 +360,7 @@ function PrayerTeacher({ onClose }) {
                                             gap: '12px',
                                             alignItems: 'start'
                                         }}>
-                                            <Sparkles size={18} style={{ color: 'var(--nav-accent)', marginTop: '2px', flexShrink: 0 }} />
+                                            <Award size={18} style={{ color: 'var(--nav-accent)', marginTop: '2px', flexShrink: 0 }} />
                                             <span>{prayer.note}</span>
                                         </div>
                                     </div>
@@ -535,7 +539,7 @@ function PrayerTeacher({ onClose }) {
                                 </button>
                             </div>
                         ) : (
-                            <div className="settings-card premium-glass hover-lift" style={{ padding: '32px 24px', flexDirection: 'column', alignItems: 'stretch' }}>
+                            <div key={currentQuestion} className="settings-card premium-glass hover-lift" style={{ padding: '32px 24px', flexDirection: 'column', alignItems: 'stretch' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px', alignItems: 'center' }}>
                                     <div className="hamburger-level-badge" style={{ background: 'var(--nav-hover)', color: 'var(--nav-text-muted)' }}>
                                         {t('prayerTeacher.quiz.questionCounter', {
@@ -552,26 +556,30 @@ function PrayerTeacher({ onClose }) {
                                     </div>
                                 </div>
                                 <h3 style={{ color: 'var(--nav-text)', marginBottom: '32px', fontSize: '1.15rem', fontWeight: '950', lineHeight: '1.5' }}>
-                                    {QUIZ_QUESTIONS[currentQuestion].question}
+                                    {currentQuizItem.question}
                                 </h3>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                    {QUIZ_QUESTIONS[currentQuestion].options.map((option, i) => (
+                                    {currentQuizItem.options.map((option, i) => (
                                         <button
+                                            type="button"
                                             key={i}
-                                            onClick={() => !showResult && handleAnswer(i)}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                if (!showResult) handleAnswer(i);
+                                            }}
                                             disabled={showResult}
                                             className="settings-card premium-glass hover-lift"
                                             style={{
                                                 padding: '18px 20px',
                                                 background: showResult
-                                                    ? i === QUIZ_QUESTIONS[currentQuestion].correctAnswer
+                                                    ? i === currentQuizItem.correctAnswer
                                                         ? 'rgba(34, 197, 94, 0.1)'
                                                         : i === selectedAnswer
                                                             ? 'rgba(239, 68, 68, 0.1)'
                                                             : 'var(--nav-hover)'
                                                     : 'var(--nav-hover)',
                                                 border: showResult
-                                                    ? i === QUIZ_QUESTIONS[currentQuestion].correctAnswer
+                                                    ? i === currentQuizItem.correctAnswer
                                                         ? '2px solid #22c55e'
                                                         : i === selectedAnswer
                                                             ? '2px solid #ef4444'
@@ -589,12 +597,12 @@ function PrayerTeacher({ onClose }) {
                                             }}
                                         >
                                             <span style={{ flex: 1 }}>{option}</span>
-                                            {showResult && i === QUIZ_QUESTIONS[currentQuestion].correctAnswer && (
+                                            {showResult && i === currentQuizItem.correctAnswer && (
                                                 <div className="settings-icon-box" style={{ width: '28px', height: '28px', background: '#22c55e', color: 'white', borderRadius: '8px' }}>
                                                     <Check size={18} />
                                                 </div>
                                             )}
-                                            {showResult && i === selectedAnswer && i !== QUIZ_QUESTIONS[currentQuestion].correctAnswer && (
+                                            {showResult && i === selectedAnswer && i !== currentQuizItem.correctAnswer && (
                                                 <div className="settings-icon-box" style={{ width: '28px', height: '28px', background: '#ef4444', color: 'white', borderRadius: '8px' }}>
                                                     <X size={18} />
                                                 </div>
@@ -604,6 +612,7 @@ function PrayerTeacher({ onClose }) {
                                 </div>
                                 {showResult && (
                                     <button
+                                        type="button"
                                         className="velocity-target-btn pulse"
                                         onClick={nextQuestion}
                                         style={{ marginTop: '32px', width: '100%', justifyContent: 'center', background: 'var(--nav-accent)', color: 'white' }}

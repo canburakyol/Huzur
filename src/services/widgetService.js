@@ -5,6 +5,7 @@
 
 import { Capacitor } from '@capacitor/core';
 import { logger } from '../utils/logger';
+import Widget from '../plugins/WidgetPlugin';
 
 const PLUGIN_NAME = 'Widget';
 
@@ -19,18 +20,12 @@ const isWidgetAvailableOnDevice = () => {
 /**
  * Widget plugin referansını al
  */
-const getWidgetPlugin = async () => {
+const getWidgetPlugin = () => {
   if (!isWidgetAvailableOnDevice()) {
     return null;
   }
-  
-  try {
-    const { Widget } = await import('../plugins/WidgetPlugin');
-    return Widget;
-  } catch (error) {
-    logger.warn('Widget plugin not available:', error);
-    return null;
-  }
+
+  return Widget;
 };
 
 /**
@@ -47,12 +42,12 @@ export const updateWidget = async (data) => {
   }
 
   try {
-    const Widget = await getWidgetPlugin();
-    if (!Widget) {
+    const widgetPlugin = getWidgetPlugin();
+    if (!widgetPlugin) {
       return { success: false, error: 'Widget plugin not available' };
     }
 
-    await Widget.updateWidget(data);
+    await widgetPlugin.updateWidget(data);
     logger.log('Widget: Updated successfully', data);
     return { success: true };
   } catch (error) {
@@ -78,12 +73,12 @@ export const scheduleWidgetAlarms = async (prayerTimes) => {
   }
 
   try {
-    const Widget = await getWidgetPlugin();
-    if (!Widget) {
+    const widgetPlugin = getWidgetPlugin();
+    if (!widgetPlugin) {
       return { success: false, error: 'Widget plugin not available' };
     }
 
-    const result = await Widget.scheduleWidgetAlarms({ prayerTimes });
+    const result = await widgetPlugin.scheduleWidgetAlarms({ prayerTimes });
     logger.log('Widget: Alarms scheduled', result);
     return result;
   } catch (error) {
@@ -101,12 +96,12 @@ export const cancelWidgetAlarms = async () => {
   }
 
   try {
-    const Widget = await getWidgetPlugin();
-    if (!Widget) {
+    const widgetPlugin = getWidgetPlugin();
+    if (!widgetPlugin) {
       return { success: false, error: 'Widget plugin not available' };
     }
 
-    const result = await Widget.cancelWidgetAlarms();
+    const result = await widgetPlugin.cancelWidgetAlarms();
     logger.log('Widget: Alarms cancelled', result);
     return result;
   } catch (error) {

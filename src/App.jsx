@@ -51,6 +51,7 @@ function App() {
     streak24hRecovery,
     setStreak24hRecovery,
     handleConfirm24hRecovery,
+    handleRewarded24hRecovery,
     handleUseProtectionToken
   } = useStreakGuards();
 
@@ -108,7 +109,9 @@ function App() {
 
   const {
     showGrowthOnboarding,
+    onboardingStep,
     onboardingLanguage,
+    setOnboardingStep,
     handleGrowthLanguageSelect,
     handleGrowthLocationRequest,
     handleGrowthNotificationRequest,
@@ -143,14 +146,18 @@ function App() {
           showSplash={showSplash}
           onHideSplash={hideSplash}
           showGrowthOnboarding={showGrowthOnboarding}
+          onboardingStep={onboardingStep}
           onboardingLanguage={onboardingLanguage}
           onSelectGrowthLanguage={handleGrowthLanguageSelect}
           onRequestGrowthLocation={handleGrowthLocationRequest}
           onRequestGrowthNotifications={handleGrowthNotificationRequest}
+          onChangeGrowthStep={setOnboardingStep}
           onCompleteGrowth={handleGrowthComplete}
           streak24hRecovery={streak24hRecovery}
           onConfirm24hRecovery={handleConfirm24hRecovery}
+          onWatchRewarded24hRecovery={handleRewarded24hRecovery}
           onClose24hRecovery={() => setStreak24hRecovery(null)}
+          isProUser={isProUser}
           showInviteModal={showInviteModal}
           onCloseInvite={() => setShowInviteModal(false)}
           showMoodSelector={showMoodSelector}
@@ -179,6 +186,7 @@ function App() {
                 onOpenInvite={() => setShowInviteModal(true)}
                 dailyContent={dailyContent}
                 onSelectFeature={setActiveFeature}
+                isProUser={isProUser}
               />
             )}
 

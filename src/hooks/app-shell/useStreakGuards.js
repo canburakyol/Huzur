@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import streakService, { recoverCategoryStreak, getCategoryRecoveryStatus } from '../../services/streakService';
 import { checkAndNotifyStreakRisk } from '../../services/streakProtectionService';
+import { isPro } from '../../services/proService';
+import { logger } from '../../utils/logger';
+import crashlyticsReporter from '../../utils/crashlyticsReporter';
 
 export function useStreakGuards() {
   const [protectionTarget, setProtectionTarget] = useState(null);
@@ -52,6 +55,35 @@ export function useStreakGuards() {
     }
   };
 
+  const handleRewarded24hRecovery = async () => {
+    if (isPro()) {
+      handleConfirm24hRecovery();
+      return { success: true, source: 'pro_bypass' };
+    }
+
+    try {
+      const { showRewardedAd } = await import('../../services/admobService');
+      const rewardedResult = await showRewardedAd();
+
+      if (!rewardedResult?.success) {
+        void crashlyticsReporter.logCrash(
+          `[StreakRecovery] rewarded_not_granted reason=${rewardedResult?.error || 'unknown'}`
+        );
+        return rewardedResult || { success: false, error: 'Rewarded ad failed' };
+      }
+
+      handleConfirm24hRecovery();
+      void crashlyticsReporter.logCrash('[StreakRecovery] rewarded_recovery_applied');
+      return rewardedResult;
+    } catch (error) {
+      logger.warn('[useStreakGuards] Rewarded recovery failed', error);
+      void crashlyticsReporter.logExceptionWithContext(error, {
+        surface: 'streak_rewarded_recovery'
+      });
+      return { success: false, error: error?.message || 'Rewarded recovery failed' };
+    }
+  };
+
   const handleUseProtectionToken = () => {
     if (!protectionTarget?.category) return;
     streakService.useFreezeToken(protectionTarget.category);
@@ -64,6 +96,7 @@ export function useStreakGuards() {
     streak24hRecovery,
     setStreak24hRecovery,
     handleConfirm24hRecovery,
+    handleRewarded24hRecovery,
     handleUseProtectionToken
   };
 }

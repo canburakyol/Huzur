@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @CapacitorPlugin(name = "NativeAdBridge")
 public class NativeAdBridgePlugin extends Plugin {
-    private static final String TAG = "NativeAdBridgePlugin";
+    private static final String TAG = "NativeAdBridge";
 
     private final Map<String, NativeAd> adCache = new ConcurrentHashMap<>();
     private final Set<String> impressionSent = ConcurrentHashMap.newKeySet();

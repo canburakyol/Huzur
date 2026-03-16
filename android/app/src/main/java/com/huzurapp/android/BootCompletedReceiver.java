@@ -20,8 +20,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         }
 
         try {
-            WidgetAlarmReceiver.schedulePrayerAlarms(context);
-            PrayerAlarmPlugin.Companion.rescheduleFromStorage(context);
+            PrayerScheduleCoordinator.rescheduleFromStore(context, "boot_completed");
             Log.d(TAG, "Boot detected - alarms rescheduled");
         } catch (Exception e) {
             Log.e(TAG, "Failed to reschedule alarms on boot", e);

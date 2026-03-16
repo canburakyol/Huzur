@@ -1,200 +1,293 @@
-/**
- * Pro Service - Premium özellikler ve günlük limit yönetimi
- * SecureStorage (Capacitor Preferences) üzerinden Pro durumunu yönetir
- * Sync cache: storageService (fast reads), Source of truth: secureStorage
- */
-
 import { storageService } from './storageService';
 import { secureStorage } from './secureStorage';
 import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
+import crashlyticsReporter from '../utils/crashlyticsReporter';
 
-// Günlük limit tanımları (Ücretsiz kullanıcılar için)
 const FREE_LIMITS = {
-  nuzul_ai: 2,           // Nüzul sebebi AI: 2 sorgu/gün
-  tajweed_ai: 1,         // Tecvid AI: 1 kayıt/gün
-  word_analysis: 3,      // Kelime kök analizi: 3 kelime/gün
-  word_by_word: 4,       // Word-by-Word: 4 sure (Fatiha, İhlas, Felak, Nas)
-  memorize_surahs: 5,    // Hafızlık: 5 sure
-  hatim_count: 1,        // Hatim takibi: 1 hatim
-  amel_history_days: 7,  // Amel defteri: 7 gün geçmiş
-  themes: 3              // Tema: 3 tema
+  nuzul_ai: 2,
+  tajweed_ai: 1,
+  word_analysis: 3,
+  word_by_word: 4,
+  memorize_surahs: 5,
+  hatim_count: 1,
+  amel_history_days: 7,
+  themes: 3
 };
 
-// Ücretsiz Word-by-Word sureleri
-export const FREE_WORD_BY_WORD_SURAHS = [1, 112, 113, 114]; // Fatiha, İhlas, Felak, Nas
+export const FREE_WORD_BY_WORD_SURAHS = [1, 112, 113, 114];
 
-const PRO_SERVER_SYNC_TTL_MS = 5 * 60 * 1000;
-const LOCAL_SDK_TRUST_WINDOW_MS = 30 * 1000; // 30 seconds - daha sıkı güvenlik için
+const FREE_MEMORIZE_SURAHS = [1, 112, 113, 114, 111];
 const TRUSTED_STATUS_CACHE_MS = 60 * 1000;
+const NEGATIVE_VERIFICATION_STATES = new Set(['inactive', 'negative', 'expired', 'integrity_failed']);
+const DEFAULT_PRO_STATE = Object.freeze({
+  active: false,
+  expiresAt: null,
+  verifiedAt: null,
+  lastCheckAt: null,
+  source: 'none',
+  verificationState: 'inactive'
+});
+
 let lastTrustedCheckAt = 0;
-let lastTrustedResult = false;
+let lastTrustedResult = null;
 
-
-/**
- * Bugünün tarihini YYYY-MM-DD formatında döndürür
- */
 const getTodayString = () => {
   const now = new Date();
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 };
 
-/**
- * Pro durumunu kontrol et (sync cache ile hızlı okuma)
- * @returns {boolean}
- */
+const toIsoOrNull = (value) => {
+  if (!value) {
+    return null;
+  }
+
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? new Date(parsed).toISOString() : null;
+};
+
+const sanitizeVerificationState = (verificationState, active) => {
+  if (typeof verificationState === 'string' && verificationState.trim()) {
+    return verificationState.trim();
+  }
+
+  return active ? 'verified' : 'inactive';
+};
+
+const normalizeProState = (candidate, fallback = DEFAULT_PRO_STATE) => {
+  if (!candidate || typeof candidate !== 'object') {
+    return { ...fallback };
+  }
+
+  const expiresAt = toIsoOrNull(candidate.expiresAt);
+  const verifiedAt = toIsoOrNull(candidate.verifiedAt || candidate.updatedAt);
+  const lastCheckAt = toIsoOrNull(candidate.lastCheckAt || candidate.updatedAt);
+  const source = typeof candidate.source === 'string' && candidate.source
+    ? candidate.source
+    : typeof candidate.verifiedBy === 'string' && candidate.verifiedBy
+      ? candidate.verifiedBy
+      : fallback.source;
+
+  let active = candidate.active === true;
+  let verificationState = sanitizeVerificationState(candidate.verificationState, active);
+
+  if (expiresAt && Date.parse(expiresAt) <= Date.now()) {
+    active = false;
+    verificationState = 'expired';
+  }
+
+  if (NEGATIVE_VERIFICATION_STATES.has(verificationState)) {
+    active = false;
+  }
+
+  return {
+    active,
+    expiresAt,
+    verifiedAt,
+    lastCheckAt,
+    source,
+    verificationState
+  };
+};
+
+const getStoredProState = () => normalizeProState(
+  storageService.getItem(STORAGE_KEYS.PRO_STATUS, null),
+  DEFAULT_PRO_STATE
+);
+
+const setTrustedResult = (result) => {
+  lastTrustedResult = result;
+  lastTrustedCheckAt = Date.now();
+};
+
+const emitProStatusChanged = (state) => {
+  if (typeof window === 'undefined' || typeof window.dispatchEvent !== 'function') {
+    return;
+  }
+
+  window.dispatchEvent(new CustomEvent('proStatusChanged', {
+    detail: {
+      active: isProStateActive(state),
+      state
+    }
+  }));
+};
+
+const persistLocalState = (state) => {
+  storageService.setItem(STORAGE_KEYS.PRO_STATUS, state);
+};
+
+const persistProState = async (state, { persistSecure = true, announce = true } = {}) => {
+  const normalized = normalizeProState(state);
+
+  if (persistSecure) {
+    if (normalized.verificationState === 'integrity_failed') {
+      await secureStorage.clearProStatus();
+    } else {
+      await secureStorage.setProStatus(normalized);
+    }
+  }
+
+  persistLocalState(normalized);
+
+  if (announce) {
+    emitProStatusChanged(normalized);
+  }
+
+  return normalized;
+};
+
+export const isProStateActive = (state) => {
+  const normalized = normalizeProState(state, DEFAULT_PRO_STATE);
+
+  if (normalized.active !== true) {
+    return false;
+  }
+
+  if (normalized.expiresAt && Date.parse(normalized.expiresAt) <= Date.now()) {
+    return false;
+  }
+
+  return !NEGATIVE_VERIFICATION_STATES.has(normalized.verificationState);
+};
+
+export const getProStateSnapshot = () => {
+  const state = getStoredProState();
+  if (state.expiresAt && Date.parse(state.expiresAt) <= Date.now() && state.verificationState !== 'expired') {
+    const expiredState = normalizeProState({
+      ...state,
+      active: false,
+      verificationState: 'expired',
+      lastCheckAt: new Date().toISOString()
+    });
+    persistLocalState(expiredState);
+    return expiredState;
+  }
+
+  return state;
+};
+
 export const isPro = () => {
   try {
-    const recentServerResult = getRecentServerSyncResult();
-    if (recentServerResult !== null) {
-      return recentServerResult;
-    }
-
-    const status = storageService.getItem(STORAGE_KEYS.PRO_STATUS);
-    if (!status) return false;
-    
-    // Expiry kontrolü
-    if (status.expiresAt && new Date(status.expiresAt) < new Date()) {
-      storageService.removeItem(STORAGE_KEYS.PRO_STATUS);
-      return false;
-    }
-    
-    const updatedAtMs = Date.parse(status.updatedAt || '');
-    if (!Number.isFinite(updatedAtMs)) return false;
-
-    const ageMs = Date.now() - updatedAtMs;
-    const isRecentLocalSdkStatus = status.source === 'revenuecat_sdk'
-      && ageMs >= 0
-      && ageMs <= LOCAL_SDK_TRUST_WINDOW_MS;
-
-    return status.active === true && status._verified === true && isRecentLocalSdkStatus;
+    return isProStateActive(getProStateSnapshot());
   } catch {
     return false;
   }
 };
 
-const getRecentServerSyncResult = () => {
-  try {
-    const sync = storageService.getItem(STORAGE_KEYS.PRO_SERVER_SYNC, null);
-    if (!sync || typeof sync !== 'object') return null;
-
-    const parsed = Date.parse(sync.timestamp || '');
-    if (!Number.isFinite(parsed)) return null;
-
-    const ageMs = Date.now() - parsed;
-    if (ageMs < 0 || ageMs > PRO_SERVER_SYNC_TTL_MS) return null;
-
-    return sync.isPro === true;
-  } catch {
-    return null;
-  }
-};
-
 const getTrustedProStatus = async () => {
-  const now = Date.now();
-  if (now - lastTrustedCheckAt <= TRUSTED_STATUS_CACHE_MS) {
-    return lastTrustedResult;
+  const localState = getProStateSnapshot();
+  if (isProStateActive(localState)) {
+    return true;
   }
 
-  const recentServerResult = getRecentServerSyncResult();
-  if (recentServerResult !== null) {
-    lastTrustedResult = recentServerResult;
-    lastTrustedCheckAt = now;
-    return recentServerResult;
+  if (lastTrustedResult !== null && Date.now() - lastTrustedCheckAt <= TRUSTED_STATUS_CACHE_MS) {
+    return lastTrustedResult;
   }
 
   try {
     const { syncProStatusFromServer } = await import('./subscriptionSyncService');
     const serverResult = await syncProStatusFromServer();
     if (serverResult && typeof serverResult.isPro === 'boolean') {
-      lastTrustedResult = serverResult.isPro === true;
-      lastTrustedCheckAt = Date.now();
-      return lastTrustedResult;
+      const active = isPro();
+      setTrustedResult(active);
+      return active;
     }
-  } catch {
-    logger.warn('[ProService] Server authoritative sync unavailable');
+  } catch (error) {
+    logger.warn('[ProService] Server authoritative sync unavailable', error);
   }
 
   const verifiedFallback = await verifyProStatus();
-  lastTrustedResult = verifiedFallback === true;
-  lastTrustedCheckAt = Date.now();
-  return lastTrustedResult;
+  setTrustedResult(verifiedFallback);
+  return verifiedFallback;
 };
 
-/**
- * Pro durumunu async olarak doğrula (secureStorage integrity hash ile)
- * Uygulama açılışında ve kritik işlemlerde çağrılmalı
- * @returns {Promise<boolean>}
- */
 export const verifyProStatus = async () => {
+  const localState = getProStateSnapshot();
+
   try {
-    const secureStatus = await secureStorage.getProStatus();
-    if (!secureStatus) {
-      // secureStorage'da yok, sync cache'i de temizle
-      storageService.removeItem(STORAGE_KEYS.PRO_STATUS);
+    const secureState = await secureStorage.getProStatus();
+
+    if (!secureState) {
+      crashlyticsReporter.logCrash('[ProService] secure cache missing, using local snapshot').catch(() => {});
+      return isProStateActive(localState);
+    }
+
+    if (!secureState.isValid) {
+      const tamperedState = normalizeProState({
+        ...localState,
+        active: false,
+        source: secureState.source || secureState.verifiedBy || localState.source,
+        verificationState: 'integrity_failed',
+        lastCheckAt: new Date().toISOString()
+      });
+
+      await persistProState(tamperedState, { persistSecure: false });
+      await secureStorage.clearProStatus();
+      setTrustedResult(false);
+      crashlyticsReporter.logCrash('[ProService] integrity check failed').catch(() => {});
       return false;
     }
-    
-    // Integrity check failed = tamper detected
-    if (!secureStatus.isValid) {
-      logger.warn('[ProService] Integrity check failed – possible tamper');
-      storageService.removeItem(STORAGE_KEYS.PRO_STATUS);
-      return false;
-    }
-    
-    // Sync cache'i güncelle
-    storageService.setItem(STORAGE_KEYS.PRO_STATUS, {
-      active: secureStatus.active,
-      expiresAt: secureStatus.expiresAt,
-      updatedAt: new Date().toISOString(),
-      _verified: true,
-      source: secureStatus.verifiedBy || 'secure_cache'
+
+    const normalized = normalizeProState({
+      ...localState,
+      ...secureState,
+      source: secureState.source || secureState.verifiedBy || localState.source,
+      lastCheckAt: new Date().toISOString()
     });
-    
-    return secureStatus.active;
-  } catch {
-    return false;
+
+    await persistProState(normalized, { persistSecure: false });
+    const active = isProStateActive(normalized);
+    setTrustedResult(active);
+    crashlyticsReporter.logCrash(
+      `[ProService] verify source=${normalized.source} active=${active} state=${normalized.verificationState}`
+    ).catch(() => {});
+    return active;
+  } catch (error) {
+    logger.warn('[ProService] verifyProStatus failed', error);
+    return isProStateActive(localState);
   }
 };
 
-/**
- * Pro durumunu ayarla (RevenueCat callback'ten çağrılır)
- * Hem secureStorage (integrity hash ile) hem sync cache'e yazar
- */
-export const setProStatus = async (active, expiresAt = null, source = 'revenuecat_sdk') => {
+export const setProStatus = async (
+  active,
+  expiresAt = null,
+  source = 'revenuecat_sdk',
+  options = {}
+) => {
   try {
-    // Primary: secureStorage with integrity hash
-    await secureStorage.setProStatus(active, expiresAt, source);
-    
-    // Sync cache: fast reads for isPro()
-    storageService.setItem(STORAGE_KEYS.PRO_STATUS, {
+    const nowIso = new Date().toISOString();
+    const currentState = getProStateSnapshot();
+    const nextState = normalizeProState({
+      ...currentState,
       active,
       expiresAt,
-      updatedAt: new Date().toISOString(),
-      _verified: true,
-      source
+      verifiedAt: options.verifiedAt || nowIso,
+      lastCheckAt: options.lastCheckAt || nowIso,
+      source,
+      verificationState: options.verificationState || (active ? 'verified' : options.reason || 'negative')
     });
-    
-    // Notify listeners (App.jsx) about Pro status change
-    window.dispatchEvent(new CustomEvent('proStatusChanged', { detail: { active } }));
-  } catch {
-    logger.warn('[ProService] Error setting pro status');
+
+    await persistProState(nextState);
+    setTrustedResult(isProStateActive(nextState));
+
+    crashlyticsReporter.logCrash(
+      `[ProService] set status source=${source} active=${nextState.active} state=${nextState.verificationState}`
+    ).catch(() => {});
+  } catch (error) {
+    logger.warn('[ProService] Error setting pro status', error);
   }
 };
 
-/**
- * Günlük limitleri getir (async - secureStorage)
- */
 const getDailyLimits = async () => {
   try {
     const today = getTodayString();
     const data = await secureStorage.getItem('huzur_daily_limits');
-    
+
     if (data && data.date === today) {
       return data;
     }
-    
-    // Yeni gün, yeni limitler
+
     return {
       date: today,
       nuzul_ai: 0,
@@ -206,24 +299,15 @@ const getDailyLimits = async () => {
   }
 };
 
-/**
- * Günlük limitleri kaydet (async - secureStorage)
- */
 const saveDailyLimits = async (limits) => {
   try {
     await secureStorage.setItem('huzur_daily_limits', limits);
-  } catch {
-    logger.warn('[ProService] Error saving daily limits');
+  } catch (error) {
+    logger.warn('[ProService] Error saving daily limits', error);
   }
 };
 
-/**
- * Belirli bir özellik için limit kontrolü yap
- * @param {string} feature - Özellik adı (nuzul_ai, tajweed_ai, vb.)
- * @returns {{ allowed: boolean, remaining: number, max: number, isPro: boolean }}
- */
 export const checkLimit = async (feature) => {
-  // Pro kullanıcılar için sınırsız
   if (await getTrustedProStatus()) {
     return {
       allowed: true,
@@ -232,12 +316,12 @@ export const checkLimit = async (feature) => {
       isPro: true
     };
   }
-  
+
   const limits = await getDailyLimits();
   const used = limits[feature] || 0;
   const max = FREE_LIMITS[feature] || 0;
   const remaining = Math.max(0, max - used);
-  
+
   return {
     allowed: remaining > 0,
     remaining,
@@ -246,70 +330,48 @@ export const checkLimit = async (feature) => {
   };
 };
 
-/**
- * Limit kullan (sorgu/kayıt yapıldığında çağrılır)
- * @param {string} feature - Özellik adı
- * @returns {boolean} - Başarılı mı
- */
 export const consumeLimit = async (feature) => {
-  // Pro kullanıcılar için limit yok
   if (await getTrustedProStatus()) {
     return true;
   }
-  
+
   const check = await checkLimit(feature);
   if (!check.allowed) {
     return false;
   }
-  
+
   const limits = await getDailyLimits();
   limits[feature] = (limits[feature] || 0) + 1;
   await saveDailyLimits(limits);
-  
+
   return true;
 };
 
-// Alias for backward compatibility
 export const useLimit = consumeLimit;
 
-/**
- * Belirli bir sure için Word-by-Word erişimi kontrolü
- * @param {number} surahNumber - Sure numarası
- * @returns {boolean}
- */
 export const canAccessWordByWord = (surahNumber) => {
   if (isPro()) return true;
   return FREE_WORD_BY_WORD_SURAHS.includes(surahNumber);
 };
 
-/**
- * Hafızlık için sure erişimi kontrolü (ilk 5 kısa sure ücretsiz)
- */
-const FREE_MEMORIZE_SURAHS = [1, 112, 113, 114, 111]; // Fatiha, İhlas, Felak, Nas, Tebbet
 export const canAccessMemorize = (surahNumber) => {
   if (isPro()) return true;
   return FREE_MEMORIZE_SURAHS.includes(surahNumber);
 };
 
-/**
- * Pro özellik listesi (UI için)
- */
 export const PRO_FEATURES = [
-  { id: 'unlimited_ai', icon: '🤖', title: 'Sınırsız AI Rehber', description: 'Nüzul sebebi ve tecvid asistanına sınırsız soru' },
-  { id: 'all_surahs', icon: '📖', title: 'Tüm Sureler', description: '114 surenin tamamında kelime analizi ve hafızlık' },
-  { id: 'no_ads', icon: '🚫', title: 'Reklamsız Deneyim', description: 'Odaklanmanızı bozacak hiçbir reklam yok' },
-  { id: 'themes', icon: '🎨', title: 'Premium Temalar', description: 'Huzur veren 10+ özel tasarım ve renk seçeneği' },
-  { id: 'history', icon: '📊', title: 'Sınırsız Geçmiş', description: 'Amel defteri ve gelişim istatistiklerine tam erişim' },
-  { id: 'support', icon: '💬', title: 'Öncelikli Destek', description: 'Sorularınız için öncelikli ve hızlı yanıt' }
+  { id: 'unlimited_ai', icon: '\u{1F916}', title: 'Sınırsız AI Rehber', description: 'Nüzul sebebi ve tecvid asistanına sınırsız soru' },
+  { id: 'all_surahs', icon: '\u{1F4D6}', title: 'Tüm Sureler', description: '114 surenin tamamında kelime analizi ve hafızlık' },
+  { id: 'no_ads', icon: '\u{1F6AB}', title: 'Reklamsız Deneyim', description: 'Odaklanmanızı bozacak hiçbir reklam yok' },
+  { id: 'themes', icon: '\u{1F3A8}', title: 'Premium Temalar', description: 'Huzur veren özel tasarım ve renk seçenekleri' },
+  { id: 'history', icon: '\u{1F4CA}', title: 'Sınırsız Geçmiş', description: 'Amel defteri ve gelişim istatistiklerine tam erişim' },
+  { id: 'support', icon: '\u{1F4AC}', title: 'Öncelikli Destek', description: 'Sorularınız için hızlı destek' }
 ];
 
-/**
- * Günlük limit durumunu UI formatında döndür
- */
 export const getDailyLimitStatus = async () => {
   const limits = await getDailyLimits();
   const pro = await getTrustedProStatus();
-  
+
   return {
     isPro: pro,
     nuzul_ai: {
@@ -327,6 +389,8 @@ export const getDailyLimitStatus = async () => {
 
 export default {
   isPro,
+  isProStateActive,
+  getProStateSnapshot,
   verifyProStatus,
   setProStatus,
   checkLimit,
@@ -338,4 +402,3 @@ export default {
   PRO_FEATURES,
   FREE_WORD_BY_WORD_SURAHS
 };
-

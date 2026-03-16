@@ -7,6 +7,7 @@
 import { PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import AppCheck from '../plugins/AppCheckPlugin';
 import { storageService } from './storageService';
 import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
@@ -22,6 +23,32 @@ const SUPPORTED_PRAYER_KEYS = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 export const FCMService = {
     token: null,
     listenersSetup: false,
+
+    async getFirebaseStatus() {
+        if (!Capacitor.isNativePlatform()) {
+            return {
+                initialized: false,
+                configured: false,
+                messagingAvailable: false
+            };
+        }
+
+        try {
+            const status = await AppCheck.getFirebaseStatus();
+            return {
+                initialized: !!status?.initialized,
+                configured: !!status?.configured,
+                messagingAvailable: !!status?.messagingAvailable
+            };
+        } catch (error) {
+            logger.warn('[FCM] Failed to get Firebase runtime status:', error);
+            return {
+                initialized: false,
+                configured: false,
+                messagingAvailable: false
+            };
+        }
+    },
 
     async syncTokenWithServer(token) {
         if (!Capacitor.isNativePlatform()) {
@@ -59,14 +86,29 @@ export const FCMService = {
      * Initialize FCM and request permissions
      * @returns {Promise<string|null>} FCM token or null if failed
      */
-    async initialize() {
+    async initialize(options = {}) {
         if (!Capacitor.isNativePlatform()) {
             logger.log('[FCM] Web platform - skipped');
             return null;
         }
 
         try {
-            const permStatus = await PushNotifications.requestPermissions();
+            const { requestPermission = true } = options;
+            const firebaseStatus = await this.getFirebaseStatus();
+
+            if (!firebaseStatus.initialized) {
+                logger.warn('[FCM] Native Firebase is unavailable; skipping push registration');
+                return null;
+            }
+
+            const permStatus = requestPermission
+                ? await PushNotifications.requestPermissions()
+                : await PushNotifications.checkPermissions();
+
+            if (!requestPermission && permStatus.receive === 'prompt') {
+                logger.log('[FCM] Push permission has not been requested yet');
+                return null;
+            }
 
             if (permStatus.receive !== 'granted') {
                 logger.warn('[FCM] Push notification permission denied');

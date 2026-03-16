@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check } from 'lucide-react';
 import { SUPPORTED_LANGUAGE_OPTIONS } from '../config/i18nConfig';
@@ -33,14 +33,15 @@ function GrowthOnboarding({
   onRequestLocation,
   onRequestNotifications,
   onComplete,
+  onStepChange,
   loadingLocation = false,
   loadingNotifications = false
 }) {
   const { t } = useTranslation();
-  const [step, setStep] = useState(initialStep);
   const [selectedLanguage, setSelectedLanguage] = useState(initialLanguage);
   const [selectedGoal, setSelectedGoal] = useState('prayer');
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const languageOptions = useMemo(() => SUPPORTED_LANGUAGE_OPTIONS, []);
 
@@ -70,52 +71,75 @@ function GrowthOnboarding({
     }
   ]), [t]);
 
-  const currentStep = steps[step];
   const totalSteps = steps.length;
+  const normalizedStep = Math.max(0, Math.min(initialStep, totalSteps - 1));
+  const currentStep = steps[normalizedStep];
 
   const goals = useMemo(() => ([
     { id: 'prayer', label: t('growth.goal.prayer', 'Namazlarimi takip etmek'), icon: '🕌' },
-    { id: 'quran', label: t('growth.goal.quran', "Kuran okumak ve ogrenmek"), icon: '📖' },
+    { id: 'quran', label: t('growth.goal.quran', 'Kuran okumak ve ogrenmek'), icon: '📖' },
     { id: 'zikir', label: t('growth.goal.zikir', 'Zikir ve tesbihat yapmak'), icon: '📿' },
     { id: 'dua', label: t('growth.goal.dua', 'Dua ve Esmaul Husna'), icon: '✨' }
   ]), [t]);
 
   const isBusy = loading || loadingLocation || loadingNotifications;
 
-  const goToNextStep = () => {
-    setStep((current) => Math.min(current + 1, totalSteps - 1));
+  useEffect(() => {
+    setSelectedLanguage(initialLanguage);
+  }, [initialLanguage]);
+
+  const syncStep = (nextStep) => {
+    const boundedStep = Math.max(0, Math.min(nextStep, totalSteps - 1));
+    onStepChange?.(boundedStep);
+    return boundedStep;
   };
 
   const handleContinue = async () => {
-    setLoading(true);
+    setErrorMessage('');
     try {
-      if (step === 0) {
-        await onSelectLanguage?.(selectedLanguage);
-        goToNextStep();
+      if (normalizedStep === 0) {
+        setLoading(true);
+        syncStep(1);
+        const result = await onSelectLanguage?.(selectedLanguage);
+        if (result?.success === false) {
+          setErrorMessage(
+            result.error || t('growth.onboarding.languageError', 'Dil secimi uygulanamadi. Varsayilan dil ile devam ediyoruz.')
+          );
+        }
         return;
       }
 
-      if (step === 3) {
+      if (normalizedStep === 3) {
         storageService.setItem(STORAGE_KEYS.USER_PRIMARY_GOAL || 'user_primary_goal', selectedGoal);
-        goToNextStep();
+        syncStep(4);
         return;
       }
 
-      if (step === totalSteps - 1) {
-        window.setTimeout(() => {
-          onComplete?.();
-        }, 0);
+      if (normalizedStep === totalSteps - 1) {
+        onComplete?.();
       }
+    } catch (error) {
+      setErrorMessage(error?.message || t('growth.onboarding.genericError', 'Bu adim tamamlanirken bir sorun olustu.'));
     } finally {
-      setLoading(false);
+      if (normalizedStep === 0) {
+        setLoading(false);
+      }
     }
   };
 
   const handleLocationAnswer = async (accepted) => {
     setLoading(true);
+    setErrorMessage('');
+    syncStep(2);
     try {
-      await onRequestLocation?.(accepted);
-      setStep(2);
+      const result = await onRequestLocation?.(accepted);
+      if (result?.success === false) {
+        setErrorMessage(
+          result.error || t('growth.onboarding.locationError', 'Konum izni alinamadi. Varsayilan konum ile devam ediyoruz.')
+        );
+      }
+    } catch (error) {
+      setErrorMessage(error?.message || t('growth.onboarding.locationError', 'Konum izni alinamadi. Varsayilan konum ile devam ediyoruz.'));
     } finally {
       setLoading(false);
     }
@@ -123,9 +147,17 @@ function GrowthOnboarding({
 
   const handleNotificationAnswer = async (accepted) => {
     setLoading(true);
+    setErrorMessage('');
+    syncStep(3);
     try {
-      await onRequestNotifications?.(accepted);
-      setStep(3);
+      const result = await onRequestNotifications?.(accepted);
+      if (result?.success === false) {
+        setErrorMessage(
+          result.error || t('growth.onboarding.notificationsError', 'Bildirim ayari su an uygulanamadi. Sonra tekrar deneyebilirsin.')
+        );
+      }
+    } catch (error) {
+      setErrorMessage(error?.message || t('growth.onboarding.notificationsError', 'Bildirim ayari su an uygulanamadi. Sonra tekrar deneyebilirsin.'));
     } finally {
       setLoading(false);
     }
@@ -158,13 +190,30 @@ function GrowthOnboarding({
         }}
       >
         <div style={{ marginBottom: 16, fontSize: 13, opacity: 0.8 }}>
-          {t('growth.onboarding.stepCounter', 'Adim {{current}} / {{total}}', { current: step + 1, total: totalSteps })}
+          {t('growth.onboarding.stepCounter', 'Adim {{current}} / {{total}}', { current: normalizedStep + 1, total: totalSteps })}
         </div>
 
         <h2 style={{ margin: '0 0 8px', fontSize: 22, color: '#d4af37' }}>{currentStep.title}</h2>
         <p style={{ margin: '0 0 20px', lineHeight: 1.6, color: '#d9e6db' }}>{currentStep.description}</p>
 
-        {step === 0 && (
+        {!!errorMessage && (
+          <div
+            style={{
+              marginBottom: 16,
+              padding: '12px 14px',
+              borderRadius: 14,
+              border: '1px solid rgba(248, 113, 113, 0.35)',
+              background: 'rgba(127, 29, 29, 0.28)',
+              color: '#fee2e2',
+              fontSize: 13,
+              lineHeight: 1.5
+            }}
+          >
+            {errorMessage}
+          </div>
+        )}
+
+        {normalizedStep === 0 && (
           <div style={{ display: 'grid', gap: 10, marginBottom: 16 }}>
             {languageOptions.map((item) => (
               <button
@@ -183,77 +232,45 @@ function GrowthOnboarding({
           </div>
         )}
 
-        {step === 1 && (
+        {normalizedStep === 1 && (
           <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
-            <button
-              onClick={() => handleLocationAnswer(true)}
-              disabled={isBusy}
-              style={choiceButtonStyle(false)}
-            >
+            <button onClick={() => handleLocationAnswer(true)} disabled={isBusy} style={choiceButtonStyle(false)}>
               <span style={{ fontSize: 20 }}>📍</span>
               <span>
-                <strong style={{ display: 'block', marginBottom: 4 }}>
-                  {t('growth.onboarding.locationAllow', 'Konumumu kullan')}
-                </strong>
-                <span style={{ opacity: 0.8, fontSize: 13 }}>
-                  {t('growth.onboarding.locationAllowDesc', 'Bulundugun yere gore vakitleri hesapla')}
-                </span>
+                <strong style={{ display: 'block', marginBottom: 4 }}>{t('growth.onboarding.locationAllow', 'Konumumu kullan')}</strong>
+                <span style={{ opacity: 0.8, fontSize: 13 }}>{t('growth.onboarding.locationAllowDesc', 'Bulundugun yere gore vakitleri hesapla')}</span>
               </span>
             </button>
-            <button
-              onClick={() => handleLocationAnswer(false)}
-              disabled={isBusy}
-              style={choiceButtonStyle(false)}
-            >
+            <button onClick={() => handleLocationAnswer(false)} disabled={isBusy} style={choiceButtonStyle(false)}>
               <span style={{ fontSize: 20 }}>🕊️</span>
               <span>
-                <strong style={{ display: 'block', marginBottom: 4 }}>
-                  {t('growth.onboarding.locationSkip', 'Simdilik gec')}
-                </strong>
-                <span style={{ opacity: 0.8, fontSize: 13 }}>
-                  {t('growth.onboarding.locationSkipDesc', 'Istanbul ile devam et, sonra degistir')}
-                </span>
+                <strong style={{ display: 'block', marginBottom: 4 }}>{t('growth.onboarding.locationSkip', 'Simdilik gec')}</strong>
+                <span style={{ opacity: 0.8, fontSize: 13 }}>{t('growth.onboarding.locationSkipDesc', 'Istanbul ile devam et, sonra degistir')}</span>
               </span>
             </button>
           </div>
         )}
 
-        {step === 2 && (
+        {normalizedStep === 2 && (
           <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
-            <button
-              onClick={() => handleNotificationAnswer(true)}
-              disabled={isBusy}
-              style={choiceButtonStyle(false)}
-            >
+            <button onClick={() => handleNotificationAnswer(true)} disabled={isBusy} style={choiceButtonStyle(false)}>
               <span style={{ fontSize: 20 }}>🔔</span>
               <span>
-                <strong style={{ display: 'block', marginBottom: 4 }}>
-                  {t('growth.onboarding.notificationsAllow', 'Bildirimleri ac')}
-                </strong>
-                <span style={{ opacity: 0.8, fontSize: 13 }}>
-                  {t('growth.onboarding.notificationsAllowDesc', 'Namaz vakitleri ve hatirlatmalari al')}
-                </span>
+                <strong style={{ display: 'block', marginBottom: 4 }}>{t('growth.onboarding.notificationsAllow', 'Bildirimleri ac')}</strong>
+                <span style={{ opacity: 0.8, fontSize: 13 }}>{t('growth.onboarding.notificationsAllowDesc', 'Namaz vakitleri ve hatirlatmalari al')}</span>
               </span>
             </button>
-            <button
-              onClick={() => handleNotificationAnswer(false)}
-              disabled={isBusy}
-              style={choiceButtonStyle(false)}
-            >
+            <button onClick={() => handleNotificationAnswer(false)} disabled={isBusy} style={choiceButtonStyle(false)}>
               <span style={{ fontSize: 20 }}>🌙</span>
               <span>
-                <strong style={{ display: 'block', marginBottom: 4 }}>
-                  {t('growth.onboarding.notificationsSkip', 'Simdilik istemiyorum')}
-                </strong>
-                <span style={{ opacity: 0.8, fontSize: 13 }}>
-                  {t('growth.onboarding.notificationsSkipDesc', 'Daha sonra ayarlardan acabilirsin')}
-                </span>
+                <strong style={{ display: 'block', marginBottom: 4 }}>{t('growth.onboarding.notificationsSkip', 'Simdilik istemiyorum')}</strong>
+                <span style={{ opacity: 0.8, fontSize: 13 }}>{t('growth.onboarding.notificationsSkipDesc', 'Daha sonra ayarlardan acabilirsin')}</span>
               </span>
             </button>
           </div>
         )}
 
-        {step === 3 && (
+        {normalizedStep === 3 && (
           <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
             {goals.map((goal) => (
               <button
@@ -270,7 +287,7 @@ function GrowthOnboarding({
           </div>
         )}
 
-        {step === 4 && (
+        {normalizedStep === 4 && (
           <div
             style={{
               marginBottom: 20,
@@ -284,15 +301,13 @@ function GrowthOnboarding({
               {t('growth.onboarding.selectedGoal', 'Secilen odak')}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700 }}>
-              <span style={{ fontSize: 20 }}>
-                {goals.find((goal) => goal.id === selectedGoal)?.icon}
-              </span>
+              <span style={{ fontSize: 20 }}>{goals.find((goal) => goal.id === selectedGoal)?.icon}</span>
               <span>{goals.find((goal) => goal.id === selectedGoal)?.label}</span>
             </div>
           </div>
         )}
 
-        {(step === 0 || step === 3 || step === 4) && (
+        {(normalizedStep === 0 || normalizedStep === 3 || normalizedStep === 4) && (
           <button
             onClick={handleContinue}
             disabled={isBusy}
@@ -304,9 +319,7 @@ function GrowthOnboarding({
               opacity: isBusy ? 0.7 : 1
             }}
           >
-            {isBusy
-              ? t('common.loading', 'Yukleniyor...')
-              : currentStep.actionLabel}
+            {isBusy ? t('common.loading', 'Yukleniyor...') : currentStep.actionLabel}
           </button>
         )}
       </div>
@@ -315,5 +328,3 @@ function GrowthOnboarding({
 }
 
 export default GrowthOnboarding;
-
-

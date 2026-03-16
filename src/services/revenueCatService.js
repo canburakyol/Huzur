@@ -1,6 +1,7 @@
 import { Purchases, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
 import { setProStatus } from './proService';
 import { logger } from '../utils/logger';
+import crashlyticsReporter, { buildCrashContext } from '../utils/crashlyticsReporter';
 
 const isDev = import.meta.env.DEV;
 
@@ -21,7 +22,11 @@ const syncPurchaseStateWithServer = async () => {
 const updateProStatusFromInfo = async (customerInfo) => {
   if (!customerInfo?.entitlements?.active) {
     logger.warn('[RevenueCat] Invalid customerInfo received:', customerInfo);
-    await setProStatus(false, null, 'revenuecat_sdk');
+    await setProStatus(false, null, 'revenuecat_sdk', {
+      verificationState: 'negative',
+      reason: 'negative'
+    });
+    crashlyticsReporter.logCrash('[RevenueCat] invalid customerInfo payload').catch(() => {});
     return false;
   }
 
@@ -35,7 +40,13 @@ const updateProStatusFromInfo = async (customerInfo) => {
     result: isPro
   });
 
-  await setProStatus(isPro, expiresAt, 'revenuecat_sdk');
+  await setProStatus(isPro, expiresAt, 'revenuecat_sdk', {
+    verificationState: isPro ? 'verified' : 'negative',
+    reason: isPro ? 'verified' : 'negative'
+  });
+  crashlyticsReporter.logCrash(
+    `[RevenueCat] entitlement active=${isPro} expiresAt=${expiresAt || 'none'}`
+  ).catch(() => {});
   return isPro;
 };
 
@@ -86,6 +97,10 @@ export const initializeRevenueCat = async () => {
     logger.log('[RevenueCat] Initialized successfully');
   } catch {
     logger.error('[RevenueCat] Init error');
+    crashlyticsReporter.logExceptionWithContext(
+      new Error('RevenueCat init failed'),
+      buildCrashContext('revenuecat_initialize')
+    ).catch(() => {});
   }
 };
 
@@ -93,8 +108,12 @@ export const checkSubscriptionStatus = async () => {
   try {
     const customerInfo = await Purchases.getCustomerInfo();
     return await updateProStatusFromInfo(customerInfo);
-  } catch {
+  } catch (error) {
     logger.error('[RevenueCat] Error checking subscription');
+    crashlyticsReporter.logExceptionWithContext(
+      error,
+      buildCrashContext('revenuecat_check_subscription')
+    ).catch(() => {});
     return false;
   }
 };
@@ -117,6 +136,10 @@ export const purchasePackage = async (packageToPurchase) => {
       logger.log('User cancelled purchase');
     } else {
       logger.error('[RevenueCat] Purchase error');
+      crashlyticsReporter.logExceptionWithContext(
+        error,
+        buildCrashContext('revenuecat_purchase')
+      ).catch(() => {});
     }
     return false;
   }
@@ -144,8 +167,12 @@ export const getOfferings = async () => {
 
     logger.error('[RevenueCat] No packages found in any offering');
     return [];
-  } catch {
+  } catch (error) {
     logger.error('[RevenueCat] Error getting offerings');
+    crashlyticsReporter.logExceptionWithContext(
+      error,
+      buildCrashContext('revenuecat_offerings')
+    ).catch(() => {});
     return [];
   }
 };
@@ -161,8 +188,12 @@ export const restorePurchases = async () => {
     }
 
     return localResult;
-  } catch {
+  } catch (error) {
     logger.error('[RevenueCat] Error restoring purchases');
+    crashlyticsReporter.logExceptionWithContext(
+      error,
+      buildCrashContext('revenuecat_restore')
+    ).catch(() => {});
     return false;
   }
 };

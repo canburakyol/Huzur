@@ -8,6 +8,7 @@ const LoadingFallback = ({ height = '100px' }) => (
 
 const PremiumHomeHero = lazy(() => import('../PremiumHomeHero'));
 const FeatureGrid = lazy(() => import('../FeatureGrid'));
+const NativeAdCard = lazy(() => import('../NativeAdCard'));
 const Stories = lazy(() => import('../Stories'));
 const DailyQuests = lazy(() => import('../DailyQuests'));
 const DailyContentGrid = lazy(() => import('../DailyContentGrid'));
@@ -24,7 +25,8 @@ function AppHomeTabContent({
   streakData,
   dailyContent,
   onOpenInvite,
-  onSelectFeature
+  onSelectFeature,
+  isProUser
 }) {
 
   if (!timings) {
@@ -57,6 +59,10 @@ function AppHomeTabContent({
         {/* Engagement Section */}
         <Suspense fallback={<LoadingFallback height="100px" />}>
           <Stories />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <NativeAdCard isProUser={isProUser} />
         </Suspense>
 
         {/* Daily Progression */}

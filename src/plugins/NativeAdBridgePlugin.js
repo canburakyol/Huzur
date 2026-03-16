@@ -1,20 +1,32 @@
-import { registerPlugin } from '@capacitor/core';
+import { registerPlugin, Capacitor } from '@capacitor/core';
 
-export const NativeAdBridge = registerPlugin('NativeAdBridge', {
-  web: () => ({
-    async initialize() {
-      return { success: false, platform: 'web' };
-    },
-    async loadAd() {
-      return null;
-    },
-    async reportImpression() {
-      return { success: false, platform: 'web' };
-    },
-    async reportClick() {
-      return { success: false, platform: 'web' };
-    }
-  })
-});
+const noopPlugin = {
+  async initialize() {
+    return { success: false, platform: Capacitor.getPlatform(), error: 'Plugin not available' };
+  },
+  async loadAd() {
+    return { success: false, platform: Capacitor.getPlatform(), error: 'Plugin not available' };
+  },
+  async reportImpression() {
+    return { success: false, platform: Capacitor.getPlatform(), error: 'Plugin not available' };
+  },
+  async reportClick() {
+    return { success: false, platform: Capacitor.getPlatform(), error: 'Plugin not available' };
+  }
+};
 
+let NativeAdBridge;
+try {
+  if (Capacitor.getPlatform() === 'android') {
+    NativeAdBridge = registerPlugin('NativeAdBridge', {
+      web: () => noopPlugin
+    });
+  } else {
+    NativeAdBridge = noopPlugin;
+  }
+} catch {
+  NativeAdBridge = noopPlugin;
+}
+
+export { NativeAdBridge };
 export default NativeAdBridge;

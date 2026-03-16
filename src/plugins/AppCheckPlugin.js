@@ -7,6 +7,16 @@ import { registerPlugin } from '@capacitor/core';
 
 export const AppCheck = registerPlugin('AppCheck', {
   web: () => ({
+    async getFirebaseStatus() {
+      return {
+        success: true,
+        initialized: false,
+        configured: false,
+        messagingAvailable: false,
+        debuggable: false,
+        platform: 'web'
+      };
+    },
     async getAppCheckStatus() {
       return {
         success: true,

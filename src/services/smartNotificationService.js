@@ -12,9 +12,9 @@ import { analyticsService, ANALYTICS_EVENTS } from './analyticsService';
 import { getExperimentVariant } from './experimentService';
 import { getActiveCampaign, resolveCampaignCopy } from './campaignService';
 import { getOptimalReminderHour } from './userActivityTracker';
-import { scheduleNativeAdhanAlarms } from './prayerAlarmBridgeService';
 import {
   NOTIFICATION_CHANNELS,
+  checkNotificationPermission,
   requestNotificationPermission,
   createNotificationChannels,
   STICKY_NOTIFICATION_ID
@@ -334,9 +334,6 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
      });
      
     logger.log('Notifications: Prayer notifications scheduled', notifications.length);
-
-    // Schedule native Android AlarmManager alarms for max reliability
-    scheduleNativeAdhanAlarms(prayerTimes);
   } catch (error) {
     logger.error('Notifications: Schedule error', error);
   }
@@ -688,9 +685,9 @@ export const initializeSmartNotifications = async (options = {}) => {
   await createNotificationChannels();
 
   // 2. İzin iste
-  const hasPermission = await requestNotificationPermission();
+  const hasPermission = await checkNotificationPermission();
   if (!hasPermission) {
-    logger.warn('Notifications: Permission denied');
+    logger.log('Notifications: Permission not granted yet, skipping startup scheduling');
     return;
   }
   

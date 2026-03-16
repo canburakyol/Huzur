@@ -125,6 +125,19 @@ export const familyService = {
     }
   },
 
+  listPublicFamilies: async () => {
+    const userId = await getCurrentUserIdEnsured();
+    if (!userId) throw new Error('User not authenticated');
+
+    try {
+      const result = await callFamilyFunction('listPublicFamilies');
+      return Array.isArray(result?.families) ? result.families : [];
+    } catch (error) {
+      logger.error('[FamilyService] List public families error:', error);
+      throw error;
+    }
+  },
+
   getMyFamily: async () => {
     const userId = await getCurrentUserIdEnsured();
     if (!userId) return null;

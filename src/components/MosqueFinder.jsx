@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { X, MapPin, Navigation, ExternalLink, Loader, RefreshCw } from 'lucide-react';
+import { ArrowLeft, MapPin, Navigation, Loader, RefreshCw } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -160,7 +160,26 @@ const MosqueFinder = ({ onClose }) => {
                 alignItems: 'center'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <IslamicBackButton onClick={onClose} size="medium" />
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        aria-label={t('common.back', 'Geri')}
+                        style={{
+                            width: '44px',
+                            height: '44px',
+                            borderRadius: '14px',
+                            border: '1px solid var(--nav-border)',
+                            background: 'var(--nav-hover)',
+                            color: 'var(--nav-text)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                            flexShrink: 0
+                        }}
+                    >
+                        <ArrowLeft size={20} />
+                    </button>
                     <h2 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--nav-text)', fontWeight: '900' }}>
                         {t('mosqueFinder.title', 'En Yakın Camiler')}
                     </h2>

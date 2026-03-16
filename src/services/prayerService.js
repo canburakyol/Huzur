@@ -28,11 +28,16 @@ const CACHE_MAX_AGE_DAYS = 30;
  * Fetch and cache monthly prayer times for offline use
  * Background background job to ensure we have a full month of data
  */
-export const fetchMonthlyPrayerTimes = async (latitude = null, longitude = null, city = 'Istanbul', country = 'Turkey') => {
+export const fetchMonthlyPrayerTimes = async (
+  latitude = null,
+  longitude = null,
+  city = 'Istanbul',
+  country = 'Turkey',
+  targetDate = new Date()
+) => {
   try {
-    const now = new Date();
-    const month = now.getMonth() + 1;
-    const year = now.getFullYear();
+    const month = targetDate.getMonth() + 1;
+    const year = targetDate.getFullYear();
     const lat = latitude || DEFAULT_LAT;
     const lon = longitude || DEFAULT_LON;
     const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${year}_${month}`;

@@ -57,7 +57,8 @@ export const hatimService = {
         joinCode,
         parts,
         readers: [userId],
-        isPrivate: true,
+        isPrivate: false,
+        isDiscoverable: true,
         completedParts: 0,
         totalParts
       });

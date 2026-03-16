@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { getPrayerTimes, getNextPrayer } from '../services/prayerService';
-import { updateWidget as updateAndroidWidget, scheduleWidgetAlarms } from '../services/widgetService';
+import { updateWidget as updateAndroidWidget } from '../services/widgetService';
 import { storageService } from '../services/storageService';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 import { scheduleDeferredTask } from '../utils/startupScheduler';
+import { syncPrayerSchedule } from '../services/prayerScheduleService';
 
 let smartNotificationModulePromise = null;
 let fcmModulePromise = null;
@@ -25,13 +26,6 @@ const loadFcmModule = async () => {
   return fcmModulePromise;
 };
 
-/**
- * Prayer Times Management Hook
- * Handles fetching, caching, scheduling and updating prayer times
- * Also manages notifications and widget updates
- *
- * @returns {Object} Prayer times state and functions
- */
 export const usePrayerTimes = () => {
   const [timings, setTimings] = useState(null);
   const [nextPrayer, setNextPrayer] = useState(null);
@@ -42,17 +36,22 @@ export const usePrayerTimes = () => {
   const lastScheduledTimingsRef = useRef('');
   const fcmModuleRef = useRef(null);
 
-  const schedulePrayerSideEffects = useCallback(async (prayerTimings) => {
+  const schedulePrayerSideEffects = useCallback(async (prayerTimings, coords = null) => {
     try {
       const smartNotificationModule = await loadSmartNotificationModule();
       const smartNotificationService = smartNotificationModule.default;
 
       await Promise.allSettled([
         smartNotificationService.initializeSmartNotifications({ prayerTimes: prayerTimings }),
-        scheduleWidgetAlarms(prayerTimings)
+        syncPrayerSchedule({
+          timings: prayerTimings,
+          latitude: coords?.latitude ?? null,
+          longitude: coords?.longitude ?? null,
+          locationName: coords?.locationName || coords?.city || coords?.name || 'Huzur'
+        })
       ]);
 
-      logger.log('[usePrayerTimes] Smart notifications and widget alarms scheduled');
+      logger.log('[usePrayerTimes] Smart notifications and native prayer schedule synced');
     } catch (scheduleError) {
       logger.warn('[usePrayerTimes] Failed to schedule notifications:', scheduleError);
     }
@@ -73,10 +72,15 @@ export const usePrayerTimes = () => {
         setTimings(data.timings);
         setNextPrayer(getNextPrayer(data.timings));
 
-        const timingsSignature = JSON.stringify(data.timings);
+        const timingsSignature = JSON.stringify({
+          timings: data.timings,
+          latitude: lat ? Number(lat.toFixed(4)) : null,
+          longitude: lon ? Number(lon.toFixed(4)) : null
+        });
+
         if (lastScheduledTimingsRef.current !== timingsSignature) {
           lastScheduledTimingsRef.current = timingsSignature;
-          void schedulePrayerSideEffects(data.timings);
+          void schedulePrayerSideEffects(data.timings, coords);
         }
       } else {
         setError('Namaz vakitleri yüklenemedi. Lütfen internet bağlantınızı kontrol edin.');
@@ -119,7 +123,15 @@ export const usePrayerTimes = () => {
           return;
         }
 
-        await fcmModule.FCMService.initialize();
+        const firebaseStatus = await fcmModule.FCMService.getFirebaseStatus();
+        if (!firebaseStatus.initialized) {
+          if (!isCancelled) {
+            logger.warn('[usePrayerTimes] Native Firebase unavailable, skipping startup FCM registration');
+          }
+          return;
+        }
+
+        await fcmModule.FCMService.initialize({ requestPermission: false });
         if (!isCancelled) {
           logger.log('[usePrayerTimes] FCM and notification channels initialized');
         }
@@ -175,6 +187,19 @@ export const usePrayerTimes = () => {
     setPermissionGranted(granted);
     setShowWelcome(false);
     storageService.setBoolean(STORAGE_KEYS.HAS_SEEN_WELCOME, true);
+
+    if (!granted) {
+      return;
+    }
+
+    try {
+      const fcmModule = fcmModuleRef.current || await loadFcmModule();
+      fcmModuleRef.current = fcmModule;
+      await fcmModule.createNotificationChannels();
+      await fcmModule.FCMService.initialize({ requestPermission: false });
+    } catch (fcmError) {
+      logger.warn('[usePrayerTimes] Notification permission granted but FCM init failed:', fcmError);
+    }
   };
 
   const handleCloseWelcome = () => {
@@ -195,10 +220,6 @@ export const usePrayerTimes = () => {
   };
 };
 
-/**
- * Sticky Notification Hook
- * Manages persistent notification showing time until next prayer
- */
 export const useStickyNotification = (timings, nextPrayer) => {
   useEffect(() => {
     if (!timings || !nextPrayer) return;
@@ -265,10 +286,6 @@ export const useStickyNotification = (timings, nextPrayer) => {
   }, [timings, nextPrayer]);
 };
 
-/**
- * Android Widget Hook
- * Updates Android home screen widget with prayer time info
- */
 export const useAndroidWidget = (timings, nextPrayer, locationName) => {
   useEffect(() => {
     if (!timings || !nextPrayer) return;

@@ -527,6 +527,8 @@
   },
   "community": {
     "title": "Community",
+    "shareTitle": "Huzur Vakti - Community",
+    "shareText": "Join the Huzur Vakti app to read hatim and unite in prayers with your loved ones and the entire ummah. Let's find peace together.",
     "tabs": {
       "duas": "Prayer Fellowship",
       "hatims": "Online Hatim"

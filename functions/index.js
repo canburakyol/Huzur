@@ -1,3 +1,4 @@
+const functionsV1 = require('firebase-functions/v1');
 const { onRequest, onCall, HttpsError } = require('firebase-functions/v2/https');
 const { onDocumentUpdated } = require('firebase-functions/v2/firestore');
 const { defineSecret } = require('firebase-functions/params');
@@ -146,6 +147,71 @@ function sanitizePublicHatim(doc, viewerUid) {
     isMember,
     joinCode: isMember ? normalizeCode(data.joinCode, 6, 12) : null,
     createdAtMs: timestampToMillis(data.createdAt),
+    isSeed: data.isSeed === true,
+    seedSource: typeof data.seedSource === 'string' ? data.seedSource.slice(0, 40) : null,
+  };
+}
+
+const DISCOVERY_SEED_HATIMS = [
+  {
+    id: 'seed-hatim-sabir',
+    name: 'Huzur Toplulugu Sabir Hatmi',
+    description: 'Zor zamanlardan gecenler icin birlikte niyet edilen acik hatim halkasi.',
+    totalParts: 30,
+    completedParts: 18,
+    progressPercent: 60,
+    memberCount: 24,
+    isMember: false,
+    joinCode: null,
+    createdAtMs: Date.parse('2026-03-10T08:00:00.000Z'),
+    isSeed: true,
+    seedSource: 'huzur',
+  },
+  {
+    id: 'seed-hatim-cuma',
+    name: 'Cuma Bereket Hatmi',
+    description: 'Cuma gunu dualarinda bulusmak isteyenler icin haftalik topluluk hatmi.',
+    totalParts: 30,
+    completedParts: 9,
+    progressPercent: 30,
+    memberCount: 17,
+    isMember: false,
+    joinCode: null,
+    createdAtMs: Date.parse('2026-03-12T11:30:00.000Z'),
+    isSeed: true,
+    seedSource: 'huzur',
+  },
+];
+
+const DISCOVERY_SEED_FAMILIES = [
+  {
+    id: 'seed-family-dua',
+    name: 'Huzur Dua Cemberi',
+    isSeed: true,
+    seedSource: 'huzur',
+    createdAtMs: Date.parse('2026-03-09T09:00:00.000Z'),
+  },
+  {
+    id: 'seed-family-bereket',
+    name: 'Bereket Sofrasi Ailesi',
+    isSeed: true,
+    seedSource: 'huzur',
+    createdAtMs: Date.parse('2026-03-11T18:30:00.000Z'),
+  },
+];
+
+function sanitizePublicFamily(doc) {
+  const data = doc.data() || {};
+  const safeName = typeof data.name === 'string' && data.name.trim().length > 0
+    ? data.name.trim().slice(0, 80)
+    : 'Aile';
+
+  return {
+    id: doc.id,
+    name: safeName,
+    isSeed: data.isSeed === true,
+    seedSource: typeof data.seedSource === 'string' ? data.seedSource.slice(0, 40) : null,
+    createdAtMs: timestampToMillis(data.createdAt),
   };
 }
 
@@ -190,9 +256,10 @@ const REGION = 'europe-west1';
  * RevenueCat Webhook Handler
  * Pro subscription durumunu server-side dogrulama
  */
-exports.revenueCatWebhook = onRequest(
-  { region: REGION, secrets: [REVENUECAT_WEBHOOK_TOKEN] },
-  async (req, res) => {
+exports.revenueCatWebhook = functionsV1
+  .region(REGION)
+  .runWith({ secrets: ['REVENUECAT_WEBHOOK_TOKEN'] })
+  .https.onRequest(async (req, res) => {
     if (req.method !== 'POST') {
       res.status(405).send('Method Not Allowed');
       return;
@@ -330,9 +397,11 @@ async function transferProSubscription(event) {
  * Client-side Pro dogrulama icin
  * Rate limited: 20 istek/dakika
  */
-exports.checkProStatus = onCall(
-  { region: REGION, enforceAppCheck: true },
-  async (request) => {
+exports.checkProStatus = functionsV1
+  .region(REGION)
+  .runWith({ enforceAppCheck: true })
+  .https.onCall(async (data, context) => {
+    const request = { data, auth: context.auth, app: context.app };
     // 1. Authentication kontrolu
     if (!request.auth) {
       throw new HttpsError(
@@ -405,9 +474,11 @@ exports.checkProStatus = onCall(
  * Manuel senkronizasyon icin
  * Rate limited: 5 istek/dakika (RevenueCat API korumasi icin)
  */
-exports.syncProStatus = onCall(
-  { region: REGION, secrets: [REVENUECAT_API_KEY], enforceAppCheck: true },
-  async (request) => {
+exports.syncProStatus = functionsV1
+  .region(REGION)
+  .runWith({ secrets: ['REVENUECAT_API_KEY'], enforceAppCheck: true })
+  .https.onCall(async (data, context) => {
+    const request = { data, auth: context.auth, app: context.app };
     if (!request.auth) {
       throw new HttpsError(
         'unauthenticated',
@@ -489,8 +560,7 @@ exports.syncProStatus = onCall(
         'Senkronizasyon hatasi.'
       );
     }
-  }
-);
+  });
 
 /**
  * Join Family by Invite Code
@@ -603,6 +673,7 @@ function createCreateFamilyHandler(deps = {}) {
       adminId: userId,
       members: [userId],
       inviteCode,
+      isDiscoverable: true,
       createdAt: adminSdk.firestore.FieldValue.serverTimestamp(),
       settings: {
         allowChildTree: true
@@ -803,11 +874,39 @@ exports.listPublicHatims = onCall(
 
     const hatims = snapshot.docs
       .map((doc) => sanitizePublicHatim(doc, userId))
-      .sort((a, b) => b.createdAtMs - a.createdAtMs);
+      .concat(DISCOVERY_SEED_HATIMS)
+      .sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
 
     return { hatims };
-  }
-);
+  });
+
+/**
+ * List Public Families for Discovery
+ */
+exports.listPublicFamilies = onCall(
+  { region: REGION, enforceAppCheck: true },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Bu islem icin giris yapmaniz gerekiyor.');
+    }
+
+    const userId = request.auth.uid;
+    if (!isValidUid(userId)) {
+      throw new HttpsError('invalid-argument', 'Invalid user id');
+    }
+
+    const snapshot = await db.collection('families')
+      .limit(50)
+      .get();
+
+    const families = snapshot.docs
+      .filter((doc) => doc.data()?.isDiscoverable !== false)
+      .map((doc) => sanitizePublicFamily(doc))
+      .concat(DISCOVERY_SEED_FAMILIES)
+      .sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+
+    return { families };
+  });
 
 /**
  * Join Hatim by Invite Code

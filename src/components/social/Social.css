@@ -217,6 +217,12 @@
     border: 1px solid rgba(180, 83, 9, 0.25);
 }
 
+.hatim-pill.featured {
+    background: rgba(251, 191, 36, 0.14);
+    color: var(--accent-gold-light, #f59e0b);
+    border: 1px solid rgba(251, 191, 36, 0.22);
+}
+
 .hatim-pill.locked,
 .hatim-pill.count {
     background: rgba(255, 255, 255, 0.05);
@@ -243,6 +249,14 @@
     align-items: center;
     gap: 6px;
     color: var(--accent-gold-light, #f59e0b);
+}
+
+.hatim-code-button {
+    border: 1px solid rgba(180, 83, 9, 0.24);
+    background: rgba(180, 83, 9, 0.12);
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 900;
 }
 
 .hatim-join-hint {
@@ -343,6 +357,13 @@
     flex-wrap: wrap;
 }
 
+.dua-meta-pills {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
 .dua-author-pill {
     display: inline-flex;
     align-items: center;
@@ -355,6 +376,11 @@
     color: var(--text-secondary, #d1d5db);
     opacity: 0.8;
     border: 1px solid var(--soc-card-border);
+}
+
+.dua-author-pill.featured {
+    background: rgba(251, 191, 36, 0.12);
+    color: var(--accent-gold-light, #f59e0b);
 }
 
 .dua-pray-btn {
@@ -468,6 +494,45 @@
     background: var(--soc-surface);
 }
 
+.sanctuary-section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sanctuary-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.sanctuary-section-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--text-primary, #f8fafc);
+}
+
+.sanctuary-section-subtitle {
+    margin: 6px 0 0;
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: var(--soc-text-muted);
+    font-weight: 600;
+}
+
+.sanctuary-stack-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sanctuary-family-discovery-card {
+    border: 1px solid var(--soc-card-border);
+    box-shadow: none;
+}
+
 /* Join Code Area */
 .sanctuary-join-input-card {
     background: var(--soc-glass);
@@ -500,6 +565,252 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     margin: 20px 0;
+}
+
+.hatim-detail-hero {
+    padding: 22px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 24px;
+    border: 1px solid var(--hb-border);
+    background:
+      radial-gradient(circle at top right, rgba(251, 191, 36, 0.18), transparent 34%),
+      linear-gradient(180deg, rgba(6, 78, 59, 0.18) 0%, rgba(4, 47, 46, 0.08) 100%);
+}
+
+.hatim-detail-hero-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.hatim-detail-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(180, 83, 9, 0.12);
+    color: var(--accent-gold-light, #f59e0b);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.hatim-detail-title {
+    margin: 10px 0 0;
+    font-size: 1.3rem;
+    font-weight: 950;
+    color: var(--text-primary, #f8fafc);
+    letter-spacing: -0.5px;
+}
+
+.hatim-code-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(180, 83, 9, 0.18);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.hatim-code-panel-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.hatim-code-label {
+    margin: 0;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--soc-text-muted);
+    font-weight: 800;
+}
+
+.hatim-code-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 950;
+    color: var(--accent-gold-light, #f59e0b);
+}
+
+.hatim-code-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.hatim-code-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 14px;
+    background: var(--soc-emerald-dark);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 900;
+    box-shadow: 0 8px 16px rgba(6, 78, 59, 0.2);
+}
+
+.hatim-code-action-btn.secondary {
+    background: rgba(180, 83, 9, 0.12);
+    color: var(--accent-gold-light, #f59e0b);
+    border: 1px solid rgba(180, 83, 9, 0.24);
+    box-shadow: none;
+}
+
+.hatim-detail-grid-card {
+    flex-direction: column;
+    padding: 24px;
+    border: 1px solid var(--hb-border);
+}
+
+.hatim-grid-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.hatim-grid-title {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: var(--text-primary, #f8fafc);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hatim-grid-subtitle {
+    margin: 8px 0 0;
+    color: var(--text-secondary, #d1d5db);
+    opacity: 0.8;
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.hatim-grid-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(180, 83, 9, 0.12);
+    border: 1px solid rgba(180, 83, 9, 0.2);
+    color: var(--accent-gold-light, #f59e0b);
+    font-size: 0.75rem;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.sanctuary-grid-premium {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.part-btn-premium {
+    aspect-ratio: auto;
+    min-height: 114px;
+    border-radius: 20px;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 14px;
+    text-align: left;
+    background:
+      radial-gradient(circle at top right, rgba(251, 191, 36, 0.12), transparent 32%),
+      rgba(255, 255, 255, 0.04);
+}
+
+.part-btn-top,
+.part-btn-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.part-number-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--soc-text-muted);
+    font-weight: 800;
+}
+
+.part-number {
+    font-size: 1.45rem;
+    font-weight: 950;
+    color: var(--text-primary, #f8fafc);
+}
+
+.part-status-pill {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 900;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary, #d1d5db);
+}
+
+.part-owner-name {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: var(--soc-text-muted);
+    font-weight: 700;
+}
+
+.part-btn-premium.taken-mine .part-status-pill {
+    background: rgba(180, 83, 9, 0.16);
+    color: var(--accent-gold-light, #f59e0b);
+}
+
+.part-btn-premium.completed .part-status-pill {
+    background: rgba(255, 255, 255, 0.16);
+    color: white;
+}
+
+.hatim-legend-premium {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 28px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.legend-box-free {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.legend-box-mine {
+    background: rgba(180, 83, 9, 0.45);
+}
+
+.legend-box-others {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.legend-box-completed {
+    background: var(--soc-emerald-dark);
 }
 
 .part-btn {
@@ -572,4 +883,24 @@
     height: 12px;
     border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 640px) {
+    .hatim-detail-hero {
+        padding: 20px;
+        gap: 14px;
+    }
+
+    .hatim-grid-header {
+        flex-direction: column;
+    }
+
+    .hatim-code-actions {
+        width: 100%;
+    }
+
+    .hatim-code-action-btn {
+        flex: 1;
+        justify-content: center;
+    }
 }

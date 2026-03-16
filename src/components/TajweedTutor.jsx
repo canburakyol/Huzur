@@ -8,6 +8,7 @@ import './Education.css';
 
 const TajweedTutor = ({ onClose }) => {
   const { t } = useTranslation('tajweed');
+  const tt = (key, defaultValue, options) => t(key, { defaultValue, ...options });
   const [selectedRule, setSelectedRule] = useState(null);
   const [activeLevel, setActiveLevel] = useState(TAJWEED_LEVELS.BEGINNER);
   const [showQuiz, setShowQuiz] = useState(false);
@@ -54,7 +55,7 @@ const TajweedTutor = ({ onClose }) => {
 
   const playAudio = (example) => {
     if (!example.surah || !example.ayah) {
-        alert(t('tajweed.audioNotReady'));
+        alert(tt('tajweed.audioNotReady', 'Ses dosyasi hazir degil.'));
         return;
     }
 
@@ -69,7 +70,7 @@ const TajweedTutor = ({ onClose }) => {
     
     audio.play().catch(e => {
         if (e.name !== 'AbortError') {
-            alert(t('tajweed.audioError', { error: e.message }));
+            alert(tt('tajweed.audioError', `Ses calinirken hata olustu: ${e.message}`, { error: e.message }));
         }
     });
   };
@@ -79,9 +80,9 @@ const TajweedTutor = ({ onClose }) => {
   }, [activeLevel]);
 
   const levelInfo = {
-    [TAJWEED_LEVELS.BEGINNER]: { title: t('tajweed.levels.beginner'), icon: '🌱', color: '#10B981', desc: t('tajweed.levels.beginnerDesc') },
-    [TAJWEED_LEVELS.INTERMEDIATE]: { title: t('tajweed.levels.intermediate'), icon: '🌿', color: '#3B82F6', desc: t('tajweed.levels.intermediateDesc') },
-    [TAJWEED_LEVELS.ADVANCED]: { title: t('tajweed.levels.advanced'), icon: '🌳', color: '#8B5CF6', desc: t('tajweed.levels.advancedDesc') }
+    [TAJWEED_LEVELS.BEGINNER]: { title: tt('tajweed.levels.beginner', 'Baslangic'), icon: '🌱', color: '#10B981', desc: tt('tajweed.levels.beginnerDesc', 'Temel tecvid kurallarini adim adim ogrenin.') },
+    [TAJWEED_LEVELS.INTERMEDIATE]: { title: tt('tajweed.levels.intermediate', 'Orta Seviye'), icon: '🌿', color: '#3B82F6', desc: tt('tajweed.levels.intermediateDesc', 'Okuyusunuzu guclendiren orta seviye kurallara gecin.') },
+    [TAJWEED_LEVELS.ADVANCED]: { title: tt('tajweed.levels.advanced', 'Ileri Seviye'), icon: '🌳', color: '#8B5CF6', desc: tt('tajweed.levels.advancedDesc', 'Ileri tecvid detaylariyla tilavetinizi inceltin.') }
   };
 
   if (showQuiz) {
@@ -90,11 +91,11 @@ const TajweedTutor = ({ onClose }) => {
         <div className="manuscript-header">
           <div className="header-top-nav">
              <IslamicBackButton onClick={() => setShowQuiz(false)} size="medium" />
-             <div className="glass-pill">{t('tajweed.quiz')}</div>
+             <div className="glass-pill">{tt('tajweed.quiz', 'Quiz')}</div>
           </div>
           <div className="manuscript-header-content reveal-stagger">
-            <h1 className="manuscript-title">🏆 {t('tajweed.quizTitle')}</h1>
-            <p className="manuscript-subtitle">{t('tajweed.quizDesc')}</p>
+            <h1 className="manuscript-title">🏆 {tt('tajweed.quizTitle', 'Tecvid Quiz')}</h1>
+            <p className="manuscript-subtitle">{tt('tajweed.quizDesc', 'Kisa bir tekrar ile tecvid bilginizi olcun.')}</p>
           </div>
         </div>
         <TajweedQuiz onBack={() => setShowQuiz(false)} />
@@ -112,13 +113,13 @@ const TajweedTutor = ({ onClose }) => {
         <p className="detail-description">{t(selectedRule.description)}</p>
         
         <div className="manuscript-info-box">
-          <h3 className="info-box-label">{t('tajweed.rule')}</h3>
+          <h3 className="info-box-label">{tt('tajweed.rule', 'Kural')}</h3>
           <p className="info-box-text">{t(selectedRule.rule)}</p>
         </div>
 
         {selectedRule.makhrajImage && (
           <div className="makhraj-box-premium">
-            <h3 className="info-box-label">{t('tajweed.makhraj')}</h3>
+            <h3 className="info-box-label">{tt('tajweed.makhraj', 'Mahrec')}</h3>
             <div className="makhraj-image-frame">
               <img src={selectedRule.makhrajImage} alt="Makhraj" className="makhraj-image" />
             </div>
@@ -127,7 +128,7 @@ const TajweedTutor = ({ onClose }) => {
 
         {selectedRule.letters && (
           <div className="letters-box-premium">
-            <h3 className="info-box-label">{t('tajweed.letters')}</h3>
+            <h3 className="info-box-label">{tt('tajweed.letters', 'Harfler')}</h3>
             <div className="letters-scroll">
               {selectedRule.letters.map((letter, i) => (
                 <span key={i} className="manuscript-letter-chip">{letter}</span>
@@ -137,7 +138,7 @@ const TajweedTutor = ({ onClose }) => {
         )}
       </div>
 
-      <h3 className="manuscript-section-title">{t('tajweed.examples')}</h3>
+      <h3 className="manuscript-section-title">{tt('tajweed.examples', 'Ornekler')}</h3>
       <div className="examples-list-premium">
         {selectedRule.examples.map((example, i) => (
           <div key={i} className="manuscript-card example-card-premium reveal-stagger" style={{ '--delay': `${0.2 + i * 0.1}s` }}>
@@ -156,7 +157,7 @@ const TajweedTutor = ({ onClose }) => {
       <div className="manuscript-footer">
         <button className="manuscript-action-btn" onClick={() => setSelectedRule(null)}>
           <CheckCircle size={24} />
-          {t('tajweed.understood')}
+          {tt('tajweed.understood', 'Anladim, Devam Et')}
         </button>
       </div>
     </div>
@@ -172,11 +173,11 @@ const TajweedTutor = ({ onClose }) => {
         
         <div className="manuscript-header-content reveal-stagger">
           <div className="title-row">
-            <h1 className="manuscript-title">📖 {t('tajweed.title')}</h1>
-            <span className="manuscript-badge">{t('tajweed.academy')}</span>
+            <h1 className="manuscript-title">📖 {tt('tajweed.title', 'Tecvid Akademisi')}</h1>
+            <span className="manuscript-badge">{tt('tajweed.academy', 'Huzur Akademi')}</span>
           </div>
           <p className="manuscript-subtitle">
-            {selectedRule ? t(selectedRule.title) : t('tajweed.mainSubtitle')}
+            {selectedRule ? t(selectedRule.title) : tt('tajweed.mainSubtitle', 'Tecvid kurallarini sade ve anlasilir adimlarla ogrenin.')}
           </p>
         </div>
       </div>
@@ -204,7 +205,7 @@ const TajweedTutor = ({ onClose }) => {
           <div className="manuscript-banner reveal-stagger" style={{ '--delay': '0.3s' }}>
              <div className="banner-content">
                 <div className="banner-text">
-                    <h2 className="banner-title">{levelInfo[activeLevel].title} {t('tajweed.module')}</h2>
+                    <h2 className="banner-title">{levelInfo[activeLevel].title} {tt('tajweed.module', 'Modulu')}</h2>
                     <p className="banner-desc">{levelInfo[activeLevel].desc}</p>
                 </div>
                 <div className="banner-visual">
@@ -217,7 +218,7 @@ const TajweedTutor = ({ onClose }) => {
 
           {/* Rules List */}
           <div className="rules-grid">
-            <h3 className="grid-label">{t('tajweed.availableLessons')}</h3>
+            <h3 className="grid-label">{tt('tajweed.availableLessons', 'Mevcut Dersler')}</h3>
             {filteredRules.map((rule, idx) => (
               <div 
                 key={rule.id} 
@@ -247,8 +248,8 @@ const TajweedTutor = ({ onClose }) => {
             <div className="manuscript-card quiz-card reveal-stagger" onClick={() => setShowQuiz(true)} style={{ '--delay': '0.6s' }}>
                 <Trophy size={32} color="var(--edu-gold)" />
                 <div className="card-text">
-                    <h4>{t('tajweed.quizTitle')}</h4>
-                    <p>{t('tajweed.quizSubtitle')}</p>
+                    <h4>{tt('tajweed.quizTitle', 'Tecvid Quiz')}</h4>
+                    <p>{tt('tajweed.quizSubtitle', 'Ogrendiklerinizi hizli bir testle pekistirin.')}</p>
                 </div>
                 <ChevronRight size={20} color="var(--edu-gold)" />
             </div>

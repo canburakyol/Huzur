@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 import { useBackButton } from '../../hooks/useBackButton';
 import HatimList from './HatimList';
 import HatimDetail from './HatimDetail';
@@ -12,6 +14,55 @@ const SocialDashboard = ({ onClose }) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('hatim'); // 'hatim' or 'dua'
   const [selectedHatimId, setSelectedHatimId] = useState(null);
+  const [isSharing, setIsSharing] = useState(false);
+
+  const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.huzurapp.android';
+  const premiumShareCopy =
+    "Huzur ile sevdiklerinle ayni niyette bulus, hatim halkalarina katil ve dualarda birlikte amin de. Sakin, guvenli ve manevi bir yol arkadasi ariyorsan Huzur'u kesfet.";
+
+  const handleShare = async () => {
+    if (isSharing) return;
+
+    const shareTitle = t('community.shareTitle', 'Huzur - Cemaat');
+    const shareMessage = `${t(
+      'community.sharePremiumText',
+      premiumShareCopy
+    )}\n\n${playStoreUrl}`;
+
+    try {
+      setIsSharing(true);
+
+      if (Capacitor.isNativePlatform()) {
+        await Share.share({
+          title: shareTitle,
+          text: shareMessage,
+          url: playStoreUrl,
+          dialogTitle: shareTitle
+        });
+        return;
+      }
+
+      if (navigator.share) {
+        await navigator.share({
+          title: shareTitle,
+          text: shareMessage,
+          url: playStoreUrl
+        });
+        return;
+      }
+
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(shareMessage);
+        alert(t('community.shareCopied', 'Paylasim linki kopyalandi.'));
+      }
+    } catch (error) {
+      if (error?.message !== 'Share canceled' && error?.name !== 'AbortError') {
+        console.error('Error sharing community:', error);
+      }
+    } finally {
+      setIsSharing(false);
+    }
+  };
 
   // Handle back button
   useBackButton({
@@ -37,8 +88,19 @@ const SocialDashboard = ({ onClose }) => {
             </div>
             <button
               className="premium-icon-btn" 
-              style={{ background: 'var(--hb-hover)', color: 'var(--hb-accent)', width: '44px', height: '44px', borderRadius: '14px' }}
+              type="button"
+              disabled={isSharing}
+              style={{
+                background: 'var(--hb-hover)',
+                color: 'var(--hb-accent)',
+                width: '44px',
+                height: '44px',
+                borderRadius: '14px',
+                opacity: isSharing ? 0.7 : 1,
+                transition: 'opacity 0.2s ease, transform 0.2s ease'
+              }}
               aria-label="Share community"
+              onClick={handleShare}
             >
               <Share2 size={20} />
             </button>

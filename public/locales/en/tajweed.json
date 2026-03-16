@@ -1,42 +1,72 @@
 {
   "tajweed": {
-    "title": "Tajweed Tutor",
+    "title": "Tajweed Academy",
     "subtitle": "Improve your Quran recitation",
+    "academy": "Huzur Academy",
+    "mainSubtitle": "Learn tajweed rules with clear and simple guidance.",
+    "module": "Module",
+    "availableLessons": "Available Lessons",
+    "quiz": "Quiz",
+    "quizTitle": "Tajweed Quiz",
+    "quizSubtitle": "Reinforce what you learned with a quick test.",
+    "quizDesc": "Measure your tajweed knowledge with a short review.",
     "rule": "Rule",
     "letters": "Letters",
     "examples": "Examples",
-    "understood": "Understood, Practice",
-    "audioNotReady": "Audio file not ready.",
-    "audioError": "Error playing audio: {{error}}",
+    "understood": "Understood, Continue",
+    "audioNotReady": "Audio file is not ready.",
+    "audioError": "An error occurred while playing audio: {{error}}",
+    "makhraj": "Articulation Points",
+    "levels": {
+      "beginner": "Beginner",
+      "beginnerDesc": "Learn the core tajweed rules step by step.",
+      "intermediate": "Intermediate",
+      "intermediateDesc": "Move into intermediate rules that strengthen your recitation.",
+      "advanced": "Advanced",
+      "advancedDesc": "Refine your recitation with advanced tajweed details."
+    },
     "aiCheck": {
       "title": "AI Pronunciation Check",
       "desc": "Analyze your recitation with AI and get instant feedback.",
       "comingSoon": "Coming Soon"
     },
     "rules": {
-      "idgam_meal_gunne": {
-        "title": "Idgham Ma'al Ghunnah",
-        "desc": "Merging with Nasalization",
-        "rule": "If Sakin Noon or Tanween is followed by one of the letters (ي م ن و), they are merged with a nasal sound.",
+      "med_tabii": {
+        "title": "Natural Madd",
+        "desc": "Basic natural elongation",
+        "rule": "When a madd letter is not followed by a hamza or sukoon, it is elongated for two counts.",
         "examples": {
           "0": {
-            "explanation": "Noon meets Ya, so Idgham occurs."
+            "explanation": "The alif acts as a natural elongation letter."
           },
           "1": {
-            "explanation": "Noon meets Meem, so Idgham occurs."
+            "explanation": "The waw acts as a natural elongation letter."
+          }
+        }
+      },
+      "idgam_meal_gunne": {
+        "title": "Idgham with Ghunnah",
+        "desc": "Merging with nasalization",
+        "rule": "If Sakin Noon or Tanween is followed by one of the Yemnu letters, it is merged with ghunnah.",
+        "examples": {
+          "0": {
+            "explanation": "The Noon meets Ya, so Idgham occurs."
+          },
+          "1": {
+            "explanation": "The Noon meets Meem, so Idgham occurs."
           }
         }
       },
       "idgam-bila-gunne": {
-        "title": "Idgham Bila Ghunnah",
-        "desc": "Merging without Nasalization",
-        "rule": "If Sakin Noon or Tanween is followed by Lam (ل) or Ra (ر), they are merged without a nasal sound.",
+        "title": "Idgham without Ghunnah",
+        "desc": "Merging without nasalization",
+        "rule": "If Sakin Noon or Tanween is followed by Lam or Ra, it is merged without ghunnah.",
         "examples": {
           "0": {
-            "explanation": "Noon meets Ra, so Idgham without Ghunnah occurs."
+            "explanation": "The Noon meets Ra, so Idgham without ghunnah occurs."
           },
           "1": {
-            "explanation": "Tanween meets Lam, so Idgham without Ghunnah occurs."
+            "explanation": "The Tanween meets Lam, so Idgham without ghunnah occurs."
           }
         }
       },
@@ -46,10 +76,10 @@
         "rule": "If Sakin Noon or Tanween is followed by an Ikhfa letter, the Noon sound is concealed with a nasal sound.",
         "examples": {
           "0": {
-            "explanation": "Sakin Noon meets Za, so Ikhfa occurs."
+            "explanation": "The Sakin Noon meets Za, so Ikhfa occurs."
           },
           "1": {
-            "explanation": "Sakin Noon meets Shin, so Ikhfa occurs."
+            "explanation": "The Sakin Noon meets Shin, so Ikhfa occurs."
           }
         }
       },
@@ -59,73 +89,59 @@
         "rule": "If Sakin Noon or Tanween is followed by a throat letter, the Noon sound is pronounced clearly.",
         "examples": {
           "0": {
-            "explanation": "Sakin Noon meets Kha, so Izhar occurs."
+            "explanation": "The Sakin Noon meets Kha, so Izhar occurs."
           },
           "1": {
-            "explanation": "Tanween meets Alif, so Izhar occurs."
+            "explanation": "The Tanween meets Alif, so Izhar occurs."
           }
         }
       },
       "iklab": {
         "title": "Iqlab",
         "desc": "Conversion",
-        "rule": "If Sakin Noon or Tanween is followed by Ba (ب), the Noon sound changes to Meem (م) with a nasal sound.",
+        "rule": "If Sakin Noon or Tanween is followed by Ba, the Noon sound is converted to Meem with ghunnah.",
         "examples": {
           "0": {
-            "explanation": "Sakin Noon meets Ba, so it converts to Meem."
+            "explanation": "The Sakin Noon meets Ba, so it changes to Meem."
           },
           "1": {
-            "explanation": "Tanween meets Ba, so it converts to Meem."
+            "explanation": "The Tanween meets Ba, so it changes to Meem."
           }
         }
       },
       "kalkale": {
         "title": "Qalqalah",
-        "desc": "Echoing / Vibration",
-        "rule": "When Qalqalah letters (ق ط ب ج د) are Sakin (have Sukoon), they are pronounced with an echoing sound.",
+        "desc": "Echoing and vibration",
+        "rule": "When the letters of Qalqalah are sakin, they are pronounced with an echoing vibration.",
         "examples": {
           "0": {
-            "explanation": "Qaf is Sakin, so Qalqalah occurs."
+            "explanation": "Qaf is sakin, so Qalqalah occurs."
           },
           "1": {
-            "explanation": "Dal is Sakin, so Qalqalah occurs."
-          }
-        }
-      },
-      "med_tabii": {
-        "title": "Natural Madd",
-        "desc": "Elongation of a vowel letter for 2 counts naturally",
-        "rule": "When a madd letter (alif, waw, ya) appears without a hamza or sukoon after it, it is elongated for 2 counts.",
-        "examples": {
-          "0": {
-            "explanation": "The alif after ba is elongated naturally for 2 counts."
-          },
-          "1": {
-            "explanation": "The ya after mim is elongated naturally for 2 counts."
+            "explanation": "Dal is sakin, so Qalqalah occurs."
           }
         }
       },
       "ra_hukmu": {
         "title": "Rules of Ra",
-        "desc": "The letter Ra is pronounced with tafkhim (heavy) or tarqiq (light) based on its position",
-        "rule": "Ra with fatha or dhamma is heavy (tafkhim). Ra with kasra is light (tarqiq). Ra with sukoon depends on the preceding vowel.",
+        "desc": "How the letter Ra is pronounced",
+        "rule": "Ra with fatha or dhamma is heavy, Ra with kasra is light. In sukoon form, the previous vowel determines the reading.",
         "examples": {
           "0": {
-            "explanation": "Ra with fatha is pronounced heavy (tafkhim)."
+            "explanation": "Ra with fatha is read heavily."
           }
         }
       },
       "med_muttasil": {
         "title": "Connected Madd",
-        "desc": "When a madd letter is followed by hamza in the same word",
-        "rule": "When a madd letter is followed by hamza in the same word, it is elongated for 4-5 counts.",
+        "desc": "Joined elongation",
+        "rule": "When a madd letter is followed by a hamza in the same word, it becomes Connected Madd and is read longer.",
         "examples": {
           "0": {
-            "explanation": "The alif before hamza in the same word is elongated for 4-5 counts."
+            "explanation": "The alif and hamza are in the same word, so the sound is elongated longer."
           }
         }
       }
-    },
-    "makhraj": "Articulation Points"
+    }
   }
 }

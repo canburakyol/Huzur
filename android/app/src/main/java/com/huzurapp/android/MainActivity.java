@@ -1,5 +1,6 @@
 package com.huzurapp.android;
 
+import android.content.Context;
 import android.os.Bundle;
 import com.huzurapp.android.BuildConfig;
 import android.util.Log;
@@ -15,18 +16,39 @@ public class MainActivity extends BridgeActivity {
     private static final String TAG = "HuzurAppCheck";
     private static final String JS_TAG = "AppCheckJS";
 
+    static boolean isFirebaseInitialized(Context context) {
+        try {
+            return !FirebaseApp.getApps(context).isEmpty();
+        } catch (Exception e) {
+            Log.w(TAG, "Firebase initialization state check failed", e);
+            return false;
+        }
+    }
+
+    static boolean hasFirebaseResourceConfig(Context context) {
+        try {
+            int googleAppIdRes = context.getResources().getIdentifier("google_app_id", "string", context.getPackageName());
+            int senderIdRes = context.getResources().getIdentifier("gcm_defaultSenderId", "string", context.getPackageName());
+            return googleAppIdRes != 0 && senderIdRes != 0;
+        } catch (Exception e) {
+            Log.w(TAG, "Firebase resource config check failed", e);
+            return false;
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        registerPlugin(WidgetPlugin.class);
+        registerPlugin(AppCheckPlugin.class);
+        registerPlugin(CrashlyticsPlugin.class);
+        registerPlugin(PrayerAlarmPlugin.class);
+        registerPlugin(PrayerSchedulePlugin.class);
+        registerPlugin(NativeAdBridgePlugin.class);
+
         super.onCreate(savedInstanceState);
         
         // Initialize Firebase App Check
         initializeAppCheck();
-
-        registerPlugin(WidgetPlugin.class);
-        registerPlugin(AppCheckPlugin.class);
-        registerPlugin(CrashlyticsPlugin.class);
-        registerPlugin(NativeAdBridgePlugin.class);
-        registerPlugin(PrayerAlarmPlugin.class);
 
         // Enqueue background prayer data sync (runs daily when network available)
         PrayerDataSyncWorker.Companion.enqueue(this);
@@ -39,9 +61,18 @@ public class MainActivity extends BridgeActivity {
     private void initializeAppCheck() {
         try {
             // Firebase App'i başlat (eğer başlatılmadıysa)
-            if (FirebaseApp.getApps(this).isEmpty()) {
-                FirebaseApp.initializeApp(this);
-                Log.i(TAG, "Firebase App initialized");
+            if (!isFirebaseInitialized(this)) {
+                FirebaseApp initializedApp = FirebaseApp.initializeApp(this);
+                if (initializedApp != null) {
+                    Log.i(TAG, "Firebase App initialized");
+                } else {
+                    Log.w(TAG, "Firebase App could not be initialized. google-services configuration is missing.");
+                }
+            }
+
+            if (!isFirebaseInitialized(this)) {
+                Log.w(TAG, "Skipping App Check initialization because Firebase is unavailable in this build.");
+                return;
             }
             
             FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.getInstance();
@@ -93,6 +124,19 @@ public class MainActivity extends BridgeActivity {
      */
     @com.getcapacitor.annotation.CapacitorPlugin(name = "AppCheck")
     public static class AppCheckPlugin extends Plugin {
+        
+        @com.getcapacitor.PluginMethod
+        public void getFirebaseStatus(PluginCall call) {
+            JSObject ret = new JSObject();
+            boolean initialized = MainActivity.isFirebaseInitialized(getContext());
+            boolean configured = initialized || MainActivity.hasFirebaseResourceConfig(getContext());
+            ret.put("success", true);
+            ret.put("initialized", initialized);
+            ret.put("configured", configured);
+            ret.put("messagingAvailable", initialized);
+            ret.put("debuggable", BuildConfig.DEBUG);
+            call.resolve(ret);
+        }
         
         @com.getcapacitor.PluginMethod
         public void getAppCheckStatus(PluginCall call) {

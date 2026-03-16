@@ -87,6 +87,21 @@ export const requestNotificationPermission = async () => {
   }
 };
 
+export const checkNotificationPermission = async () => {
+  if (Capacitor.getPlatform() === 'web') {
+    if (!('Notification' in window)) return false;
+    return Notification.permission === 'granted';
+  }
+
+  try {
+    const result = await LocalNotifications.checkPermissions();
+    return result.display === 'granted';
+  } catch (error) {
+    logger.error('[NotificationPlatform] Permission check failed', error);
+    return false;
+  }
+};
+
 export const createNotificationChannels = async () => {
   if (Capacitor.getPlatform() !== 'android') return;
 

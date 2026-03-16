@@ -1,9 +1,9 @@
 /* Native Ad Container - Glassmorphism */
 .native-ad-container {
-  background: var(--glass-bg);           /* rgba(15, 61, 46, 0.7) */
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border); /* rgba(212, 175, 55, 0.3) */
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 16px;
   margin: 16px 0;
@@ -50,20 +50,20 @@
 .native-ad-content {
   display: flex;
   gap: 12px;
-  margin-top: 20px; /* Space for ad label */
+  margin-top: 20px;
 }
 
 /* Media View (Video/Image) */
 .native-ad-media {
-  flex: 0 0 120px; /* Fixed width */
-  aspect-ratio: 9/16; /* Portrait video ratio */
+  flex: 0 0 120px;
+  aspect-ratio: 9/16;
   border-radius: 12px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.2);
   position: relative;
 }
 
-.native-ad-media img, 
+.native-ad-media img,
 .native-ad-media video {
   width: 100%;
   height: 100%;
@@ -76,7 +76,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-width: 0; /* Prevent flex overflow */
+  min-width: 0;
 }
 
 .native-ad-header-row {
@@ -114,7 +114,7 @@
   align-items: center;
   gap: 4px;
   font-size: 12px;
-  color: #f1c40f; /* Gold star */
+  color: #f1c40f;
 }
 
 .native-ad-store {
@@ -131,13 +131,13 @@
   line-height: 1.4;
   opacity: 0.9;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-line-clamp: 3;
   line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* CTA Button - Altın Tema */
+/* CTA Button */
 .native-ad-cta {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   color: white;

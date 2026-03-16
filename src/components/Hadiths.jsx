@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, Heart, Share2, BookOpen, Star, Sparkles, Info } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Heart, Share2, BookOpen, Star, Sparkles, Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';

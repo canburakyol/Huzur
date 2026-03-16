@@ -12,14 +12,18 @@ function AppOverlays({
   showSplash,
   onHideSplash,
   showGrowthOnboarding,
+  onboardingStep,
   onboardingLanguage,
   onSelectGrowthLanguage,
   onRequestGrowthLocation,
   onRequestGrowthNotifications,
+  onChangeGrowthStep,
   onCompleteGrowth,
   streak24hRecovery,
   onConfirm24hRecovery,
+  onWatchRewarded24hRecovery,
   onClose24hRecovery,
+  isProUser,
   showInviteModal,
   onCloseInvite,
   showMoodSelector,
@@ -42,10 +46,12 @@ function AppOverlays({
       {showGrowthOnboarding && !showSplash && (
         <Suspense fallback={null}>
           <GrowthOnboarding
+            initialStep={onboardingStep}
             initialLanguage={onboardingLanguage}
             onSelectLanguage={onSelectGrowthLanguage}
             onRequestLocation={onRequestGrowthLocation}
             onRequestNotifications={onRequestGrowthNotifications}
+            onStepChange={onChangeGrowthStep}
             onComplete={onCompleteGrowth}
           />
         </Suspense>
@@ -58,6 +64,8 @@ function AppOverlays({
             categoryName="Namaz"
             deadline={streak24hRecovery.deadline}
             onConfirm={onConfirm24hRecovery}
+            onWatchRewardedRecovery={onWatchRewarded24hRecovery}
+            requiresRewardedAd={!isProUser}
             onClose={onClose24hRecovery}
           />
         </Suspense>

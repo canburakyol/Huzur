@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { checkAndUpdateStreak, getStreakDisplay } from '../services/streakService';
-import { isPro as checkIsPro, verifyProStatus } from '../services/proService';
+import { getProStateSnapshot, isPro as checkIsPro, verifyProStatus } from '../services/proService';
 import { detectAndSetLanguage } from '../services/languageService';
 import { VAKIT_THEMES } from '../data/vakitThemes';
 import { THEMES, ACCENT_COLORS } from '../data/themes';
@@ -9,6 +9,7 @@ import { storageService } from '../services/storageService';
 import { logger } from '../utils/logger';
 import { recordAppOpen } from '../services/userActivityTracker';
 import { scheduleDeferredTask } from '../utils/startupScheduler';
+import crashlyticsReporter from '../utils/crashlyticsReporter';
 
 const LEGACY_ACCENT_MAP = {
   orange: 'amber',
@@ -145,37 +146,29 @@ export const useAppInit = (timings) => {
           }
         });
 
-        if (initResults[0].status === 'fulfilled') {
-          const proResults = await Promise.allSettled([
-            verifyProStatus(),
-            syncProStatusFromServer()
-          ]);
+        const proResults = await Promise.allSettled([
+          verifyProStatus(),
+          syncProStatusFromServer()
+        ]);
 
-          if (isCancelled) {
-            return;
-          }
-
-          let activeProStatus = false;
-          let hasProResult = false;
-
-          if (proResults[0].status === 'fulfilled') {
-            activeProStatus = proResults[0].value;
-            hasProResult = true;
-          } else {
-            logger.warn('[useAppInit] verifyProStatus failed:', proResults[0].reason);
-          }
-
-          if (proResults[1].status === 'fulfilled' && proResults[1].value && typeof proResults[1].value.isPro === 'boolean') {
-            activeProStatus = proResults[1].value.isPro;
-            hasProResult = true;
-          } else if (proResults[1].status === 'rejected') {
-            logger.warn('[useAppInit] syncProStatusFromServer failed:', proResults[1].reason);
-          }
-
-          if (hasProResult) {
-            setIsProUser(activeProStatus);
-          }
+        if (isCancelled) {
+          return;
         }
+
+        if (proResults[0].status === 'rejected') {
+          logger.warn('[useAppInit] verifyProStatus failed:', proResults[0].reason);
+        }
+
+        if (proResults[1].status === 'rejected') {
+          logger.warn('[useAppInit] syncProStatusFromServer failed:', proResults[1].reason);
+        }
+
+        const activeProStatus = checkIsPro();
+        const proState = getProStateSnapshot();
+        crashlyticsReporter.logCrash(
+          `[useAppInit] pro resolved active=${activeProStatus} source=${proState.source} state=${proState.verificationState}`
+        ).catch(() => {});
+        setIsProUser(activeProStatus);
       } catch (error) {
         if (!isCancelled) {
           logger.error('[useAppInit] Critical initialization error:', error);

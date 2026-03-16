@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { 
-  onSnapshot, 
-  doc, 
-  collection, 
-  query, 
+import {
+  onSnapshot,
+  doc,
+  collection,
+  query,
   where,
   getDocs,
   limit
@@ -21,7 +21,18 @@ export const useGroupHatim = (hatimId = null) => {
   const [userId, setUserId] = useState(null);
   const [authReady, setAuthReady] = useState(false);
 
-  // Auth initialization
+  const loadMemberHatims = useCallback(async (uid) => {
+    const q = query(
+      collection(db, 'hatims'),
+      where('readers', 'array-contains', uid),
+      limit(20)
+    );
+    const snapshot = await getDocs(q);
+    const hatims = snapshot.docs.map((docSnapshot) => ({ id: docSnapshot.id, ...docSnapshot.data() }));
+    hatims.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+    return hatims;
+  }, []);
+
   useEffect(() => {
     let isMounted = true;
     const initAuth = async () => {
@@ -35,8 +46,8 @@ export const useGroupHatim = (hatimId = null) => {
       } catch (err) {
         logger.error('[useGroupHatim] Auth error:', err);
         if (isMounted) {
-          setError('Firebase kimlik doğrulaması başarısız. İnternetinizi kontrol edip tekrar deneyin.');
-          setAuthReady(true); // Set true even on error to stop loading
+          setError('Firebase kimlik dogrulamasi basarisiz. Internetinizi kontrol edip tekrar deneyin.');
+          setAuthReady(true);
         }
       }
     };
@@ -47,22 +58,14 @@ export const useGroupHatim = (hatimId = null) => {
     };
   }, []);
 
-  // 1. Fetch User's Active Hatims (List View)
   const fetchMyHatims = useCallback(async () => {
-    // Ensure auth first
     const uid = await ensureAuthenticated({ requireFirebaseUser: true });
     if (!uid) return;
-    
+
     setLoading(true);
+    setError(null);
     try {
-      const q = query(
-        collection(db, 'hatims'),
-        where('readers', 'array-contains', uid),
-        limit(20)
-      );
-      const snapshot = await getDocs(q);
-      const hatims = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      hatims.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
+      const hatims = await loadMemberHatims(uid);
       setActiveHatims(hatims);
     } catch (err) {
       logger.error('Error fetching my hatims:', err);
@@ -70,36 +73,65 @@ export const useGroupHatim = (hatimId = null) => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [loadMemberHatims]);
 
-  // 1b. Fetch All Public Group Hatims (Discovery View)
   const fetchAllPublicHatims = useCallback(async () => {
+    const uid = await ensureAuthenticated({ requireFirebaseUser: true });
+    if (!uid) return;
+
     setLoading(true);
+    setError(null);
     try {
-      const hatims = await hatimService.listPublicHatims();
-      setActiveHatims(hatims);
+      const [publicResult, memberResult] = await Promise.allSettled([
+        hatimService.listPublicHatims(),
+        loadMemberHatims(uid),
+      ]);
+
+      const publicHatims = publicResult.status === 'fulfilled' && Array.isArray(publicResult.value)
+        ? publicResult.value
+        : [];
+      const memberHatims = memberResult.status === 'fulfilled' && Array.isArray(memberResult.value)
+        ? memberResult.value
+        : [];
+
+      const mergedHatims = [...memberHatims, ...publicHatims]
+        .reduce((acc, hatim) => {
+          if (!hatim?.id || acc.some((item) => item.id === hatim.id)) {
+            return acc;
+          }
+
+          acc.push(hatim);
+          return acc;
+        }, [])
+        .sort((a, b) => (b.createdAtMs || b.createdAt?.seconds || 0) - (a.createdAtMs || a.createdAt?.seconds || 0));
+
+      setActiveHatims(mergedHatims);
+
+      if (publicResult.status === 'rejected' && memberResult.status === 'rejected') {
+        throw publicResult.reason || memberResult.reason || new Error('Hatimler yuklenemedi');
+      }
     } catch (err) {
       logger.error('Error fetching all hatims:', err);
-      setError(err.message);
+      setError(err?.message || 'Hatimler yuklenemedi');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [loadMemberHatims]);
 
-  // 2. Real-time Subscription to Specific Hatim (Detail View)
   useEffect(() => {
     if (!hatimId || !authReady || !userId) return;
 
     setLoading(true);
     setError(null);
-    
-    const unsub = onSnapshot(doc(db, 'hatims', hatimId), 
+
+    const unsub = onSnapshot(
+      doc(db, 'hatims', hatimId),
       (docSnap) => {
         if (docSnap.exists()) {
           setHatimDetails({ id: docSnap.id, ...docSnap.data() });
           setError(null);
         } else {
-          setError('Hatim bulunamadı');
+          setError('Hatim bulunamadi');
           setHatimDetails(null);
         }
         setLoading(false);
@@ -107,40 +139,36 @@ export const useGroupHatim = (hatimId = null) => {
       (err) => {
         logger.error('[useGroupHatim] Hatim subscription error:', err);
         if (err.code === 'permission-denied') {
-          setError('Erişim izni hatası. Lütfen uygulamayı yeniden başlatın.');
+          setError('Erisim izni hatasi. Lutfen uygulamayi yeniden baslatin.');
         } else {
-          setError('Veri güncellenemedi');
+          setError('Veri guncellenemedi');
         }
         setLoading(false);
       }
     );
 
-    // Düzgün bir cleanup işlemi dönüyoruz
     return () => {
-       logger.log(`[useGroupHatim] Unsubscribing from hatim: ${hatimId}`);
-       unsub();
+      logger.log(`[useGroupHatim] Unsubscribing from hatim: ${hatimId}`);
+      unsub();
     };
   }, [hatimId, authReady, userId]);
 
-  // Actions
   const createHatim = async (name, desc, parts) => {
     const result = await hatimService.createGroupHatim(name, desc, parts);
-    await fetchMyHatims(); // Refresh list
+    await fetchMyHatims();
     return result;
   };
 
   const joinHatim = async (code) => {
     const result = await hatimService.joinGroupHatim(code);
-    await fetchMyHatims(); // Refresh list
+    await fetchAllPublicHatims();
     return result;
   };
 
   const takePart = async (partId) => {
-    // Optimistic UI updates could be added here, but Firestore listener handles sync
     try {
-      // Get user profile if possible (from context or auth)
-      const visibleName = `Mümin-${userId ? userId.substring(0, 4) : 'User'}`;
-      await hatimService.updatePartStatus(hatimId, partId, 'taken', { name: visibleName }); 
+      const visibleName = `Mumin-${userId ? userId.substring(0, 4) : 'User'}`;
+      await hatimService.updatePartStatus(hatimId, partId, 'taken', { name: visibleName });
     } catch (err) {
       setError(err.message);
       throw err;
@@ -158,7 +186,7 @@ export const useGroupHatim = (hatimId = null) => {
 
   const completePart = async (partId) => {
     try {
-      const visibleName = `Mümin-${userId ? userId.substring(0, 4) : 'User'}`;
+      const visibleName = `Mumin-${userId ? userId.substring(0, 4) : 'User'}`;
       await hatimService.updatePartStatus(hatimId, partId, 'completed', { name: visibleName });
     } catch (err) {
       setError(err.message);

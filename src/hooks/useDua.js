@@ -10,6 +10,7 @@ import { db } from '../services/firebase';
 import { duaService } from '../services/duaService';
 import { ensureAuthenticated } from '../services/authService';
 import { logger } from '../utils/logger';
+import { DUA_DISCOVERY_SEEDS } from '../features/social/discoverySeeds';
 
 export const useDua = () => {
   const [loading, setLoading] = useState(true);
@@ -18,6 +19,7 @@ export const useDua = () => {
   const [userId, setUserId] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [prayedDuaIds, setPrayedDuaIds] = useState(() => new Set());
+  const [submittingDuaIds, setSubmittingDuaIds] = useState(() => new Set());
 
   useEffect(() => {
     const initAuth = async () => {
@@ -57,7 +59,19 @@ export const useDua = () => {
           id: docSnapshot.id,
           ...docSnapshot.data(),
         }));
-        setDuas(duaList);
+
+        const mergedDuas = [...DUA_DISCOVERY_SEEDS, ...duaList]
+          .reduce((acc, dua) => {
+            if (!dua?.id || acc.some((item) => item.id === dua.id)) {
+              return acc;
+            }
+
+            acc.push(dua);
+            return acc;
+          }, [])
+          .sort((a, b) => (b.createdAtMs || b.createdAt?.seconds || 0) - (a.createdAtMs || a.createdAt?.seconds || 0));
+
+        setDuas(mergedDuas);
         setLoading(false);
       },
       (err) => {
@@ -101,6 +115,16 @@ export const useDua = () => {
   };
 
   const prayForDua = async (duaId) => {
+    if (submittingDuaIds.has(duaId) || prayedDuaIds.has(duaId)) {
+      return { success: true, alreadyPrayed: true };
+    }
+
+    setSubmittingDuaIds((current) => {
+      const next = new Set(current);
+      next.add(duaId);
+      return next;
+    });
+
     try {
       const result = await duaService.prayForDua(duaId);
       setPrayedDuaIds((current) => {
@@ -108,10 +132,23 @@ export const useDua = () => {
         next.add(duaId);
         return next;
       });
+      if (typeof result?.aminCount === 'number') {
+        setDuas((current) => current.map((dua) => (
+          dua.id === duaId
+            ? { ...dua, aminCount: result.aminCount }
+            : dua
+        )));
+      }
       return result;
     } catch (err) {
       logger.error('Pray action error:', err);
       throw err;
+    } finally {
+      setSubmittingDuaIds((current) => {
+        const next = new Set(current);
+        next.delete(duaId);
+        return next;
+      });
     }
   };
 
@@ -121,6 +158,7 @@ export const useDua = () => {
     duas,
     userId,
     prayedDuaIds,
+    submittingDuaIds,
     createDua,
     prayForDua,
   };

@@ -54,10 +54,10 @@ export const useLocationConsent = (onLocationUpdate) => {
   const [weather, setWeather] = useState(null);
   const [locationName, setLocationName] = useState('Konum...');
   const [showLocationPrompt, setShowLocationPrompt] = useState(() => {
-    return !storageService.getString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN);
+    return !storageService.getString(STORAGE_KEYS.LOCATION_CONSENT);
   });
   const [locationConsentGiven, setLocationConsentGiven] = useState(() => {
-    return storageService.getString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN) === 'true';
+    return storageService.getString(STORAGE_KEYS.LOCATION_CONSENT) === 'true';
   });
   const lastForwardedLocationRef = useRef('');
 
@@ -130,7 +130,7 @@ export const useLocationConsent = (onLocationUpdate) => {
       setShowLocationPrompt(false);
 
       if (accepted) {
-        storageService.setString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN, 'true');
+        storageService.setString(STORAGE_KEYS.LOCATION_CONSENT, 'true');
         setLocationConsentGiven(true);
 
         Geolocation.getCurrentPosition({
@@ -155,7 +155,7 @@ export const useLocationConsent = (onLocationUpdate) => {
           resolve({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
         });
       } else {
-        storageService.setString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN, 'declined');
+        storageService.setString(STORAGE_KEYS.LOCATION_CONSENT, 'declined');
         void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
         forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
         resolve({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
@@ -164,7 +164,7 @@ export const useLocationConsent = (onLocationUpdate) => {
   }, [fetchWeatherData, forwardLocationUpdate]);
 
   useEffect(() => {
-    const storedConsent = storageService.getString(STORAGE_KEYS.LOCATION_CONSENT_GIVEN);
+    const storedConsent = storageService.getString(STORAGE_KEYS.LOCATION_CONSENT);
 
     if (!storedConsent) {
       void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);

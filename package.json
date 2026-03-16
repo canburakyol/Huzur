@@ -1,7 +1,7 @@
 {
   "name": "huzur-app",
   "private": true,
-  "version": "18.2.4",
+  "version": "18.2.5",
   "type": "module",
   "engines": {
     "node": ">=22 <23"

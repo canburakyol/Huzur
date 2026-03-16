@@ -572,6 +572,8 @@
   },
   "community": {
     "title": "Cemaat",
+    "shareTitle": "Huzur Vakti - Cemaat",
+    "shareText": "Sevdiklerinle ve tüm ümmetle beraber hatim okumak, dualarda buluşmak için sen de Huzur Vakti uygulamasına katıl. Beraber huzura erelim.",
     "tabs": {
       "duas": "Dualar",
       "hatims": "Hatimler"
