@@ -352,7 +352,12 @@
       "autoRenew": "Subscription automatically renews at the end of the period",
       "cancelAnytime": "You can cancel anytime from Google Play settings",
       "cancel24h": "You must cancel at least 24 hours before the period ends"
-    }
+    },
+    "monthlyInfo": "{{price}} monthly.",
+    "trialInfo": "Try 3 days for free.",
+    "yearlyInfo": "Then {{price}} annually.",
+    "yearlyTrialControl": "Try 3 days for free. Auto-renews at {{price}}/year after trial ends.",
+    "nativeOnly": "Purchases are only supported in the mobile app."
   },
   "wordByWord": {
     "title": "Word by Word",

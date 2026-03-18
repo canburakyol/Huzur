@@ -384,7 +384,12 @@
       "autoRenew": "Abonelik dönem sonunda otomatik olarak yenilenir",
       "cancelAnytime": "İstediğiniz zaman Google Play ayarlarından iptal edebilirsiniz",
       "cancel24h": "Dönem bitmeden en az 24 saat önce iptal etmelisiniz"
-    }
+    },
+    "monthlyInfo": "Aylık {{price}}.",
+    "trialInfo": "3 gün ücretsiz deneyin.",
+    "yearlyInfo": "Sonra yıllık {{price}}.",
+    "yearlyTrialControl": "3 gün ücretsiz deneyin. Deneme bitiminde {{price}}/yıl otomatik yenilenir.",
+    "nativeOnly": "Satın alma yalnızca mobil uygulamada destekleniyor."
   },
   "wordByWord": {
     "title": "Kelime Kelime",

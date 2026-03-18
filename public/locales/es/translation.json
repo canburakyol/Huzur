@@ -352,7 +352,12 @@
       "autoRenew": "La suscripción se renueva automáticamente salvo cancelación.",
       "cancelAnytime": "Cancela en cualquier momento desde la tienda.",
       "cancel24h": "El siguiente cobro se realiza 24h antes de finalizar el período."
-    }
+    },
+    "monthlyInfo": "{{price}} al mes.",
+    "trialInfo": "Prueba 3 días gratis.",
+    "yearlyInfo": "Luego {{price}} al año.",
+    "yearlyTrialControl": "Prueba 3 días gratis. Se renueva automáticamente por {{price}}/año tras finalizar la prueba.",
+    "nativeOnly": "Las compras solo son compatibles con la aplicación móvil."
   },
   "wordByWord": {
     "title": "Word by Word",

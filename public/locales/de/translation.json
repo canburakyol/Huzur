@@ -352,7 +352,12 @@
       "autoRenew": "Das Abo verlängert sich automatisch, wenn es nicht gekündigt wird.",
       "cancelAnytime": "Jederzeit in den Store-Einstellungen kündbar.",
       "cancel24h": "Die nächste Abbuchung erfolgt 24h vor Periodenende."
-    }
+    },
+    "monthlyInfo": "{{price}} monatlich.",
+    "trialInfo": "3 Tage kostenlos testen.",
+    "yearlyInfo": "Dann {{price}} jährlich.",
+    "yearlyTrialControl": "3 Tage kostenlos testen. Verlängert sich nach Ablauf des Testzeitraums automatisch für {{price}}/Jahr.",
+    "nativeOnly": "Käufe werden nur in der mobilen App unterstützt."
   },
   "wordByWord": {
     "title": "Word by Word",

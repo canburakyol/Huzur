@@ -193,7 +193,7 @@ const ProUpgrade = ({ onClose }) => {
                     {pkg?.identifier === 'yearly' 
                       ? (variant === 'variant_a' 
                           ? `${t('pro.trialInfo', '3 gün ücretsiz deneyin.')} ${t('pro.yearlyInfo', 'Sonra yıllık {{price}}.', { price: pkg?.product?.priceString })}`
-                          : `3 gün ücretsiz deneyin. Deneme bitiminde ${pkg?.product?.priceString || ''}/yıl otomatik yenilenir.`)
+                          : t('pro.yearlyTrialControl', '3 gün ücretsiz deneyin. Deneme bitiminde {{price}}/yıl otomatik yenilenir.', { price: pkg?.product?.priceString || '' }))
                       : `${t('pro.monthlyInfo', 'Aylık {{price}}.', { price: pkg?.product?.priceString })}`}
                 </div>
               </div>
@@ -207,9 +207,9 @@ const ProUpgrade = ({ onClose }) => {
           <p>• {t('pro.terms.cancelAnytime')}</p>
           <p>• {t('pro.terms.cancel24h')}</p>
           <p className="legal-links">
-            <a href="https://canburakyol.github.io/privacy-policy/" target="_blank" rel="noopener noreferrer">{t('pro.privacyPolicy')}</a>
+            <a href="https://canburakyol.github.io/privacy-policy/" target="_blank" rel="noopener noreferrer">{t('settings.privacyPolicy')}</a>
             {' | '}
-            <a href="https://canburakyol.github.io/terms.html/" target="_blank" rel="noopener noreferrer">{t('pro.termsOfService')}</a>
+            <a href="https://canburakyol.github.io/terms.html/" target="_blank" rel="noopener noreferrer">{t('settings.termsOfService')}</a>
           </p>
         </div>
 

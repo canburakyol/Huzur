@@ -352,7 +352,12 @@
       "autoRenew": "L’abonnement se renouvelle automatiquement sauf annulation.",
       "cancelAnytime": "Annulez à tout moment depuis les paramètres du store.",
       "cancel24h": "Le prochain prélèvement a lieu 24h avant la fin de la période."
-    }
+    },
+    "monthlyInfo": "{{price}} par mois.",
+    "trialInfo": "Essayez 3 jours gratuitement.",
+    "yearlyInfo": "Ensuite {{price}} par an.",
+    "yearlyTrialControl": "Essayez 3 jours gratuitement. Renouvellement automatique à {{price}}/an à la fin de l'essai.",
+    "nativeOnly": "Les achats ne sont pris en charge que dans l'application mobile."
   },
   "wordByWord": {
     "title": "Word by Word",

@@ -352,7 +352,12 @@
       "autoRenew": "Langganan diperpanjang otomatis kecuali dibatalkan.",
       "cancelAnytime": "Batalkan kapan saja dari pengaturan toko.",
       "cancel24h": "Perpanjangan berikutnya dikenakan 24 jam sebelum periode berakhir."
-    }
+    },
+    "monthlyInfo": "{{price}} per bulan.",
+    "trialInfo": "Coba 3 hari gratis.",
+    "yearlyInfo": "Lalu {{price}} setiap tahun.",
+    "yearlyTrialControl": "Coba 3 hari gratis. Diperpanjang otomatis pada {{price}}/tahun setelah masa uji coba berakhir.",
+    "nativeOnly": "Pembelian hanya didukung di aplikasi seluler."
   },
   "wordByWord": {
     "title": "Word by Word",
