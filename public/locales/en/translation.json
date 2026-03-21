@@ -418,10 +418,10 @@
     "meaning": "Meaning"
   },
   "assistant": {
-    "title": "Islamic Assistant",
+    "title": "Huzur Guide",
     "online": "Online",
     "remaining": "Remaining",
-    "welcomeMessage": "As-salamu alaykum! I am your Islamic Assistant. How can I help you?",
+    "welcomeMessage": "As-salamu alaykum. This section currently offers ready-made answers and personal suggestions.",
     "errorMessage": "Sorry, an error occurred. Please try again.",
     "found": "verses found",
     "placeholder": "Ask a question...",
@@ -436,18 +436,18 @@
       "q5": "Virtues of reading Quran",
       "q6": "Life of the Prophet"
     },
-    "betaWelcomeHint": "Beta mode: You can click on ready-made questions or type a similar question.",
-    "betaUnknownQuestion": "This question is not currently in the Beta ready-answer list. You can click one of the sample questions below.",
-    "betaLabel": "Beta",
+    "betaWelcomeHint": "You can tap one of the ready questions or type a similar one.",
+    "betaUnknownQuestion": "This question is not in the current ready-answer list. You can choose one of the sample questions below.",
+    "betaLabel": "Ready",
     "readyQaMode": "Ready Q&A mode",
-    "betaInputPlaceholder": "Beta: type one of the ready questions or select from below",
+    "betaInputPlaceholder": "Type one of the ready questions or select from below",
     "answers": {
       "q1": "To pray regularly, start small: create a short preparation routine at the same time every day, turn on reminders, and if you miss one prayer, restart at the next one.",
       "q2": "To build a Quran reading habit, set aside a fixed 5-10 minutes daily. Aim for consistency, not duration.",
       "q3": "For dhikr goals, the 'little but consistent' method is recommended. Start with a small number and increase weekly.",
       "q4": "When focus is difficult, take a short break, breathe deeply, and return to a single goal. Single-tasking is more productive than multitasking.",
       "q5": "For spiritual motivation, making a short daily prayer, writing a gratitude note, and doing an end-of-day reflection can be very effective.",
-      "q6": "This section currently operates as a Beta ready Q&A assistant. Enhanced live chat support will be added soon."
+      "q6": "This section currently works as a ready Q&A and guidance surface. A richer live assistant would be a separate future improvement."
     },
     "evening": "المساء",
     "progress": "التقدم",
@@ -3192,7 +3192,7 @@
     "fontSettings": "Font Settings",
     "muezzinSelector": "Muezzin Selector",
     "streak": "Streak Calendar",
-    "assistant": "Islamic Assistant",
+    "assistant": "Huzur Guide",
     "spiritualCoach": "Spiritual Coach",
     "support": "Support",
     "pro": "Upgrade to Pro",

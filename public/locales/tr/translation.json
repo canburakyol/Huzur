@@ -463,10 +463,10 @@
     "meaning": "Anlamı"
   },
   "assistant": {
-    "title": "İslami Asistan",
+    "title": "Huzur Rehberi",
     "online": "Çevrimiçi",
     "remaining": "Kalan Hak",
-    "welcomeMessage": "Selamun Aleyküm! Ben İslami Asistanınızım. Size nasıl yardımcı olabilirim?",
+    "welcomeMessage": "Selamun aleykum. Bu bolumde hazir soru-cevaplar ve kisisel oneriler bulabilirsiniz.",
     "errorMessage": "Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.",
     "found": "ayet bulundu",
     "placeholder": "Bir soru sorun...",
@@ -481,18 +481,18 @@
       "q5": "Kuran okumanın fazileti",
       "q6": "Peygamberimizin hayatı"
     },
-    "betaWelcomeHint": "Beta mod: Hazır sorulara tıklayabilir veya benzer bir soru yazabilirsiniz.",
-    "betaUnknownQuestion": "Bu soru şu an Beta hazır cevap listesinde yok. Alttaki örnek sorulardan birine tıklayabilirsiniz.",
-    "betaLabel": "Beta",
+    "betaWelcomeHint": "Hazir sorulardan birine dokunabilir veya benzer bir soru yazabilirsiniz.",
+    "betaUnknownQuestion": "Bu soru su an hazir cevap listesinde yok. Alttaki ornek sorulardan birini secebilirsiniz.",
+    "betaLabel": "Hazir",
     "readyQaMode": "Hazır soru-cevap modu",
-    "betaInputPlaceholder": "Beta: hazır sorulardan birini yazın veya alttan seçin",
+    "betaInputPlaceholder": "Hazir sorulardan birini yazin veya alttan secin",
     "answers": {
       "q1": "Namazı düzenli kılmak için küçük başlayın: her gün aynı vakitte kısa bir hazırlık rutini yapın, hatırlatıcı açın ve bir vakti kaçırırsanız ertesi vakitte yeniden başlayın.",
       "q2": "Kur’an okuma alışkanlığı için günlük 5-10 dakika sabit zaman ayırın. Süreyi değil sürekliliği hedefleyin.",
       "q3": "Zikir hedefi için “az ama devamlı” yöntemi önerilir. Güne küçük bir sayı ile başlayıp haftalık olarak artırabilirsiniz.",
       "q4": "Odaklanmak zor olduğunda kısa bir mola verin, derin nefes alın ve tek bir hedefe dönün. Çoklu görev yerine tek görev daha verimli olur.",
       "q5": "Manevi motivasyon için günlük kısa bir dua, şükür notu ve gün sonu değerlendirmesi yapmanız etkili olur.",
-      "q6": "Bu bölüm şu an Beta sürümde hazır soru-cevap asistanı olarak çalışıyor. Yakında daha gelişmiş canlı sohbet desteği eklenecek."
+      "q6": "Bu bolum su an hazir soru-cevap ve yonlendirme alani olarak calisiyor. Daha gelismis canli destek ayri bir gelistirme olarak planlaniyor."
     },
     "evening": "المساء",
     "progress": "التقدم",
@@ -1239,7 +1239,7 @@
     "fontSettings": "Yazı Tipi",
     "muezzinSelector": "Müezzin Seç",
     "streak": "Seri Takvimi",
-    "assistant": "İslami Asistan",
+    "assistant": "Huzur Rehberi",
     "spiritualCoach": "Manevi Koç",
     "support": "Destek",
     "pro": "Pro Yükselt",

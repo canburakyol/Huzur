@@ -6,7 +6,7 @@ import { logger } from '../utils/logger';
 
 const DEFAULT_LAT = 41.0082;
 const DEFAULT_LON = 28.9784;
-const DEFAULT_LOCATION_NAME = 'İstanbul';
+const DEFAULT_LOCATION_NAME = 'Istanbul';
 const LOCATION_WEATHER_CACHE_PREFIX = 'location_weather_cache_';
 const LOCATION_WEATHER_CACHE_TTL_MS = 30 * 60 * 1000;
 
@@ -43,13 +43,15 @@ const setCachedLocationSnapshot = (lat, lon, payload) => {
   }
 };
 
-/**
- * Location Consent and Weather Hook
- * Handles Google Play Prominent Disclosure requirement for location permission
- *
- * @param {Function} onLocationUpdate - Callback when location is obtained
- * @returns {Object} Location consent state and functions
- */
+const setDebugLocation = (latitude, longitude) => {
+  if (!import.meta.env.DEV) {
+    return;
+  }
+
+  window.debugLat = latitude;
+  window.debugLon = longitude;
+};
+
 export const useLocationConsent = (onLocationUpdate) => {
   const [weather, setWeather] = useState(null);
   const [locationName, setLocationName] = useState('Konum...');
@@ -101,7 +103,6 @@ export const useLocationConsent = (onLocationUpdate) => {
           });
 
       const [weatherResult, locationResult] = await Promise.allSettled([weatherPromise, locationPromise]);
-
       const nextWeather = weatherResult.status === 'fulfilled' ? weatherResult.value : null;
       const nextLocationName = locationResult.status === 'fulfilled'
         ? locationResult.value
@@ -140,8 +141,7 @@ export const useLocationConsent = (onLocationUpdate) => {
         }).then((position) => {
           const { latitude, longitude } = position.coords;
           logger.log('[useLocationConsent] Location obtained:', latitude, longitude);
-          window.debugLat = latitude;
-          window.debugLon = longitude;
+          setDebugLocation(latitude, longitude);
 
           void fetchWeatherData(latitude, longitude);
           forwardLocationUpdate(latitude, longitude);
@@ -149,8 +149,7 @@ export const useLocationConsent = (onLocationUpdate) => {
         }).catch((error) => {
           logger.warn('[useLocationConsent] Location permission denied/error after consent:', error);
           void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-          window.debugLat = DEFAULT_LAT;
-          window.debugLon = DEFAULT_LON;
+          setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
           forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
           resolve({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
         });
@@ -164,12 +163,26 @@ export const useLocationConsent = (onLocationUpdate) => {
   }, [fetchWeatherData, forwardLocationUpdate]);
 
   useEffect(() => {
+    let cancelled = false;
+
+    const loadDefaultLocation = async () => {
+      await Promise.resolve();
+      if (cancelled) return;
+
+      await fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
+      if (cancelled) return;
+
+      setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
+      forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
+    };
+
     const storedConsent = storageService.getString(STORAGE_KEYS.LOCATION_CONSENT);
 
     if (!storedConsent) {
-      void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-      forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
-      return;
+      void loadDefaultLocation();
+      return () => {
+        cancelled = true;
+      };
     }
 
     if (storedConsent === 'true') {
@@ -180,23 +193,28 @@ export const useLocationConsent = (onLocationUpdate) => {
       }).then((position) => {
         const { latitude, longitude } = position.coords;
         logger.log('[useLocationConsent] Initial location obtained:', latitude, longitude);
-        window.debugLat = latitude;
-        window.debugLon = longitude;
+        if (cancelled) return;
+
+        setDebugLocation(latitude, longitude);
         void fetchWeatherData(latitude, longitude);
         forwardLocationUpdate(latitude, longitude);
       }).catch((error) => {
         logger.warn('[useLocationConsent] Initial location error:', error);
-        window.debugLat = DEFAULT_LAT;
-        window.debugLon = DEFAULT_LON;
+        if (cancelled) return;
+
+        setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
         forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
       });
-      return;
+
+      return () => {
+        cancelled = true;
+      };
     }
 
-    void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-    window.debugLat = DEFAULT_LAT;
-    window.debugLon = DEFAULT_LON;
-    forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
+    void loadDefaultLocation();
+    return () => {
+      cancelled = true;
+    };
   }, [fetchWeatherData, forwardLocationUpdate]);
 
   return {

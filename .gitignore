@@ -69,8 +69,13 @@ android/local.properties
 
 # Debug/Build outputs
 android/app/build/
+android/app/release/
 android/.gradle/
 .gradle_home/
+android/error_log.txt
+android/full_error.txt
+android/hs_err_pid*.log
+android/app/src.zip
 
 # Development scripts (Python/Node)
 *.py

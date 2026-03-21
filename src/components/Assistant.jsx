@@ -8,7 +8,6 @@ const Assistant = ({ onClose }) => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [isTyping, setIsTyping] = useState(false);
-    // Senkron hesaplama — useEffect'e gerek yok
     const [recommendations] = useState(() => getPersonalizedSuggestions());
 
     const messagesEndRef = useRef(null);
@@ -34,29 +33,31 @@ const Assistant = ({ onClose }) => {
             {
                 id: getNextMessageId(),
                 type: 'bot',
-                text: `${t('assistant.welcomeMessage')}\n\n${t('assistant.betaWelcomeHint', 'Beta modu: Önerilen bir soruya dokunun veya mesaj yazın.')}`,
+                text: `${t('assistant.welcomeMessage')}\n\n${t('assistant.betaWelcomeHint', 'Hazir sorulardan birine dokunabilir veya benzer bir soru yazabilirsiniz.')}`,
             },
         ]);
     }, [t]);
 
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
-
     useEffect(() => {
-        scrollToBottom();
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
     const getFaqAnswer = (query) => {
         const normalized = query.toLowerCase().trim();
         const directMatch = FAQ_ITEMS.find((item) => t(item.key).toLowerCase() === normalized);
         if (directMatch) return t(directMatch.answerKey);
+
         const fuzzyMatch = FAQ_ITEMS.find((item) => {
-            const q = t(item.key).toLowerCase();
-            return q.includes(normalized) || normalized.includes(q.split(' ').slice(0, 3).join(' '));
+            const candidate = t(item.key).toLowerCase();
+            return candidate.includes(normalized) || normalized.includes(candidate.split(' ').slice(0, 3).join(' '));
         });
+
         if (fuzzyMatch) return t(fuzzyMatch.answerKey);
-        return t('assistant.betaUnknownQuestion', 'Beta aşamasında henüz bu cevaba sahip değilim. Lütfen aşağıdaki önerilen sorulardan birini seçin.');
+
+        return t(
+            'assistant.betaUnknownQuestion',
+            'Bu bolum su an hazir soru-cevap modunda calisiyor. Asagidaki ornek sorulardan birini secebilirsiniz.'
+        );
     };
 
     const handleSend = async (text) => {
@@ -76,7 +77,7 @@ const Assistant = ({ onClose }) => {
             };
             setMessages((prev) => [...prev, botMsg]);
             setIsTyping(false);
-        }, 600);
+        }, 400);
     };
 
     const handleKeyDown = (e) => {
@@ -95,7 +96,6 @@ const Assistant = ({ onClose }) => {
             display: 'flex',
             flexDirection: 'column',
         }}>
-            {/* Header */}
             <div className="settings-card" style={{
                 padding: '24px 20px',
                 display: 'flex',
@@ -139,16 +139,15 @@ const Assistant = ({ onClose }) => {
                 </div>
                 <div style={{ flex: 1 }}>
                     <h3 style={{ margin: 0, color: 'var(--nav-text)', fontSize: '1.25rem', fontWeight: '950' }}>
-                        {t('assistant.title', 'Huzur AI')}
+                        {t('assistant.title', 'Huzur Rehberi')}
                     </h3>
                     <div style={{ fontSize: '0.8rem', color: 'var(--accent-gold-light, #f59e0b)', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '800' }}>
                         <span className="pulse" style={{ width: '8px', height: '8px', background: 'var(--accent-gold-light, #f59e0b)', borderRadius: '50%' }}></span>
-                        ONLINE • {t('assistant.betaLabel', 'Beta')}
+                        {t('assistant.readyQaMode', 'Hazir soru-cevap modu')}
                     </div>
                 </div>
             </div>
 
-            {/* Kişisel Öneri Kartları */}
             {recommendations.suggestions.length > 0 && (
                 <div style={{
                     padding: '16px 20px 0',
@@ -198,7 +197,6 @@ const Assistant = ({ onClose }) => {
                 </div>
             )}
 
-            {/* Mesaj Alanı */}
             <div style={{
                 flex: 1,
                 overflowY: 'auto',
@@ -248,7 +246,6 @@ const Assistant = ({ onClose }) => {
                 <div ref={messagesEndRef} />
             </div>
 
-            {/* Önerilen Sorular */}
             <div style={{
                 padding: '0 20px 16px 20px',
                 display: 'flex',
@@ -283,7 +280,6 @@ const Assistant = ({ onClose }) => {
                 ))}
             </div>
 
-            {/* Input Alanı */}
             <div style={{
                 padding: '16px 20px',
                 background: 'var(--nav-bg)',
@@ -298,7 +294,7 @@ const Assistant = ({ onClose }) => {
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyDown}
-                        placeholder={t('assistant.betaInputPlaceholder', "Huzur AI'ya Sorun...")}
+                        placeholder={t('assistant.betaInputPlaceholder', 'Hazir sorulardan birini yazin veya alttan secin')}
                         style={{
                             width: '100%',
                             padding: '16px 24px',

@@ -1,86 +1,74 @@
 /**
  * Lifestyle Module
- * Yaşam Tarzı & Kişiselleştirme özellikleri
+ * Yasam tarzi ve kisisellestirme ozellikleri
  */
 
 import { lazy } from 'react';
 
-// Lazy-loaded components with chunk grouping
 export const HuzurMode = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/HuzurMode'));
 export const DailyTasks = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/DailyTasks'));
-export const FamilyMode = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/FamilyMode'));
 export const IslamicMeditation = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/IslamicMeditation'));
 export const ThemeSelector = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/ThemeSelector'));
 export const FontSettings = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/FontSettings'));
 export const MuezzinSelector = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/MuezzinSelector'));
-
 export const StreakFeature = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ './StreakFeature'));
 
-// Feature configuration for this module
 export const lifestyleFeatures = {
   streak: {
     component: StreakFeature,
     category: 'LIFESTYLE',
     module: 'lifestyle',
     nameKey: 'features.streak',
-    icon: '🔥'
+    icon: 'fire'
   },
   huzurMode: {
     component: HuzurMode,
     category: 'LIFESTYLE',
     module: 'lifestyle',
     nameKey: 'features.huzurMode',
-    icon: '🌙'
+    icon: 'moon'
   },
   dailyTasks: {
     component: DailyTasks,
     category: 'LIFESTYLE',
     module: 'lifestyle',
     nameKey: 'features.dailyTasks',
-    icon: '✅'
-  },
-  family: {
-    component: FamilyMode,
-    category: 'LIFESTYLE',
-    module: 'lifestyle',
-    nameKey: 'features.family',
-    icon: '👨‍👩‍👧‍👦'
+    icon: 'check'
   },
   islamicMeditation: {
     component: IslamicMeditation,
     category: 'LIFESTYLE',
     module: 'lifestyle',
     nameKey: 'features.islamicMeditation',
-    icon: '🧘'
+    icon: 'meditation'
   },
   theme: {
     component: ThemeSelector,
     category: 'LIFESTYLE',
     module: 'lifestyle',
     nameKey: 'features.theme',
-    icon: '🎨'
+    icon: 'palette'
   },
   fontSettings: {
     component: FontSettings,
     category: 'LIFESTYLE',
     module: 'lifestyle',
     nameKey: 'features.fontSettings',
-    icon: '🔤'
+    icon: 'font'
   },
   muezzinSelector: {
     component: MuezzinSelector,
     category: 'LIFESTYLE',
     module: 'lifestyle',
     nameKey: 'features.muezzinSelector',
-    icon: '🔊'
+    icon: 'volume'
   }
 };
 
-// Module metadata
 export const moduleInfo = {
   nameKey: 'modules.lifestyle',
   descriptionKey: 'modules.lifestyleDesc',
-  icon: '🌙',
+  icon: 'moon',
   priority: 7,
   chunkName: 'feature-lifestyle'
 };

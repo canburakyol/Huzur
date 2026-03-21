@@ -15,14 +15,14 @@ const Streak24hRecoveryModal = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [rewardError, setRewardError] = useState('');
 
-  if (!isOpen) return null;
-
   const resolvedCategory = categoryName || t('streak24h.defaultCategory', 'Namaz');
   const primaryLabel = useMemo(() => (
     requiresRewardedAd
       ? t('streak24h.rewardedAction', 'Reklam Izle ve Telafi Et')
       : t('streak24h.recoverAction', 'Telafi Et')
   ), [requiresRewardedAd, t]);
+
+  if (!isOpen) return null;
 
   const handlePrimaryAction = async () => {
     if (isSubmitting) {
