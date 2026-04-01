@@ -24,7 +24,7 @@
     "ayetel-kursi": {
       "title": "Ayatul Kursi",
       "subtitle": "Baqarah 255",
-      "meaning": "In the name of Allah, the Beneficent, the Merciful. Allah! There is no god but He, the Living, the Self-subsisting, Eternal. No slumber can seize Him nor sleep. His are all things in the heavens and on earth. Who is there can intercede in His presence except as He permitteth? He knoweth what (appearth to His creatures as) before or after or behind them. Nor shall they compass aught of His knowledge except as He willeth. His Throne doth extend over the heavens and the earth, and He feeleth no fatigue in guarding and preserving them for He is the Most High, the Supreme (in glory)."
+      "meaning": "In the name of Allah, the Beneficent, the Merciful. Allah. There is no god but He, the Living, the Self-subsisting, Eternal. No slumber can seize Him nor sleep. His are all things in the heavens and on earth. Who is there can intercede in His presence except as He permitteth? He knoweth what (appearth to His creatures as) before or after or behind them. Nor shall they compass aught of His knowledge except as He willeth. His Throne doth extend over the heavens and the earth, and He feeleth no fatigue in guarding and preserving them for He is the Most High, the Supreme (in glory)."
     }
   },
   "tesbihler": {
@@ -49,19 +49,19 @@
   "dualar": {
     "rabbena1": {
       "title": "Rabbana Atina",
-      "meaning": "Our Lord! Give us in this world that which is good and in the Hereafter that which is good, and save us from the torment of the Fire."
+      "meaning": "Our Lord. Give us in this world that which is good and in the Hereafter that which is good, and save us from the torment of the Fire."
     },
     "rabbena2": {
       "title": "Rabbanaighfirli",
-      "meaning": "Our Lord! Forgive me and my parents, and (all) the believers on the Day when the reckoning will be established."
+      "meaning": "Our Lord. Forgive me and my parents, and (all) the believers on the Day when the reckoning will be established."
     },
     "rabbi-inni": {
       "title": "Rabbi Inni",
-      "meaning": "My Lord! I am truly in need of whatever good You bestow on me."
+      "meaning": "My Lord. I am truly in need of whatever good You bestow on me."
     },
     "rabbi-habli": {
       "title": "Rabbi Habli",
-      "meaning": "My Lord! Grant me from Yourself a good offspring. Indeed, You are the Hearer of supplication."
+      "meaning": "My Lord. Grant me from Yourself a good offspring. Indeed, You are the Hearer of supplication."
     }
   },
   "ui": {

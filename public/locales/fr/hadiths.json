@@ -29,6 +29,91 @@
       "source": "Bukhari, Muslim",
       "narrator": " Abdullah ibn Amr (ra)"
     },
+    "4": {
+      "text": "Namaz dinin direğidir.",
+      "source": "Bayhaqi",
+      "narrator": " Umar (ra)"
+    },
+    "5": {
+      "text": "Kim inanarak ve sevabını Allah'tan bekleyerek Ramazan orucunu tutarsa, geçmiş günahları bağışlanır.",
+      "source": "Bukhari, Muslim",
+      "narrator": " Abu Hüreyre (ra)"
+    },
+    "6": {
+      "text": "Temizlik imanın yarısıdır.",
+      "source": "Muslim",
+      "narrator": " Abu Mâlik el-Eş\\'arî (ra)"
+    },
+    "7": {
+      "text": "Ben ancak güzel ahlakı tamamlamak için gönderildim.",
+      "source": "Mâlik, Ahmad",
+      "narrator": " Abu Hüreyre (ra)"
+    },
+    "8": {
+      "text": "Sizin en hayırlınız, ailesine karşı en hayırlı olanınızdır.",
+      "source": "Tirmidhi",
+      "narrator": " Aisha (ra)"
+    },
+    "9": {
+      "text": "Kardeşinin yüzüne gülümsemen sadakadır.",
+      "source": "Tirmidhi",
+      "narrator": " Abu Zer (ra)"
+    },
+    "10": {
+      "text": "Cennet annelerin ayakları altındadır.",
+      "source": "Nasai",
+      "narrator": " Anas (ra)"
+    },
+    "11": {
+      "text": "Merhamet etmeyene merhamet olunmaz.",
+      "source": "Bukhari, Muslim",
+      "narrator": " Abu Hüreyre (ra)"
+    },
+    "12": {
+      "text": "Hepiniz çobansınız ve hepiniz güttüğünüzden sorumlusunuz.",
+      "source": "Bukhari, Muslim",
+      "narrator": " Abdullah ibn Umar (ra)"
+    },
+    "13": {
+      "text": "İlmi beşikten mezara kadar arayın.",
+      "source": "Hadith",
+      "narrator": " Prophet (s.a.v.)"
+    },
+    "14": {
+      "text": "Kim ilim öğrenmek için bir yola girerse, Allah ona cennetin yolunu kolaylaştırır.",
+      "source": "Muslim",
+      "narrator": " Abu Hüreyre (ra)"
+    },
+    "15": {
+      "text": "Dua ibadetin özüdür.",
+      "source": "Tirmidhi",
+      "narrator": " Nu\\'man bin Beşîr (ra)"
+    },
+    "16": {
+      "text": "Allah'a kabul edileceğinden emin olarak dua edin.",
+      "source": "Tirmidhi",
+      "narrator": " Abu Hüreyre (ra)"
+    },
+    "17": {
+      "text": "Sabır aydınlıktır.",
+      "source": "Muslim",
+      "narrator": " Abu Mâlik el-Eş\\'arî (ra)"
+    },
+    "18": {
+      "text": "Müminin işi ne güzeldir. Her hali hayırdır; sevinirse şükreder, bu onun için hayır olur; başına bir bela gelirse sabreder, bu da onun için hayır olur.",
+      "source": "Muslim",
+      "narrator": " Suheyb (ra)"
+    },
+    "19": {
+      "text": "İktisatlı davranan fakir düşmez.",
+      "source": "Ahmad",
+      "narrator": " Abdullah ibn Mes\\'ud (ra)"
+    },
+    "20": {
+      "text": "Veren el, alan elden hayırlıdır.",
+      "source": "Bukhari, Muslim",
+      "narrator": " Abdullah ibn Umar (ra)"
+    },
     "101": {
       "text": "Allah'a ve ahiret gününe iman eden kimse ya hayır söylesin ya da sussun.",
       "source": "Bukhari, Muslim",
@@ -78,21 +163,6 @@
       "text": "Rab olarak Allah'tan, din olarak İslam'dan, peygamber olarak Muhammed'den razı olan kimse imanın tadını tatmıştır.",
       "source": "Muslim",
       "narrator": " Abbas (ra)"
-    },
-    "4": {
-      "text": "Namaz dinin direğidir.",
-      "source": "Bayhaqi",
-      "narrator": " Umar (ra)"
-    },
-    "5": {
-      "text": "Kim inanarak ve sevabını Allah'tan bekleyerek Ramazan orucunu tutarsa, geçmiş günahları bağışlanır.",
-      "source": "Bukhari, Muslim",
-      "narrator": " Abu Hüreyre (ra)"
-    },
-    "6": {
-      "text": "Temizlik imanın yarısıdır.",
-      "source": "Muslim",
-      "narrator": " Abu Mâlik el-Eş\\'arî (ra)"
     },
     "201": {
       "text": "Kim iki serinlik namazını (sabah ve ikindi) kılarsa cennete girer.",
@@ -144,21 +214,6 @@
       "source": "Bukhari, Muslim",
       "narrator": " Abu Hüreyre (ra)"
     },
-    "7": {
-      "text": "Ben ancak güzel ahlakı tamamlamak için gönderildim.",
-      "source": "Mâlik, Ahmad",
-      "narrator": " Abu Hüreyre (ra)"
-    },
-    "8": {
-      "text": "Sizin en hayırlınız, ailesine karşı en hayırlı olanınızdır.",
-      "source": "Tirmidhi",
-      "narrator": " Aisha (ra)"
-    },
-    "9": {
-      "text": "Kardeşinin yüzüne gülümsemen sadakadır.",
-      "source": "Tirmidhi",
-      "narrator": " Abu Zer (ra)"
-    },
     "301": {
       "text": "Güçlü kimse güreşte rakibini yenen değil, öfke anında kendine hakim olandır.",
       "source": "Bukhari, Muslim",
@@ -208,21 +263,6 @@
       "text": "Kolaylaştırınız, zorlaştırmayınız; müjdeleyiniz, nefret ettirmeyiniz.",
       "source": "Bukhari, Muslim",
       "narrator": " Anas (ra)"
-    },
-    "10": {
-      "text": "Cennet annelerin ayakları altındadır.",
-      "source": "Nasai",
-      "narrator": " Anas (ra)"
-    },
-    "11": {
-      "text": "Merhamet etmeyene merhamet olunmaz.",
-      "source": "Bukhari, Muslim",
-      "narrator": " Abu Hüreyre (ra)"
-    },
-    "12": {
-      "text": "Hepiniz çobansınız ve hepiniz güttüğünüzden sorumlusunuz.",
-      "source": "Bukhari, Muslim",
-      "narrator": " Abdullah ibn Umar (ra)"
     },
     "401": {
       "text": "Rabbin rızası, anne babanın rızasındadır. Rabbin gazabı da anne babanın gazabındadır.",
@@ -274,16 +314,6 @@
       "source": "Muslim",
       "narrator": " Abdullah ibn Amr (ra)"
     },
-    "13": {
-      "text": "İlmi beşikten mezara kadar arayın.",
-      "source": "Hadith",
-      "narrator": " Prophet (s.a.v.)"
-    },
-    "14": {
-      "text": "Kim ilim öğrenmek için bir yola girerse, Allah ona cennetin yolunu kolaylaştırır.",
-      "source": "Muslim",
-      "narrator": " Abu Hüreyre (ra)"
-    },
     "501": {
       "text": "İlim öğrenmek her Müslümana farzdır.",
       "source": "Ibn Majah",
@@ -324,16 +354,6 @@
       "source": "Abu Dawood",
       "narrator": " Safvân bin Assâl (ra)"
     },
-    "15": {
-      "text": "Dua ibadetin özüdür.",
-      "source": "Tirmidhi",
-      "narrator": " Nu\\'man bin Beşîr (ra)"
-    },
-    "16": {
-      "text": "Allah'a kabul edileceğinden emin olarak dua edin.",
-      "source": "Tirmidhi",
-      "narrator": " Abu Hüreyre (ra)"
-    },
     "601": {
       "text": "Allah katında duadan daha kıymetli bir şey yoktur.",
       "source": "Tirmidhi",
@@ -365,7 +385,7 @@
       "narrator": " Amr bin Abese (ra)"
     },
     "607": {
-      "text": "Dua, inmiş ve inmemiş olan belalara karşı fayda verir. Ey Allah'ın kulları, duaya sarılın!",
+      "text": "Dua, inmiş ve inmemiş olan belalara karşı fayda verir. Ey Allah'ın kulları, duaya sarılın.",
       "source": "Tirmidhi",
       "narrator": " İbn Umar (ra)"
     },
@@ -373,16 +393,6 @@
       "text": "Üç dua vardır ki, kabul olunacağında şüphe yoktur: Mazlumun duası, yolcunun duası ve babanın çocuğuna duası.",
       "source": "Abu Dawood",
       "narrator": " Abu Hüreyre (ra)"
-    },
-    "17": {
-      "text": "Sabır aydınlıktır.",
-      "source": "Muslim",
-      "narrator": " Abu Mâlik el-Eş\\'arî (ra)"
-    },
-    "18": {
-      "text": "Müminin işi ne güzeldir! Her hali hayırdır; sevinirse şükreder, bu onun için hayır olur; başına bir bela gelirse sabreder, bu da onun için hayır olur.",
-      "source": "Muslim",
-      "narrator": " Suheyb (ra)"
     },
     "701": {
       "text": "Müslümana fenalık, hastalık, keder, hüzün, eziyet ve gam isabet etmez ki, hatta ayağına batan bir diken bile olsa, Allah bunları onun günahlarına kefaret kılar.",
@@ -419,16 +429,6 @@
       "source": "Muslim",
       "narrator": " Anas (ra)"
     },
-    "19": {
-      "text": "İktisatlı davranan fakir düşmez.",
-      "source": "Ahmad",
-      "narrator": " Abdullah ibn Mes\\'ud (ra)"
-    },
-    "20": {
-      "text": "Veren el, alan elden hayırlıdır.",
-      "source": "Bukhari, Muslim",
-      "narrator": " Abdullah ibn Umar (ra)"
-    },
     "801": {
       "text": "Eğer siz Allah'a hakkıyla tevekkül etseydiniz, kuşları rızıklandırdığı gibi sizi de rızıklandırırdı. Onlar sabah aç gider, akşam tok dönerler.",
       "source": "Tirmidhi",
@@ -450,7 +450,7 @@
       "narrator": " Nu\\'man bin Beşîr (ra)"
     },
     "805": {
-      "text": "Allah'ım! Senden hidayet, takva, iffet ve gönül zenginliği isterim.",
+      "text": "Allah'ım. Senden hidayet, takva, iffet ve gönül zenginliği isterim.",
       "source": "Muslim",
       "narrator": " Abdullah ibn Mes\\'ud (ra)"
     },

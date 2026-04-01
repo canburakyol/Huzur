@@ -15,7 +15,7 @@
     "examples": "Examples",
     "understood": "Understood, Continue",
     "audioNotReady": "Audio file is not ready.",
-    "audioError": "An error occurred while playing audio: {{error}}",
+    "audioError": "An issue occurred while playing audio: {{issue}}",
     "makhraj": "Articulation Points",
     "levels": {
       "beginner": "Beginner",

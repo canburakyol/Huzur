@@ -21,7 +21,7 @@
     "my_favorites": "My Favorites",
     "favorite": "Favorite",
     "share": "Share",
-    "copied": "Copied!",
+    "copied": "Copied.",
     "no_results": "No results found",
     "copy_failed": "Copy failed.",
     "view": "View",
@@ -75,10 +75,10 @@
     "task": "Task",
     "pointsToday": "points earned today",
     "earnedBadges": "Earned Badges",
-    "newBadge": "You Earned a New Badge!",
-    "congrats": "Congratulations!",
-    "allTasksCompleted": "You completed all of today's tasks!",
-    "bonusPoints": "+{{points}} Bonus Points!",
+    "newBadge": "You Earned a New Badge.",
+    "congrats": "Congratulations.",
+    "allTasksCompleted": "You completed all of today's tasks.",
+    "bonusPoints": "+{{points}} Bonus Points.",
     "categories": {
       "namaz": "Prayer",
       "kuran": "Quran",
@@ -226,7 +226,7 @@
     "time": "Time"
   },
   "splash": {
-    "translation": "My Lord! Expand my chest and ease my task.",
+    "translation": "My Lord. Expand my chest and ease my task.",
     "reference": "(Surah Taha, 25-26)",
     "tapToContinue": "Tap to continue"
   },
@@ -376,7 +376,7 @@
     "analysisErrorGeneric": "An error occurred during analysis.",
     "unknownError": "Unknown error",
     "limitTitle": "Daily Limit Reached",
-    "limitDesc": "Free users can analyze 3 words per day. Upgrade to Pro for unlimited analysis!",
+    "limitDesc": "Free users can analyze 3 words per day. Upgrade to Pro for unlimited analysis.",
     "goToPro": "Go Pro"
   },
   "error": {
@@ -421,13 +421,13 @@
     "title": "Islamic Assistant",
     "online": "Online",
     "remaining": "Remaining",
-    "welcomeMessage": "As-salamu alaykum! I am your Islamic Assistant. How can I help you?",
+    "welcomeMessage": "As-salamu alaykum. I am your Islamic Assistant. How can I help you?",
     "errorMessage": "Sorry, an error occurred. Please try again.",
     "found": "verses found",
     "placeholder": "Ask a question...",
     "limitReached": "You have reached your daily question limit. Upgrade to Pro for unlimited access.",
     "upgradePro": "Upgrade to Pro",
-    "proSoon": "Pro version coming soon!",
+    "proSoon": "Pro version coming soon.",
     "questions": {
       "q1": "How to perform Salah?",
       "q2": "What invalidates fasting?",
@@ -551,7 +551,7 @@
     },
     "messages": {
       "loading": "Loading...",
-      "noDuas": "No prayer requests yet. Be the first!",
+      "noDuas": "No prayer requests yet. Be the first.",
       "errorSending": "An error occurred while sending the prayer."
     }
   },
@@ -585,7 +585,7 @@
     "placeholderShortCode": "CODE",
     "giveUp": "Cancel",
     "login": "Login",
-    "createdTitle": "Hatim Created!",
+    "createdTitle": "Hatim Created.",
     "createdDesc": "Copy the code below and share it with your loved ones.",
     "copy": "Copy",
     "share": "Share",
@@ -599,8 +599,8 @@
       "error": "An error occurred.",
       "enterCode": "Please enter the code.",
       "wrongCode": "Wrong code. Please enter the correct code.",
-      "codeCopied": "Code copied!",
-      "inviteCopied": "Invitation text copied!",
+      "codeCopied": "Code copied.",
+      "inviteCopied": "Invitation text copied.",
       "authRequired": "Connecting to server..."
     }
   },
@@ -618,7 +618,7 @@
       "sunnah": "Sunnah & Nafl Worship",
       "goodDeeds": "Good Deeds & Charity",
       "avoid": "Sin Tracker (Things to Avoid)",
-      "avoidDesc": "Mark if you committed these sins - awareness is key!",
+      "avoidDesc": "Mark if you committed these sins - awareness is key.",
       "reset": "Reset Today",
       "resetConfirm": "Delete today's records?"
     },
@@ -769,7 +769,7 @@
       "0": "Every good deed is a step, every step brings you closer to Jannah.",
       "1": "Do it without belittling, Allah judges by intention.",
       "2": "The good you do today will find you tomorrow.",
-      "3": "He who perseveres wins, keep going!",
+      "3": "He who perseveres wins, keep going.",
       "4": "Be better every day than the one before.",
       "5": "The door of mercy is always open.",
       "6": "Consistent deeds, even if small, are beloved.",
@@ -841,7 +841,7 @@
       "dear": "Dear {{name}},",
       "appName": "Huzur App",
       "sentWith": "Sent with Huzur App 💚",
-      "downloaded": "Greeting card downloaded! You can share it from your gallery.",
+      "downloaded": "Greeting card downloaded. You can share it from your gallery.",
       "shareError": "An error occurred while sharing.",
       "imageError": "Could not generate image"
     },
@@ -950,7 +950,7 @@
       },
       "cuma5": {
         "title": "Friday Message",
-        "message": "Blessed Friday! May Allah accept all your prayers on this blessed day and give peace to your heart."
+        "message": "Blessed Friday. May Allah accept all your prayers on this blessed day and give peace to your heart."
       },
       "cuma6": {
         "title": "Friday Salawat",
@@ -1053,7 +1053,7 @@
         "title": "Ayatul Kursi",
         "arabic": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...",
         "transliteration": "Allahu la ilahe illa huvel hayyul kayyum...",
-        "meaning": "Allah! There is no deity except Him, the Ever-Living, the Sustainer of [all] existence..."
+        "meaning": "Allah. There is no deity except Him, the Ever-Living, the Sustainer of [all] existence."
       },
       "ihlas": {
         "title": "Surah Al-Ikhlas",
@@ -1119,7 +1119,7 @@
     "notSupported": "Compass feature is not supported on this device."
   },
   "home": {
-    "awesome": "¡Genial!",
+    "awesome": "¡Genial.",
     "moodQuestion": "¿Cómo te sientes hoy?",
     "moodSubtitle": "Elige tu estado de ánimo para personalizar tu experiencia",
     "welcome": "Bienvenido a Huzur",
@@ -1143,7 +1143,7 @@
   "hikmet": {
     "title": "Wisdom Book",
     "daily": "Wisdom of the Day",
-    "copied": "Copied!",
+    "copied": "Copied.",
     "favorite": "Favorite",
     "share": "Share",
     "new": "New",
@@ -1489,28 +1489,28 @@
   },
   "content": {
     "duas": {
-      "0": "Our Lord! Give us good in this world and good in the Hereafter, and protect us from the torment of the Fire.",
-      "1": "O Allah! I ask You for guidance, piety, chastity, and contentment of heart.",
-      "2": "O Turner of hearts! Make my heart firm upon Your religion.",
-      "3": "O Allah! Forgive me, my parents, and all believers.",
-      "4": "O Allah! As You have made my creation beautiful, beautify my character too.",
-      "5": "O Allah! Make us among those who are grateful for Your blessings.",
-      "6": "O Allah! Grant me the ability to work for Your pleasure.",
-      "7": "My Lord! Increase me in knowledge and count me among the righteous.",
-      "8": "O Allah! Grant us health, well-being, and peace.",
-      "9": "Our Lord! Pour upon us patience and let us die as Muslims."
+      "0": "Our Lord. Give us good in this world and good in the Hereafter, and protect us from the torment of the Fire.",
+      "1": "O Allah. I ask You for guidance, piety, chastity, and contentment of heart.",
+      "2": "O Turner of hearts. Make my heart firm upon Your religion.",
+      "3": "O Allah. Forgive me, my parents, and all believers.",
+      "4": "O Allah. As You have made my creation beautiful, beautify my character too.",
+      "5": "O Allah. Make us among those who are grateful for Your blessings.",
+      "6": "O Allah. Grant me the ability to work for Your pleasure.",
+      "7": "My Lord. Increase me in knowledge and count me among the righteous.",
+      "8": "O Allah. Grant us health, well-being, and peace.",
+      "9": "Our Lord. Pour upon us patience and let us die as Muslims."
     },
     "verses": {
-      "0": "Our Lord! Do not hold us accountable if we forget or make a mistake.",
-      "1": "Our Lord! Give us good in this world and good in the Hereafter.",
-      "2": "Our Lord! Do not let our hearts deviate after You have guided us.",
+      "0": "Our Lord. Do not hold us accountable if we forget or make a mistake.",
+      "1": "Our Lord. Give us good in this world and good in the Hereafter.",
+      "2": "Our Lord. Do not let our hearts deviate after You have guided us.",
       "3": "Those who say 'Our Lord is Allah' and then remain steadfast...",
       "4": "Whoever puts their trust in Allah, He will be sufficient for them.",
       "5": "Whoever does good, male or female, while believing, We will grant them a good life.",
-      "6": "My Lord! Let me enter with truth and exit with truth.",
+      "6": "My Lord. Let me enter with truth and exit with truth.",
       "7": "Indeed, it is in the remembrance of Allah that hearts find peace.",
-      "8": "Our Lord! Grant us from our spouses and offspring the comfort of our eyes.",
-      "9": "Our Lord! Perfect our light and forgive us."
+      "8": "Our Lord. Grant us from our spouses and offspring the comfort of our eyes.",
+      "9": "Our Lord. Perfect our light and forgive us."
     },
     "hadiths": {
       "0": "Make things easy, do not make things difficult; give glad tidings, do not drive people away.",
@@ -1555,16 +1555,16 @@
       "cahitZarifoglu": "Cahit Zarifoglu"
     },
     "dailyDuas": {
-      "0": "O Allah! By Your power we have reached the morning, by Your power we will reach the evening. By Your power we live, by Your power we die. To You is the return.",
-      "1": "O Allah! By Your grace we have reached the evening, by Your grace we will reach the morning. By Your grace we live, by Your grace we die. To You is the return.",
+      "0": "O Allah. By Your power we have reached the morning, by Your power we will reach the evening. By Your power we live, by Your power we die. To You is the return.",
+      "1": "O Allah. By Your grace we have reached the evening, by Your grace we will reach the morning. By Your grace we live, by Your grace we die. To You is the return.",
       "2": "All praise is due to Allah who has fed us, given us drink, and made us Muslims.",
-      "3": "O Allah! Protect us on our journey and take care of our family we left behind.",
-      "4": "O Allah! Lord of mankind! Remove the illness, cure the disease. You are the one who cures. There is no cure except Your cure.",
-      "5": "O Allah! I seek refuge in You from anxiety, sorrow, incapacity, laziness, miserliness, and cowardice.",
-      "6": "O Allah! Make the provision You have given us blessed and make us content.",
-      "7": "My Lord! Increase me in knowledge and count me among the righteous.",
-      "8": "O Allah! You are the Most Forgiving, You love to forgive, so forgive me.",
-      "9": "O Allah! I ask You for the good of this world and the Hereafter. Fulfill my needs."
+      "3": "O Allah. Protect us on our journey and take care of our family we left behind.",
+      "4": "O Allah. Lord of mankind. Remove the illness, cure the disease. You are the one who cures. There is no cure except Your cure.",
+      "5": "O Allah. I seek refuge in You from anxiety, sorrow, incapacity, laziness, miserliness, and cowardice.",
+      "6": "O Allah. Make the provision You have given us blessed and make us content.",
+      "7": "My Lord. Increase me in knowledge and count me among the righteous.",
+      "8": "O Allah. You are the Most Forgiving, You love to forgive, so forgive me.",
+      "9": "O Allah. I ask You for the good of this world and the Hereafter. Fulfill my needs."
     },
     "dailyDuaTitles": {
       "morning": "Morning Prayer",
@@ -1582,10 +1582,10 @@
       "task": "Task",
       "pointsToday": "points earned today",
       "earnedBadges": "Earned Badges",
-      "newBadge": "New Badge Earned!",
-      "congrats": "Congratulations!",
-      "allTasksCompleted": "You completed all tasks for today!",
-      "bonusPoints": "+{{points}} Bonus Points!",
+      "newBadge": "New Badge Earned.",
+      "congrats": "Congratulations.",
+      "allTasksCompleted": "You completed all tasks for today.",
+      "bonusPoints": "+{{points}} Bonus Points.",
       "categories": {
         "namaz": "Prayer",
         "kuran": "Quran",
@@ -1709,7 +1709,7 @@
       "new": "New",
       "categoriesTitle": "Categories",
       "favorites": "My Favorites",
-      "copied": "Wisdom copied!",
+      "copied": "Wisdom copied.",
       "shareText": "\"{{text}}\"\n\n— {{source}}{{ref}}\n\n📜 {{appName}}",
       "title": "Book of Wisdom",
       "categories": {
@@ -2034,7 +2034,7 @@
         },
         "3": {
           "title": "Yatarken Okunacak Dua",
-          "meaning": "Allah'ım! Senin adınla ölür ve senin adınla diriliyorum."
+          "meaning": "Allah'ım. Senin adınla ölür ve senin adınla diriliyorum."
         },
         "4": {
           "title": "Evden Çıkarken Dua",
@@ -2042,7 +2042,7 @@
         },
         "5": {
           "title": "Eve Girerken Dua",
-          "meaning": "Allah'ım! Senden giriş ve çıkışın hayırlısını isterim."
+          "meaning": "Allah'ım. Senden giriş ve çıkışın hayırlısını isterim."
         },
         "6": {
           "title": "Ayetel Kürsi",
@@ -2058,7 +2058,7 @@
         },
         "9": {
           "title": "Şifa Duası",
-          "meaning": "Allah'ım! Bedenime afiyet ver."
+          "meaning": "Allah'ım. Bedenime afiyet ver."
         },
         "10": {
           "title": "İstiğfar",
@@ -2066,7 +2066,7 @@
         },
         "11": {
           "title": "Salavat",
-          "meaning": "Allah'ım! Muhammed'e salat eyle."
+          "meaning": "Allah'ım. Muhammed'e salat eyle."
         },
         "12": {
           "title": "Rıza Duası",
@@ -2078,47 +2078,47 @@
         },
         "14": {
           "title": "Selamet Duası",
-          "meaning": "Allah'ım! Senden afiyet istiyorum."
+          "meaning": "Allah'ım. Senden afiyet istiyorum."
         },
         "15": {
           "title": "Şükür Duası",
-          "meaning": "Allah'ım! Hamd ve şükür sanadır."
+          "meaning": "Allah'ım. Hamd ve şükür sanadır."
         },
         "16": {
           "title": "Borçtan Kurtulma",
-          "meaning": "Allah'ım! Helalinle haramdan beni kurtar."
+          "meaning": "Allah'ım. Helalinle haramdan beni kurtar."
         },
         "17": {
           "title": "Rızık Genişliği",
-          "meaning": "Allah'ım! Keder ve üzüntüden sana sığınırım."
+          "meaning": "Allah'ım. Keder ve üzüntüden sana sığınırım."
         },
         "18": {
           "title": "Bereket Duası",
-          "meaning": "Allah'ım! Bize verdiğin rızkı bereketli kıl."
+          "meaning": "Allah'ım. Bize verdiğin rızkı bereketli kıl."
         },
         "19": {
           "title": "Hayırlı Kazanç",
-          "meaning": "Allah'ım! Senden temiz rızık istiyorum."
+          "meaning": "Allah'ım. Senden temiz rızık istiyorum."
         },
         "20": {
           "title": "Kapı Açılması",
-          "meaning": "Allah'ım! Rahmet kapılarını aç."
+          "meaning": "Allah'ım. Rahmet kapılarını aç."
         },
         "21": {
           "title": "Bolluk İstemek",
-          "meaning": "Rabbim! Nimetine şükredebilmeyi nasip et."
+          "meaning": "Rabbim. Nimetine şükredebilmeyi nasip et."
         },
         "22": {
           "title": "Zenginlik Duası",
-          "meaning": "Allah'ım! Senden zenginlik istiyorum."
+          "meaning": "Allah'ım. Senden zenginlik istiyorum."
         },
         "23": {
           "title": "Helal Rızık",
-          "meaning": "Allah'ım! Bana helal rızık ver."
+          "meaning": "Allah'ım. Bana helal rızık ver."
         },
         "24": {
           "title": "İşlerin Kolaylaşması",
-          "meaning": "Allah'ım! Sen kolaylaştırmadıkça hiçbir şey kolay olmaz."
+          "meaning": "Allah'ım. Sen kolaylaştırmadıkça hiçbir şey kolay olmaz."
         },
         "25": {
           "title": "Hasbünallah",
@@ -2126,7 +2126,7 @@
         },
         "26": {
           "title": "Genişlik Duası",
-          "meaning": "Allah'ım! Rızkımı genişlet."
+          "meaning": "Allah'ım. Rızkımı genişlet."
         },
         "27": {
           "title": "Çıkış Yolu",
@@ -2134,7 +2134,7 @@
         },
         "28": {
           "title": "Aile Huzuru",
-          "meaning": "Rabbimiz! Eşlerimizden ve çocuklarımızdan göz aydınlığı ver."
+          "meaning": "Rabbimiz. Eşlerimizden ve çocuklarımızdan göz aydınlığı ver."
         },
         "29": {
           "title": "Evlilik Bereket",
@@ -2142,43 +2142,43 @@
         },
         "30": {
           "title": "Çocuklar İçin",
-          "meaning": "Rabbim! Bana temiz bir nesil bağışla."
+          "meaning": "Rabbim. Bana temiz bir nesil bağışla."
         },
         "31": {
           "title": "Ana Baba İçin",
-          "meaning": "Rabbim! Onlara merhamet et."
+          "meaning": "Rabbim. Onlara merhamet et."
         },
         "32": {
           "title": "Ev Bereket",
-          "meaning": "Allah'ım! Evimize bereket ver."
+          "meaning": "Allah'ım. Evimize bereket ver."
         },
         "33": {
           "title": "Çocukların Salihlği",
-          "meaning": "Rabbim! Beni ve neslimden gelenleri namaz kılan eyle."
+          "meaning": "Rabbim. Beni ve neslimden gelenleri namaz kılan eyle."
         },
         "34": {
           "title": "Aile Koruması",
-          "meaning": "Rabbimiz! Cehennem azabını bizden uzaklaştır."
+          "meaning": "Rabbimiz. Cehennem azabını bizden uzaklaştır."
         },
         "35": {
           "title": "Mutlu Yuva",
-          "meaning": "Rabbimiz! Bize katından rahmet ver."
+          "meaning": "Rabbimiz. Bize katından rahmet ver."
         },
         "36": {
           "title": "Kalplerin Kaymaması",
-          "meaning": "Rabbimiz! Kalplerimizi kaydırma."
+          "meaning": "Rabbimiz. Kalplerimizi kaydırma."
         },
         "37": {
           "title": "Komşularla İyi Geçinme",
-          "meaning": "Allah'ım! Komşularımızla aramızı ıslah et."
+          "meaning": "Allah'ım. Komşularımızla aramızı ıslah et."
         },
         "38": {
           "title": "Aile Birliği",
-          "meaning": "Rabbimiz! Bizi sana teslim olanlardan eyle."
+          "meaning": "Rabbimiz. Bizi sana teslim olanlardan eyle."
         },
         "39": {
           "title": "Dünya ve Ahiret Hayır",
-          "meaning": "Rabbimiz! Bize dünyada iyilik ver."
+          "meaning": "Rabbimiz. Bize dünyada iyilik ver."
         },
         "40": {
           "title": "Şeytandan Korunma",
@@ -2214,7 +2214,7 @@
         },
         "48": {
           "title": "Kaza Beladan Korunma",
-          "meaning": "Allah'ım! Nimetin yok olmasından sana sığınırım."
+          "meaning": "Allah'ım. Nimetin yok olmasından sana sığınırım."
         },
         "49": {
           "title": "Güç ve Kuvvet",
@@ -2222,23 +2222,23 @@
         },
         "50": {
           "title": "İman Korunması",
-          "meaning": "Allah'ım! Kalpleri çeviren! Kalbimi dinin üzere sabit kıl."
+          "meaning": "Allah'ım. Kalpleri çeviren. Kalbimi dinin üzere sabit kıl."
         },
         "51": {
           "title": "Fitnedenkorunma",
-          "meaning": "Allah'ım! Deccal fitnesinden sana sığınırım."
+          "meaning": "Allah'ım. Deccal fitnesinden sana sığınırım."
         },
         "52": {
           "title": "Hayır Dua",
-          "meaning": "Rabbimiz! Dünyada da ahirette de iyilik ver."
+          "meaning": "Rabbimiz. Dünyada da ahirette de iyilik ver."
         },
         "53": {
           "title": "İlim İsteme",
-          "meaning": "Rabbim! İlmimi artır."
+          "meaning": "Rabbim. İlmimi artır."
         },
         "54": {
           "title": "Af ve Mağfiret",
-          "meaning": "Rabbimiz! Günahlarımızı bağışla."
+          "meaning": "Rabbimiz. Günahlarımızı bağışla."
         },
         "55": {
           "title": "Hidayet İsteme",
@@ -2246,19 +2246,19 @@
         },
         "56": {
           "title": "Rahmet Dileme",
-          "meaning": "Rabbim! Bize merhamet et."
+          "meaning": "Rabbim. Bize merhamet et."
         },
         "57": {
           "title": "Sabır İsteme",
-          "meaning": "Rabbimiz! Üzerimize sabır yağdır."
+          "meaning": "Rabbimiz. Üzerimize sabır yağdır."
         },
         "58": {
           "title": "Kolaylık Dileme",
-          "meaning": "Rabbim! Kolaylaştır, zorlaştırma."
+          "meaning": "Rabbim. Kolaylaştır, zorlaştırma."
         },
         "59": {
           "title": "Kabul Duası",
-          "meaning": "Rabbimiz! Bizden kabul buyur."
+          "meaning": "Rabbimiz. Bizden kabul buyur."
         },
         "60": {
           "title": "Salih Amel",
@@ -2266,23 +2266,23 @@
         },
         "61": {
           "title": "Şükür Duası",
-          "meaning": "Rabbim! Nimetine şükretmeyi nasip et."
+          "meaning": "Rabbim. Nimetine şükretmeyi nasip et."
         },
         "62": {
           "title": "İbadet Kabul",
-          "meaning": "Rabbimiz! Bizden kabul et, sen işitensin, bilensin."
+          "meaning": "Rabbimiz. Bizden kabul et, sen işitensin, bilensin."
         },
         "63": {
           "title": "Makbul Dua",
-          "meaning": "Allah'ım! Sen affedicisin, affetmeyi seversin, beni affet."
+          "meaning": "Allah'ım. Sen affedicisin, affetmeyi seversin, beni affet."
         },
         "64": {
           "title": "Kunut Duası",
-          "meaning": "Allah'ım! Hidayete erdirdiklerinle beni de hidayete erdir."
+          "meaning": "Allah'ım. Hidayete erdirdiklerinle beni de hidayete erdir."
         },
         "65": {
           "title": "Seyyidul İstiğfar",
-          "meaning": "Allah'ım! Sen benim Rabbimsin, senden başka ilah yoktur."
+          "meaning": "Allah'ım. Sen benim Rabbimsin, senden başka ilah yoktur."
         },
         "66": {
           "title": "Yolculuk Duası",
@@ -2290,7 +2290,7 @@
         },
         "67": {
           "title": "Yemek Duası",
-          "meaning": "Allah'ım! Bize verdiğin rızkı bereketli kıl."
+          "meaning": "Allah'ım. Bize verdiğin rızkı bereketli kıl."
         },
         "68": {
           "title": "Hasta Ziyareti",
@@ -2302,15 +2302,15 @@
         },
         "70": {
           "title": "Rüya Duası",
-          "meaning": "Allah'ım! Kabir azabından sana sığınırım."
+          "meaning": "Allah'ım. Kabir azabından sana sığınırım."
         },
         "71": {
           "title": "Mescide Giriş",
-          "meaning": "Allah'ım! Rahmet kapılarını aç."
+          "meaning": "Allah'ım. Rahmet kapılarını aç."
         },
         "72": {
           "title": "Mescidden Çıkış",
-          "meaning": "Allah'ım! Senden fazlını dilerim."
+          "meaning": "Allah'ım. Senden fazlını dilerim."
         },
         "73": {
           "title": "Abdest Duası",
@@ -2318,15 +2318,15 @@
         },
         "74": {
           "title": "Cenaze Duası",
-          "meaning": "Allah'ım! Onu bağışla ve ona merhamet et."
+          "meaning": "Allah'ım. Onu bağışla ve ona merhamet et."
         },
         "75": {
           "title": "Hacet Namazı Duası",
-          "meaning": "Allah'ım! Rahmetinle senden isterim."
+          "meaning": "Allah'ım. Rahmetinle senden isterim."
         },
         "76": {
           "title": "Cuma Günü Duası",
-          "meaning": "Allah'ım! Efendimiz Muhammed'e salat eyle."
+          "meaning": "Allah'ım. Efendimiz Muhammed'e salat eyle."
         },
         "77": {
           "title": "Regaib Gecesi",
@@ -2334,19 +2334,19 @@
         },
         "78": {
           "title": "Miraç Kandili",
-          "meaning": "Allah'ım! Peygamberinin şefaatini bize nasip et."
+          "meaning": "Allah'ım. Peygamberinin şefaatini bize nasip et."
         },
         "79": {
           "title": "Berat Kandili",
-          "meaning": "Allah'ım! Günahlarımı bağışla."
+          "meaning": "Allah'ım. Günahlarımı bağışla."
         },
         "80": {
           "title": "Kadir Gecesi",
-          "meaning": "Allah'ım! Sen affedicisin, affet beni."
+          "meaning": "Allah'ım. Sen affedicisin, affet beni."
         },
         "81": {
           "title": "Ramazan Duası",
-          "meaning": "Allah'ım! Bizi Ramazan'a ulaştır."
+          "meaning": "Allah'ım. Bizi Ramazan'a ulaştır."
         },
         "82": {
           "title": "Arefe Günü",
@@ -2362,15 +2362,15 @@
         },
         "85": {
           "title": "Muharrem Ayı",
-          "meaning": "Allah'ım! Bu ayı üzerimize bereket ve imanla helal kıl."
+          "meaning": "Allah'ım. Bu ayı üzerimize bereket ve imanla helal kıl."
         },
         "86": {
           "title": "Şaban Ayı",
-          "meaning": "Allah'ım! Şaban ayında bize bereket ver."
+          "meaning": "Allah'ım. Şaban ayında bize bereket ver."
         },
         "87": {
           "title": "Zilhicce Ayı",
-          "meaning": "Allah'ım! Bu günleri mübarek kıl."
+          "meaning": "Allah'ım. Bu günleri mübarek kıl."
         },
         "88": {
           "title": "Basit İstiğfar",
@@ -2382,23 +2382,23 @@
         },
         "90": {
           "title": "Bağışlanma",
-          "meaning": "Rabbim! Beni bağışla ve bana merhamet et."
+          "meaning": "Rabbim. Beni bağışla ve bana merhamet et."
         },
         "91": {
           "title": "Pişmanlık",
-          "meaning": "Allah'ım! Nefsime zulmettim."
+          "meaning": "Allah'ım. Nefsime zulmettim."
         },
         "92": {
           "title": "Günahtan Dönüş",
-          "meaning": "Rabbimiz! Biz kendimize zulmettik."
+          "meaning": "Rabbimiz. Biz kendimize zulmettik."
         },
         "93": {
           "title": "Af Dileme",
-          "meaning": "Rabbim! Bağışla, merhamet et, sen merhametlilerin en hayırlısısın."
+          "meaning": "Rabbim. Bağışla, merhamet et, sen merhametlilerin en hayırlısısın."
         },
         "94": {
           "title": "Temizlenme",
-          "meaning": "Allah'ım! Hatalarımdan beni temizle."
+          "meaning": "Allah'ım. Hatalarımdan beni temizle."
         },
         "95": {
           "title": "Samimi Tevbe",
@@ -2406,15 +2406,15 @@
         },
         "96": {
           "title": "Afv İsteme",
-          "meaning": "Allah'ım! Sen affedicisin, kerim olansan."
+          "meaning": "Allah'ım. Sen affedicisin, kerim olansan."
         },
         "97": {
           "title": "Rahmet Dileme",
-          "meaning": "Rabbimiz! Unutur veya yanılırsak bizi sorguya çekme."
+          "meaning": "Rabbimiz. Unutur veya yanılırsak bizi sorguya çekme."
         },
         "98": {
           "title": "Günahlardan Arınma",
-          "meaning": "Allah'ım! Beni günahlardan temizle."
+          "meaning": "Allah'ım. Beni günahlardan temizle."
         },
         "99": {
           "title": "Yeniden Başlama",
@@ -2426,7 +2426,7 @@
         },
         "101": {
           "title": "Sübhaneke",
-          "meaning": "Allah'ım! Seni hamd ile tesbih ederim."
+          "meaning": "Allah'ım. Seni hamd ile tesbih ederim."
         },
         "102": {
           "title": "Fatiha",
@@ -2446,15 +2446,15 @@
         },
         "106": {
           "title": "Allahumme Salli",
-          "meaning": "Allah'ım! Muhammed'e salat eyle."
+          "meaning": "Allah'ım. Muhammed'e salat eyle."
         },
         "107": {
           "title": "Allahumme Barik",
-          "meaning": "Allah'ım! Muhammed'e bereket ver."
+          "meaning": "Allah'ım. Muhammed'e bereket ver."
         },
         "108": {
           "title": "Rabbena Duası",
-          "meaning": "Rabbimiz! Dünyada iyilik ver."
+          "meaning": "Rabbimiz. Dünyada iyilik ver."
         },
         "109": {
           "title": "Selam Verme",
@@ -2462,11 +2462,11 @@
         },
         "110": {
           "title": "Namaz Sonrası",
-          "meaning": "Allah'ım! Sen selamsan."
+          "meaning": "Allah'ım. Sen selamsan."
         },
         "111": {
           "title": "Vitir Kannet",
-          "meaning": "Allah'ım! Senden yardım dileriz."
+          "meaning": "Allah'ım. Senden yardım dileriz."
         },
         "112": {
           "title": "Üzüntü Duası",
@@ -2474,7 +2474,7 @@
         },
         "113": {
           "title": "Keder Giderme",
-          "meaning": "Allah'ım! Ben senin kulunum."
+          "meaning": "Allah'ım. Ben senin kulunum."
         },
         "114": {
           "title": "Sıkıntı Anında",
@@ -2482,19 +2482,19 @@
         },
         "115": {
           "title": "Ferahlama Duası",
-          "meaning": "Allah'ım! Rahmetini umarım."
+          "meaning": "Allah'ım. Rahmetini umarım."
         },
         "116": {
           "title": "Zor Zamanlarda",
-          "meaning": "Ey diri olan, ey kaim olan! Rahmetinle yardım dilerim."
+          "meaning": "Ey diri olan, ey kaim olan. Rahmetinle yardım dilerim."
         },
         "117": {
           "title": "Elem Giderme",
-          "meaning": "Allah'ım! Kolaylaştırmadıkça hiçbir şey kolay olmaz."
+          "meaning": "Allah'ım. Kolaylaştırmadıkça hiçbir şey kolay olmaz."
         },
         "118": {
           "title": "Hüzün Giderme",
-          "meaning": "Allah'ım! Kaygıdan sana sığınırım."
+          "meaning": "Allah'ım. Kaygıdan sana sığınırım."
         },
         "119": {
           "title": "Teselli Duası",
@@ -2502,7 +2502,7 @@
         },
         "120": {
           "title": "Sabır Dileme",
-          "meaning": "Rabbimiz! Üzerimize sabır yağdır."
+          "meaning": "Rabbimiz. Üzerimize sabır yağdır."
         },
         "121": {
           "title": "Yalnızlık Anında",
@@ -2654,7 +2654,7 @@
       },
       "3": {
         "title": "Sleep Prayer",
-        "meaning": "O Allah! In Your name I die and live."
+        "meaning": "O Allah. In Your name I die and live."
       },
       "4": {
         "title": "Leaving Home Prayer",
@@ -2662,7 +2662,7 @@
       },
       "5": {
         "title": "Entering Home Prayer",
-        "meaning": "O Allah! I ask You for the best entry and the best exit."
+        "meaning": "O Allah. I ask You for the best entry and the best exit."
       },
       "6": {
         "title": "Ayatul Kursi",
@@ -2678,7 +2678,7 @@
       },
       "9": {
         "title": "Health Prayer",
-        "meaning": "O Allah! Grant me health in my body."
+        "meaning": "O Allah. Grant me health in my body."
       },
       "10": {
         "title": "Seeking Forgiveness",
@@ -2686,7 +2686,7 @@
       },
       "11": {
         "title": "Salawat",
-        "meaning": "O Allah! Send blessings upon Muhammad."
+        "meaning": "O Allah. Send blessings upon Muhammad."
       },
       "12": {
         "title": "Contentment Prayer",
@@ -2698,47 +2698,47 @@
       },
       "14": {
         "title": "Seeking Wellbeing",
-        "meaning": "O Allah! I ask You for wellbeing."
+        "meaning": "O Allah. I ask You for wellbeing."
       },
       "15": {
         "title": "Gratitude Prayer",
-        "meaning": "O Allah! All praise and thanks are Yours."
+        "meaning": "O Allah. All praise and thanks are Yours."
       },
       "16": {
         "title": "Halal Sustenance Prayer",
-        "meaning": "O Allah! Suffice me with what is lawful against what is unlawful."
+        "meaning": "O Allah. Suffice me with what is lawful against what is unlawful."
       },
       "17": {
         "title": "Anxiety Protection",
-        "meaning": "O Allah! I seek refuge in You from worry and grief."
+        "meaning": "O Allah. I seek refuge in You from worry and grief."
       },
       "18": {
         "title": "Blessing Prayer",
-        "meaning": "O Allah! Bless what You have provided us."
+        "meaning": "O Allah. Bless what You have provided us."
       },
       "19": {
         "title": "Pure Sustenance Prayer",
-        "meaning": "O Allah! I ask You for pure sustenance."
+        "meaning": "O Allah. I ask You for pure sustenance."
       },
       "20": {
         "title": "Doors of Mercy Prayer",
-        "meaning": "O Allah! Open for me the doors of Your mercy."
+        "meaning": "O Allah. Open for me the doors of Your mercy."
       },
       "21": {
         "title": "Gratitude for Blessings",
-        "meaning": "My Lord! Inspire me to be grateful for Your blessings."
+        "meaning": "My Lord. Inspire me to be grateful for Your blessings."
       },
       "22": {
         "title": "Wealth Prayer",
-        "meaning": "O Allah! I ask You for sufficiency."
+        "meaning": "O Allah. I ask You for sufficiency."
       },
       "23": {
         "title": "Lawful Earnings Prayer",
-        "meaning": "O Allah! Provide me with lawful sustenance."
+        "meaning": "O Allah. Provide me with lawful sustenance."
       },
       "24": {
         "title": "Ease Prayer",
-        "meaning": "O Allah! There is no ease except what You make easy."
+        "meaning": "O Allah. There is no ease except what You make easy."
       },
       "25": {
         "title": "Hasbunallah",
@@ -2746,7 +2746,7 @@
       },
       "26": {
         "title": "Abundance in Provision",
-        "meaning": "O Allah! Expand my provision."
+        "meaning": "O Allah. Expand my provision."
       },
       "27": {
         "title": "Taqwa and Solution",
@@ -2754,7 +2754,7 @@
       },
       "28": {
         "title": "Family Happiness Prayer",
-        "meaning": "Our Lord! Grant us from our spouses and offspring comfort to our eyes."
+        "meaning": "Our Lord. Grant us from our spouses and offspring comfort to our eyes."
       },
       "29": {
         "title": "Marriage Blessing",
@@ -2762,43 +2762,43 @@
       },
       "30": {
         "title": "Righteous Offspring Prayer",
-        "meaning": "My Lord! Grant me righteous offspring from Your presence."
+        "meaning": "My Lord. Grant me righteous offspring from Your presence."
       },
       "31": {
         "title": "Parents Prayer",
-        "meaning": "My Lord! Have mercy on them as they raised me when I was small."
+        "meaning": "My Lord. Have mercy on them as they raised me when I was small."
       },
       "32": {
         "title": "Home Blessing Prayer",
-        "meaning": "O Allah! Bless our home."
+        "meaning": "O Allah. Bless our home."
       },
       "33": {
         "title": "Prayer Establishment",
-        "meaning": "My Lord! Make me an establisher of prayer, and from my descendants."
+        "meaning": "My Lord. Make me an establisher of prayer, and from my descendants."
       },
       "34": {
         "title": "Hellfire Protection",
-        "meaning": "Our Lord! Avert from us the punishment of Hell."
+        "meaning": "Our Lord. Avert from us the punishment of Hell."
       },
       "35": {
         "title": "Mercy Prayer",
-        "meaning": "Our Lord! Grant us mercy from Yourself."
+        "meaning": "Our Lord. Grant us mercy from Yourself."
       },
       "36": {
         "title": "Heart Steadfastness",
-        "meaning": "Our Lord! Do not let our hearts deviate."
+        "meaning": "Our Lord. Do not let our hearts deviate."
       },
       "37": {
         "title": "Neighbor Reconciliation",
-        "meaning": "O Allah! Reconcile between us and our neighbors."
+        "meaning": "O Allah. Reconcile between us and our neighbors."
       },
       "38": {
         "title": "Submission Prayer",
-        "meaning": "Our Lord! Make us submissive to You."
+        "meaning": "Our Lord. Make us submissive to You."
       },
       "39": {
         "title": "Good in Both Worlds",
-        "meaning": "Our Lord! Give us good in this world and in the Hereafter."
+        "meaning": "Our Lord. Give us good in this world and in the Hereafter."
       },
       "40": {
         "title": "Satan Protection",
@@ -2834,7 +2834,7 @@
       },
       "48": {
         "title": "Blessing Loss Protection",
-        "meaning": "O Allah! I seek refuge in You from the loss of Your blessings."
+        "meaning": "O Allah. I seek refuge in You from the loss of Your blessings."
       },
       "49": {
         "title": "La Hawla Prayer",
@@ -2842,23 +2842,23 @@
       },
       "50": {
         "title": "Heart Firmness",
-        "meaning": "O Turner of hearts! Keep my heart firm upon Your religion."
+        "meaning": "O Turner of hearts. Keep my heart firm upon Your religion."
       },
       "51": {
         "title": "Dajjal Fitnah Protection",
-        "meaning": "O Allah! I seek refuge in You from the trial of the Dajjal."
+        "meaning": "O Allah. I seek refuge in You from the trial of the Dajjal."
       },
       "52": {
         "title": "Goodness in Both Worlds",
-        "meaning": "Our Lord! Give us good in this world and good in the Hereafter."
+        "meaning": "Our Lord. Give us good in this world and good in the Hereafter."
       },
       "53": {
         "title": "Increase in Knowledge",
-        "meaning": "My Lord! Increase me in knowledge."
+        "meaning": "My Lord. Increase me in knowledge."
       },
       "54": {
         "title": "Forgiveness of Sins",
-        "meaning": "Our Lord! Forgive us our sins."
+        "meaning": "Our Lord. Forgive us our sins."
       },
       "55": {
         "title": "Straight Path",
@@ -2866,19 +2866,19 @@
       },
       "56": {
         "title": "Mercy Prayer",
-        "meaning": "My Lord! Have mercy on us."
+        "meaning": "My Lord. Have mercy on us."
       },
       "57": {
         "title": "Patience Prayer",
-        "meaning": "Our Lord! Pour upon us patience."
+        "meaning": "Our Lord. Pour upon us patience."
       },
       "58": {
         "title": "Ease Not Difficulty",
-        "meaning": "My Lord! Make it easy, not difficult."
+        "meaning": "My Lord. Make it easy, not difficult."
       },
       "59": {
         "title": "Acceptance Prayer",
-        "meaning": "Our Lord! Accept from us."
+        "meaning": "Our Lord. Accept from us."
       },
       "60": {
         "title": "Among Righteous",
@@ -2886,23 +2886,23 @@
       },
       "61": {
         "title": "Blessing Gratitude",
-        "meaning": "My Lord! Inspire me to be grateful for Your blessings."
+        "meaning": "My Lord. Inspire me to be grateful for Your blessings."
       },
       "62": {
         "title": "Hearing and Knowing",
-        "meaning": "Our Lord! Accept from us. Indeed You are the Hearing, the Knowing."
+        "meaning": "Our Lord. Accept from us. Indeed You are the Hearing, the Knowing."
       },
       "63": {
         "title": "Pardon Prayer",
-        "meaning": "O Allah! You are Pardoning and love to pardon, so pardon me."
+        "meaning": "O Allah. You are Pardoning and love to pardon, so pardon me."
       },
       "64": {
         "title": "Qunut Prayer",
-        "meaning": "O Allah! Guide me among those You have guided."
+        "meaning": "O Allah. Guide me among those You have guided."
       },
       "65": {
         "title": "Master of Forgiveness",
-        "meaning": "O Allah! You are my Lord. There is no deity except You."
+        "meaning": "O Allah. You are my Lord. There is no deity except You."
       },
       "66": {
         "title": "Travel Prayer",
@@ -2910,7 +2910,7 @@
       },
       "67": {
         "title": "Meal Prayer",
-        "meaning": "O Allah! Bless us in what You have provided."
+        "meaning": "O Allah. Bless us in what You have provided."
       },
       "68": {
         "title": "Visiting the Sick",
@@ -2922,15 +2922,15 @@
       },
       "70": {
         "title": "Grave Torment Protection",
-        "meaning": "O Allah! I seek refuge in You from the punishment of the grave."
+        "meaning": "O Allah. I seek refuge in You from the punishment of the grave."
       },
       "71": {
         "title": "Mosque Entry Prayer",
-        "meaning": "O Allah! Open the gates of Your mercy for me."
+        "meaning": "O Allah. Open the gates of Your mercy for me."
       },
       "72": {
         "title": "Mosque Exit Prayer",
-        "meaning": "O Allah! I ask You from Your bounty."
+        "meaning": "O Allah. I ask You from Your bounty."
       },
       "73": {
         "title": "Post-Ablution Testimony",
@@ -2938,15 +2938,15 @@
       },
       "74": {
         "title": "Funeral Prayer",
-        "meaning": "O Allah! Forgive him and have mercy on him."
+        "meaning": "O Allah. Forgive him and have mercy on him."
       },
       "75": {
         "title": "Seeking Mercy",
-        "meaning": "O Allah! I ask You by Your mercy."
+        "meaning": "O Allah. I ask You by Your mercy."
       },
       "76": {
         "title": "Friday Salawat",
-        "meaning": "O Allah! Send blessings upon our master Muhammad."
+        "meaning": "O Allah. Send blessings upon our master Muhammad."
       },
       "77": {
         "title": "Tasbeeh",
@@ -2954,19 +2954,19 @@
       },
       "78": {
         "title": "Intercession Prayer",
-        "meaning": "O Allah! Grant us the intercession of Your Prophet."
+        "meaning": "O Allah. Grant us the intercession of Your Prophet."
       },
       "79": {
         "title": "Sin Forgiveness",
-        "meaning": "O Allah! Forgive my sins."
+        "meaning": "O Allah. Forgive my sins."
       },
       "80": {
         "title": "Night of Power Prayer",
-        "meaning": "O Allah! You are Pardoning and love to pardon, so pardon me."
+        "meaning": "O Allah. You are Pardoning and love to pardon, so pardon me."
       },
       "81": {
         "title": "Reaching Ramadan",
-        "meaning": "O Allah! Let us reach Ramadan."
+        "meaning": "O Allah. Let us reach Ramadan."
       },
       "82": {
         "title": "Tawheed Dhikr",
@@ -2982,15 +2982,15 @@
       },
       "85": {
         "title": "New Moon Prayer",
-        "meaning": "O Allah! Let it appear over us with blessing and faith."
+        "meaning": "O Allah. Let it appear over us with blessing and faith."
       },
       "86": {
         "title": "Sha'ban Prayer",
-        "meaning": "O Allah! Bless us in Sha'ban."
+        "meaning": "O Allah. Bless us in Sha'ban."
       },
       "87": {
         "title": "Blessed Days Prayer",
-        "meaning": "O Allah! Make these days blessed for us."
+        "meaning": "O Allah. Make these days blessed for us."
       },
       "88": {
         "title": "Istighfar",
@@ -3002,23 +3002,23 @@
       },
       "90": {
         "title": "Forgiveness and Mercy",
-        "meaning": "My Lord! Forgive me and have mercy on me."
+        "meaning": "My Lord. Forgive me and have mercy on me."
       },
       "91": {
         "title": "Self-Wrong Confession",
-        "meaning": "O Allah! I have wronged myself."
+        "meaning": "O Allah. I have wronged myself."
       },
       "92": {
         "title": "Adam's Repentance",
-        "meaning": "Our Lord! We have wronged ourselves."
+        "meaning": "Our Lord. We have wronged ourselves."
       },
       "93": {
         "title": "Best of Forgivers",
-        "meaning": "My Lord! Forgive and have mercy. You are the best of those who show mercy."
+        "meaning": "My Lord. Forgive and have mercy. You are the best of those who show mercy."
       },
       "94": {
         "title": "Purification from Sins",
-        "meaning": "O Allah! Wash me from my sins."
+        "meaning": "O Allah. Wash me from my sins."
       },
       "95": {
         "title": "Living and Sustaining",
@@ -3026,15 +3026,15 @@
       },
       "96": {
         "title": "Pardoning and Generous",
-        "meaning": "O Allah! You are Pardoning and Generous."
+        "meaning": "O Allah. You are Pardoning and Generous."
       },
       "97": {
         "title": "Forgetting and Mistakes",
-        "meaning": "Our Lord! Do not blame us if we forget or make mistakes."
+        "meaning": "Our Lord. Do not blame us if we forget or make mistakes."
       },
       "98": {
         "title": "Cleansing from Sins",
-        "meaning": "O Allah! Cleanse me from sins."
+        "meaning": "O Allah. Cleanse me from sins."
       },
       "99": {
         "title": "I Have Repented",
@@ -3046,7 +3046,7 @@
       },
       "101": {
         "title": "Subhanaka",
-        "meaning": "Glory be to You, O Allah! Praise be to You."
+        "meaning": "Glory be to You, O Allah. Praise be to You."
       },
       "102": {
         "title": "Surah Al-Fatiha",
@@ -3066,15 +3066,15 @@
       },
       "106": {
         "title": "Allahumma Salli",
-        "meaning": "O Allah! Send blessings upon Muhammad."
+        "meaning": "O Allah. Send blessings upon Muhammad."
       },
       "107": {
         "title": "Allahumma Barik",
-        "meaning": "O Allah! Bestow blessings upon Muhammad."
+        "meaning": "O Allah. Bestow blessings upon Muhammad."
       },
       "108": {
         "title": "Rabbana Prayer",
-        "meaning": "Our Lord! Give us good in this world."
+        "meaning": "Our Lord. Give us good in this world."
       },
       "109": {
         "title": "Salam",
@@ -3082,11 +3082,11 @@
       },
       "110": {
         "title": "Post-Salam Prayer",
-        "meaning": "O Allah! You are Peace (the Source of Peace)."
+        "meaning": "O Allah. You are Peace (the Source of Peace)."
       },
       "111": {
         "title": "Qunut Prayer",
-        "meaning": "O Allah! We seek Your help."
+        "meaning": "O Allah. We seek Your help."
       },
       "112": {
         "title": "Prophet Yunus Prayer",
@@ -3094,7 +3094,7 @@
       },
       "113": {
         "title": "Grief Prayer",
-        "meaning": "O Allah! I am Your servant."
+        "meaning": "O Allah. I am Your servant."
       },
       "114": {
         "title": "Sufficiency Verse",
@@ -3102,19 +3102,19 @@
       },
       "115": {
         "title": "Hope for Mercy",
-        "meaning": "O Allah! I hope for Your mercy."
+        "meaning": "O Allah. I hope for Your mercy."
       },
       "116": {
         "title": "Living and Sustaining",
-        "meaning": "O Ever-Living, O Sustainer! I seek help through Your mercy."
+        "meaning": "O Ever-Living, O Sustainer. I seek help through Your mercy."
       },
       "117": {
         "title": "Difficulty to Ease",
-        "meaning": "O Allah! Nothing is easy except what You make easy."
+        "meaning": "O Allah. Nothing is easy except what You make easy."
       },
       "118": {
         "title": "Grief Protection",
-        "meaning": "O Allah! I seek refuge in You from grief."
+        "meaning": "O Allah. I seek refuge in You from grief."
       },
       "119": {
         "title": "Calamity Prayer",
@@ -3122,7 +3122,7 @@
       },
       "120": {
         "title": "Rain of Patience",
-        "meaning": "Our Lord! Pour upon us patience."
+        "meaning": "Our Lord. Pour upon us patience."
       },
       "121": {
         "title": "Allah is With Me",
@@ -3217,7 +3217,7 @@
       "title": "Prayer Requests",
       "create": "Request Prayer",
       "myDuas": "My Prayers",
-      "noDuas": "No prayer requests yet. Be the first!",
+      "noDuas": "No prayer requests yet. Be the first.",
       "amin": "Ameen",
       "aminCount": "Ameen Count",
       "pray": "Pray",
@@ -3281,11 +3281,11 @@
     "members": "Family Members",
     "inviteTip": "Share this code with your family to invite them.",
     "prayerTreeTitle": "Prayer Tree",
-    "prayerTreeDesc": "Each prayer is like a drop of water. Grow your tree by praying!",
+    "prayerTreeDesc": "Each prayer is like a drop of water. Grow your tree by praying.",
     "waterDrops": "Water Drops",
     "waterTreeAction": "Water the Tree",
     "watering": "Watering...",
-    "treeTip": "Your tree grows with daily prayer!"
+    "treeTip": "Your tree grows with daily prayer."
   },
   "hatimCoach": {
     "title": "Smart Khatm Coach",
@@ -3426,7 +3426,7 @@
     "messagePlaceholder": "Escribe tu problema o sugerencia en detalle...",
     "send": "Enviar",
     "sending": "Enviando...",
-    "successTitle": "¡Tu solicitud fue enviada!",
+    "successTitle": "¡Tu solicitud fue enviada.",
     "successBodyLine1": "Gracias por tus comentarios.",
     "successBodyLine2": "Se revisará lo antes posible.",
     "directContact": "Para contacto directo",
@@ -3460,7 +3460,7 @@
   "limitModal": {
     "title": "Límite Diario Alcanzado",
     "usagePrefix": "Has usado",
-    "usageSuffix": "usos gratuitos por hoy!",
+    "usageSuffix": "usos gratuitos por hoy.",
     "tomorrowOption": "Mañana tendrás 2 usos nuevos",
     "or": "o",
     "proOptionPrefix": "Pásate a Pro y usa",
@@ -3482,7 +3482,7 @@
   },
   "weeklyChallenges": {
     "title": "Desafíos Semanales",
-    "subtitle": "¡Completa los objetivos de esta semana y gana recompensas!",
+    "subtitle": "¡Completa los objetivos de esta semana y gana recompensas.",
     "stats": {
       "completed": "Completado",
       "success": "Éxito",
@@ -3490,18 +3490,18 @@
     },
     "newChallenges": "Nuevos Desafíos",
     "rewardXp": "+{{xp}} XP",
-    "completedLabel": "¡Completado!",
+    "completedLabel": "¡Completado.",
     "progressText": "{{progress}} / {{target}} {{unit}}",
     "completeAction": "Completar",
-    "congratsShort": "¡Felicidades!",
+    "congratsShort": "¡Felicidades.",
     "timer": {
       "zero": "00:00:00",
       "daysHours": "{{days}}d {{hours}}h"
     },
     "modal": {
-      "title": "¡Desafío Completado!",
-      "reward": "¡Has ganado +{{xp}} XP!",
-      "cta": "¡Genial!"
+      "title": "¡Desafío Completado.",
+      "reward": "¡Has ganado +{{xp}} XP.",
+      "cta": "¡Genial."
     },
     "units": {
       "juz": "juz",
@@ -3532,7 +3532,7 @@
     }
   },
   "streakProtection": {
-    "title": "¡Tu racha está en riesgo!",
+    "title": "¡Tu racha está en riesgo.",
     "defaultCategory": "General",
     "description": "Como no usaste la app ayer, tu racha de {{count}} días en {{category}} está por reiniciarse.",
     "useTokenLabel": "Usar derecho de congelación",
@@ -3553,8 +3553,8 @@
     "adError": "No se pudo cargar el anuncio. Inténtalo de nuevo.",
     "genericError": "Ocurrió un error. Inténtalo de nuevo.",
     "title": "Recupera tu racha",
-    "successTitle": "¡Racha recuperada!",
-    "successMessage": "¡Felicidades! Tu racha de {{count}} días fue protegida.",
+    "successTitle": "¡Racha recuperada.",
+    "successMessage": "¡Felicidades. Tu racha de {{count}} días fue protegida.",
     "days": "días",
     "daysAtRisk": "Días en riesgo",
     "description": "Puedes proteger tu racha en 24 horas viendo un anuncio.",
@@ -3564,11 +3564,11 @@
     "footerText": "Después de ver el anuncio completo, tu racha se protegerá automáticamente."
   },
   "tajweedQuiz": {
-    "resultTitle": "¡Felicidades!",
+    "resultTitle": "¡Felicidades.",
     "resultSubtitle": "Has completado el Quiz de Tajwid.",
     "feedback": {
-      "excellent": "¡Excelente! Dominas las reglas de tajwid.",
-      "good": "¡Buen comienzo! Con más práctica, mejorarás aún más.",
+      "excellent": "¡Excelente. Dominas las reglas de tajwid.",
+      "good": "¡Buen comienzo. Con más práctica, mejorarás aún más.",
       "retry": "¿Qué tal si revisas las lecciones otra vez?"
     },
     "actions": {
@@ -3608,7 +3608,7 @@
     "ayahCount": "{{count}} Aleyas",
     "start": "Comenzar",
     "empty": {
-      "title": "¡Excelente!",
+      "title": "¡Excelente.",
       "description": "No quedan suras para repasar hoy."
     },
     "level": "Nivel {{level}}",
@@ -3634,17 +3634,17 @@
     "totalRakat": "Total: {{count}} rakats",
     "quiz": {
       "title": "Concurso de Conocimiento de la Oración",
-      "intro": "¡Pon a prueba tu conocimiento con {{count}} preguntas!",
+      "intro": "¡Pon a prueba tu conocimiento con {{count}} preguntas.",
       "start": "Comenzar",
-      "finished": "¡Quiz completado!",
+      "finished": "¡Quiz completado.",
       "retry": "Intentar de Nuevo",
       "questionCounter": "Pregunta {{current}}/{{total}}",
       "score": "Puntuación: {{score}}",
       "nextQuestion": "Siguiente Pregunta",
       "showResults": "Ver Resultados",
       "feedback": {
-        "excellent": "¡Excelente! ¡Lo sabes muy bien!",
-        "good": "¡Bien! Puedes mejorar con más práctica.",
+        "excellent": "¡Excelente. ¡Lo sabes muy bien.",
+        "good": "¡Bien. Puedes mejorar con más práctica.",
         "retry": "Se recomienda volver a estudiar."
       }
     }
@@ -3658,7 +3658,7 @@
       "dayStreak": "Racha de Días"
     },
     "progress": {
-      "completed": "¡Completado!",
+      "completed": "¡Completado.",
       "count": "{{current}} / {{max}} rakat"
     },
     "info": {
@@ -3771,14 +3771,14 @@
   "gamification": {
     "badgesTitle": "Badge Collection",
     "streakTitle": "My Streaks",
-    "streakTip": "Try to keep your streak by performing your worship on time every day!"
+    "streakTip": "Try to keep your streak by performing your worship on time every day."
   },
   "streakFeature": {
     "title": "Streak Calendar",
     "appCategory": "App",
     "prayerCategory": "Prayer",
     "tipTitle": "Tip",
-    "tipText": "By recording your worship every day for 7 days, you can earn 1 Freeze Card!"
+    "tipText": "By recording your worship every day for 7 days, you can earn 1 Freeze Card."
   },
   "streakCalendar": {
     "weekdays": {

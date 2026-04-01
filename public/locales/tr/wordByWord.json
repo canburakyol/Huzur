@@ -217,7 +217,7 @@
     "limitDesc": "Günlük kelime analizi limitine ulaştınız. Sınırsız analiz için Pro'ya geçin.",
     "goToPro": "Pro'ya Geç",
     "analysisError": "Analiz hatası",
-    "unknownError": "Bilinmeyen hata",
-    "analysisErrorGeneric": "Analiz yapılırken bir hata oluştu."
+    "unknownError": "Bilinmeyen sorun",
+    "analysisErrorGeneric": "Analiz yapılırken bir sorun oluştu."
   }
 }

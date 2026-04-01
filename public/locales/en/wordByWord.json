@@ -216,8 +216,8 @@
     "limitTitle": "Daily Limit Reached",
     "limitDesc": "You have reached your daily word analysis limit. Upgrade to Pro for unlimited analysis.",
     "goToPro": "Go Pro",
-    "analysisError": "Analysis error",
-    "unknownError": "Unknown error",
-    "analysisErrorGeneric": "An error occurred during analysis."
+    "analysisError": "Analysis issue",
+    "unknownError": "Unknown issue",
+    "analysisErrorGeneric": "An issue occurred during analysis."
   }
 }
