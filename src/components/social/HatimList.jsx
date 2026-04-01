@@ -4,10 +4,13 @@ import { useGroupHatim } from '../../hooks/useGroupHatim';
 import CreateHatimModal from './CreateHatimModal';
 import HatimCard from './HatimCard';
 import { BookOpen, RefreshCw, Users } from 'lucide-react';
+import { useToast } from '../../hooks/useToast';
+import { logger } from '../../utils/logger';
 import './Social.css';
 
 const HatimList = ({ onSelectHatim }) => {
   const { t } = useTranslation();
+  const { showToast } = useToast();
   const { activeHatims, fetchAllPublicHatims, loading, error, joinHatim, userId } = useGroupHatim();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showJoinInput, setShowJoinInput] = useState(false);
@@ -29,7 +32,8 @@ const HatimList = ({ onSelectHatim }) => {
       setJoinCode('');
       setTargetHatimId(null);
     } catch (error) {
-      alert(`${t('common.error', 'Hata olustu')}: ${error.message}`);
+      logger.error('[HatimList] Failed to join hatim', error);
+      showToast(t('common.error', 'Hata olustu'), 'error');
     }
   };
 

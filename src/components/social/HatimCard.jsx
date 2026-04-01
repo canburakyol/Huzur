@@ -1,9 +1,12 @@
 import { memo } from 'react';
 import { Users, Lock, CheckCircle, Hash, Copy, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useToast } from '../../hooks/useToast';
+import { logger } from '../../utils/logger';
 
 const HatimCard = memo(({ hatim, onClick, isMember }) => {
   const { t } = useTranslation();
+  const { showToast } = useToast();
 
   const getProgress = () => {
     if (Number.isFinite(hatim.progressPercent)) return hatim.progressPercent;
@@ -23,14 +26,14 @@ const HatimCard = memo(({ hatim, onClick, isMember }) => {
     try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(hatim.joinCode);
-        alert(t('hatim.messages.codeCopied', 'Kod kopyalandi.'));
+        showToast(t('hatim.messages.codeCopied', 'Kod kopyalandi.'), 'success');
         return;
       }
-    } catch {
-      // fall through
+    } catch (error) {
+      logger.error('[HatimCard] Failed to copy join code', error);
     }
 
-    window.prompt(t('common.copy', 'Kopyalamak icin secin:'), hatim.joinCode);
+    showToast(t('hatim.messages.codeCopied', 'Kod kopyalandi.'), 'success');
   };
 
   return (

@@ -9,6 +9,7 @@ const DEFAULT_LON = 28.9784;
 const DEFAULT_LOCATION_NAME = 'Istanbul';
 const LOCATION_WEATHER_CACHE_PREFIX = 'location_weather_cache_';
 const LOCATION_WEATHER_CACHE_TTL_MS = 30 * 60 * 1000;
+const LOCATION_REQUEST_TIMEOUT_MS = 5000;
 
 const buildLocationCacheKey = (lat, lon) => {
   return `${LOCATION_WEATHER_CACHE_PREFIX}${Number(lat).toFixed(3)}_${Number(lon).toFixed(3)}`;
@@ -27,7 +28,8 @@ const getCachedLocationSnapshot = (lat, lon) => {
     }
 
     return cached;
-  } catch {
+  } catch (error) {
+    logger.error('[useLocationConsent] Failed to read cached location snapshot', error);
     return null;
   }
 };
@@ -38,8 +40,8 @@ const setCachedLocationSnapshot = (lat, lon, payload) => {
       ...payload,
       timestamp: Date.now()
     });
-  } catch {
-    // no-op
+  } catch (error) {
+    logger.error('[useLocationConsent] Failed to persist cached location snapshot', error);
   }
 };
 
@@ -50,6 +52,25 @@ const setDebugLocation = (latitude, longitude) => {
 
   window.debugLat = latitude;
   window.debugLon = longitude;
+};
+
+const fetchJsonWithTimeout = async (url, timeoutMs = LOCATION_REQUEST_TIMEOUT_MS) => {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    return await response.json();
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
 };
 
 export const useLocationConsent = (onLocationUpdate) => {
@@ -86,19 +107,15 @@ export const useLocationConsent = (onLocationUpdate) => {
     }
 
     try {
-      const weatherPromise = fetch(
+      const weatherPromise = fetchJsonWithTimeout(
         `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
-      ).then(async (response) => {
-        const weatherData = await response.json();
-        return weatherData.current_weather || null;
-      });
+      ).then((weatherData) => weatherData.current_weather || null);
 
       const locationPromise = isDefault
         ? Promise.resolve(DEFAULT_LOCATION_NAME)
-        : fetch(
+        : fetchJsonWithTimeout(
             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=tr`
-          ).then(async (response) => {
-            const locationData = await response.json();
+          ).then((locationData) => {
             return locationData.city || locationData.locality || locationData.principalSubdivision || 'Konum';
           });
 
@@ -119,9 +136,20 @@ export const useLocationConsent = (onLocationUpdate) => {
         logger.log('[useLocationConsent] Detected city:', nextLocationName);
       }
 
+      if (weatherResult.status === 'rejected') {
+        logger.warn('[useLocationConsent] Weather request failed:', weatherResult.reason);
+      }
+
+      if (locationResult.status === 'rejected') {
+        logger.warn('[useLocationConsent] Reverse geocode request failed:', locationResult.reason);
+      }
+
       return { weather: nextWeather, locationName: nextLocationName };
     } catch (error) {
       logger.error('[useLocationConsent] Weather/Location error:', error);
+      const fallbackLocationName = cachedSnapshot?.locationName || (isDefault ? DEFAULT_LOCATION_NAME : 'Konum');
+      setWeather(cachedSnapshot?.weather || null);
+      setLocationName(fallbackLocationName);
       return null;
     }
   }, []);
@@ -166,14 +194,12 @@ export const useLocationConsent = (onLocationUpdate) => {
     let cancelled = false;
 
     const loadDefaultLocation = async () => {
+      setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
+      forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
       await Promise.resolve();
       if (cancelled) return;
 
       await fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-      if (cancelled) return;
-
-      setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
-      forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
     };
 
     const storedConsent = storageService.getString(STORAGE_KEYS.LOCATION_CONSENT);

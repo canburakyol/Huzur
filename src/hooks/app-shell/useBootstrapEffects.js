@@ -13,8 +13,8 @@ export function useBootstrapEffects() {
     const initAuth = async () => {
       try {
         await ensureAuthenticated();
-      } catch {
-        logger.error('[Bootstrap] Auth init error');
+      } catch (error) {
+        logger.error('[Bootstrap] Auth init error', error);
       }
     };
     initAuth();
@@ -29,8 +29,8 @@ export function useBootstrapEffects() {
     try {
       crashlyticsReporter?.logCrash?.('App mounted - startup');
       initCrashlyticsTestHook();
-    } catch {
-      // ignore
+    } catch (error) {
+      logger.error('[Bootstrap] Crashlytics startup hook failed', error);
     }
   }, []);
 
@@ -47,8 +47,8 @@ export function useBootstrapEffects() {
             column: event?.colno
           })
         );
-      } catch {
-        // silently ignore logging errors
+      } catch (error) {
+        logger.error('[Bootstrap] Failed to report global error to Crashlytics', error);
       }
     };
 
@@ -61,8 +61,8 @@ export function useBootstrapEffects() {
             source: 'window.unhandledrejection'
           })
         );
-      } catch {
-        // silently ignore logging errors
+      } catch (error) {
+        logger.error('[Bootstrap] Failed to report unhandled rejection to Crashlytics', error);
       }
     };
 

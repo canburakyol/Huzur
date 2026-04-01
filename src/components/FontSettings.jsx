@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Type, Minus, Plus, Check, RotateCcw, AlignLeft } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
+import { logger } from '../utils/logger';
 
 const STORAGE_KEY = 'huzur_font_settings';
 
@@ -33,7 +34,8 @@ const FontSettings = ({ onClose }) => {
       try {
         // eslint-disable-next-line
         setSettings(JSON.parse(savedSettings));
-      } catch {
+      } catch (error) {
+        logger.error('[FontSettings] Failed to parse saved font settings', error);
         // Hata sessizce yönetiliyor
       }
     }

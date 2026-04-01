@@ -1,17 +1,23 @@
 import { Suspense, lazy } from 'react';
+import LoadingFallback from './home/LoadingFallback';
 
 const Prayers = lazy(() => import('../Prayers'));
 const Quran = lazy(() => import('../Quran'));
 const SocialDashboard = lazy(() => import('../social/SocialDashboard'));
-const SpiritualCoach = lazy(() => import('../SpiritualCoach'));
+const Assistant = lazy(() => import('../Assistant'));
 
-const LoadingFallback = ({ height = '100px' }) => (
-  <div style={{ height, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <div className="loading-spinner" />
-  </div>
-);
-
-function AppTabRouter({ activeTab, setActiveTab }) {
+function AppTabRouter({
+  activeTab,
+  setActiveTab,
+  onSelectFeature,
+  timings,
+  nextPrayer,
+  locationName,
+  streakData,
+  dailyContent,
+  isProUser,
+  onOpenInvite,
+}) {
   return (
     <>
       {activeTab === 'prayers' && (
@@ -34,7 +40,18 @@ function AppTabRouter({ activeTab, setActiveTab }) {
 
       {activeTab === 'assistant' && (
         <Suspense fallback={<LoadingFallback height="100vh" />}>
-          <SpiritualCoach onClose={() => setActiveTab('home')} />
+          <Assistant
+            onClose={() => setActiveTab('home')}
+            onSelectFeature={onSelectFeature}
+            onSelectTab={setActiveTab}
+            timings={timings}
+            nextPrayer={nextPrayer}
+            locationName={locationName}
+            streakData={streakData}
+            dailyContent={dailyContent}
+            isProUser={isProUser}
+            onOpenInvite={onOpenInvite}
+          />
         </Suspense>
       )}
     </>

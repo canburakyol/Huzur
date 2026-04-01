@@ -1,5 +1,6 @@
 // Simple bridge to report JS errors to Crashlytics via Capacitor plugin
 import { logger } from './logger';
+import { isCrashReportingEnabledSync } from '../services/privacyModeService';
 
 const CRASHLYTICS_MAX_MESSAGE_LENGTH = 1000;
 
@@ -85,15 +86,20 @@ const toCrashPayload = (error, context = {}) => {
 
 export async function logCrash(message) {
   try {
-    const plugin = window?.Capacitor?.Plugins?.Crashlytics;
     const safeMessage = sanitizeForCrashlytics(message);
+    if (!isCrashReportingEnabledSync()) {
+      logger.log('[CrashlyticsStub]', safeMessage);
+      return null;
+    }
+
+    const plugin = window?.Capacitor?.Plugins?.Crashlytics;
     if (plugin && typeof plugin.log === 'function') {
       await plugin.log({ message: safeMessage });
     } else {
       logger.warn('Crashlytics plugin not available.');
     }
-  } catch {
-    // Swallow to avoid breaking app flow
+  } catch (error) {
+    logger.error('[Crashlytics] Failed to send breadcrumb log', error);
   }
 }
 
@@ -103,15 +109,20 @@ export async function logException(error) {
 
 export async function logExceptionWithContext(error, context = {}) {
   try {
-    const plugin = window?.Capacitor?.Plugins?.Crashlytics;
     const payload = toCrashPayload(error, context);
+    if (!isCrashReportingEnabledSync()) {
+      logger.error('[CrashlyticsStub]', payload.message);
+      return null;
+    }
+
+    const plugin = window?.Capacitor?.Plugins?.Crashlytics;
     if (plugin && typeof plugin.logException === 'function') {
       await plugin.logException(payload);
     } else {
       logger.error('[Crashlytics] Plugin not available, error not reported');
     }
-  } catch {
-    // Swallow to avoid breaking app flow
+  } catch (reportingError) {
+    logger.error('[Crashlytics] Failed to report exception', reportingError);
   }
 }
 

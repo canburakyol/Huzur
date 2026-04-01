@@ -1,4 +1,5 @@
 import { registerPlugin, Capacitor } from '@capacitor/core';
+import { logger } from '../utils/logger';
 
 const noopPlugin = {
   async initialize() {
@@ -24,7 +25,8 @@ try {
   } else {
     NativeAdBridge = noopPlugin;
   }
-} catch {
+} catch (error) {
+  logger.error('[NativeAdBridgePlugin] Failed to register plugin', error);
   NativeAdBridge = noopPlugin;
 }
 

@@ -17,7 +17,8 @@ const readJsonFromStorage = async (page, key, fallback = null) => {
       const raw = localStorage.getItem(k);
       if (!raw) return fb;
       return JSON.parse(raw);
-    } catch {
+    } catch (error) {
+      console.error('[ReferralFlowE2E] Failed to parse JSON from localStorage', error);
       return fb;
     }
   }, [key, fallback]);

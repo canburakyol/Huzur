@@ -3,6 +3,7 @@ import { getNotificationHistory, clearNotificationHistory } from '../services/sm
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
+import { logger } from '../utils/logger';
 
 const NotificationHistory = () => {
     const { t } = useTranslation();
@@ -36,7 +37,8 @@ const NotificationHistory = () => {
     const formatDate = (isoString) => {
         try {
             return format(new Date(isoString), 'd MMMM HH:mm', { locale: tr });
-        } catch {
+        } catch (error) {
+            logger.error('[NotificationHistory] Failed to format notification timestamp', error);
             return isoString;
         }
     };

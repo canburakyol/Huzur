@@ -1,4 +1,5 @@
 import { registerPlugin, Capacitor } from '@capacitor/core';
+import { logger } from '../utils/logger';
 
 const noopPlugin = {
   async syncPrayerSchedule() {
@@ -15,7 +16,8 @@ try {
   } else {
     PrayerSchedule = noopPlugin;
   }
-} catch {
+} catch (error) {
+  logger.error('[PrayerSchedulePlugin] Failed to register plugin', error);
   PrayerSchedule = noopPlugin;
 }
 

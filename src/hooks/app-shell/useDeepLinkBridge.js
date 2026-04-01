@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { App as CapacitorApp } from '@capacitor/app';
 import { captureInviteAcceptanceFromUrl } from '../../services/referralService';
+import { logger } from '../../utils/logger';
 
 export function useDeepLinkBridge() {
   useEffect(() => {
@@ -25,7 +26,7 @@ export function useDeepLinkBridge() {
           }
         });
       } catch (error) {
-        console.warn('[DeepLink] Listener setup failed:', error);
+        logger.error('[DeepLink] Listener setup failed', error);
       }
     };
 
@@ -34,8 +35,8 @@ export function useDeepLinkBridge() {
     return () => {
       try {
         appUrlOpenListener?.remove();
-      } catch {
-        // ignore
+      } catch (error) {
+        logger.error('[DeepLink] Failed to remove appUrlOpen listener', error);
       }
     };
   }, []);

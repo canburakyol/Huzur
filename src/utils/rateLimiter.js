@@ -1,12 +1,12 @@
 /**
  * Rate Limiter Utility
- * 
+ *
  * Client-side rate limiting for Firestore write operations.
  * Prevents spam and abuse of social features.
- * 
+ *
  * Usage:
  *   if (!checkRateLimit('dua_submit')) {
- *     alert('Çok fazla istek gönderdiniz. Lütfen bekleyin.');
+ *     showToast('Cok fazla istek gonderdiniz. Lutfen bekleyin.', 'error');
  *     return;
  *   }
  */
@@ -22,22 +22,22 @@ const rateLimiters = new Map();
  */
 export const checkRateLimit = (key, maxRequests = 5, windowMs = 60000) => {
   const now = Date.now();
-  
+
   if (!rateLimiters.has(key)) {
     rateLimiters.set(key, []);
   }
-  
+
   // Filter out old timestamps outside the window
-  const timestamps = rateLimiters.get(key).filter(t => now - t < windowMs);
-  
+  const timestamps = rateLimiters.get(key).filter((timestamp) => now - timestamp < windowMs);
+
   if (timestamps.length >= maxRequests) {
     return false; // Rate limited
   }
-  
+
   // Add current timestamp
   timestamps.push(now);
   rateLimiters.set(key, timestamps);
-  
+
   return true; // Allowed
 };
 
@@ -58,12 +58,12 @@ export const resetRateLimit = (key) => {
  */
 export const getRemainingRequests = (key, maxRequests = 5, windowMs = 60000) => {
   const now = Date.now();
-  
+
   if (!rateLimiters.has(key)) {
     return maxRequests;
   }
-  
-  const timestamps = rateLimiters.get(key).filter(t => now - t < windowMs);
+
+  const timestamps = rateLimiters.get(key).filter((timestamp) => now - timestamp < windowMs);
   return Math.max(0, maxRequests - timestamps.length);
 };
 
@@ -75,19 +75,19 @@ export const getRemainingRequests = (key, maxRequests = 5, windowMs = 60000) => 
  */
 export const getTimeUntilReset = (key, windowMs = 60000) => {
   const now = Date.now();
-  
+
   if (!rateLimiters.has(key)) {
     return 0;
   }
-  
+
   const timestamps = rateLimiters.get(key);
   if (timestamps.length === 0) {
     return 0;
   }
-  
+
   const oldestTimestamp = Math.min(...timestamps);
   const resetTime = oldestTimestamp + windowMs;
-  
+
   return Math.max(0, resetTime - now);
 };
 

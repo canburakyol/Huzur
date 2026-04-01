@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import { featureConfig } from '../data/featureConfig';
+import LoadingSpinner from './LoadingSpinner';
 
 /**
  * FeatureManager Component
@@ -19,7 +20,6 @@ const FeatureManager = ({ activeFeature, setActiveFeature, locationName }) => {
     return null;
   }
 
-  // Check if the feature requires special props
   const extraProps = {};
   if (featureConfig[activeFeature]?.hasUpgrade) {
     extraProps.onUpgrade = goToPro;
@@ -27,8 +27,7 @@ const FeatureManager = ({ activeFeature, setActiveFeature, locationName }) => {
 
   return (
     <div className="app-container">
-
-      <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>⏳</div>}>
+      <Suspense fallback={<LoadingSpinner height="100vh" />}>
         <FeatureComponent onClose={closeFeature} locationName={locationName} {...extraProps} />
       </Suspense>
     </div>
@@ -36,4 +35,3 @@ const FeatureManager = ({ activeFeature, setActiveFeature, locationName }) => {
 };
 
 export default FeatureManager;
-

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
+import { logger } from '../utils/logger';
 
 function Support({ onClose }) {
     const { t, i18n } = useTranslation();
@@ -70,7 +71,8 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
             // Show success anyway (email client will handle)
             setSubmitted(true);
 
-        } catch {
+        } catch (error) {
+            logger.error('[Support] Failed to launch support mail client', error);
             setError(t('support.errors.generic', 'An error occurred. Please try again.'));
         } finally {
             setIsSubmitting(false);

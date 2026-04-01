@@ -2,34 +2,53 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { getPrayerTimes, getNextPrayer } from '../services/prayerService';
 import { updateWidget as updateAndroidWidget } from '../services/widgetService';
 import { storageService } from '../services/storageService';
+import smartNotificationService, {
+  cancelStickyNotification,
+  requestNotificationPermission,
+  showStickyNotification,
+} from '../services/smartNotificationService';
+import { syncPrayerSchedule } from '../services/prayerScheduleService';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 import { scheduleDeferredTask } from '../utils/startupScheduler';
-import { syncPrayerSchedule } from '../services/prayerScheduleService';
 
-let smartNotificationModulePromise = null;
-let fcmModulePromise = null;
+const getInitialPrayerSnapshot = () => {
+  try {
+    const initialData = getPrayerTimes();
+    const initialTimings = initialData?.timings || null;
 
-const loadSmartNotificationModule = async () => {
-  if (!smartNotificationModulePromise) {
-    smartNotificationModulePromise = import('../services/smartNotificationService');
+    return {
+      timings: initialTimings,
+      nextPrayer: initialTimings ? getNextPrayer(initialTimings) : null,
+      loading: !initialTimings
+    };
+  } catch (error) {
+    logger.error('[usePrayerTimes] Failed to create initial prayer snapshot', error);
+    return {
+      timings: null,
+      nextPrayer: null,
+      loading: true
+    };
   }
-
-  return smartNotificationModulePromise;
 };
 
-const loadFcmModule = async () => {
-  if (!fcmModulePromise) {
-    fcmModulePromise = import('../services/fcmService');
-  }
-
-  return fcmModulePromise;
+const loadFcmRuntime = async () => {
+  const fcmModule = await import('../services/fcmService');
+  return {
+    fcmService: fcmModule.default,
+    createNotificationChannels: fcmModule.createNotificationChannels,
+  };
 };
 
 export const usePrayerTimes = () => {
-  const [timings, setTimings] = useState(null);
-  const [nextPrayer, setNextPrayer] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const initialPrayerSnapshotRef = useRef(null);
+  if (!initialPrayerSnapshotRef.current) {
+    initialPrayerSnapshotRef.current = getInitialPrayerSnapshot();
+  }
+
+  const [timings, setTimings] = useState(initialPrayerSnapshotRef.current.timings);
+  const [nextPrayer, setNextPrayer] = useState(initialPrayerSnapshotRef.current.nextPrayer);
+  const [loading, setLoading] = useState(initialPrayerSnapshotRef.current.loading);
   const [error, setError] = useState(null);
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
@@ -38,9 +57,6 @@ export const usePrayerTimes = () => {
 
   const schedulePrayerSideEffects = useCallback(async (prayerTimings, coords = null) => {
     try {
-      const smartNotificationModule = await loadSmartNotificationModule();
-      const smartNotificationService = smartNotificationModule.default;
-
       await Promise.allSettled([
         smartNotificationService.initializeSmartNotifications({ prayerTimes: prayerTimings }),
         syncPrayerSchedule({
@@ -112,18 +128,18 @@ export const usePrayerTimes = () => {
 
     const initFCM = async () => {
       try {
-        const fcmModule = await loadFcmModule();
+        const { fcmService, createNotificationChannels } = await loadFcmRuntime();
         if (isCancelled) {
           return;
         }
 
-        fcmModuleRef.current = fcmModule;
-        await fcmModule.createNotificationChannels();
+        fcmModuleRef.current = fcmService;
+        await createNotificationChannels();
         if (isCancelled) {
           return;
         }
 
-        const firebaseStatus = await fcmModule.FCMService.getFirebaseStatus();
+        const firebaseStatus = await fcmService.getFirebaseStatus();
         if (!firebaseStatus.initialized) {
           if (!isCancelled) {
             logger.warn('[usePrayerTimes] Native Firebase unavailable, skipping startup FCM registration');
@@ -131,7 +147,7 @@ export const usePrayerTimes = () => {
           return;
         }
 
-        await fcmModule.FCMService.initialize({ requestPermission: false });
+        await fcmService.initialize({ requestPermission: false });
         if (!isCancelled) {
           logger.log('[usePrayerTimes] FCM and notification channels initialized');
         }
@@ -158,7 +174,7 @@ export const usePrayerTimes = () => {
     return () => {
       isCancelled = true;
       cancelDeferredInit();
-      fcmModuleRef.current?.FCMService.removeListeners().catch(() => {});
+      fcmModuleRef.current?.removeListeners?.().catch(() => {});
     };
   }, []);
 
@@ -182,7 +198,6 @@ export const usePrayerTimes = () => {
   }, [timings]);
 
   const handleEnableNotifications = async () => {
-    const { requestNotificationPermission } = await loadSmartNotificationModule();
     const granted = await requestNotificationPermission();
     setPermissionGranted(granted);
     setShowWelcome(false);
@@ -193,10 +208,11 @@ export const usePrayerTimes = () => {
     }
 
     try {
-      const fcmModule = fcmModuleRef.current || await loadFcmModule();
+      const { fcmService, createNotificationChannels } = await loadFcmRuntime();
+      const fcmModule = fcmModuleRef.current || fcmService;
       fcmModuleRef.current = fcmModule;
-      await fcmModule.createNotificationChannels();
-      await fcmModule.FCMService.initialize({ requestPermission: false });
+      await createNotificationChannels();
+      await fcmModule.initialize({ requestPermission: false });
     } catch (fcmError) {
       logger.warn('[usePrayerTimes] Notification permission granted but FCM init failed:', fcmError);
     }
@@ -206,6 +222,15 @@ export const usePrayerTimes = () => {
     setShowWelcome(false);
     storageService.setBoolean(STORAGE_KEYS.HAS_SEEN_WELCOME, true);
   };
+
+  useEffect(() => {
+    if (timings) {
+      return undefined;
+    }
+
+    void fetchPrayerTimes(null, true);
+    return undefined;
+  }, [fetchPrayerTimes, timings]);
 
   return {
     timings,
@@ -228,7 +253,6 @@ export const useStickyNotification = (timings, nextPrayer) => {
     let isDisposed = false;
 
     const updateStickyNotification = async () => {
-      const { showStickyNotification, cancelStickyNotification } = await loadSmartNotificationModule();
       if (isDisposed) {
         return;
       }

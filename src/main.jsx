@@ -1,18 +1,14 @@
-import { StrictMode, Suspense } from 'react'
+import { StrictMode, Suspense, lazy } from 'react'
 import { createRoot } from 'react-dom/client'
 import '@fontsource/noto-naskh-arabic/400.css'
 import './index.css'
 import './i18n'
-import App from './App.jsx'
-import { BrowserRouter } from 'react-router-dom'
-import ErrorBoundary from './components/ErrorBoundary.jsx'
 import { storageService } from './services/storageService'
 import { STORAGE_KEYS } from './constants'
-import { TimeProvider } from './context/TimeContext'
-import { FocusProvider } from './context/FocusContext'
-import { GamificationProvider } from './context/GamificationProvider'
-import { FamilyProvider } from './context/FamilyProvider.jsx'
 import { scheduleDeferredTask } from './utils/startupScheduler'
+import { logger } from './utils/logger'
+
+const AppProviders = lazy(() => import('./AppProviders.jsx'))
 
 const isDev = import.meta.env.DEV
 
@@ -27,8 +23,8 @@ const applyAndroidWebViewClass = () => {
       document.documentElement.classList.add('android-webview');
       document.body?.classList.add('android-webview');
     }
-  } catch {
-    // no-op
+  } catch (error) {
+    logger.error('[AppBootstrap] Failed to apply Android WebView class', error)
   }
 };
 
@@ -52,7 +48,7 @@ const mountStartupDebugOverlay = (label, errorLike) => {
       errorLike?.stack ? `Stack:\n${errorLike.stack}` : null
     ].filter(Boolean).join('\n\n')
 
-    console.error('[StartupFatal]', text)
+    logger.error('[StartupFatal]', text)
 
     const existing = document.getElementById('startup-fatal-overlay')
     if (existing) {
@@ -71,12 +67,12 @@ const mountStartupDebugOverlay = (label, errorLike) => {
     pre.style.overflow = 'auto'
     pre.style.whiteSpace = 'pre-wrap'
     pre.style.wordBreak = 'break-word'
-    pre.style.background = '#111'
-    pre.style.color = '#ffb4b4'
+    pre.style.background = '#1b1f23'
+    pre.style.color = '#fecaca'
     pre.style.fontSize = '12px'
     document.body?.appendChild(pre)
-  } catch {
-    // no-op
+  } catch (error) {
+    logger.error('[AppBootstrap] Failed to mount startup debug overlay', error)
   }
 }
 
@@ -100,21 +96,9 @@ document.documentElement.setAttribute('data-theme', theme);
 try {
   createRoot(document.getElementById('root')).render(
     <StrictMode>
-      <ErrorBoundary>
-        <TimeProvider>
-          <FocusProvider>
-            <GamificationProvider>
-              <FamilyProvider>
-                <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0f3d2e', color: '#a3b18a' }}>Yükleniyor...</div>}>
-                  <BrowserRouter>
-                    <App />
-                  </BrowserRouter>
-                </Suspense>
-              </FamilyProvider>
-            </GamificationProvider>
-          </FocusProvider>
-        </TimeProvider>
-      </ErrorBoundary>
+      <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'linear-gradient(135deg, #064e3b, #042f2e)', color: '#fde68a', fontWeight: 700 }}>Yukleniyor...</div>}>
+        <AppProviders />
+      </Suspense>
     </StrictMode>,
   )
 } catch (e) {

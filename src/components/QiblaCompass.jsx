@@ -4,6 +4,7 @@ import { Compass, MapPin, Info, ArrowUp, CheckCircle2, Camera, CameraOff } from 
 import IslamicBackButton from './shared/IslamicBackButton';
 import './QiblaCompass.css';
 import './Navigation.css';
+import { logger } from '../utils/logger';
 
 // ── Sabitler ────────────────────────────────────────────────────
 const KAABA_LAT = 21.4225;
@@ -177,7 +178,8 @@ const QiblaCompass = ({ onClose }) => {
                     } else {
                         setError(t('qibla.permissionDenied', 'Pusula izni reddedildi.'));
                     }
-                } catch {
+                } catch (error) {
+                    logger.error('[QiblaCompass] Failed to request device orientation permission', error);
                     setError(t('qibla.notSupported', 'Pusula bu cihazda desteklenmiyor.'));
                 }
             } else {
@@ -207,7 +209,8 @@ const QiblaCompass = ({ onClose }) => {
                 videoRef.current.srcObject = stream;
                 await videoRef.current.play();
             }
-        } catch {
+        } catch (error) {
+            logger.error('[QiblaCompass] Failed to start AR camera mode', error);
             setArError(t('qibla.cameraError', 'Kamera açılamadı. İzin verdiğinizden emin olun.'));
             setIsARMode(false);
         }

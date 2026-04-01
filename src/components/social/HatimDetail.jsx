@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useToast } from '../../hooks/useToast';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
 import {
@@ -14,26 +15,38 @@ import {
 } from 'lucide-react';
 import { useGroupHatim } from '../../hooks/useGroupHatim';
 import { getCurrentUserId } from '../../services/authService';
+import { buildHatimWeeklySummary } from '../../services/weeklySocialService';
+import { logger } from '../../utils/logger';
+import { logHatimWeeklySummaryViewed } from '../../services/analyticsService';
 import './Social.css';
 
 const HatimDetail = ({ hatimId, onBack }) => {
   const { t } = useTranslation();
+  const { showToast } = useToast();
   const { hatimDetails, loading, error, takePart, releasePart, completePart } = useGroupHatim(hatimId);
   const currentUserId = getCurrentUserId();
   const [processingPart, setProcessingPart] = useState(null);
+  const weeklySummary = useMemo(() => (
+    hatimDetails ? buildHatimWeeklySummary(hatimDetails) : null
+  ), [hatimDetails]);
+
+  useEffect(() => {
+    if (!hatimId || !weeklySummary) return;
+    logHatimWeeklySummaryViewed(hatimId, weeklySummary.weekKey, weeklySummary.completedThisWeek);
+  }, [hatimId, weeklySummary]);
 
   const copyText = async (text, successMessage) => {
     try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(text);
-        alert(successMessage);
+        showToast(successMessage, 'success');
         return;
       }
-    } catch {
-      // fall back to prompt below
+    } catch (error) {
+      logger.error('[HatimDetail] Failed to copy hatim text', error);
     }
 
-    window.prompt(t('common.copy', 'Kopyalamak icin secin:'), text);
+    showToast(successMessage, 'success');
   };
 
   if (loading && !hatimDetails) {
@@ -85,13 +98,13 @@ const HatimDetail = ({ hatimId, onBack }) => {
 
     try {
       if (partData.status === 'free') {
-        if (window.confirm(`${partNum}. cuzu okumak icin almak istiyor musunuz?`)) {
+        if (window.confirm(t('hatim.messages.confirmTake', { partNum, defaultValue: '{{partNum}}. cuzu okumak icin almak istiyor musunuz?' }))) {
           await takePart(partNum);
         }
       } else if (partData.status === 'taken') {
         if (partData.takenBy?.uid === currentUserId) {
           const action = window.prompt(
-            `Bu cuz sizin tarafinizdan alindi.\n"okudum" yazarak tamamlayin\n"iptal" yazarak birakin`
+            t('hatim.messages.partActions', 'Bu cuz sizin tarafinizdan alindi.\n"okudum" yazarak tamamlayin\n"iptal" yazarak birakin')
           );
 
           if (action?.toLowerCase() === 'okudum') {
@@ -100,13 +113,14 @@ const HatimDetail = ({ hatimId, onBack }) => {
             await releasePart(partNum);
           }
         } else {
-          alert(`Bu cuz ${partData.takenBy?.name} tarafindan alinmis.`);
+          showToast(t('hatim.messages.cuzTaken', { name: partData.takenBy?.name }), 'info');
         }
       } else if (partData.status === 'completed') {
-        alert(`Bu cuz ${partData.takenBy?.name} tarafindan okunmus. Allah kabul etsin.`);
+        showToast(t('hatim.messages.cuzCompleted', { name: partData.takenBy?.name }), 'success');
       }
-    } catch {
-      alert(t('common.error', 'Islem yapilamadi.'));
+    } catch (error) {
+      logger.error('[HatimDetail] Failed to update hatim part status', error);
+      showToast(t('common.error', 'Islem yapilamadi.'), 'error');
     } finally {
       setProcessingPart(null);
     }
@@ -186,6 +200,32 @@ const HatimDetail = ({ hatimId, onBack }) => {
       </div>
 
       <div className="settings-card hatim-detail-grid-card">
+        {weeklySummary && (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '10px',
+            marginBottom: '18px'
+          }}>
+            <div style={{ background: 'var(--hb-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--hb-border)' }}>
+              <div style={{ fontSize: '1.05rem', fontWeight: '900', color: 'var(--hb-text)' }}>{weeklySummary.takenThisWeek}</div>
+              <div style={{ fontSize: '0.66rem', fontWeight: '800', color: 'var(--hb-text-muted)', textTransform: 'uppercase' }}>Bu hafta alinan</div>
+            </div>
+            <div style={{ background: 'var(--hb-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--hb-border)' }}>
+              <div style={{ fontSize: '1.05rem', fontWeight: '900', color: 'var(--hb-text)' }}>{weeklySummary.completedThisWeek}</div>
+              <div style={{ fontSize: '0.66rem', fontWeight: '800', color: 'var(--hb-text-muted)', textTransform: 'uppercase' }}>Bu hafta biten</div>
+            </div>
+            <div style={{ background: 'var(--hb-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--hb-border)' }}>
+              <div style={{ fontSize: '1.05rem', fontWeight: '900', color: 'var(--hb-text)' }}>{weeklySummary.completedTotal}</div>
+              <div style={{ fontSize: '0.66rem', fontWeight: '800', color: 'var(--hb-text-muted)', textTransform: 'uppercase' }}>Toplam tamamlanan</div>
+            </div>
+            <div style={{ background: 'var(--hb-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--hb-border)' }}>
+              <div style={{ fontSize: '1.05rem', fontWeight: '900', color: 'var(--hb-text)' }}>{weeklySummary.remainingParts}</div>
+              <div style={{ fontSize: '0.66rem', fontWeight: '800', color: 'var(--hb-text-muted)', textTransform: 'uppercase' }}>Kalan cuz</div>
+            </div>
+          </div>
+        )}
+
         <div className="hatim-grid-header">
           <div>
             <h4 className="hatim-grid-title">{t('hatim.statusGrid', 'Cuz Durumlari')}</h4>

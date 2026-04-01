@@ -6,10 +6,13 @@ import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { LazyImage } from './LazyImage';
+import { useToast } from '../hooks/useToast';
+import { logger } from '../utils/logger';
 // html2canvas is dynamically imported when needed to reduce initial bundle size
 
 const Stories = memo(() => {
     const { t, ready } = useTranslation(['translation', 'prayers']);
+    const { showToast } = useToast();
     const [activeStory, setActiveStory] = useState(null);
     const [isSharing, setIsSharing] = useState(false);
     const storyContentRef = useRef(null);
@@ -184,7 +187,7 @@ const Stories = memo(() => {
                     a.click();
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
-                    alert(t('stories.downloadedAlert'));
+                    showToast(t('stories.downloadedAlert'), 'success');
                 }
             }
         } catch (err) {
@@ -194,9 +197,10 @@ const Stories = memo(() => {
                 try {
                     const shareText = `${storyTitle}\n\n${storyContent}\n\n- ${t('stories.sharedFrom')}`;
                     await navigator.clipboard.writeText(shareText);
-                    alert(t('stories.copiedToClipboard'));
-                } catch {
-                    alert(t('stories.shareError'));
+                    showToast(t('stories.copiedToClipboard'), 'success');
+                } catch (error) {
+                    logger.error('[Stories] Failed to copy share text to clipboard', error);
+                    showToast(t('stories.shareError'), 'error');
                 }
             }
         } finally {

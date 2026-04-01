@@ -4,6 +4,7 @@
  */
 
 import { registerPlugin, Capacitor } from '@capacitor/core';
+import { logger } from '../utils/logger';
 
 // Fallback implementation for when plugin is not available
 const noopPlugin = {
@@ -31,7 +32,8 @@ try {
   } else {
     Widget = noopPlugin;
   }
-} catch {
+} catch (error) {
+  logger.error('[WidgetPlugin] Failed to register plugin', error);
   Widget = noopPlugin;
 }
 

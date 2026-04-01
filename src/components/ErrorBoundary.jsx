@@ -1,6 +1,7 @@
 import React from 'react'
 import crashlyticsReporter from '../utils/crashlyticsReporter'
 import i18n from '../i18n'
+import { logger } from '../utils/logger'
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -24,11 +25,10 @@ class ErrorBoundary extends React.Component {
     // Log to Crashlytics for production observability
     try {
       crashlyticsReporter?.logException?.(error || new Error('Unknown error'));
-    } catch {
-      // ignore logging failures to avoid breaking UI
+    } catch (reportingError) {
+      logger.error('[ErrorBoundary] Failed to report error to Crashlytics', reportingError)
     }
-    // Fallback console error for local debugging
-    console.error('Unhandled error captured by ErrorBoundary:', error, errorInfo)
+    logger.error('Unhandled error captured by ErrorBoundary:', error, errorInfo)
   }
 
   render() {
