@@ -170,7 +170,8 @@ export const getProStateSnapshot = () => {
 export const isPro = () => {
   try {
     return isProStateActive(getProStateSnapshot());
-  } catch {
+  } catch (error) {
+    logger.error('[ProService] isPro failed', error);
     return false;
   }
 };
@@ -294,7 +295,8 @@ const getDailyLimits = async () => {
       tajweed_ai: 0,
       word_analysis: 0
     };
-  } catch {
+  } catch (error) {
+    logger.error('[ProService] getUsageStats failed', error);
     return { date: getTodayString(), nuzul_ai: 0, tajweed_ai: 0, word_analysis: 0 };
   }
 };

@@ -13,7 +13,11 @@ function AppOverlays({
   onHideSplash,
   showGrowthOnboarding,
   onboardingStep,
+  onboardingConfig,
   onboardingLanguage,
+  onboardingReferralProgress,
+  onboardingReferralServerSnapshot,
+  onboardingIsProUser,
   onSelectGrowthLanguage,
   onRequestGrowthLocation,
   onRequestGrowthNotifications,
@@ -25,6 +29,7 @@ function AppOverlays({
   onClose24hRecovery,
   isProUser,
   showInviteModal,
+  inviteModalContext,
   onCloseInvite,
   showMoodSelector,
   onCloseMoodSelector,
@@ -48,6 +53,10 @@ function AppOverlays({
           <GrowthOnboarding
             initialStep={onboardingStep}
             initialLanguage={onboardingLanguage}
+            flowConfig={onboardingConfig}
+            referralProgress={onboardingReferralProgress}
+            referralServerSnapshot={onboardingReferralServerSnapshot}
+            isProUser={onboardingIsProUser}
             onSelectLanguage={onSelectGrowthLanguage}
             onRequestLocation={onRequestGrowthLocation}
             onRequestNotifications={onRequestGrowthNotifications}
@@ -75,6 +84,7 @@ function AppOverlays({
         <Suspense fallback={null}>
           <InviteModal
             isOpen={showInviteModal}
+            entrySource={inviteModalContext?.source || 'invite_modal'}
             onClose={onCloseInvite}
           />
         </Suspense>

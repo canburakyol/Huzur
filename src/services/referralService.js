@@ -2,6 +2,7 @@ import { buildInviteUrl } from '../config/deepLinkConfig';
 import { analyticsService } from './analyticsService';
 import { STORAGE_KEYS } from '../constants';
 import { storageService } from './storageService';
+import { logger } from '../utils/logger';
 import {
   evaluateReferralRewardEligibility,
   REFERRAL_ANTI_ABUSE_RULES,
@@ -9,6 +10,7 @@ import {
   isReferralRewardBlocked
 } from '../config/referralRules';
 import { getActiveCampaign } from './campaignService';
+import { syncReferralState } from './referralServerService';
 
 const REFERRAL_CODE_KEY = STORAGE_KEYS.REFERRAL_OWN_CODE;
 const REFERRAL_STATE_KEY = STORAGE_KEYS.REFERRAL_STATE;
@@ -34,6 +36,10 @@ const createDefaultReferralState = () => ({
     suspiciousFlags: []
   }
 });
+
+const syncReferralStateInBackground = (state, source = 'runtime') => {
+  void syncReferralState(state, { source }).catch(() => null);
+};
 
 const nowIso = () => new Date().toISOString();
 
@@ -253,20 +259,17 @@ export const createInviteLink = ({ source = 'app_share', campaign = 'evergreen',
   const inviteUrl = buildInviteUrl({ code, source, campaign: effectiveCampaign, lang: effectiveLang });
 
   const state = ensureAntiAbuseState(getReferralState());
-  saveReferralState({
+  const savedState = saveReferralState({
     ...state,
     ownCode: code,
     inviteCreatedAt: state.inviteCreatedAt || nowIso()
   });
 
-  analyticsService.logEvent('invite_created', {
-    referral_code: code,
-    source,
-    campaign: effectiveCampaign,
-    lang: effectiveLang,
+  analyticsService.logInviteCreated(code, source, effectiveCampaign, effectiveLang, {
     campaign_region: activeCampaign.region,
     campaign_variant: activeCampaign.variant
   });
+  syncReferralStateInBackground(savedState, source);
 
   return {
     code,
@@ -282,13 +285,14 @@ const readReferralCodeFromLocation = () => {
     const pathCode = invitePathIndex >= 0 ? pathParts[invitePathIndex + 1] : null;
     const queryCode = currentUrl.searchParams.get('ref');
     return (pathCode || queryCode || '').trim().toUpperCase() || null;
-  } catch {
+  } catch (error) {
+    logger.error('[ReferralService] extractReferralCodeFromUrl failed', error);
     return null;
   }
 };
 
-export const captureInviteAcceptanceFromUrl = ({ source = 'deep_link' } = {}) => {
-  const referralCode = normalizeReferralCode(readReferralCodeFromLocation());
+export const captureInviteAcceptanceFromCode = (referralCodeInput, { source = 'deep_link' } = {}) => {
+  const referralCode = normalizeReferralCode(referralCodeInput);
   if (!referralCode) return null;
 
   const ownCode = storageService.getString(REFERRAL_CODE_KEY, '');
@@ -369,6 +373,7 @@ export const captureInviteAcceptanceFromUrl = ({ source = 'deep_link' } = {}) =>
     };
 
     const savedState = saveReferralState(nextState);
+    syncReferralStateInBackground(savedState, source);
 
     analyticsService.logInviteAccepted(referralCode, source);
     return {
@@ -380,12 +385,17 @@ export const captureInviteAcceptanceFromUrl = ({ source = 'deep_link' } = {}) =>
   }
 
   const savedState = saveReferralState(nextState);
+  syncReferralStateInBackground(savedState, source);
   return {
     status: 'unchanged',
     reason: 'same_referral_code',
     blockedUntil: savedState.antiAbuse.blockedUntil,
     state: savedState
   };
+};
+
+export const captureInviteAcceptanceFromUrl = ({ source = 'deep_link' } = {}) => {
+  return captureInviteAcceptanceFromCode(readReferralCodeFromLocation(), { source });
 };
 
 export const markOnboardingCompletedForReferral = () => {
@@ -397,7 +407,9 @@ export const markOnboardingCompletedForReferral = () => {
     onboardingCompletedAt: state.onboardingCompletedAt || nowIso()
   };
 
-  return saveReferralState(maybeUnlockRewards(updated));
+  const savedState = saveReferralState(maybeUnlockRewards(updated));
+  syncReferralStateInBackground(savedState, 'onboarding_completed');
+  return savedState;
 };
 
 export const markFirstIbadahCompletedForReferral = () => {
@@ -408,7 +420,9 @@ export const markFirstIbadahCompletedForReferral = () => {
     firstIbadahCompletedAt: state.firstIbadahCompletedAt || nowIso()
   };
 
-  return saveReferralState(maybeUnlockRewards(updated));
+  const savedState = saveReferralState(maybeUnlockRewards(updated));
+  syncReferralStateInBackground(savedState, 'first_ibadah_completed');
+  return savedState;
 };
 
 export const markInviteeConvertedForInviter = () => {
@@ -441,6 +455,7 @@ export const getReferralProgress = () => {
 export default {
   getOrCreateReferralCode,
   createInviteLink,
+  captureInviteAcceptanceFromCode,
   captureInviteAcceptanceFromUrl,
   markOnboardingCompletedForReferral,
   markFirstIbadahCompletedForReferral,

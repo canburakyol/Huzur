@@ -2,46 +2,15 @@ import { useGamification } from '../hooks/useGamification';
 import { Check, Gift, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { memo } from 'react';
-
-const ROUTE_MAP = {
-    '/zikirmatik': { feature: 'zikirmatik' },
-    '/esma': { feature: 'esmaUlHusna' },
-    '/hadis': { feature: 'hadiths' },
-    '/ayet': { feature: 'quran' },
-    '/dua-share': { tab: 'community' },
-    '/kible': { feature: 'qibla' },
-    '/': { tab: 'home' }
-};
+import { navigateFromAction } from '../utils/actionNavigation';
 
 const DailyQuests = memo(() => {
     const { dailyQuests, claimQuestReward } = useGamification();
     const { t } = useTranslation();
 
-    const emitQuestProgressForAction = (action) => {
-        if (action === '/kible') {
-            window.dispatchEvent(new CustomEvent('quest:progress', {
-                detail: { type: 'utility', subType: 'qibla', amount: 1 }
-            }));
-        }
-
-        if (action === '/') {
-            window.dispatchEvent(new CustomEvent('quest:progress', {
-                detail: { type: 'utility', subType: 'prayer_times', amount: 1 }
-            }));
-        }
-    };
-
     const openQuestAction = (action) => {
         if (!action) return;
-
-        emitQuestProgressForAction(action);
-        const config = ROUTE_MAP[action] || ROUTE_MAP['/'];
-
-        if (config.feature) {
-            window.dispatchEvent(new CustomEvent('openFeature', { detail: config.feature }));
-        } else if (config.tab) {
-            window.dispatchEvent(new CustomEvent('setActiveTab', { detail: config.tab }));
-        }
+        navigateFromAction(action);
     };
 
     if (!dailyQuests || !dailyQuests.quests) return null;

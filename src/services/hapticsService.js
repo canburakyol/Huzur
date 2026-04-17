@@ -88,8 +88,8 @@ class HapticsService {
       if (this.supported) {
         await Haptics.selectionChanged();
       }
-    } catch {
-      // No fallback needed
+    } catch (error) {
+      logger.error('[Haptics] selection haptic failed', error);
     }
   }
 }

@@ -8,6 +8,7 @@ import { Capacitor } from '@capacitor/core';
 import { storageService } from './storageService';
 import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
+import { startAmbientPulse, isAmbientPulseEnabled } from './ambientPrayerPulseService';
 
 // Notification IDs (reserved range: 5000-5100)
 const MORNING_REMINDER_ID = 5001;
@@ -32,7 +33,8 @@ export const getReminderRegion = () => {
         if (tz === 'Europe/Istanbul') return 'TR';
         if (EUROPE_TIMEZONE_PREFIXES.some(prefix => tz.startsWith(prefix))) return 'EU_DIASPORA';
         return 'TR';
-    } catch {
+    } catch (error) {
+        logger.error('[ReminderService] Region detection failed', error);
         return 'TR';
     }
 };
@@ -169,8 +171,21 @@ export const initializeDailyReminders = async () => {
     }
 };
 
+/**
+ * Trigger ambient pulse if prayer time is approaching.
+ * Call this from the prayer time countdown logic.
+ * @param {number} minutesUntilPrayer - Minutes until next prayer
+ */
+export const checkAndTriggerAmbientPulse = (minutesUntilPrayer) => {
+    if (minutesUntilPrayer <= 15 && minutesUntilPrayer > 14 && isAmbientPulseEnabled()) {
+        startAmbientPulse();
+        logger.log('[Reminder] Ambient prayer pulse triggered,', minutesUntilPrayer, 'min before prayer');
+    }
+};
+
 export default {
     scheduleDailyReminders,
     cancelDailyReminders,
-    initializeDailyReminders
+    initializeDailyReminders,
+    checkAndTriggerAmbientPulse
 };

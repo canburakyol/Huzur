@@ -1,0 +1,54 @@
+/* ===========================
+   Assistant — Scoped Styles
+   Extracted from inline <style> in the monolithic Assistant.jsx
+   =========================== */
+
+.typing-indicator {
+  display: flex;
+  gap: 5px;
+}
+
+.typing-indicator span {
+  width: 7px;
+  height: 7px;
+  background: var(--nav-accent);
+  opacity: 0.6;
+  border-radius: 50%;
+  animation: assistant-typing 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes assistant-typing {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.3;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.pulse {
+  display: inline-block;
+  animation: assistant-pulse 2s infinite;
+}
+
+@keyframes assistant-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+  }
+}

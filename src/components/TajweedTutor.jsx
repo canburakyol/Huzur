@@ -4,17 +4,28 @@ import IslamicBackButton from './shared/IslamicBackButton';
 import { useTranslation } from 'react-i18next';
 import { getRulesByLevel, TAJWEED_LEVELS } from '../data/tajweedData';
 import TajweedQuiz from './TajweedQuiz';
+import { useToast } from '../hooks/useToast';
 import './Education.css';
 
 const TajweedTutor = ({ onClose }) => {
   const { t } = useTranslation('tajweed');
+  const { showToast } = useToast();
   const tt = (key, defaultValue, options) => t(key, { defaultValue, ...options });
   const [selectedRule, setSelectedRule] = useState(null);
   const [activeLevel, setActiveLevel] = useState(TAJWEED_LEVELS.BEGINNER);
   const [showQuiz, setShowQuiz] = useState(false);
   const audioRef = useRef(null);
 
-  const TAJWEED_QA = {};
+  const TAJWEED_QA = useMemo(() => ({
+    [tt('tajweed.faq.items.tenvin.question', 'Tenvin nedir?')]: tt('tajweed.faq.items.tenvin.answer', 'Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Uc cesidi vardir:\n• Fethatan (ً): Ustun tenvin\n• Kesretan (ٍ): Esre tenvin\n• Dammetan (ٌ): Otre tenvin\nTenvin, kelimenin sonundaki nunun yazilmadan okunmasidir.'),
+    [tt('tajweed.faq.items.gunne.question', 'Gunneli okuyus nasil olur?')]: tt('tajweed.faq.items.gunne.answer', 'Gunne, nun ve mim harflerinin genizden okunmasidir. Iki hareke miktari tutulur.\n• Idgam (mealgunne): Nun sakineden sonra ي، ن، م، و gelirse\n• Ihfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• Iklab: Nun sakineden sonra ب gelirse, mime donusur ve gunneli okunur.'),
+    [tt('tajweed.faq.items.kalkale.question', 'Kalkale harfleri hangileri?')]: tt('tajweed.faq.items.kalkale.answer', 'Kalkale harfleri 5 tanedir ve "قطب جد" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) oldugunda, cikis noktasinda bir sicrama veya titresim yapilir.'),
+    [tt('tajweed.faq.items.med.question', 'Med harfleri nelerdir?')]: tt('tajweed.faq.items.med.answer', 'Uzatma (Med) harfleri uctur: Elif (ا), Vav (و) ve Ya (ي). Bu harfler kendinden onceki harfi bir elif miktari (yaklasik 1-1.5 saniye) uzatir.'),
+    [tt('tajweed.faq.items.makhraj.question', 'Mahrec nedir?')]: tt('tajweed.faq.items.makhraj.answer', 'Mahrec, harflerin agizdan cikis yeridir. Kuran okurken harflerin dogru mahreclerinden cikarilmasi anlamin bozulmamasi icin cok onemlidir.'),
+    [tt('tajweed.faq.items.ihfa.question', 'Ihfa nasil yapilir?')]: tt('tajweed.faq.items.ihfa.answer', 'Ihfa, sozlukte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiginde, nun sesini genizden getirerek hafifce gizleyerek okumaktir.'),
+    [tt('tajweed.faq.items.sekte.question', 'Sekte nedir?')]: tt('tajweed.faq.items.sekte.answer', 'Sekte, sesi bir an icin kesip nefes almadan beklemektir. Kuran-i Kerim\'de 4 yerde sekte bulunur (Kehf, Yasin, Kiyame ve Mutaffifin surelerinde).'),
+    [tt('tajweed.faq.items.izhar.question', 'Izhar nedir?')]: tt('tajweed.faq.items.izhar.answer', 'Izhar, acikca okumaktir. Sakin nun veya tenvinden sonra bogaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hic tutulmadan ve gizlenmeden oldugu gibi okunur.')
+  }), [t]);
   /*
   const TAJWEED_QA_REMOVED = {
     'Tenvin nedir?': 'Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Üç çeşidi vardır:\n• Fethatân (ً): Üstün tenvin\n• Kesretân (ٍ): Esre tenvin\n• Dammetân (ٌ): Ötre tenvin\nTenvin, kelimenin sonundaki nunun yazılmadan okunmasıdır.',
@@ -55,7 +66,7 @@ const TajweedTutor = ({ onClose }) => {
 
   const playAudio = (example) => {
     if (!example.surah || !example.ayah) {
-        alert(tt('tajweed.audioNotReady', 'Ses dosyasi hazir degil.'));
+        showToast(tt('tajweed.audioNotReady', 'Ses dosyasi hazir degil.'), 'info');
         return;
     }
 
@@ -70,7 +81,7 @@ const TajweedTutor = ({ onClose }) => {
     
     audio.play().catch(e => {
         if (e.name !== 'AbortError') {
-            alert(tt('tajweed.audioError', `Ses calinirken hata olustu: ${e.message}`, { error: e.message }));
+            showToast(tt('tajweed.audioError', 'Ses calinirken hata olustu.'), 'error');
         }
     });
   };

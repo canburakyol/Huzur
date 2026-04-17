@@ -10,11 +10,23 @@ import { useTranslation } from 'react-i18next';
 const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
   const { t } = useTranslation();
 
+  const handleKeyDown = (callback) => (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      callback();
+    }
+  };
+
   return (
-    <div className="bottom-nav">
+    <div className="bottom-nav" role="navigation" aria-label={t('nav.mainNavigation', 'Main navigation')}>
       <div 
         className={`nav-item ${activeTab === 'home' ? 'active' : ''}`} 
         onClick={() => setActiveTab('home')}
+        onKeyDown={handleKeyDown(() => setActiveTab('home'))}
+        role="button"
+        tabIndex={0}
+        aria-current={activeTab === 'home' ? 'page' : undefined}
+        aria-label={t('nav.home')}
       >
         <Home size={24} />
         <span>{t('nav.home')}</span>
@@ -22,6 +34,11 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
       <div 
         className={`nav-item ${activeTab === 'quran' ? 'active' : ''}`} 
         onClick={() => setActiveTab('quran')}
+        onKeyDown={handleKeyDown(() => setActiveTab('quran'))}
+        role="button"
+        tabIndex={0}
+        aria-current={activeTab === 'quran' ? 'page' : undefined}
+        aria-label={t('nav.quran')}
       >
         <Book size={24} />
         <span>{t('nav.quran')}</span>
@@ -29,6 +46,11 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
       <div 
         className={`nav-item ${activeTab === 'assistant' ? 'active' : ''}`} 
         onClick={() => setActiveTab('assistant')}
+        onKeyDown={handleKeyDown(() => setActiveTab('assistant'))}
+        role="button"
+        tabIndex={0}
+        aria-current={activeTab === 'assistant' ? 'page' : undefined}
+        aria-label={t('nav.assistant')}
       >
         <div className="assistant-icon-wrapper">
           <MessageCircle size={24} />
@@ -39,11 +61,23 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
       <div 
         className={`nav-item ${activeTab === 'community' ? 'active' : ''}`} 
         onClick={() => setActiveTab('community')}
+        onKeyDown={handleKeyDown(() => setActiveTab('community'))}
+        role="button"
+        tabIndex={0}
+        aria-current={activeTab === 'community' ? 'page' : undefined}
+        aria-label={t('nav.community')}
       >
         <Users size={24} />
         <span>{t('nav.community')}</span>
       </div>
-      <div className="nav-item" onClick={onShowMenu}>
+      <div
+        className="nav-item"
+        onClick={onShowMenu}
+        onKeyDown={handleKeyDown(onShowMenu)}
+        role="button"
+        tabIndex={0}
+        aria-label={t('nav.menu')}
+      >
         <Menu size={24} />
         <span>{t('nav.menu')}</span>
       </div>

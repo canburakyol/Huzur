@@ -3,9 +3,11 @@ import { Send, Heart, X, Sparkles, AlertCircle, ShieldOff, ShieldCheck } from 'l
 import { checkRateLimit } from '../../utils/rateLimiter';
 import { useDua } from '../../hooks/useDua';
 import { useTranslation } from 'react-i18next';
+import { useToast } from '../../hooks/useToast';
 
 const CreateDuaModal = ({ onClose }) => {
   const { t } = useTranslation();
+  const { showToast } = useToast();
   const { createDua, error } = useDua();
   const [text, setText] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -17,12 +19,12 @@ const CreateDuaModal = ({ onClose }) => {
     if (!text.trim()) return;
 
     if (!checkRateLimit('dua_submit', 5, 3600000)) {
-      alert(t('dua.create.rateLimit', 'Çok fazla dua isteği gönderdiniz. Lütfen daha sonra tekrar deneyin.'));
+      showToast(t('dua.create.rateLimit', 'Çok fazla dua isteği gönderdiniz. Lütfen daha sonra tekrar deneyin.'), 'error');
       return;
     }
 
     if (isAuthBlocked) {
-      alert(t('dua.create.authError', 'Firebase kimlik doğrulaması hazır değil. Lütfen internetinizi kontrol edip tekrar deneyin.'));
+      showToast(t('dua.create.authError', 'Firebase kimlik doğrulaması hazır değil. Lütfen internetinizi kontrol edip tekrar deneyin.'), 'error');
       return;
     }
 
@@ -32,7 +34,7 @@ const CreateDuaModal = ({ onClose }) => {
       onClose();
     } catch (err) {
       console.error(err);
-      alert(t('dua.create.error', 'Dua isteği oluşturulamadı'));
+      showToast(t('dua.create.error', 'Dua isteği oluşturulamadı'), 'error');
     } finally {
       setLoading(false);
     }

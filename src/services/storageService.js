@@ -24,8 +24,8 @@ export const getItem = (key, defaultValue = null) => {
     const item = localStorage.getItem(key);
     if (item === null) return defaultValue;
     return JSON.parse(item);
-  } catch {
-    logger.warn(`[StorageService] Error reading ${key}`);
+  } catch (error) {
+    logger.error(`[StorageService] Error reading ${key}`, error);
     return defaultValue;
   }
 };
@@ -40,8 +40,8 @@ export const setItem = (key, value) => {
   try {
     localStorage.setItem(key, JSON.stringify(value));
     return true;
-  } catch {
-    logger.warn('[StorageService] Error writing key');
+  } catch (error) {
+    logger.error(`[StorageService] Error writing key ${key}`, error);
     return false;
   }
 };
@@ -55,8 +55,8 @@ export const removeItem = (key) => {
   try {
     localStorage.removeItem(key);
     return true;
-  } catch {
-    logger.warn('[StorageService] Error removing key');
+  } catch (error) {
+    logger.error(`[StorageService] Error removing key ${key}`, error);
     return false;
   }
 };
@@ -70,8 +70,8 @@ export const removeItem = (key) => {
 export const getString = (key, defaultValue = '') => {
   try {
     return localStorage.getItem(key) || defaultValue;
-  } catch {
-    logger.warn(`[StorageService] Error reading string ${key}`);
+  } catch (error) {
+    logger.error(`[StorageService] Error reading string ${key}`, error);
     return defaultValue;
   }
 };
@@ -86,8 +86,8 @@ export const setString = (key, value) => {
   try {
     localStorage.setItem(key, value);
     return true;
-  } catch {
-    logger.warn('[StorageService] Error writing string key');
+  } catch (error) {
+    logger.error(`[StorageService] Error writing string key ${key}`, error);
     return false;
   }
 };
@@ -147,8 +147,8 @@ export const clearAll = () => {
       localStorage.removeItem(key);
     });
     return true;
-  } catch {
-    logger.warn('[StorageService] Error clearing storage');
+  } catch (error) {
+    logger.error('[StorageService] Error clearing storage', error);
     return false;
   }
 };

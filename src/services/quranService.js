@@ -235,8 +235,8 @@ export const getSurahComplete = async (surahNumber, translationId = DEFAULT_TURK
             if (expiredCache?.data && !hasMatchingSurahNumber(expiredCache.data, surahNumber)) {
                 storageService.removeItem(storageKey);
             }
-        } catch {
-            // Ignore offline fallback cache errors.
+        } catch (error) {
+            logger.error('[QuranService] Offline fallback cache cleanup failed', error);
         }
 
         return null;

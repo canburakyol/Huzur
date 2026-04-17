@@ -6,6 +6,7 @@ import { Share } from '@capacitor/share';
 import { HIKMET_CATEGORIES, HIKMETLER, getDailyHikmet, getHikmetByCategory, getRandomHikmet } from '../data/hikmetData';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
+import { useToast } from '../hooks/useToast';
 import './Hikmetname.css';
 import './Navigation.css';
 
@@ -13,6 +14,7 @@ const HIKMET_FAVORITES_KEY = 'hikmet_favorites';
 
 function Hikmetname({ onClose }) {
     const { t } = useTranslation();
+    const { showToast } = useToast();
     const [activeCategory, setActiveCategory] = useState(null);
     const [dailyHikmet, setDailyHikmet] = useState(getDailyHikmet());
     const [favorites, setFavorites] = useState(() => {
@@ -49,7 +51,7 @@ function Hikmetname({ onClose }) {
                 await navigator.share({ text });
             } else {
                 navigator.clipboard.writeText(text);
-                alert(t('common.copied', 'Panoya kopyalandı!'));
+                showToast(t('common.copied', 'Panoya kopyalandı!'), 'success');
             }
         } catch (err) { console.error('Share error:', err); }
     };

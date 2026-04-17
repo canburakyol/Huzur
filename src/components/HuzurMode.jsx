@@ -98,8 +98,8 @@ const HuzurMode = ({ onClose }) => {
             {isSleepMode && (
                 <div onClick={toggleSleepMode} className="sleep-screen">
                     <div className="sleep-indicator">
-                        <Moon size={64} className="floating" />
-                        <p>{t('huzurMode.wake_hint', 'Uyandırmak için dokun')}</p>
+                        <Moon size={64} className="floating sota-glow" color="#fde68a" />
+                        <p style={{ marginTop: '20px', opacity: 0.8, letterSpacing: '1px' }}>{t('huzurMode.wake_hint', 'Uyandırmak için dokun')}</p>
                     </div>
                 </div>
             )}
@@ -125,11 +125,15 @@ const HuzurMode = ({ onClose }) => {
 
                 {/* Main Visual / Timer */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin: '40px 0' }}>
-                    <div className="huzur-visual-container">
+                    <div className="huzur-visual-container" style={{ position: 'relative' }}>
                         {isPlaying && <div className="huzur-pulse"></div>}
                         <button
                             onClick={togglePlay}
-                            className={`huzur-play-btn ${isPlaying ? 'playing' : ''}`}
+                            className={`huzur-play-btn ${isPlaying ? 'playing' : ''} ${isPlaying ? 'sota-liquid-pulse' : ''}`}
+                            style={{ 
+                                transition: 'all 0.4s cubic-bezier(0.25, 1.5, 0.5, 1)',
+                                boxShadow: isPlaying ? 'none' : '0 12px 30px rgba(245, 158, 11, 0.3)'
+                            }}
                         >
                             {isPlaying ? <Pause size={40} /> : <Play size={40} style={{ marginLeft: '6px' }} />}
                         </button>

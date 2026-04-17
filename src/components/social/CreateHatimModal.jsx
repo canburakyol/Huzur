@@ -3,9 +3,11 @@ import { Sparkles, BookOpen, X, Send, AlertCircle, Info } from 'lucide-react';
 import { checkRateLimit } from '../../utils/rateLimiter';
 import { useGroupHatim } from '../../hooks/useGroupHatim';
 import { useTranslation } from 'react-i18next';
+import { useToast } from '../../hooks/useToast';
 
 const CreateHatimModal = ({ onClose, onSuccess }) => {
   const { t } = useTranslation();
+  const { showToast } = useToast();
   const { createHatim, error } = useGroupHatim();
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
@@ -17,12 +19,12 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
     if (!name.trim()) return;
 
     if (!checkRateLimit('hatim_create', 3, 3600000)) {
-      alert(t('hatim.create.rateLimit', 'Çok fazla hatim oluşturdunuz. Lütfen daha sonra tekrar deneyin.'));
+      showToast(t('hatim.create.rateLimit', 'Çok fazla hatim oluşturdunuz. Lütfen daha sonra tekrar deneyin.'), 'error');
       return;
     }
 
     if (isAuthBlocked) {
-      alert(t('hatim.create.authError', 'Firebase kimlik doğrulaması hazır değil. Lütfen internetinizi kontrol edip tekrar deneyin.'));
+      showToast(t('hatim.create.authError', 'Firebase kimlik doğrulaması hazır değil. Lütfen internetinizi kontrol edip tekrar deneyin.'), 'error');
       return;
     }
 
@@ -32,7 +34,7 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
       onSuccess();
     } catch (err) {
       console.error(err);
-      alert(t('hatim.create.error', 'Hatim oluşturulamadı'));
+      showToast(t('hatim.create.error', 'Hatim oluşturulamadı'), 'error');
     } finally {
       setLoading(false);
     }

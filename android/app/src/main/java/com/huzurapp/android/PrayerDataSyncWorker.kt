@@ -12,7 +12,6 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -33,6 +32,7 @@ class PrayerDataSyncWorker(
         private const val PREFS_NAME = "PrayerDataSync"
         private const val KEY_MONTHLY_DATA_PREFIX = "monthly_prayer_data_"
         private const val KEY_LAST_SYNC = "last_sync_timestamp"
+        private const val KEY_LAST_ENQUEUE_AT = "last_enqueue_requested_at"
         private const val KEY_LATITUDE = "latitude"
         private const val KEY_LONGITUDE = "longitude"
         private const val KEY_HAS_USER_COORDS = "has_user_coordinates"
@@ -40,6 +40,7 @@ class PrayerDataSyncWorker(
         private const val API_TIMEOUT_MS = 15_000
         private const val DEFAULT_LAT = 41.0082
         private const val DEFAULT_LON = 28.9784
+        private val ENQUEUE_DEBOUNCE_MS = TimeUnit.HOURS.toMillis(12)
 
         fun enqueue(context: Context) {
             val constraints = Constraints.Builder()
@@ -59,6 +60,22 @@ class PrayerDataSyncWorker(
                 ExistingPeriodicWorkPolicy.KEEP,
                 request
             )
+        }
+
+        fun enqueueIfStale(context: Context) {
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            val now = System.currentTimeMillis()
+            val lastEnqueueAt = prefs.getLong(KEY_LAST_ENQUEUE_AT, 0L)
+
+            if (now - lastEnqueueAt < ENQUEUE_DEBOUNCE_MS) {
+                return
+            }
+
+            prefs.edit()
+                .putLong(KEY_LAST_ENQUEUE_AT, now)
+                .apply()
+
+            enqueue(context)
         }
 
         fun enqueueImmediate(context: Context) {
@@ -225,10 +242,6 @@ class PrayerDataSyncWorker(
     }
 
     private fun logBreadcrumb(message: String) {
-        try {
-            FirebaseCrashlytics.getInstance().log("[PrayerDataSyncWorker] $message")
-        } catch (_: Exception) {
-            // no-op
-        }
+        Log.d(TAG, "[PrayerDataSyncWorker] $message")
     }
 }

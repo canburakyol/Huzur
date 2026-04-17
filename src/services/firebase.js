@@ -1,6 +1,15 @@
+import { Capacitor } from "@capacitor/core";
+import { FirebaseAppCheck } from "@capacitor-firebase/app-check";
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { CustomProvider, initializeAppCheck } from "firebase/app-check";
 import { getAuth } from "firebase/auth";
+import {
+    initializeFirestore,
+    persistentLocalCache,
+    persistentMultipleTabManager,
+} from "firebase/firestore";
+import { isTelemetryEnabledSync } from "./privacyModeService";
+import { logger } from "../utils/logger";
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -12,15 +21,142 @@ const firebaseConfig = {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+const isNativeRuntime = () => {
+    try {
+        return Capacitor.getPlatform() !== "web";
+    } catch (error) {
+        logger.error('[Firebase] Native platform detection failed', error);
+        return false;
+    }
+};
 
-// Lazy initialized functions instance
+const getFallbackExpireTimeMillis = () => Date.now() + (30 * 60 * 1000);
+
+// ─── Lazy Singletons ────────────────────────────────────────────
+// Firebase SDK instances are NOT created on module load.
+// Each singleton is created on first access via the exported
+// getter functions, so cold start has zero Firebase network activity.
+
+let _app = null;
+let _db = null;
+let _auth = null;
+let _appCheck = null;
+let _appCheckDisabled = false;
 let _functions = null;
 let _analytics = null;
 let _analyticsLogEvent = null;
+
+/**
+ * Lazy Firebase App — initialized on first call, not on import.
+ */
+const ensureApp = () => {
+    if (!_app) {
+        _app = initializeApp(firebaseConfig);
+    }
+    return _app;
+};
+
+/**
+ * Lazy App Check — initialized after app is created.
+ */
+const ensureAppCheck = (app) => {
+    if (_appCheck || _appCheckDisabled || !isNativeRuntime()) {
+        return _appCheck;
+    }
+
+    const provider = new CustomProvider({
+        getToken: async () => {
+            try {
+                const result = await FirebaseAppCheck.getToken({ forceRefresh: false });
+                return {
+                    token: result.token,
+                    expireTimeMillis: result.expireTimeMillis || getFallbackExpireTimeMillis(),
+                };
+            } catch (error) {
+                logger.warn("[Firebase] App Check token unavailable, bypassing native provider", error);
+                _appCheckDisabled = true;
+                return {
+                    token: "debug-app-check-bypassed",
+                    expireTimeMillis: getFallbackExpireTimeMillis(),
+                };
+            }
+        },
+    });
+
+    _appCheck = initializeAppCheck(app, {
+        provider,
+        isTokenAutoRefreshEnabled: true,
+    });
+
+    return _appCheck;
+};
+
+// ─── Lazy Getter Proxy ──────────────────────────────────────────
+// These proxy objects allow existing `import { db }` / `import { auth }`
+// consumers to keep working WITHOUT code changes. The Firestore/Auth
+// instances are created on FIRST property access, not on import.
+
+const createLazyProxy = (factory) => new Proxy({}, {
+    get(_target, prop) {
+        return Reflect.get(factory(), prop);
+    },
+    has(_target, prop) {
+        return Reflect.has(factory(), prop);
+    },
+    ownKeys() {
+        return Reflect.ownKeys(factory());
+    },
+    getOwnPropertyDescriptor(_target, prop) {
+        return Reflect.getOwnPropertyDescriptor(factory(), prop);
+    },
+    getPrototypeOf() {
+        return Reflect.getPrototypeOf(factory());
+    },
+});
+
+const getDbInstance = () => {
+    if (!_db) {
+        const app = ensureApp();
+        ensureAppCheck(app);
+        _db = initializeFirestore(app, {
+            localCache: persistentLocalCache({
+                tabManager: persistentMultipleTabManager(),
+            }),
+        });
+    }
+    return _db;
+};
+
+const getAuthRaw = () => {
+    if (!_auth) {
+        const app = ensureApp();
+        ensureAppCheck(app);
+        _auth = getAuth(app);
+    }
+    return _auth;
+};
+
+/**
+ * Lazy Firestore proxy — initialized on first property access.
+ * Consumers can keep using `import { db }` without changes.
+ */
+export const db = createLazyProxy(getDbInstance);
+
+/**
+ * Lazy Auth proxy — initialized on first property access.
+ * Consumers can keep using `import { auth }` without changes.
+ */
+export const auth = createLazyProxy(getAuthRaw);
+
+/**
+ * Direct getter for Firestore (for new code).
+ */
+export const getDb = getDbInstance;
+
+/**
+ * Direct getter for Auth (for new code).
+ */
+export const getAuthInstance = getAuthRaw;
 
 /**
  * Get Firebase Functions instance (Lazy loaded)
@@ -29,17 +165,24 @@ let _analyticsLogEvent = null;
 export const getFunctionsInstance = async () => {
     if (!_functions) {
         const { getFunctions } = await import("firebase/functions");
-        _functions = getFunctions(app, 'europe-west1');
+        const app = ensureApp();
+        ensureAppCheck(app);
+        _functions = getFunctions(app, "europe-west1");
     }
     return _functions;
 };
 
 /**
  * Get Firebase Analytics instance lazily
- * Works only when analytics is supported (native/web runtime dependent)
- * @returns {Promise<{ analytics: any|null, logEvent: Function|null }>}
+ * @returns {Promise<{ analytics: object|null, logEvent: Function|null }>}
  */
 export const getAnalyticsInstance = async () => {
+    if (!isTelemetryEnabledSync()) {
+        _analytics = null;
+        _analyticsLogEvent = null;
+        return { analytics: null, logEvent: null };
+    }
+
     if (_analytics && _analyticsLogEvent) {
         return { analytics: _analytics, logEvent: _analyticsLogEvent };
     }
@@ -51,15 +194,12 @@ export const getAnalyticsInstance = async () => {
             return { analytics: null, logEvent: null };
         }
 
+        const app = ensureApp();
         _analytics = getAnalytics(app);
         _analyticsLogEvent = logEvent;
         return { analytics: _analytics, logEvent: _analyticsLogEvent };
-    } catch {
+    } catch (error) {
+        logger.error('[Firebase] Analytics initialization failed', error);
         return { analytics: null, logEvent: null };
     }
 };
-
-// NOT: Production'da App Check, Native Android katmanında (MainActivity.java) başlatılıyor.
-// JS tarafında tekrar başlatmak çakışmaya neden oluyordu.
-
-export { app, db, auth };

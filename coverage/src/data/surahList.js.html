@@ -1,0 +1,463 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/data/surahList.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/data</a> surahList.js</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>2/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>2/2</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// 114 Sure Listesi - Kuran-ı Kerim Sırası
+export const surahList = [
+    { number: 1, name: "الفاتحة", nameTranslation: "Fatiha", meaning: "Açılış", ayahCount: 7, revelationType: "Mekki" },
+    { number: 2, name: "البقرة", nameTranslation: "Bakara", meaning: "İnek", ayahCount: 286, revelationType: "Medeni" },
+    { number: 3, name: "آل عمران", nameTranslation: "Âl-i İmrân", meaning: "İmran Ailesi", ayahCount: 200, revelationType: "Medeni" },
+    { number: 4, name: "النساء", nameTranslation: "Nisâ", meaning: "Kadınlar", ayahCount: 176, revelationType: "Medeni" },
+    { number: 5, name: "المائدة", nameTranslation: "Mâide", meaning: "Sofra", ayahCount: 120, revelationType: "Medeni" },
+    { number: 6, name: "الأنعام", nameTranslation: "En'âm", meaning: "Hayvanlar", ayahCount: 165, revelationType: "Mekki" },
+    { number: 7, name: "الأعراف", nameTranslation: "A'râf", meaning: "Yüksekler", ayahCount: 206, revelationType: "Mekki" },
+    { number: 8, name: "الأنفال", nameTranslation: "Enfâl", meaning: "Ganimetler", ayahCount: 75, revelationType: "Medeni" },
+    { number: 9, name: "التوبة", nameTranslation: "Tevbe", meaning: "Tövbe", ayahCount: 129, revelationType: "Medeni" },
+    { number: 10, name: "يونس", nameTranslation: "Yûnus", meaning: "Yunus", ayahCount: 109, revelationType: "Mekki" },
+    { number: 11, name: "هود", nameTranslation: "Hûd", meaning: "Hud", ayahCount: 123, revelationType: "Mekki" },
+    { number: 12, name: "يوسف", nameTranslation: "Yûsuf", meaning: "Yusuf", ayahCount: 111, revelationType: "Mekki" },
+    { number: 13, name: "الرعد", nameTranslation: "Ra'd", meaning: "Gök Gürültüsü", ayahCount: 43, revelationType: "Medeni" },
+    { number: 14, name: "إبراهيم", nameTranslation: "İbrâhîm", meaning: "İbrahim", ayahCount: 52, revelationType: "Mekki" },
+    { number: 15, name: "الحجر", nameTranslation: "Hicr", meaning: "Hicr", ayahCount: 99, revelationType: "Mekki" },
+    { number: 16, name: "النحل", nameTranslation: "Nahl", meaning: "Arı", ayahCount: 128, revelationType: "Mekki" },
+    { number: 17, name: "الإسراء", nameTranslation: "İsrâ", meaning: "Gece Yürüyüşü", ayahCount: 111, revelationType: "Mekki" },
+    { number: 18, name: "الكهف", nameTranslation: "Kehf", meaning: "Mağara", ayahCount: 110, revelationType: "Mekki" },
+    { number: 19, name: "مريم", nameTranslation: "Meryem", meaning: "Meryem", ayahCount: 98, revelationType: "Mekki" },
+    { number: 20, name: "طه", nameTranslation: "Tâhâ", meaning: "Taha", ayahCount: 135, revelationType: "Mekki" },
+    { number: 21, name: "الأنبياء", nameTranslation: "Enbiyâ", meaning: "Peygamberler", ayahCount: 112, revelationType: "Mekki" },
+    { number: 22, name: "الحج", nameTranslation: "Hac", meaning: "Hac", ayahCount: 78, revelationType: "Medeni" },
+    { number: 23, name: "المؤمنون", nameTranslation: "Mü'minûn", meaning: "Müminler", ayahCount: 118, revelationType: "Mekki" },
+    { number: 24, name: "النور", nameTranslation: "Nûr", meaning: "Işık", ayahCount: 64, revelationType: "Medeni" },
+    { number: 25, name: "الفرقان", nameTranslation: "Furkân", meaning: "Ayırıcı", ayahCount: 77, revelationType: "Mekki" },
+    { number: 26, name: "الشعراء", nameTranslation: "Şuarâ", meaning: "Şairler", ayahCount: 227, revelationType: "Mekki" },
+    { number: 27, name: "النمل", nameTranslation: "Neml", meaning: "Karınca", ayahCount: 93, revelationType: "Mekki" },
+    { number: 28, name: "القصص", nameTranslation: "Kasas", meaning: "Kıssalar", ayahCount: 88, revelationType: "Mekki" },
+    { number: 29, name: "العنكبوت", nameTranslation: "Ankebût", meaning: "Örümcek", ayahCount: 69, revelationType: "Mekki" },
+    { number: 30, name: "الروم", nameTranslation: "Rûm", meaning: "Rumlar", ayahCount: 60, revelationType: "Mekki" },
+    { number: 31, name: "لقمان", nameTranslation: "Lokmân", meaning: "Lokman", ayahCount: 34, revelationType: "Mekki" },
+    { number: 32, name: "السجدة", nameTranslation: "Secde", meaning: "Secde", ayahCount: 30, revelationType: "Mekki" },
+    { number: 33, name: "الأحزاب", nameTranslation: "Ahzâb", meaning: "Topluluklar", ayahCount: 73, revelationType: "Medeni" },
+    { number: 34, name: "سبأ", nameTranslation: "Sebe'", meaning: "Sebe", ayahCount: 54, revelationType: "Mekki" },
+    { number: 35, name: "فاطر", nameTranslation: "Fâtır", meaning: "Yaratan", ayahCount: 45, revelationType: "Mekki" },
+    { number: 36, name: "يس", nameTranslation: "Yâsîn", meaning: "Yasin", ayahCount: 83, revelationType: "Mekki" },
+    { number: 37, name: "الصافات", nameTranslation: "Sâffât", meaning: "Sıra Sıra Dizilenler", ayahCount: 182, revelationType: "Mekki" },
+    { number: 38, name: "ص", nameTranslation: "Sâd", meaning: "Sad", ayahCount: 88, revelationType: "Mekki" },
+    { number: 39, name: "الزمر", nameTranslation: "Zümer", meaning: "Gruplar", ayahCount: 75, revelationType: "Mekki" },
+    { number: 40, name: "غافر", nameTranslation: "Mü'min", meaning: "Mümin", ayahCount: 85, revelationType: "Mekki" },
+    { number: 41, name: "فصلت", nameTranslation: "Fussilet", meaning: "Açıklandı", ayahCount: 54, revelationType: "Mekki" },
+    { number: 42, name: "الشورى", nameTranslation: "Şûrâ", meaning: "Danışma", ayahCount: 53, revelationType: "Mekki" },
+    { number: 43, name: "الزخرف", nameTranslation: "Zuhruf", meaning: "Süs", ayahCount: 89, revelationType: "Mekki" },
+    { number: 44, name: "الدخان", nameTranslation: "Duhân", meaning: "Duman", ayahCount: 59, revelationType: "Mekki" },
+    { number: 45, name: "الجاثية", nameTranslation: "Câsiye", meaning: "Diz Çöken", ayahCount: 37, revelationType: "Mekki" },
+    { number: 46, name: "الأحقاف", nameTranslation: "Ahkâf", meaning: "Kum Tepeleri", ayahCount: 35, revelationType: "Mekki" },
+    { number: 47, name: "محمد", nameTranslation: "Muhammed", meaning: "Muhammed", ayahCount: 38, revelationType: "Medeni" },
+    { number: 48, name: "الفتح", nameTranslation: "Fetih", meaning: "Fetih", ayahCount: 29, revelationType: "Medeni" },
+    { number: 49, name: "الحجرات", nameTranslation: "Hucurât", meaning: "Odalar", ayahCount: 18, revelationType: "Medeni" },
+    { number: 50, name: "ق", nameTranslation: "Kâf", meaning: "Kaf", ayahCount: 45, revelationType: "Mekki" },
+    { number: 51, name: "الذاريات", nameTranslation: "Zâriyât", meaning: "Saçıp Savuranlar", ayahCount: 60, revelationType: "Mekki" },
+    { number: 52, name: "الطور", nameTranslation: "Tûr", meaning: "Dağ", ayahCount: 49, revelationType: "Mekki" },
+    { number: 53, name: "النجم", nameTranslation: "Necm", meaning: "Yıldız", ayahCount: 62, revelationType: "Mekki" },
+    { number: 54, name: "القمر", nameTranslation: "Kamer", meaning: "Ay", ayahCount: 55, revelationType: "Mekki" },
+    { number: 55, name: "الرحمن", nameTranslation: "Rahmân", meaning: "Rahman", ayahCount: 78, revelationType: "Medeni" },
+    { number: 56, name: "الواقعة", nameTranslation: "Vâkıa", meaning: "Kıyamet", ayahCount: 96, revelationType: "Mekki" },
+    { number: 57, name: "الحديد", nameTranslation: "Hadîd", meaning: "Demir", ayahCount: 29, revelationType: "Medeni" },
+    { number: 58, name: "المجادلة", nameTranslation: "Mücâdele", meaning: "Tartışan Kadın", ayahCount: 22, revelationType: "Medeni" },
+    { number: 59, name: "الحشر", nameTranslation: "Haşr", meaning: "Toplanma", ayahCount: 24, revelationType: "Medeni" },
+    { number: 60, name: "الممتحنة", nameTranslation: "Mümtehine", meaning: "Sınanan Kadın", ayahCount: 13, revelationType: "Medeni" },
+    { number: 61, name: "الصف", nameTranslation: "Saff", meaning: "Saf", ayahCount: 14, revelationType: "Medeni" },
+    { number: 62, name: "الجمعة", nameTranslation: "Cum'a", meaning: "Cuma", ayahCount: 11, revelationType: "Medeni" },
+    { number: 63, name: "المنافقون", nameTranslation: "Münâfikûn", meaning: "Münafıklar", ayahCount: 11, revelationType: "Medeni" },
+    { number: 64, name: "التغابن", nameTranslation: "Teğâbün", meaning: "Aldanma", ayahCount: 18, revelationType: "Medeni" },
+    { number: 65, name: "الطلاق", nameTranslation: "Talâk", meaning: "Boşanma", ayahCount: 12, revelationType: "Medeni" },
+    { number: 66, name: "التحريم", nameTranslation: "Tahrîm", meaning: "Yasaklama", ayahCount: 12, revelationType: "Medeni" },
+    { number: 67, name: "الملك", nameTranslation: "Mülk", meaning: "Mülk", ayahCount: 30, revelationType: "Mekki" },
+    { number: 68, name: "القلم", nameTranslation: "Kalem", meaning: "Kalem", ayahCount: 52, revelationType: "Mekki" },
+    { number: 69, name: "الحاقة", nameTranslation: "Hâkka", meaning: "Gerçekleşen", ayahCount: 52, revelationType: "Mekki" },
+    { number: 70, name: "المعارج", nameTranslation: "Meâric", meaning: "Yükseliş Yolları", ayahCount: 44, revelationType: "Mekki" },
+    { number: 71, name: "نوح", nameTranslation: "Nûh", meaning: "Nuh", ayahCount: 28, revelationType: "Mekki" },
+    { number: 72, name: "الجن", nameTranslation: "Cin", meaning: "Cinler", ayahCount: 28, revelationType: "Mekki" },
+    { number: 73, name: "المزمل", nameTranslation: "Müzzemmil", meaning: "Örtünen", ayahCount: 20, revelationType: "Mekki" },
+    { number: 74, name: "المدثر", nameTranslation: "Müddessir", meaning: "Bürünen", ayahCount: 56, revelationType: "Mekki" },
+    { number: 75, name: "القيامة", nameTranslation: "Kıyâme", meaning: "Kıyamet", ayahCount: 40, revelationType: "Mekki" },
+    { number: 76, name: "الإنسان", nameTranslation: "İnsân", meaning: "İnsan", ayahCount: 31, revelationType: "Medeni" },
+    { number: 77, name: "المرسلات", nameTranslation: "Mürselât", meaning: "Gönderilenler", ayahCount: 50, revelationType: "Mekki" },
+    { number: 78, name: "النبأ", nameTranslation: "Nebe'", meaning: "Haber", ayahCount: 40, revelationType: "Mekki" },
+    { number: 79, name: "النازعات", nameTranslation: "Nâziât", meaning: "Çekip Çıkaranlar", ayahCount: 46, revelationType: "Mekki" },
+    { number: 80, name: "عبس", nameTranslation: "Abese", meaning: "Yüzünü Ekşitti", ayahCount: 42, revelationType: "Mekki" },
+    { number: 81, name: "التكوير", nameTranslation: "Tekvîr", meaning: "Dürülme", ayahCount: 29, revelationType: "Mekki" },
+    { number: 82, name: "الانفطار", nameTranslation: "İnfitâr", meaning: "Yarılma", ayahCount: 19, revelationType: "Mekki" },
+    { number: 83, name: "المطففين", nameTranslation: "Mutaffifîn", meaning: "Eksik Ölçenler", ayahCount: 36, revelationType: "Mekki" },
+    { number: 84, name: "الانشقاق", nameTranslation: "İnşikâk", meaning: "Yarılma", ayahCount: 25, revelationType: "Mekki" },
+    { number: 85, name: "البروج", nameTranslation: "Burûc", meaning: "Burçlar", ayahCount: 22, revelationType: "Mekki" },
+    { number: 86, name: "الطارق", nameTranslation: "Târık", meaning: "Gece Gelen", ayahCount: 17, revelationType: "Mekki" },
+    { number: 87, name: "الأعلى", nameTranslation: "A'lâ", meaning: "En Yüce", ayahCount: 19, revelationType: "Mekki" },
+    { number: 88, name: "الغاشية", nameTranslation: "Gâşiye", meaning: "Kapsayan", ayahCount: 26, revelationType: "Mekki" },
+    { number: 89, name: "الفجر", nameTranslation: "Fecr", meaning: "Tan Vakti", ayahCount: 30, revelationType: "Mekki" },
+    { number: 90, name: "البلد", nameTranslation: "Beled", meaning: "Şehir", ayahCount: 20, revelationType: "Mekki" },
+    { number: 91, name: "الشمس", nameTranslation: "Şems", meaning: "Güneş", ayahCount: 15, revelationType: "Mekki" },
+    { number: 92, name: "الليل", nameTranslation: "Leyl", meaning: "Gece", ayahCount: 21, revelationType: "Mekki" },
+    { number: 93, name: "الضحى", nameTranslation: "Duhâ", meaning: "Kuşluk", ayahCount: 11, revelationType: "Mekki" },
+    { number: 94, name: "الشرح", nameTranslation: "İnşirâh", meaning: "Ferahlık", ayahCount: 8, revelationType: "Mekki" },
+    { number: 95, name: "التين", nameTranslation: "Tîn", meaning: "İncir", ayahCount: 8, revelationType: "Mekki" },
+    { number: 96, name: "العلق", nameTranslation: "Alak", meaning: "Asılan", ayahCount: 19, revelationType: "Mekki" },
+    { number: 97, name: "القدر", nameTranslation: "Kadir", meaning: "Kadir Gecesi", ayahCount: 5, revelationType: "Mekki" },
+    { number: 98, name: "البينة", nameTranslation: "Beyyine", meaning: "Apaçık Delil", ayahCount: 8, revelationType: "Medeni" },
+    { number: 99, name: "الزلزلة", nameTranslation: "Zilzâl", meaning: "Sarsıntı", ayahCount: 8, revelationType: "Medeni" },
+    { number: 100, name: "العاديات", nameTranslation: "Âdiyât", meaning: "Koşanlar", ayahCount: 11, revelationType: "Mekki" },
+    { number: 101, name: "القارعة", nameTranslation: "Kâria", meaning: "Kapı Çalan", ayahCount: 11, revelationType: "Mekki" },
+    { number: 102, name: "التكاثر", nameTranslation: "Tekâsür", meaning: "Çokluk Yarışı", ayahCount: 8, revelationType: "Mekki" },
+    { number: 103, name: "العصر", nameTranslation: "Asr", meaning: "Asır", ayahCount: 3, revelationType: "Mekki" },
+    { number: 104, name: "الهمزة", nameTranslation: "Hümeze", meaning: "Dedikoducu", ayahCount: 9, revelationType: "Mekki" },
+    { number: 105, name: "الفيل", nameTranslation: "Fîl", meaning: "Fil", ayahCount: 5, revelationType: "Mekki" },
+    { number: 106, name: "قريش", nameTranslation: "Kureyş", meaning: "Kureyş", ayahCount: 4, revelationType: "Mekki" },
+    { number: 107, name: "الماعون", nameTranslation: "Mâûn", meaning: "Yardım", ayahCount: 7, revelationType: "Mekki" },
+    { number: 108, name: "الكوثر", nameTranslation: "Kevser", meaning: "Bolluk", ayahCount: 3, revelationType: "Mekki" },
+    { number: 109, name: "الكافرون", nameTranslation: "Kâfirûn", meaning: "Kafirler", ayahCount: 6, revelationType: "Mekki" },
+    { number: 110, name: "النصر", nameTranslation: "Nasr", meaning: "Yardım", ayahCount: 3, revelationType: "Medeni" },
+    { number: 111, name: "المسد", nameTranslation: "Tebbet", meaning: "Lif", ayahCount: 5, revelationType: "Mekki" },
+    { number: 112, name: "الإخلاص", nameTranslation: "İhlâs", meaning: "Samimiyet", ayahCount: 4, revelationType: "Mekki" },
+    { number: 113, name: "الفلق", nameTranslation: "Felak", meaning: "Sabah Aydınlığı", ayahCount: 5, revelationType: "Mekki" },
+    { number: 114, name: "الناس", nameTranslation: "Nâs", meaning: "İnsanlar", ayahCount: 6, revelationType: "Mekki" }
+];
+&nbsp;
+// Mevcut Hafızlar
+export const reciters = [
+    { id: 'ar.alafasy', name: 'Mishary Rashid Alafasy', country: '🇰🇼 Kuveyt' },
+    { id: 'ar.abdulbasitmurattal', name: 'Abdul Basit (Murattal)', country: '🇪🇬 Mısır' },
+    { id: 'ar.husary', name: 'Mahmoud Khalil Al-Husary', country: '🇪🇬 Mısır' },
+    { id: 'ar.minshawi', name: 'Mohamed Siddiq Al-Minshawi', country: '🇪🇬 Mısır' },
+    { id: 'ar.abdurrahmaansudais', name: 'Abdurrahman As-Sudais', country: '🇸🇦 S. Arabistan' }
+];
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-03-31T21:07:14.101Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    

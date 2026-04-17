@@ -12,6 +12,8 @@ export const ThemeSelector = lazy(() => import(/* webpackChunkName: "feature-lif
 export const FontSettings = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/FontSettings'));
 export const MuezzinSelector = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/MuezzinSelector'));
 export const StreakFeature = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ './StreakFeature'));
+export const SpiritualJourney = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/gamification/SpiritualJourney'));
+export const RoutineBuilder = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/routine/RoutineBuilder'));
 
 export const lifestyleFeatures = {
   streak: {
@@ -62,6 +64,20 @@ export const lifestyleFeatures = {
     module: 'lifestyle',
     nameKey: 'features.muezzinSelector',
     icon: 'volume'
+  },
+  spiritualJourney: {
+    component: SpiritualJourney,
+    category: 'GAMIFICATION',
+    module: 'lifestyle',
+    nameKey: 'journey.title',
+    icon: 'trending-up'
+  },
+  routineBuilder: {
+    component: RoutineBuilder,
+    category: 'LIFESTYLE',
+    module: 'lifestyle',
+    nameKey: 'routine.title',
+    icon: 'check-square'
   }
 };
 

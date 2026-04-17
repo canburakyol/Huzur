@@ -166,8 +166,8 @@ export const errorHandler = {
           ...sanitizedInfo
         })
       );
-    } catch {
-      // Silently fail if Crashlytics is unavailable
+    } catch (error) {
+      logger.error('[ErrorHandler] Crashlytics logging failed', error);
     }
 
     return errorLog;

@@ -32,6 +32,9 @@
   --secondary-color: var(--accent-gold-shimmer);
   --arabic-font-family: var(--font-arabic);
   --nav-accent-rgb: 245, 158, 11;
+  --nav-bg-rgb: 4, 47, 46;
+  --nav-surface: rgba(4, 47, 46, 0.9);
+  --nav-surface-strong: rgba(3, 31, 28, 0.96);
   --text-contrast-boost: 1;
   --bg-color: var(--bg-gradient-start);
 
@@ -39,6 +42,11 @@
   --glass-border: rgba(180, 83, 9, 0.25);
   --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
   --glass-highlight: rgba(255, 255, 255, 0.05);
+  --surface-opacity: 0.12;
+  --surface-opacity-strong: 0.18;
+  --surface-border-opacity: 0.12;
+  --elevation-soft: 0 10px 30px rgba(0, 0, 0, 0.18);
+  --elevation-medium: 0 18px 38px rgba(0, 0, 0, 0.24);
 
   /* Advanced Typography */
   --font-display: 'Outfit', 'Inter', 'Segoe UI', system-ui, sans-serif;
@@ -74,6 +82,9 @@
   --card-bg: rgba(2, 44, 34, 0.88);
   --bg-color: var(--bg-gradient-start);
   --glass-bg: rgba(2, 44, 34, 0.82);
+  --nav-bg-rgb: 2, 44, 34;
+  --nav-surface: rgba(2, 44, 34, 0.9);
+  --nav-surface-strong: rgba(2, 31, 28, 0.96);
   /* ... diğer koyu mod ayarları ... */
 }
 
@@ -236,7 +247,7 @@ h2,
 h3 {
   line-height: 1.2;
   margin-bottom: 1rem;
-  color: #2c3e50;
+  color: var(--text-primary);
   text-shadow: none;
 }
 
@@ -327,9 +338,10 @@ body.android-webview .glass-card {
   border: none;
   width: 100%;
   transition: var(--transition-smooth);
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--nav-hover);
   color: var(--text-color);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--elevation-soft);
 }
 
 .btn:active {
@@ -478,10 +490,10 @@ body.android-webview .glass-card {
   height: 70px;
   inset-inline-start: 0;
   inset-inline-end: 0;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--nav-surface);
   backdrop-filter: blur(var(--surface-blur-strong)) saturate(var(--surface-saturate));
   -webkit-backdrop-filter: blur(var(--surface-blur-strong)) saturate(var(--surface-saturate));
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--glass-border);
   /* Daha belirgin sınır */
   box-shadow: var(--elevation-medium);
   display: flex;
@@ -514,7 +526,7 @@ body.android-webview .glass-card {
   padding: 8px 12px;
   cursor: pointer;
   transition: var(--transition-smooth);
-  color: #2c3e50;
+  color: var(--text-primary);
   /* Tam koyu lacivert (En net görünüm) */
   border-radius: 12px;
   min-width: 70px;
@@ -539,8 +551,8 @@ body.android-webview .glass-card {
 
 html.android-webview .bottom-nav,
 body.android-webview .bottom-nav {
-  background: rgba(255, 255, 255, 0.97);
-  border-top: 1px solid rgba(0, 0, 0, 0.14);
+  background: var(--nav-surface-strong);
+  border-top: 1px solid var(--glass-border);
 }
 
 .nav-item span {
@@ -555,8 +567,7 @@ body.android-webview .bottom-nav {
 /* Aktif Navigasyon Öğesi */
 .nav-item.active {
   color: var(--accent-vibrant) !important;
-  /* Tema rengi (Turuncu) - Zorla uygula */
-  background: #ffffff;
+  background: rgba(var(--nav-accent-rgb), 0.14);
 }
 
 .nav-item.active svg {
@@ -568,7 +579,7 @@ body.android-webview .bottom-nav {
 
 .nav-item:hover:not(.active) {
   color: var(--primary-dark);
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .assistant-icon-wrapper {
@@ -583,7 +594,7 @@ body.android-webview .bottom-nav {
   height: 8px;
   border-radius: 50%;
   background: var(--notification-dot);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 2px var(--nav-surface-strong);
 }
 
 @keyframes navIconSoftBounce {
@@ -824,18 +835,18 @@ body.android-webview .bottom-nav {
 
 .day-item {
   padding: 15px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--glass-border);
   transition: background-color 0.2s;
 }
 
 .day-item.past {
   opacity: 0.5;
-  background: rgba(0, 0, 0, 0.02);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .day-name {
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--text-primary);
   font-size: 1.125rem; /* 18px */
 }
 
@@ -1533,4 +1544,55 @@ body.android-webview .bottom-nav {
 
 [dir="rtl"] .feature-text {
   text-align: right;
+}
+
+/* --- SOTA PREMIUM UI ANIMATIONS & EFFECTS --- */
+
+/* Breathing Glow Effect */
+@keyframes breathingGlow {
+  0% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.1); }
+  50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.3); }
+  100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.1); }
+}
+
+.sota-glow {
+  animation: breathingGlow 4s ease-in-out infinite;
+}
+
+/* Staggered Fade Up for Splash Screen */
+@keyframes sotaFadeUp {
+  0% { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.sota-stagger-1 { animation: sotaFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both; }
+.sota-stagger-2 { animation: sotaFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s both; }
+.sota-stagger-3 { animation: sotaFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.7s both; }
+.sota-stagger-4 { animation: sotaFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 1.0s both; }
+.sota-stagger-5 { animation: sotaFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 1.3s both; }
+
+/* Liquid/Pulse Animation for HuzurMode Play Button */
+@keyframes sotaLiquidPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.5); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(245, 158, 11, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+.sota-liquid-pulse {
+  animation: sotaLiquidPulse 2.5s infinite cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Deeper Glassmorphism */
+.sota-glass-deep {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01));
+  backdrop-filter: blur(32px) saturate(1.5);
+  -webkit-backdrop-filter: blur(32px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='dark'] .sota-glass-deep {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }

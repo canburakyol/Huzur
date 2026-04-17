@@ -95,8 +95,8 @@ export const initializeRevenueCat = async () => {
 
     void checkSubscriptionStatus();
     logger.log('[RevenueCat] Initialized successfully');
-  } catch {
-    logger.error('[RevenueCat] Init error');
+  } catch (error) {
+    logger.error('[RevenueCat] Init error', error);
     crashlyticsReporter.logExceptionWithContext(
       new Error('RevenueCat init failed'),
       buildCrashContext('revenuecat_initialize')

@@ -1,53 +1,72 @@
 /**
  * Firebase App Check Service
- * App Check durumunu kontrol etmek ve yönetmek için
+ * Native App Check token zincirini kontrol etmek ve yÃ¶netmek iÃ§in.
  */
 
 import { Capacitor } from '@capacitor/core';
+import { FirebaseAppCheck } from '@capacitor-firebase/app-check';
 import { logger } from '../utils/logger';
 
-const PLUGIN_NAME = 'AppCheck';
+const getPlatform = () => {
+  try {
+    return Capacitor.getPlatform();
+  } catch (error) {
+    logger.error('[AppCheck] Platform detection failed', error);
+    return 'web';
+  }
+};
+
+const isWebPlatform = () => getPlatform() === 'web';
 
 /**
  * App Check durumunu kontrol et
- * @returns {Promise<{success: boolean, tokenPresent?: boolean, error?: string}>}
+ * @returns {Promise<{success: boolean, tokenPresent?: boolean, expireTimeMillis?: number, platform?: string, error?: string}>}
  */
 export const checkAppCheckStatus = async () => {
-  if (Capacitor.getPlatform() === 'web') {
+  const platform = getPlatform();
+  if (platform === 'web') {
     logger.log('AppCheck: Web platform - skipped');
-    return { success: true, tokenPresent: false, platform: 'web' };
+    return { success: true, tokenPresent: false, platform };
   }
 
   try {
-    const { AppCheck } = await import('../plugins/AppCheckPlugin');
-    const result = await AppCheck.getAppCheckStatus();
-    
-    logger.log('AppCheck: Status check result', result);
-    return result;
+    const result = await FirebaseAppCheck.getToken({ forceRefresh: false });
+    return {
+      success: true,
+      tokenPresent: Boolean(result?.token),
+      expireTimeMillis: result?.expireTimeMillis,
+      platform
+    };
   } catch (error) {
     logger.error('AppCheck: Status check error', error);
-    return { 
-      success: false, 
-      error: error.message || 'App Check plugin not available' 
+    return {
+      success: false,
+      error: error.message || 'App Check token could not be retrieved',
+      platform
     };
   }
 };
 
 /**
- * App Check token'ını manuel olarak yenile
- * @returns {Promise<{success: boolean, message?: string, error?: string}>}
+ * App Check token'Ä±nÄ± manuel olarak yenile
+ * @returns {Promise<{success: boolean, message?: string, expireTimeMillis?: number, error?: string}>}
  */
 export const forceRefreshAppCheckToken = async () => {
-  if (Capacitor.getPlatform() === 'web') {
+  if (isWebPlatform()) {
     return { success: false, error: 'Not available on web platform' };
   }
 
   try {
-    const { AppCheck } = await import('../plugins/AppCheckPlugin');
-    const result = await AppCheck.forceRefreshToken();
-    
-    logger.log('AppCheck: Token refresh result', result);
-    return result;
+    const result = await FirebaseAppCheck.getToken({ forceRefresh: true });
+    logger.log('AppCheck: Token refresh result', {
+      tokenPresent: Boolean(result?.token),
+      expireTimeMillis: result?.expireTimeMillis
+    });
+    return {
+      success: true,
+      message: 'Token refreshed successfully',
+      expireTimeMillis: result?.expireTimeMillis
+    };
   } catch (error) {
     logger.error('AppCheck: Token refresh error', error);
     return { success: false, error: error.message };
@@ -55,96 +74,106 @@ export const forceRefreshAppCheckToken = async () => {
 };
 
 /**
- * App Check başarıyla çalışıyor mu kontrol et
- * Kullanıcıya gösterilecek durum mesajı döndürür
+ * App Check baÅŸarÄ±yla Ã§alÄ±ÅŸÄ±yor mu kontrol et
+ * KullanÄ±cÄ±ya gÃ¶sterilecek durum mesajÄ± dÃ¶ndÃ¼rÃ¼r
  */
 export const getAppCheckHealthStatus = async () => {
   const status = await checkAppCheckStatus();
-  
+
   if (!status.success) {
     return {
       healthy: false,
-      message: 'App Check çalışmıyor. Firebase servisleri sınırlı olabilir.',
+      message: 'App Check Ã§alÄ±ÅŸmÄ±yor. Firebase servisleri sÄ±nÄ±rlÄ± olabilir.',
       action: 'Tekrar dene',
       canRetry: true
     };
   }
-  
+
   if (status.tokenPresent) {
     return {
       healthy: true,
-      message: 'App Check aktif ve çalışıyor.',
+      message: 'App Check aktif ve Ã§alÄ±ÅŸÄ±yor.',
       action: null,
       canRetry: false
     };
   }
-  
+
   return {
     healthy: false,
-    message: 'App Check token alınamadı.',
+    message: 'App Check token alÄ±namadÄ±.',
     action: 'Yenile',
     canRetry: true
   };
 };
 
 /**
- * App Check durumunu logla (debug için)
+ * App Check durumunu logla (debug iÃ§in)
  */
 export const logAppCheckStatus = async () => {
   const status = await checkAppCheckStatus();
-  
+
   if (status.success) {
-    logger.log('✅ App Check Status:', {
+    logger.log('AppCheck Status:', {
       tokenPresent: status.tokenPresent,
       expireTimeMillis: status.expireTimeMillis,
-      platform: Capacitor.getPlatform()
+      platform: status.platform
     });
   } else {
-    logger.error('❌ App Check Error:', status.error);
+    logger.error('AppCheck Error:', status.error);
   }
-  
+
   return status;
 };
 
 // Module-level interval reference for cleanup
 let monitoringIntervalId = null;
+let tokenChangedListenerHandle = null;
 
 /**
- * Uygulama başlangıcında App Check'i kontrol et
- * Sorun varsa kullanıcıya bildir
+ * Uygulama baÅŸlangÄ±cÄ±nda App Check'i kontrol et
+ * Sorun varsa kullanÄ±cÄ±ya bildir
  */
 export const initializeAppCheckMonitoring = async () => {
-  // Sadece native platformlarda çalıştır
-  if (Capacitor.getPlatform() === 'web') return;
-  
+  if (isWebPlatform()) return;
+
   logger.log('AppCheck: Initializing monitoring...');
-  
-  // Önceki interval varsa temizle (hot reload güvenliği)
+
   if (monitoringIntervalId !== null) {
     clearInterval(monitoringIntervalId);
   }
-  
-  // İlk kontrol
+
+  if (!tokenChangedListenerHandle) {
+    tokenChangedListenerHandle = await FirebaseAppCheck.addListener('tokenChanged', (event) => {
+      logger.log('AppCheck: Native token changed', {
+        tokenPresent: Boolean(event?.token)
+      });
+    });
+  }
+
   await logAppCheckStatus();
-  
-  // Her 30 dakikada bir kontrol et
+
   monitoringIntervalId = setInterval(async () => {
     const status = await checkAppCheckStatus();
-    
+
     if (!status.success || !status.tokenPresent) {
       logger.warn('AppCheck: Token issue detected, attempting refresh...');
       await forceRefreshAppCheckToken();
     }
-  }, 30 * 60 * 1000); // 30 dakika
+  }, 30 * 60 * 1000);
 };
 
 /**
  * App Check monitoring'i durdur (cleanup)
  */
-export const stopAppCheckMonitoring = () => {
+export const stopAppCheckMonitoring = async () => {
   if (monitoringIntervalId !== null) {
     clearInterval(monitoringIntervalId);
     monitoringIntervalId = null;
+  }
+
+  if (tokenChangedListenerHandle) {
+    await tokenChangedListenerHandle.remove();
+    tokenChangedListenerHandle = null;
   }
 };
 

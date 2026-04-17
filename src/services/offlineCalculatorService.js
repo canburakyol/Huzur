@@ -1,44 +1,47 @@
 import { logger } from '../utils/logger';
 import { format } from 'date-fns';
-import { Coordinates, CalculationMethod, PrayerTimes, Madhab } from 'adhan';
+import { Coordinates, CalculationMethod, PrayerTimes, Madhab, SunnahTimes } from 'adhan';
 
 /**
- * Cihaz üzerinde internet olmadan namaz vakti hesaplayan servis
+ * Device-side prayer time calculator that does not require network access.
  */
 class OfflineCalculatorService {
+    formatTimeSafely(time) {
+        if (!(time instanceof Date) || Number.isNaN(time.getTime())) {
+            return null;
+        }
+
+        return format(time, 'HH:mm');
+    }
+
     /**
-     * Verilen koordinatlar ve tarih için namaz vakitlerini hesaplar
-     * @param {number} latitude 
-     * @param {number} longitude 
-     * @param {Date} date 
-     * @returns {Object} Uygulama formatında vakitler
+     * Calculate prayer times for coordinates and date.
+     * @param {number} latitude
+     * @param {number} longitude
+     * @param {Date} date
+     * @returns {Object|null}
      */
     calculatePrayerTimes(latitude, longitude, date = new Date()) {
         try {
             const coordinates = new Coordinates(latitude, longitude);
-            
-            // Türkiye için standart Diyanet parametreleri
-            // adhan kütüphanesinde CalculationMethod.Turkey() Diyanet'e en yakın olandır.
+
+            // Turkey method is the closest built-in setup to Diyanet timings.
             const params = CalculationMethod.Turkey();
-            // Diyanet Hanefi mezhebine göre hesaplar (Asr vakti için kritik)
             params.madhab = Madhab.Hanafi;
-            
+
             const prayerTimes = new PrayerTimes(coordinates, date, params);
+            const sunnahTimes = new SunnahTimes(prayerTimes);
 
-            // Formatter fonksiyonu
-            const formatTime = (time) => format(time, 'HH:mm');
-
-            // Uygulamanın kullandığı Aladhan API formatına uygun JSON objesi döndür
             return {
-                Fajr: formatTime(prayerTimes.fajr),
-                Sunrise: formatTime(prayerTimes.sunrise),
-                Dhuhr: formatTime(prayerTimes.dhuhr),
-                Asr: formatTime(prayerTimes.asr),
-                Maghrib: formatTime(prayerTimes.maghrib),
-                Isha: formatTime(prayerTimes.isha),
-                Imsak: formatTime(prayerTimes.fajr), // Imsak genellikle Fajr ile aynı alınır veya Türkiye'de Fajr - 20dk
-                Midnight: formatTime(prayerTimes.middleOfTheNight),
-                Lastthird: formatTime(prayerTimes.lastThirdOfTheNight)
+                Fajr: this.formatTimeSafely(prayerTimes.fajr),
+                Sunrise: this.formatTimeSafely(prayerTimes.sunrise),
+                Dhuhr: this.formatTimeSafely(prayerTimes.dhuhr),
+                Asr: this.formatTimeSafely(prayerTimes.asr),
+                Maghrib: this.formatTimeSafely(prayerTimes.maghrib),
+                Isha: this.formatTimeSafely(prayerTimes.isha),
+                Imsak: this.formatTimeSafely(prayerTimes.fajr),
+                Midnight: this.formatTimeSafely(sunnahTimes.middleOfTheNight),
+                Lastthird: this.formatTimeSafely(sunnahTimes.lastThirdOfTheNight)
             };
         } catch (error) {
             logger.error('Offline calculation error:', error);
@@ -47,7 +50,7 @@ class OfflineCalculatorService {
     }
 
     /**
-     * Belirli bir ayın tüm günleri için vakit hesaplar
+     * Calculate times for every day in a month.
      */
     calculateMonthlyTimes(latitude, longitude, month, year) {
         const daysInMonth = new Date(year, month, 0).getDate();

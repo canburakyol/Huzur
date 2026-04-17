@@ -22,23 +22,22 @@ const ToastNotification = ({ message, type = 'error', onClose, duration = 5000 }
   };
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: '20px',
-      right: '20px',
-      zIndex: 9999,
-      background: `linear-gradient(135deg, ${colors[type]}15, ${colors[type]}25)`,
-      border: `1px solid ${colors[type]}40`,
-      borderRadius: '12px',
-      padding: '16px 20px',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px',
-      minWidth: '300px',
-      maxWidth: '400px',
-      boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
-      animation: 'slideInRight 0.3s ease-out'
-    }}>
+    <div
+      role="alert"
+      aria-live="assertive"
+      style={{
+        background: `linear-gradient(135deg, ${colors[type]}15, ${colors[type]}25)`,
+        border: `1px solid ${colors[type]}40`,
+        borderRadius: '12px',
+        padding: '16px 20px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        minWidth: '300px',
+        maxWidth: '400px',
+        boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+        animation: 'slideInRight 0.3s ease-out'
+      }}>
       <div style={{ color: colors[type] }}>
         {icons[type]}
       </div>
@@ -47,6 +46,7 @@ const ToastNotification = ({ message, type = 'error', onClose, duration = 5000 }
       </div>
       <button
         onClick={onClose}
+        aria-label="Close notification"
         style={{
           background: 'none',
           border: 'none',

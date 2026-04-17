@@ -247,6 +247,8 @@ exports.syncReferralStateV1 = onCall(
 function createGetReferralServerSnapshotHandler(deps = {}) {
   const dbRef = deps.db || db;
   const rateLimitFn = deps.checkRateLimit || checkRateLimit;
+  const adminSdk = deps.admin || admin;
+  const distributedRateLimitFn = deps.checkDistributedRateLimit || checkDistributedRateLimit;
 
   return async (request) => {
     if (!request.auth) {
@@ -261,6 +263,18 @@ function createGetReferralServerSnapshotHandler(deps = {}) {
     const rateCheck = rateLimitFn(`getReferralSnapshot:${userId}`, 30, 60000);
     if (!rateCheck.allowed) {
       throw new HttpsError('resource-exhausted', 'Cok fazla referral durumu sorgulandi.');
+    }
+
+    const distributedRateCheck = await distributedRateLimitFn({
+      dbRef,
+      adminSdk,
+      namespace: 'getReferralSnapshot',
+      identifier: userId,
+      maxRequests: 250,
+      windowMs: 86400000,
+    });
+    if (!distributedRateCheck.allowed) {
+      throw new HttpsError('resource-exhausted', 'Gunluk referral durum sorgu limitine ulastiniz.');
     }
 
     return {

@@ -1,0 +1,49 @@
+/* ===========================
+   WordByWord — Scoped Styles
+   Extracted from inline <style> in the monolithic WordByWord.jsx
+   =========================== */
+
+.word-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+  animation: wbw-fadeIn 0.3s ease-out;
+}
+
+.word-modal-content {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.spin {
+  animation: wbw-spin 1s linear infinite;
+}
+
+@keyframes wbw-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes wbw-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.settings-card.locked {
+  background: var(--nav-hover);
+  border-style: dashed;
+}
+
+.settings-card.unavailable {
+  filter: grayscale(1);
+}

@@ -31,7 +31,8 @@ const detectCountryCode = () => {
     const normalized = String(locale).replace('_', '-');
     const country = normalized.split('-')[1];
     return (country || 'TR').toUpperCase();
-  } catch {
+  } catch (error) {
+    logger.error('[LanguageService] Country detection failed', error);
     return 'TR';
   }
 };

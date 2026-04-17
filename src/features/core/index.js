@@ -10,7 +10,7 @@ export const Prayers = lazy(() => import(/* webpackChunkName: "feature-core" */ 
 export const QiblaCompass = lazy(() => import(/* webpackChunkName: "feature-core" */ '../../components/QiblaCompass'));
 export const Quran = lazy(() => import(/* webpackChunkName: "feature-core" */ '../../components/Quran'));
 export const PrayerTracker = lazy(() => import(/* webpackChunkName: "feature-core" */ '../../components/PrayerTracker'));
-export const Settings = lazy(() => import(/* webpackChunkName: "feature-core" */ '../../components/Settings'));
+export const Settings = lazy(() => import(/* webpackChunkName: "feature-core" */ '../../domains/settings/components/SettingsShell'));
 
 // Feature configuration for this module
 export const coreFeatures = {

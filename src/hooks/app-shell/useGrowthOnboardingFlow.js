@@ -4,22 +4,39 @@ import { STORAGE_KEYS } from '../../constants';
 import { changeLanguage } from '../../services/languageService';
 import { logger } from '../../utils/logger';
 import {
+  ANALYTICS_EVENTS,
+  logEvent,
   logOnboardingStarted,
   logOnboardingCompleted,
   logFirstPrayerActionCompleted
 } from '../../services/analyticsService';
 import {
+  buildPremiumMomentAnalyticsPayload,
+  getAiFeatureFlags,
+  getExperimentVariant,
+  getOnboardingConfig,
+  getPremiumMomentsConfig,
+  getReferralProgress,
+  getReferralServerSnapshot,
   markFirstIbadahCompletedForReferral,
-  markOnboardingCompletedForReferral
-} from '../../services/referralService';
+  markOnboardingCompletedForReferral,
+  openPremiumMoment,
+  resolveOnboardingExperienceConfig,
+  syncReferralState
+} from '../../services/domains/onboarding';
+import { getStoredPrimaryGoal } from '../../utils/primaryGoal';
 
-export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNotifications, setActiveTab }) {
+export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNotifications, setActiveTab, isProUser = false }) {
   const [showGrowthOnboarding, setShowGrowthOnboarding] = useState(() => {
     return !storageService.getBoolean(STORAGE_KEYS.ONBOARDING_COMPLETED, false);
   });
+  const [onboardingConfig, setOnboardingConfig] = useState(null);
+  const [aiFeatureFlags, setAiFeatureFlags] = useState(null);
+  const [referralProgress, setReferralProgress] = useState(() => getReferralProgress());
+  const [referralServerSnapshot, setReferralServerSnapshot] = useState(null);
   const [onboardingStep, setOnboardingStep] = useState(() => {
     const storedStep = storageService.getNumber(STORAGE_KEYS.ONBOARDING_STEP, 0);
-    return Math.max(0, Math.min(storedStep, 4));
+    return Math.max(0, Math.min(storedStep, 2));
   });
 
   const [onboardingLanguage, setOnboardingLanguage] = useState(() => {
@@ -27,18 +44,84 @@ export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNot
   });
 
   const persistOnboardingStep = (step) => {
-    const normalizedStep = Math.max(0, Math.min(Number(step) || 0, 4));
+    const maxStep = Math.max(0, (onboardingConfig?.steps?.length || 3) - 1);
+    const normalizedStep = Math.max(0, Math.min(Number(step) || 0, maxStep));
     setOnboardingStep(normalizedStep);
     storageService.setNumber(STORAGE_KEYS.ONBOARDING_STEP, normalizedStep);
     return normalizedStep;
   };
 
   useEffect(() => {
+    let isMounted = true;
+
+    const loadConfig = async () => {
+      try {
+        const flags = await getAiFeatureFlags();
+        if (!isMounted) return;
+        setAiFeatureFlags(flags);
+
+        if (flags.remote_onboarding_v1_enabled) {
+          const resolvedVariants = {
+            headlineVariant: getExperimentVariant('onboarding_headline_v1'),
+            goalStepVariant: getExperimentVariant('onboarding_goal_step_v1'),
+          };
+
+          if (isMounted) {
+            setOnboardingConfig(resolveOnboardingExperienceConfig(undefined, resolvedVariants));
+          }
+
+          const config = await getOnboardingConfig();
+          if (isMounted) {
+            setOnboardingConfig(resolveOnboardingExperienceConfig(config, resolvedVariants));
+          }
+        }
+
+        if (flags.premium_moments_v1_enabled) {
+          void getPremiumMomentsConfig();
+        }
+      } catch (error) {
+        logger.warn('[useGrowthOnboardingFlow] Config load failed:', error);
+      }
+    };
+
+    void loadConfig();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!showGrowthOnboarding || !referralProgress?.invitedByCode) return undefined;
+
+    let isMounted = true;
+
+    const loadReferralSnapshot = async () => {
+      const snapshot = await getReferralServerSnapshot();
+      if (isMounted && snapshot) {
+        setReferralServerSnapshot(snapshot);
+      }
+    };
+
+    void loadReferralSnapshot();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [referralProgress?.invitedByCode, showGrowthOnboarding]);
+
+  useEffect(() => {
     if (showGrowthOnboarding && !storageService.getBoolean(STORAGE_KEYS.ONBOARDING_STARTED, false)) {
       storageService.setBoolean(STORAGE_KEYS.ONBOARDING_STARTED, true);
-      logOnboardingStarted('language_selection');
+      const firstStep = onboardingConfig?.enabled ? onboardingConfig.steps?.[0] || 'language' : 'language';
+      logOnboardingStarted(firstStep, {
+        flow_version: onboardingConfig?.flowVersion || 'v1',
+        experiment_variant: onboardingConfig?.experimentContext?.signature || 'A|A',
+        onboarding_headline_variant: onboardingConfig?.experimentContext?.onboardingHeadlineVariant || 'A',
+        onboarding_goal_step_variant: onboardingConfig?.experimentContext?.onboardingGoalStepVariant || 'A',
+      });
     }
-  }, [showGrowthOnboarding]);
+  }, [onboardingConfig, showGrowthOnboarding]);
 
   const handleGrowthLanguageSelect = async (lang) => {
     const selectedLang = lang || 'tr';
@@ -81,13 +164,21 @@ export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNot
     }
   };
 
-  const handleGrowthComplete = () => {
+  const handleGrowthComplete = async ({ premiumTeaserEnabled = false, selectedGoal = getStoredPrimaryGoal() } = {}) => {
     storageService.setBoolean(STORAGE_KEYS.ONBOARDING_COMPLETED, true);
     storageService.removeItem(STORAGE_KEYS.ONBOARDING_STEP);
     setShowGrowthOnboarding(false);
     setOnboardingStep(0);
-    logOnboardingCompleted(onboardingLanguage);
-    markOnboardingCompletedForReferral();
+    logOnboardingCompleted(onboardingLanguage, {
+      flow_version: onboardingConfig?.flowVersion || 'v1',
+      experiment_variant: onboardingConfig?.experimentContext?.signature || 'A|A',
+      onboarding_headline_variant: onboardingConfig?.experimentContext?.onboardingHeadlineVariant || 'A',
+      onboarding_goal_step_variant: onboardingConfig?.experimentContext?.onboardingGoalStepVariant || 'A',
+      primary_goal: selectedGoal,
+      referred_user: referralProgress?.invitedByCode ? true : undefined,
+      referral_code: referralProgress?.invitedByCode || undefined,
+    });
+    const onboardingReferralState = markOnboardingCompletedForReferral();
 
     if (!storageService.getBoolean(STORAGE_KEYS.FIRST_IBADAH_ACTION_DONE, false)) {
       storageService.setBoolean(STORAGE_KEYS.FIRST_IBADAH_ACTION_DONE, true);
@@ -95,7 +186,46 @@ export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNot
       markFirstIbadahCompletedForReferral();
     }
 
+    const nextReferralProgress = getReferralProgress();
+    setReferralProgress(nextReferralProgress);
+
+    if (nextReferralProgress?.invitedByCode) {
+      const snapshot = await syncReferralState(nextReferralProgress, {
+        source: 'growth_onboarding_complete',
+        force: true,
+      });
+
+      if (snapshot) {
+        setReferralServerSnapshot(snapshot);
+      }
+
+      logEvent(ANALYTICS_EVENTS.REFERRAL_ONBOARDING_COMPLETED, {
+        referral_code: nextReferralProgress.invitedByCode,
+        onboarding_completed: Boolean(onboardingReferralState?.onboardingCompletedAt),
+        first_ibadah_completed: Boolean(nextReferralProgress?.firstIbadahCompletedAt),
+        reward_ready: Boolean(nextReferralProgress?.rewards?.inviteeUnlockedAt),
+        flow_version: onboardingConfig?.flowVersion || 'v1',
+        experiment_variant: onboardingConfig?.experimentContext?.signature || 'A|A',
+        primary_goal: selectedGoal,
+      });
+    }
+
     setActiveTab('home');
+
+    if (premiumTeaserEnabled && aiFeatureFlags?.premium_moments_v1_enabled && !isProUser) {
+      window.setTimeout(() => {
+        const premiumMoment = {
+          isPro: false,
+          source: 'onboarding',
+          momentType: 'onboarding_complete',
+          primaryGoal: selectedGoal,
+        };
+        logEvent(ANALYTICS_EVENTS.PREMIUM_MOMENT_OPENED, buildPremiumMomentAnalyticsPayload(premiumMoment, {
+          onboarding_experiment_variant: onboardingConfig?.experimentContext?.signature || 'A|A',
+        }));
+        openPremiumMoment(premiumMoment);
+      }, 250);
+    }
   };
 
   return {
@@ -103,7 +233,10 @@ export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNot
     setShowGrowthOnboarding,
     onboardingStep,
     setOnboardingStep: persistOnboardingStep,
+    onboardingConfig,
     onboardingLanguage,
+    referralProgress,
+    referralServerSnapshot,
     setOnboardingLanguage,
     handleGrowthLanguageSelect,
     handleGrowthLocationRequest,

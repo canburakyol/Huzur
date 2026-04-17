@@ -1,0 +1,48 @@
+{
+  "types": {
+    "content": {
+      "type": "content",
+      "reviewStatus": "reviewed",
+      "confidence": "medium",
+      "origin": "local_curated"
+    },
+    "daily_content": {
+      "type": "daily_content",
+      "reviewStatus": "reviewed",
+      "confidence": "high",
+      "origin": "daily_content"
+    },
+    "daily_dua": {
+      "type": "daily_dua",
+      "reviewStatus": "reviewed",
+      "confidence": "high",
+      "origin": "local_curated"
+    },
+    "hadith": {
+      "type": "hadith",
+      "reviewStatus": "reviewed",
+      "confidence": "medium",
+      "origin": "local_curated"
+    },
+    "esma_ul_husna": {
+      "type": "esma_ul_husna",
+      "reviewStatus": "reviewed",
+      "confidence": "high",
+      "origin": "local_curated"
+    },
+    "general_islamic_guidance": {
+      "type": "general_islamic_guidance",
+      "reviewStatus": "general_guidance",
+      "confidence": "low",
+      "origin": "policy"
+    }
+  },
+  "namespaces": {
+    "verse": "daily_content",
+    "daily_dua": "daily_dua",
+    "dua": "daily_dua",
+    "hadith": "hadith",
+    "esma": "esma_ul_husna",
+    "content": "content"
+  }
+}

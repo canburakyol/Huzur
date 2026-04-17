@@ -1,5 +1,6 @@
 import { STORAGE_KEYS } from '../constants';
 import { storageService } from './storageService';
+import { logger } from '../utils/logger';
 
 const CAMPAIGN_IDS = {
   EVERGREEN: 'evergreen',
@@ -39,7 +40,8 @@ export const getCampaignRegion = () => {
     if (timezone === 'Europe/Istanbul') return REGION_IDS.TR;
     if (timezone.startsWith(EUROPE_TIMEZONE_PREFIX)) return REGION_IDS.EU_DIASPORA;
     return REGION_IDS.TR;
-  } catch {
+  } catch (error) {
+    logger.error('[CampaignService] Region detection failed', error);
     return REGION_IDS.TR;
   }
 };

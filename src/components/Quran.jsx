@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getSurahComplete, getAyahAudioUrl, getAvailableTranslations } from '../services/quranService';
 import { ChevronLeft, Play, Pause, Menu, X, SkipBack, SkipForward, Bookmark, Globe } from 'lucide-react';
 import { storageService } from '../services/storageService';
+import { surahList as staticSurahList, reciters as staticReciters } from '../data/surahList';
 import './Quran.css';
 
 const QURAN_STORAGE_KEYS = {
@@ -11,13 +12,16 @@ const QURAN_STORAGE_KEYS = {
 };
 
 const EMPTY_ARRAY = [];
+const DEFAULT_TRANSLATIONS = [
+    { identifier: 'tr.vakfi', name: 'Diyanet Vakfi (Turkce)', language: 'tr', type: 'translation' },
+    { identifier: 'en.sahih', name: 'Sahih International (English)', language: 'en', type: 'translation' },
+    { identifier: 'ar.jalalayn', name: 'Tafsir Al-Jalalayn (العربية)', language: 'ar', type: 'tafsir' }
+];
 const normalizeTranslationId = (translationId) => (translationId === 'tr.diyanet' ? 'tr.vakfi' : translationId);
 const BASMALA_TEXT = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
 
 function Quran({ onClose }) {
     const { t, i18n } = useTranslation();
-    const [quranMeta, setQuranMeta] = useState(null);
-    const [isQuranMetaLoading, setIsQuranMetaLoading] = useState(false);
 
     const [currentSurahNumber, setCurrentSurahNumber] = useState(null);
     const [selectedSurah, setSelectedSurah] = useState(null);
@@ -32,7 +36,9 @@ function Quran({ onClose }) {
     const [playingAyah, setPlayingAyah] = useState(null);
     const [expandedCategory, setExpandedCategory] = useState(null);
     const [selectedTopic, setSelectedTopic] = useState(null);
-    const [translations, setTranslations] = useState([]);
+    const [translations, setTranslations] = useState(DEFAULT_TRANSLATIONS);
+    const [detailedFihrist, setDetailedFihrist] = useState(EMPTY_ARRAY);
+    const [isFihristLoading, setIsFihristLoading] = useState(false);
     const [favorites, setFavorites] = useState([]);
     const [volume] = useState(1);
 
@@ -41,37 +47,8 @@ function Quran({ onClose }) {
     const latestLoadRequestRef = useRef(0);
     const hasInitializedRef = useRef(false);
 
-    const loadQuranMeta = useCallback(async () => {
-        if (quranMeta || isQuranMetaLoading) {
-            return;
-        }
-
-        setIsQuranMetaLoading(true);
-        try {
-            const [surahModule, fihristModule] = await Promise.all([
-                import('../data/surahList'),
-                import('../data/detailedFihrist')
-            ]);
-
-            setQuranMeta({
-                surahList: surahModule.surahList || EMPTY_ARRAY,
-                reciters: surahModule.reciters || EMPTY_ARRAY,
-                detailedFihrist: fihristModule.detailedFihrist || EMPTY_ARRAY
-            });
-        } catch (error) {
-            console.error('Quran metadata load error:', error);
-        } finally {
-            setIsQuranMetaLoading(false);
-        }
-    }, [isQuranMetaLoading, quranMeta]);
-
-    useEffect(() => {
-        loadQuranMeta();
-    }, [loadQuranMeta]);
-
-    const surahList = useMemo(() => quranMeta?.surahList || EMPTY_ARRAY, [quranMeta]);
-    const reciters = useMemo(() => quranMeta?.reciters || EMPTY_ARRAY, [quranMeta]);
-    const detailedFihrist = useMemo(() => quranMeta?.detailedFihrist || EMPTY_ARRAY, [quranMeta]);
+    const surahList = useMemo(() => staticSurahList || EMPTY_ARRAY, []);
+    const reciters = useMemo(() => staticReciters || EMPTY_ARRAY, []);
 
     const getInitialTranslation = useCallback(() => {
         if (i18n.language === 'en') return 'en.sahih';
@@ -80,6 +57,22 @@ function Quran({ onClose }) {
     }, [i18n.language]);
 
     const [selectedTranslation, setSelectedTranslation] = useState(() => normalizeTranslationId(getInitialTranslation()));
+
+    const loadDetailedFihrist = useCallback(async () => {
+        if (detailedFihrist.length > 0 || isFihristLoading) {
+            return;
+        }
+
+        setIsFihristLoading(true);
+        try {
+            const fihristModule = await import('../data/detailedFihrist');
+            setDetailedFihrist(fihristModule.detailedFihrist || EMPTY_ARRAY);
+        } catch (error) {
+            console.error('Detailed fihrist load error:', error);
+        } finally {
+            setIsFihristLoading(false);
+        }
+    }, [detailedFihrist.length, isFihristLoading]);
 
     const activeSurah = useMemo(() => {
         const canonicalSurahNumber = Number(currentSurahNumber ?? surahContent?.number ?? selectedSurah?.number);
@@ -120,6 +113,27 @@ function Quran({ onClose }) {
             setSelectedReciter(reciters[0]);
         }
     }, [selectedReciter, reciters]);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const loadTranslations = async () => {
+            try {
+                const availableTranslations = await getAvailableTranslations();
+                if (isMounted && Array.isArray(availableTranslations) && availableTranslations.length > 0) {
+                    setTranslations(availableTranslations);
+                }
+            } catch (error) {
+                console.error('Translations load error:', error);
+            }
+        };
+
+        void loadTranslations();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     const scrollToAyah = useCallback((ayahId) => {
         window.setTimeout(() => {
@@ -192,9 +206,6 @@ function Quran({ onClose }) {
                 setFavorites(storedFavorites);
 
                 const storedLastRead = storageService.getItem(QURAN_STORAGE_KEYS.LAST_READ, null);
-                const availableTranslations = await getAvailableTranslations();
-                setTranslations(availableTranslations);
-
                 const startSurahId = storedLastRead?.surahId || 1;
                 const startAyahId = storedLastRead?.ayahId || null;
 
@@ -228,6 +239,12 @@ function Quran({ onClose }) {
             loadSurah(activeSurah.number, null, nextTranslation);
         }
     }, [activeSurah, getInitialTranslation, loadSurah, selectedTranslation]);
+
+    useEffect(() => {
+        if (activeMenuTab === 'fihrist' && detailedFihrist.length === 0) {
+            void loadDetailedFihrist();
+        }
+    }, [activeMenuTab, detailedFihrist.length, loadDetailedFihrist]);
 
     const handleTranslationChange = async (translationId) => {
         const normalizedTranslationId = normalizeTranslationId(translationId);
@@ -415,7 +432,7 @@ function Quran({ onClose }) {
         };
     }, [activeSurah, ayahCount, playingAyah, selectedReciter]);
 
-    if (!activeSurah || !selectedReciter || isQuranMetaLoading || isSurahLoading || !surahContent) {
+    if (!activeSurah || !selectedReciter || isSurahLoading || !surahContent) {
         return (
             <div className="library-loading">
                 <div className="spinner premium"></div>
@@ -424,6 +441,15 @@ function Quran({ onClose }) {
             </div>
         );
     }
+
+    const sliderAyah = playingAyah || 1;
+    const sliderProgress = ayahCount > 1 ? ((sliderAyah - 1) / (ayahCount - 1)) * 100 : 0;
+    const ayahSelectorTitle = t('quran.ayahSelectorTitle', 'Ayet sec');
+    const ayahSelectorHint = t('quran.ayahSelectorHint', 'Kaydirinca secilen ayet hemen calmaya baslar');
+    const activeAyahLabel = isPlaying && playingAyah
+        ? t('quran.playingAyahLabel', 'Calan ayet')
+        : t('quran.selectedAyahLabel', 'Secili ayet');
+    const totalAyahsLabel = t('quran.totalAyahsLabel', 'Toplam');
 
     return (
         <div className="quran-container">
@@ -555,7 +581,9 @@ function Quran({ onClose }) {
 
                     {activeMenuTab === 'fihrist' && (
                         <div className="list-content">
-                            {selectedTopic ? (
+                            {isFihristLoading ? (
+                                <div className="empty-state">{t('common.loading', 'Yukleniyor...')}</div>
+                            ) : selectedTopic ? (
                                 <div className="topic-detail">
                                     <button className="back-btn" onClick={() => setSelectedTopic(null)}>
                                         <ChevronLeft size={16} /> {t('quran.backToTopics')}
@@ -708,18 +736,33 @@ function Quran({ onClose }) {
             <div className={`quran-player-bar-premium ${showBars ? 'visible' : 'hidden'}`}>
                 <audio ref={audioRef} onEnded={handleAyahEnd} />
 
-                <div className="premium-slider-container">
-                    <input
-                        type="range"
-                        min="1"
-                        max={ayahCount}
-                        value={playingAyah || 0}
-                        onChange={handleSeek}
-                        className="premium-slider"
-                    />
+                <div className="premium-selector-panel">
+                    <div className="premium-selector-header">
+                        <div className="premium-selector-copy">
+                            <div className="premium-selector-eyebrow">{ayahSelectorTitle}</div>
+                            <div className="premium-selector-hint">{ayahSelectorHint}</div>
+                        </div>
+                        <div className="premium-selected-ayah-chip">
+                            <span className="premium-selected-ayah-label">{activeAyahLabel}</span>
+                            <strong>{sliderAyah}. {t('quran.ayah')}</strong>
+                        </div>
+                    </div>
+
+                    <div className="premium-slider-container" style={{ '--slider-progress': `${sliderProgress}%` }}>
+                        <input
+                            type="range"
+                            min="1"
+                            max={ayahCount}
+                            value={sliderAyah}
+                            onChange={handleSeek}
+                            className="premium-slider"
+                            aria-label={ayahSelectorTitle}
+                        />
+                    </div>
+
                     <div className="premium-slider-meta">
-                        <span>{playingAyah || 0}. Ayet</span>
-                        <span>{ayahCount} Ayet</span>
+                        <span>{sliderAyah}. {t('quran.ayah')}</span>
+                        <span>{totalAyahsLabel}: {ayahCount} {t('quran.ayah')}</span>
                     </div>
                 </div>
 

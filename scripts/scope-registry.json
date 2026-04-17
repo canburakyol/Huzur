@@ -1,0 +1,175 @@
+{
+  "ai": {
+    "summary": "Assistant ve Spiritual Coach deneyimleri. Genelde metin yaniti, tone, prompt, local AI guardrail ve FAQ akislari buradan etkilenir.",
+    "entrypoints": [
+      "src/features/ai/index.js",
+      "src/components/Assistant.jsx",
+      "src/components/SpiritualCoach.jsx"
+    ],
+    "commonFiles": [
+      "src/services/aiService.js",
+      "src/services/assistantFaqService.js",
+      "src/services/localIntelligenceService.js"
+    ],
+    "sharedRisks": [
+      "src/App.jsx",
+      "src/components/app-shell/AppTabRouter.jsx"
+    ],
+    "relatedScopes": ["onboarding", "core"]
+  },
+  "family": {
+    "summary": "Aile paneli ve aile icindeki ilerleme/gamification baglari. Davet, uye kartlari ve aile katkisi davranislari bu alanda yogunlasir.",
+    "entrypoints": [
+      "src/features/family/index.js",
+      "src/components/family/FamilyDashboard.jsx"
+    ],
+    "commonFiles": [
+      "src/services/familyService.js",
+      "src/services/familyGoalContributionService.js"
+    ],
+    "sharedRisks": [
+      "src/context/FamilyProvider.jsx",
+      "src/services/analyticsService.js"
+    ],
+    "relatedScopes": ["social", "onboarding"]
+  },
+  "social": {
+    "summary": "Grup Hatim ve Dua kardesligi ekranlari. Listeleme, detay, olusturma modal ve sosyal paylasim akislarini kapsar.",
+    "entrypoints": [
+      "src/features/social/index.js",
+      "src/components/social/SocialDashboard.jsx"
+    ],
+    "commonFiles": [
+      "src/components/social/DuaList.jsx",
+      "src/components/social/HatimDetail.jsx",
+      "src/services/hatimService.js",
+      "src/services/duaService.js",
+      "src/services/weeklySocialService.js"
+    ],
+    "sharedRisks": [
+      "src/components/InviteModal.jsx",
+      "src/services/referralService.js"
+    ],
+    "relatedScopes": ["family", "ibadet", "onboarding"]
+  },
+  "ibadet": {
+    "summary": "Gunluk ibadet araclari. Dua tracker, hatim coach, zikirmatik, missed prayers ve benzeri bireysel ibadet yuzeyleri burada.",
+    "entrypoints": [
+      "src/features/ibadet/index.js",
+      "src/components/DuaTracker.jsx",
+      "src/components/HatimCoach.jsx"
+    ],
+    "commonFiles": [
+      "src/services/prayerService.js",
+      "src/services/duaService.js",
+      "src/services/hatimService.js",
+      "src/services/streakService.js"
+    ],
+    "sharedRisks": [
+      "src/hooks/usePrayerTimes.js",
+      "src/services/analyticsService.js"
+    ],
+    "relatedScopes": ["social", "family"]
+  },
+  "onboarding": {
+    "summary": "Growth onboarding, davet/referral girisleri ve ilk premium surface. Ilk deneyim ve onboarding state burada merkezilesir.",
+    "entrypoints": [
+      "src/hooks/app-shell/useGrowthOnboardingFlow.js",
+      "src/components/GrowthOnboarding.jsx",
+      "src/components/InviteModal.jsx"
+    ],
+    "commonFiles": [
+      "src/services/onboardingConfigService.js",
+      "src/services/onboardingExperienceService.js",
+      "src/services/referralGrowthService.js",
+      "src/services/referralService.js",
+      "src/services/premiumMomentService.js"
+    ],
+    "sharedRisks": [
+      "src/App.jsx",
+      "src/constants.js",
+      "src/services/analyticsService.js"
+    ],
+    "relatedScopes": ["family", "social", "monetization", "ai"]
+  },
+  "monetization": {
+    "summary": "Premium, RevenueCat, AdMob ve upgrade yuzeyleri. Restore, entitlement, rewarded ad ve premium moment davranislari burada toplanir.",
+    "entrypoints": [
+      "src/components/ProUpgrade.jsx",
+      "src/components/PremiumHomeHero.jsx",
+      "src/services/revenueCatService.js"
+    ],
+    "commonFiles": [
+      "src/services/admobService.js",
+      "src/services/proService.js",
+      "src/services/subscriptionSyncService.js",
+      "src/services/premiumMomentService.js"
+    ],
+    "sharedRisks": [
+      "functions/index.js",
+      "android",
+      "src/services/analyticsService.js"
+    ],
+    "relatedScopes": ["onboarding", "android", "backend"]
+  },
+  "notifications": {
+    "summary": "Push, local reminder ve notification platform entegrasyonlari. Native taraf ve izin akislari birlikte dusunulmeli.",
+    "entrypoints": [
+      "src/services/smartNotificationService.js",
+      "src/services/fcmService.js",
+      "src/services/reminderService.js"
+    ],
+    "commonFiles": [
+      "src/services/notificationPlatformService.js",
+      "android/app/src/main/java/com/huzurapp/android/MainActivity.java"
+    ],
+    "sharedRisks": [
+      "android",
+      "src/hooks/usePrayerTimes.js"
+    ],
+    "relatedScopes": ["android", "ibadet"]
+  },
+  "app-shell": {
+    "summary": "Uygulamanin ana kabugu. Navigation state, overlay stack, tab router, bottom nav ve app bootstrap orkestrasyonu burada toplanir.",
+    "entrypoints": [
+      "src/App.jsx",
+      "src/components/app-shell/AppChrome.jsx",
+      "src/hooks/app-shell/useAppShellController.js"
+    ],
+    "commonFiles": [
+      "src/components/app-shell/AppOverlays.jsx",
+      "src/components/app-shell/AppTabRouter.jsx",
+      "src/components/app-shell/AppFeatureOverlay.jsx",
+      "src/components/BottomNav.jsx",
+      "src/components/HamburgerMenu.jsx"
+    ],
+    "sharedRisks": [
+      "src/AppProviders.jsx",
+      "src/hooks/usePrayerTimes.js",
+      "src/services/analyticsService.js"
+    ],
+    "relatedScopes": ["onboarding", "notifications", "ai"]
+  },
+  "home": {
+    "summary": "Ana sayfa feed'i. Home hero, hikayeler, gunluk gorevler, AI onerisi, referral tetikleyicileri ve aile momentumu burada toplanir.",
+    "entrypoints": [
+      "src/components/app-shell/AppHomeTabContent.jsx",
+      "src/hooks/app-shell/useHomeFeedState.js",
+      "src/components/app-shell/home/HomePriorityCard.jsx"
+    ],
+    "commonFiles": [
+      "src/components/PremiumHomeHero.jsx",
+      "src/components/FeatureGrid.jsx",
+      "src/components/DailyQuests.jsx",
+      "src/components/DailyDiscovery.jsx",
+      "src/components/ReferralTriggerCard.jsx",
+      "src/services/domains/home/index.js"
+    ],
+    "sharedRisks": [
+      "src/services/analyticsService.js",
+      "src/context/FamilyContext.js",
+      "src/hooks/useReferralTriggerSurface.js"
+    ],
+    "relatedScopes": ["app-shell", "family", "onboarding", "monetization", "ai"]
+  }
+}

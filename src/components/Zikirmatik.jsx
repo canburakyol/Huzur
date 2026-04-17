@@ -27,15 +27,73 @@ const DHIKR_LIST = [
     { id: 'hasbunallah', name: 'Hasbünallah', arabic: 'حَسْبُنَا اللهُ وَنِعْمَ الوَكِيلُ', meaning: 'Allah bize yeter, O ne güzel vekildir', defaultTarget: 33 },
 ];
 
+const DHIKR_TRANSLATIONS = {
+    free: {
+        nameKey: 'zikirmatikDhikrs.free.name',
+        fallbackName: 'Serbest Zikir',
+        meaningKey: 'zikirmatikDhikrs.free.meaning',
+        fallbackMeaning: 'Istediginiz zikri cekin'
+    },
+    subhanallah: {
+        nameKey: 'zikirmatikDhikrs.subhanallah.name',
+        fallbackName: 'Subhanallah',
+        meaningKey: 'zikirmatikDhikrs.subhanallah.meaning',
+        fallbackMeaning: "Allah'i tum eksikliklerden tenzih ederim"
+    },
+    elhamdulillah: {
+        nameKey: 'zikirmatikDhikrs.elhamdulillah.name',
+        fallbackName: 'Elhamdulillah',
+        meaningKey: 'zikirmatikDhikrs.elhamdulillah.meaning',
+        fallbackMeaning: "Hamd Allah'a mahsustur"
+    },
+    allahuekber: {
+        nameKey: 'zikirmatikDhikrs.allahuekber.name',
+        fallbackName: 'Allahu Ekber',
+        meaningKey: 'zikirmatikDhikrs.allahuekber.meaning',
+        fallbackMeaning: 'Allah en buyuktur'
+    },
+    lailaheillallah: {
+        nameKey: 'zikirmatikDhikrs.lailaheillallah.name',
+        fallbackName: 'La ilahe illallah',
+        meaningKey: 'zikirmatikDhikrs.lailaheillallah.meaning',
+        fallbackMeaning: "Allah'tan baska ilah yoktur"
+    },
+    estagfirullah: {
+        nameKey: 'zikirmatikDhikrs.estagfirullah.name',
+        fallbackName: 'Estagfirullah',
+        meaningKey: 'zikirmatikDhikrs.estagfirullah.meaning',
+        fallbackMeaning: "Allah'tan bagislanma dilerim"
+    },
+    lahavle: {
+        nameKey: 'zikirmatikDhikrs.lahavle.name',
+        fallbackName: 'La havle',
+        meaningKey: 'zikirmatikDhikrs.lahavle.meaning',
+        fallbackMeaning: "Guc ve kuvvet ancak Allah'tandir"
+    },
+    salavat: {
+        nameKey: 'zikirmatikDhikrs.salavat.name',
+        fallbackName: 'Salavat',
+        meaningKey: 'zikirmatikDhikrs.salavat.meaning',
+        fallbackMeaning: "Allah'im Muhammed'e salat eyle"
+    },
+    hasbunallah: {
+        nameKey: 'zikirmatikDhikrs.hasbunallah.name',
+        fallbackName: 'Hasbunallah',
+        meaningKey: 'zikirmatikDhikrs.hasbunallah.meaning',
+        fallbackMeaning: 'Allah bize yeter, O ne guzel vekildir'
+    }
+};
+
 const Zikirmatik = ({ onClose }) => {
     const { t } = useTranslation();
     const { isFocusMode, toggleFocusMode } = useFocus();
     const { checkQuestProgress } = useGamification();
+    const defaultFreeDhikrName = t('zikirmatikDhikrs.free.name', 'Serbest Zikir');
     
     const [view, setView] = useState('list');
     const [selectedDhikr, setSelectedDhikr] = useState(null);
     const [freeDhikrName, setFreeDhikrName] = useState(() => {
-        return storageService.getString(ZIKIRMATIK_KEYS.FREE_NAME, 'Serbest Zikir');
+        return storageService.getString(ZIKIRMATIK_KEYS.FREE_NAME, defaultFreeDhikrName);
     });
 
     const [counts, setCounts] = useState(() => {
@@ -63,6 +121,21 @@ const Zikirmatik = ({ onClose }) => {
     });
     const [showStats, setShowStats] = useState(false);
     const [showSuccessAnim, setShowSuccessAnim] = useState(false);
+
+    const getDhikrName = (dhikr) => {
+        if (!dhikr) return '';
+        if (dhikr.id === 'free') return freeDhikrName;
+
+        const translation = DHIKR_TRANSLATIONS[dhikr.id];
+        return translation ? t(translation.nameKey, translation.fallbackName) : dhikr.name;
+    };
+
+    const getDhikrMeaning = (dhikr) => {
+        if (!dhikr) return '';
+
+        const translation = DHIKR_TRANSLATIONS[dhikr.id];
+        return translation ? t(translation.meaningKey, translation.fallbackMeaning) : dhikr.meaning;
+    };
 
     const handleFreeNameChange = (e) => {
         const name = e.target.value;
@@ -179,7 +252,7 @@ const Zikirmatik = ({ onClose }) => {
                             const target = targets[dhikr.id] || dhikr.defaultTarget;
                             const progress = getProgress(dhikr.id);
                             const isComplete = count >= target;
-                            const displayName = dhikr.id === 'free' ? freeDhikrName : dhikr.name;
+                            const displayName = getDhikrName(dhikr);
 
                             return (
                                 <div
@@ -273,10 +346,10 @@ const Zikirmatik = ({ onClose }) => {
                         placeholder="Zikir Adı"
                     />
                 ) : (
-                    <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{selectedDhikr?.name}</h3>
+                    <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{getDhikrName(selectedDhikr)}</h3>
                 )}
                 <div style={{ fontSize: '2rem', fontFamily: 'var(--arabic-font)', color: 'var(--nav-text)', margin: '16px 0' }}>{selectedDhikr?.arabic}</div>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontStyle: 'italic', lineHeight: '1.4' }}>{selectedDhikr?.meaning}</p>
+                <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontStyle: 'italic', lineHeight: '1.4' }}>{getDhikrMeaning(selectedDhikr)}</p>
             </div>
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '40px 0' }}>

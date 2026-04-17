@@ -117,6 +117,40 @@ export const familyService = {
     }
   },
 
+  getWeeklyGoal: async (familyId = null, weekKey = null) => {
+    const userId = await getCurrentUserIdEnsured();
+    if (!userId) throw new Error('User not authenticated');
+
+    try {
+      const result = await callFamilyFunction('getOrCreateFamilyWeeklyGoal', {
+        familyId,
+        weekKey
+      });
+      return result?.goal || null;
+    } catch (error) {
+      logger.error('[FamilyService] Get weekly goal error:', error);
+      throw error;
+    }
+  },
+
+  contributeWeeklyGoal: async ({ familyId = null, weekKey = null, amount = 1, contributionType = 'manual_checkin' } = {}) => {
+    const userId = await getCurrentUserIdEnsured();
+    if (!userId) throw new Error('User not authenticated');
+
+    try {
+      const result = await callFamilyFunction('contributeToFamilyWeeklyGoal', {
+        familyId,
+        weekKey,
+        amount,
+        contributionType
+      });
+      return result?.goal || null;
+    } catch (error) {
+      logger.error('[FamilyService] Contribute weekly goal error:', error);
+      throw error;
+    }
+  },
+
   addChildMember: async () => {
     const userId = await getCurrentUserIdEnsured();
     if (!userId) throw new Error('User not authenticated');

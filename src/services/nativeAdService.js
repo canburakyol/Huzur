@@ -2,6 +2,7 @@ import { Capacitor } from '@capacitor/core';
 import NativeAdBridge from '../plugins/NativeAdBridgePlugin';
 import { getNativeAdUnitId } from './adEnvironmentService';
 import { isPro } from './proService';
+import { logger } from '../utils/logger';
 
 let isInitialized = false;
 let currentAdId = null;
@@ -25,7 +26,8 @@ export const nativeAdService = {
       await NativeAdBridge.initialize();
       isInitialized = true;
       return true;
-    } catch {
+    } catch (error) {
+      logger.error('[NativeAd] Initialize failed', error);
       return false;
     }
   },
@@ -54,7 +56,8 @@ export const nativeAdService = {
         return result;
       }
       return null;
-    } catch {
+    } catch (error) {
+      logger.error('[NativeAd] Load failed', error);
       return null;
     }
   },
@@ -67,8 +70,8 @@ export const nativeAdService = {
 
     try {
       await NativeAdBridge.reportImpression({ adId: currentAdId });
-    } catch {
-      // Impression tracking failure should not break the UI
+    } catch (error) {
+      logger.error('[NativeAd] reportImpression failed', error);
     }
   },
 
@@ -80,8 +83,8 @@ export const nativeAdService = {
 
     try {
       await NativeAdBridge.reportClick({ adId: currentAdId });
-    } catch {
-      // Click tracking failure should not break the UI
+    } catch (error) {
+      logger.error('[NativeAd] reportClick failed', error);
     }
   }
 };

@@ -12,6 +12,7 @@ export const TajweedTutor = lazy(() => import(/* webpackChunkName: "feature-educ
 export const NuzulExplorer = lazy(() => import(/* webpackChunkName: "feature-education" */ '../../components/NuzulExplorer'));
 export const WordByWord = lazy(() => import(/* webpackChunkName: "feature-education" */ '../../components/WordByWord'));
 export const SeerahMap = lazy(() => import(/* webpackChunkName: "feature-education" */ '../../components/SeerahMap'));
+export const DailyIslamicQuiz = lazy(() => import(/* webpackChunkName: "feature-education" */ '../../components/education/DailyIslamicQuiz'));
 
 // Feature configuration for this module
 export const educationFeatures = {
@@ -58,6 +59,13 @@ export const educationFeatures = {
     module: 'education',
     nameKey: 'features.seerahMap',
     icon: '🗺️'
+  },
+  dailyQuiz: {
+    component: DailyIslamicQuiz,
+    category: 'GAMIFICATION',
+    module: 'education',
+    nameKey: 'quiz.title',
+    icon: 'star'
   }
 };
 

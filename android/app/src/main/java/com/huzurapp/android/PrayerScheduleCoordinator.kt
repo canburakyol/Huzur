@@ -2,7 +2,6 @@ package com.huzurapp.android
 
 import android.content.Context
 import android.util.Log
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.json.JSONObject
 
 object PrayerScheduleCoordinator {
@@ -113,10 +112,6 @@ object PrayerScheduleCoordinator {
     }
 
     private fun logSchedule(message: String) {
-        try {
-            FirebaseCrashlytics.getInstance().log("[PrayerSchedule] $message")
-        } catch (_: Exception) {
-            // no-op
-        }
+        Log.d(TAG, "[PrayerSchedule] $message")
     }
 }

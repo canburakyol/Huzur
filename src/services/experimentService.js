@@ -1,5 +1,6 @@
 import { STORAGE_KEYS } from '../constants';
 import { storageService } from './storageService';
+import { logExperimentAssigned } from './analyticsService';
 
 const DEFAULT_EXPERIMENTS = {
   push_copy_v1: {
@@ -11,6 +12,18 @@ const DEFAULT_EXPERIMENTS = {
     fallbackVariant: 'A'
   },
   onboarding_headline_v1: {
+    variants: ['A', 'B'],
+    fallbackVariant: 'A'
+  },
+  onboarding_goal_step_v1: {
+    variants: ['A', 'B'],
+    fallbackVariant: 'A'
+  },
+  paywall_value_stack_v1: {
+    variants: ['A', 'B'],
+    fallbackVariant: 'A'
+  },
+  paywall_cta_v1: {
     variants: ['A', 'B'],
     fallbackVariant: 'A'
   }
@@ -88,6 +101,7 @@ export const getExperimentVariant = (experimentKey) => {
     }
   };
   writeAssignments(next);
+  logExperimentAssigned(experimentKey, resolved, 'experiment_service');
   return resolved;
 };
 

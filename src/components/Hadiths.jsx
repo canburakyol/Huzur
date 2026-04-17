@@ -6,6 +6,7 @@ import { Share } from '@capacitor/share';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { contentService } from '../services/contentService';
 import { storageService } from '../services/storageService';
+import { useToast } from '../hooks/useToast';
 import './Hadiths.css';
 import './Navigation.css';
 
@@ -13,6 +14,7 @@ const HADITH_FAVORITES_KEY = 'hadithFavorites';
 
 const Hadiths = ({ onClose }) => {
     const { t, i18n } = useTranslation();
+    const { showToast } = useToast();
     const [view, setView] = useState('home'); 
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedHadith, setSelectedHadith] = useState(null);
@@ -57,17 +59,18 @@ const Hadiths = ({ onClose }) => {
 
     const handleShare = async (hadith) => {
         const title = t('hadith.title', 'Hadis-i Şerif');
-        const text = `📖 ${title}\n\n"${hadith.text}"\n\n— ${hadith.narrator}\n(${hadith.source})\n\n- Huzur Uygulaması`;
+        const appName = t('app.name', 'Huzur');
+        const text = `📖 ${title}\n\n"${hadith.text}"\n\n— ${hadith.narrator}\n(${hadith.source})\n\n- ${appName}`;
         try {
             if (Capacitor.isNativePlatform()) {
-                await Share.share({ title, text, dialogTitle: 'Hadisi Paylaş' });
+                await Share.share({ title, text, dialogTitle: t('hadith.shareDialogTitle', 'Hadisi Paylas') });
                 return;
             }
             if (navigator.share) {
                 await navigator.share({ title, text });
             } else {
                 await navigator.clipboard.writeText(text);
-                alert(t('common.copied', 'Panoya kopyalandı!'));
+                showToast(t('common.copied', 'Panoya kopyalandı!'), 'success');
             }
         } catch (err) { console.error('Share error:', err); }
     };

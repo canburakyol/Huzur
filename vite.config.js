@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
+import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -18,7 +19,29 @@ export default defineConfig({
         manualChunks(id) {
           if (!id.includes('node_modules')) return;
 
-          if (id.includes('/node_modules/firebase/')) return 'vendor-firebase';
+          if (id.includes('/node_modules/firebase/') || id.includes('/node_modules/@firebase/')) {
+            if (id.includes('/firebase/firestore') || id.includes('/@firebase/firestore')) {
+              return 'vendor-firebase-firestore';
+            }
+
+            if (id.includes('/firebase/auth') || id.includes('/@firebase/auth')) {
+              return 'vendor-firebase-auth';
+            }
+
+            if (id.includes('/firebase/functions') || id.includes('/@firebase/functions')) {
+              return 'vendor-firebase-functions';
+            }
+
+            if (id.includes('/firebase/analytics') || id.includes('/@firebase/analytics')) {
+              return 'vendor-firebase-analytics';
+            }
+
+            if (id.includes('/firebase/app-check') || id.includes('/@firebase/app-check')) {
+              return 'vendor-firebase-app-check';
+            }
+
+            return 'vendor-firebase-core';
+          }
           if (id.includes('/@revenuecat/')) return 'vendor-revenuecat';
           if (id.includes('/@capacitor/')) return 'vendor-capacitor';
 
@@ -56,6 +79,65 @@ export default defineConfig({
     visualizer({
       open: false,
       filename: 'bundle-stats.html'
+    }),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico', 'icons/*.webp'],
+      manifest: {
+        name: 'Huzur - İslami Yaşam Asistanı',
+        short_name: 'Huzur',
+        description: 'Namaz, Kur\'an, zikirmatik ve daha fazlası',
+        theme_color: '#0d1117',
+        background_color: '#0d1117',
+        display: 'standalone',
+        orientation: 'portrait',
+        start_url: './',
+        icons: [
+          { src: 'icons/icon-192.webp', sizes: '192x192', type: 'image/webp', purpose: 'any maskable' },
+          { src: 'icons/icon-512.webp', sizes: '512x512', type: 'image/webp', purpose: 'any maskable' }
+        ]
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,webp,png,svg,woff2}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 }
+            }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'gstatic-fonts-cache',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 }
+            }
+          }
+        ]
+      }
     })
   ],
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    setupFiles: ['./src/test/setup.js'],
+    include: ['src/**/*.test.{js,jsx}'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'src/test/',
+        '**/*.test.{js,jsx}',
+        '**/*.config.js',
+        'e2e/',
+        'dist/',
+        'functions/',
+        'scripts/'
+      ]
+    }
+  },
 })

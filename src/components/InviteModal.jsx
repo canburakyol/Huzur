@@ -1,237 +1,814 @@
-import { useState } from 'react';
-import { Gift, Link2, Send, X, Users, CheckCircle2, Copy } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  CheckCircle2,
+  Copy,
+  Gift,
+  Link2,
+  LoaderCircle,
+  Send,
+  ShieldAlert,
+  Sparkles,
+  X
+} from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
-import { createInviteLink, getReferralProgress } from '../services/referralService';
-import { analyticsService } from '../services/analyticsService';
+import {
+  createInviteLink,
+  getReferralProgress,
+} from '../services/referralService';
+import {
+  ANALYTICS_EVENTS,
+  analyticsService,
+} from '../services/analyticsService';
+import {
+  buildReferralAnalyticsPayload,
+  buildReferralShareText,
+  getReferralGrowthPlan,
+} from '../services/referralGrowthService';
+import {
+  getReferralServerSnapshot,
+  syncReferralState,
+} from '../services/referralServerService';
 import { getActiveCampaign } from '../services/campaignService';
 
-const InviteModal = ({ isOpen, onClose }) => {
+const formatBlockedUntil = (value) => {
+  const parsed = Date.parse(value || '');
+  if (!Number.isFinite(parsed)) return null;
+
+  return new Intl.DateTimeFormat('tr-TR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(parsed));
+};
+
+const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
+  const [modalSeedProgress] = useState(() => getReferralProgress());
+  const [localProgress, setLocalProgress] = useState(modalSeedProgress);
+  const [serverSnapshot, setServerSnapshot] = useState(null);
   const [inviteUrl, setInviteUrl] = useState('');
-  const [inviteCode, setInviteCode] = useState('');
-  const referralProgress = isOpen ? getReferralProgress() : null;
+  const [inviteCode, setInviteCode] = useState(() => modalSeedProgress?.ownCode || '');
+  const [feedback, setFeedback] = useState('');
+  const [syncing, setSyncing] = useState(false);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    if (!isOpen) return;
 
-  const handleCreateInvite = () => {
-    const campaign = getActiveCampaign();
-    const result = createInviteLink({
-      source: 'invite_modal',
-      campaign: campaign.id,
-      lang: campaign.variant === 'diaspora' ? 'en' : 'tr'
+    const initialPlan = getReferralGrowthPlan({
+      localProgress: modalSeedProgress,
+      surface: entrySource,
     });
+
+    analyticsService.logInviteModalViewed(
+      entrySource,
+      buildReferralAnalyticsPayload(initialPlan, {
+        has_local_code: Boolean(modalSeedProgress?.ownCode),
+      })
+    );
+
+    let cancelled = false;
+    const loadSnapshot = async () => {
+      setSyncing(true);
+      const snapshot = await getReferralServerSnapshot();
+      if (!cancelled && snapshot) {
+        setServerSnapshot(snapshot);
+      }
+      if (!cancelled) {
+        setSyncing(false);
+      }
+    };
+
+    void loadSnapshot();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [entrySource, isOpen, modalSeedProgress]);
+
+  const growthPlan = useMemo(() => {
+    if (!localProgress) return null;
+
+    return getReferralGrowthPlan({
+      localProgress,
+      serverSnapshot,
+      surface: entrySource,
+    });
+  }, [entrySource, localProgress, serverSnapshot]);
+  const funnelMetrics = useMemo(() => {
+    const inviterSummary = serverSnapshot?.inviterSummary || {};
+    const linkReadyCount = localProgress?.ownCode ? 1 : 0;
+
+    return [
+      { id: 'link_ready', label: 'Link hazir', value: linkReadyCount },
+      { id: 'accepted', label: 'Kabul', value: Math.max(0, Number(inviterSummary.acceptedCount) || 0) },
+      { id: 'onboarding', label: 'Onboarding', value: Math.max(0, Number(inviterSummary.onboardingCompletedCount) || 0) },
+      { id: 'ibadah', label: 'Ilk ibadet', value: Math.max(0, Number(inviterSummary.firstIbadahCompletedCount) || 0) },
+      { id: 'reward', label: 'Odul', value: Math.max(0, Number(inviterSummary.rewardUnlockedCount) || 0) },
+    ];
+  }, [localProgress?.ownCode, serverSnapshot]);
+
+  if (!isOpen || !localProgress || !growthPlan) return null;
+
+  const refreshAfterLocalMutation = async (nextProgress, source) => {
+    setLocalProgress(nextProgress);
+    setInviteCode(nextProgress?.ownCode || '');
+    setSyncing(true);
+    const snapshot = await syncReferralState(nextProgress, { source, force: true });
+    if (snapshot) {
+      setServerSnapshot(snapshot);
+    }
+    setSyncing(false);
+  };
+
+  const ensureInviteReady = async () => {
+    const campaign = getActiveCampaign();
+    if (inviteUrl && inviteCode) {
+      return {
+        code: inviteCode,
+        inviteUrl,
+        campaign,
+      };
+    }
+
+    const result = createInviteLink({
+      source: entrySource,
+      campaign: campaign.id,
+      lang: campaign.variant === 'diaspora' ? 'en' : 'tr',
+    });
+
     setInviteUrl(result.inviteUrl);
     setInviteCode(result.code);
+    const nextProgress = getReferralProgress();
+    await refreshAfterLocalMutation(nextProgress, entrySource);
+    setFeedback('Davet linkin hazir. Simdi tek bir kisiye sakin bir notla gonderebilirsin.');
+
+    return {
+      ...result,
+      campaign,
+    };
+  };
+
+  const writeClipboard = async (text, successMessage, analyticsEvent) => {
+    if (!navigator.clipboard?.writeText) {
+      setFeedback('Bu cihazda kopyalama destegi su an gorunmuyor.');
+      return;
+    }
+
+    await navigator.clipboard.writeText(text);
+    setFeedback(successMessage);
+
+    const analyticsPayload = buildReferralAnalyticsPayload(growthPlan, {
+      referral_code: inviteCode || undefined,
+    });
+
+    if (analyticsEvent === 'code') {
+      analyticsService.logInviteCodeCopied(inviteCode, entrySource, analyticsPayload);
+      return;
+    }
+
+    analyticsService.logInviteLinkCopied(entrySource, analyticsPayload);
   };
 
   const handleShareInvite = async () => {
-    if (!inviteUrl) return;
-    const text = `Huzur uygulamasına katıl 🌙\n\nDavet kodum: ${inviteCode}\n${inviteUrl}`;
+    const preparedInvite = await ensureInviteReady();
+    const shareCopy = buildReferralShareText({
+      inviteCode: preparedInvite.code,
+      inviteUrl: preparedInvite.inviteUrl,
+      variant: growthPlan.shareVariant,
+      lang: preparedInvite.campaign.variant === 'diaspora' ? 'en' : 'tr',
+      campaign: preparedInvite.campaign,
+    });
+
+    const baseAnalyticsPayload = buildReferralAnalyticsPayload(growthPlan, {
+      referral_code: preparedInvite.code,
+    });
 
     try {
       if (Capacitor.isNativePlatform()) {
+        analyticsService.logInviteShareOpened(entrySource, 'native_share', baseAnalyticsPayload);
         await Share.share({
-          title: 'Huzur Daveti',
-          text: text,
-          url: inviteUrl,
-          dialogTitle: 'Arkadaşını Davet Et'
+          title: shareCopy.title,
+          text: shareCopy.text,
+          url: preparedInvite.inviteUrl,
+          dialogTitle: shareCopy.dialogTitle,
         });
-        analyticsService.logShareSent('invite_link', 'native_share');
+        analyticsService.logEvent(ANALYTICS_EVENTS.SHARE_SENT, {
+          card_type: 'invite_link',
+          channel: 'native_share',
+          ...baseAnalyticsPayload,
+        });
+        setFeedback('Davet paylasildi. Ilk donus oldugunda burada gormeye baslayacaksin.');
         return;
       }
 
       if (navigator.share) {
-        await navigator.share({ title: 'Huzur Daveti', text, url: inviteUrl });
-        analyticsService.logShareSent('invite_link', 'native_share');
+        analyticsService.logInviteShareOpened(entrySource, 'web_share', baseAnalyticsPayload);
+        await navigator.share({
+          title: shareCopy.title,
+          text: shareCopy.text,
+          url: preparedInvite.inviteUrl,
+        });
+        analyticsService.logEvent(ANALYTICS_EVENTS.SHARE_SENT, {
+          card_type: 'invite_link',
+          channel: 'web_share',
+          ...baseAnalyticsPayload,
+        });
+        setFeedback('Davet paylasildi. Ilk donus oldugunda burada gormeye baslayacaksin.');
         return;
       }
 
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-        analyticsService.logShareSent('invite_link', 'clipboard');
-        // Simple visual feedback instead of alert if possible, but keeping it for now
-        alert('Davet linki kopyalandı!');
-      }
-    } catch (err) {
-      console.error('Share error:', err);
+      analyticsService.logInviteShareOpened(entrySource, 'clipboard', baseAnalyticsPayload);
+      await navigator.clipboard.writeText(shareCopy.text);
+      analyticsService.logEvent(ANALYTICS_EVENTS.SHARE_SENT, {
+        card_type: 'invite_link',
+        channel: 'clipboard',
+        ...baseAnalyticsPayload,
+      });
+      setFeedback('Paylasim metni kopyalandi. Tek bir kisiye gondermen yeterli.');
+    } catch (error) {
+      setFeedback('Paylasim yarida kaldi. Istersen once linki kopyalayip elle gonderebilirsin.');
+      console.error('[InviteModal] Share error', error);
     }
   };
 
+  const blockedLabel = formatBlockedUntil(growthPlan.blockedUntil);
+  const hasInviteReady = Boolean(inviteUrl && inviteCode);
+
   return (
-    <div className="velocity-modal-overlay">
-      <div className="settings-card reveal-stagger" style={{ 
-          flexDirection: 'column', padding: '32px', maxWidth: '440px', width: '90%',
-          position: 'relative', border: '1px solid rgba(212, 175, 55, 0.3)',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212, 175, 55, 0.1)'
-      }}>
-        <button 
-            onClick={onClose}
-            className="modal-close-btn"
+    <div className="invite-modal-overlay">
+      <div className="invite-modal-card reveal-stagger">
+        <button
+          onClick={onClose}
+          className="invite-modal-close"
+          aria-label="Kapat"
         >
           <X size={18} />
         </button>
 
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <div className="settings-icon-box" style={{ 
-              width: '64px', height: '64px', background: 'rgba(212, 175, 55, 0.15)', 
-              color: '#d4af37', borderRadius: '20px', margin: '0 auto 16px' 
-          }}>
-            <Gift size={32} />
+        <div className="invite-modal-header">
+          <div className="invite-icon-box">
+            <Gift size={30} />
           </div>
-          <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '950', color: 'var(--nav-text)', letterSpacing: '-0.5px' }}>
-             Arkadaşını Davet Et
-          </h3>
-          <p style={{ margin: '8px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>
-            Huzur'u paylaş, beraber kazanın. Referans ilerlemeni buradan takip edebilirsin.
-          </p>
+          <div className="invite-badge-row">
+            <span className="invite-badge">{growthPlan.badge}</span>
+            {syncing ? (
+              <span className="invite-sync-pill">
+                <LoaderCircle size={12} className="spin-icon" />
+                Esitleniyor
+              </span>
+            ) : null}
+          </div>
+          <h3>{growthPlan.headline}</h3>
+          <p>{growthPlan.description}</p>
         </div>
 
-        {referralProgress && (
-          <div className="progress-section" style={{ marginBottom: '24px' }}>
-            <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '900', color: 'var(--nav-text)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '12px' }}>
-                Referans Durumu
-            </label>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div className="progress-item">
-                    <div className={`status-dot ${referralProgress.rewards?.inviterUnlockedAt ? 'active' : ''}`} />
-                    <span style={{ flex: 1 }}>Davet Eden Ödülü</span>
-                    <span style={{ fontWeight: '800', color: referralProgress.rewards?.inviterUnlockedAt ? '#10b981' : 'var(--nav-text-muted)' }}>
-                        {referralProgress.rewards?.inviterUnlockedAt ? 'AÇILDI' : 'BEKLEMEDE'}
-                    </span>
-                    {referralProgress.rewards?.inviterUnlockedAt && <CheckCircle2 size={14} color="#10b981" />}
-                </div>
-                <div className="progress-item">
-                    <div className={`status-dot ${referralProgress.rewards?.inviteeUnlockedAt ? 'active' : ''}`} />
-                    <span style={{ flex: 1 }}>Davet Edilen Ödülü</span>
-                    <span style={{ fontWeight: '800', color: referralProgress.rewards?.inviteeUnlockedAt ? '#10b981' : 'var(--nav-text-muted)' }}>
-                        {referralProgress.rewards?.inviteeUnlockedAt ? 'AÇILDI' : 'BEKLEMEDE'}
-                    </span>
-                    {referralProgress.rewards?.inviteeUnlockedAt && <CheckCircle2 size={14} color="#10b981" />}
-                </div>
+        <div className="invite-stats-grid">
+          {growthPlan.stats.map((stat) => (
+            <div key={stat.id} className="invite-stat-card">
+              <div className="invite-stat-value">{stat.value}</div>
+              <div className="invite-stat-label">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="invite-funnel-card">
+          <div className="invite-section-title">
+            <Sparkles size={14} />
+            Referral hunisi
+          </div>
+          <div className="invite-funnel-grid">
+            {funnelMetrics.map((metric) => (
+              <div key={metric.id} className="invite-funnel-metric">
+                <div className="invite-funnel-value">{metric.value}</div>
+                <div className="invite-funnel-label">{metric.label}</div>
+              </div>
+            ))}
+          </div>
+          <div className="invite-funnel-helper">
+            Link hazirlandiktan sonra hangi asamada hareket oldugunu buradan gorebilirsin.
+          </div>
+        </div>
+
+        {growthPlan.riskState === 'blocked' ? (
+          <div className="invite-warning-card">
+            <ShieldAlert size={18} />
+            <div>
+              <strong>Guvenlik molasi aktif</strong>
+              <p>
+                {blockedLabel
+                  ? `${blockedLabel} sonrasinda tekrar deneyebilirsin.`
+                  : 'Kisa bir sure sonra tekrar deneyebilirsin.'}
+              </p>
             </div>
           </div>
-        )}
+        ) : null}
 
-        {!inviteUrl ? (
-          <button
-            onClick={handleCreateInvite}
-            className="velocity-btn-primary"
-            style={{ width: '100%', padding: '16px', background: '#d4af37' }}
-          >
-            <Link2 size={18} style={{ marginRight: '8px' }} />
-            Davet Linki Oluştur
-          </button>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div className="invite-info-card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>Davet Kodu</span>
-                  <Copy size={14} color="var(--nav-accent)" style={{ cursor: 'pointer' }} onClick={() => navigator.clipboard.writeText(inviteCode)} />
+        <div className="invite-steps-card">
+          <div className="invite-section-title">
+            <Sparkles size={14} />
+            Growth loop
+          </div>
+          <div className="invite-step-list">
+            {growthPlan.steps.map((step) => (
+              <div key={step.id} className={`invite-step-item status-${step.status}`}>
+                <div className="invite-step-marker">
+                  {step.status === 'done' ? <CheckCircle2 size={14} /> : step.status === 'active' ? <Sparkles size={14} /> : <span />}
+                </div>
+                <div className="invite-step-copy">
+                  <strong>{step.label}</strong>
+                  <p>{step.description}</p>
+                </div>
               </div>
-              <div style={{ fontSize: '1.25rem', fontWeight: '950', color: 'var(--nav-text)', letterSpacing: '1px' }}>
-                  {inviteCode}
-              </div>
-              <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid var(--nav-border)', fontSize: '0.75rem', color: 'var(--nav-text-muted)', wordBreak: 'break-all', fontWeight: '600' }}>
-                  {inviteUrl}
-              </div>
-            </div>
+            ))}
+          </div>
+        </div>
 
+        <div className="invite-note-card">
+          <div className="invite-section-title">
+            <Link2 size={14} />
+            Paylasim notu
+          </div>
+          <p>{growthPlan.supportingNote}</p>
+          {growthPlan.syncIssue ? (
+            <p className="invite-note-subtle">
+              Davet iliskisi sunucuda henuz tam eslesmedi. Linki kullanan ilk kisi geldikce burada netlesecek.
+            </p>
+          ) : null}
+        </div>
+
+        <div className="invite-actions-card">
+          <div className="invite-actions-topline">
+            <span>Davet kodun</span>
+            {inviteCode ? (
+              <button
+                type="button"
+                className="invite-inline-copy"
+                onClick={() => writeClipboard(inviteCode, 'Davet kodu kopyalandi.', 'code')}
+              >
+                <Copy size={14} />
+                Kopyala
+              </button>
+            ) : null}
+          </div>
+
+          <div className="invite-code-pill">
+            {inviteCode || 'Hazir degil'}
+          </div>
+
+          {inviteUrl ? (
             <button
-              onClick={handleShareInvite}
-              className="velocity-btn-primary"
-              style={{ width: '100%', padding: '16px' }}
+              type="button"
+              className="invite-link-preview"
+              onClick={() => writeClipboard(inviteUrl, 'Davet linki kopyalandi.', 'link')}
             >
-              <Send size={18} style={{ marginRight: '8px' }} />
-              Linki Paylaş
+              <span>{inviteUrl}</span>
+              <Copy size={14} />
             </button>
+          ) : (
+            <div className="invite-link-placeholder">
+              Link ilk paylasim oncesi tek tikla hazirlanir.
+            </div>
+          )}
+
+          <button
+            onClick={handleShareInvite}
+            className="invite-primary-button"
+          >
+            <Send size={18} />
+            {hasInviteReady ? growthPlan.shareLabel : 'Davet linkini hazirla'}
+          </button>
+
+          <div className="invite-support-text">
+            {hasInviteReady ? growthPlan.shareSupportLabel : 'Link bir kez hazirlandiktan sonra tekrar tekrar kullanabilirsin.'}
           </div>
-        )}
+        </div>
+
+        {feedback ? (
+          <div className="invite-feedback">
+            {feedback}
+          </div>
+        ) : null}
       </div>
 
       <style>{`
-        .velocity-modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 10003;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
+        .invite-modal-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(4, 20, 16, 0.88);
+          backdrop-filter: blur(10px);
+          z-index: 10003;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          animation: fadeIn 0.25s ease;
         }
 
-        .modal-close-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: var(--nav-hover);
-            border: none;
-            color: var(--nav-text-muted);
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
+        .invite-modal-card {
+          width: min(460px, 100%);
+          max-height: 92vh;
+          overflow-y: auto;
+          padding: 28px 24px 24px;
+          border-radius: 28px;
+          position: relative;
+          background:
+            radial-gradient(circle at top right, rgba(212, 175, 55, 0.18), transparent 34%),
+            linear-gradient(145deg, rgba(15, 61, 46, 0.98), rgba(7, 36, 27, 0.98));
+          border: 1px solid rgba(212, 175, 55, 0.24);
+          box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
         }
 
-        .modal-close-btn:hover { background: var(--nav-border); color: var(--nav-text); }
-
-        .progress-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            background: var(--nav-hover);
-            border-radius: 14px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--nav-text);
+        .invite-modal-close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          width: 34px;
+          height: 34px;
+          border-radius: 999px;
+          border: 1px solid rgba(212, 175, 55, 0.18);
+          background: rgba(255, 255, 255, 0.06);
+          color: var(--nav-text-muted);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--nav-border);
+        .invite-modal-header {
+          text-align: center;
+          margin-bottom: 18px;
         }
 
-        .status-dot.active {
-            background: #10b981;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        .invite-icon-box {
+          width: 62px;
+          height: 62px;
+          border-radius: 22px;
+          margin: 0 auto 14px;
+          background: rgba(212, 175, 55, 0.14);
+          color: #d4af37;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 0 24px rgba(212, 175, 55, 0.12);
         }
 
-        .invite-info-card {
-            background: var(--nav-hover);
-            border: 1px solid var(--nav-border);
-            border-radius: 16px;
-            padding: 16px;
+        .invite-badge-row {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-bottom: 12px;
         }
 
-        .velocity-btn-primary {
-            background: var(--nav-accent);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            font-weight: 950;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        .invite-badge,
+        .invite-sync-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          border-radius: 999px;
+          padding: 6px 10px;
+          font-size: 0.72rem;
+          font-weight: 900;
         }
 
-        .velocity-btn-primary:active { transform: scale(0.97); }
+        .invite-badge {
+          background: rgba(212, 175, 55, 0.16);
+          color: #f3d27b;
+          border: 1px solid rgba(212, 175, 55, 0.22);
+        }
+
+        .invite-sync-pill {
+          background: rgba(15, 118, 110, 0.18);
+          color: #9de8d8;
+          border: 1px solid rgba(15, 118, 110, 0.2);
+        }
+
+        .invite-modal-header h3 {
+          margin: 0 0 8px 0;
+          font-size: 1.45rem;
+          font-weight: 950;
+          color: var(--nav-text);
+          letter-spacing: -0.04em;
+        }
+
+        .invite-modal-header p {
+          margin: 0;
+          color: var(--nav-text-muted);
+          line-height: 1.55;
+          font-size: 0.88rem;
+          font-weight: 600;
+        }
+
+        .invite-stats-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 10px;
+          margin-bottom: 16px;
+        }
+
+        .invite-stat-card,
+        .invite-funnel-card,
+        .invite-steps-card,
+        .invite-note-card,
+        .invite-actions-card,
+        .invite-warning-card,
+        .invite-feedback {
+          border-radius: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        .invite-stat-card {
+          padding: 14px 12px;
+          text-align: center;
+        }
+
+        .invite-stat-value {
+          color: var(--nav-text);
+          font-size: 1.05rem;
+          font-weight: 950;
+          margin-bottom: 4px;
+        }
+
+        .invite-stat-label {
+          color: var(--nav-text-muted);
+          font-size: 0.72rem;
+          line-height: 1.4;
+          font-weight: 700;
+        }
+
+        .invite-warning-card,
+        .invite-funnel-card,
+        .invite-steps-card,
+        .invite-note-card,
+        .invite-actions-card,
+        .invite-feedback {
+          padding: 16px;
+          margin-bottom: 14px;
+        }
+
+        .invite-warning-card {
+          display: flex;
+          gap: 12px;
+          border-color: rgba(245, 158, 11, 0.25);
+          background: rgba(180, 83, 9, 0.10);
+          color: #ffe8c2;
+        }
+
+        .invite-warning-card strong {
+          display: block;
+          margin-bottom: 4px;
+          font-size: 0.86rem;
+        }
+
+        .invite-warning-card p {
+          margin: 0;
+          font-size: 0.76rem;
+          line-height: 1.5;
+          color: #f9ddb5;
+        }
+
+        .invite-section-title {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.76rem;
+          font-weight: 900;
+          color: var(--nav-accent);
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          margin-bottom: 12px;
+        }
+
+        .invite-step-list {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .invite-funnel-grid {
+          display: grid;
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+          gap: 10px;
+        }
+
+        .invite-funnel-metric {
+          border-radius: 16px;
+          border: 1px solid rgba(212, 175, 55, 0.14);
+          background: rgba(255, 255, 255, 0.04);
+          padding: 12px 10px;
+          text-align: center;
+        }
+
+        .invite-funnel-value {
+          font-size: 1.05rem;
+          font-weight: 900;
+          color: var(--nav-text);
+          margin-bottom: 4px;
+        }
+
+        .invite-funnel-label {
+          font-size: 0.66rem;
+          font-weight: 800;
+          color: var(--nav-text-muted);
+          text-transform: uppercase;
+          line-height: 1.35;
+        }
+
+        .invite-funnel-helper {
+          margin-top: 10px;
+          font-size: 0.72rem;
+          color: var(--nav-text-muted);
+          line-height: 1.45;
+          font-weight: 700;
+        }
+
+        .invite-step-item {
+          display: flex;
+          gap: 12px;
+          padding: 12px;
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .invite-step-item.status-done {
+          border-color: rgba(16, 185, 129, 0.22);
+          background: rgba(16, 185, 129, 0.08);
+        }
+
+        .invite-step-item.status-active {
+          border-color: rgba(212, 175, 55, 0.2);
+          background: rgba(212, 175, 55, 0.08);
+        }
+
+        .invite-step-marker {
+          width: 28px;
+          height: 28px;
+          flex-shrink: 0;
+          border-radius: 999px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.08);
+          color: var(--nav-accent);
+        }
+
+        .invite-step-copy strong {
+          display: block;
+          color: var(--nav-text);
+          font-size: 0.84rem;
+          margin-bottom: 4px;
+        }
+
+        .invite-step-copy p,
+        .invite-note-card p,
+        .invite-note-subtle {
+          margin: 0;
+          color: var(--nav-text-muted);
+          font-size: 0.76rem;
+          line-height: 1.55;
+          font-weight: 600;
+        }
+
+        .invite-note-subtle {
+          margin-top: 8px !important;
+          color: rgba(217, 230, 219, 0.72) !important;
+        }
+
+        .invite-actions-topline {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          margin-bottom: 10px;
+          color: var(--nav-text-muted);
+          font-size: 0.74rem;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+
+        .invite-inline-copy {
+          border: none;
+          border-radius: 999px;
+          background: rgba(212, 175, 55, 0.12);
+          color: var(--nav-accent);
+          padding: 6px 10px;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.7rem;
+          font-weight: 900;
+          cursor: pointer;
+        }
+
+        .invite-code-pill {
+          border-radius: 18px;
+          padding: 16px;
+          background: rgba(255, 255, 255, 0.04);
+          color: var(--nav-text);
+          font-size: 1.18rem;
+          font-weight: 950;
+          text-align: center;
+          letter-spacing: 0.16em;
+          border: 1px solid rgba(212, 175, 55, 0.18);
+          margin-bottom: 10px;
+        }
+
+        .invite-link-preview,
+        .invite-link-placeholder {
+          width: 100%;
+          border-radius: 16px;
+          padding: 12px 14px;
+          margin-bottom: 12px;
+          font-size: 0.76rem;
+          line-height: 1.45;
+        }
+
+        .invite-link-preview {
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          background: rgba(255, 255, 255, 0.03);
+          color: var(--nav-text-muted);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          text-align: left;
+          cursor: pointer;
+        }
+
+        .invite-link-preview span {
+          overflow-wrap: anywhere;
+          flex: 1;
+        }
+
+        .invite-link-placeholder {
+          border: 1px dashed rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.025);
+          color: var(--nav-text-muted);
+        }
+
+        .invite-primary-button {
+          width: 100%;
+          border: none;
+          border-radius: 18px;
+          padding: 15px 16px;
+          background: linear-gradient(135deg, var(--nav-accent), var(--bg-emerald-light));
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          font-size: 0.94rem;
+          font-weight: 950;
+          cursor: pointer;
+          box-shadow: 0 12px 24px rgba(15, 118, 110, 0.22);
+        }
+
+        .invite-support-text {
+          margin-top: 10px;
+          color: var(--nav-text-muted);
+          font-size: 0.74rem;
+          line-height: 1.5;
+          font-weight: 600;
+          text-align: center;
+        }
+
+        .invite-feedback {
+          color: #dff7ef;
+          border-color: rgba(16, 185, 129, 0.18);
+          background: rgba(16, 185, 129, 0.10);
+          font-size: 0.78rem;
+          line-height: 1.5;
+          font-weight: 700;
+        }
+
+        .spin-icon {
+          animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @media (max-width: 480px) {
+          .invite-modal-card {
+            padding: 24px 18px 18px;
+          }
+
+          .invite-stats-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .invite-funnel-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
         }
       `}</style>
     </div>

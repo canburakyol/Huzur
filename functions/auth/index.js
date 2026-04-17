@@ -51,6 +51,22 @@ exports.checkProStatus = functionsV1
       );
     }
 
+    const distributedRateCheck = await checkDistributedRateLimit({
+      dbRef: db,
+      adminSdk: admin,
+      namespace: 'checkProStatus',
+      identifier: userId,
+      maxRequests: 120,
+      windowMs: 86400000,
+    });
+
+    if (!distributedRateCheck.allowed) {
+      throw new HttpsError(
+        'resource-exhausted',
+        'Gunluk pro durum sorgulama limitine ulastiniz.'
+      );
+    }
+
     try {
       // 2. Firestore'dan subscription durumunu al
       const subDoc = await db.collection('users').doc(userId).collection('subscription').doc('status').get();
@@ -132,6 +148,22 @@ exports.syncProStatus = functionsV1
         'resource-exhausted',
         'Cok fazla senkronizasyon istegi. Lutfen daha sonra deneyin.',
         { retryAfterSeconds: Math.ceil((rateCheck.resetAt - Date.now()) / 1000) }
+      );
+    }
+
+    const distributedRateCheck = await checkDistributedRateLimit({
+      dbRef: db,
+      adminSdk: admin,
+      namespace: 'syncProStatus',
+      identifier: userId,
+      maxRequests: 20,
+      windowMs: 86400000,
+    });
+
+    if (!distributedRateCheck.allowed) {
+      throw new HttpsError(
+        'resource-exhausted',
+        'Gunluk pro senkronizasyon limitine ulastiniz.'
       );
     }
 

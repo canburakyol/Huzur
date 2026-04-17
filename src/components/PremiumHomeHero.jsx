@@ -18,7 +18,7 @@ const getWeatherIcon = (code) => {
  * Timer logic helper
  */
 const calculateTimeLeft = (timings, nextPrayer) => {
-    if (!timings || !nextPrayer) return null;
+    if (!timings || !nextPrayer || !timings[nextPrayer.key]) return null;
     const now = new Date();
     const [targetH, targetM] = timings[nextPrayer.key].split(':').map(Number);
     const targetTime = new Date();
@@ -37,7 +37,8 @@ const PremiumHomeHero = memo(({
     streakData,
     onOpenInvite,
     timings,
-    nextPrayer
+    nextPrayer,
+    recoveryPlan = null
 }) => {
     const { t } = useTranslation();
     const { greetingKey, timeOfDay } = useTime();
@@ -76,6 +77,12 @@ const PremiumHomeHero = memo(({
 
     // Hero background gradients based on time of day - Tuned to Islamic Green & Gold theme
     const getHeroGradient = () => {
+        if (recoveryPlan?.riskBand === 'comeback') {
+            return 'linear-gradient(135deg, #0B2E23 0%, #6B4F24 100%)';
+        }
+        if (recoveryPlan?.riskBand === 'at_risk') {
+            return 'linear-gradient(135deg, #124D3A 0%, #8B6914 100%)';
+        }
         switch (timeOfDay) {
             case 'morning': return 'linear-gradient(135deg, #0F3D2E 0%, #D4AF37 100%)'; // Dawn: Green to Gold
             case 'noon': return 'linear-gradient(135deg, #124D3A 0%, #1A5C45 100%)'; // Noon: Vibrant Green
@@ -127,8 +134,21 @@ const PremiumHomeHero = memo(({
             {/* Main Content: Greeting & Countdown */}
             <div style={{ textAlign: 'center', marginBottom: '24px', position: 'relative', zIndex: 1 }}>
                 <h2 style={{ margin: '0 0 10px 0', fontSize: '16px', color: 'rgba(255,255,255,0.7)', fontWeight: '500' }}>
-                    {t(greetingKey)}
+                    {recoveryPlan?.headline || t(greetingKey)}
                 </h2>
+                {recoveryPlan?.description ? (
+                    <p style={{
+                        margin: '0 0 14px 0',
+                        fontSize: '0.8rem',
+                        color: 'rgba(255,255,255,0.78)',
+                        fontWeight: '600',
+                        lineHeight: '1.5',
+                        maxWidth: '320px',
+                        marginInline: 'auto'
+                    }}>
+                        {recoveryPlan.description}
+                    </p>
+                ) : null}
                 
                 {nextPrayer && (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -179,7 +199,7 @@ const PremiumHomeHero = memo(({
                             {t(prayer.nameKey)}
                         </div>
                         <div style={{ fontSize: '12px', color: nextPrayer?.key === prayer.key ? '#D4AF37' : '#fff', fontWeight: '700' }}>
-                            {timings[prayer.key]?.substring(0, 5) || '--:--'}
+                            {timings?.[prayer.key]?.substring(0, 5) || '--:--'}
                         </div>
                         {nextPrayer?.key === prayer.key && (
                             <div style={{ position: 'absolute', bottom: '-4px', left: '50%', transform: 'translateX(-50%)', width: '4px', height: '4px', borderRadius: '50%', background: '#D4AF37' }}></div>

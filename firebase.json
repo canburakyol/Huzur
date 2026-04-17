@@ -10,7 +10,9 @@
         "firebase-debug.*.log",
         "*.local"
       ],
-      "predeploy": [],
+      "predeploy": [
+        "node scripts/syncReviewedSourceCatalog.cjs"
+      ],
       "runtime": "nodejs22"
     }
   ],

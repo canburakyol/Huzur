@@ -1,6 +1,6 @@
 /**
  * Content Module
- * İçerik & Medya özellikleri
+ * Icerik ve medya ozellikleri
  */
 
 import { lazy } from 'react';
@@ -9,7 +9,7 @@ import { lazy } from 'react';
 export const Hadiths = lazy(() => import(/* webpackChunkName: "feature-content" */ '../../components/Hadiths'));
 export const Hikmetname = lazy(() => import(/* webpackChunkName: "feature-content" */ '../../components/Hikmetname'));
 export const WeeklySermon = lazy(() => import(/* webpackChunkName: "feature-content" */ '../../components/WeeklySermon'));
-export const Library = lazy(() => import(/* webpackChunkName: "feature-content" */ '../../components/Library'));
+export const Library = lazy(() => import(/* webpackChunkName: "feature-content" */ '../../domains/library/components/LibraryShell'));
 export const QuranRadio = lazy(() => import(/* webpackChunkName: "feature-content" */ '../../components/QuranRadio'));
 export const Multimedia = lazy(() => import(/* webpackChunkName: "feature-content" */ '../../components/Multimedia'));
 export const LiveBroadcast = lazy(() => import(/* webpackChunkName: "feature-content" */ '../../components/LiveBroadcast'));
@@ -42,7 +42,8 @@ export const contentFeatures = {
     category: 'CONTENT',
     module: 'content',
     nameKey: 'features.library',
-    icon: '📚'
+    icon: '📚',
+    hasUpgrade: true
   },
   radio: {
     component: QuranRadio,

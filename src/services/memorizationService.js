@@ -4,6 +4,7 @@
  */
 
 import { storageService } from './storageService';
+import { logger } from '../utils/logger';
 
 const MEMORIZATION_KEY = 'huzur_memorization_data';
 
@@ -13,7 +14,8 @@ const MEMORIZATION_KEY = 'huzur_memorization_data';
 export const getMemorizationData = () => {
   try {
     return storageService.getItem(MEMORIZATION_KEY, { surahs: [] });
-  } catch {
+  } catch (error) {
+    logger.error('[MemorizationService] getMemorizationData failed', error);
     return { surahs: [] };
   }
 };

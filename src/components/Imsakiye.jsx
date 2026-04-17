@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { MapPin, ChevronLeft, ChevronRight, Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
+import { offlineCalculatorService } from '../services/offlineCalculatorService';
 
 const Imsakiye = ({ onClose, locationName }) => {
     const { t } = useTranslation();
@@ -16,52 +16,53 @@ const Imsakiye = ({ onClose, locationName }) => {
     const city = locationName && locationName !== 'Konum' ? locationName : 'Istanbul';
     const country = 'Turkey';
 
+    // Default coordinates for Istanbul (used for offline calculation)
+    const DEFAULT_LAT = 41.0082;
+    const DEFAULT_LON = 28.9784;
+
     const monthNames = [
         'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
         'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
     ];
 
     useEffect(() => {
-        const fetchMonthlyPrayerTimes = async () => {
+        const calculateMonthlyPrayerTimes = () => {
             setLoading(true);
             setError(null);
             
             try {
-                // Use AlAdhan Calendar API for monthly prayer times
-                const response = await axios.get(
-                    `https://api.aladhan.com/v1/calendarByCity/${currentYear}/${currentMonth + 1}`,
-                    {
-                        params: {
-                            city: city,
-                            country: country,
-                            method: 13, // Diyanet İşleri Başkanlığı
-                        },
-                        timeout: 15000
-                    }
-                );
+                // Calculate prayer times OFFLINE using the adhan library
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                const monthData = [];
 
-                if (response.data && response.data.data) {
-                    const monthData = response.data.data.map((dayData) => ({
-                        date: dayData.date.readable,
-                        gregorian: dayData.date.gregorian.day,
-                        hijri: `${dayData.date.hijri.day} ${dayData.date.hijri.month.tr || dayData.date.hijri.month.en}`,
-                        times: dayData.timings,
-                        isToday: new Date().getDate() === parseInt(dayData.date.gregorian.day) &&
-                                 new Date().getMonth() === currentMonth &&
-                                 new Date().getFullYear() === currentYear
-                    }));
-                    setDays(monthData);
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const date = new Date(currentYear, currentMonth, day);
+                    const times = offlineCalculatorService.calculatePrayerTimes(DEFAULT_LAT, DEFAULT_LON, date);
+
+                    if (times) {
+                        monthData.push({
+                            date: date.toLocaleDateString('tr-TR'),
+                            gregorian: String(day),
+                            hijri: '',
+                            times,
+                            isToday: new Date().getDate() === day &&
+                                     new Date().getMonth() === currentMonth &&
+                                     new Date().getFullYear() === currentYear
+                        });
+                    }
                 }
+
+                setDays(monthData);
             } catch (err) {
-                console.error('Imsakiye fetch error:', err);
-                setError('Namaz saatleri yüklenemedi. Lütfen tekrar deneyin.');
+                console.error('Imsakiye calculation error:', err);
+                setError('Namaz saatleri hesaplanamadı. Lütfen tekrar deneyin.');
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchMonthlyPrayerTimes();
-    }, [currentMonth, currentYear, city, country]);
+        calculateMonthlyPrayerTimes();
+    }, [currentMonth, currentYear]);
 
     const goToPreviousMonth = () => {
         if (currentMonth === 0) {

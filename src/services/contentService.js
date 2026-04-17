@@ -2,6 +2,7 @@ import { logger } from '../utils/logger';
 import { hadiths, hadithCategories } from '../data/hadiths';
 import { prayers } from '../data/prayers';
 import { ESMA_UL_HUSNA } from '../data/esmaUlHusnaData';
+import { createReviewedSourceMeta } from '../data/reviewedSourceRegistry';
 import { getActiveCampaign } from './campaignService';
 
 // API Endpoints
@@ -57,12 +58,25 @@ export const getDailyContent = () => {
         esma: {
             name: dailyEsma.latin,
             arabic: dailyEsma.arabic,
-            meaning: dailyEsma.meaning
+            meaning: dailyEsma.meaning,
+            sourceMeta: createReviewedSourceMeta({
+                namespace: 'esma',
+                id: dailyEsma.latin,
+                label: `Esma-ul Husna: ${dailyEsma.latin}`,
+                type: 'esma_ul_husna',
+                confidence: 'high'
+            })
         },
         dua: {
             text: dailyDuaItem.meaning,
             arabic: dailyDuaItem.arabic,
-            source: dailyDuaItem.title
+            source: dailyDuaItem.title,
+            sourceMeta: createReviewedSourceMeta({
+                namespace: 'dua',
+                id: dailyDuaItem.title,
+                label: dailyDuaItem.title,
+                type: 'daily_dua'
+            })
         },
         // For Stories.jsx
         verse: {
@@ -70,13 +84,26 @@ export const getDailyContent = () => {
             arabic: dailyVerse.arabic,
             translation: dailyVerse.translation,
             text: dailyVerse.translation,
-            image: dailyVerse.image
+            image: dailyVerse.image,
+            sourceMeta: createReviewedSourceMeta({
+                namespace: 'verse',
+                id: dailyVerse.reference,
+                label: dailyVerse.reference,
+                type: 'daily_content',
+                confidence: 'high'
+            })
         },
         hadith: {
             text: dailyHadith.text,
             arabic: dailyHadith.arabic || '',
             source: dailyHadith.source || 'Hadis-i Şerif',
-            image: '/stories/pattern-2.jpg'
+            image: '/stories/pattern-2.jpg',
+            sourceMeta: createReviewedSourceMeta({
+                namespace: 'hadith',
+                id: dailyHadith.id || dayOfYear,
+                label: dailyHadith.source || 'Hadis-i Serif',
+                type: 'hadith'
+            })
         },
         quote: {
             text: dailyQuote.text,
@@ -87,7 +114,13 @@ export const getDailyContent = () => {
             text: dailyDuaItem.meaning,
             arabic: dailyDuaItem.arabic,
             title: dailyDuaItem.title,
-            image: '/stories/mosque.png'
+            image: '/stories/mosque.png',
+            sourceMeta: createReviewedSourceMeta({
+                namespace: 'daily_dua',
+                id: dailyDuaItem.title,
+                label: dailyDuaItem.title,
+                type: 'daily_dua'
+            })
         }
     };
 };

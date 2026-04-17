@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { ExternalLink, Calendar, Mic, FileText, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';

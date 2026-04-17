@@ -1,38 +1,54 @@
-import axios from 'axios';
 import { format } from 'date-fns';
 import { storageService } from './storageService';
-import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 import { offlineCalculatorService } from './offlineCalculatorService';
+import { sanitizePrayerTimings, PRAYER_KEYS_ALL } from '../constants/prayerTimes';
 
-// Hanafi school for Asr calculation (Diyanet uses Hanafi)
-const CALCULATION_SCHOOL = 1;
-
-// Get device timezone for accurate API results
-const getDeviceTimezone = () => {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Istanbul';
-  } catch {
-    return 'Europe/Istanbul';
-  }
-};
-
-// Use coordinate-based API for accurate location-based prayer times
-const API_URL_COORDS = 'https://api.aladhan.com/v1/timings';
-const API_URL_CITY = 'https://api.aladhan.com/v1/timingsByCity';
+// Cache key prefixes
 const CACHE_KEY_PREFIX = 'prayerTimes_';
 const MONTHLY_CACHE_KEY_PREFIX = 'prayerMonthly_';
-const CACHE_MAX_AGE_DAYS = 30;
+
+// Default coordinates for Istanbul
+const DEFAULT_LAT = 41.0082;
+const DEFAULT_LON = 28.9784;
+
+const isValidPrayerTimeValue = (value) => typeof value === 'string' && /^\d{2}:\d{2}$/.test(value);
+
+const normalizePrayerPayload = (payload) => {
+  if (!payload || typeof payload !== 'object') {
+    return null;
+  }
+
+  const sanitizedTimings = sanitizePrayerTimings(payload.timings || payload);
+  const hasAllRequiredTimings = PRAYER_KEYS_ALL.every((key) => isValidPrayerTimeValue(sanitizedTimings?.[key]));
+
+  if (!hasAllRequiredTimings) {
+    return null;
+  }
+
+  if (payload.timings) {
+    return {
+      ...payload,
+      timings: sanitizedTimings
+    };
+  }
+
+  return {
+    timings: sanitizedTimings
+  };
+};
 
 /**
- * Fetch and cache monthly prayer times for offline use
- * Background background job to ensure we have a full month of data
+ * Calculate and cache monthly prayer times OFFLINE (no network).
+ * Uses the `adhan` npm package via offlineCalculatorService.
  */
-export const fetchMonthlyPrayerTimes = async (
+export const fetchMonthlyPrayerTimes = (
   latitude = null,
   longitude = null,
-  city = 'Istanbul',
-  country = 'Turkey',
+  // eslint-disable-next-line no-unused-vars
+  _city = 'Istanbul',
+  // eslint-disable-next-line no-unused-vars
+  _country = 'Turkey',
   targetDate = new Date()
 ) => {
   try {
@@ -42,160 +58,134 @@ export const fetchMonthlyPrayerTimes = async (
     const lon = longitude || DEFAULT_LON;
     const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${year}_${month}`;
 
-    let response;
-    if (latitude && longitude) {
-      response = await axios.get(`https://api.aladhan.com/v1/calendar/${year}/${month}`, {
-        params: {
-          latitude,
-          longitude,
-          method: 13, // Diyanet
-          school: CALCULATION_SCHOOL,
-          timezonestring: getDeviceTimezone(),
-        },
-        timeout: 15000
-      });
-    } else {
-      response = await axios.get(`https://api.aladhan.com/v1/calendarByCity/${year}/${month}`, {
-        params: {
-          city,
-          country,
-          method: 13,
-          school: CALCULATION_SCHOOL,
-          timezonestring: getDeviceTimezone(),
-        },
-        timeout: 15000
+    // Check if we already have a cached copy
+    const existing = storageService.getItem(monthlyKey);
+    if (existing && Array.isArray(existing.timings) && existing.timings.length > 0) {
+      return existing;
+    }
+
+    // Calculate the full month offline using the adhan library
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const timingsArray = [];
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month - 1, day);
+      const calculatedTimings = offlineCalculatorService.calculatePrayerTimes(lat, lon, date);
+
+      timingsArray.push({
+        timings: calculatedTimings,
+        date: { readable: format(date, 'dd MMM yyyy') },
+        meta: { method: { name: 'Diyanet (Offline)' } }
       });
     }
 
-    if (response.data && response.data.data) {
-      const dataToCache = {
-        timings: response.data.data,
-        timestamp: Date.now(),
-        month,
-        year,
-        latitude: lat,
-        longitude: lon
-      };
-      storageService.setItem(monthlyKey, dataToCache);
-      logger.log('[PrayerService] Monthly cache updated for offline use');
-      return dataToCache;
-    }
+    const dataToCache = {
+      timings: timingsArray,
+      timestamp: Date.now(),
+      month,
+      year,
+      latitude: lat,
+      longitude: lon
+    };
+
+    storageService.setItem(monthlyKey, dataToCache);
+    logger.log('[PrayerService] Monthly offline calculation cached');
+    return dataToCache;
   } catch (error) {
-    logger.error('[PrayerService] Monthly fetch failed:', error);
+    logger.error('[PrayerService] Monthly offline calculation failed:', error);
   }
   return null;
 };
 
-// Default coordinates for Istanbul
-const DEFAULT_LAT = 41.0082;
-const DEFAULT_LON = 28.9784;
-
 /**
- * Get prayer times based on coordinates (preferred) or city name (fallback)
+ * Get prayer times — 100% OFFLINE using the `adhan` npm package.
+ * No outbound network requests are made.
+ *
  * @param {number|null} latitude - User's latitude
  * @param {number|null} longitude - User's longitude
- * @param {string} city - Fallback city name
- * @param {string} country - Fallback country name
+ * @param {string} _city - Unused (kept for API compatibility)
+ * @param {string} _country - Unused (kept for API compatibility)
  */
-export const getPrayerTimes = async (latitude = null, longitude = null, city = 'Istanbul', country = 'Turkey') => {
+export const getPrayerTimes = (latitude = null, longitude = null) => {
   const today = format(new Date(), 'dd-MM-yyyy');
   const lat = latitude || DEFAULT_LAT;
   const lon = longitude || DEFAULT_LON;
   const cacheKey = `${CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${today}`;
-  
-  const now = new Date();
-  const dayOfMonth = now.getDate();
-  const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${now.getFullYear()}_${now.getMonth() + 1}`;
 
   try {
-    // 1. Günlük cache kontrolü (En taze veri)
+    // 1. Check daily cache first
     const cachedData = storageService.getItem(cacheKey);
+    const normalizedCachedData = normalizePrayerPayload(cachedData);
+    if (normalizedCachedData) {
+      return normalizedCachedData;
+    }
+
     if (cachedData) {
-      return cachedData;
+      storageService.removeItem(cacheKey);
     }
 
-    let response;
-    const timestamp = Math.floor(now.getTime() / 1000);
-    
-    // 2. API İsteği - Bugünün verisini çek
-    if (latitude && longitude) {
-      response = await axios.get(`${API_URL_COORDS}/${timestamp}`, {
-        params: { latitude, longitude, method: 13, school: CALCULATION_SCHOOL, timezonestring: getDeviceTimezone() },
-        timeout: 8000
-      });
-    } else {
-      response = await axios.get(API_URL_CITY, {
-        params: { city, country, method: 13, school: CALCULATION_SCHOOL, timezonestring: getDeviceTimezone(), date: today },
-        timeout: 8000
-      });
-    }
+    // 2. Calculate prayer times OFFLINE using the adhan library
+    const now = new Date();
+    const calculatedTimes = offlineCalculatorService.calculatePrayerTimes(lat, lon, now);
 
-    if (response.data && response.data.data) {
-      // Background monthly fetch if monthly cache is missing or older than 7 days
-      const monthlyData = storageService.getItem(monthlyKey);
-      if (!monthlyData || (Date.now() - monthlyData.timestamp > 7 * 24 * 60 * 60 * 1000)) {
-        fetchMonthlyPrayerTimes(latitude, longitude, city, country);
+    if (calculatedTimes) {
+      logger.log('[PrayerService] Prayer times calculated OFFLINE via adhan');
+
+      const result = normalizePrayerPayload({
+        timings: calculatedTimes,
+        date: { readable: format(now, 'dd MMM yyyy') },
+        meta: { method: { name: 'Diyanet (Offline)' } },
+      });
+
+      if (!result) {
+        throw new Error('Offline prayer time calculation returned invalid timings');
       }
 
-      // Cleanup old daily caches using storageService
+      // Cache the result for the rest of the day
+      storageService.setItem(cacheKey, result);
+
+      // Cleanup old daily caches
       try {
         const allKeys = Object.keys(localStorage).filter(
           key => key.startsWith(CACHE_KEY_PREFIX) && key !== cacheKey
         );
         allKeys.forEach(key => storageService.removeItem(key));
-      } catch {
-        // Silently fail on cache cleanup
+      } catch (error) {
+        logger.error('[PrayerService] Cache cleanup failed', error);
       }
 
-      storageService.setItem(cacheKey, response.data.data);
-      return response.data.data;
+      return result;
     }
-    throw new Error('Geçersiz API yanıtı');
+
+    throw new Error('Offline prayer time calculation returned null');
   } catch (error) {
-    logger.warn('[PrayerService] API call failed, attempting offline fallback...', error.message);
+    logger.error('[PrayerService] Offline calculation failed:', error);
 
-    // 3. OFFLINE FALLBACK: Monthly cache'den bugünü bul
+    // Fallback: check monthly cache
+    const now = new Date();
+    const dayOfMonth = now.getDate();
+    const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${now.getFullYear()}_${now.getMonth() + 1}`;
     const monthlyCache = storageService.getItem(monthlyKey);
-    if (monthlyCache && monthlyCache.timings && monthlyCache.timings[dayOfMonth - 1]) {
-      const todayData = monthlyCache.timings[dayOfMonth - 1];
-      logger.log(`[PrayerService] Using monthly cache fallback for day ${dayOfMonth}`);
-      
-      // Gelecek sefer için günlük cache'e de yazalım ki offline performansı artsın
-      storageService.setItem(cacheKey, todayData);
-      
-      return todayData.timings || todayData;
+
+    if (monthlyCache?.timings?.[dayOfMonth - 1]) {
+      const todayData = normalizePrayerPayload(monthlyCache.timings[dayOfMonth - 1]);
+      if (todayData) {
+        logger.log(`[PrayerService] Using monthly cache fallback for day ${dayOfMonth}`);
+        storageService.setItem(cacheKey, todayData);
+        return todayData;
+      }
     }
 
-    // 4. SON FALLBACK: Matematiksel Hesaplama (Faz 2)
-    const calculatedTimes = offlineCalculatorService.calculatePrayerTimes(lat, lon, now);
-    if (calculatedTimes) {
-      logger.log('[PrayerService] Using MATHEMATICAL CALCULATION fallback');
-      const finalData = {
-        timings: calculatedTimes,
-        date: { readable: format(now, 'dd MMM yyyy') },
-        meta: { method: { name: 'Diyanet (Offline Calc)' } },
-        isOfflineCalculated: true
-      };
-      
-      // Gelecek sefer için günlük cache'e de yazalım
-      storageService.setItem(cacheKey, finalData);
-      
-      return finalData;
-    }
-
-    // 5. Hata mesajları
-    if (error.code === 'ECONNABORTED' || error.request) {
-      throw new Error('İnternet bağlantısı yok veya servis yanıt vermiyor. Lütfen bağlantınızı kontrol edin.');
-    }
-    throw error;
+    throw new Error('Namaz vakitleri hesaplanamadı. Lütfen uygulamayı yeniden başlatın.');
   }
 };
 
 export const getNextPrayer = (timings, currentTime = new Date()) => {
-  if (!timings) return null;
+  const normalizedTimings = sanitizePrayerTimings(timings);
+  const hasAllRequiredTimings = PRAYER_KEYS_ALL.every((key) => isValidPrayerTimeValue(normalizedTimings?.[key]));
+  if (!hasAllRequiredTimings) return null;
 
-  const now = currentTime;
-  const timeStr = format(now, 'HH:mm');
+  const timeStr = format(currentTime, 'HH:mm');
 
   const prayers = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
   const prayerNames = {
@@ -207,11 +197,11 @@ export const getNextPrayer = (timings, currentTime = new Date()) => {
     'Isha': 'Yatsı'
   };
 
-  for (let prayer of prayers) {
-    if (timings[prayer] > timeStr) {
+  for (const prayer of prayers) {
+    if (normalizedTimings[prayer] > timeStr) {
       return {
         name: prayerNames[prayer],
-        time: timings[prayer],
+        time: normalizedTimings[prayer],
         key: prayer,
         isTomorrow: false
       };
@@ -221,7 +211,7 @@ export const getNextPrayer = (timings, currentTime = new Date()) => {
   // If all passed, next is Fajr tomorrow
   return {
     name: 'İmsak',
-    time: timings['Fajr'],
+    time: normalizedTimings.Fajr,
     key: 'Fajr',
     isTomorrow: true
   };

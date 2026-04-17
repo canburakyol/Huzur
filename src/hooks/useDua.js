@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   collection,
-  limit,
-  onSnapshot,
-  orderBy,
-  query,
+  getDocs,
 } from 'firebase/firestore';
 import { db } from '../services/firebase';
 import { duaService } from '../services/duaService';
@@ -20,6 +17,22 @@ export const useDua = () => {
   const [authLoading, setAuthLoading] = useState(true);
   const [prayedDuaIds, setPrayedDuaIds] = useState(() => new Set());
   const [submittingDuaIds, setSubmittingDuaIds] = useState(() => new Set());
+
+  const loadRecentDuas = async () => {
+    const duaList = await duaService.getRecentDuas(25);
+    const mergedDuas = [...DUA_DISCOVERY_SEEDS, ...duaList]
+      .reduce((acc, dua) => {
+        if (!dua?.id || acc.some((item) => item.id === dua.id)) {
+          return acc;
+        }
+
+        acc.push(dua);
+        return acc;
+      }, [])
+      .sort((a, b) => (b.createdAtMs || b.createdAt?.seconds || 0) - (a.createdAtMs || a.createdAt?.seconds || 0));
+
+    setDuas(mergedDuas);
+  };
 
   useEffect(() => {
     const initAuth = async () => {
@@ -43,47 +56,31 @@ export const useDua = () => {
       return undefined;
     }
 
-    setLoading(true);
-    setError(null);
+    let isMounted = true;
 
-    const duaQuery = query(
-      collection(db, 'duas'),
-      orderBy('createdAt', 'desc'),
-      limit(50)
-    );
+    const fetchDuas = async () => {
+      setLoading(true);
+      setError(null);
 
-    return onSnapshot(
-      duaQuery,
-      (snapshot) => {
-        const duaList = snapshot.docs.map((docSnapshot) => ({
-          id: docSnapshot.id,
-          ...docSnapshot.data(),
-        }));
-
-        const mergedDuas = [...DUA_DISCOVERY_SEEDS, ...duaList]
-          .reduce((acc, dua) => {
-            if (!dua?.id || acc.some((item) => item.id === dua.id)) {
-              return acc;
-            }
-
-            acc.push(dua);
-            return acc;
-          }, [])
-          .sort((a, b) => (b.createdAtMs || b.createdAt?.seconds || 0) - (a.createdAtMs || a.createdAt?.seconds || 0));
-
-        setDuas(mergedDuas);
-        setLoading(false);
-      },
-      (err) => {
-        logger.error('[useDua] Firestore error:', err);
-        if (err.code === 'permission-denied') {
-          setError('Erisim izni hatasi. Lutfen uygulamayi yeniden baslatin.');
-        } else {
+      try {
+        await loadRecentDuas();
+      } catch (err) {
+        logger.error('[useDua] Fetch duas error:', err);
+        if (isMounted) {
           setError('Dualar yuklenemedi');
         }
-        setLoading(false);
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
-    );
+    };
+
+    fetchDuas();
+
+    return () => {
+      isMounted = false;
+    };
   }, [authLoading, userId]);
 
   useEffect(() => {
@@ -91,22 +88,36 @@ export const useDua = () => {
       return undefined;
     }
 
-    const userAminQuery = query(collection(db, 'users', userId, 'duaAmins'));
-    return onSnapshot(
-      userAminQuery,
-      (snapshot) => {
+    let isMounted = true;
+
+    const fetchPrayedDuas = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, 'users', userId, 'duaAmins'));
+        if (!isMounted) return;
+
         const nextPrayedIds = new Set(snapshot.docs.map((docSnapshot) => docSnapshot.id));
         setPrayedDuaIds(nextPrayedIds);
-      },
-      (err) => {
+      } catch (err) {
         logger.error('[useDua] Dua amin state error:', err);
       }
-    );
+    };
+
+    fetchPrayedDuas();
+
+    return () => {
+      isMounted = false;
+    };
   }, [authLoading, userId]);
 
   const createDua = async (text, isAnonymous, authorName) => {
     try {
-      await duaService.createDua(text, isAnonymous, authorName);
+      const createdDua = await duaService.createDua(text, isAnonymous, authorName);
+      if (createdDua?.id) {
+        setDuas((current) => {
+          const withoutDuplicate = current.filter((dua) => dua.id !== createdDua.id);
+          return [createdDua, ...withoutDuplicate].sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+        });
+      }
       return true;
     } catch (err) {
       logger.error('Create dua error:', err);
@@ -161,6 +172,7 @@ export const useDua = () => {
     submittingDuaIds,
     createDua,
     prayForDua,
+    refreshDuas: loadRecentDuas,
   };
 };
 

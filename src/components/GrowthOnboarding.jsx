@@ -1,9 +1,25 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Check } from 'lucide-react';
+import {
+  Bell,
+  BookOpen,
+  Check,
+  Globe2,
+  HeartHandshake,
+  MapPinned,
+  Sparkles,
+  Target
+} from 'lucide-react';
+import { ANALYTICS_EVENTS, logEvent } from '../services/analyticsService';
+import { DEFAULT_ONBOARDING_CONFIG } from '../services/onboardingConfigService';
+import {
+  buildReferralOnboardingAnalyticsPayload,
+  buildReferralOnboardingPlan,
+} from '../services/referralOnboardingService';
 import { SUPPORTED_LANGUAGE_OPTIONS } from '../config/i18nConfig';
-import { storageService } from '../services/storageService';
 import { STORAGE_KEYS } from '../constants';
+import { storageService } from '../services/storageService';
+import { DEFAULT_PRIMARY_GOAL, normalizePrimaryGoal, setStoredPrimaryGoal } from '../utils/primaryGoal';
 
 const baseButton = {
   border: 'none',
@@ -26,9 +42,42 @@ const choiceButtonStyle = (selected = false) => ({
   transition: 'all 0.2s ease'
 });
 
+const permissionButtonStyle = (selected = false, primary = false) => ({
+  ...baseButton,
+  padding: '8px 12px',
+  background: selected
+    ? (primary ? '#d4af37' : 'rgba(255,255,255,0.12)')
+    : 'rgba(255,255,255,0.04)',
+  color: selected && primary ? '#14352a' : '#fff',
+  border: selected
+    ? `1px solid ${primary ? '#d4af37' : 'rgba(255,255,255,0.18)'}`
+    : '1px solid rgba(255,255,255,0.1)',
+  minWidth: 110
+});
+
+const GOAL_ICONS = {
+  prayer_rhythm: <Target size={20} />,
+  quran_learning: <BookOpen size={20} />,
+  family_consistency: <HeartHandshake size={20} />
+};
+
+const ALLOWED_STEPS = ['language', 'permissions', 'goal'];
+
+const sanitizeSteps = (steps = []) => {
+  if (!Array.isArray(steps)) return DEFAULT_ONBOARDING_CONFIG.steps;
+  const normalized = steps
+    .map((item) => (typeof item === 'string' ? item.trim().toLowerCase() : null))
+    .filter((item) => ALLOWED_STEPS.includes(item));
+  return normalized.length > 0 ? [...new Set(normalized)] : DEFAULT_ONBOARDING_CONFIG.steps;
+};
+
 function GrowthOnboarding({
   initialStep = 0,
   initialLanguage = 'tr',
+  flowConfig = null,
+  referralProgress = null,
+  referralServerSnapshot = null,
+  isProUser = false,
   onSelectLanguage,
   onRequestLocation,
   onRequestNotifications,
@@ -39,54 +88,139 @@ function GrowthOnboarding({
 }) {
   const { t } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(initialLanguage);
-  const [selectedGoal, setSelectedGoal] = useState('prayer');
+  const [selectedGoal, setSelectedGoal] = useState(DEFAULT_PRIMARY_GOAL);
+  const [locationPreference, setLocationPreference] = useState(null);
+  const [notificationPreference, setNotificationPreference] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const lastViewedStepRef = useRef('');
+  const lastGoalRef = useRef('');
+
+  const resolvedConfig = useMemo(() => {
+    const safe = flowConfig && typeof flowConfig === 'object' ? flowConfig : {};
+    return {
+      ...DEFAULT_ONBOARDING_CONFIG,
+      ...safe,
+      steps: sanitizeSteps(safe.steps),
+    };
+  }, [flowConfig]);
 
   const languageOptions = useMemo(() => SUPPORTED_LANGUAGE_OPTIONS, []);
-
-  const steps = useMemo(() => ([
+  const goals = useMemo(() => ([
     {
-      title: t('growth.onboarding.languageTitle', 'Dilini Sec / Choose your language'),
-      description: t('growth.onboarding.languageDescription', 'Uygulamayi sana en uygun dilde hazirlayalim. Istedigin dili simdi sec, sonra ayarlardan degistirebilirsin.'),
-      actionLabel: t('growth.onboarding.continue', 'Devam Et')
+      id: 'prayer_rhythm',
+      label: t('growth.goal.prayerRhythm', 'Gunluk ibadet ritmimi kurmak'),
+      subtitle: t('growth.goal.prayerRhythmDesc', 'Namaz, gorevler ve gunluk duzen ile sakin bir rutin olustur.')
     },
     {
-      title: t('growth.onboarding.locationTitle', 'Konumunu kullanalim mi?'),
-      description: t('growth.onboarding.locationDescription', 'Namaz vakitlerini daha dogru hesaplamak icin konumunu kullanabiliriz. Istersen simdilik Istanbul ile de devam edebilirsin.')
+      id: 'quran_learning',
+      label: t('growth.goal.quranLearning', 'Kuran okuyup ogrenmek'),
+      subtitle: t('growth.goal.quranLearningDesc', 'Quiz, Kuran ve egitim ekranlarini daha cok one cikar.')
     },
     {
-      title: t('growth.onboarding.notificationTitle', 'Bildirim almak ister misin?'),
-      description: t('growth.onboarding.notificationDescription', 'Vakitleri, zikirleri ve gunluk hatirlatmalari kacirmamak icin bildirimleri acabilirsin. Istersen bunu sonra da yapabilirsin.')
-    },
-    {
-      title: t('growth.onboarding.goalTitle', 'Temel odagin ne olsun?'),
-      description: t('growth.onboarding.goalDescription', 'Anasayfa ve onerileri buna gore sekillendirelim.'),
-      actionLabel: t('growth.onboarding.continue', 'Devam Et')
-    },
-    {
-      title: t('growth.onboarding.firstActionTitle', 'Hazirsan baslayalim'),
-      description: t('growth.onboarding.firstActionDescription', 'Kurulum tamamlandi. Artik dogrudan ana ekrana gecip uygulamayi kullanabilirsin.'),
-      actionLabel: t('growth.onboarding.startNow', 'Ana ekrana gec')
+      id: 'family_consistency',
+      label: t('growth.goal.familyConsistency', 'Ailece istikrar kurmak'),
+      subtitle: t('growth.goal.familyConsistencyDesc', 'Aile hedefleri ve birlikte ilerleme akisini merkeze al.')
     }
   ]), [t]);
 
-  const totalSteps = steps.length;
+  const steps = useMemo(() => {
+    const headlineVariant = resolvedConfig.headlineVariant;
+    const permissionEmphasis = resolvedConfig.permissionEmphasis;
+
+    return {
+      language: {
+        title: headlineVariant === 'direct'
+          ? t('growth.onboarding.languageTitleDirect', 'Huzur dilini ayarla')
+          : t('growth.onboarding.languageTitle', 'Dilini sec'),
+        description: headlineVariant === 'direct'
+          ? t('growth.onboarding.languageDescriptionDirect', 'Ilk deneyimi sana uygun dilde acalim. Sonra diledigin zaman degistirebilirsin.')
+          : t('growth.onboarding.languageDescription', 'Uygulamayi sana en uygun dilde hazirlayalim. Bunu daha sonra ayarlardan degistirebilirsin.'),
+        actionLabel: t('growth.onboarding.continue', 'Devam et'),
+      },
+      permissions: {
+        title: t('growth.onboarding.permissionsTitle', 'Iki hizli ayar'),
+        description: permissionEmphasis === 'notifications_first'
+          ? t('growth.onboarding.permissionsDescriptionNotifications', 'Gunluk ritmi kacirmaman icin once bildirim ve konum tarafini hazirlayalim.')
+          : t('growth.onboarding.permissionsDescription', 'Ilk gunun akici gecsin diye yalnizca namaz vakti ve bildirim tarafini hazirlayalim.'),
+        actionLabel: t('growth.onboarding.continue', 'Hazirim'),
+      },
+      goal: {
+        title: t('growth.onboarding.goalTitle', 'Temel odagini sec'),
+        description: t('growth.onboarding.goalDescription', 'Ana ekran ve ilk onerileri buna gore sade tutalim.'),
+        actionLabel: resolvedConfig.premiumTeaserEnabled && !isProUser
+          ? t('growth.onboarding.startWithTeaser', 'Devam et')
+          : t('growth.onboarding.startNow', 'Ana ekrana gec'),
+      },
+    };
+  }, [isProUser, resolvedConfig.headlineVariant, resolvedConfig.permissionEmphasis, resolvedConfig.premiumTeaserEnabled, t]);
+
+  const stepOrder = resolvedConfig.steps;
+  const totalSteps = stepOrder.length;
   const normalizedStep = Math.max(0, Math.min(initialStep, totalSteps - 1));
-  const currentStep = steps[normalizedStep];
-
-  const goals = useMemo(() => ([
-    { id: 'prayer', label: t('growth.goal.prayer', 'Namazlarimi takip etmek'), icon: '🕌' },
-    { id: 'quran', label: t('growth.goal.quran', 'Kuran okumak ve ogrenmek'), icon: '📖' },
-    { id: 'zikir', label: t('growth.goal.zikir', 'Zikir ve tesbihat yapmak'), icon: '📿' },
-    { id: 'dua', label: t('growth.goal.dua', 'Dua ve Esmaul Husna'), icon: '✨' }
-  ]), [t]);
-
+  const currentStepKey = stepOrder[normalizedStep];
+  const currentStep = steps[currentStepKey];
   const isBusy = loading || loadingLocation || loadingNotifications;
+  const permissionsReady = locationPreference !== null && notificationPreference !== null;
+  const experimentContext = resolvedConfig.experimentContext || {
+    onboardingHeadlineVariant: 'A',
+    onboardingGoalStepVariant: 'A',
+    signature: 'A|A'
+  };
+  const referralPlan = useMemo(() => buildReferralOnboardingPlan({
+    localProgress: referralProgress,
+    serverSnapshot: referralServerSnapshot,
+    currentStep: currentStepKey,
+    selectedGoal,
+  }), [currentStepKey, referralProgress, referralServerSnapshot, selectedGoal]);
 
   useEffect(() => {
     setSelectedLanguage(initialLanguage);
   }, [initialLanguage]);
+
+  useEffect(() => {
+    const storedGoal = storageService.getString(
+      STORAGE_KEYS.USER_PRIMARY_GOAL,
+      resolvedConfig.goalDefault || DEFAULT_PRIMARY_GOAL
+    );
+    setSelectedGoal(normalizePrimaryGoal(storedGoal));
+  }, [resolvedConfig.goalDefault]);
+
+  useEffect(() => {
+    if (!currentStepKey || lastViewedStepRef.current === currentStepKey) return;
+    lastViewedStepRef.current = currentStepKey;
+
+    logEvent(ANALYTICS_EVENTS.ONBOARDING_STEP_VIEWED, {
+      step_name: currentStepKey,
+      step_number: normalizedStep + 1,
+      flow_version: resolvedConfig.flowVersion,
+      headline_variant: resolvedConfig.headlineVariant,
+      experiment_variant: experimentContext.signature,
+      onboarding_headline_variant: experimentContext.onboardingHeadlineVariant,
+      onboarding_goal_step_variant: experimentContext.onboardingGoalStepVariant,
+      ...buildReferralOnboardingAnalyticsPayload(referralPlan),
+    });
+  }, [
+    currentStepKey,
+    experimentContext.onboardingGoalStepVariant,
+    experimentContext.onboardingHeadlineVariant,
+    experimentContext.signature,
+    normalizedStep,
+    referralPlan,
+    resolvedConfig.flowVersion,
+    resolvedConfig.headlineVariant
+  ]);
+
+  useEffect(() => {
+    if (!referralPlan) return;
+
+    logEvent(ANALYTICS_EVENTS.REFERRAL_ONBOARDING_SURFACED, {
+      step_name: currentStepKey,
+      flow_version: resolvedConfig.flowVersion,
+      experiment_variant: experimentContext.signature,
+      ...buildReferralOnboardingAnalyticsPayload(referralPlan),
+    });
+  }, [currentStepKey, experimentContext.signature, referralPlan, resolvedConfig.flowVersion]);
 
   const syncStep = (nextStep) => {
     const boundedStep = Math.max(0, Math.min(nextStep, totalSteps - 1));
@@ -94,70 +228,107 @@ function GrowthOnboarding({
     return boundedStep;
   };
 
+  const logStepCompleted = (stepName, extra = {}) => {
+    logEvent(ANALYTICS_EVENTS.ONBOARDING_STEP_COMPLETED, {
+      step_name: stepName,
+      step_number: normalizedStep + 1,
+      flow_version: resolvedConfig.flowVersion,
+      experiment_variant: experimentContext.signature,
+      onboarding_headline_variant: experimentContext.onboardingHeadlineVariant,
+      onboarding_goal_step_variant: experimentContext.onboardingGoalStepVariant,
+      ...buildReferralOnboardingAnalyticsPayload(referralPlan),
+      ...extra,
+    });
+  };
+
+  const handleGoalChange = (goalId) => {
+    setSelectedGoal(goalId);
+    if (lastGoalRef.current === goalId) return;
+    lastGoalRef.current = goalId;
+    logEvent(ANALYTICS_EVENTS.ONBOARDING_GOAL_SELECTED, {
+      goal: goalId,
+      flow_version: resolvedConfig.flowVersion,
+      source: 'growth_onboarding',
+      experiment_variant: experimentContext.signature,
+      onboarding_headline_variant: experimentContext.onboardingHeadlineVariant,
+      onboarding_goal_step_variant: experimentContext.onboardingGoalStepVariant,
+      ...buildReferralOnboardingAnalyticsPayload(referralPlan),
+    });
+  };
+
   const handleContinue = async () => {
     setErrorMessage('');
+
     try {
-      if (normalizedStep === 0) {
+      if (currentStepKey === 'language') {
         setLoading(true);
-        syncStep(1);
         const result = await onSelectLanguage?.(selectedLanguage);
+        logStepCompleted('language', {
+          selected_language: selectedLanguage,
+          success: result?.success !== false,
+        });
         if (result?.success === false) {
           setErrorMessage(
             result.error || t('growth.onboarding.languageError', 'Dil secimi uygulanamadi. Varsayilan dil ile devam ediyoruz.')
           );
         }
+        syncStep(normalizedStep + 1);
         return;
       }
 
-      if (normalizedStep === 3) {
-        storageService.setItem(STORAGE_KEYS.USER_PRIMARY_GOAL || 'user_primary_goal', selectedGoal);
-        syncStep(4);
+      if (currentStepKey === 'permissions') {
+        if (!permissionsReady) {
+          setErrorMessage(t('growth.onboarding.permissionsRequired', 'Devam etmeden once iki tercih yap.'));
+          return;
+        }
+
+        setLoading(true);
+        const [locationResult, notificationResult] = await Promise.all([
+          onRequestLocation?.(locationPreference === 'allow'),
+          onRequestNotifications?.(notificationPreference === 'allow')
+        ]);
+
+        logEvent(ANALYTICS_EVENTS.ONBOARDING_PERMISSION_CHOICE, {
+          permission: 'location',
+          choice: locationPreference,
+          flow_version: resolvedConfig.flowVersion,
+          experiment_variant: experimentContext.signature,
+        });
+        logEvent(ANALYTICS_EVENTS.ONBOARDING_PERMISSION_CHOICE, {
+          permission: 'notifications',
+          choice: notificationPreference,
+          flow_version: resolvedConfig.flowVersion,
+          experiment_variant: experimentContext.signature,
+        });
+        logStepCompleted('permissions', {
+          location_choice: locationPreference,
+          notification_choice: notificationPreference,
+          success: locationResult?.success !== false && notificationResult?.success !== false,
+        });
+
+        if (locationResult?.success === false || notificationResult?.success === false) {
+          setErrorMessage(
+            locationResult?.error ||
+            notificationResult?.error ||
+            t('growth.onboarding.permissionsError', 'Bazi izinler su an uygulanamadi. Yine de devam edebilirsin.')
+          );
+        }
+
+        syncStep(normalizedStep + 1);
         return;
       }
 
-      if (normalizedStep === totalSteps - 1) {
-        onComplete?.();
-      }
+      setStoredPrimaryGoal(selectedGoal);
+      logStepCompleted('goal', {
+        selected_goal: selectedGoal,
+        premium_teaser_enabled: resolvedConfig.premiumTeaserEnabled === true,
+      });
+      onComplete?.({
+        selectedGoal,
+        premiumTeaserEnabled: resolvedConfig.premiumTeaserEnabled === true,
+      });
     } catch (error) {
       setErrorMessage(error?.message || t('growth.onboarding.genericError', 'Bu adim tamamlanirken bir sorun olustu.'));
-    } finally {
-      if (normalizedStep === 0) {
-        setLoading(false);
-      }
-    }
-  };
-
-  const handleLocationAnswer = async (accepted) => {
-    setLoading(true);
-    setErrorMessage('');
-    syncStep(2);
-    try {
-      const result = await onRequestLocation?.(accepted);
-      if (result?.success === false) {
-        setErrorMessage(
-          result.error || t('growth.onboarding.locationError', 'Konum izni alinamadi. Varsayilan konum ile devam ediyoruz.')
-        );
-      }
-    } catch (error) {
-      setErrorMessage(error?.message || t('growth.onboarding.locationError', 'Konum izni alinamadi. Varsayilan konum ile devam ediyoruz.'));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleNotificationAnswer = async (accepted) => {
-    setLoading(true);
-    setErrorMessage('');
-    syncStep(3);
-    try {
-      const result = await onRequestNotifications?.(accepted);
-      if (result?.success === false) {
-        setErrorMessage(
-          result.error || t('growth.onboarding.notificationsError', 'Bildirim ayari su an uygulanamadi. Sonra tekrar deneyebilirsin.')
-        );
-      }
-    } catch (error) {
-      setErrorMessage(error?.message || t('growth.onboarding.notificationsError', 'Bildirim ayari su an uygulanamadi. Sonra tekrar deneyebilirsin.'));
     } finally {
       setLoading(false);
     }
@@ -196,6 +367,81 @@ function GrowthOnboarding({
         <h2 style={{ margin: '0 0 8px', fontSize: 22, color: '#d4af37' }}>{currentStep.title}</h2>
         <p style={{ margin: '0 0 20px', lineHeight: 1.6, color: '#d9e6db' }}>{currentStep.description}</p>
 
+        {referralPlan && (
+          <div
+            style={{
+              marginBottom: 16,
+              padding: 16,
+              borderRadius: 16,
+              border: referralPlan.rewardReady
+                ? '1px solid rgba(16, 185, 129, 0.28)'
+                : '1px solid rgba(212, 175, 55, 0.24)',
+              background: referralPlan.rewardReady
+                ? 'rgba(16, 185, 129, 0.10)'
+                : 'rgba(212, 175, 55, 0.10)',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 8, alignItems: 'center' }}>
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                borderRadius: 999,
+                padding: '6px 10px',
+                background: 'rgba(255,255,255,0.08)',
+                fontSize: 12,
+                fontWeight: 900,
+                color: referralPlan.rewardReady ? '#d1fae5' : '#f3d27b',
+              }}>
+                <Sparkles size={14} />
+                {referralPlan.badge}
+              </span>
+              <span style={{ fontSize: 12, fontWeight: 800, color: 'rgba(247,245,239,0.84)' }}>
+                {referralPlan.completedCount}/{referralPlan.totalCount}
+              </span>
+            </div>
+
+            <div style={{ fontSize: 16, fontWeight: 900, color: '#f7f5ef', marginBottom: 6 }}>
+              {referralPlan.headline}
+            </div>
+            <div style={{ fontSize: 13, lineHeight: 1.55, color: '#d9e6db', marginBottom: 12 }}>
+              {referralPlan.description}
+            </div>
+
+            <div style={{ display: 'grid', gap: 8, marginBottom: 10 }}>
+              {referralPlan.steps.map((step) => (
+                <div
+                  key={step.id}
+                  style={{
+                    borderRadius: 12,
+                    padding: '10px 12px',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: step.status === 'done'
+                      ? 'rgba(16, 185, 129, 0.12)'
+                      : step.status === 'active'
+                        ? 'rgba(212, 175, 55, 0.10)'
+                        : 'rgba(255,255,255,0.04)',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginBottom: 4 }}>
+                    <strong style={{ fontSize: 13, color: '#f7f5ef' }}>{step.label}</strong>
+                    <span style={{ fontSize: 11, fontWeight: 900, color: step.status === 'done' ? '#86efac' : '#f3d27b' }}>
+                      {step.status === 'done' ? 'Hazir' : step.status === 'active' ? 'Siradaki' : 'Bekliyor'}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: 12, lineHeight: 1.5, color: 'rgba(247,245,239,0.78)' }}>
+                    {step.description}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ fontSize: 12, lineHeight: 1.55, color: 'rgba(247,245,239,0.74)' }}>
+              {referralPlan.supportNote}
+            </div>
+          </div>
+        )}
+
         {!!errorMessage && (
           <div
             style={{
@@ -213,7 +459,7 @@ function GrowthOnboarding({
           </div>
         )}
 
-        {normalizedStep === 0 && (
+        {currentStepKey === 'language' && (
           <div style={{ display: 'grid', gap: 10, marginBottom: 16 }}>
             {languageOptions.map((item) => (
               <button
@@ -225,103 +471,192 @@ function GrowthOnboarding({
                   justifyContent: 'space-between'
                 }}
               >
-                <span>{item.nativeName}</span>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <Globe2 size={18} />
+                  {item.nativeName}
+                </span>
                 {selectedLanguage === item.code && <Check size={18} />}
               </button>
             ))}
           </div>
         )}
 
-        {normalizedStep === 1 && (
-          <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
-            <button onClick={() => handleLocationAnswer(true)} disabled={isBusy} style={choiceButtonStyle(false)}>
-              <span style={{ fontSize: 20 }}>📍</span>
-              <span>
-                <strong style={{ display: 'block', marginBottom: 4 }}>{t('growth.onboarding.locationAllow', 'Konumumu kullan')}</strong>
-                <span style={{ opacity: 0.8, fontSize: 13 }}>{t('growth.onboarding.locationAllowDesc', 'Bulundugun yere gore vakitleri hesapla')}</span>
-              </span>
-            </button>
-            <button onClick={() => handleLocationAnswer(false)} disabled={isBusy} style={choiceButtonStyle(false)}>
-              <span style={{ fontSize: 20 }}>🕊️</span>
-              <span>
-                <strong style={{ display: 'block', marginBottom: 4 }}>{t('growth.onboarding.locationSkip', 'Simdilik gec')}</strong>
-                <span style={{ opacity: 0.8, fontSize: 13 }}>{t('growth.onboarding.locationSkipDesc', 'Istanbul ile devam et, sonra degistir')}</span>
-              </span>
-            </button>
-          </div>
-        )}
-
-        {normalizedStep === 2 && (
-          <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
-            <button onClick={() => handleNotificationAnswer(true)} disabled={isBusy} style={choiceButtonStyle(false)}>
-              <span style={{ fontSize: 20 }}>🔔</span>
-              <span>
-                <strong style={{ display: 'block', marginBottom: 4 }}>{t('growth.onboarding.notificationsAllow', 'Bildirimleri ac')}</strong>
-                <span style={{ opacity: 0.8, fontSize: 13 }}>{t('growth.onboarding.notificationsAllowDesc', 'Namaz vakitleri ve hatirlatmalari al')}</span>
-              </span>
-            </button>
-            <button onClick={() => handleNotificationAnswer(false)} disabled={isBusy} style={choiceButtonStyle(false)}>
-              <span style={{ fontSize: 20 }}>🌙</span>
-              <span>
-                <strong style={{ display: 'block', marginBottom: 4 }}>{t('growth.onboarding.notificationsSkip', 'Simdilik istemiyorum')}</strong>
-                <span style={{ opacity: 0.8, fontSize: 13 }}>{t('growth.onboarding.notificationsSkipDesc', 'Daha sonra ayarlardan acabilirsin')}</span>
-              </span>
-            </button>
-          </div>
-        )}
-
-        {normalizedStep === 3 && (
-          <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
-            {goals.map((goal) => (
-              <button
-                key={goal.id}
-                onClick={() => setSelectedGoal(goal.id)}
-                disabled={isBusy}
-                style={choiceButtonStyle(selectedGoal === goal.id)}
-              >
-                <span style={{ fontSize: 20 }}>{goal.icon}</span>
-                <span style={{ flex: 1, fontWeight: 600 }}>{goal.label}</span>
-                {selectedGoal === goal.id && <Check size={18} />}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {normalizedStep === 4 && (
-          <div
-            style={{
-              marginBottom: 20,
-              padding: 16,
+        {currentStepKey === 'permissions' && (
+          <div style={{ display: 'grid', gap: 12, marginBottom: 20 }}>
+            <div style={{
               borderRadius: 16,
-              background: 'rgba(255,255,255,0.08)',
-              border: '1px solid rgba(255,255,255,0.12)'
-            }}
-          >
-            <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 8 }}>
-              {t('growth.onboarding.selectedGoal', 'Secilen odak')}
+              border: '1px solid rgba(255,255,255,0.12)',
+              background: 'rgba(255,255,255,0.06)',
+              padding: 16
+            }}>
+              <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
+                <div style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 12,
+                  background: 'rgba(212, 175, 55, 0.14)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#d4af37',
+                  flexShrink: 0
+                }}>
+                  <MapPinned size={18} />
+                </div>
+                <div>
+                  <div style={{ fontWeight: 800, marginBottom: 4 }}>{t('growth.onboarding.locationTitleShort', 'Konum')}</div>
+                  <div style={{ fontSize: 13, opacity: 0.82, lineHeight: 1.5 }}>
+                    {t('growth.onboarding.locationDescriptionShort', 'Namaz vakitlerini bulundugun yere gore daha dogru hesaplar.')}
+                  </div>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => setLocationPreference('allow')}
+                  disabled={isBusy}
+                  style={permissionButtonStyle(locationPreference === 'allow', true)}
+                >
+                  {t('growth.onboarding.allow', 'Izin ver')}
+                </button>
+                <button
+                  onClick={() => setLocationPreference('skip')}
+                  disabled={isBusy}
+                  style={permissionButtonStyle(locationPreference === 'skip')}
+                >
+                  {t('growth.onboarding.skipForNow', 'Simdilik gec')}
+                </button>
+              </div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700 }}>
-              <span style={{ fontSize: 20 }}>{goals.find((goal) => goal.id === selectedGoal)?.icon}</span>
-              <span>{goals.find((goal) => goal.id === selectedGoal)?.label}</span>
+
+            <div style={{
+              borderRadius: 16,
+              border: '1px solid rgba(255,255,255,0.12)',
+              background: 'rgba(255,255,255,0.06)',
+              padding: 16
+            }}>
+              <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
+                <div style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 12,
+                  background: 'rgba(16, 185, 129, 0.14)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#10b981',
+                  flexShrink: 0
+                }}>
+                  <Bell size={18} />
+                </div>
+                <div>
+                  <div style={{ fontWeight: 800, marginBottom: 4 }}>{t('growth.onboarding.notificationsTitleShort', 'Bildirimler')}</div>
+                  <div style={{ fontSize: 13, opacity: 0.82, lineHeight: 1.5 }}>
+                    {t('growth.onboarding.notificationsDescriptionShort', 'Vakitleri, gunluk gorevleri ve geri donus anlarini kacirmazsin.')}
+                  </div>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => setNotificationPreference('allow')}
+                  disabled={isBusy}
+                  style={permissionButtonStyle(notificationPreference === 'allow', true)}
+                >
+                  {t('growth.onboarding.turnOn', 'Ac')}
+                </button>
+                <button
+                  onClick={() => setNotificationPreference('skip')}
+                  disabled={isBusy}
+                  style={permissionButtonStyle(notificationPreference === 'skip')}
+                >
+                  {t('growth.onboarding.skipForNow', 'Simdilik gec')}
+                </button>
+              </div>
             </div>
           </div>
         )}
 
-        {(normalizedStep === 0 || normalizedStep === 3 || normalizedStep === 4) && (
-          <button
-            onClick={handleContinue}
-            disabled={isBusy}
-            style={{
-              ...baseButton,
-              width: '100%',
-              background: '#d4af37',
-              color: '#14352a',
-              opacity: isBusy ? 0.7 : 1
-            }}
-          >
-            {isBusy ? t('common.loading', 'Yukleniyor...') : currentStep.actionLabel}
-          </button>
+        {currentStepKey === 'goal' && (
+          <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
+            {goals.map((goal) => {
+              const selected = selectedGoal === goal.id;
+
+              return (
+                <button
+                  key={goal.id}
+                  onClick={() => handleGoalChange(goal.id)}
+                  disabled={isBusy}
+                  style={choiceButtonStyle(selected)}
+                >
+                  <span style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 12,
+                    background: selected ? 'rgba(212, 175, 55, 0.12)' : 'rgba(255,255,255,0.06)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0
+                  }}>
+                    {GOAL_ICONS[goal.id]}
+                  </span>
+                  <span style={{ flex: 1 }}>
+                    <strong style={{ display: 'block', marginBottom: 4 }}>{goal.label}</strong>
+                    <span style={{ opacity: 0.8, fontSize: 13 }}>{goal.subtitle}</span>
+                  </span>
+                  {selected && <Check size={18} />}
+                </button>
+              );
+            })}
+
+            {resolvedConfig.premiumTeaserEnabled && !isProUser && (
+              <div style={{
+                borderRadius: 16,
+                padding: '14px 16px',
+                background: 'rgba(212, 175, 55, 0.12)',
+                border: '1px solid rgba(212, 175, 55, 0.22)',
+                display: 'flex',
+                gap: 12,
+                alignItems: 'flex-start'
+              }}>
+                <div style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 12,
+                  background: 'rgba(212, 175, 55, 0.18)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#d4af37',
+                  flexShrink: 0
+                }}>
+                  <Sparkles size={18} />
+                </div>
+                <div>
+                  <div style={{ fontWeight: 900, color: '#f7f5ef', marginBottom: 4 }}>
+                    {t('growth.onboarding.premiumTeaserTitle', 'Istersen daha derin destek de acilabilir')}
+                  </div>
+                  <div style={{ fontSize: 13, lineHeight: 1.55, color: 'rgba(247,245,239,0.84)' }}>
+                    {t('growth.onboarding.premiumTeaserDesc', 'Kurulum bitince AI rehberlik, haftalik derinlik ve aile ritmi icin sakin bir Pro onerisi gosterebiliriz.')}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         )}
+
+        <button
+          onClick={handleContinue}
+          disabled={isBusy}
+          style={{
+            ...baseButton,
+            width: '100%',
+            background: '#d4af37',
+            color: '#14352a',
+            opacity: isBusy ? 0.7 : 1
+          }}
+        >
+          {isBusy ? t('common.loading', 'Yukleniyor...') : currentStep.actionLabel}
+        </button>
       </div>
     </div>
   );

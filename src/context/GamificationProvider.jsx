@@ -3,6 +3,10 @@ import { LEVELS, BADGES } from '../data/gamificationData';
 import { getRandomDailyQuests } from '../data/questsData';
 import { GamificationContext } from './GamificationContext';
 import { storageService } from '../services/storageService';
+import { recordXpEvent } from '../services/engagementSummaryService';
+import { ANALYTICS_EVENTS, logBadgeEarned, logEvent, logLevelUp } from '../services/analyticsService';
+import { contributeFamilyGoalOncePerDay } from '../services/familyGoalContributionService';
+import { getXpMultiplier } from '../utils/xpMultiplier';
 
 const GAMIFICATION_KEYS = {
   USER_POINTS: 'userPoints',
@@ -18,6 +22,7 @@ export const GamificationProvider = ({ children }) => {
   const level = useMemo(() => LEVELS.slice().reverse().find(l => points >= l.minPoints) || LEVELS[0], [points]);
   const [showLevelUp, setShowLevelUp] = useState(false);
   const prevLevelRef = useRef(level);
+  const prevBadgesRef = useRef(earnedBadges);
 
   // Daily Quests State
   const [dailyQuests, setDailyQuests] = useState(() => {
@@ -34,7 +39,8 @@ export const GamificationProvider = ({ children }) => {
     
     // Check for Level Up
     let levelUpTimer;
-    if (level.id > prevLevelRef.current.id) {
+    if (level.level > prevLevelRef.current.level) {
+      logLevelUp(level.level, points);
       levelUpTimer = setTimeout(() => setShowLevelUp(true), 0);
       // Play sound or other effects here if needed
     }
@@ -50,6 +56,24 @@ export const GamificationProvider = ({ children }) => {
   }, [earnedBadges]);
 
   useEffect(() => {
+    const previousBadgeIds = new Set(
+      (prevBadgesRef.current || [])
+        .map((badge) => (typeof badge === 'string' ? badge : badge?.badgeId || badge?.id))
+        .filter(Boolean)
+    );
+
+    earnedBadges.forEach((badge) => {
+      const badgeId = typeof badge === 'string' ? badge : badge?.badgeId || badge?.id;
+      if (!badgeId || previousBadgeIds.has(badgeId)) return;
+
+      const badgeMeta = Object.values(BADGES).find((item) => item.id === badgeId);
+      logBadgeEarned(badgeId, badgeMeta?.name || badgeId);
+    });
+
+    prevBadgesRef.current = earnedBadges;
+  }, [earnedBadges]);
+
+  useEffect(() => {
     storageService.setItem(GAMIFICATION_KEYS.DAILY_QUESTS, dailyQuests);
   }, [dailyQuests]);
 
@@ -57,8 +81,33 @@ export const GamificationProvider = ({ children }) => {
   // Removed getLevel function as we now use state
 
 
-  const addPoints = useCallback((amount) => {
-    setPoints(prev => prev + amount);
+  const addPoints = useCallback((amount, options = {}) => {
+    const numericAmount = Number(amount) || 0;
+    if (numericAmount === 0) return 0;
+
+    const {
+      applyMultiplier = true,
+      source = 'general'
+    } = options;
+
+    const multiplier = applyMultiplier ? getXpMultiplier() : 1;
+    const appliedAmount = Math.round(numericAmount * multiplier);
+
+    setPoints(prev => prev + appliedAmount);
+    recordXpEvent({
+      baseAmount: numericAmount,
+      appliedAmount,
+      source
+    });
+    logEvent(ANALYTICS_EVENTS.XP_EARNED, {
+      source,
+      base_amount: numericAmount,
+      applied_amount: appliedAmount,
+      multiplier_applied: applyMultiplier,
+      multiplier_value: multiplier
+    });
+
+    return appliedAmount;
   }, []);
 
   const awardBadge = useCallback((badgeId) => {
@@ -110,7 +159,7 @@ export const GamificationProvider = ({ children }) => {
     setDailyQuests(prev => {
         const quest = prev.quests.find(q => q.id === questId);
         if (quest && quest.completed && !quest.isClaimed) {
-            addPoints(quest.xp);
+            addPoints(quest.xp, { source: 'daily_quest_reward' });
             const newQuests = prev.quests.map(q => 
                 q.id === questId ? { ...q, isClaimed: true } : q
             );
@@ -132,16 +181,19 @@ export const GamificationProvider = ({ children }) => {
       
       
       // Award XP
-      addPoints(50); // Base XP for any activity
+      addPoints(50, { source: `streak_${category}` }); // Base XP for any activity
       
       // Update Daily Quests
       if (category === 'zikir') {
         checkQuestProgress('zikir', null, count || 1);
+        void contributeFamilyGoalOncePerDay('streak_zikir', 'streak_zikir');
 
       } else if (category === 'prayer') {
         checkQuestProgress('prayer', null, 1);
+        void contributeFamilyGoalOncePerDay('streak_prayer', 'streak_prayer');
       } else if (category === 'quran') {
         checkQuestProgress('reading', null, 1);
+        void contributeFamilyGoalOncePerDay('streak_quran', 'streak_quran');
       }
     };
 
@@ -160,12 +212,23 @@ export const GamificationProvider = ({ children }) => {
     return () => window.removeEventListener('quest:progress', handleQuestProgressEvent);
   }, [checkQuestProgress]);
 
+  const badgeDetails = useMemo(() => {
+    const badgeIds = earnedBadges.map((badge) => (typeof badge === 'string' ? badge : badge?.badgeId || badge?.id));
+
+    return badgeIds
+      .map((badgeId) => Object.values(BADGES).find((badge) => badge.id === badgeId))
+      .filter(Boolean);
+  }, [earnedBadges]);
+
   const contextValue = useMemo(() => ({
     points,
     level,
+    title: level?.title || 'Yeni Baslayan',
     showLevelUp,
     setShowLevelUp,
     earnedBadges,
+    badgeDetails,
+    badges: badgeDetails,
     dailyQuests,
     BADGES,
     addPoints,
@@ -177,12 +240,13 @@ export const GamificationProvider = ({ children }) => {
     points, 
     level, 
     showLevelUp, 
-    earnedBadges, 
-    dailyQuests, 
-    addPoints, 
-    awardBadge, 
-    checkQuestProgress, 
-    claimQuestReward, 
+    earnedBadges,
+    badgeDetails,
+    dailyQuests,
+    addPoints,
+    awardBadge,
+    checkQuestProgress,
+    claimQuestReward,
     refreshQuests
   ]);
 

@@ -6,12 +6,14 @@ import { GREETING_CATEGORIES, getCardsByCategory } from '../data/greetingCardsDa
 import { storageService } from '../services/storageService';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
+import { useToast } from '../hooks/useToast';
 // html2canvas is dynamically imported when needed to reduce initial bundle size
 
 const GREETING_FAVORITES_KEY = 'greeting_favorites';
 
 function GreetingCards({ onClose }) {
     const { t } = useTranslation();
+    const { showToast } = useToast();
     const [activeCategory, setActiveCategory] = useState(null);
     const [selectedCard, setSelectedCard] = useState(null);
     const [editMode, setEditMode] = useState(false);
@@ -100,12 +102,12 @@ function GreetingCards({ onClose }) {
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                alert(t('greetingCards.ui.downloaded'));
+                showToast(t('greetingCards.ui.downloaded'), 'success');
             }
         } catch (err) {
             console.error('Share error:', err);
             if (err.name !== 'AbortError') {
-                alert(t('greetingCards.ui.shareError'));
+                showToast(t('greetingCards.ui.shareError'), 'error');
             }
         } finally {
             setIsSharing(false);

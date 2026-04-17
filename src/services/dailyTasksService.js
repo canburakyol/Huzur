@@ -5,6 +5,7 @@
 
 import { DAILY_TASKS, TASK_BADGES, TASK_CATEGORIES } from '../data/dailyTasksData';
 import { storageService } from './storageService';
+import { saveDailyTasksSnapshot } from './engagementSummaryService';
 import { STORAGE_KEYS } from '../constants';
 
 /**
@@ -70,6 +71,10 @@ const saveTodayTasks = (tasks) => {
     storageService.setItem('huzur_daily_tasks', {
       date: today,
       tasks: tasks
+    });
+    saveDailyTasksSnapshot({
+      dateKey: today,
+      tasks
     });
   } catch (error) {
     console.warn('[DailyTasksService] Error saving tasks:', error);

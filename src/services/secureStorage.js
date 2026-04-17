@@ -19,8 +19,8 @@ export const secureStorage = {
     try {
       await Preferences.set({ key, value });
       return true;
-    } catch {
-      logger.error('[SecureStorage] setString error');
+    } catch (error) {
+      logger.error('[SecureStorage] setString error', error);
       return false;
     }
   },
@@ -29,8 +29,8 @@ export const secureStorage = {
     try {
       const { value } = await Preferences.get({ key });
       return value !== null ? value : defaultValue;
-    } catch {
-      logger.error('[SecureStorage] getString error');
+    } catch (error) {
+      logger.error('[SecureStorage] getString error', error);
       return defaultValue;
     }
   },
@@ -40,8 +40,8 @@ export const secureStorage = {
       const jsonValue = JSON.stringify(value);
       await Preferences.set({ key, value: jsonValue });
       return true;
-    } catch {
-      logger.error('[SecureStorage] setItem error');
+    } catch (error) {
+      logger.error('[SecureStorage] setItem error', error);
       return false;
     }
   },
@@ -51,8 +51,8 @@ export const secureStorage = {
       const { value } = await Preferences.get({ key });
       if (value === null) return defaultValue;
       return JSON.parse(value);
-    } catch {
-      logger.error('[SecureStorage] getItem error');
+    } catch (error) {
+      logger.error('[SecureStorage] getItem error', error);
       return defaultValue;
     }
   },
@@ -82,8 +82,8 @@ export const secureStorage = {
     try {
       await Preferences.remove({ key });
       return true;
-    } catch {
-      logger.error('[SecureStorage] removeItem error');
+    } catch (error) {
+      logger.error('[SecureStorage] removeItem error', error);
       return false;
     }
   },
@@ -92,8 +92,8 @@ export const secureStorage = {
     try {
       await Preferences.clear();
       return true;
-    } catch {
-      logger.error('[SecureStorage] clearAll error');
+    } catch (error) {
+      logger.error('[SecureStorage] clearAll error', error);
       return false;
     }
   },
@@ -102,7 +102,8 @@ export const secureStorage = {
     try {
       const { value } = await Preferences.get({ key });
       return value !== null;
-    } catch {
+    } catch (error) {
+      logger.error('[SecureStorage] hasKey error', error);
       return false;
     }
   },
@@ -111,8 +112,8 @@ export const secureStorage = {
     try {
       const { keys } = await Preferences.keys();
       return keys;
-    } catch {
-      logger.error('[SecureStorage] keys error');
+    } catch (error) {
+      logger.error('[SecureStorage] keys error', error);
       return [];
     }
   },
@@ -141,8 +142,8 @@ export const secureStorage = {
       status._integrity = await this._generateIntegrityHash(status);
       await this.setItem(SECURE_STORAGE_KEYS.PRO_STATUS, status);
       return true;
-    } catch {
-      logger.error('[SecureStorage] setProStatus error');
+    } catch (error) {
+      logger.error('[SecureStorage] setProStatus error', error);
       return false;
     }
   },
@@ -179,8 +180,8 @@ export const secureStorage = {
         verificationState: status.verificationState || (status.active ? 'verified' : 'inactive'),
         isValid
       };
-    } catch {
-      logger.error('[SecureStorage] getProStatus error');
+    } catch (error) {
+      logger.error('[SecureStorage] getProStatus error', error);
       return null;
     }
   },
@@ -218,7 +219,8 @@ export const secureStorage = {
       const hashBuffer = await crypto.subtle.digest('SHA-256', data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       return hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
-    } catch {
+    } catch (error) {
+      logger.error('[SecureStorage] Integrity digest failed, using fallback hash', error);
       let hash = 0x811c9dc5;
       for (let index = 0; index < payload.length; index += 1) {
         hash ^= payload.charCodeAt(index);

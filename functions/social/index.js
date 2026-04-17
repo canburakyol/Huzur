@@ -121,6 +121,7 @@ function createCreateFamilyHandler(deps = {}) {
   const dbRef = deps.db || db;
   const adminSdk = deps.admin || admin;
   const rateLimitFn = deps.checkRateLimit || checkRateLimit;
+  const distributedRateLimitFn = deps.checkDistributedRateLimit || checkDistributedRateLimit;
 
   return async (request) => {
     if (!request.auth) {
@@ -137,6 +138,19 @@ function createCreateFamilyHandler(deps = {}) {
     const rateCheck = rateLimitFn(`createFamily:${userId}`, 5, 60000);
     if (!rateCheck.allowed) {
       throw new HttpsError('resource-exhausted', 'Cok fazla aile olusturdunuz. Lutfen biraz bekleyin.');
+    }
+
+    const distributedRateCheck = await distributedRateLimitFn({
+      dbRef,
+      adminSdk,
+      namespace: 'createFamily',
+      identifier: userId,
+      maxRequests: 12,
+      windowMs: 86400000,
+    });
+    if (!distributedRateCheck.allowed) {
+      logSecurityEvent('create_family_daily_quota_exceeded', { userId }, 'WARNING');
+      throw new HttpsError('resource-exhausted', 'Gunluk aile olusturma limitine ulastiniz.');
     }
 
     // GÃ¼venli aile adÄ± - HTML tag'lerini temizle
@@ -194,6 +208,7 @@ function createCreateFamilyGroupHandler(deps = {}) {
   const dbRef = deps.db || db;
   const adminSdk = deps.admin || admin;
   const rateLimitFn = deps.checkRateLimit || checkRateLimit;
+  const distributedRateLimitFn = deps.checkDistributedRateLimit || checkDistributedRateLimit;
 
   return async (request) => {
     if (!request.auth) {
@@ -222,6 +237,19 @@ function createCreateFamilyGroupHandler(deps = {}) {
     const rateCheck = rateLimitFn(`createFamilyGroup:${userId}`, 10, 60000);
     if (!rateCheck.allowed) {
       throw new HttpsError('resource-exhausted', 'Cok fazla grup olusturdunuz. Lutfen biraz bekleyin.');
+    }
+
+    const distributedRateCheck = await distributedRateLimitFn({
+      dbRef,
+      adminSdk,
+      namespace: 'createFamilyGroup',
+      identifier: userId,
+      maxRequests: 20,
+      windowMs: 86400000,
+    });
+    if (!distributedRateCheck.allowed) {
+      logSecurityEvent('create_family_group_daily_quota_exceeded', { userId }, 'WARNING');
+      throw new HttpsError('resource-exhausted', 'Gunluk grup olusturma limitine ulastiniz.');
     }
 
     // Grup kodu oluÅŸtur
@@ -287,6 +315,19 @@ exports.requestFamilyGroupJoinByCode = onCall(
     const rateCheck = checkRateLimit(`joinFamilyGroup:${userId}`, 10, 60000);
     if (!rateCheck.allowed) {
       throw new HttpsError('resource-exhausted', 'Cok fazla deneme yaptiniz. Lutfen biraz bekleyin.');
+    }
+
+    const distributedRateCheck = await checkDistributedRateLimit({
+      dbRef: db,
+      adminSdk: admin,
+      namespace: 'joinFamilyGroup',
+      identifier: userId,
+      maxRequests: 40,
+      windowMs: 86400000,
+    });
+    if (!distributedRateCheck.allowed) {
+      logSecurityEvent('join_family_group_daily_quota_exceeded', { userId }, 'WARNING');
+      throw new HttpsError('resource-exhausted', 'Gunluk grup katilim deneme limitine ulastiniz.');
     }
 
     const groupSnapshot = await db.collection('familyGroups')
@@ -484,6 +525,18 @@ exports.listPublicFamilies = onCall(
       throw new HttpsError('resource-exhausted', 'Cok fazla listeleme istegi gonderdiniz.');
     }
 
+    const distributedRateCheck = await checkDistributedRateLimit({
+      dbRef: db,
+      adminSdk: admin,
+      namespace: 'listPublicFamilies',
+      identifier: userId,
+      maxRequests: 250,
+      windowMs: 86400000,
+    });
+    if (!distributedRateCheck.allowed) {
+      throw new HttpsError('resource-exhausted', 'Gunluk aile kesif limitine ulastiniz.');
+    }
+
     const snapshot = await db.collection('families')
       .limit(50)
       .get();
@@ -500,6 +553,8 @@ exports.listPublicFamilies = onCall(
 function createGetOrCreateFamilyWeeklyGoalHandler(deps = {}) {
   const dbRef = deps.db || db;
   const adminSdk = deps.admin || admin;
+  const rateLimitFn = deps.checkRateLimit || checkRateLimit;
+  const distributedRateLimitFn = deps.checkDistributedRateLimit || checkDistributedRateLimit;
 
   return async (request) => {
     if (!request.auth) {
@@ -509,6 +564,23 @@ function createGetOrCreateFamilyWeeklyGoalHandler(deps = {}) {
     const userId = request.auth.uid;
     if (!isValidUid(userId)) {
       throw new HttpsError('invalid-argument', 'Gecersiz kullanici.');
+    }
+
+    const rateCheck = rateLimitFn(`getOrCreateFamilyWeeklyGoal:${userId}`, 30, 60000);
+    if (!rateCheck.allowed) {
+      throw new HttpsError('resource-exhausted', 'Cok fazla haftalik hedef istegi gonderdiniz.');
+    }
+
+    const distributedRateCheck = await distributedRateLimitFn({
+      dbRef,
+      adminSdk,
+      namespace: 'getOrCreateFamilyWeeklyGoal',
+      identifier: userId,
+      maxRequests: 250,
+      windowMs: 86400000,
+    });
+    if (!distributedRateCheck.allowed) {
+      throw new HttpsError('resource-exhausted', 'Gunluk haftalik hedef sorgu limitine ulastiniz.');
     }
 
     const userDoc = await dbRef.collection('users').doc(userId).get();

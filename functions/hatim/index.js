@@ -6,6 +6,7 @@
   db,
   isValidUid,
   isValidDocumentId,
+  normalizeCode,
   sanitizeHatimName,
   sanitizeHatimDescription,
   sanitizeDisplayName,
@@ -234,6 +235,18 @@ exports.listPublicHatims = onCall(
     const rateCheck = checkRateLimit(`listPublicHatims:${userId}`, 20, 60000);
     if (!rateCheck.allowed) {
       throw new HttpsError('resource-exhausted', 'Cok fazla listeleme istegi gonderdiniz.');
+    }
+
+    const distributedRateCheck = await checkDistributedRateLimit({
+      dbRef: db,
+      adminSdk: admin,
+      namespace: 'listPublicHatims',
+      identifier: userId,
+      maxRequests: 250,
+      windowMs: 86400000,
+    });
+    if (!distributedRateCheck.allowed) {
+      throw new HttpsError('resource-exhausted', 'Gunluk hatim kesif limitine ulastiniz.');
     }
 
     const snapshot = await db.collection('hatims')

@@ -1,24 +1,13 @@
-import {
-  addDoc,
-  collection,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  serverTimestamp,
-} from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
-import { db, getFunctionsInstance } from './firebase';
+import { getFunctionsInstance } from './firebase';
 import { getCurrentUserIdEnsured } from './authService';
 import { logger } from '../utils/logger';
 
-const COLLECTION_DUAS = 'duas';
-
-const callDuaFunction = async (name, payload) => {
+const callDuaFunction = async (name, payload = {}) => {
   const functions = await getFunctionsInstance();
   const callable = httpsCallable(functions, name);
   const result = await callable(payload);
-  return result.data;
+  return result?.data || null;
 };
 
 export const duaService = {
@@ -29,18 +18,13 @@ export const duaService = {
     }
 
     try {
-      const duaData = {
+      const result = await callDuaFunction('createDua', {
         text,
         isAnonymous,
-        authorId: userId,
-        authorName: isAnonymous ? 'Bir Mumin' : (authorName || 'Isimsiz'),
-        createdAt: serverTimestamp(),
-        aminCount: 0,
-      };
-
-      const docRef = await addDoc(collection(db, COLLECTION_DUAS), duaData);
-      logger.log('[DuaService] Dua created:', docRef.id);
-      return docRef.id;
+        authorName,
+      });
+      logger.log('[DuaService] Dua created:', result?.dua?.id);
+      return result?.dua || null;
     } catch (error) {
       logger.error('[DuaService] Create dua error:', error);
       throw error;
@@ -48,18 +32,14 @@ export const duaService = {
   },
 
   async getRecentDuas(limitCount = 20) {
-    try {
-      const duaQuery = query(
-        collection(db, COLLECTION_DUAS),
-        orderBy('createdAt', 'desc'),
-        limit(limitCount)
-      );
+    const userId = await getCurrentUserIdEnsured();
+    if (!userId) {
+      throw new Error('User not authenticated');
+    }
 
-      const querySnapshot = await getDocs(duaQuery);
-      return querySnapshot.docs.map((docSnapshot) => ({
-        id: docSnapshot.id,
-        ...docSnapshot.data(),
-      }));
+    try {
+      const result = await callDuaFunction('listRecentDuas', { limitCount });
+      return Array.isArray(result?.duas) ? result.duas : [];
     } catch (error) {
       logger.error('[DuaService] Get duas error:', error);
       return [];

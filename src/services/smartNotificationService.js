@@ -12,6 +12,9 @@ import { analyticsService, ANALYTICS_EVENTS } from './analyticsService';
 import { getExperimentVariant } from './experimentService';
 import { getActiveCampaign, resolveCampaignCopy } from './campaignService';
 import { getOptimalReminderHour } from './userActivityTracker';
+import { getPersonalizedPushHintsV1 } from './aiService';
+import { buildAiContext } from './aiContextService';
+import { getRecoveryLoopPlan } from './recoveryLoopService';
 import {
   NOTIFICATION_CHANNELS,
   checkNotificationPermission,
@@ -64,18 +67,18 @@ const PRAYER_NOTIFICATIONS = {
 // Streak bildirim mesajları
 const STREAK_NOTIFICATIONS = [
   {
-    title: '🔥 Your Streak Is at Risk!',
-    body: 'You have not opened the app today. Open now to protect your {days}-day streak!',
+    title: 'Bugun tek bir adim yeterli',
+    body: '{days} gunluk ritmini korumak icin Huzur\'a kisa bir donus yapabilirsin.',
     hour: 20,
     minute: 0
   },
   {
-    title: '⏰ Last 4 Hours!',
-    body: 'Only 4 hours left to save your streak. Open the app now!',
+    title: 'Gunu sakin bir adimla tamamla',
+    body: 'Bugun tek bir kucuk temas bile ritmi yeniden canlandirabilir.',
     hour: 23,
     minute: 0
   }
-];
+]
 
 // Günlük hatırlatıcı bildirimler (saatler userActivityTracker'dan dinamik olarak alınır)
 const DAILY_REMINDERS = [
@@ -178,6 +181,24 @@ const getPushCopyVariantText = ({ variant, campaign, baseTitle, baseBody }) => {
   return group[variant] || group.A;
 };
 
+const getAiPushHintIfEnabled = async ({ type = 'reminder', context = {}, fallbackTitle = '', fallbackBody = '' } = {}) => {
+  try {
+    const result = await getPersonalizedPushHintsV1({ type, context, fallbackTitle, fallbackBody });
+    if (!result?.title || !result?.body) {
+      return null;
+    }
+
+    analyticsService.logPushHintV1Applied?.(result.reason || 'generic', result.provider || 'fallback');
+    return {
+      title: result.title || fallbackTitle,
+      body: result.body || fallbackBody,
+    };
+  } catch (error) {
+    logger.warn('[Notifications] AI hint unavailable', error);
+    return null;
+  }
+};
+
 /**
  * Kullanıcı tercihlerini güncelle
  */
@@ -212,6 +233,20 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
   analyticsService.logCampaignResolved(campaign.id, campaign.region, campaign.variant);
   const pushVariant = getExperimentVariant('push_copy_v1');
   analyticsService.logExperimentAssigned('push_copy_v1', pushVariant, 'schedule_prayer_notifications');
+  const baseContext = buildAiContext({
+    activeTab: 'home',
+    timings: prayerTimes,
+    dailyContent: { campaignId: campaign.id },
+    locationName: '',
+  });
+  const genericMainHint = await getAiPushHintIfEnabled({
+    type: 'prayer_main',
+    context: baseContext,
+  });
+  const genericPreHint = await getAiPushHintIfEnabled({
+    type: 'prayer_pre',
+    context: baseContext,
+  });
 
   // Vakit adları mapping
   const prayerNames = {
@@ -243,7 +278,7 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
         fallbackTitle: `Ezan Vakti: ${prayerNames[prayer] || prayer}`,
         fallbackBody: 'Vakit girdi. Haydi namaza!'
       });
-      const variantCopy = getPushCopyVariantText({
+      const variantCopy = genericMainHint || getPushCopyVariantText({
         variant: pushVariant,
         campaign,
         baseTitle: campaignCopy.title,
@@ -288,7 +323,7 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
           fallbackTitle: config.title,
           fallbackBody: config.body
         });
-        const variantCopy = getPushCopyVariantText({
+        const variantCopy = genericPreHint || getPushCopyVariantText({
           variant: pushVariant,
           campaign,
           baseTitle: campaignCopy.title,
@@ -344,7 +379,7 @@ export const schedulePrayerNotifications = async (prayerTimes, date = new Date()
  */
 export const scheduleStreakNotifications = async (currentStreak) => {
   const prefs = getNotificationPreferences();
-  if (!prefs.streak || currentStreak < 2) return; // En az 2 gün streak olsun
+  if (!prefs.streak || currentStreak < 2) return; // En az 2 gun streak olsun
 
   const hasPermission = await requestNotificationPermission();
   if (!hasPermission) return;
@@ -352,6 +387,7 @@ export const scheduleStreakNotifications = async (currentStreak) => {
   const notifications = [];
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
+  const recoveryPlan = getRecoveryLoopPlan(tomorrow);
 
   STREAK_NOTIFICATIONS.forEach((config, index) => {
     const scheduleTime = new Date(tomorrow);
@@ -359,19 +395,32 @@ export const scheduleStreakNotifications = async (currentStreak) => {
 
     if (!shouldScheduleAt(scheduleTime, prefs, 'streak')) return;
 
+    const personalizedTitle = index === 0
+      ? recoveryPlan.notificationTitle
+      : `${recoveryPlan.notificationTitle} - aksam`;
+    const personalizedBody = index === 0
+      ? `${recoveryPlan.notificationBody} ${currentStreak} gunluk zincirini yavasca surdurebilirsin.`
+      : `${recoveryPlan.description} Bugun kisa bir donus bile yeterli.`;
+
     notifications.push({
       id: 1000 + index,
-      title: config.title,
-      body: config.body.replace('{days}', currentStreak),
-      schedule: { 
+      title: personalizedTitle || config.title,
+      body: personalizedBody || config.body.replace('{days}', currentStreak),
+      schedule: {
         at: scheduleTime,
         allowWhileIdle: true
       },
       sound: NOTIFICATION_CHANNELS.STREAK.sound,
       channelId: NOTIFICATION_CHANNELS.STREAK.id,
       smallIcon: 'ic_notification',
-      largeIcon: 'ic_fire', // Eğer varsa
-      extra: { type: 'streak', streak: currentStreak }
+      largeIcon: 'ic_fire', // Eger varsa
+      extra: {
+        type: 'streak',
+        streak: currentStreak,
+        risk_band: recoveryPlan.riskBand,
+        recovery_feature: recoveryPlan.feature,
+        reward_tone: recoveryPlan.rewardTone
+      }
     });
   });
 
@@ -401,6 +450,13 @@ export const scheduleDailyReminders = async () => {
   
   // Önceki hatırlatıcıları temizle
   await cancelNotificationsByType('reminder');
+  const genericReminderHint = await getAiPushHintIfEnabled({
+    type: 'reminder',
+    context: buildAiContext({
+      activeTab: 'home',
+      locationName: '',
+    }),
+  });
 
   DAILY_REMINDERS.forEach((config, index) => {
     // Kullanıcının en aktif olduğu saati al, yoksa fallback kullan
@@ -424,7 +480,7 @@ export const scheduleDailyReminders = async () => {
       fallbackTitle: config.title,
       fallbackBody: config.body
     });
-    const variantCopy = getPushCopyVariantText({
+    const variantCopy = genericReminderHint || getPushCopyVariantText({
       variant: pushVariant,
       campaign,
       baseTitle: campaignCopy.title,

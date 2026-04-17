@@ -54,56 +54,56 @@ export const DUA_IMAGES = [
         id: 'dua1',
         title: 'Sabah Duası',
         text: 'Ya Rabbi, bugün beni hayırlı işlere muvaffak kıl.',
-        bgColor: 'linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%)',
-        textColor: '#d4af37'
+        bgColor: 'linear-gradient(135deg, #064e3b 0%, #0f766e 100%)',
+        textColor: '#fde68a'
     },
     {
         id: 'dua2',
         title: 'Şükür Duası',
         text: 'Elhamdülillah, her halimde şükürler olsun.',
-        bgColor: 'linear-gradient(135deg, #2c3e50 0%, #3498db 100%)',
-        textColor: '#f1c40f'
+        bgColor: 'linear-gradient(135deg, #042f2e 0%, #065f46 100%)',
+        textColor: '#f8fafc'
     },
     {
         id: 'dua3',
         title: 'Bereket Duası',
         text: 'Allah\'ım evime, işime, aileme bereket ver.',
-        bgColor: 'linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)',
-        textColor: '#fff'
+        bgColor: 'linear-gradient(135deg, #0f3d2e 0%, #1a5c45 100%)',
+        textColor: '#d4af37'
     },
     {
         id: 'dua4',
         title: 'Huzur Duası',
         text: 'Rabbim kalbime huzur, dilime doğru söz ver.',
-        bgColor: 'linear-gradient(135deg, #16a085 0%, #1abc9c 100%)',
+        bgColor: 'linear-gradient(135deg, #065f46 0%, #0f766e 100%)',
         textColor: '#fff'
     },
     {
         id: 'dua5',
         title: 'Af Duası',
         text: 'Ya Rabbi, günahlarımı affet, beni bağışla.',
-        bgColor: 'linear-gradient(135deg, #c0392b 0%, #e74c3c 100%)',
+        bgColor: 'linear-gradient(135deg, #78350f 0%, #b45309 100%)',
         textColor: '#fff'
     },
     {
         id: 'dua6',
         title: 'Şifa Duası',
         text: 'Allah\'ım hastalarımıza şifa, dertlilerimize deva ver.',
-        bgColor: 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)',
-        textColor: '#fff'
+        bgColor: 'linear-gradient(135deg, #064e3b 0%, #1a5c45 100%)',
+        textColor: '#fde68a'
     },
     {
         id: 'dua7',
         title: 'Sabır Duası',
         text: 'Rabbim bana sabır ver, sabredenlerden eyle.',
-        bgColor: 'linear-gradient(135deg, #2980b9 0%, #3498db 100%)',
+        bgColor: 'linear-gradient(135deg, #0f766e 0%, #064e3b 100%)',
         textColor: '#fff'
     },
     {
         id: 'dua8',
         title: 'Akşam Duası',
         text: 'Ya Rabbi, bu geceyi hayırlı eyle, bizi koru.',
-        bgColor: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+        bgColor: 'linear-gradient(135deg, #022c22 0%, #042f2e 100%)',
         textColor: '#d4af37'
     }
 ];

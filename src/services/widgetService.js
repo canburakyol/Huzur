@@ -12,7 +12,8 @@ const PLUGIN_NAME = 'Widget';
 const isWidgetAvailableOnDevice = () => {
   try {
     return Capacitor.getPlatform() !== 'web' && Capacitor.isPluginAvailable(PLUGIN_NAME);
-  } catch {
+  } catch (error) {
+    logger.error('[WidgetService] Availability check failed', error);
     return false;
   }
 };

@@ -1,20 +1,24 @@
 import { useState } from 'react';
 import { Download, Share2, Heart, ChevronRight, X, Grid, Image as ImageIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { MULTIMEDIA_CATEGORIES, DUA_IMAGES, getImagesByCategory } from '../data/multimediaData';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { Share } from '@capacitor/share';
 import { Capacitor } from '@capacitor/core';
 import { storageService } from '../services/storageService';
+import { useToast } from '../hooks/useToast';
 
 const MULTIMEDIA_FAVORITES_KEY = 'multimedia_favorites';
 
 function Multimedia({ onClose }) {
+    const { t } = useTranslation();
+    const { showToast } = useToast();
     const [activeCategory, setActiveCategory] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [favorites, setFavorites] = useState(() => {
         return storageService.getItem(MULTIMEDIA_FAVORITES_KEY, []);
     });
-    const [setLoading] = useState({});
+    const [, setLoading] = useState({});
 
     // Toggle favorite
     const toggleFavorite = (imageId) => {
@@ -27,9 +31,10 @@ function Multimedia({ onClose }) {
 
     // Share image using Capacitor Share plugin
     const shareImage = async (image) => {
+        const appName = t('app.name', 'Huzur');
         const shareText = image.text
-            ? `${image.title}\n\n"${image.text}"\n\n📱 Huzur Uygulaması`
-            : `${image.title} - ${image.location || image.description || ''}\n\n📱 Huzur Uygulaması`;
+            ? `${image.title}\n\n"${image.text}"\n\n📱 ${appName}`
+            : `${image.title} - ${image.location || image.description || ''}\n\n📱 ${appName}`;
 
         try {
             // On native platform, use Capacitor Share
@@ -38,7 +43,7 @@ function Multimedia({ onClose }) {
                     title: image.title,
                     text: shareText,
                     url: image.url || '',
-                    dialogTitle: 'Paylaş'
+                    dialogTitle: t('common.share', 'Paylas')
                 });
             } else if (navigator.share) {
                 // Web fallback with native Web Share API
@@ -50,7 +55,7 @@ function Multimedia({ onClose }) {
             } else {
                 // Final fallback: Copy to clipboard
                 await navigator.clipboard.writeText(shareText);
-                alert('Paylaşım metni kopyalandı!');
+                showToast('Paylaşım metni kopyalandı!', 'success');
             }
         } catch (err) {
             // User cancelled or error
@@ -73,7 +78,7 @@ function Multimedia({ onClose }) {
                 }
             } else {
                 // For dua cards, we'll create a canvas and download
-                alert('Görsel yeni sekmede açılacak. Sağ tıklayıp "Resmi Kaydet" seçeneğini kullanabilirsiniz.');
+                showToast('Görsel yeni sekmede açılacak. Sağ tıklayıp "Resmi Kaydet" seçeneğini kullanabilirsiniz.', 'info');
             }
         } finally {
             setLoading(prev => ({ ...prev, [image.id]: false }));
@@ -95,7 +100,7 @@ function Multimedia({ onClose }) {
     const renderCategories = () => (
         <div className="reveal-stagger">
             <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600' }}>
-                İslami görseller, özel tasarım dua kartları ve paylaşılabilir manevi içerikler.
+                {t('multimedia.description', 'Islami gorseller, ozel tasarim dua kartlari ve paylasabilir manevi icerikler.')}
             </p>
 
             {/* Category Grid - Velocity Style */}
@@ -137,7 +142,7 @@ function Multimedia({ onClose }) {
                                 {category.title}
                             </div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
-                                {category.count} İÇERİK
+                                {category.count} {t('multimedia.contentLabel', 'ICERIK')}
                             </div>
                         </div>
                     </div>
@@ -149,7 +154,7 @@ function Multimedia({ onClose }) {
                 <div className="settings-group reveal-stagger" style={{ marginTop: '32px', '--delay': '0.5s' }}>
                     <div className="settings-group-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <Heart size={18} fill="var(--nav-accent)" color="var(--nav-accent)" />
-                        FAVORİLERİM ({favorites.length})
+                        {t('multimedia.favorites', 'FAVORILERIM')} ({favorites.length})
                     </div>
                 </div>
             )}
@@ -166,7 +171,7 @@ function Multimedia({ onClose }) {
             return (
                 <div className="reveal-stagger">
                     <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
-                        Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları.
+                        {t('multimedia.duaCardsDesc', 'Sevdiklerinizle paylasabileceginiz ozel tasarim dua kartlari.')}
                     </p>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
                         {DUA_IMAGES.map((dua, index) => (
@@ -256,7 +261,7 @@ function Multimedia({ onClose }) {
                                         alignItems: 'center',
                                         gap: '6px'
                                     }} onClick={(e) => { e.stopPropagation(); shareImage(dua); }}>
-                                        <Share2 size={14} /> PAYLAŞ
+                                        <Share2 size={14} /> {t('common.share', 'Paylas')}
                                     </div>
                                 </div>
                             </div>
@@ -338,7 +343,7 @@ function Multimedia({ onClose }) {
                                         position: 'absolute',
                                         top: '12px',
                                         right: '12px',
-                                        background: 'rgba(var(--nav-bg-rgb, 255,255,255), 0.8)',
+                                        background: 'rgba(var(--nav-bg-rgb, 4, 47, 46), 0.82)',
                                         backdropFilter: 'blur(10px)',
                                         border: 'none',
                                         borderRadius: '12px',
@@ -353,8 +358,8 @@ function Multimedia({ onClose }) {
                                 >
                                     <Heart
                                         size={16}
-                                        color={favorites.includes(image.id) ? '#ff4757' : 'var(--nav-text-muted)'}
-                                        fill={favorites.includes(image.id) ? '#ff4757' : 'transparent'}
+                                        color={favorites.includes(image.id) ? 'var(--error-color)' : 'var(--nav-text-muted)'}
+                                        fill={favorites.includes(image.id) ? 'var(--error-color)' : 'transparent'}
                                     />
                                 </button>
                             </div>
@@ -390,7 +395,7 @@ function Multimedia({ onClose }) {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: 'rgba(var(--nav-bg-rgb, 255,255,255), 0.98)',
+                background: 'rgba(var(--nav-bg-rgb, 4, 47, 46), 0.98)',
                 backdropFilter: 'blur(20px)',
                 zIndex: 2000,
                 display: 'flex',
@@ -469,7 +474,7 @@ function Multimedia({ onClose }) {
                                 opacity: 0.6,
                                 fontWeight: '900'
                             }}>
-                                🕌 Huzur Uygulaması
+                                🕌 {t('app.name', 'Huzur')}
                             </div>
                         </div>
                     ) : (
@@ -506,10 +511,10 @@ function Multimedia({ onClose }) {
                             flex: 1,
                             justifyContent: 'center',
                             padding: '16px',
-                            background: favorites.includes(selectedImage.id) ? 'rgba(255,71,87,0.1)' : 'var(--nav-hover)',
-                            border: favorites.includes(selectedImage.id) ? '1px solid #ff4757' : '1px solid var(--nav-border)',
+                            background: favorites.includes(selectedImage.id) ? 'rgba(239, 68, 68, 0.12)' : 'var(--nav-hover)',
+                            border: favorites.includes(selectedImage.id) ? '1px solid rgba(239, 68, 68, 0.28)' : '1px solid var(--nav-border)',
                             borderRadius: '20px',
-                            color: favorites.includes(selectedImage.id) ? '#ff4757' : 'var(--nav-text)',
+                            color: favorites.includes(selectedImage.id) ? 'var(--error-color)' : 'var(--nav-text)',
                             fontSize: '0.95rem',
                             fontWeight: '900',
                             gap: '10px'
@@ -517,9 +522,9 @@ function Multimedia({ onClose }) {
                     >
                         <Heart
                             size={20}
-                            fill={favorites.includes(selectedImage.id) ? '#ff4757' : 'transparent'}
+                            fill={favorites.includes(selectedImage.id) ? 'var(--error-color)' : 'transparent'}
                         />
-                        FAVORİ
+                        {t('common.favorite', 'Favori')}
                     </button>
                     {!isDua && (
                         <button
@@ -539,7 +544,7 @@ function Multimedia({ onClose }) {
                             }}
                         >
                             <Download size={20} />
-                            KAYDET
+                            {t('common.save', 'Kaydet')}
                         </button>
                     )}
                     <button
@@ -559,7 +564,7 @@ function Multimedia({ onClose }) {
                         }}
                     >
                         <Share2 size={20} />
-                        PAYLAŞ
+                        {t('common.share', 'Paylas')}
                     </button>
                 </div>
             </div>
@@ -587,7 +592,7 @@ function Multimedia({ onClose }) {
                 }}>
                     {activeCategory
                         ? MULTIMEDIA_CATEGORIES.find(c => c.id === activeCategory)?.title
-                        : 'Multimedya'}
+                        : t('multimedia.title', 'Multimedya')}
                 </h1>
             </div>
 

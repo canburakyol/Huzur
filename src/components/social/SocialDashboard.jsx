@@ -8,10 +8,12 @@ import HatimDetail from './HatimDetail';
 import DuaList from './DuaList';
 import IslamicBackButton from '../shared/IslamicBackButton';
 import { BookOpen, Heart, Share2 } from 'lucide-react';
+import { useToast } from '../../hooks/useToast';
 import './Social.css';
 
 const SocialDashboard = ({ onClose }) => {
   const { t } = useTranslation();
+  const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState('hatim'); // 'hatim' or 'dua'
   const [selectedHatimId, setSelectedHatimId] = useState(null);
   const [isSharing, setIsSharing] = useState(false);
@@ -53,7 +55,7 @@ const SocialDashboard = ({ onClose }) => {
 
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(shareMessage);
-        alert(t('community.shareCopied', 'Paylasim linki kopyalandi.'));
+        showToast(t('community.shareCopied', 'Paylasim linki kopyalandi.'), 'success');
       }
     } catch (error) {
       if (error?.message !== 'Share canceled' && error?.name !== 'AbortError') {

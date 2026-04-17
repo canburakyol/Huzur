@@ -44,14 +44,15 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(PrayerAlarmPlugin.class);
         registerPlugin(PrayerSchedulePlugin.class);
         registerPlugin(NativeAdBridgePlugin.class);
+        registerPlugin(InstallReferrerPlugin.class);
 
         super.onCreate(savedInstanceState);
         
         // Initialize Firebase App Check
         initializeAppCheck();
 
-        // Enqueue background prayer data sync (runs daily when network available)
-        PrayerDataSyncWorker.Companion.enqueue(this);
+        // Defer periodic scheduling until the first frame has been attached.
+        getWindow().getDecorView().post(() -> PrayerDataSyncWorker.Companion.enqueueIfStale(this));
     }
     
     /**

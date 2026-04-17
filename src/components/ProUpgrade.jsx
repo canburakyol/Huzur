@@ -1,55 +1,198 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { X, Check, Crown } from 'lucide-react';
+import { Check, Crown, Sparkles, X } from 'lucide-react';
+import { getExperimentVariant } from '../services/experimentService';
 import { getOfferings, purchasePackage, restorePurchases } from '../services/revenueCatService';
+import {
+  ANALYTICS_EVENTS,
+  logEvent,
+} from '../services/analyticsService';
+import {
+  clearPendingPremiumMoment,
+  resolvePremiumMomentFromProps,
+} from '../services/premiumMomentService';
+import { getRecoveryLoopPlan } from '../services/recoveryLoopService';
 import { logger } from '../utils/logger';
-import { getVariant, trackConversion, EXPERIMENTS } from '../services/abTestService';
+import { getStoredPrimaryGoal } from '../utils/primaryGoal';
 
-const ProUpgrade = ({ onClose }) => {
+const isNativePlatform = () => (
+  window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false
+);
+
+const normalizePackageRecommendation = (value = '') => {
+  const normalized = String(value || '').trim().toLowerCase();
+  if (normalized.includes('year')) return 'yearly';
+  if (normalized.includes('month')) return 'monthly';
+  return normalized || 'yearly';
+};
+
+const buildPaywallCopy = (moment, valueVariant, ctaVariant) => {
+  const momentType = moment?.momentType || 'assistant_success';
+  const primaryGoal = moment?.primaryGoal || getStoredPrimaryGoal();
+  const recommendedPackage = normalizePackageRecommendation(moment?.recommendedPackage || 'yearly');
+
+  const commonFeatures = [
+    {
+      title: 'AI rehberlik',
+      description: 'Daha derin manevi rehberlik ve daha sakin sonraki adim onerileri.',
+    },
+    {
+      title: 'Haftalik icgoru',
+      description: 'Haftalik ritmini daha derin ve daha net goren ozetler.',
+    },
+    {
+      title: 'Sessiz premium destek',
+      description: 'Ritmi korurken daha yumuşak ama daha kisisel destek momentleri.',
+    },
+    {
+      title: 'Kesintisiz odak',
+      description: 'Reklamsiz deneyim ana fayda degil, ama odagi koruyan ikincil destek olarak burada.',
+    },
+  ];
+
+  let title = 'Huzur Pro';
+  let subtitle = 'Daha derin rehberlik, daha net haftalik icgoruler ve sakin premium destek burada acilir.';
+  let accent = 'AI rehberlik';
+
+  if (momentType === 'weekly_report') {
+    title = 'Haftalik ritmini derinlestir';
+    subtitle = 'Yuzeysel ozetin otesine gec; ritmi, aile akisini ve sakin sonraki adimlari daha net gor.';
+    accent = 'Daha derin haftalik icgoru';
+  } else if (momentType === 'home_recovery_support') {
+    title = 'Bugun icin daha derin destek ac';
+    subtitle = 'Ritmi toparlarken seni yormayan ama daha yakindan destekleyen bir premium katman acabilirsin.';
+    accent = 'Sessiz premium destek';
+  } else if (momentType === 'onboarding_complete') {
+    title = primaryGoal === 'family_consistency'
+      ? 'Aile ritmini Pro ile kur'
+      : 'Baslangic akisini Pro ile derinlestir';
+    subtitle = primaryGoal === 'family_consistency'
+      ? 'Aile hedefleri, haftalik derinlik ve daha sakin rehberlik ayni akista toplansin.'
+      : 'Ilk kurulumun ustune AI rehberlik ve haftalik derinlik katmani ekle.';
+    accent = 'Aile ritmi';
+  } else if (primaryGoal === 'quran_learning') {
+    title = 'Kuran yolculugunu derinlestir';
+    subtitle = 'Daha derin rehberlik ve haftalik ritim destegiyle ogrenme akisini daha sakin kur.';
+    accent = 'AI rehberlik';
+  }
+
+  const cta = ctaVariant === 'B'
+    ? 'Bu destegi ac'
+    : recommendedPackage === 'yearly'
+      ? 'Yillik Plani Gor'
+      : 'Aylik Plani Gor';
+
+  const socialProof = valueVariant === 'B'
+    ? 'Sakin ritim ve derin rehberlik arayan kullanicilarin en cok actigi alanlardan biri.'
+    : 'Huzur Rehberi, haftalik ozet ve aile ritmi bir arada daha guclu calisir.';
+
+  return {
+    title,
+    subtitle,
+    accent,
+    cta,
+    features: commonFeatures,
+    socialProof,
+  };
+};
+
+const matchesPackage = (pkg, recommendedPackage) => {
+  const normalizedRecommendation = normalizePackageRecommendation(recommendedPackage);
+  const identifier = String(pkg?.identifier || '').toLowerCase();
+  const title = String(pkg?.product?.title || '').toLowerCase();
+
+  if (normalizedRecommendation === 'yearly') {
+    return identifier.includes('year') || title.includes('yil') || title.includes('year');
+  }
+  if (normalizedRecommendation === 'monthly') {
+    return identifier.includes('month') || title.includes('ay') || title.includes('month');
+  }
+  return false;
+};
+
+const sortPackages = (packages = [], recommendedPackage = 'yearly') => {
+  return [...packages].sort((left, right) => {
+    const leftScore = matchesPackage(left, recommendedPackage) ? 1 : 0;
+    const rightScore = matchesPackage(right, recommendedPackage) ? 1 : 0;
+    return rightScore - leftScore;
+  });
+};
+
+const ProUpgrade = ({
+  source = 'direct',
+  momentType = 'assistant_success',
+  recommendedPackage = 'yearly',
+  copyVariant = null,
+  onClose,
+}) => {
   const { t } = useTranslation();
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
-  const [restoreResult, setRestoreResult] = useState(null); // 'success' | 'not_found' | null
-  const [variant, setVariant] = useState('control');
+  const [restoreResult, setRestoreResult] = useState(null);
+
+  const moment = useMemo(() => {
+    const resolved = resolvePremiumMomentFromProps({
+      source,
+      momentType,
+      recommendedPackage,
+      copyVariant,
+    });
+
+    return {
+      source: resolved.source || source,
+      momentType: resolved.momentType || momentType,
+      recommendedPackage: normalizePackageRecommendation(resolved.recommendedPackage || recommendedPackage),
+      copyVariant: resolved.copyVariant || copyVariant || 'ai_guidance',
+      recoveryBand: resolved.recoveryBand || getRecoveryLoopPlan().riskBand,
+      primaryGoal: resolved.primaryGoal || getStoredPrimaryGoal(),
+    };
+  }, [copyVariant, momentType, recommendedPackage, source]);
+
+  const valueVariant = useMemo(() => getExperimentVariant('paywall_value_stack_v1'), []);
+  const ctaVariant = useMemo(() => getExperimentVariant('paywall_cta_v1'), []);
+  const uiCopy = useMemo(
+    () => buildPaywallCopy(moment, valueVariant, ctaVariant),
+    [ctaVariant, moment, valueVariant]
+  );
+
+  const closeModal = useCallback(() => {
+    clearPendingPremiumMoment();
+    onClose?.();
+  }, [onClose]);
 
   const loadOfferings = useCallback(async () => {
-    // Platform kontrolü
-    const isNativePlatform = window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false;
-    
-    if (!isNativePlatform) {
-      // Browser Mock Data
+    if (!isNativePlatform()) {
       logger.log('[ProUpgrade] Browser detected, loading mock packages...');
-      setPackages([
+      setPackages(sortPackages([
         {
           identifier: 'monthly',
           product: {
-            title: 'Huzur Pro (Aylık)',
+            title: 'Huzur Pro (Aylik)',
             priceString: '₺29.99',
-            description: 'Aylık abonelik'
+            description: 'Aylik abonelik'
           }
         },
         {
           identifier: 'yearly',
           product: {
-            title: 'Huzur Pro (Yıllık)',
+            title: 'Huzur Pro (Yillik)',
             priceString: '₺299.99',
-            description: 'Yıllık abonelik'
+            description: 'Yillik abonelik'
           }
         }
-      ]);
+      ], moment.recommendedPackage));
       setLoading(false);
       return;
     }
 
     try {
-      logger.log('[ProUpgrade] Loading offerings from RevenueCat...');
       const availablePackages = await getOfferings();
       if (availablePackages.length === 0) {
         setError(t('pro.noPackages'));
       } else {
-        setPackages(availablePackages);
+        setPackages(sortPackages(availablePackages, moment.recommendedPackage));
       }
     } catch (err) {
       logger.error('[ProUpgrade] Error loading offerings:', err);
@@ -57,42 +200,91 @@ const ProUpgrade = ({ onClose }) => {
     } finally {
       setLoading(false);
     }
-  }, [t]);
+  }, [moment.recommendedPackage, t]);
 
   useEffect(() => {
-    // Assign A/B test variant
-    const assignedVariant = getVariant(EXPERIMENTS.PAYWALL_REDESIGN, ['control', 'variant_a'], [0.5, 0.5]);
-    setVariant(assignedVariant);
-    
-    loadOfferings();
+    void loadOfferings();
   }, [loadOfferings]);
 
+  useEffect(() => {
+    logEvent(ANALYTICS_EVENTS.PAYWALL_VIEWED, {
+      source: moment.source,
+      moment_type: moment.momentType,
+      experiment_variant: `${valueVariant}|${ctaVariant}`,
+      recommended_package: moment.recommendedPackage,
+      recovery_band: moment.recoveryBand,
+      primary_goal: moment.primaryGoal,
+    });
+  }, [ctaVariant, moment, valueVariant]);
+
   const handlePurchase = async (pkg) => {
+    const selectedPackage = normalizePackageRecommendation(pkg?.identifier || moment.recommendedPackage);
     setProcessing(true);
     setError(null);
 
-    // Platform kontrolü
-    const isNativePlatform = window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false;
-    if (!isNativePlatform) {
-      logger.warn('[ProUpgrade] Purchase attempted on unsupported platform');
-      setError(t('pro.nativeOnly', 'Satın alma yalnızca mobil uygulamada destekleniyor.'));
+    logEvent(ANALYTICS_EVENTS.PAYWALL_PACKAGE_SELECTED, {
+      source: moment.source,
+      moment_type: moment.momentType,
+      experiment_variant: `${valueVariant}|${ctaVariant}`,
+      recommended_package: selectedPackage,
+      recovery_band: moment.recoveryBand,
+      primary_goal: moment.primaryGoal,
+      package_id: pkg?.identifier || 'unknown',
+    });
+
+    if (!isNativePlatform()) {
+      setError(t('pro.nativeOnly', 'Satin alma yalnizca mobil uygulamada destekleniyor.'));
       setProcessing(false);
       return;
     }
 
+    logEvent(ANALYTICS_EVENTS.PAYWALL_PURCHASE_STARTED, {
+      source: moment.source,
+      moment_type: moment.momentType,
+      experiment_variant: `${valueVariant}|${ctaVariant}`,
+      recommended_package: selectedPackage,
+      recovery_band: moment.recoveryBand,
+      primary_goal: moment.primaryGoal,
+      package_id: pkg?.identifier || 'unknown',
+    });
+
     try {
-      logger.log('[ProUpgrade] Starting purchase for package:', pkg.identifier);
       const success = await purchasePackage(pkg);
       if (success) {
-        logger.log('[ProUpgrade] Purchase successful');
-        trackConversion(EXPERIMENTS.PAYWALL_REDESIGN, 'purchased_pro');
-        onClose();
+        logEvent(ANALYTICS_EVENTS.PAYWALL_PURCHASE_SUCCEEDED, {
+          source: moment.source,
+          moment_type: moment.momentType,
+          experiment_variant: `${valueVariant}|${ctaVariant}`,
+          recommended_package: selectedPackage,
+          recovery_band: moment.recoveryBand,
+          primary_goal: moment.primaryGoal,
+          package_id: pkg?.identifier || 'unknown',
+        });
+        closeModal();
       } else {
-        // Kullanıcı iptal etti veya hata - UI zaten error state'i gösterecek
-        logger.log('[ProUpgrade] Purchase not completed');
+        logEvent(ANALYTICS_EVENTS.PAYWALL_PURCHASE_FAILED, {
+          source: moment.source,
+          moment_type: moment.momentType,
+          experiment_variant: `${valueVariant}|${ctaVariant}`,
+          recommended_package: selectedPackage,
+          recovery_band: moment.recoveryBand,
+          primary_goal: moment.primaryGoal,
+          package_id: pkg?.identifier || 'unknown',
+          reason: 'not_completed',
+        });
       }
     } catch (err) {
       logger.error('[ProUpgrade] Purchase error:', err);
+      logEvent(ANALYTICS_EVENTS.PAYWALL_PURCHASE_FAILED, {
+        source: moment.source,
+        moment_type: moment.momentType,
+        experiment_variant: `${valueVariant}|${ctaVariant}`,
+        recommended_package: selectedPackage,
+        recovery_band: moment.recoveryBand,
+        primary_goal: moment.primaryGoal,
+        package_id: pkg?.identifier || 'unknown',
+        reason: err?.code || 'exception',
+      });
       setError(t('pro.purchaseFailed'));
     } finally {
       setProcessing(false);
@@ -102,9 +294,18 @@ const ProUpgrade = ({ onClose }) => {
   const handleRestore = async () => {
     setProcessing(true);
     setRestoreResult(null);
-    const isNativePlatform = window.Capacitor?.isNativePlatform?.() ?? window.Capacitor?.isNative ?? false;
-    if (!isNativePlatform) {
-      setError(t('pro.nativeOnly', 'Satın alma yalnızca mobil uygulamada destekleniyor.'));
+
+    logEvent(ANALYTICS_EVENTS.PAYWALL_RESTORE_STARTED, {
+      source: moment.source,
+      moment_type: moment.momentType,
+      experiment_variant: `${valueVariant}|${ctaVariant}`,
+      recommended_package: moment.recommendedPackage,
+      recovery_band: moment.recoveryBand,
+      primary_goal: moment.primaryGoal,
+    });
+
+    if (!isNativePlatform()) {
+      setError(t('pro.nativeOnly', 'Satin alma yalnizca mobil uygulamada destekleniyor.'));
       setProcessing(false);
       return;
     }
@@ -113,11 +314,28 @@ const ProUpgrade = ({ onClose }) => {
       const success = await restorePurchases();
       if (success) {
         setRestoreResult('success');
-        setTimeout(() => onClose(), 1500);
+        logEvent(ANALYTICS_EVENTS.PAYWALL_RESTORE_SUCCEEDED, {
+          source: moment.source,
+          moment_type: moment.momentType,
+          experiment_variant: `${valueVariant}|${ctaVariant}`,
+          recommended_package: moment.recommendedPackage,
+          recovery_band: moment.recoveryBand,
+          primary_goal: moment.primaryGoal,
+        });
+        setTimeout(() => closeModal(), 1200);
       } else {
         setRestoreResult('not_found');
+        logEvent(ANALYTICS_EVENTS.PAYWALL_RESTORE_NOT_FOUND, {
+          source: moment.source,
+          moment_type: moment.momentType,
+          experiment_variant: `${valueVariant}|${ctaVariant}`,
+          recommended_package: moment.recommendedPackage,
+          recovery_band: moment.recoveryBand,
+          primary_goal: moment.primaryGoal,
+        });
       }
-    } catch {
+    } catch (err) {
+      logger.error('[ProUpgrade] Restore error:', err);
       setError(t('pro.restoreError'));
     } finally {
       setProcessing(false);
@@ -127,51 +345,36 @@ const ProUpgrade = ({ onClose }) => {
   return (
     <div className="pro-modal-overlay">
       <div className="pro-modal animate-scaleIn">
-        <button className="close-btn" onClick={onClose}>
+        <button className="close-btn" onClick={closeModal}>
           <X size={24} />
         </button>
 
         <div className="pro-header">
           <div className="crown-icon">
-            <Crown size={48} color="#FFD700" fill="#FFD700" />
+            <Crown size={44} color="#FFD700" fill="#FFD700" />
           </div>
-          <h2>{t('pro.title')}</h2>
-          <p>{t('pro.subtitle')}</p>
-        </div>
-
-        <div className="features-list">
-          <div className="feature-item">
-            <div className="feature-icon"><Check size={20} /></div>
-            <div className="feature-text">
-              <strong>{t('pro.features.unlimitedAI', 'Sınırsız Manevi Rehberlik')}</strong>
-              <p>{t('pro.features.unlimitedAIDesc', 'Yapay zeka asistanımızla 7/24 dini sorularınıza cevap bulun.')}</p>
-            </div>
+          <div className="moment-chip">
+            <Sparkles size={14} />
+            {uiCopy.accent}
           </div>
-          <div className="feature-item">
-            <div className="feature-icon"><Check size={20} /></div>
-            <div className="feature-text">
-              <strong>{t('pro.features.wordByWord', 'Kelime Kelime Kur\'an')}</strong>
-              <p>{t('pro.features.wordByWordDesc', 'Anlam derinliğini keşfetmek için kelime kelime meallere erişin.')}</p>
-            </div>
-          </div>
-          <div className="feature-item">
-            <div className="feature-icon"><Check size={20} /></div>
-            <div className="feature-text">
-              <strong>{t('pro.features.memorization', 'Akıllı Ezber Takibi')}</strong>
-              <p>{t('pro.features.memorizationDesc', 'Sure ve ayet ezberlerinizi yapay zeka desteğiyle yönetin.')}</p>
-            </div>
-          </div>
-          <div className="feature-item">
-            <div className="feature-icon"><Check size={20} /></div>
-            <div className="feature-text">
-              <strong>{t('pro.features.adFree', 'Kesintisiz Odaklanma')}</strong>
-              <p>{t('pro.features.adFreeDesc', 'Reklamsız deneyimle sadece ibadetinize ve huzura odaklanın.')}</p>
-            </div>
-          </div>
+          <h2>{uiCopy.title}</h2>
+          <p>{uiCopy.subtitle}</p>
         </div>
 
         <div className="social-proof">
-          <p>⭐️ {t('pro.socialProof', '100.000+ Müslüman tarafından sevildi.')}</p>
+          <p>{uiCopy.socialProof}</p>
+        </div>
+
+        <div className="features-list">
+          {uiCopy.features.map((feature) => (
+            <div key={feature.title} className="feature-item">
+              <div className="feature-icon"><Check size={18} /></div>
+              <div className="feature-text">
+                <strong>{feature.title}</strong>
+                <p>{feature.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
 
         {error && <div className="error-msg">{error}</div>}
@@ -180,28 +383,32 @@ const ProUpgrade = ({ onClose }) => {
           {loading ? (
             <div className="loading">{t('common.loading')}</div>
           ) : (
-            packages.map((pkg, index) => (
-              <div 
-                key={index} 
-                className={`package-card ${index === 1 ? 'popular' : ''}`}
-                onClick={() => handlePurchase(pkg)}
-              >
-                {index === 1 && <div className="popular-tag"><span>🔥</span> {t('pro.popular', 'EN ÇOK TERCİH EDİLEN')}</div>}
-                <div className="package-title">{pkg?.product?.title || t('pro.package')}</div>
-                <div className="package-price">{pkg?.product?.priceString || '-'}</div>
-                <div className="package-desc">
-                    {pkg?.identifier === 'yearly' 
-                      ? (variant === 'variant_a' 
-                          ? `${t('pro.trialInfo', '3 gün ücretsiz deneyin.')} ${t('pro.yearlyInfo', 'Sonra yıllık {{price}}.', { price: pkg?.product?.priceString })}`
-                          : t('pro.yearlyTrialControl', '3 gün ücretsiz deneyin. Deneme bitiminde {{price}}/yıl otomatik yenilenir.', { price: pkg?.product?.priceString || '' }))
-                      : `${t('pro.monthlyInfo', 'Aylık {{price}}.', { price: pkg?.product?.priceString })}`}
-                </div>
-              </div>
-            ))
+            packages.map((pkg) => {
+              const highlighted = matchesPackage(pkg, moment.recommendedPackage);
+              return (
+                <button
+                  key={pkg?.identifier || pkg?.product?.title}
+                  type="button"
+                  className={`package-card ${highlighted ? 'popular' : ''}`}
+                  onClick={() => handlePurchase(pkg)}
+                >
+                  {highlighted && <div className="popular-tag">{t('pro.popular', 'EN UYGUN MOMENT')}</div>}
+                  <div className="package-title">{pkg?.product?.title || t('pro.package')}</div>
+                  <div className="package-price">{pkg?.product?.priceString || '-'}</div>
+                  <div className="package-desc">
+                    {pkg?.identifier === 'yearly'
+                      ? t('pro.yearlyFocus', 'Daha derin rehberlik ve haftalik ritim icin en guclu secenek.')
+                      : t('pro.monthlyFocus', 'Premium destegi yavas ve esnek sekilde acmak icin uygun.')}
+                  </div>
+                  <div className="package-cta">
+                    {ctaVariant === 'B' ? 'Bu destegi ac' : uiCopy.cta}
+                  </div>
+                </button>
+              );
+            })
           )}
         </div>
 
-        {/* Subscription Terms - Google Play Policy Requirement */}
         <div className="subscription-terms">
           <p>• {t('pro.terms.autoRenew')}</p>
           <p>• {t('pro.terms.cancelAnytime')}</p>
@@ -217,35 +424,30 @@ const ProUpgrade = ({ onClose }) => {
           {t('pro.restore')}
         </button>
 
-        {/* Restore Result Feedback */}
         {restoreResult === 'success' && (
           <div className="restore-success">
-            ✅ {t('pro.restoreSuccess')}
+            {t('pro.restoreSuccess')}
           </div>
         )}
         {restoreResult === 'not_found' && (
           <div className="restore-not-found">
-            ℹ️ {t('pro.restoreNotFound')}
+            {t('pro.restoreNotFound')}
           </div>
         )}
 
         {processing && (
-            <div className="processing-overlay">
-                <div className="spinner"></div>
-            </div>
+          <div className="processing-overlay">
+            <div className="spinner"></div>
+          </div>
         )}
       </div>
 
       <style>{`
         .pro-modal-overlay {
           position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
+          inset: 0;
           background: rgba(15, 61, 46, 0.95);
           backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
           z-index: 1000;
           display: flex;
           align-items: center;
@@ -256,12 +458,12 @@ const ProUpgrade = ({ onClose }) => {
         .pro-modal {
           background: linear-gradient(135deg, #0f3d2e 0%, #1a5c45 100%);
           width: 100%;
-          max-width: 400px;
+          max-width: 420px;
           border-radius: 24px;
           padding: 24px;
           position: relative;
-          border: 1px solid rgba(212, 175, 55, 0.3);
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 175, 55, 0.1);
+          border: 1px solid rgba(212, 175, 55, 0.28);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
           max-height: 90vh;
           overflow-y: auto;
         }
@@ -270,8 +472,8 @@ const ProUpgrade = ({ onClose }) => {
           position: absolute;
           top: 16px;
           right: 16px;
-          background: rgba(212, 175, 55, 0.2);
-          border: 1px solid rgba(212, 175, 55, 0.3);
+          background: rgba(212, 175, 55, 0.16);
+          border: 1px solid rgba(212, 175, 55, 0.25);
           color: #d4af37;
           width: 40px;
           height: 40px;
@@ -280,28 +482,31 @@ const ProUpgrade = ({ onClose }) => {
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          transition: all 0.2s ease;
-          z-index: 10;
-        }
-
-        .close-btn:hover {
-          background: rgba(212, 175, 55, 0.3);
-          transform: scale(1.1);
-        }
-
-        .close-btn:active {
-          transform: scale(0.95);
         }
 
         .pro-header {
           text-align: center;
-          margin-bottom: 24px;
-          padding-top: 10px;
+          margin-bottom: 22px;
+          padding-top: 8px;
         }
 
         .crown-icon {
-          margin-bottom: 16px;
-          filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+          margin-bottom: 12px;
+          filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.5));
+        }
+
+        .moment-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          border-radius: 999px;
+          background: rgba(212, 175, 55, 0.14);
+          border: 1px solid rgba(212, 175, 55, 0.22);
+          color: #f0e68c;
+          font-size: 12px;
+          font-weight: 800;
+          padding: 6px 10px;
+          margin-bottom: 12px;
         }
 
         .pro-header h2 {
@@ -309,16 +514,22 @@ const ProUpgrade = ({ onClose }) => {
           margin: 0 0 8px 0;
           font-size: 28px;
           font-weight: 800;
-          text-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-          letter-spacing: -0.5px;
+        }
+
+        .pro-header p {
+          margin: 0;
+          color: #d9e6db;
+          font-size: 14px;
+          line-height: 1.6;
+          font-weight: 600;
         }
 
         .social-proof {
           background: rgba(255, 255, 255, 0.05);
           border-radius: 12px;
-          padding: 8px 12px;
+          padding: 10px 12px;
           text-align: center;
-          margin-bottom: 24px;
+          margin-bottom: 20px;
           border: 1px dashed rgba(212, 175, 55, 0.3);
         }
 
@@ -327,50 +538,110 @@ const ProUpgrade = ({ onClose }) => {
           color: #d4af37;
           font-size: 13px;
           font-weight: 600;
+          line-height: 1.45;
+        }
+
+        .features-list {
+          display: grid;
+          gap: 12px;
+          margin-bottom: 22px;
+        }
+
+        .feature-item {
+          display: flex;
+          gap: 12px;
+          align-items: flex-start;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 16px;
+          padding: 14px;
+        }
+
+        .feature-icon {
+          width: 32px;
+          height: 32px;
+          border-radius: 10px;
+          background: rgba(212, 175, 55, 0.14);
+          color: #d4af37;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .feature-text strong {
+          display: block;
+          color: #f7f5ef;
+          margin-bottom: 4px;
+          font-size: 14px;
+        }
+
+        .feature-text p {
+          margin: 0;
+          color: #c7d8cc;
+          font-size: 12px;
+          line-height: 1.55;
+        }
+
+        .packages-container {
+          display: grid;
+          gap: 14px;
+          margin-bottom: 18px;
+        }
+
+        .package-card {
+          position: relative;
+          text-align: left;
+          border: 1px solid rgba(255,255,255,0.12);
+          background: rgba(255,255,255,0.05);
+          border-radius: 18px;
+          padding: 18px 16px;
+          cursor: pointer;
+          color: inherit;
         }
 
         .package-card.popular {
-          background: linear-gradient(135deg, rgba(212, 175, 55, 0.35), rgba(212, 175, 55, 0.15));
+          background: linear-gradient(135deg, rgba(212, 175, 55, 0.26), rgba(212, 175, 55, 0.08));
           border-color: #d4af37;
-          box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-          transform: scale(1.02);
+          box-shadow: 0 0 24px rgba(212, 175, 55, 0.18);
         }
 
         .popular-tag {
           position: absolute;
-          top: -12px;
-          left: 50%;
-          transform: translateX(-50%);
+          top: -10px;
+          left: 16px;
           background: linear-gradient(135deg, #d4af37, #b8860b);
           color: #0f3d2e;
           font-size: 11px;
-          font-weight: 800;
-          padding: 6px 15px;
-          border-radius: 20px;
-          box-shadow: 0 4px 15px rgba(212, 175, 55, 0.5);
-          white-space: nowrap;
-          display: flex;
-          align-items: center;
-          gap: 5px;
+          font-weight: 900;
+          padding: 5px 10px;
+          border-radius: 999px;
         }
 
         .package-title {
           color: #f0e68c;
-          font-weight: 600;
-          margin-bottom: 4px;
+          font-weight: 700;
+          margin-bottom: 6px;
         }
 
         .package-price {
           color: #d4af37;
-          font-size: 22px;
-          font-weight: 700;
-          text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+          font-size: 24px;
+          font-weight: 800;
         }
 
         .package-desc {
-            color: #a3b18a;
-            font-size: 12px;
-            margin-top: 4px;
+          color: #d9e6db;
+          font-size: 12px;
+          line-height: 1.5;
+          margin-top: 8px;
+        }
+
+        .package-cta {
+          margin-top: 12px;
+          color: #ffffff;
+          font-size: 13px;
+          font-weight: 800;
         }
 
         .subscription-terms {
@@ -404,10 +675,6 @@ const ProUpgrade = ({ onClose }) => {
           font-size: 11px;
         }
 
-        .legal-links a:hover {
-          text-decoration: underline;
-        }
-
         .restore-btn {
           width: 100%;
           background: none;
@@ -420,90 +687,51 @@ const ProUpgrade = ({ onClose }) => {
           padding: 8px;
         }
 
-        .restore-btn:active {
-          opacity: 0.7;
+        .restore-success,
+        .restore-not-found,
+        .error-msg {
+          border-radius: 12px;
+          padding: 10px 12px;
+          margin-bottom: 12px;
+          font-size: 12px;
+          font-weight: 700;
         }
 
         .restore-success {
-          background: rgba(46, 204, 113, 0.2);
-          border: 1px solid rgba(46, 204, 113, 0.4);
-          color: #2ecc71;
-          padding: 12px;
-          border-radius: 10px;
-          font-size: 13px;
-          text-align: center;
-          margin-bottom: 12px;
-          animation: fadeIn 0.3s ease-out;
+          background: rgba(16, 185, 129, 0.12);
+          border: 1px solid rgba(16, 185, 129, 0.2);
+          color: #d1fae5;
         }
 
-        .restore-not-found {
-          background: rgba(52, 152, 219, 0.2);
-          border: 1px solid rgba(52, 152, 219, 0.4);
-          color: #3498db;
-          padding: 12px;
-          border-radius: 10px;
-          font-size: 13px;
-          text-align: center;
-          margin-bottom: 12px;
-          animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-5px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
+        .restore-not-found,
         .error-msg {
-            color: #e74c3c;
-            text-align: center;
-            margin-bottom: 16px;
-            font-size: 14px;
-            background: rgba(231, 76, 60, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(231, 76, 60, 0.3);
+          background: rgba(249, 115, 22, 0.10);
+          border: 1px solid rgba(249, 115, 22, 0.18);
+          color: #ffedd5;
         }
 
         .processing-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(15, 61, 46, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 24px;
-            z-index: 10;
+          position: absolute;
+          inset: 0;
+          background: rgba(4, 20, 16, 0.68);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 24px;
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(212, 175, 55, 0.3);
-            border-top-color: #d4af37;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+          width: 34px;
+          height: 34px;
+          border-radius: 999px;
+          border: 3px solid rgba(255,255,255,0.2);
+          border-top-color: #d4af37;
+          animation: spin 0.9s linear infinite;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .animate-scaleIn {
-          animation: scaleIn 0.3s ease-out;
-        }
-
-        @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.9); }
-          to { opacity: 1; transform: scale(1); }
-        }
-
-        .loading {
-          text-align: center;
-          color: #a3b18a;
-          padding: 20px;
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
       `}</style>
     </div>

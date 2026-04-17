@@ -58,7 +58,7 @@ describe('Firestore security rules', () => {
     await assertSucceeds(
       setDoc(doc(firestore, 'users', 'user-alpha'), {
         displayName: 'Ali',
-        familyId: 'family-1',
+        city: 'Istanbul',
       })
     );
   });
@@ -82,6 +82,35 @@ describe('Firestore security rules', () => {
     await assertFails(
       updateDoc(doc(firestore, 'users', 'user-alpha'), {
         fcmTokens: ['token-direct-write'],
+      })
+    );
+  });
+
+  it('denies owners from writing server-managed social and progression fields directly', async () => {
+    const firestore = testEnv.authenticatedContext('user-alpha').firestore();
+
+    await seedDocs(testEnv, {
+      'users/user-alpha': {
+        displayName: 'Ali',
+      },
+    });
+
+    await assertFails(
+      updateDoc(doc(firestore, 'users', 'user-alpha'), {
+        socialPreferences: {
+          miniLeague: {
+            optedIn: true,
+            visibilityMode: 'league',
+          },
+        },
+      })
+    );
+
+    await assertFails(
+      updateDoc(doc(firestore, 'users', 'user-alpha'), {
+        streaks: {
+          prayer_count: 999,
+        },
       })
     );
   });
@@ -110,9 +139,9 @@ describe('Firestore security rules', () => {
     await assertFails(getDoc(doc(otherFirestore, 'users', 'user-alpha', 'duaAmins', 'dua-1')));
   });
 
-  it('allows authenticated users to create duas with safe content', async () => {
+  it('denies direct client dua creation even with safe content', async () => {
     const firestore = testEnv.authenticatedContext('dua-author').firestore();
-    await assertSucceeds(
+    await assertFails(
       setDoc(doc(firestore, 'duas', 'dua-safe'), {
         text: 'Allah rizasi icin dua bekliyorum.',
         authorId: 'dua-author',
@@ -142,7 +171,7 @@ describe('Firestore security rules', () => {
     );
   });
 
-  it('allows authors to delete their own duas and blocks others', async () => {
+  it('denies direct client dua deletes for both authors and others', async () => {
     await seedDocs(testEnv, {
       'duas/dua-1': {
         text: 'Hayirli bir haber icin dua.',
@@ -157,7 +186,76 @@ describe('Firestore security rules', () => {
     const otherFirestore = testEnv.authenticatedContext('other-user').firestore();
 
     await assertFails(deleteDoc(doc(otherFirestore, 'duas', 'dua-1')));
+    await assertFails(deleteDoc(doc(authorFirestore, 'duas', 'dua-1')));
+  });
 
-    await assertSucceeds(deleteDoc(doc(authorFirestore, 'duas', 'dua-1')));
+  it('allows hatim members to read but denies all direct hatim writes', async () => {
+    await seedDocs(testEnv, {
+      'hatims/hatim-1': {
+        name: 'Topluluk Hatmi',
+        createdBy: 'user-alpha',
+        readers: ['user-alpha'],
+        parts: {
+          '1': {
+            status: 'free',
+            takenBy: null,
+            takenAt: null,
+            completedAt: null,
+          },
+        },
+        totalParts: 30,
+        completedParts: 0,
+        joinCode: 'ABC123',
+        isPrivate: false,
+      },
+    });
+
+    const ownerFirestore = testEnv.authenticatedContext('user-alpha').firestore();
+    const otherFirestore = testEnv.authenticatedContext('user-beta').firestore();
+
+    await assertSucceeds(getDoc(doc(ownerFirestore, 'hatims', 'hatim-1')));
+    await assertFails(getDoc(doc(otherFirestore, 'hatims', 'hatim-1')));
+
+    await assertFails(
+      setDoc(doc(ownerFirestore, 'hatims', 'hatim-2'), {
+        name: 'Yeni Hatim',
+        createdBy: 'user-alpha',
+        readers: ['user-alpha'],
+      })
+    );
+
+    await assertFails(
+      updateDoc(doc(ownerFirestore, 'hatims', 'hatim-1'), {
+        completedParts: 1,
+      })
+    );
+
+    await assertFails(deleteDoc(doc(ownerFirestore, 'hatims', 'hatim-1')));
+  });
+
+  it('denies direct family and family group writes from clients', async () => {
+    const firestore = testEnv.authenticatedContext('user-alpha').firestore();
+
+    await assertFails(
+      setDoc(doc(firestore, 'families', 'family-1'), {
+        name: 'Bizim Aile',
+        adminId: 'user-alpha',
+        members: ['user-alpha'],
+      })
+    );
+
+    await seedDocs(testEnv, {
+      'familyGroups/group-1': {
+        name: 'Aksam Zikri',
+        createdBy: 'user-alpha',
+        memberIds: ['user-alpha'],
+      },
+    });
+
+    await assertFails(
+      updateDoc(doc(firestore, 'familyGroups', 'group-1'), {
+        name: 'Yeni Ad',
+      })
+    );
   });
 });

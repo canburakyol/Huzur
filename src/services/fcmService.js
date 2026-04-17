@@ -11,6 +11,9 @@ import AppCheck from '../plugins/AppCheckPlugin';
 import { storageService } from './storageService';
 import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
+import { getCurrentUserIdEnsured } from './authService';
+import { getFunctionsInstance } from './firebase';
+import { schedulePrayerNotifications } from './smartNotificationService';
 import {
     createNotificationChannels as ensureNotificationChannels
 } from './notificationPlatformService';
@@ -61,17 +64,12 @@ export const FCMService = {
         }
 
         try {
-            const [{ getFunctionsInstance }, { getCurrentUserIdEnsured }, { httpsCallable }] = await Promise.all([
-                import('./firebase'),
-                import('./authService'),
-                import('firebase/functions')
-            ]);
-
             const userId = await getCurrentUserIdEnsured();
             if (!userId) {
                 return false;
             }
 
+            const { httpsCallable } = await import('firebase/functions');
             const functions = await getFunctionsInstance();
             const syncFcmToken = httpsCallable(functions, 'syncFcmToken');
             await syncFcmToken({ token: normalizedToken });
@@ -214,7 +212,6 @@ export const FCMService = {
  * Redirection to centralized smartNotificationService
  */
 export const schedulePrayerAlarms = async (prayerTimes) => {
-    const { schedulePrayerNotifications } = await import('./smartNotificationService');
     return schedulePrayerNotifications(prayerTimes);
 };
 

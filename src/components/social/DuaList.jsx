@@ -5,11 +5,13 @@ import CreateDuaModal from './CreateDuaModal';
 import DuaCard from './DuaCard';
 import { logger } from '../../utils/logger';
 import { Heart, RefreshCw, Plus } from 'lucide-react';
+import { useToast } from '../../hooks/useToast';
 import './Social.css';
 
 const DuaList = () => {
   const { t } = useTranslation();
-  const { duas, loading, error, prayForDua, prayedDuaIds, submittingDuaIds } = useDua();
+  const { showToast } = useToast();
+  const { duas, loading, error, prayForDua, prayedDuaIds, submittingDuaIds, refreshDuas } = useDua();
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const featuredDuas = duas.filter((dua) => dua.isSeed === true || dua.featured === true);
@@ -27,7 +29,7 @@ const DuaList = () => {
       await prayForDua(duaId);
     } catch (error) {
       logger.error('Amin error:', error);
-      alert(error?.message || t('community.messages.aminFailed', 'Amin gonderilemedi. Lutfen tekrar deneyin.'));
+      showToast(t('community.messages.aminFailed', 'Amin gonderilemedi. Lutfen tekrar deneyin.'), 'error');
     }
   };
 
@@ -86,6 +88,15 @@ const DuaList = () => {
                 <h3 className="sanctuary-section-title">{t('community.publicDuas', 'Topluluktan dualar')}</h3>
                 <p className="sanctuary-section-subtitle">{t('community.publicDuasDesc', 'Yeni dualari gor, amin de ve birlikte destek ol')}</p>
               </div>
+              <button
+                type="button"
+                onClick={refreshDuas}
+                className="hatim-code-action-btn secondary"
+                style={{ alignSelf: 'flex-start' }}
+              >
+                <RefreshCw size={16} />
+                {t('common.refresh', 'Yenile')}
+              </button>
             </div>
             {renderDuaCards(communityDuas)}
           </div>

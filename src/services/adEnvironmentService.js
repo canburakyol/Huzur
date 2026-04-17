@@ -1,5 +1,6 @@
 import { Capacitor } from '@capacitor/core';
 import { AppCheck } from '../plugins/AppCheckPlugin';
+import { logger } from '../utils/logger';
 
 const TEST_BANNER_ID = 'ca-app-pub-3940256099942544/6300978111';
 const TEST_REWARDED_ID = 'ca-app-pub-3940256099942544/5224354917';
@@ -39,7 +40,8 @@ export const getAdRuntime = async () => {
           isDebugBuild,
           useTestAds: forceTestAds
         };
-      } catch {
+      } catch (error) {
+        logger.error('[AdEnvironment] Failed to resolve runtime, using fallback', error);
         return fallbackRuntime;
       }
     })();
