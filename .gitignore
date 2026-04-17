@@ -72,6 +72,8 @@ android/app/build/
 android/app/release/
 android/.gradle/
 .gradle_home/
+coverage/
+e2e/results/
 android/error_log.txt
 android/full_error.txt
 android/hs_err_pid*.log
@@ -120,3 +122,6 @@ localization_status_report.md
 plans/
 tmp_*
 bundle-stats.html
+current-screen.png
+window_dump.xml
+marketing/generated/
