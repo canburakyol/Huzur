@@ -22,26 +22,26 @@ function AppTabRouter({
     <>
       {activeTab === 'prayers' && (
         <Suspense fallback={<LoadingFallback height="100vh" />}>
-          <Prayers onClose={() => setActiveTab('home')} />
+          <Prayers onClose={() => setActiveTab('home', 'tab_close')} />
         </Suspense>
       )}
 
       {activeTab === 'quran' && (
         <Suspense fallback={<LoadingFallback height="100vh" />}>
-          <Quran onClose={() => setActiveTab('home')} />
+          <Quran onClose={() => setActiveTab('home', 'tab_close')} />
         </Suspense>
       )}
 
       {activeTab === 'community' && (
         <Suspense fallback={<LoadingFallback height="100vh" />}>
-          <SocialDashboard onClose={() => setActiveTab('home')} />
+          <SocialDashboard onClose={() => setActiveTab('home', 'tab_close')} />
         </Suspense>
       )}
 
       {activeTab === 'assistant' && (
         <Suspense fallback={<LoadingFallback height="100vh" />}>
           <Assistant
-            onClose={() => setActiveTab('home')}
+            onClose={() => setActiveTab('home', 'tab_close')}
             onSelectFeature={onSelectFeature}
             onSelectTab={setActiveTab}
             timings={timings}

@@ -7,6 +7,7 @@ import { HIKMET_CATEGORIES, HIKMETLER, getDailyHikmet, getHikmetByCategory, getR
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
 import { useToast } from '../hooks/useToast';
+import { logger } from '../utils/logger';
 import './Hikmetname.css';
 import './Navigation.css';
 
@@ -53,7 +54,7 @@ function Hikmetname({ onClose }) {
                 navigator.clipboard.writeText(text);
                 showToast(t('common.copied', 'Panoya kopyalandı!'), 'success');
             }
-        } catch (err) { console.error('Share error:', err); }
+        } catch (err) { logger.error('Share error:', err); }
     };
 
     const goBack = () => {

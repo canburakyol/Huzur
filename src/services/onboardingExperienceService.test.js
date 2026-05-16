@@ -14,7 +14,7 @@ describe('onboardingExperienceService', () => {
     });
 
     expect(resolved.headlineVariant).toBe('direct');
-    expect(resolved.steps).toEqual(['language', 'goal', 'permissions']);
+    expect(resolved.steps).toEqual(['language', 'goal', 'permissions', 'preview']);
     expect(resolved.experimentContext.signature).toBe('B|B');
   });
 
@@ -29,7 +29,7 @@ describe('onboardingExperienceService', () => {
     });
 
     expect(resolved.headlineVariant).toBe('direct');
-    expect(resolved.steps).toEqual(['goal', 'language', 'permissions']);
+    expect(resolved.steps).toEqual(['goal', 'language', 'permissions', 'preview']);
     expect(resolved.experimentContext.signature).toBe('A|A');
   });
 });

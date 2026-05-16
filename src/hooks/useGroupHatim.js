@@ -12,11 +12,23 @@ import { db } from '../services/firebase';
 import { hatimService } from '../services/hatimService';
 import { ensureAuthenticated } from '../services/authService';
 import { logger } from '../utils/logger';
+import { HATIM_DISCOVERY_SEEDS } from '../features/social/discoverySeeds';
+
+const mergeHatimsWithSeeds = (hatims = []) => [...HATIM_DISCOVERY_SEEDS, ...hatims]
+  .reduce((acc, hatim) => {
+    if (!hatim?.id || acc.some((item) => item.id === hatim.id)) {
+      return acc;
+    }
+
+    acc.push(hatim);
+    return acc;
+  }, [])
+  .sort((a, b) => (b.createdAtMs || b.createdAt?.seconds || 0) - (a.createdAtMs || a.createdAt?.seconds || 0));
 
 export const useGroupHatim = (hatimId = null) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [activeHatims, setActiveHatims] = useState([]);
+  const [activeHatims, setActiveHatims] = useState(() => mergeHatimsWithSeeds());
   const [hatimDetails, setHatimDetails] = useState(null);
   const [userId, setUserId] = useState(null);
   const [authReady, setAuthReady] = useState(false);
@@ -38,15 +50,20 @@ export const useGroupHatim = (hatimId = null) => {
     const initAuth = async () => {
       try {
         const uid = await ensureAuthenticated();
+        if (!uid) {
+          throw new Error('Firebase auth returned no user');
+        }
         if (isMounted) {
           setUserId(uid);
           setAuthReady(true);
           logger.log('[useGroupHatim] Auth initialized, userId:', uid);
         }
       } catch (err) {
-        logger.error('[useGroupHatim] Auth error:', err);
+        logger.warn('[useGroupHatim] Auth unavailable, using seed hatims:', err);
         if (isMounted) {
-          setError('Firebase kimlik dogrulamasi basarisiz. Internetinizi kontrol edip tekrar deneyin.');
+          setActiveHatims(mergeHatimsWithSeeds());
+          setLoading(false);
+          setError(null);
           setAuthReady(true);
         }
       }
@@ -59,29 +76,36 @@ export const useGroupHatim = (hatimId = null) => {
   }, []);
 
   const fetchMyHatims = useCallback(async () => {
-    const uid = await ensureAuthenticated({ requireFirebaseUser: true });
-    if (!uid) return;
-
     setLoading(true);
     setError(null);
     try {
+      const uid = await ensureAuthenticated({ requireFirebaseUser: true });
+      if (!uid) {
+        setActiveHatims(mergeHatimsWithSeeds());
+        return;
+      }
+
       const hatims = await loadMemberHatims(uid);
-      setActiveHatims(hatims);
+      setActiveHatims(mergeHatimsWithSeeds(hatims));
     } catch (err) {
-      logger.error('Error fetching my hatims:', err);
-      setError(err.message);
+      logger.warn('[useGroupHatim] Falling back to seed hatims:', err);
+      setActiveHatims(mergeHatimsWithSeeds());
+      setError(null);
     } finally {
       setLoading(false);
     }
   }, [loadMemberHatims]);
 
   const fetchAllPublicHatims = useCallback(async () => {
-    const uid = await ensureAuthenticated({ requireFirebaseUser: true });
-    if (!uid) return;
-
     setLoading(true);
     setError(null);
     try {
+      const uid = await ensureAuthenticated({ requireFirebaseUser: true });
+      if (!uid) {
+        setActiveHatims(mergeHatimsWithSeeds());
+        return;
+      }
+
       const [publicResult, memberResult] = await Promise.allSettled([
         hatimService.listPublicHatims(),
         loadMemberHatims(uid),
@@ -94,25 +118,15 @@ export const useGroupHatim = (hatimId = null) => {
         ? memberResult.value
         : [];
 
-      const mergedHatims = [...memberHatims, ...publicHatims]
-        .reduce((acc, hatim) => {
-          if (!hatim?.id || acc.some((item) => item.id === hatim.id)) {
-            return acc;
-          }
-
-          acc.push(hatim);
-          return acc;
-        }, [])
-        .sort((a, b) => (b.createdAtMs || b.createdAt?.seconds || 0) - (a.createdAtMs || a.createdAt?.seconds || 0));
-
-      setActiveHatims(mergedHatims);
+      setActiveHatims(mergeHatimsWithSeeds([...memberHatims, ...publicHatims]));
 
       if (publicResult.status === 'rejected' && memberResult.status === 'rejected') {
         throw publicResult.reason || memberResult.reason || new Error('Hatimler yuklenemedi');
       }
     } catch (err) {
-      logger.error('Error fetching all hatims:', err);
-      setError(err?.message || 'Hatimler yuklenemedi');
+      logger.warn('[useGroupHatim] Falling back to seed hatims:', err);
+      setActiveHatims(mergeHatimsWithSeeds());
+      setError(null);
     } finally {
       setLoading(false);
     }

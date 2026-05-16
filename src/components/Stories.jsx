@@ -191,7 +191,7 @@ const Stories = memo(() => {
                 }
             }
         } catch (err) {
-            console.error('Share error:', err);
+            logger.error('Share error:', err);
             if (err.name !== 'AbortError' && err.message !== 'Share canceled') {
                 // Fallback to text share on error
                 try {

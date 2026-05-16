@@ -4,6 +4,7 @@ import { checkRateLimit } from '../../utils/rateLimiter';
 import { useDua } from '../../hooks/useDua';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../../hooks/useToast';
+import { logger } from '../../utils/logger';
 
 const CreateDuaModal = ({ onClose }) => {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ const CreateDuaModal = ({ onClose }) => {
       await createDua(text, isAnonymous, null); 
       onClose();
     } catch (err) {
-      console.error(err);
+      logger.error(err);
       showToast(t('dua.create.error', 'Dua isteği oluşturulamadı'), 'error');
     } finally {
       setLoading(false);

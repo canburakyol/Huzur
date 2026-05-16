@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   CheckCircle2,
   Copy,
@@ -16,6 +16,7 @@ import {
   createInviteLink,
   getReferralProgress,
 } from '../services/referralService';
+import { getProDetails } from '../services/proService';
 import {
   ANALYTICS_EVENTS,
   analyticsService,
@@ -30,6 +31,7 @@ import {
   syncReferralState,
 } from '../services/referralServerService';
 import { getActiveCampaign } from '../services/campaignService';
+import { logger } from '../utils/logger';
 
 const formatBlockedUntil = (value) => {
   const parsed = Date.parse(value || '');
@@ -49,6 +51,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
   const [inviteCode, setInviteCode] = useState(() => modalSeedProgress?.ownCode || '');
   const [feedback, setFeedback] = useState('');
   const [syncing, setSyncing] = useState(false);
+  const rewardClaimLoggedRef = useRef('');
 
   useEffect(() => {
     if (!isOpen) return;
@@ -93,6 +96,28 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
       surface: entrySource,
     });
   }, [entrySource, localProgress, serverSnapshot]);
+
+  const referralExpiry = useMemo(() => {
+    const proDetails = getProDetails();
+    if (proDetails.active && proDetails.source === 'referral_reward' && proDetails.remaining.ms > 0) {
+      return proDetails.remaining;
+    }
+    return null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!growthPlan?.inviterRewardReady && !growthPlan?.inviteeRewardReady) return;
+    const signature = `${entrySource}:${growthPlan.signature}`;
+    if (rewardClaimLoggedRef.current === signature) return;
+    rewardClaimLoggedRef.current = signature;
+
+    analyticsService.logEvent(ANALYTICS_EVENTS.REFERRAL_REWARD_CLAIMED, {
+      ...buildReferralAnalyticsPayload(growthPlan, {
+        entry_source: entrySource,
+      }),
+    });
+  }, [entrySource, growthPlan]);
   const funnelMetrics = useMemo(() => {
     const inviterSummary = serverSnapshot?.inviterSummary || {};
     const linkReadyCount = localProgress?.ownCode ? 1 : 0;
@@ -226,7 +251,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
       setFeedback('Paylasim metni kopyalandi. Tek bir kisiye gondermen yeterli.');
     } catch (error) {
       setFeedback('Paylasim yarida kaldi. Istersen once linki kopyalayip elle gonderebilirsin.');
-      console.error('[InviteModal] Share error', error);
+      logger.error('[InviteModal] Share error', error);
     }
   };
 
@@ -260,6 +285,25 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
           <h3>{growthPlan.headline}</h3>
           <p>{growthPlan.description}</p>
         </div>
+
+        {referralExpiry && (
+          <div className="referral-expiry-banner">
+            <div className="referral-expiry-icon">
+              <Sparkles size={16} />
+            </div>
+            <div className="referral-expiry-content">
+              <p className="referral-expiry-title">Pro üyeliğin aktif!</p>
+              <p className="referral-expiry-timer">
+                {referralExpiry.hours > 0 
+                  ? `${referralExpiry.hours} saat ${referralExpiry.minutes} dakika`
+                  : `${referralExpiry.minutes} dakika`} kaldı
+              </p>
+              <p className="referral-expiry-hint">
+                Davet ederek süreyi uzatabilir veya abone olabilirsin.
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className="invite-stats-grid">
           {growthPlan.stats.map((stat) => (
@@ -436,6 +480,49 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
         .invite-modal-header {
           text-align: center;
           margin-bottom: 18px;
+        }
+
+        .referral-expiry-banner {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+          padding: 14px 16px;
+          margin-bottom: 16px;
+          background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.06));
+          border: 1px solid rgba(16, 185, 129, 0.25);
+          border-radius: 16px;
+        }
+
+        .referral-expiry-icon {
+          color: #10b981;
+          flex-shrink: 0;
+          margin-top: 2px;
+        }
+
+        .referral-expiry-content {
+          flex: 1;
+        }
+
+        .referral-expiry-title {
+          margin: 0 0 6px 0;
+          color: #d1fae5;
+          font-size: 0.88rem;
+          font-weight: 800;
+        }
+
+        .referral-expiry-timer {
+          margin: 0 0 6px 0;
+          color: #fbbf24;
+          font-size: 1.1rem;
+          font-weight: 950;
+        }
+
+        .referral-expiry-hint {
+          margin: 0;
+          color: #a7f3d0;
+          font-size: 0.74rem;
+          line-height: 1.5;
+          font-weight: 600;
         }
 
         .invite-icon-box {

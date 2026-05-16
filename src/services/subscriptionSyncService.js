@@ -3,6 +3,7 @@ import { getFunctionsInstance } from './firebase';
 import { storageService } from './storageService';
 import { STORAGE_KEYS } from '../constants';
 import { getProStateSnapshot, setProStatus } from './proService';
+import { ANALYTICS_EVENTS, logEvent } from './analyticsService';
 import { logger } from '../utils/logger';
 import crashlyticsReporter, { buildCrashContext } from '../utils/crashlyticsReporter';
 
@@ -25,9 +26,17 @@ const persistServerStatus = async (payload, source) => {
     verificationState
   });
 
+  if (isPro && payload?.source === 'referral_reward') {
+    logEvent(ANALYTICS_EVENTS.REFERRAL_REWARD_PRO_ACTIVATED, {
+      source,
+      entitlement_id: payload?.entitlementId || 'referral_reward',
+      expires_at: expiresAt || undefined,
+    });
+  }
+
   crashlyticsReporter.logCrash(
     `[SubscriptionSync] ${source} active=${isPro} state=${verificationState}`
-  ).catch(() => {});
+  );
 
   return { isPro, expiresAt, source, verificationState, state: getProStateSnapshot() };
 };
@@ -43,7 +52,7 @@ export const syncProStatusFromServer = async () => {
     crashlyticsReporter.logExceptionWithContext(
       error,
       buildCrashContext('subscription_sync_check')
-    ).catch(() => {});
+    );
     return null;
   }
 };
@@ -59,7 +68,7 @@ export const syncProStatusWithRevenueCat = async () => {
     crashlyticsReporter.logExceptionWithContext(
       error,
       buildCrashContext('subscription_sync_revenuecat')
-    ).catch(() => {});
+    );
     return null;
   }
 };

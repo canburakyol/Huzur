@@ -4,70 +4,70 @@ export const prayerCategories = [
     {
         id: 'daily',
         name: 'prayerBook.categories.daily.name',
-        icon: '🌅',
+        icon: 'Sunrise',
         description: 'prayerBook.categories.daily.desc',
         color: 'linear-gradient(135deg, rgba(147, 197, 253, 0.3), rgba(196, 181, 253, 0.3))'
     },
     {
         id: 'debt',
         name: 'prayerBook.categories.debt.name',
-        icon: '💰',
+        icon: 'Coins',
         description: 'prayerBook.categories.debt.desc',
         color: 'linear-gradient(135deg, rgba(134, 239, 172, 0.3), rgba(167, 243, 208, 0.3))'
     },
     {
         id: 'family',
         name: 'prayerBook.categories.family.name',
-        icon: '🏠',
+        icon: 'Home',
         description: 'prayerBook.categories.family.desc',
         color: 'linear-gradient(135deg, rgba(252, 231, 243, 0.3), rgba(251, 207, 232, 0.3))'
     },
     {
         id: 'protection',
         name: 'prayerBook.categories.protection.name',
-        icon: '🛡️',
+        icon: 'Shield',
         description: 'prayerBook.categories.protection.desc',
         color: 'linear-gradient(135deg, rgba(254, 215, 170, 0.3), rgba(253, 186, 116, 0.3))'
     },
     {
         id: 'wishes',
         name: 'prayerBook.categories.wishes.name',
-        icon: '🤲',
+        icon: 'Hand',
         description: 'prayerBook.categories.wishes.desc',
         color: 'linear-gradient(135deg, rgba(191, 219, 254, 0.3), rgba(186, 230, 253, 0.3))'
     },
     {
         id: 'prophet',
         name: 'prayerBook.categories.prophet.name',
-        icon: '☪️',
+        icon: 'MoonStar',
         description: 'prayerBook.categories.prophet.desc',
         color: 'linear-gradient(135deg, rgba(196, 181, 253, 0.3), rgba(221, 214, 254, 0.3))'
     },
     {
         id: 'special_days',
         name: 'prayerBook.categories.special_days.name',
-        icon: '🌙',
+        icon: 'Moon',
         description: 'prayerBook.categories.special_days.desc',
         color: 'linear-gradient(135deg, rgba(254, 240, 138, 0.3), rgba(253, 224, 71, 0.3))'
     },
     {
         id: 'repentance',
         name: 'prayerBook.categories.repentance.name',
-        icon: '🕊️',
+        icon: 'Dove',
         description: 'prayerBook.categories.repentance.desc',
         color: 'linear-gradient(135deg, rgba(209, 250, 229, 0.3), rgba(167, 243, 208, 0.3))'
     },
     {
         id: 'prayer_duas',
         name: 'prayerBook.categories.prayer_duas.name',
-        icon: '🕌',
+        icon: 'Mosque',
         description: 'prayerBook.categories.prayer_duas.desc',
         color: 'linear-gradient(135deg, rgba(254, 202, 202, 0.3), rgba(252, 165, 165, 0.3))'
     },
     {
         id: 'distress',
         name: 'prayerBook.categories.distress.name',
-        icon: '💙',
+        icon: 'Heart',
         description: 'prayerBook.categories.distress.desc',
         color: 'linear-gradient(135deg, rgba(224, 231, 255, 0.3), rgba(199, 210, 254, 0.3))'
     }

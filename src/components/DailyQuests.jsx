@@ -3,6 +3,7 @@ import { Check, Gift, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { memo } from 'react';
 import { navigateFromAction } from '../utils/actionNavigation';
+import './DailyQuests.css';
 
 const DailyQuests = memo(() => {
     const { dailyQuests, claimQuestReward } = useGamification();
@@ -148,17 +149,6 @@ const DailyQuests = memo(() => {
                     );
                 })}
             </div>
-            
-             <style>{`
-                .badge-pulse {
-                    animation: badgePulse 2s infinite;
-                }
-                @keyframes badgePulse {
-                    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
-                    70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(231, 76, 60, 0); }
-                    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
-                }
-            `}</style>
         </div>
     );
 });

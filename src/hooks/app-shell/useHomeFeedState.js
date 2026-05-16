@@ -30,14 +30,15 @@ export function useHomeFeedState({
   streakData,
   dailyContent,
   isProUser,
-  onOpenInvite
+  onOpenInvite,
+  referralSurfaceEnabled = true
 }) {
   const primaryGoal = getStoredPrimaryGoal();
   const { family, weeklyGoal } = useFamily();
   const recoveryPlan = getRecoveryLoopPlan();
   const { plan: referralTriggerPlan } = useReferralTriggerSurface({
     surface: 'home',
-    enabled: true,
+    enabled: referralSurfaceEnabled,
   });
   const [rankingState, setRankingState] = useState({
     headline: '',

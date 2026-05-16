@@ -492,7 +492,12 @@
     "relatedAyah": "Konuyla ilgili ayet",
     "turkishReading": "TÜRKÇE OKUNUŞ",
     "translation": "MEALİ",
-    "start": "Başla"
+    "start": "Başla",
+    "ayahSelectorTitle": "Ayet Seç",
+    "ayahSelectorHint": "Kaydırınca seçilen ayet hemen çalmaya başlar",
+    "selectedAyahLabel": "Seçili Ayet",
+    "playingAyahLabel": "Çalan Ayet",
+    "totalAyahsLabel": "Toplam"
   },
   "prayers": {
     "title": "Dua Kitabı",
@@ -3846,18 +3851,18 @@
   },
   "growth": {
     "onboarding": {
-      "languageTitle": "Dilini Seç",
-      "languageDescription": "Nerede olursan ol, ibadet yolculuğunda kendi dilinle yanındayız.",
+      "languageTitle": "Dilini Sec",
+      "languageDescription": "Once dili netlestirelim; sonra seni tek bir kucuk ibadet adimina goturecegiz.",
       "continue": "Devam Et",
-      "locationTitle": "Konumunu Ayarlayalım",
-      "locationDescription": "Şehrin için doğru namaz vakitleri ve kıble yönü için konum izni ver.",
+      "locationTitle": "Namaz Vaktini Dogru Kuralim",
+      "locationDescription": "Bulundugun yere gore dogru vakitleri ve ilk gunluk hatirlatmayi hazirlayalim.",
       "enableLocation": "Konumu Etkinleştir",
-      "notificationTitle": "İbadetle Bağını Güçlendir",
-      "notificationDescription": "Namaz ve zikir hatırlatmalarını kaçırmamak için bildirimleri aç.",
+      "notificationTitle": "Gunluk Ritmi Kacirma",
+      "notificationDescription": "Namaz vakti ve 2 dakikalik gunluk adim icin sakin hatirlatmalari ac.",
       "enableNotifications": "Bildirimleri Aç",
-      "firstActionTitle": "Bismillah Diyerek Başlayalım",
-      "firstActionDescription": "Manevi yolculuğuna bugün ilk adımı at.",
-      "startNow": "Şimdi Başla",
+      "firstActionTitle": "Bugunun Ilk Adimini Sec",
+      "firstActionDescription": "Uzun bir plan degil; namaz, Kuran veya dua icin kisa bir ritim baslat.",
+      "startNow": "Ilk Adimi Ac",
       "stepCounter": "Adım {{current}} / {{total}}"
     },
     "funnel": {

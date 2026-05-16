@@ -3,15 +3,47 @@ import { logger } from '../utils/logger';
 
 /**
  * Persistent cache service backed by Capacitor Preferences.
- * This is useful for consistent native/web persistence, but it is not a
- * dedicated encrypted vault and should be treated as app cache, not as a
- * standalone security boundary.
+ * 
+ * ⚠️ DEPRECATED NAMING: This file is named "secureStorage" for historical
+ * reasons but it does NOT provide encryption or real security. It uses
+ * Capacitor Preferences which stores data in plain text.
+ * 
+ * For true encrypted storage, use @capacitor-community/secure-storage-plugin.
+ * 
+ * The integrity checksum stored with Pro status is ONLY for detecting
+ * accidental cache corruption (e.g., partial writes, JSON parse errors).
+ * It is NOT a security measure. Real Pro verification happens server-side
+ * via the checkProStatus Firebase Function.
  */
 
 const SECURE_STORAGE_KEYS = {
   PRO_STATUS: 'huzur_pro_status_secure',
   AUTH_TOKEN: 'huzur_auth_token',
   USER_ID: 'huzur_user_id'
+};
+
+/**
+ * Generate a simple checksum for detecting accidental cache corruption.
+ * This is NOT cryptographic security — it only detects partial writes
+ * or accidental data modification. Real Pro verification is server-side.
+ */
+const _generateCorruptionChecksum = (state) => {
+  const payload = [
+    state.active === true,
+    state.expiresAt || '',
+    state.source || state.verifiedBy || '',
+    state.verifiedAt || '',
+    state.lastCheckAt || '',
+    state.verificationState || ''
+  ].join('|');
+
+  // Simple FNV-1a hash for corruption detection (not security)
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < payload.length; i++) {
+    hash ^= payload.charCodeAt(i);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return (hash >>> 0).toString(16);
 };
 
 export const secureStorage = {
@@ -139,7 +171,8 @@ export const secureStorage = {
         updatedAt: new Date().toISOString()
       };
 
-      status._integrity = await this._generateIntegrityHash(status);
+      // Corruption checksum only (NOT security — real verification is server-side)
+      status._checksum = _generateCorruptionChecksum(status);
       await this.setItem(SECURE_STORAGE_KEYS.PRO_STATUS, status);
       return true;
     } catch (error) {
@@ -167,8 +200,9 @@ export const secureStorage = {
         };
       }
 
-      const expectedHash = await this._generateIntegrityHash(status);
-      const isValid = status._integrity === expectedHash;
+      // Check corruption checksum (NOT security — just detects accidental corruption)
+      const expectedChecksum = _generateCorruptionChecksum(status);
+      const isValid = status._checksum === expectedChecksum || status._integrity === expectedChecksum;
 
       return {
         active: status.active === true,
@@ -188,46 +222,6 @@ export const secureStorage = {
 
   async clearProStatus() {
     return await this.removeItem(SECURE_STORAGE_KEYS.PRO_STATUS);
-  },
-
-  async _generateIntegrityHash(stateOrActive, expiresAt, source) {
-    const state = typeof stateOrActive === 'object' && stateOrActive !== null
-      ? stateOrActive
-      : {
-          active: stateOrActive,
-          expiresAt,
-          source
-        };
-
-    const salt = [72, 122, 114, 80, 114, 111, 73, 110, 116, 71, 114, 100]
-      .map((code) => String.fromCharCode(code))
-      .join('');
-
-    const payload = [
-      state.active === true,
-      state.expiresAt || '',
-      state.source || state.verifiedBy || '',
-      state.verifiedAt || '',
-      state.lastCheckAt || '',
-      state.verificationState || '',
-      salt
-    ].join('|');
-
-    try {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(payload);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
-    } catch (error) {
-      logger.error('[SecureStorage] Integrity digest failed, using fallback hash', error);
-      let hash = 0x811c9dc5;
-      for (let index = 0; index < payload.length; index += 1) {
-        hash ^= payload.charCodeAt(index);
-        hash = Math.imul(hash, 0x01000193);
-      }
-      return (hash >>> 0).toString(16);
-    }
   }
 };
 

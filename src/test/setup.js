@@ -140,7 +140,7 @@ Object.defineProperty(window, 'crypto', {
 });
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
+globalThis.IntersectionObserver = class IntersectionObserver {
   constructor() {}
   observe() {}
   unobserve() {}
@@ -148,7 +148,7 @@ global.IntersectionObserver = class IntersectionObserver {
 };
 
 // Mock ResizeObserver
-global.ResizeObserver = class ResizeObserver {
+globalThis.ResizeObserver = class ResizeObserver {
   constructor() {}
   observe() {}
   unobserve() {}
@@ -174,4 +174,4 @@ Object.defineProperty(window, 'matchMedia', {
 Element.prototype.scrollIntoView = vi.fn();
 
 // Mock requestAnimationFrame
-global.requestAnimationFrame = (cb) => setTimeout(cb, 0);
+globalThis.requestAnimationFrame = (cb) => setTimeout(cb, 0);

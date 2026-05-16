@@ -1,5 +1,5 @@
 import { storageService } from './storageService';
-import { secureStorage } from './secureStorage';
+import { secureStorage } from './persistentStorage';
 import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 import crashlyticsReporter from '../utils/crashlyticsReporter';
@@ -18,7 +18,7 @@ const FREE_LIMITS = {
 export const FREE_WORD_BY_WORD_SURAHS = [1, 112, 113, 114];
 
 const FREE_MEMORIZE_SURAHS = [1, 112, 113, 114, 111];
-const TRUSTED_STATUS_CACHE_MS = 60 * 1000;
+const TRUSTED_STATUS_CACHE_MS = 15 * 60 * 1000; // 15 minutes cache for server verification
 const NEGATIVE_VERIFICATION_STATES = new Set(['inactive', 'negative', 'expired', 'integrity_failed']);
 const DEFAULT_PRO_STATE = Object.freeze({
   active: false,
@@ -210,7 +210,7 @@ export const verifyProStatus = async () => {
     const secureState = await secureStorage.getProStatus();
 
     if (!secureState) {
-      crashlyticsReporter.logCrash('[ProService] secure cache missing, using local snapshot').catch(() => {});
+      crashlyticsReporter.logCrash('[ProService] secure cache missing, using local snapshot');
       return isProStateActive(localState);
     }
 
@@ -226,7 +226,7 @@ export const verifyProStatus = async () => {
       await persistProState(tamperedState, { persistSecure: false });
       await secureStorage.clearProStatus();
       setTrustedResult(false);
-      crashlyticsReporter.logCrash('[ProService] integrity check failed').catch(() => {});
+      crashlyticsReporter.logCrash('[ProService] integrity check failed');
       return false;
     }
 
@@ -242,7 +242,7 @@ export const verifyProStatus = async () => {
     setTrustedResult(active);
     crashlyticsReporter.logCrash(
       `[ProService] verify source=${normalized.source} active=${active} state=${normalized.verificationState}`
-    ).catch(() => {});
+    );
     return active;
   } catch (error) {
     logger.warn('[ProService] verifyProStatus failed', error);
@@ -274,7 +274,7 @@ export const setProStatus = async (
 
     crashlyticsReporter.logCrash(
       `[ProService] set status source=${source} active=${nextState.active} state=${nextState.verificationState}`
-    ).catch(() => {});
+    );
   } catch (error) {
     logger.warn('[ProService] Error setting pro status', error);
   }
@@ -389,10 +389,56 @@ export const getDailyLimitStatus = async () => {
   };
 };
 
+export const getProSource = () => {
+  try {
+    const state = getProStateSnapshot();
+    return state.source || 'none';
+  } catch (error) {
+    logger.error('[ProService] getProSource failed', error);
+    return 'none';
+  }
+};
+
+export const getProDetails = () => {
+  try {
+    const state = getProStateSnapshot();
+    const active = isProStateActive(state);
+    const now = Date.now();
+    const expiresAt = state.expiresAt ? Date.parse(state.expiresAt) : null;
+    const remainingMs = expiresAt && active ? Math.max(0, expiresAt - now) : 0;
+    const remainingHours = remainingMs > 0 ? Math.floor(remainingMs / (1000 * 60 * 60)) : 0;
+    const remainingMinutes = remainingMs > 0 ? Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60)) : 0;
+    
+    return {
+      active,
+      source: state.source || 'none',
+      expiresAt: state.expiresAt,
+      verificationState: state.verificationState,
+      remaining: {
+        ms: remainingMs,
+        hours: remainingHours,
+        minutes: remainingMinutes,
+        isExpiringSoon: remainingMs > 0 && remainingMs < 6 * 60 * 60 * 1000 // 6 saatten az
+      }
+    };
+  } catch (error) {
+    logger.error('[ProService] getProDetails failed', error);
+    return {
+      active: false,
+      source: 'none',
+      expiresAt: null,
+      verificationState: 'inactive',
+      remaining: { ms: 0, hours: 0, minutes: 0, isExpiringSoon: false }
+    };
+  }
+};
+
 export default {
   isPro,
   isProStateActive,
   getProStateSnapshot,
+  getProSource,
+  getProDetails,
   verifyProStatus,
   setProStatus,
   checkLimit,

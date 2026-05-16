@@ -9,7 +9,10 @@ import {
   getRoutines, getRoutineProgress, completeRoutineTask, 
   createCustomRoutine, deleteRoutine 
 } from '../../services/routineService';
+import { markFirstIbadahActionCompleted } from '../../services/activationService';
 import { contributeFamilyGoalOncePerDay } from '../../services/familyGoalContributionService';
+
+const IBADAH_ROUTINE_TASK_TYPES = new Set(['prayer', 'quran', 'dhikr']);
 
 const RoutineBuilder = ({ onClose }) => {
   const { t } = useTranslation();
@@ -32,6 +35,15 @@ const RoutineBuilder = ({ onClose }) => {
     // Award standard XP for completing a sub-task (e.g., 5 XP)
     addPoints(5, { source: 'routine_task' });
 
+    const routine = routines.find((item) => item.id === routineId);
+    const task = routine?.tasks?.find((item) => item.id === taskId);
+    if (IBADAH_ROUTINE_TASK_TYPES.has(task?.type)) {
+      markFirstIbadahActionCompleted({
+        feature: 'dailyTasks',
+        source: `routine_task:${task.type}`,
+      });
+    }
+
     const result = completeRoutineTask(routineId, taskId);
     setProgress(result.progress);
     
@@ -40,7 +52,7 @@ const RoutineBuilder = ({ onClose }) => {
       addPoints(result.bonusXp, { source: 'routine_completion' });
       void contributeFamilyGoalOncePerDay(`routine_completion_${routineId}`, 'routine_completion');
     }
-  }, [progress, addPoints]);
+  }, [progress, addPoints, routines]);
 
   const handleAddCustomTask = () => {
     if (!newTaskInput.trim()) return;

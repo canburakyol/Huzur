@@ -9,6 +9,7 @@ import DuaList from './DuaList';
 import IslamicBackButton from '../shared/IslamicBackButton';
 import { BookOpen, Heart, Share2 } from 'lucide-react';
 import { useToast } from '../../hooks/useToast';
+import { logger } from '../../utils/logger';
 import './Social.css';
 
 const SocialDashboard = ({ onClose }) => {
@@ -59,7 +60,7 @@ const SocialDashboard = ({ onClose }) => {
       }
     } catch (error) {
       if (error?.message !== 'Share canceled' && error?.name !== 'AbortError') {
-        console.error('Error sharing community:', error);
+        logger.error('Error sharing community:', error);
       }
     } finally {
       setIsSharing(false);

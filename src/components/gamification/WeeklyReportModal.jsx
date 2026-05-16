@@ -52,7 +52,8 @@ const REVIEW_STATUS_LABELS = {
 const WeeklyReportModal = ({ onOpenInvite }) => {
   const { t } = useTranslation();
   const reportWindow = useMemo(() => getLastCompletedWeek(), []);
-  const [isOpen, setIsOpen] = useState(() => storageService.getString(REPORT_KEY, '') !== reportWindow.weekKey);
+  const [isAvailable, setIsAvailable] = useState(() => storageService.getString(REPORT_KEY, '') !== reportWindow.weekKey);
+  const [isOpen, setIsOpen] = useState(false);
   const weeklyStats = useMemo(() => buildWeeklyEngagementSnapshot(7, reportWindow.end), [reportWindow.end]);
   const rangeLabel = useMemo(() => formatWeeklyRange(reportWindow.start, reportWindow.end), [reportWindow.end, reportWindow.start]);
   const [aiInsight, setAiInsight] = useState(null);
@@ -117,24 +118,26 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
           return;
         }
         setAiInsight(result);
-        logWeeklyInsightV1Viewed(
-          reportWindow.weekKey,
-          result.riskBand || 'steady',
-          result.provider || 'fallback',
-          Date.now() - startedAt,
-          {
+        if (isOpen) {
+          logWeeklyInsightV1Viewed(
+            reportWindow.weekKey,
+            result.riskBand || 'steady',
+            result.provider || 'fallback',
+            Date.now() - startedAt,
+            {
+              reviewStatus: result.reviewStatus || 'unreviewed',
+              trustScore: result.trustScore,
+              sourceCount: result.sourceCount,
+            }
+          );
+          logAiTrustSurfaced('weekly_report', {
+            provider: result.provider || 'fallback',
+            confidence: result.confidence || 'medium',
             reviewStatus: result.reviewStatus || 'unreviewed',
             trustScore: result.trustScore,
             sourceCount: result.sourceCount,
-          }
-        );
-        logAiTrustSurfaced('weekly_report', {
-          provider: result.provider || 'fallback',
-          confidence: result.confidence || 'medium',
-          reviewStatus: result.reviewStatus || 'unreviewed',
-          trustScore: result.trustScore,
-          sourceCount: result.sourceCount,
-        });
+          });
+        }
         if (!isPro()) {
           setPremiumMoment(getPremiumMoment({
             isPro: false,
@@ -148,14 +151,14 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
       }
     };
 
-    if (isOpen) {
+    if (isAvailable) {
       void resolveInsight();
     }
 
     return () => {
       isCancelled = true;
     };
-  }, [isOpen, reportWindow.weekKey, weeklyStats]);
+  }, [isAvailable, isOpen, reportWindow.weekKey, weeklyStats]);
 
   const handleClose = useCallback(() => {
     storageService.setString(REPORT_KEY, reportWindow.weekKey);
@@ -163,6 +166,13 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
       week_key: reportWindow.weekKey
     });
     setIsOpen(false);
+    setIsAvailable(false);
+  }, [reportWindow.weekKey]);
+
+  const handleDismissBanner = useCallback((e) => {
+    e.stopPropagation();
+    storageService.setString(REPORT_KEY, reportWindow.weekKey);
+    setIsAvailable(false);
   }, [reportWindow.weekKey]);
 
   const handleOpenInvite = useCallback(() => {
@@ -178,7 +188,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
     onOpenInvite(referralTriggerPlan.entrySource);
   }, [onOpenInvite, referralTriggerPlan]);
 
-  if (!isOpen || !weeklyStats.hasActivity) return null;
+  if (!isAvailable || !weeklyStats.hasActivity) return null;
 
   const statsCards = [
     {
@@ -202,6 +212,63 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
       icon: <Flame size={18} color="#f59e0b" />
     }
   ];
+
+  if (!isOpen) {
+    return (
+      <div 
+        onClick={() => setIsOpen(true)}
+        style={{
+          position: 'fixed',
+          top: '16px',
+          left: '16px',
+          right: '16px',
+          zIndex: 998,
+          background: 'linear-gradient(135deg, #064e3b, #0f766e)',
+          borderRadius: '16px',
+          padding: '12px 16px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          boxShadow: '0 8px 24px rgba(16, 185, 129, 0.25)',
+          cursor: 'pointer',
+          animation: 'reportFadeIn 0.5s ease'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{
+            background: 'rgba(255,255,255,0.2)',
+            padding: '8px',
+            borderRadius: '12px'
+          }}>
+            <Award size={20} color="#fff" />
+          </div>
+          <div>
+            <div style={{ color: '#fff', fontSize: '0.9rem', fontWeight: '800' }}>
+              {t('weeklyReport.bannerTitle', 'Haftalık Özetin Hazır')}
+            </div>
+            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.75rem', fontWeight: '600' }}>
+              {t('weeklyReport.bannerDesc', '+{{xp}} XP kazandın, detayları gör', { xp: weeklyStats.xpEarned })}
+            </div>
+          </div>
+        </div>
+        <button
+          onClick={handleDismissBanner}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: 'rgba(255,255,255,0.6)',
+            padding: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer'
+          }}
+        >
+          <X size={18} />
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div style={{

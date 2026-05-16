@@ -162,7 +162,7 @@ export const hasKey = (key) => {
   return localStorage.getItem(key) !== null;
 };
 
-import secureStorage from './secureStorage';
+import secureStorage from './persistentStorage';
 
 // ... (existing sync methods remain unchanged)
 

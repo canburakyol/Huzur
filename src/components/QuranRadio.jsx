@@ -4,6 +4,7 @@ import { surahList, reciters } from '../data/surahList';
 import { Play, Pause, SkipForward, SkipBack, List, X, Music, Disc, Loader2, Volume2, Globe } from 'lucide-react';
 import './Education.css';
 import IslamicBackButton from './shared/IslamicBackButton';
+import { logger } from '../utils/logger';
 
 const QuranRadio = ({ onClose }) => {
     const { t } = useTranslation();
@@ -59,7 +60,7 @@ const QuranRadio = ({ onClose }) => {
             setIsPlaying(true);
         };
         const handleError = (e) => {
-            console.error("Audio error:", e);
+            logger.error("Audio error:", e);
             setIsLoading(false);
             setIsPlaying(false);
         };
@@ -71,7 +72,7 @@ const QuranRadio = ({ onClose }) => {
 
         if (isPlaying) {
             audioRef.current.play().catch(e => {
-                console.warn("Autoplay was prevented:", e);
+                logger.warn("Autoplay was prevented:", e);
                 setIsPlaying(false);
             });
         }

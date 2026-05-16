@@ -7,6 +7,7 @@ import { storageService } from '../services/storageService';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
 import { useToast } from '../hooks/useToast';
+import { logger } from '../utils/logger';
 // html2canvas is dynamically imported when needed to reduce initial bundle size
 
 const GREETING_FAVORITES_KEY = 'greeting_favorites';
@@ -105,7 +106,7 @@ function GreetingCards({ onClose }) {
                 showToast(t('greetingCards.ui.downloaded'), 'success');
             }
         } catch (err) {
-            console.error('Share error:', err);
+            logger.error('Share error:', err);
             if (err.name !== 'AbortError') {
                 showToast(t('greetingCards.ui.shareError'), 'error');
             }

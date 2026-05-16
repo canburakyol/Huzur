@@ -5,12 +5,12 @@ import { db } from './firebase';
 import { storageService } from './storageService';
 
 const CACHE_TTL_MS = 5 * 60 * 1000;
-const ALLOWED_STEPS = ['language', 'permissions', 'goal'];
+const ALLOWED_STEPS = ['language', 'permissions', 'goal', 'preview'];
 
 export const DEFAULT_ONBOARDING_CONFIG = {
   flowVersion: 'v1',
   enabled: false,
-  steps: ['language', 'permissions', 'goal'],
+  steps: ['language', 'goal', 'preview'],
   headlineVariant: 'calm',
   permissionEmphasis: 'balanced',
   goalDefault: 'prayer_rhythm',
@@ -23,7 +23,8 @@ const sanitizeSteps = (steps = []) => {
     .map((item) => (typeof item === 'string' ? item.trim().toLowerCase() : null))
     .filter((item) => ALLOWED_STEPS.includes(item));
 
-  return normalized.length > 0 ? [...new Set(normalized)] : DEFAULT_ONBOARDING_CONFIG.steps;
+  const deduped = normalized.length > 0 ? [...new Set(normalized)] : DEFAULT_ONBOARDING_CONFIG.steps;
+  return deduped.includes('preview') ? deduped : [...deduped, 'preview'];
 };
 
 export const normalizeOnboardingConfig = (value = {}) => {

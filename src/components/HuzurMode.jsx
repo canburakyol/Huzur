@@ -3,6 +3,7 @@ import { Play, Pause, Volume2, Moon, Clock, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { SLEEP_SOUNDS, CATEGORIES } from '../data/sleepModeData';
+import { logger } from '../utils/logger';
 import './HuzurMode.css';
 import './Navigation.css';
 
@@ -42,7 +43,7 @@ const HuzurMode = ({ onClose }) => {
                 audioRef.current.load();
             }
             audioRef.current.volume = volume;
-            audioRef.current.play().catch(e => console.error('Audio play error:', e));
+            audioRef.current.play().catch(e => logger.error('Audio play error:', e));
         } else {
             audioRef.current.pause();
         }

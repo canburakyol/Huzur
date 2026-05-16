@@ -13,6 +13,7 @@ import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 import { getCurrentUserIdEnsured } from './authService';
 import { getFunctionsInstance } from './firebase';
+import { logNotificationTapped } from './analyticsService';
 import { schedulePrayerNotifications } from './smartNotificationService';
 import {
     createNotificationChannels as ensureNotificationChannels
@@ -147,7 +148,9 @@ export const FCMService = {
             logger.sensitive('[FCM] Registration token received');
             this.token = token.value;
             storageService.setString(STORAGE_KEYS.FCM_TOKEN, token.value);
-            this.syncTokenWithServer(token.value).catch(() => {});
+            this.syncTokenWithServer(token.value).catch((error) => {
+                logger.warn('[FCM] Token sync failed', error);
+            });
 
             window.dispatchEvent(new CustomEvent('fcmTokenReceived', {
                 detail: { token: token.value }
@@ -176,7 +179,8 @@ export const FCMService = {
         PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
             logger.log('[FCM] Push action performed');
 
-            const data = notification.notification.data;
+            const data = notification.notification.data || {};
+            logNotificationTapped(data.type || data.action || 'push', data.prayer || null);
             if (data && data.action) {
                 window.dispatchEvent(new CustomEvent('pushNotificationAction', {
                     detail: data

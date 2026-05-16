@@ -138,6 +138,16 @@ export const getReferralGrowthPlan = ({
     badge = 'Hazir link';
   }
 
+  if (!blocked && surface === 'onboarding_huzur_ritmi_reward') {
+    headline = inviterRewardReady || convertedCount > 0
+      ? '24 saatlik Pro ritmin hazir'
+      : 'Bir dostuna gonder, 24 saatlik Pro ritmini ac';
+    description = inviterRewardReady || convertedCount > 0
+      ? 'Davet halkan tamamlandi. Derin ritim destegini sakin sekilde kullanabilirsin.'
+      : 'Tek bir samimi davet yeterli. Davet tamamlaninca derin ritim destegi 24 saatligine acilir.';
+    badge = '24 saat Pro';
+  }
+
   const steps = [
     {
       id: 'link',

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { useFocus } from '../context/FocusContext';
 import { useGamification } from '../hooks/useGamification';
+import { markFirstIbadahActionCompleted } from '../services/activationService';
 import { storageService } from '../services/storageService';
 import './Zikirmatik.css';
 import './Navigation.css';
@@ -173,6 +174,10 @@ const Zikirmatik = ({ onClose }) => {
         updateStats(1);
         
         checkQuestProgress('zikir', selectedDhikr.id, 1);
+        markFirstIbadahActionCompleted({
+            feature: 'zikirmatik',
+            source: 'zikir_increment',
+        });
 
         if (vibrateEnabled && navigator.vibrate) {
             navigator.vibrate(30);

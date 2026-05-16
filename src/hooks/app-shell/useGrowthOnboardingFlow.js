@@ -7,8 +7,7 @@ import {
   ANALYTICS_EVENTS,
   logEvent,
   logOnboardingStarted,
-  logOnboardingCompleted,
-  logFirstPrayerActionCompleted
+  logOnboardingCompleted
 } from '../../services/analyticsService';
 import {
   buildPremiumMomentAnalyticsPayload,
@@ -18,7 +17,6 @@ import {
   getPremiumMomentsConfig,
   getReferralProgress,
   getReferralServerSnapshot,
-  markFirstIbadahCompletedForReferral,
   markOnboardingCompletedForReferral,
   openPremiumMoment,
   resolveOnboardingExperienceConfig,
@@ -36,7 +34,7 @@ export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNot
   const [referralServerSnapshot, setReferralServerSnapshot] = useState(null);
   const [onboardingStep, setOnboardingStep] = useState(() => {
     const storedStep = storageService.getNumber(STORAGE_KEYS.ONBOARDING_STEP, 0);
-    return Math.max(0, Math.min(storedStep, 2));
+    return Math.max(0, Math.min(storedStep, 3));
   });
 
   const [onboardingLanguage, setOnboardingLanguage] = useState(() => {
@@ -180,12 +178,6 @@ export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNot
     });
     const onboardingReferralState = markOnboardingCompletedForReferral();
 
-    if (!storageService.getBoolean(STORAGE_KEYS.FIRST_IBADAH_ACTION_DONE, false)) {
-      storageService.setBoolean(STORAGE_KEYS.FIRST_IBADAH_ACTION_DONE, true);
-      logFirstPrayerActionCompleted('growth_onboarding');
-      markFirstIbadahCompletedForReferral();
-    }
-
     const nextReferralProgress = getReferralProgress();
     setReferralProgress(nextReferralProgress);
 
@@ -210,7 +202,7 @@ export function useGrowthOnboardingFlow({ handleLocationConsent, handleEnableNot
       });
     }
 
-    setActiveTab('home');
+    setActiveTab('home', 'growth_onboarding_complete');
 
     if (premiumTeaserEnabled && aiFeatureFlags?.premium_moments_v1_enabled && !isProUser) {
       window.setTimeout(() => {

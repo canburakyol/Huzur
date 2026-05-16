@@ -4,9 +4,11 @@ import {
   Bell,
   BookOpen,
   Check,
+  Crown,
   Globe2,
   HeartHandshake,
   MapPinned,
+  Send,
   Sparkles,
   Target
 } from 'lucide-react';
@@ -20,6 +22,14 @@ import { SUPPORTED_LANGUAGE_OPTIONS } from '../config/i18nConfig';
 import { STORAGE_KEYS } from '../constants';
 import { storageService } from '../services/storageService';
 import { DEFAULT_PRIMARY_GOAL, normalizePrimaryGoal, setStoredPrimaryGoal } from '../utils/primaryGoal';
+import {
+  buildHuzurRitmiAnalyticsPayload,
+  getHuzurRitmiPreview,
+} from '../services/huzurRitmiPreviewService';
+import {
+  buildPremiumMomentAnalyticsPayload,
+  openPremiumMoment,
+} from '../services/premiumMomentService';
 
 const baseButton = {
   border: 'none',
@@ -61,14 +71,15 @@ const GOAL_ICONS = {
   family_consistency: <HeartHandshake size={20} />
 };
 
-const ALLOWED_STEPS = ['language', 'permissions', 'goal'];
+const ALLOWED_STEPS = ['language', 'permissions', 'goal', 'preview'];
 
 const sanitizeSteps = (steps = []) => {
   if (!Array.isArray(steps)) return DEFAULT_ONBOARDING_CONFIG.steps;
   const normalized = steps
     .map((item) => (typeof item === 'string' ? item.trim().toLowerCase() : null))
     .filter((item) => ALLOWED_STEPS.includes(item));
-  return normalized.length > 0 ? [...new Set(normalized)] : DEFAULT_ONBOARDING_CONFIG.steps;
+  const deduped = normalized.length > 0 ? [...new Set(normalized)] : DEFAULT_ONBOARDING_CONFIG.steps;
+  return deduped.includes('preview') ? deduped : [...deduped, 'preview'];
 };
 
 function GrowthOnboarding({
@@ -109,18 +120,18 @@ function GrowthOnboarding({
   const goals = useMemo(() => ([
     {
       id: 'prayer_rhythm',
-      label: t('growth.goal.prayerRhythm', 'Gunluk ibadet ritmimi kurmak'),
-      subtitle: t('growth.goal.prayerRhythmDesc', 'Namaz, gorevler ve gunluk duzen ile sakin bir rutin olustur.')
+      label: t('growth.goal.prayerRhythm', 'Namazimi ve gunluk ritmimi kacirmamak'),
+      subtitle: t('growth.goal.prayerRhythmDesc', 'Vakit hatirlatmasi ve 2 dakikalik adimla bugunu bos gecirme.')
     },
     {
       id: 'quran_learning',
-      label: t('growth.goal.quranLearning', 'Kuran okuyup ogrenmek'),
-      subtitle: t('growth.goal.quranLearningDesc', 'Quiz, Kuran ve egitim ekranlarini daha cok one cikar.')
+      label: t('growth.goal.quranLearning', 'Her gun Kuran veya dua ile bag kurmak'),
+      subtitle: t('growth.goal.quranLearningDesc', 'Uzun ders degil; kisa okuma, dua ve anlam adimlari one ciksin.')
     },
     {
       id: 'family_consistency',
-      label: t('growth.goal.familyConsistency', 'Ailece istikrar kurmak'),
-      subtitle: t('growth.goal.familyConsistencyDesc', 'Aile hedefleri ve birlikte ilerleme akisini merkeze al.')
+      label: t('growth.goal.familyConsistency', 'Ailece kucuk bir ibadet ritmi kurmak'),
+      subtitle: t('growth.goal.familyConsistencyDesc', 'Aile hedefleri buyumeden, bugun yapilacak tek adimi gorunur kil.')
     }
   ]), [t]);
 
@@ -131,26 +142,31 @@ function GrowthOnboarding({
     return {
       language: {
         title: headlineVariant === 'direct'
-          ? t('growth.onboarding.languageTitleDirect', 'Huzur dilini ayarla')
+          ? t('growth.onboarding.languageTitleDirect', 'Gunluk ritmini kendi dilinde kur')
           : t('growth.onboarding.languageTitle', 'Dilini sec'),
         description: headlineVariant === 'direct'
-          ? t('growth.onboarding.languageDescriptionDirect', 'Ilk deneyimi sana uygun dilde acalim. Sonra diledigin zaman degistirebilirsin.')
-          : t('growth.onboarding.languageDescription', 'Uygulamayi sana en uygun dilde hazirlayalim. Bunu daha sonra ayarlardan degistirebilirsin.'),
+          ? t('growth.onboarding.languageDescriptionDirect', 'Namaz, Kuran ve dua ritmini sana en rahat gelen dilde baslatalim.')
+          : t('growth.onboarding.languageDescription', 'Once dili netlestirelim; sonra seni tek bir kucuk ibadet adimina goturecegiz.'),
         actionLabel: t('growth.onboarding.continue', 'Devam et'),
       },
       permissions: {
-        title: t('growth.onboarding.permissionsTitle', 'Iki hizli ayar'),
+        title: t('growth.onboarding.permissionsTitle', 'Ritmi kacirmamak icin iki ayar'),
         description: permissionEmphasis === 'notifications_first'
-          ? t('growth.onboarding.permissionsDescriptionNotifications', 'Gunluk ritmi kacirmaman icin once bildirim ve konum tarafini hazirlayalim.')
-          : t('growth.onboarding.permissionsDescription', 'Ilk gunun akici gecsin diye yalnizca namaz vakti ve bildirim tarafini hazirlayalim.'),
+          ? t('growth.onboarding.permissionsDescriptionNotifications', 'Bildirim ve konum, ilk gun namaz vaktini ve kisa hatirlatmayi dogru kurar.')
+          : t('growth.onboarding.permissionsDescription', 'Sadece namaz vakti ve gunluk hatirlatma icin gereken ayarlari hazirlayalim.'),
         actionLabel: t('growth.onboarding.continue', 'Hazirim'),
       },
       goal: {
-        title: t('growth.onboarding.goalTitle', 'Temel odagini sec'),
-        description: t('growth.onboarding.goalDescription', 'Ana ekran ve ilk onerileri buna gore sade tutalim.'),
+        title: t('growth.onboarding.goalTitle', 'Bugun hangi ritmi baslatalim?'),
+        description: t('growth.onboarding.goalDescription', 'Ana ekran once tek bir net adim gosterecek; diger ozellikler sonra kalabilir.'),
         actionLabel: resolvedConfig.premiumTeaserEnabled && !isProUser
           ? t('growth.onboarding.startWithTeaser', 'Devam et')
-          : t('growth.onboarding.startNow', 'Ana ekrana gec'),
+          : t('growth.onboarding.startNow', 'Ilk adimi ac'),
+      },
+      preview: {
+        title: t('growth.onboarding.previewTitle', 'Huzur ritmin hazir'),
+        description: t('growth.onboarding.previewDescription', 'Bugun icin tek sakin adimi gor; istersen derin plani Pro ile veya bir dost davetiyle ac.'),
+        actionLabel: t('growth.onboarding.previewFinish', 'Ritmi baslat'),
       },
     };
   }, [isProUser, resolvedConfig.headlineVariant, resolvedConfig.permissionEmphasis, resolvedConfig.premiumTeaserEnabled, t]);
@@ -173,6 +189,7 @@ function GrowthOnboarding({
     currentStep: currentStepKey,
     selectedGoal,
   }), [currentStepKey, referralProgress, referralServerSnapshot, selectedGoal]);
+  const huzurRitmiPreview = useMemo(() => getHuzurRitmiPreview(selectedGoal), [selectedGoal]);
 
   useEffect(() => {
     setSelectedLanguage(initialLanguage);
@@ -200,6 +217,14 @@ function GrowthOnboarding({
       onboarding_goal_step_variant: experimentContext.onboardingGoalStepVariant,
       ...buildReferralOnboardingAnalyticsPayload(referralPlan),
     });
+
+    if (currentStepKey === 'preview') {
+      logEvent(ANALYTICS_EVENTS.HUZUR_RITMI_PREVIEW_VIEWED, {
+        ...buildHuzurRitmiAnalyticsPayload(selectedGoal),
+        flow_version: resolvedConfig.flowVersion,
+        experiment_variant: experimentContext.signature,
+      });
+    }
   }, [
     currentStepKey,
     experimentContext.onboardingGoalStepVariant,
@@ -208,7 +233,8 @@ function GrowthOnboarding({
     normalizedStep,
     referralPlan,
     resolvedConfig.flowVersion,
-    resolvedConfig.headlineVariant
+    resolvedConfig.headlineVariant,
+    selectedGoal
   ]);
 
   useEffect(() => {
@@ -256,6 +282,71 @@ function GrowthOnboarding({
     });
   };
 
+  const completeOnboarding = ({ logGoalStep = false, premiumTeaserOverride = undefined } = {}) => {
+    setStoredPrimaryGoal(selectedGoal);
+    if (logGoalStep) {
+      logStepCompleted('goal', {
+        selected_goal: selectedGoal,
+        premium_teaser_enabled: resolvedConfig.premiumTeaserEnabled === true,
+      });
+    }
+    onComplete?.({
+      selectedGoal,
+      premiumTeaserEnabled: typeof premiumTeaserOverride === 'boolean'
+        ? premiumTeaserOverride
+        : resolvedConfig.premiumTeaserEnabled === true,
+    });
+  };
+
+  const openPreviewPaywall = () => {
+    logEvent(ANALYTICS_EVENTS.HUZUR_RITMI_CTA_CLICKED, {
+      ...buildHuzurRitmiAnalyticsPayload(selectedGoal, {
+        cta: 'pro',
+        entry_source: 'huzur_ritmi_preview',
+      }),
+      flow_version: resolvedConfig.flowVersion,
+      experiment_variant: experimentContext.signature,
+    });
+
+    const premiumMoment = {
+      isPro: false,
+      source: 'huzur_ritmi_preview',
+      momentType: 'onboarding_complete',
+      primaryGoal: selectedGoal,
+    };
+
+    completeOnboarding({ premiumTeaserOverride: false });
+
+    window.setTimeout(() => {
+      logEvent(ANALYTICS_EVENTS.PREMIUM_MOMENT_OPENED, buildPremiumMomentAnalyticsPayload(premiumMoment, {
+        onboarding_experiment_variant: experimentContext.signature,
+      }));
+      openPremiumMoment(premiumMoment);
+    }, 250);
+  };
+
+  const openPreviewInvite = () => {
+    logEvent(ANALYTICS_EVENTS.HUZUR_RITMI_CTA_CLICKED, {
+      ...buildHuzurRitmiAnalyticsPayload(selectedGoal, {
+        cta: 'invite',
+        entry_source: 'onboarding_huzur_ritmi_reward',
+      }),
+      flow_version: resolvedConfig.flowVersion,
+      experiment_variant: experimentContext.signature,
+    });
+
+    completeOnboarding({ premiumTeaserOverride: false });
+
+    window.setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('openInviteModal', {
+        detail: {
+          source: 'onboarding_huzur_ritmi_reward',
+          primaryGoal: selectedGoal,
+        },
+      }));
+    }, 250);
+  };
+
   const handleContinue = async () => {
     setErrorMessage('');
 
@@ -272,7 +363,12 @@ function GrowthOnboarding({
             result.error || t('growth.onboarding.languageError', 'Dil secimi uygulanamadi. Varsayilan dil ile devam ediyoruz.')
           );
         }
-        syncStep(normalizedStep + 1);
+        
+        if (normalizedStep + 1 >= totalSteps) {
+          completeOnboarding();
+        } else {
+          syncStep(normalizedStep + 1);
+        }
         return;
       }
 
@@ -318,14 +414,19 @@ function GrowthOnboarding({
         return;
       }
 
-      setStoredPrimaryGoal(selectedGoal);
-      logStepCompleted('goal', {
-        selected_goal: selectedGoal,
-        premium_teaser_enabled: resolvedConfig.premiumTeaserEnabled === true,
-      });
-      onComplete?.({
-        selectedGoal,
-        premiumTeaserEnabled: resolvedConfig.premiumTeaserEnabled === true,
+      if (currentStepKey === 'goal' && stepOrder.includes('preview') && normalizedStep + 1 < totalSteps) {
+        setStoredPrimaryGoal(selectedGoal);
+        logStepCompleted('goal', {
+          selected_goal: selectedGoal,
+          premium_teaser_enabled: resolvedConfig.premiumTeaserEnabled === true,
+        });
+        syncStep(normalizedStep + 1);
+        return;
+      }
+
+      completeOnboarding({
+        logGoalStep: currentStepKey === 'goal',
+        premiumTeaserOverride: currentStepKey === 'preview' ? false : undefined,
       });
     } catch (error) {
       setErrorMessage(error?.message || t('growth.onboarding.genericError', 'Bu adim tamamlanirken bir sorun olustu.'));
@@ -506,7 +607,7 @@ function GrowthOnboarding({
                 <div>
                   <div style={{ fontWeight: 800, marginBottom: 4 }}>{t('growth.onboarding.locationTitleShort', 'Konum')}</div>
                   <div style={{ fontSize: 13, opacity: 0.82, lineHeight: 1.5 }}>
-                    {t('growth.onboarding.locationDescriptionShort', 'Namaz vakitlerini bulundugun yere gore daha dogru hesaplar.')}
+                    {t('growth.onboarding.locationDescriptionShort', 'Namaz vakitlerini bulundugun yere gore dogru hesaplar.')}
                   </div>
                 </div>
               </div>
@@ -551,7 +652,7 @@ function GrowthOnboarding({
                 <div>
                   <div style={{ fontWeight: 800, marginBottom: 4 }}>{t('growth.onboarding.notificationsTitleShort', 'Bildirimler')}</div>
                   <div style={{ fontSize: 13, opacity: 0.82, lineHeight: 1.5 }}>
-                    {t('growth.onboarding.notificationsDescriptionShort', 'Vakitleri, gunluk gorevleri ve geri donus anlarini kacirmazsin.')}
+                    {t('growth.onboarding.notificationsDescriptionShort', 'Vakitleri ve 2 dakikalik gunluk adimi kacirmamana yardim eder.')}
                   </div>
                 </div>
               </div>
@@ -633,12 +734,122 @@ function GrowthOnboarding({
                 </div>
                 <div>
                   <div style={{ fontWeight: 900, color: '#f7f5ef', marginBottom: 4 }}>
-                    {t('growth.onboarding.premiumTeaserTitle', 'Istersen daha derin destek de acilabilir')}
+                    {t('growth.onboarding.premiumTeaserTitle', 'Ritim oturunca daha derin destek acilabilir')}
                   </div>
                   <div style={{ fontSize: 13, lineHeight: 1.55, color: 'rgba(247,245,239,0.84)' }}>
-                    {t('growth.onboarding.premiumTeaserDesc', 'Kurulum bitince AI rehberlik, haftalik derinlik ve aile ritmi icin sakin bir Pro onerisi gosterebiliriz.')}
+                    {t('growth.onboarding.premiumTeaserDesc', 'Once ilk adimi tamamla; sonra haftalik icgoru ve daha sakin rehberlik icin Pro onerisi gosterebiliriz.')}
                   </div>
                 </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {currentStepKey === 'preview' && (
+          <div style={{ display: 'grid', gap: 12, marginBottom: 20 }}>
+            <div style={{
+              borderRadius: 18,
+              padding: 16,
+              border: '1px solid rgba(212, 175, 55, 0.24)',
+              background: 'rgba(255,255,255,0.07)'
+            }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                marginBottom: 10,
+                borderRadius: 999,
+                padding: '6px 10px',
+                background: 'rgba(212, 175, 55, 0.14)',
+                color: '#f3d27b',
+                fontSize: 12,
+                fontWeight: 900
+              }}>
+                <Sparkles size={14} />
+                {t('growth.onboarding.previewBadge', 'Bugunluk ritim')}
+              </div>
+              <h3 style={{ margin: '0 0 6px', color: '#f7f5ef', fontSize: 20 }}>
+                {huzurRitmiPreview.title}
+              </h3>
+              <p style={{ margin: 0, color: 'rgba(247,245,239,0.82)', lineHeight: 1.55, fontSize: 14 }}>
+                {huzurRitmiPreview.subtitle}
+              </p>
+            </div>
+
+            {huzurRitmiPreview.steps.map((step, index) => (
+              <div
+                key={step.label}
+                style={{
+                  display: 'flex',
+                  gap: 12,
+                  padding: '12px 14px',
+                  borderRadius: 14,
+                  border: '1px solid rgba(255,255,255,0.10)',
+                  background: 'rgba(255,255,255,0.05)'
+                }}
+              >
+                <div style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 10,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'rgba(16, 185, 129, 0.14)',
+                  color: '#86efac',
+                  fontWeight: 900,
+                  flexShrink: 0
+                }}>
+                  {index + 1}
+                </div>
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 900, color: '#f7f5ef', marginBottom: 4 }}>
+                    {step.label}
+                  </div>
+                  <div style={{ fontSize: 13, lineHeight: 1.5, color: 'rgba(247,245,239,0.78)' }}>
+                    {step.text}
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {!isProUser && (
+              <div style={{ display: 'grid', gap: 10 }}>
+                <button
+                  onClick={openPreviewPaywall}
+                  disabled={isBusy}
+                  style={{
+                    ...baseButton,
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 8,
+                    background: '#f3d27b',
+                    color: '#14352a'
+                  }}
+                >
+                  <Crown size={18} />
+                  {t('growth.onboarding.previewProCta', 'Pro ile derin plani ac')}
+                </button>
+                <button
+                  onClick={openPreviewInvite}
+                  disabled={isBusy}
+                  style={{
+                    ...baseButton,
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 8,
+                    background: 'rgba(255,255,255,0.08)',
+                    color: '#f7f5ef',
+                    border: '1px solid rgba(255,255,255,0.14)'
+                  }}
+                >
+                  <Send size={18} />
+                  {t('growth.onboarding.previewInviteCta', '1 kisiyi davet et, 24 saat Pro ac')}
+                </button>
               </div>
             )}
           </div>

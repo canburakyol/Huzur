@@ -10,6 +10,8 @@
   secureCallableOptions,
 } = require('../common/runtime');
 
+const REFERRAL_REWARD_DURATION_MS = 24 * 60 * 60 * 1000;
+
 function sanitizeIsoTimestamp(value) {
   if (!value) return null;
 
@@ -27,6 +29,30 @@ function sanitizeIsoTimestamp(value) {
 
   const parsed = Date.parse(String(value));
   return Number.isFinite(parsed) ? new Date(parsed).toISOString() : null;
+}
+
+function timestampFromIso(adminSdk, isoValue) {
+  const parsed = Date.parse(isoValue || '');
+  if (!Number.isFinite(parsed)) return null;
+  return adminSdk.firestore.Timestamp.fromMillis(parsed);
+}
+
+function buildReferralRewardGrant({ inviterId, inviteeId, conversionId, grantedAtIso, adminSdk }) {
+  const grantedAtMs = Date.parse(grantedAtIso || '');
+  if (!Number.isFinite(grantedAtMs)) return null;
+
+  return {
+    isPro: true,
+    entitlementId: 'referral_reward',
+    source: 'referral_reward',
+    rewardType: 'inviter_24h_pro',
+    inviterId,
+    inviteeId,
+    conversionId,
+    grantedAt: adminSdk.firestore.Timestamp.fromMillis(grantedAtMs),
+    expiresAt: adminSdk.firestore.Timestamp.fromMillis(grantedAtMs + REFERRAL_REWARD_DURATION_MS),
+    updatedAt: adminSdk.firestore.FieldValue.serverTimestamp(),
+  };
 }
 
 function normalizeNonNegativeInteger(value) {
@@ -153,17 +179,20 @@ function createSyncReferralStateHandler(deps = {}) {
       } else {
         const inviterSummaryRef = dbRef.collection('referrals').doc(inviterId);
         const conversionRef = dbRef.collection('referralConversions').doc(`${inviterId}_${userId}`);
+        const inviterRewardRef = dbRef.collection('users').doc(inviterId).collection('subscription').doc('referralReward');
 
         await dbRef.runTransaction(async (transaction) => {
-          const [conversionSnapshot, inviterSummarySnapshot, inviteeStateSnapshot] = await Promise.all([
+          const [conversionSnapshot, inviterSummarySnapshot, inviteeStateSnapshot, inviterRewardSnapshot] = await Promise.all([
             transaction.get(conversionRef),
             transaction.get(inviterSummaryRef),
             transaction.get(referralStateRef),
+            transaction.get(inviterRewardRef),
           ]);
 
           const conversionData = conversionSnapshot.exists ? conversionSnapshot.data() || {} : {};
           const inviterSummaryData = inviterSummarySnapshot.exists ? inviterSummarySnapshot.data() || {} : {};
           const inviteeStateData = inviteeStateSnapshot.exists ? inviteeStateSnapshot.data() || {} : {};
+          const inviterRewardData = inviterRewardSnapshot.exists ? inviterRewardSnapshot.data() || {} : {};
 
           const resolvedAcceptedAt = sanitizeIsoTimestamp(conversionData?.acceptedAt)
             || sanitizeIsoTimestamp(inviteeStateData?.inviteAcceptedAt)
@@ -226,6 +255,28 @@ function createSyncReferralStateHandler(deps = {}) {
             syncIssue: null,
             syncedAt: fieldValue.serverTimestamp(),
           }, { merge: true });
+
+          if (resolvedConvertedAt && !sanitizeIsoTimestamp(conversionData?.rewardGrantedAt)) {
+            const conversionId = `${inviterId}_${userId}`;
+            const rewardGrant = buildReferralRewardGrant({
+              inviterId,
+              inviteeId: userId,
+              conversionId,
+              grantedAtIso: resolvedConvertedAt,
+              adminSdk,
+            });
+
+            if (rewardGrant) {
+              transaction.set(inviterRewardRef, {
+                ...rewardGrant,
+                createdAt: inviterRewardData?.createdAt || fieldValue.serverTimestamp(),
+              }, { merge: true });
+              transaction.set(conversionRef, {
+                rewardGrantedAt: timestampFromIso(adminSdk, resolvedConvertedAt),
+                rewardExpiresAt: rewardGrant.expiresAt,
+              }, { merge: true });
+            }
+          }
         });
       }
     }
@@ -294,4 +345,6 @@ exports.__test = {
   createSyncReferralStateHandler,
   createGetReferralServerSnapshotHandler,
   buildReferralServerSnapshot,
+  buildReferralRewardGrant,
+  REFERRAL_REWARD_DURATION_MS,
 };

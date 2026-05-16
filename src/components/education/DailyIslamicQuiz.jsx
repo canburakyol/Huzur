@@ -33,24 +33,28 @@ const DailyIslamicQuiz = ({ onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(initialData.score);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [showExplanation, setShowExplanation] = useState(false);
   const [isFinished, setIsFinished] = useState(initialData.finished);
   const [hasPlayedToday] = useState(initialData.played);
 
   const handleOptionSelect = (index) => {
     if (selectedOption !== null) return; // Zaten seçilmiş
     setSelectedOption(index);
-    
-    const isCorrect = index === questions[currentIndex].answer;
+    setShowExplanation(true);
+  };
+
+  const handleNext = () => {
+    const isCorrect = selectedOption === questions[currentIndex].answer;
     if (isCorrect) setScore(prev => prev + 1);
 
-    setTimeout(() => {
-      setSelectedOption(null);
-      if (currentIndex < questions.length - 1) {
-        setCurrentIndex(prev => prev + 1);
-      } else {
-        finishQuiz(score + (isCorrect ? 1 : 0));
-      }
-    }, 1200);
+    setShowExplanation(false);
+    setSelectedOption(null);
+    
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+    } else {
+      finishQuiz(score + (isCorrect ? 1 : 0));
+    }
   };
 
   const finishQuiz = (finalScore) => {
@@ -200,6 +204,34 @@ const DailyIslamicQuiz = ({ onClose }) => {
             )
           })}
         </div>
+
+        {/* Explanation Box */}
+        {showExplanation && currentQ.explanation && (
+          <div className="reveal-stagger" style={{ 
+            marginTop: '24px', padding: '20px', borderRadius: '16px',
+            background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)',
+            animation: 'fadeIn 0.3s ease'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+              <Brain size={18} color="#3b82f6" />
+              <span style={{ fontSize: '0.85rem', fontWeight: '800', color: '#3b82f6', textTransform: 'uppercase' }}>Bilgi</span>
+            </div>
+            <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--nav-text)', lineHeight: '1.6', fontWeight: '600' }}>
+              {currentQ.explanation}
+            </p>
+            <button
+              onClick={handleNext}
+              style={{
+                marginTop: '16px', width: '100%', padding: '14px', borderRadius: '12px',
+                background: 'linear-gradient(135deg, var(--nav-accent), #f59e0b)',
+                color: 'white', border: 'none', fontSize: '1rem', fontWeight: '800',
+                cursor: 'pointer'
+              }}
+            >
+              {currentIndex < questions.length - 1 ? 'Sonraki Soru →' : 'Sonuçları Gör'}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

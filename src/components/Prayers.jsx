@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import * as LucideIcons from 'lucide-react';
 import { prayerCategories, prayers } from '../data/prayers';
 import { ChevronLeft, BookOpen } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
+
+const IconMapper = ({ iconName, size = 24, strokeWidth = 2, color }) => {
+    const IconComponent = LucideIcons[iconName] || LucideIcons.Book;
+    return <IconComponent size={size} strokeWidth={strokeWidth} color={color} />;
+};
 
 function Prayers({ onClose }) {
     const { t } = useTranslation();
@@ -126,7 +132,9 @@ function Prayers({ onClose }) {
                                     borderRadius: '50%'
                                 }} />
                                 
-                                <div style={{ fontSize: '32px', marginBottom: '8px' }}>{category.icon}</div>
+                                <div style={{ marginBottom: '8px', color: primaryGreen }}>
+                                    <IconMapper iconName={category.icon} size={32} strokeWidth={1.5} />
+                                </div>
                                 <h3 style={{ 
                                     margin: '0 0 4px 0', 
                                     fontSize: '14px', 
@@ -197,7 +205,9 @@ function Prayers({ onClose }) {
                     >
                         <ChevronLeft size={24} />
                     </button>
-                    <div style={{ fontSize: '32px' }}>{category.icon}</div>
+                    <div style={{ color: 'white' }}>
+                        <IconMapper iconName={category.icon} size={32} strokeWidth={1.5} />
+                    </div>
                     <div style={{ flex: 1 }}>
                         <h2 style={{ margin: 0, fontSize: '20px', color: 'white', fontWeight: '700' }}>
                             {t(category.name)}

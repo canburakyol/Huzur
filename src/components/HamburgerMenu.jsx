@@ -122,7 +122,7 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
 
   const handleItemClick = (item) => {
     handleClose();
-    onSelectFeature(item.component);
+    onSelectFeature(item.component, 'hamburger_menu');
   };
 
   const topBadges = badgeDetails.slice(0, 3);

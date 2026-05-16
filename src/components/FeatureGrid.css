@@ -1,0 +1,55 @@
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 0 5px;
+}
+
+.bento-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 10px;
+  background: var(--glass-bg);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.bento-btn:active {
+  transform: scale(0.95);
+  background: rgba(255,255,255,0.1);
+}
+
+.span-2 {
+  grid-column: span 2;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.bento-icon {
+  font-size: 26px;
+  transition: transform 0.3s;
+  margin-bottom: 6px;
+}
+
+.span-2 .bento-icon {
+  margin-bottom: 0;
+}
+
+.bento-btn:hover .bento-icon {
+  transform: scale(1.08);
+}
+
+.bento-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.span-2 .bento-label {
+  font-size: 14px;
+}

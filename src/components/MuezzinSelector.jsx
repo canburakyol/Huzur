@@ -4,6 +4,7 @@ import { Check, Play, Pause, Volume2 } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
 import { MUEZZINS } from '../data/muezzinData';
+import { logger } from '../utils/logger';
 
 const STORAGE_KEY_MUEZZIN = 'selected_muezzin_id';
 
@@ -38,7 +39,7 @@ function MuezzinSelector({ onClose }) {
             }
             audioRef.current = new Audio(muezzin.audioUrl);
             audioRef.current.volume = 0.5;
-            audioRef.current.play().catch(err => console.error("Audio play error:", err));
+            audioRef.current.play().catch(err => logger.error("Audio play error:", err));
             audioRef.current.onended = () => setPlayingId(null);
             setPlayingId(muezzin.id);
         }

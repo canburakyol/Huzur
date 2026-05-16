@@ -30,6 +30,8 @@ module.exports = {
     createJoinHatimByCodeHandler: hatimTest.createJoinHatimByCodeHandler,
     createGenerateWeeklyInsightsV1Handler: aiTest.createGenerateWeeklyInsightsV1Handler,
     createSyncFcmTokenHandler: authTest.createSyncFcmTokenHandler,
+    readCombinedProStatus: authTest.readCombinedProStatus,
+    resolveActiveStatus: authTest.resolveActiveStatus,
     createPrayForDuaHandler: socialTest.createPrayForDuaHandler,
     createSyncReferralStateHandler: referralTest.createSyncReferralStateHandler,
     createGetReferralServerSnapshotHandler: referralTest.createGetReferralServerSnapshotHandler,

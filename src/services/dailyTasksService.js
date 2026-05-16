@@ -7,6 +7,7 @@ import { DAILY_TASKS, TASK_BADGES, TASK_CATEGORIES } from '../data/dailyTasksDat
 import { storageService } from './storageService';
 import { saveDailyTasksSnapshot } from './engagementSummaryService';
 import { STORAGE_KEYS } from '../constants';
+import { logger } from '../utils/logger';
 
 /**
  * Bugünün tarihini YYYY-MM-DD formatında döndürür
@@ -57,7 +58,7 @@ export const getTodayTasks = () => {
     return newTasks;
     
   } catch (error) {
-    console.warn('[DailyTasksService] Error getting tasks:', error);
+    logger.warn('[DailyTasksService] Error getting tasks:', error);
     return selectDailyTasks();
   }
 };
@@ -77,7 +78,7 @@ const saveTodayTasks = (tasks) => {
       tasks
     });
   } catch (error) {
-    console.warn('[DailyTasksService] Error saving tasks:', error);
+    logger.warn('[DailyTasksService] Error saving tasks:', error);
   }
 };
 
@@ -112,7 +113,7 @@ export const completeTask = (taskId) => {
     };
     
   } catch (error) {
-    console.warn('[DailyTasksService] Error completing task:', error);
+    logger.warn('[DailyTasksService] Error completing task:', error);
     return { success: false, message: 'Bir hata oluştu' };
   }
 };
@@ -141,7 +142,7 @@ export const uncompleteTask = (taskId) => {
     return { success: true };
     
   } catch (error) {
-    console.warn('[DailyTasksService] Error uncompleting task:', error);
+    logger.warn('[DailyTasksService] Error uncompleting task:', error);
     return { success: false };
   }
 };
@@ -156,7 +157,7 @@ export const getStats = () => {
       return data;
     }
   } catch (error) {
-    console.warn('[DailyTasksService] Error getting stats:', error);
+    logger.warn('[DailyTasksService] Error getting stats:', error);
   }
   
   return {
@@ -183,7 +184,7 @@ const saveStats = (stats) => {
   try {
     storageService.setItem('huzur_task_stats', stats);
   } catch (error) {
-    console.warn('[DailyTasksService] Error saving stats:', error);
+    logger.warn('[DailyTasksService] Error saving stats:', error);
   }
 };
 

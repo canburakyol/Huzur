@@ -181,6 +181,7 @@ export const STORAGE_KEYS = {
   ONBOARDING_COMPLETED: 'growthOnboardingCompleted',
   ONBOARDING_STARTED: 'growthOnboardingStarted',
   ONBOARDING_STEP: 'growthOnboardingStep',
+  FIRST_ACTIVATION_FEATURE_OPENED: 'firstActivationFeatureOpened',
   FIRST_IBADAH_ACTION_DONE: 'firstIbadahActionDone',
   APP_LANGUAGE: 'app_language',
   USER_PRIMARY_GOAL: 'user_primary_goal',

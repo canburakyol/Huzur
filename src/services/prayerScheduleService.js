@@ -92,7 +92,7 @@ export const syncPrayerSchedule = async ({
 
     crashlyticsReporter.logCrash(
       `[PrayerSchedule] synced success=${Boolean(result?.success)} lat=${roundCoordinate(latitude)} lon=${roundCoordinate(longitude)}`
-    ).catch(() => {});
+    );
 
     return result;
   } catch (error) {
@@ -103,8 +103,8 @@ export const syncPrayerSchedule = async ({
         latitude: roundCoordinate(latitude),
         longitude: roundCoordinate(longitude)
       })
-    ).catch(() => {});
-    return { success: false, error: error?.message || 'Prayer schedule sync failed' };
+    );
+    throw error;
   }
 };
 

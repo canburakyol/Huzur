@@ -9,40 +9,52 @@ import { ensureAuthenticated } from '../services/authService';
 import { logger } from '../utils/logger';
 import { DUA_DISCOVERY_SEEDS } from '../features/social/discoverySeeds';
 
+const mergeDuasWithSeeds = (duaList = []) => [...DUA_DISCOVERY_SEEDS, ...duaList]
+  .reduce((acc, dua) => {
+    if (!dua?.id || acc.some((item) => item.id === dua.id)) {
+      return acc;
+    }
+
+    acc.push(dua);
+    return acc;
+  }, [])
+  .sort((a, b) => (b.createdAtMs || b.createdAt?.seconds || 0) - (a.createdAtMs || a.createdAt?.seconds || 0));
+
 export const useDua = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [duas, setDuas] = useState([]);
+  const [duas, setDuas] = useState(() => mergeDuasWithSeeds());
   const [userId, setUserId] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [prayedDuaIds, setPrayedDuaIds] = useState(() => new Set());
   const [submittingDuaIds, setSubmittingDuaIds] = useState(() => new Set());
 
   const loadRecentDuas = async () => {
-    const duaList = await duaService.getRecentDuas(25);
-    const mergedDuas = [...DUA_DISCOVERY_SEEDS, ...duaList]
-      .reduce((acc, dua) => {
-        if (!dua?.id || acc.some((item) => item.id === dua.id)) {
-          return acc;
-        }
-
-        acc.push(dua);
-        return acc;
-      }, [])
-      .sort((a, b) => (b.createdAtMs || b.createdAt?.seconds || 0) - (a.createdAtMs || a.createdAt?.seconds || 0));
-
-    setDuas(mergedDuas);
+    try {
+      const duaList = await duaService.getRecentDuas(25);
+      setDuas(mergeDuasWithSeeds(duaList));
+      setError(null);
+    } catch (err) {
+      logger.warn('[useDua] Falling back to seed duas:', err);
+      setDuas(mergeDuasWithSeeds());
+      setError(null);
+    }
   };
 
   useEffect(() => {
     const initAuth = async () => {
       try {
         const uid = await ensureAuthenticated();
+        if (!uid) {
+          throw new Error('Firebase auth returned no user');
+        }
         setUserId(uid);
         logger.log('[useDua] Auth initialized, userId:', uid);
       } catch (err) {
-        logger.error('[useDua] Auth error:', err);
-        setError('Firebase kimlik dogrulamasi basarisiz. Internetinizi kontrol edip tekrar deneyin.');
+        logger.warn('[useDua] Auth unavailable, using seed duas:', err);
+        setDuas(mergeDuasWithSeeds());
+        setLoading(false);
+        setError(null);
       } finally {
         setAuthLoading(false);
       }

@@ -1,8 +1,19 @@
-import { BookOpen, ChevronRight, Crown, Search, X } from 'lucide-react';
+import { BookOpen, ChevronRight, Crown, Search, X, BookOpen as BookOpenIcon, ScrollText, GraduationCap, ClipboardList, Headphones, Video, CircleHelp } from 'lucide-react';
+
+const iconMap = {
+    'BookOpen': BookOpenIcon,
+    'ScrollText': ScrollText,
+    'GraduationCap': GraduationCap,
+    'ClipboardList': ClipboardList,
+    'Headphones': Headphones,
+    'Video': Video,
+    'CircleHelp': CircleHelp
+};
 
 const renderIcon = (icon, fallback) => {
-  if (typeof icon === 'string') {
-    return <span style={{ fontSize: '2rem' }}>{icon}</span>;
+  if (typeof icon === 'string' && iconMap[icon]) {
+    const IconComponent = iconMap[icon];
+    return <IconComponent size={32} strokeWidth={1.5} />;
   }
 
   return icon || fallback;
@@ -158,7 +169,7 @@ function CategoryList({
             >
               <div className="settings-card-left">
                 <div className="settings-icon-box" style={{ background: 'var(--nav-hover)', color: 'var(--nav-accent)' }}>
-                  <span style={{ fontSize: '1.2rem' }}>{result.icon}</span>
+                  {renderIcon(result.icon)}
                 </div>
                 <div className="settings-user-info">
                   <div className="settings-label">{result.match || getItemTitle(result.item, t)}</div>

@@ -7,7 +7,6 @@ import { THEMES, ACCENT_COLORS } from '../data/themes';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { storageService } from '../services/storageService';
 import { logger } from '../utils/logger';
-import { recordAppOpen } from '../services/userActivityTracker';
 import { scheduleDeferredTask } from '../utils/startupScheduler';
 import crashlyticsReporter from '../utils/crashlyticsReporter';
 
@@ -115,8 +114,6 @@ export const useAppInit = (timings) => {
   useEffect(() => {
     let isCancelled = false;
 
-    recordAppOpen();
-
     const cancelServiceInitialization = scheduleDeferredTask(async () => {
       try {
         const [{ initializeRevenueCat }, { syncProStatusFromServer }] = await Promise.all([
@@ -186,6 +183,10 @@ export const useAppInit = (timings) => {
         targetTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       }
       document.documentElement.setAttribute('data-theme', targetTheme);
+    }
+
+    if (!storageService.hasKey('APP_INSTALL_DATE')) {
+      storageService.setItem('APP_INSTALL_DATE', Date.now());
     }
 
     window.addEventListener('proStatusChanged', handleProStatusChange);
@@ -294,7 +295,10 @@ export const useAppInit = (timings) => {
 
   const clearBadge = () => setNewBadge(null);
 
-  return { streakData, newBadge, clearBadge, isProUser };
+  const installDate = storageService.getNumber('APP_INSTALL_DATE', Date.now());
+  const isNewUser = (Date.now() - installDate) < (7 * 24 * 60 * 60 * 1000);
+
+  return { streakData, newBadge, clearBadge, isProUser, isNewUser };
 };
 
 export default useAppInit;

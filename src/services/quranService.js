@@ -199,7 +199,10 @@ export const getSurahComplete = async (surahNumber, translationId = DEFAULT_TURK
         const [arabicPayload, translationPayload, transliterationPayload] = await Promise.all([
             fetchJson(`${BASE_URL}/surah/${surahNumber}`),
             fetchJson(`${BASE_URL}/surah/${surahNumber}/${normalizedTranslationId}`),
-            fetchJson(transliterationUrl).catch(() => null)
+            fetchJson(transliterationUrl).catch((error) => {
+                logger.warn('[QuranService] Transliteration fetch failed', { surahNumber, error: error?.message });
+                return null;
+            })
         ]);
 
         const transliterationByAyah = transliterationPayload?.data?.ayahs

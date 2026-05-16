@@ -2,9 +2,6 @@
 // Comprehensive Islamic Library Content
 
 // ==================== 1. KİTAPLAR ====================
-import { prayers as PRAYERS } from '../../../data/prayers';
-export { PRAYERS };
-
 export const BOOKS = [
     {
         id: 'islam-tarihi',
@@ -771,13 +768,12 @@ export const VIDEO = [
 
 // Tüm kategoriler
 export const LIBRARY_CATEGORIES = [
-    { id: 'books', title: 'Kitaplar', icon: '📚', data: BOOKS },
-    { id: 'texts', title: 'Dini Metinler', icon: '📜', data: RELIGIOUS_TEXTS },
-    { id: 'education', title: 'Eğitim', icon: '🎓', data: EDUCATION },
-    { id: 'references', title: 'Referanslar', icon: '📋', data: REFERENCES },
-    { id: 'prayers', title: 'Peygamber Duaları', icon: '🤲', data: PRAYERS },
-    { id: 'audio', title: 'Sesli Kütüphane', icon: '🎧', data: AUDIO, isPro: true },
-    { id: 'video', title: 'İslami Akademi', icon: '🎬', data: VIDEO },
-    { id: 'faq', title: 'Soru-Cevap', icon: '❓', data: FAQ }
+    { id: 'books', title: 'Kitaplar', icon: 'BookOpen', data: BOOKS },
+    { id: 'texts', title: 'Dini Metinler', icon: 'ScrollText', data: RELIGIOUS_TEXTS },
+    { id: 'education', title: 'Eğitim', icon: 'GraduationCap', data: EDUCATION },
+    { id: 'references', title: 'Referanslar', icon: 'ClipboardList', data: REFERENCES },
+    { id: 'audio', title: 'Sesli Kütüphane', icon: 'Headphones', data: AUDIO, isPro: true },
+    { id: 'video', title: 'İslami Akademi', icon: 'Video', data: VIDEO },
+    { id: 'faq', title: 'Soru-Cevap', icon: 'CircleHelp', data: FAQ }
 ];
 

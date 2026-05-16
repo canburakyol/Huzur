@@ -4,35 +4,35 @@ import { storageService } from '../services/storageService';
 export const PRIMARY_GOALS = {
   prayer_rhythm: {
     id: 'prayer_rhythm',
-    label: 'Namaz ve gunluk ritim',
+    label: 'Namaz ve 2 dakikalik ritim',
     icon: 'Prayer',
     homeAction: {
       feature: 'dailyTasks',
-      title: 'Bugunun ritmini kur',
-      description: 'Gunluk gorevlerini tamamlayip ibadet duzenini bugunden sabitle.',
-      cta: 'Gunluk gorevlere git'
+      title: 'Bugunun ibadet ritmini kur',
+      description: 'Bir vakit hatirlatmasi ve kisa bir gunluk adimla bugunu bos gecirme.',
+      cta: '2 dakikalik adimi ac'
     }
   },
   quran_learning: {
     id: 'quran_learning',
-    label: 'Kuran ve ogrenme',
+    label: 'Kuran ve dua ritmi',
     icon: 'BookOpen',
     homeAction: {
       feature: 'dailyQuiz',
-      title: 'Bugun bir bilgi adimi at',
-      description: 'Gunluk quiz ile hizli basla, sonra Kuran ve egitim ozelliklerine gec.',
-      cta: 'Gunluk testi ac'
+      title: 'Bugun Kuran ile kisa bir bag kur',
+      description: 'Uzun bir ders degil; sadece 2 dakikalik okuma, dua veya bilgi adimi.',
+      cta: 'Kisa adimi ac'
     }
   },
   family_consistency: {
     id: 'family_consistency',
-    label: 'Ailece istikrar kurmak',
+    label: 'Ailece gunluk ritim',
     icon: 'Users',
     homeAction: {
       feature: 'family',
-      title: 'Aile ritmini canli tut',
-      description: 'Haftalik aile hedefine bugun kucuk bir katki yap ve ilerlemeyi gorunur kil.',
-      cta: 'Aile ekranina git'
+      title: 'Ailece bugunun kucuk adimini sec',
+      description: 'Aile hedefini buyutmeden, bugun gorunur bir ibadet ritmi baslat.',
+      cta: 'Aile ritmini ac'
     }
   }
 };

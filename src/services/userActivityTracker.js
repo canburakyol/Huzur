@@ -30,6 +30,42 @@ const saveHistory = (history) => {
 
 const getTodayStr = () => new Date().toISOString().split('T')[0];
 
+const diffInDays = (fromTs, toTs) => {
+  if (!fromTs || !toTs) return null;
+  const fromDate = new Date(fromTs);
+  const toDate = new Date(toTs);
+  if (Number.isNaN(fromDate.getTime()) || Number.isNaN(toDate.getTime())) return null;
+
+  const fromStart = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+  const toStart = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate());
+  return Math.max(0, Math.round((toStart - fromStart) / (1000 * 60 * 60 * 24)));
+};
+
+export const getLifecycleStage = (daysSinceLastOpen) => {
+  if (daysSinceLastOpen === null || daysSinceLastOpen === undefined) return 'first_open';
+  if (daysSinceLastOpen <= 0) return 'same_day';
+  if (daysSinceLastOpen === 1) return 'returning_1d';
+  if (daysSinceLastOpen <= 4) return 'cooling_2_4d';
+  if (daysSinceLastOpen <= 13) return 'comeback_5_13d';
+  return 'dormant_14d_plus';
+};
+
+const getDominantActivitySlot = (history) => {
+  const pattern = { morning: 0, afternoon: 0, evening: 0, night: 0 };
+
+  history.forEach(({ hour }) => {
+    if (hour >= 5 && hour < 12) pattern.morning++;
+    else if (hour >= 12 && hour < 17) pattern.afternoon++;
+    else if (hour >= 17 && hour < 22) pattern.evening++;
+    else pattern.night++;
+  });
+
+  return Object.entries(pattern).reduce(
+    (best, [slot, count]) => (count > best.count ? { slot, count } : best),
+    { slot: 'unknown', count: 0 }
+  ).slot;
+};
+
 // ── Ana API ──────────────────────────────────────────────────────
 
 /**
@@ -39,6 +75,8 @@ const getTodayStr = () => new Date().toISOString().split('T')[0];
 export const recordAppOpen = () => {
   const history = getHistory();
   const now = new Date();
+  const previousOpen = history.find((item) => Number(item?.ts) > 0) || null;
+  const daysSinceLastOpen = previousOpen ? diffInDays(previousOpen.ts, now.getTime()) : null;
   const entry = {
     date: getTodayStr(),
     hour: now.getHours(),
@@ -49,7 +87,16 @@ export const recordAppOpen = () => {
   const recentSameHour = history.find(
     (h) => h.date === entry.date && Math.abs(h.hour - entry.hour) < 1
   );
-  if (recentSameHour) return;
+  if (recentSameHour) {
+    return {
+      recorded: false,
+      days_since_last_open: daysSinceLastOpen,
+      lifecycle_stage: getLifecycleStage(daysSinceLastOpen),
+      active_days_14d: new Set(history.map((item) => item.date).filter(Boolean)).size,
+      dominant_activity_slot: getDominantActivitySlot(history),
+      previous_open_date: previousOpen?.date || ''
+    };
+  }
 
   history.unshift(entry);
 
@@ -60,6 +107,15 @@ export const recordAppOpen = () => {
   const trimmed = history.filter((h) => h.ts > cutoffTs);
 
   saveHistory(trimmed);
+
+  return {
+    recorded: true,
+    days_since_last_open: daysSinceLastOpen,
+    lifecycle_stage: getLifecycleStage(daysSinceLastOpen),
+    active_days_14d: new Set(trimmed.map((item) => item.date).filter(Boolean)).size,
+    dominant_activity_slot: getDominantActivitySlot(trimmed),
+    previous_open_date: previousOpen?.date || ''
+  };
 };
 
 /**

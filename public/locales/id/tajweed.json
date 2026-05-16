@@ -126,6 +126,58 @@
         }
       }
     },
-    "makhraj": "Articulation Points"
+    "makhraj": "Articulation Points",
+    "academy": "Huzur Academy",
+    "mainSubtitle": "Learn tajweed rules with clear and simple guidance.",
+    "module": "Module",
+    "availableLessons": "Available Lessons",
+    "quiz": "Quiz",
+    "quizTitle": "Tajweed Quiz",
+    "quizSubtitle": "Reinforce what you learned with a quick test.",
+    "quizDesc": "Measure your tajweed knowledge with a short review.",
+    "levels": {
+      "beginner": "Beginner",
+      "beginnerDesc": "Learn the core tajweed rules step by step.",
+      "intermediate": "Intermediate",
+      "intermediateDesc": "Move into intermediate rules that strengthen your recitation.",
+      "advanced": "Advanced",
+      "advancedDesc": "Refine your recitation with advanced tajweed details."
+    },
+    "faq": {
+      "items": {
+        "tenvin": {
+          "question": "Tenvin nedir?",
+          "answer": "Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Uc cesidi vardir:\n• Fethatan (ً): Ustun tenvin\n• Kesretan (ٍ): Esre tenvin\n• Dammetan (ٌ): Otre tenvin\nTenvin, kelimenin sonundaki nunun yazilmadan okunmasidir."
+        },
+        "gunne": {
+          "question": "Gunneli okuyus nasil olur?",
+          "answer": "Gunne, nun ve mim harflerinin genizden okunmasidir. Iki hareke miktari tutulur.\n• Idgam (mealgunne): Nun sakineden sonra ي، ن، م، و gelirse\n• Ihfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• Iklab: Nun sakineden sonra ب gelirse, mime donusur ve gunneli okunur."
+        },
+        "kalkale": {
+          "question": "Kalkale harfleri hangileri?",
+          "answer": "Kalkale harfleri 5 tanedir ve \"قطب جد\" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) oldugunda, cikis noktasinda bir sicrama veya titresim yapilir."
+        },
+        "med": {
+          "question": "Med harfleri nelerdir?",
+          "answer": "Uzatma (Med) harfleri uctur: Elif (ا), Vav (و) ve Ya (ي). Bu harfler kendinden onceki harfi bir elif miktari (yaklasik 1-1.5 saniye) uzatir."
+        },
+        "makhraj": {
+          "question": "Mahrec nedir?",
+          "answer": "Mahrec, harflerin agizdan cikis yeridir. Kuran okurken harflerin dogru mahreclerinden cikarilmasi anlamin bozulmamasi icin cok onemlidir."
+        },
+        "ihfa": {
+          "question": "Ihfa nasil yapilir?",
+          "answer": "Ihfa, sozlukte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiginde, nun sesini genizden getirerek hafifce gizleyerek okumaktir."
+        },
+        "sekte": {
+          "question": "Sekte nedir?",
+          "answer": "Sekte, sesi bir an icin kesip nefes almadan beklemektir. Kuran-i Kerim'de 4 yerde sekte bulunur (Kehf, Yasin, Kiyame ve Mutaffifin surelerinde)."
+        },
+        "izhar": {
+          "question": "Izhar nedir?",
+          "answer": "Izhar, acikca okumaktir. Sakin nun veya tenvinden sonra bogaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hic tutulmadan ve gizlenmeden oldugu gibi okunur."
+        }
+      }
+    }
   }
 }

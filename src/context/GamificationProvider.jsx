@@ -5,6 +5,7 @@ import { GamificationContext } from './GamificationContext';
 import { storageService } from '../services/storageService';
 import { recordXpEvent } from '../services/engagementSummaryService';
 import { ANALYTICS_EVENTS, logBadgeEarned, logEvent, logLevelUp } from '../services/analyticsService';
+import { markFirstIbadahActionCompleted } from '../services/activationService';
 import { contributeFamilyGoalOncePerDay } from '../services/familyGoalContributionService';
 import { getXpMultiplier } from '../utils/xpMultiplier';
 
@@ -185,13 +186,16 @@ export const GamificationProvider = ({ children }) => {
       
       // Update Daily Quests
       if (category === 'zikir') {
+        markFirstIbadahActionCompleted({ feature: 'zikirmatik', source: 'streak:zikir' });
         checkQuestProgress('zikir', null, count || 1);
         void contributeFamilyGoalOncePerDay('streak_zikir', 'streak_zikir');
 
       } else if (category === 'prayer') {
+        markFirstIbadahActionCompleted({ feature: 'dailyTasks', source: 'streak:prayer' });
         checkQuestProgress('prayer', null, 1);
         void contributeFamilyGoalOncePerDay('streak_prayer', 'streak_prayer');
       } else if (category === 'quran') {
+        markFirstIbadahActionCompleted({ feature: 'quran', source: 'streak:quran' });
         checkQuestProgress('reading', null, 1);
         void contributeFamilyGoalOncePerDay('streak_quran', 'streak_quran');
       }

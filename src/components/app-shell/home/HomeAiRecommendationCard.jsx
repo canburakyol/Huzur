@@ -16,7 +16,7 @@ function HomeAiRecommendationCard({ onSelectFeature, rankingState }) {
       }}
     >
       <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
-        Huzur'dan kucuk bir not
+        Gunluk ritim notu
       </div>
       <div style={{ fontSize: '0.96rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: '6px' }}>
         {rankingState.headline}
@@ -31,7 +31,7 @@ function HomeAiRecommendationCard({ onSelectFeature, rankingState }) {
       ) : null}
       {rankingState.suggestedActionFeature && rankingState.suggestedActionLabel ? (
         <button
-          onClick={() => onSelectFeature?.(rankingState.suggestedActionFeature)}
+          onClick={() => onSelectFeature?.(rankingState.suggestedActionFeature, 'home_ai_recommendation')}
           style={{
             marginTop: '12px',
             background: 'var(--nav-accent)',

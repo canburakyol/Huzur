@@ -21,8 +21,8 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
     <div className="bottom-nav" role="navigation" aria-label={t('nav.mainNavigation', 'Main navigation')}>
       <div 
         className={`nav-item ${activeTab === 'home' ? 'active' : ''}`} 
-        onClick={() => setActiveTab('home')}
-        onKeyDown={handleKeyDown(() => setActiveTab('home'))}
+        onClick={() => setActiveTab('home', 'bottom_nav')}
+        onKeyDown={handleKeyDown(() => setActiveTab('home', 'bottom_nav'))}
         role="button"
         tabIndex={0}
         aria-current={activeTab === 'home' ? 'page' : undefined}
@@ -33,8 +33,8 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
       </div>
       <div 
         className={`nav-item ${activeTab === 'quran' ? 'active' : ''}`} 
-        onClick={() => setActiveTab('quran')}
-        onKeyDown={handleKeyDown(() => setActiveTab('quran'))}
+        onClick={() => setActiveTab('quran', 'bottom_nav')}
+        onKeyDown={handleKeyDown(() => setActiveTab('quran', 'bottom_nav'))}
         role="button"
         tabIndex={0}
         aria-current={activeTab === 'quran' ? 'page' : undefined}
@@ -45,8 +45,8 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
       </div>
       <div 
         className={`nav-item ${activeTab === 'assistant' ? 'active' : ''}`} 
-        onClick={() => setActiveTab('assistant')}
-        onKeyDown={handleKeyDown(() => setActiveTab('assistant'))}
+        onClick={() => setActiveTab('assistant', 'bottom_nav')}
+        onKeyDown={handleKeyDown(() => setActiveTab('assistant', 'bottom_nav'))}
         role="button"
         tabIndex={0}
         aria-current={activeTab === 'assistant' ? 'page' : undefined}
@@ -58,10 +58,10 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
         </div>
         <span>{t('nav.assistant')}</span>
       </div>
-      <div 
-        className={`nav-item ${activeTab === 'community' ? 'active' : ''}`} 
-        onClick={() => setActiveTab('community')}
-        onKeyDown={handleKeyDown(() => setActiveTab('community'))}
+      <div
+        className={`nav-item ${activeTab === 'community' ? 'active' : ''}`}
+        onClick={() => setActiveTab('community', 'bottom_nav')}
+        onKeyDown={handleKeyDown(() => setActiveTab('community', 'bottom_nav'))}
         role="button"
         tabIndex={0}
         aria-current={activeTab === 'community' ? 'page' : undefined}

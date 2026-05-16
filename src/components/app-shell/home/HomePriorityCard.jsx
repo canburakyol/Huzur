@@ -12,8 +12,8 @@ function HomePriorityCard({ onSelectFeature, streakData }) {
   const goalConfig = getPrimaryGoalConfig(primaryGoal);
   const action = goalConfig.homeAction;
   const supportingCopy = streakData?.current > 0
-    ? `${streakData.current} gunluk serin devam ediyor. Bugunku kucuk adim bu akisi korumana yardim eder.`
-    : 'Baslamak icin tek bir net adim sec. Home ekrani bundan sonra seni bu ritim etrafinda yonlendirecek.';
+    ? `${streakData.current} gunluk serin devam ediyor. Bugunku 2 dakikalik adim bu akisi korumana yardim eder.`
+    : 'Baslamak icin tek bir net adim yeter. Ana ekran once bu gunluk ritmi korumana yardim edecek.';
 
   return (
     <div
@@ -29,7 +29,7 @@ function HomePriorityCard({ onSelectFeature, streakData }) {
       }}
     >
       <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
-        Bugunun ana aksiyonu
+        Bugunun 2 dakikalik adimi
       </div>
       <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
         <div
@@ -60,7 +60,7 @@ function HomePriorityCard({ onSelectFeature, streakData }) {
       </div>
 
       <button
-        onClick={() => onSelectFeature(action.feature)}
+        onClick={() => onSelectFeature(action.feature, 'home_priority_card')}
         className="hover-lift"
         style={{
           marginTop: '16px',

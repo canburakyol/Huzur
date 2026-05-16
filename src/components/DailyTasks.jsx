@@ -3,6 +3,9 @@ import { Check, Circle, Trophy, Star, Flame, Target, Gift } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { getTodayTasks, completeTask, uncompleteTask, getStats, getTodayProgress, getEarnedBadges } from '../services/dailyTasksService';
+import { markFirstIbadahActionCompleted } from '../services/activationService';
+
+const IBADAH_TASK_CATEGORIES = new Set(['namaz', 'kuran', 'zikir']);
 
 const DailyTasks = ({ onClose }) => {
   const { t } = useTranslation();
@@ -34,6 +37,13 @@ const DailyTasks = ({ onClose }) => {
       const result = completeTask(taskId);
       
       if (result.success) {
+        if (IBADAH_TASK_CATEGORIES.has(task.category)) {
+          markFirstIbadahActionCompleted({
+            feature: 'dailyTasks',
+            source: `daily_task:${task.category}`,
+          });
+        }
+
         // Yeni rozet kazanıldıysa göster
         if (result.newBadge) {
           setTimeout(() => {

@@ -18,6 +18,13 @@ class RetentionAnalyticsMethods {
     });
   }
 
+  logFirstActivationFeatureOpened(feature = 'unknown', actionSource = 'onboarding') {
+    this.logEvent(ANALYTICS_EVENTS.FIRST_ACTIVATION_FEATURE_OPENED, {
+      feature,
+      source: actionSource
+    });
+  }
+
   /**
    * Track first prayer action completed
    */

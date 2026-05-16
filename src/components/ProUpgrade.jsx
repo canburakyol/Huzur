@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Check, Crown, Sparkles, X } from 'lucide-react';
 import { getExperimentVariant } from '../services/experimentService';
 import { getOfferings, purchasePackage, restorePurchases } from '../services/revenueCatService';
+import { getProDetails } from '../services/proService';
+import { getReferralProgress } from '../services/referralService';
 import {
   ANALYTICS_EVENTS,
   logEvent,
@@ -33,26 +35,26 @@ const buildPaywallCopy = (moment, valueVariant, ctaVariant) => {
 
   const commonFeatures = [
     {
-      title: 'AI rehberlik',
-      description: 'Daha derin manevi rehberlik ve daha sakin sonraki adim onerileri.',
+      title: 'Haftalik ritim rehberi',
+      description: 'Namaz, Kuran ve dua adimlarini haftalik olarak daha net gor.',
     },
     {
-      title: 'Haftalik icgoru',
-      description: 'Haftalik ritmini daha derin ve daha net goren ozetler.',
+      title: 'Daha derin manevi destek',
+      description: 'Kisa gunluk ritmin oturdugunda daha sakin sonraki adim onerileri al.',
     },
     {
-      title: 'Sessiz premium destek',
-      description: 'Ritmi korurken daha yumuşak ama daha kisisel destek momentleri.',
+      title: 'Kisisel toparlanma anlari',
+      description: 'Ritim koptugunda seni yormayan geri donus ve destek momentleri acilir.',
     },
     {
       title: 'Kesintisiz odak',
-      description: 'Reklamsiz deneyim ana fayda degil, ama odagi koruyan ikincil destek olarak burada.',
+      description: 'Reklamsiz deneyim ana ritmini bolmeden odakta kalmana yardim eder.',
     },
   ];
 
   let title = 'Huzur Pro';
-  let subtitle = 'Daha derin rehberlik, daha net haftalik icgoruler ve sakin premium destek burada acilir.';
-  let accent = 'AI rehberlik';
+  let subtitle = 'Gunluk ibadet ritmin oturdugunda haftalik icgoru ve daha derin destek burada acilir.';
+  let accent = 'Haftalik ritim';
 
   if (momentType === 'weekly_report') {
     title = 'Haftalik ritmini derinlestir';
@@ -65,15 +67,15 @@ const buildPaywallCopy = (moment, valueVariant, ctaVariant) => {
   } else if (momentType === 'onboarding_complete') {
     title = primaryGoal === 'family_consistency'
       ? 'Aile ritmini Pro ile kur'
-      : 'Baslangic akisini Pro ile derinlestir';
+      : 'Gunluk ritmini Pro ile derinlestir';
     subtitle = primaryGoal === 'family_consistency'
       ? 'Aile hedefleri, haftalik derinlik ve daha sakin rehberlik ayni akista toplansin.'
-      : 'Ilk kurulumun ustune AI rehberlik ve haftalik derinlik katmani ekle.';
+      : 'Ilk 2 dakikalik adimin ustune haftalik icgoru ve daha sakin rehberlik ekle.';
     accent = 'Aile ritmi';
   } else if (primaryGoal === 'quran_learning') {
-    title = 'Kuran yolculugunu derinlestir';
-    subtitle = 'Daha derin rehberlik ve haftalik ritim destegiyle ogrenme akisini daha sakin kur.';
-    accent = 'AI rehberlik';
+    title = 'Kuran ve dua ritmini derinlestir';
+    subtitle = 'Kisa gunluk adimlari haftalik icgoru ve sakin rehberlikle daha kalici hale getir.';
+    accent = 'Kuran ritmi';
   }
 
   const cta = ctaVariant === 'B'
@@ -83,8 +85,8 @@ const buildPaywallCopy = (moment, valueVariant, ctaVariant) => {
       : 'Aylik Plani Gor';
 
   const socialProof = valueVariant === 'B'
-    ? 'Sakin ritim ve derin rehberlik arayan kullanicilarin en cok actigi alanlardan biri.'
-    : 'Huzur Rehberi, haftalik ozet ve aile ritmi bir arada daha guclu calisir.';
+    ? 'Gunluk ritmini korumak isteyen kullanicilarin en cok actigi alanlardan biri.'
+    : 'Haftalik ozet, toparlanma destegi ve reklamsiz odak birlikte daha guclu calisir.';
 
   return {
     title,
@@ -118,6 +120,49 @@ const sortPackages = (packages = [], recommendedPackage = 'yearly') => {
   });
 };
 
+const buildReferralCopy = (proDetails, referralProgress) => {
+  if (proDetails?.active && proDetails.source === 'referral_reward') {
+    const { hours, minutes, isExpiringSoon } = proDetails.remaining;
+    return {
+      isReferralPro: true,
+      badge: 'Arkadas Hediyesi',
+      title: '24 saatlik Pro ritmin aktif',
+      subtitle: isExpiringSoon
+        ? `Hediyen ${hours > 0 ? `${hours} saat` : `${minutes} dakika`} sonra sona erecek. Dilersen sure bitmeden abonelikle devam edebilirsin.`
+        : `Hediyen ${hours} saat ${minutes} dakika daha aktif. Derin plani once sakin sekilde dene.`,
+      cta: null
+    };
+  }
+
+  if (referralProgress?.invitedByCode && !referralProgress.inviteeEligible) {
+    const steps = [
+      referralProgress.inviteAcceptedAt && 'Kayit tamamlandi',
+      referralProgress.onboardingCompletedAt && 'Onboarding tamamlandi',
+      referralProgress.firstIbadahCompletedAt && 'Ilk ibadet tamamlandi'
+    ].filter(Boolean);
+
+    const completedSteps = steps.length;
+    const totalSteps = 3;
+
+    return {
+      isReferralPending: true,
+      badge: `${completedSteps}/${totalSteps} tamamlandi`,
+      title: `${totalSteps - completedSteps} adim kaldi`,
+      subtitle: `Davet ritmini tamamlamak icin ${totalSteps - completedSteps} sakin adim daha var. Istersen Pro'yu abonelikle hemen acabilirsin.`,
+      cta: null
+    };
+  }
+
+  return {
+    isReferralPro: false,
+    isReferralPending: false,
+    badge: null,
+    title: null,
+    subtitle: null,
+    cta: null
+  };
+};
+
 const ProUpgrade = ({
   source = 'direct',
   momentType = 'assistant_success',
@@ -131,6 +176,8 @@ const ProUpgrade = ({
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [restoreResult, setRestoreResult] = useState(null);
+  const [proDetails, setProDetails] = useState(null);
+  const [referralProgress, setReferralProgress] = useState(null);
 
   const moment = useMemo(() => {
     const resolved = resolvePremiumMomentFromProps({
@@ -155,6 +202,10 @@ const ProUpgrade = ({
   const uiCopy = useMemo(
     () => buildPaywallCopy(moment, valueVariant, ctaVariant),
     [ctaVariant, moment, valueVariant]
+  );
+  const referralCopy = useMemo(
+    () => buildReferralCopy(proDetails, referralProgress),
+    [proDetails, referralProgress]
   );
 
   const closeModal = useCallback(() => {
@@ -204,6 +255,8 @@ const ProUpgrade = ({
 
   useEffect(() => {
     void loadOfferings();
+    setProDetails(getProDetails());
+    setReferralProgress(getReferralProgress());
   }, [loadOfferings]);
 
   useEffect(() => {
@@ -355,15 +408,30 @@ const ProUpgrade = ({
           </div>
           <div className="moment-chip">
             <Sparkles size={14} />
-            {uiCopy.accent}
+            {referralCopy.badge || uiCopy.accent}
           </div>
-          <h2>{uiCopy.title}</h2>
-          <p>{uiCopy.subtitle}</p>
+          <h2>{referralCopy.title || uiCopy.title}</h2>
+          <p>{referralCopy.subtitle || uiCopy.subtitle}</p>
         </div>
 
         <div className="social-proof">
           <p>{uiCopy.socialProof}</p>
         </div>
+
+        {proDetails?.active && proDetails.source === 'referral_reward' && (
+          <div className="referral-active-banner">
+            <p>
+              Arkadasinin hediyesi ile Pro aktifsin.
+              {proDetails.remaining.isExpiringSoon && (
+                <span className="expiring-soon">
+                  {' '}Sure dolmak uzere: {proDetails.remaining.hours > 0
+                    ? `${proDetails.remaining.hours} saat`
+                    : `${proDetails.remaining.minutes} dakika`} kaldi
+                </span>
+              )}
+            </p>
+          </div>
+        )}
 
         <div className="features-list">
           {uiCopy.features.map((feature) => (
@@ -401,7 +469,7 @@ const ProUpgrade = ({
                       : t('pro.monthlyFocus', 'Premium destegi yavas ve esnek sekilde acmak icin uygun.')}
                   </div>
                   <div className="package-cta">
-                    {ctaVariant === 'B' ? 'Bu destegi ac' : uiCopy.cta}
+                    {referralCopy.cta || (ctaVariant === 'B' ? 'Bu destegi ac' : uiCopy.cta)}
                   </div>
                 </button>
               );
@@ -539,6 +607,28 @@ const ProUpgrade = ({
           font-size: 13px;
           font-weight: 600;
           line-height: 1.45;
+        }
+
+        .referral-active-banner {
+          background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.08));
+          border-radius: 12px;
+          padding: 12px 14px;
+          margin-bottom: 20px;
+          border: 1px solid rgba(16, 185, 129, 0.3);
+          text-align: center;
+        }
+
+        .referral-active-banner p {
+          margin: 0;
+          color: #d1fae5;
+          font-size: 13px;
+          font-weight: 600;
+          line-height: 1.5;
+        }
+
+        .referral-active-banner .expiring-soon {
+          color: #fbbf24;
+          font-weight: 700;
         }
 
         .features-list {

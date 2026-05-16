@@ -108,6 +108,32 @@ const DAILY_REMINDERS = [
   },
 ];
 
+const WINBACK_CAMPAIGN_ID = 'winback_reactivation_v1';
+
+export const WINBACK_NOTIFICATIONS = [
+  {
+    id: 3100,
+    delayDays: 3,
+    lifecycleStage: 'cooling_2_4d',
+    title: 'Bugun ritmi tazele',
+    body: 'Buyuk bir hedef gerekmez. Huzurda tek kucuk adim gunun akisina yetebilir.'
+  },
+  {
+    id: 3101,
+    delayDays: 7,
+    lifecycleStage: 'comeback_5_13d',
+    title: 'Yavasca geri don',
+    body: 'Ara vermis olman normal. Bugun sadece sakin bir baslangic yapabilirsin.'
+  },
+  {
+    id: 3102,
+    delayDays: 14,
+    lifecycleStage: 'dormant_14d_plus',
+    title: 'Sifirdan baslamak serbest',
+    body: 'Eski ritmi yakalamaya calismadan, bugun yeni ve hafif bir adim secebilirsin.'
+  }
+];
+
 /**
  * Kullanıcı tercihlerini al
  */
@@ -116,6 +142,7 @@ export const getNotificationPreferences = () => {
     prayer: true,
     streak: true,
     reminder: true,
+    winback: true,
     updates: true,
     preAlertMinutes: 15,
     quietHoursEnabled: false,
@@ -211,6 +238,7 @@ export const updateNotificationPreferences = async (newPrefs) => {
   if (!updated.prayer) await cancelNotificationsByType('prayer');
   if (!updated.streak) await cancelNotificationsByType('streak');
   if (!updated.reminder) await cancelNotificationsByType('reminder');
+  if (!updated.winback) await cancelNotificationsByType('winback');
   
   return updated;
 };
@@ -527,6 +555,69 @@ export const scheduleDailyReminders = async () => {
   }
 };
 
+export const buildWinbackNotifications = (now = new Date(), prefs = getNotificationPreferences()) => {
+  return WINBACK_NOTIFICATIONS.map((config) => {
+    const scheduleTime = new Date(now);
+    scheduleTime.setDate(scheduleTime.getDate() + config.delayDays);
+    scheduleTime.setHours(19, 30, 0, 0);
+
+    if (!shouldScheduleAt(scheduleTime, prefs, 'winback')) {
+      return null;
+    }
+
+    return {
+      id: config.id,
+      title: config.title,
+      body: config.body,
+      schedule: {
+        at: scheduleTime,
+        allowWhileIdle: true
+      },
+      sound: NOTIFICATION_CHANNELS.REMINDER.sound,
+      channelId: NOTIFICATION_CHANNELS.REMINDER.id,
+      smallIcon: 'ic_notification',
+      extra: {
+        type: 'winback',
+        campaign: WINBACK_CAMPAIGN_ID,
+        lifecycle_stage: config.lifecycleStage,
+        delay_days: config.delayDays,
+        action: 'home'
+      }
+    };
+  }).filter(Boolean);
+};
+
+export const scheduleWinbackNotifications = async () => {
+  const prefs = getNotificationPreferences();
+  if (!prefs.winback || !prefs.reminder) return;
+
+  const hasPermission = await requestNotificationPermission();
+  if (!hasPermission) return;
+
+  await cancelNotificationsByType('winback');
+  const notifications = buildWinbackNotifications(new Date(), prefs);
+
+  try {
+    if (notifications.length === 0) return;
+
+    if (Capacitor.getPlatform() !== 'web') {
+      await LocalNotifications.schedule({ notifications });
+    }
+
+    saveScheduledNotifications('winback', notifications);
+    analyticsService.logCampaignResolved(WINBACK_CAMPAIGN_ID, 'local', 'reactivation');
+    analyticsService.logPushVariantDelivered('A', WINBACK_CAMPAIGN_ID, 'winback');
+    analyticsService.logEvent(ANALYTICS_EVENTS.NOTIFICATION_RECEIVED, {
+      type: 'winback_schedule_batch',
+      count: notifications.length,
+      campaign: WINBACK_CAMPAIGN_ID
+    });
+    logger.log('Notifications: Winback notifications scheduled', notifications.length);
+  } catch (error) {
+    logger.error('Notifications: Winback schedule error', error);
+  }
+};
+
 /**
  * Anlık bildirim göster
  */
@@ -662,7 +753,8 @@ const getScheduledNotifications = () => {
   return storageService.getItem(NOTIFICATION_STORAGE_KEY) || {
     prayer: [],
     streak: [],
-    reminder: []
+    reminder: [],
+    winback: []
   };
 };
 
@@ -761,6 +853,10 @@ export const initializeSmartNotifications = async (options = {}) => {
   if (prefs.reminder) {
     await scheduleDailyReminders();
   }
+
+  if (prefs.winback) {
+    await scheduleWinbackNotifications();
+  }
   
   logger.log('Notifications: Smart notifications initialized');
 };
@@ -770,6 +866,7 @@ export default {
   schedulePrayerNotifications,
   scheduleStreakNotifications,
   scheduleDailyReminders,
+  scheduleWinbackNotifications,
   showInstantNotification,
   showStickyNotification,
   cancelStickyNotification,
@@ -779,6 +876,7 @@ export default {
   initializeSmartNotifications,
   getNotificationPreferences,
   updateNotificationPreferences,
+  buildWinbackNotifications,
   getNotificationHistory,
   clearNotificationHistory,
   NOTIFICATION_CHANNELS

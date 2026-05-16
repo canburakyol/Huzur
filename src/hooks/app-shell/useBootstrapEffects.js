@@ -6,6 +6,7 @@ import crashlyticsReporter, {
   buildCrashContext
 } from '../../utils/crashlyticsReporter';
 import { analyticsService } from '../../services/analyticsService';
+import { recordAppOpen } from '../../services/userActivityTracker';
 import { logger } from '../../utils/logger';
 
 export function useBootstrapEffects() {
@@ -21,8 +22,9 @@ export function useBootstrapEffects() {
   }, []);
 
   useEffect(() => {
+    const appOpenContext = recordAppOpen();
     analyticsService.init();
-    analyticsService.logAppOpen('cold_start');
+    analyticsService.logAppOpen('cold_start', appOpenContext);
   }, []);
 
   useEffect(() => {

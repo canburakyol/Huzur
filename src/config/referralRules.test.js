@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { evaluateReferralRewardEligibility, isReferralRewardBlocked, REFERRAL_ANTI_ABUSE_RULES, REFERRAL_RULES } from '../config/referralRules';
 
 describe('referralRules', () => {

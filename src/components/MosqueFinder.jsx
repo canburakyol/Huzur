@@ -4,6 +4,7 @@ import { ArrowLeft, MapPin, Navigation, Loader, RefreshCw } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { logger } from '../utils/logger';
 
 // Cami ikonu
 const mosqueIcon = new L.DivIcon({
@@ -86,7 +87,7 @@ const MosqueFinder = ({ onClose }) => {
 
             setMosques(mosqueList.slice(0, 15)); // En yakın 15 cami
         } catch (err) {
-            console.error('Cami arama hatası:', err);
+            logger.error('Cami arama hatası:', err);
             // Hata durumunda örnek veriler
             setMosques([]);
         } finally {
@@ -123,7 +124,7 @@ const MosqueFinder = ({ onClose }) => {
             searchMosques(latitude, longitude);
 
         } catch (err) {
-            console.error('Konum hatası:', err);
+            logger.error('Konum hatası:', err);
             setLoading(false);
             
             if (err.message === 'PERMISSION_DENIED' || err.code === 1) {

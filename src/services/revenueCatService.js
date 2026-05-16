@@ -2,6 +2,7 @@ import { Purchases, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
 import { setProStatus } from './proService';
 import { logger } from '../utils/logger';
 import crashlyticsReporter, { buildCrashContext } from '../utils/crashlyticsReporter';
+import { withRetry } from '../utils/retry';
 
 const isDev = import.meta.env.DEV;
 
@@ -26,7 +27,7 @@ const updateProStatusFromInfo = async (customerInfo) => {
       verificationState: 'negative',
       reason: 'negative'
     });
-    crashlyticsReporter.logCrash('[RevenueCat] invalid customerInfo payload').catch(() => {});
+    crashlyticsReporter.logCrash('[RevenueCat] invalid customerInfo payload');
     return false;
   }
 
@@ -46,7 +47,7 @@ const updateProStatusFromInfo = async (customerInfo) => {
   });
   crashlyticsReporter.logCrash(
     `[RevenueCat] entitlement active=${isPro} expiresAt=${expiresAt || 'none'}`
-  ).catch(() => {});
+  );
   return isPro;
 };
 
@@ -100,7 +101,7 @@ export const initializeRevenueCat = async () => {
     crashlyticsReporter.logExceptionWithContext(
       new Error('RevenueCat init failed'),
       buildCrashContext('revenuecat_initialize')
-    ).catch(() => {});
+    );
   }
 };
 
@@ -113,7 +114,7 @@ export const checkSubscriptionStatus = async () => {
     crashlyticsReporter.logExceptionWithContext(
       error,
       buildCrashContext('revenuecat_check_subscription')
-    ).catch(() => {});
+    );
     return false;
   }
 };
@@ -124,9 +125,16 @@ export const purchasePackage = async (packageToPurchase) => {
     const localResult = await updateProStatusFromInfo(customerInfo);
 
     if (localResult) {
-      const synced = await syncPurchaseStateWithServer();
-      if (synced && typeof synced.isPro === 'boolean') {
-        return synced.isPro;
+      try {
+        const synced = await withRetry(
+          syncPurchaseStateWithServer,
+          { maxAttempts: 3, baseDelay: 1000 }
+        );
+        if (synced && typeof synced.isPro === 'boolean') {
+          return synced.isPro;
+        }
+      } catch (syncError) {
+        logger.warn('[RevenueCat] Server sync failed after retries, returning local result', syncError);
       }
     }
 
@@ -139,7 +147,7 @@ export const purchasePackage = async (packageToPurchase) => {
       crashlyticsReporter.logExceptionWithContext(
         error,
         buildCrashContext('revenuecat_purchase')
-      ).catch(() => {});
+      );
     }
     return false;
   }
@@ -172,7 +180,7 @@ export const getOfferings = async () => {
     crashlyticsReporter.logExceptionWithContext(
       error,
       buildCrashContext('revenuecat_offerings')
-    ).catch(() => {});
+    );
     return [];
   }
 };
@@ -181,10 +189,17 @@ export const restorePurchases = async () => {
   try {
     const customerInfo = await Purchases.restorePurchases();
     const localResult = await updateProStatusFromInfo(customerInfo);
-    const synced = await syncPurchaseStateWithServer();
 
-    if (synced && typeof synced.isPro === 'boolean') {
-      return synced.isPro;
+    try {
+      const synced = await withRetry(
+        syncPurchaseStateWithServer,
+        { maxAttempts: 3, baseDelay: 1000 }
+      );
+      if (synced && typeof synced.isPro === 'boolean') {
+        return synced.isPro;
+      }
+    } catch (syncError) {
+      logger.warn('[RevenueCat] Server sync failed after retries during restore, returning local result', syncError);
     }
 
     return localResult;
@@ -193,7 +208,7 @@ export const restorePurchases = async () => {
     crashlyticsReporter.logExceptionWithContext(
       error,
       buildCrashContext('revenuecat_restore')
-    ).catch(() => {});
+    );
     return false;
   }
 };

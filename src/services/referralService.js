@@ -38,7 +38,9 @@ const createDefaultReferralState = () => ({
 });
 
 const syncReferralStateInBackground = (state, source = 'runtime') => {
-  void syncReferralState(state, { source }).catch(() => null);
+  syncReferralState(state, { source }).catch((error) => {
+    logger.error('[ReferralService] syncReferralStateInBackground failed', { source, error });
+  });
 };
 
 const nowIso = () => new Date().toISOString();

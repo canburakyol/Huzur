@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Crown, Sparkles } from 'lucide-react';
+import { Crown, Sparkles, BookOpen, ScrollText, GraduationCap, ClipboardList, Headphones, Video, CircleHelp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '../../../utils/logger';
 
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { surahList } from '../../../data/surahList';
@@ -13,6 +14,20 @@ import { useLibrarySearch } from '../hooks/useLibrarySearch';
 import CategoryList from './CategoryList';
 import ItemContent from './ItemContent';
 import ReciterBrowser from './ReciterBrowser';
+
+const IconMapper = ({ iconName, size = 24, color }) => {
+    const iconMap = {
+        'BookOpen': BookOpen,
+        'ScrollText': ScrollText,
+        'GraduationCap': GraduationCap,
+        'ClipboardList': ClipboardList,
+        'Headphones': Headphones,
+        'Video': Video,
+        'CircleHelp': CircleHelp
+    };
+    const IconComponent = iconMap[iconName] || BookOpen;
+    return <IconComponent size={size} color={color} />;
+};
 
 const EMPTY_LIBRARY_DATA = Object.freeze({
   AUDIO: [],
@@ -60,14 +75,13 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
     const data = libraryData || EMPTY_LIBRARY_DATA;
 
     return [
-      { id: 'books', title: 'Kitaplar', icon: '📚', data: data.BOOKS },
-      { id: 'texts', title: 'Dini Metinler', icon: '📜', data: data.RELIGIOUS_TEXTS },
-      { id: 'education', title: 'Eğitim', icon: '🎓', data: data.EDUCATION },
-      { id: 'references', title: 'Referanslar', icon: '📋', data: data.REFERENCES },
-      { id: 'prayers', title: 'Peygamber Duaları', icon: '🤲', data: data.PRAYERS },
-      { id: 'audio', title: 'Sesli Kütüphane', icon: '🎧', data: data.AUDIO, isPro: true },
-      { id: 'video', title: 'İslami Akademi', icon: '🎬', data: data.VIDEO },
-      { id: 'faq', title: 'Soru-Cevap', icon: '❓', data: data.FAQ }
+      { id: 'books', title: 'Kitaplar', icon: 'BookOpen', data: data.BOOKS },
+      { id: 'texts', title: 'Dini Metinler', icon: 'ScrollText', data: data.RELIGIOUS_TEXTS },
+      { id: 'education', title: 'Eğitim', icon: 'GraduationCap', data: data.EDUCATION },
+      { id: 'references', title: 'Referanslar', icon: 'ClipboardList', data: data.REFERENCES },
+      { id: 'audio', title: 'Sesli Kütüphane', icon: 'Headphones', data: data.AUDIO, isPro: true },
+      { id: 'video', title: 'İslami Akademi', icon: 'Video', data: data.VIDEO },
+      { id: 'faq', title: 'Soru-Cevap', icon: 'CircleHelp', data: data.FAQ }
     ];
   }, [libraryData]);
 
@@ -96,7 +110,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
       const dataModule = await import('../data/libraryData');
       setLibraryData(getResolvedLibraryData(dataModule));
     } catch (error) {
-      console.error('[Library] Veri yükleme hatası:', error);
+      logger.error('[Library] Veri yükleme hatası:', error);
     } finally {
       setIsLibraryDataLoading(false);
     }
@@ -363,12 +377,14 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
 
             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {[
-                { icon: '🎧', text: t('library.feature_audio', 'Ünlü hafızlardan hatim setleri') },
-                { icon: '🎬', text: t('library.feature_video', 'İslami Akademi video serileri') },
-                { icon: '📚', text: t('library.feature_books', 'Özel dini kaynaklar ve kitaplar') }
+                { icon: 'Headphones', text: t('library.feature_audio', 'Ünlü hafızlardan hatim setleri') },
+                { icon: 'Video', text: t('library.feature_video', 'İslami Akademi video serileri') },
+                { icon: 'BookOpen', text: t('library.feature_books', 'Özel dini kaynaklar ve kitaplar') }
               ].map((feature, index) => (
                 <div key={`${feature.text}-${index}`} className="settings-card" style={{ padding: '12px 16px', background: 'var(--nav-hover)', border: 'none', justifyContent: 'flex-start', gap: '12px' }}>
-                  <span style={{ fontSize: '1.25rem' }}>{feature.icon}</span>
+                  <span style={{ color: 'var(--nav-accent)' }}>
+                    <IconMapper iconName={feature.icon} size={20} />
+                  </span>
                   <span style={{ fontSize: '0.85rem', color: 'var(--nav-text)', fontWeight: '700', textAlign: 'left' }}>
                     {feature.text}
                   </span>

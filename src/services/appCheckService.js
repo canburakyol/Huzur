@@ -83,7 +83,7 @@ export const getAppCheckHealthStatus = async () => {
   if (!status.success) {
     return {
       healthy: false,
-      message: 'App Check Ã§alÄ±ÅŸmÄ±yor. Firebase servisleri sÄ±nÄ±rlÄ± olabilir.',
+      message: 'App Check çalışmıyor. Firebase servisleri sınırlı olabilir.',
       action: 'Tekrar dene',
       canRetry: true
     };
@@ -92,7 +92,7 @@ export const getAppCheckHealthStatus = async () => {
   if (status.tokenPresent) {
     return {
       healthy: true,
-      message: 'App Check aktif ve Ã§alÄ±ÅŸÄ±yor.',
+      message: 'App Check aktif ve çalışıyor.',
       action: null,
       canRetry: false
     };
@@ -100,7 +100,7 @@ export const getAppCheckHealthStatus = async () => {
 
   return {
     healthy: false,
-    message: 'App Check token alÄ±namadÄ±.',
+    message: 'App Check token alınamadı.',
     action: 'Yenile',
     canRetry: true
   };

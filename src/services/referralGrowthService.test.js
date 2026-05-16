@@ -63,6 +63,20 @@ describe('referralGrowthService', () => {
     expect(plan.supportingNote).toContain('Ramazan');
   });
 
+  it('uses reward copy for the onboarding Huzur Ritmi surface', () => {
+    const plan = getReferralGrowthPlan({
+      localProgress: {
+        ownCode: 'HZRLOCAL1',
+      },
+      surface: 'onboarding_huzur_ritmi_reward',
+      shareVariant: 'B',
+    });
+
+    expect(plan.badge).toBe('24 saat Pro');
+    expect(plan.headline).toContain('24 saatlik Pro');
+    expect(plan.source).toBe('onboarding_huzur_ritmi_reward');
+  });
+
   it('builds a Turkish share text with code and link', () => {
     const result = buildReferralShareText({
       inviteCode: 'HZRLOCAL1',

@@ -7,6 +7,7 @@ import IslamicBackButton from './shared/IslamicBackButton';
 import { contentService } from '../services/contentService';
 import { storageService } from '../services/storageService';
 import { useToast } from '../hooks/useToast';
+import { logger } from '../utils/logger';
 import './Hadiths.css';
 import './Navigation.css';
 
@@ -40,7 +41,7 @@ const Hadiths = ({ onClose }) => {
                     setDailyHadith(data.hadiths[dayOfYear % data.hadiths.length]);
                 }
             } catch (err) {
-                console.error('Fetch hadiths error:', err);
+                logger.error('Fetch hadiths error:', err);
             } finally {
                 setLoading(false);
             }
@@ -72,7 +73,7 @@ const Hadiths = ({ onClose }) => {
                 await navigator.clipboard.writeText(text);
                 showToast(t('common.copied', 'Panoya kopyalandı!'), 'success');
             }
-        } catch (err) { console.error('Share error:', err); }
+        } catch (err) { logger.error('Share error:', err); }
     };
 
     const goBack = () => {

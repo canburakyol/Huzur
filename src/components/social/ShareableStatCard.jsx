@@ -8,6 +8,7 @@ import { buildWeeklyEngagementSnapshot } from '../../services/engagementSummaryS
 import { logShareSent } from '../../services/analyticsService';
 import { openShareCard } from '../../services/shareCardService';
 import { useToast } from '../../hooks/useToast';
+import { logger } from '../../utils/logger';
 
 const ShareableStatCard = ({ onClose }) => {
   const { t } = useTranslation();
@@ -79,7 +80,7 @@ const ShareableStatCard = ({ onClose }) => {
         return;
       }
 
-      console.error('Error sharing image:', error);
+      logger.error('Error sharing image:', error);
       showToast(t('stats.errors.cardFailed', 'Kart hazirlanirken bir hata olustu.'), 'error');
     } finally {
       setIsCapturing(false);

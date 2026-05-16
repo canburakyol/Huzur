@@ -1,7 +1,7 @@
 {
   "name": "huzur-app",
   "private": true,
-  "version": "18.2.8",
+  "version": "18.2.9",
   "type": "module",
   "engines": {
     "node": ">=22 <23"
@@ -68,7 +68,6 @@
   },
   "devDependencies": {
     "@capacitor/android": "^8.0.1",
-    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^8.0.1",
     "@eslint/js": "^9.39.1",
     "@firebase/rules-unit-testing": "^5.0.0",
@@ -83,7 +82,7 @@
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
-    "firebase-tools": "^13.35.1",
+    "firebase-tools": "^14.27.0",
     "globals": "^16.5.0",
     "happy-dom": "^20.8.9",
     "jsdom": "^29.0.1",
@@ -95,6 +94,9 @@
     "vitest": "^4.1.2"
   },
   "overrides": {
-    "tar": "^7.5.7"
+    "@protobufjs/utf8": "^1.1.1",
+    "protobufjs": "^7.5.8",
+    "tar": "^7.5.7",
+    "serialize-javascript": "^7.0.5"
   }
 }

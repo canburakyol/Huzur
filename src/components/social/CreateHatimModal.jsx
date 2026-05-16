@@ -4,6 +4,7 @@ import { checkRateLimit } from '../../utils/rateLimiter';
 import { useGroupHatim } from '../../hooks/useGroupHatim';
 import { useTranslation } from 'react-i18next';
 import { useToast } from '../../hooks/useToast';
+import { logger } from '../../utils/logger';
 
 const CreateHatimModal = ({ onClose, onSuccess }) => {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
       await createHatim(name, desc, 30);
       onSuccess();
     } catch (err) {
-      console.error(err);
+      logger.error(err);
       showToast(t('hatim.create.error', 'Hatim oluşturulamadı'), 'error');
     } finally {
       setLoading(false);

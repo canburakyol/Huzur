@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { logger } from '../../../utils/logger';
 
 export function useAudioPlayer() {
   const [playingIndex, setPlayingIndex] = useState(null);
@@ -79,7 +80,7 @@ export function useAudioPlayer() {
     setPlayingIndex(index);
 
     nextAudio.play().catch((error) => {
-      console.error('[Library] Audio play error:', error);
+      logger.error('[Library] Audio play error:', error);
       if (audioRef.current === nextAudio) {
         audioRef.current = null;
         currentAudioUrlRef.current = null;

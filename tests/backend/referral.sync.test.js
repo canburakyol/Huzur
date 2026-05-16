@@ -12,6 +12,13 @@ const fieldValue = {
 const adminMock = {
   firestore: {
     FieldValue: fieldValue,
+    Timestamp: {
+      fromMillis: (value) => ({
+        __timestamp: value,
+        toMillis: () => value,
+        toDate: () => new Date(value),
+      }),
+    },
   },
 };
 
@@ -209,6 +216,19 @@ describe('Referral server sync handlers', () => {
       inviterId: 'inviter-1',
       syncIssue: null,
     });
+    expect(dbMock.store.get('users/inviter-1/subscription/referralReward')).toMatchObject({
+      isPro: true,
+      entitlementId: 'referral_reward',
+      source: 'referral_reward',
+      rewardType: 'inviter_24h_pro',
+      inviterId: 'inviter-1',
+      inviteeId: 'invitee-1',
+      conversionId: 'inviter-1_invitee-1',
+    });
+    expect(dbMock.store.get('users/inviter-1/subscription/referralReward').expiresAt.toDate().toISOString())
+      .toBe('2026-03-28T12:00:00.000Z');
+    expect(dbMock.store.get('referralConversions/inviter-1_invitee-1').rewardGrantedAt.toDate().toISOString())
+      .toBe('2026-03-27T12:00:00.000Z');
     expect(firstResult.snapshot.inviteeSummary.inviteeRewardUnlockedAt).toBe('2026-03-27T12:00:00.000Z');
   });
 });

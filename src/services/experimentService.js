@@ -26,6 +26,10 @@ const DEFAULT_EXPERIMENTS = {
   paywall_cta_v1: {
     variants: ['A', 'B'],
     fallbackVariant: 'A'
+  },
+  home_layout_v1: {
+    variants: ['A', 'B'],
+    fallbackVariant: 'A'
   }
 };
 

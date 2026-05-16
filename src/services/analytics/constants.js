@@ -37,6 +37,12 @@ export const ANALYTICS_EVENTS = {
   APP_OPEN: 'app_open',
   APP_BACKGROUND: 'app_background',
   SCREEN_VIEW: 'screen_view',
+  HOME_VIEWED: 'home_viewed',
+  FEATURE_OPENED: 'feature_opened',
+  FEATURE_OPEN_FAILED: 'feature_open_failed',
+  FIRST_ACTIVATION_CARD_VIEWED: 'first_activation_card_viewed',
+  FIRST_ACTIVATION_CARD_CLICKED: 'first_activation_card_clicked',
+  FIRST_ACTIVATION_FEATURE_OPENED: 'first_activation_feature_opened',
   
   // User Actions
   NOTIFICATION_RECEIVED: 'notification_received',
@@ -62,6 +68,8 @@ export const ANALYTICS_EVENTS = {
   ONBOARDING_STEP_COMPLETED: 'onboarding_step_completed',
   ONBOARDING_GOAL_SELECTED: 'onboarding_goal_selected',
   ONBOARDING_PERMISSION_CHOICE: 'onboarding_permission_choice',
+  HUZUR_RITMI_PREVIEW_VIEWED: 'huzur_ritmi_preview_viewed',
+  HUZUR_RITMI_CTA_CLICKED: 'huzur_ritmi_cta_clicked',
 
   // Phase 2 Retention
   STREAK_INCREMENTED: 'streak_incremented',
@@ -87,6 +95,8 @@ export const ANALYTICS_EVENTS = {
   REFERRAL_ONBOARDING_COMPLETED: 'referral_onboarding_completed',
   REFERRAL_TRIGGER_SURFACE_VIEWED: 'referral_trigger_surface_viewed',
   REFERRAL_TRIGGER_CTA_CLICKED: 'referral_trigger_cta_clicked',
+  REFERRAL_REWARD_CLAIMED: 'referral_reward_claimed',
+  REFERRAL_REWARD_PRO_ACTIVATED: 'referral_reward_pro_activated',
 
   // Growth Experiments & Campaign
   EXPERIMENT_ASSIGNED: 'experiment_assigned',

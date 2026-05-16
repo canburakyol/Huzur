@@ -206,14 +206,16 @@
     "title": "Hadiths",
     "daily": "Hadith of the Day",
     "categories": "Categories",
-    "count_suffix": "hadiths"
+    "count_suffix": "hadiths",
+    "shareDialogTitle": "Hadisi Paylaş"
   },
   "nav": {
     "home": "Inicio",
     "quran": "Corán",
     "assistant": "Asistente",
     "community": "Comunidad",
-    "menu": "Menú"
+    "menu": "Menú",
+    "mainNavigation": "Ana gezinme"
   },
   "prayer": {
     "fajr": "Fajr",
@@ -279,7 +281,8 @@
     "seerahMap": "Seerah Map",
     "spiritualCoach": "Spiritual Guide",
     "prayerCircle": "Prayer Circle",
-    "dailyFiqh": "Daily Fiqh"
+    "dailyFiqh": "Daily Fiqh",
+    "muezzinSelector": "Müezzin Seçimi"
   },
   "settings": {
     "title": "Ajustes",
@@ -553,7 +556,9 @@
       "loading": "Loading...",
       "noDuas": "No prayer requests yet. Be the first.",
       "errorSending": "An error occurred while sending the prayer."
-    }
+    },
+    "shareTitle": "Huzur Vakti - Community",
+    "shareText": "Join the Huzur Vakti app to read hatim and unite in prayers with your loved ones and the entire ummah. Let's find peace together."
   },
   "hatim": {
     "title": "Khatm Tracker",
@@ -601,7 +606,11 @@
       "wrongCode": "Wrong code. Please enter the correct code.",
       "codeCopied": "Code copied.",
       "inviteCopied": "Invitation text copied.",
-      "authRequired": "Connecting to server..."
+      "authRequired": "Connecting to server...",
+      "cuzTaken": "Bu cüz {{name}} tarafından alınmış.",
+      "cuzCompleted": "Bu cüz {{name}} tarafından okunmuş. Allah kabul etsin.",
+      "confirmTake": "{{partNum}}. cüzü okumak için almak istiyor musunuz?",
+      "partActions": "Bu cüz sizin tarafınızdan alındı.\n\"okudum\" yazarak tamamlayın\n\"vazgeç\" yazarak bırakın"
     }
   },
   "deedJournal": {
@@ -3194,7 +3203,8 @@
     "spiritualCoach": "Spiritual Coach",
     "support": "Support",
     "pro": "Upgrade to Pro",
-    "familyDashboard": "Family Dashboard"
+    "familyDashboard": "Family Dashboard",
+    "quickAccess": "Hedefe göre hızlı erişim"
   },
   "social": {
     "title": "Social",
@@ -3317,17 +3327,17 @@
   "growth": {
     "onboarding": {
       "languageTitle": "Elige tu Idioma",
-      "languageDescription": "Dondequiera que estés, te acompañamos en tu viaje espiritual en tu idioma.",
+      "languageDescription": "Primero elige tu idioma; luego Huzur te llevara a un pequeno paso diario de adoracion.",
       "continue": "Continuar",
-      "locationTitle": "Configuremos tu Ubicación",
-      "locationDescription": "Permite la ubicación para horas de oración y qibla precisas en tu ciudad.",
+      "locationTitle": "Configura horarios de oracion precisos",
+      "locationDescription": "Usa tu ubicacion para preparar horarios de oracion precisos y tu primer recordatorio diario.",
       "enableLocation": "Activar Ubicación",
-      "notificationTitle": "Mantente Conectado con la Adoración",
-      "notificationDescription": "Activa notificaciones para no perder oración y dhikr.",
+      "notificationTitle": "Mant?n tu ritmo diario",
+      "notificationDescription": "Activa recordatorios tranquilos para la oracion y tu paso diario de 2 minutos.",
       "enableNotifications": "Activar Notificaciones",
-      "firstActionTitle": "Comencemos con Bismillah",
-      "firstActionDescription": "Da hoy el primer paso en tu camino espiritual.",
-      "startNow": "Empezar Ahora",
+      "firstActionTitle": "Elige el primer paso de hoy",
+      "firstActionDescription": "Sin un plan largo; empieza un ritmo corto de oracion, Coran o dua.",
+      "startNow": "Abrir primer paso",
       "stepCounter": "Paso {{current}} / {{total}}"
     },
     "funnel": {
@@ -3837,5 +3847,117 @@
     "ai": "Artificial Intelligence",
     "system": "System",
     "family": "Family & Kids"
+  },
+  "socialRetention": {
+    "weeklyYou": "This week, you",
+    "weeklyGroup": "This week, your circle",
+    "rhythmScore": "Rhythm score",
+    "activeDays": "Active days",
+    "completedSteps": "Completed steps",
+    "vsLastWeek": "Vs last week",
+    "members": "Members",
+    "streakStrength": "Streak strength",
+    "badges": "Total badges",
+    "gentleCompetition": "Gentle competition",
+    "miniLeagueTitle": "Anonymous mini league",
+    "miniLeagueDesc": "Only your rhythm band is visible; your name and raw points stay private.",
+    "visibilityTitle": "Visibility level",
+    "visibilityOffDesc": "Visibility stays off while the mini league is disabled.",
+    "visibilityCurrent": "You are currently in {{mode}} mode. {{detail}}",
+    "closedTitle": "Rhythm circle is off",
+    "closedDesc": "You can opt into the anonymous mini league and only see your consistency band.",
+    "closedCta": "Open in settings",
+    "band": "Band",
+    "circleSize": "Circle size",
+    "visibility": "Visibility",
+    "visibility_private": "private",
+    "visibility_group": "group",
+    "visibility_league": "league",
+    "defaultStanding": "Turn it on in settings to see your anonymous rhythm band.",
+    "manageCta": "Manage visibility",
+    "band_warmup": "Warm-up band",
+    "band_top": "Top rhythm band",
+    "band_balanced": "Balanced rhythm band",
+    "band_rising": "Rising rhythm band",
+    "encouragement_warmup": "While you build a calm rhythm, your best benchmark is still your own last week.",
+    "encouragement_top": "This week you are among the people carrying the calm but strong pace of the league.",
+    "encouragement_balanced": "If you stay consistent, you have a strong base to move into the top band.",
+    "encouragement_rising": "Small but steady steps can move you above the league average.",
+    "standing_top_quarter": "You are in the top quarter",
+    "standing_upper_half": "You are in the upper half of the league",
+    "standing_rising": "Your rhythm is climbing as it settles in"
+  },
+  "journey": {
+    "title": "Manevi Yolculuğum"
+  },
+  "routine": {
+    "title": "Günlük Rutinlerim"
+  },
+  "quiz": {
+    "title": "Günün Testi"
+  },
+  "shareCard": {
+    "title": "İstatistik Kartı",
+    "subtitle": "Manevi ritmim",
+    "level": "Seviye",
+    "xpCollected": "{{count}} XP toplandı",
+    "activeDays": "Aktif gün",
+    "weeklyXP": "Haftalık XP",
+    "badges": "Rozet",
+    "featuredBadges": "Öne çıkan rozetler",
+    "noBadges": "Henüz rozet kazanılmadı.",
+    "tagline": "Huzur ile ibadet ritmini sakin ve istikrarlı şekilde koru",
+    "preparing": "Kart hazırlanıyor...",
+    "shareButton": "Kartı Paylaş"
+  },
+  "multimedia": {
+    "title": "Multimedya",
+    "description": "İslami görseller, özel tasarım dua kartları ve paylaşılabilir manevi içerikler.",
+    "contentLabel": "İÇERİK",
+    "favorites": "FAVORİLERİM",
+    "duaCardsDesc": "Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları."
+  },
+  "stats": {
+    "errors": {
+      "cardFailed": "Kart hazırlanırken bir sorun oluştu."
+    }
+  },
+  "zikirmatikDhikrs": {
+    "free": {
+      "name": "Serbest Zikir",
+      "meaning": "Istediginiz zikri cekin"
+    },
+    "subhanallah": {
+      "name": "Subhanallah",
+      "meaning": "Allah'i tum eksikliklerden tenzih ederim"
+    },
+    "elhamdulillah": {
+      "name": "Elhamdulillah",
+      "meaning": "Hamd Allah'a mahsustur"
+    },
+    "allahuekber": {
+      "name": "Allahu Ekber",
+      "meaning": "Allah en buyuktur"
+    },
+    "lailaheillallah": {
+      "name": "La ilahe illallah",
+      "meaning": "Allah'tan baska ilah yoktur"
+    },
+    "estagfirullah": {
+      "name": "Estagfirullah",
+      "meaning": "Allah'tan bagislanma dilerim"
+    },
+    "lahavle": {
+      "name": "La havle",
+      "meaning": "Guc ve kuvvet ancak Allah'tandir"
+    },
+    "salavat": {
+      "name": "Salavat",
+      "meaning": "Allah'im Muhammed'e salat eyle"
+    },
+    "hasbunallah": {
+      "name": "Hasbunallah",
+      "meaning": "Allah bize yeter, O ne guzel vekildir"
+    }
   }
 }

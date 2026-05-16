@@ -206,14 +206,16 @@
     "title": "Hadiths",
     "daily": "Hadith of the Day",
     "categories": "Categories",
-    "count_suffix": "hadiths"
+    "count_suffix": "hadiths",
+    "shareDialogTitle": "Hadisi Paylaş"
   },
   "nav": {
     "home": "Home",
     "quran": "Quran",
     "assistant": "Assistant",
     "community": "Community",
-    "menu": "Menu"
+    "menu": "Menu",
+    "mainNavigation": "Ana gezinme"
   },
   "prayer": {
     "fajr": "Fajr",
@@ -279,7 +281,8 @@
     "seerahMap": "Seerah Map",
     "spiritualCoach": "Spiritual Guide",
     "prayerCircle": "Prayer Circle",
-    "dailyFiqh": "Daily Fiqh"
+    "dailyFiqh": "Daily Fiqh",
+    "muezzinSelector": "Müezzin Seçimi"
   },
   "settings": {
     "title": "Settings",
@@ -603,7 +606,11 @@
       "wrongCode": "incorrect code. Please enter the correct code.",
       "codeCopied": "Code copied.",
       "inviteCopied": "Invitation text copied.",
-      "authRequired": "Connecting to server..."
+      "authRequired": "Connecting to server...",
+      "cuzTaken": "Bu cüz {{name}} tarafından alınmış.",
+      "cuzCompleted": "Bu cüz {{name}} tarafından okunmuş. Allah kabul etsin.",
+      "confirmTake": "{{partNum}}. cüzü okumak için almak istiyor musunuz?",
+      "partActions": "Bu cüz sizin tarafınızdan alındı.\n\"okudum\" yazarak tamamlayın\n\"vazgeç\" yazarak bırakın"
     }
   },
   "deedJournal": {
@@ -3196,7 +3203,8 @@
     "spiritualCoach": "Spiritual Coach",
     "support": "Support",
     "pro": "Upgrade to Pro",
-    "familyDashboard": "Family Dashboard"
+    "familyDashboard": "Family Dashboard",
+    "quickAccess": "Hedefe göre hızlı erişim"
   },
   "social": {
     "title": "Social",
@@ -3830,17 +3838,17 @@
   "growth": {
     "onboarding": {
       "languageTitle": "Choose your language",
-      "languageDescription": "Wherever you are, we accompany your spiritual journey in your own language.",
+      "languageDescription": "Choose your language first; then Huzur will take you to one small daily worship step.",
       "continue": "Continue",
-      "locationTitle": "Set your location",
-      "locationDescription": "Allow location access for accurate prayer times and qibla direction in your city.",
+      "locationTitle": "Set accurate prayer times",
+      "locationDescription": "Use your location to prepare accurate prayer times and your first daily reminder.",
       "enableLocation": "Enable Location",
-      "notificationTitle": "Stay connected with worship",
-      "notificationDescription": "Enable notifications so you don’t miss prayer and dhikr reminders.",
+      "notificationTitle": "Keep your daily rhythm",
+      "notificationDescription": "Enable calm reminders for prayer times and your 2-minute daily step.",
       "enableNotifications": "Enable Notifications",
-      "firstActionTitle": "Let’s begin with Bismillah",
-      "firstActionDescription": "Take the first step on your spiritual journey today.",
-      "startNow": "Start Now",
+      "firstActionTitle": "Choose today's first step",
+      "firstActionDescription": "No long plan; start a short rhythm for prayer, Quran, or dua.",
+      "startNow": "Open First Step",
       "stepCounter": "Step {{current}} / {{total}}"
     },
     "funnel": {
@@ -3877,6 +3885,79 @@
       "default": "Undang",
       "variantB": "Undang Teman",
       "variantC": "Mari Mulai Bersama"
+    }
+  },
+  "journey": {
+    "title": "Manevi Yolculuğum"
+  },
+  "routine": {
+    "title": "Günlük Rutinlerim"
+  },
+  "quiz": {
+    "title": "Günün Testi"
+  },
+  "shareCard": {
+    "title": "İstatistik Kartı",
+    "subtitle": "Manevi ritmim",
+    "level": "Seviye",
+    "xpCollected": "{{count}} XP toplandı",
+    "activeDays": "Aktif gün",
+    "weeklyXP": "Haftalık XP",
+    "badges": "Rozet",
+    "featuredBadges": "Öne çıkan rozetler",
+    "noBadges": "Henüz rozet kazanılmadı.",
+    "tagline": "Huzur ile ibadet ritmini sakin ve istikrarlı şekilde koru",
+    "preparing": "Kart hazırlanıyor...",
+    "shareButton": "Kartı Paylaş"
+  },
+  "multimedia": {
+    "title": "Multimedya",
+    "description": "İslami görseller, özel tasarım dua kartları ve paylaşılabilir manevi içerikler.",
+    "contentLabel": "İÇERİK",
+    "favorites": "FAVORİLERİM",
+    "duaCardsDesc": "Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları."
+  },
+  "stats": {
+    "errors": {
+      "cardFailed": "Kart hazırlanırken bir sorun oluştu."
+    }
+  },
+  "zikirmatikDhikrs": {
+    "free": {
+      "name": "Serbest Zikir",
+      "meaning": "Istediginiz zikri cekin"
+    },
+    "subhanallah": {
+      "name": "Subhanallah",
+      "meaning": "Allah'i tum eksikliklerden tenzih ederim"
+    },
+    "elhamdulillah": {
+      "name": "Elhamdulillah",
+      "meaning": "Hamd Allah'a mahsustur"
+    },
+    "allahuekber": {
+      "name": "Allahu Ekber",
+      "meaning": "Allah en buyuktur"
+    },
+    "lailaheillallah": {
+      "name": "La ilahe illallah",
+      "meaning": "Allah'tan baska ilah yoktur"
+    },
+    "estagfirullah": {
+      "name": "Estagfirullah",
+      "meaning": "Allah'tan bagislanma dilerim"
+    },
+    "lahavle": {
+      "name": "La havle",
+      "meaning": "Guc ve kuvvet ancak Allah'tandir"
+    },
+    "salavat": {
+      "name": "Salavat",
+      "meaning": "Allah'im Muhammed'e salat eyle"
+    },
+    "hasbunallah": {
+      "name": "Hasbunallah",
+      "meaning": "Allah bize yeter, O ne guzel vekildir"
     }
   }
 }

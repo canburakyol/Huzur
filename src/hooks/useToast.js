@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { ToastContext } from '../context/ToastContext';
+import { logger } from '../utils/logger';
 
 /**
  * Hook to show toast notifications from any component.
@@ -11,7 +12,7 @@ export function useToast() {
     // Graceful fallback when used outside provider (e.g. in tests)
     return {
       showToast: (message) => {
-        console.warn('[Toast] Provider not found, falling back:', message);
+        logger.warn('[Toast] Provider not found, falling back:', message);
       }
     };
   }

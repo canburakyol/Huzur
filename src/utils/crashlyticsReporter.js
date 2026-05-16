@@ -89,17 +89,45 @@ export async function logCrash(message) {
     const safeMessage = sanitizeForCrashlytics(message);
     if (!isCrashReportingEnabledSync()) {
       logger.log('[CrashlyticsStub]', safeMessage);
-      return null;
+      return;
     }
 
     const plugin = window?.Capacitor?.Plugins?.Crashlytics;
     if (plugin && typeof plugin.log === 'function') {
       await plugin.log({ message: safeMessage });
     } else {
-      logger.warn('Crashlytics plugin not available.');
+      logger.warn('[Crashlytics] Plugin not available.');
     }
   } catch (error) {
     logger.error('[Crashlytics] Failed to send breadcrumb log', error);
+  }
+}
+
+/**
+ * Report an error with context. Does NOT throw — always safe to call without .catch().
+ * @param {Error|string} error - The error to report
+ * @param {string} context - Context identifier (e.g., 'payment_flow', 'referral_sync')
+ * @param {object} metadata - Additional metadata to include
+ */
+export async function reportError(error, context = '', metadata = {}) {
+  try {
+    const normalized = normalizeErrorLike(error);
+    const safeContext = sanitizeForCrashlytics(context || 'unknown_context');
+    const safeMessage = `[${safeContext}] ${sanitizeForCrashlytics(normalized.message)}`;
+    
+    if (!isCrashReportingEnabledSync()) {
+      logger.error('[CrashlyticsStub]', safeMessage, metadata);
+      return;
+    }
+
+    const plugin = window?.Capacitor?.Plugins?.Crashlytics;
+    if (plugin && typeof plugin.log === 'function') {
+      await plugin.log({ message: safeMessage });
+    } else {
+      logger.error('[Crashlytics] Plugin not available, error not reported');
+    }
+  } catch (reportingError) {
+    logger.error('[Crashlytics] Failed to report error', reportingError);
   }
 }
 

@@ -9,6 +9,7 @@ import { storageService } from '../../../services/storageService';
 import { syncProStatusFromServer } from '../../../services/subscriptionSyncService';
 import { buildWeeklySocialSummary } from '../../../services/weeklySocialService';
 import { isPro } from '../../../services/proService';
+import { logger } from '../../../utils/logger';
 
 const THEME_DARK = 'dark';
 const THEME_LIGHT = 'light';
@@ -113,7 +114,7 @@ export function useSettingsState({ i18n, onClose }) {
       try {
         await syncProStatusFromServer();
       } catch (error) {
-        console.warn('[Settings] Subscription sync failed:', error);
+        logger.warn('[Settings] Subscription sync failed:', error);
       }
     }, 2000);
 

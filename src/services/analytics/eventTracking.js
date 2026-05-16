@@ -83,15 +83,16 @@ class EventTrackingAnalyticsMethods {
   /**
    * Track app open
    */
-  logAppOpen(source = 'direct') {
+  logAppOpen(source = 'direct', metadata = {}) {
     if (!this.enabled || !this.consentGiven) {
-      return this.stubEvent(ANALYTICS_EVENTS.APP_OPEN, { source });
+      return this.stubEvent(ANALYTICS_EVENTS.APP_OPEN, { source, ...metadata });
     }
 
     this.incrementSessionCount();
     this.logEvent(ANALYTICS_EVENTS.APP_OPEN, {
       source: source,
-      session_count: this.getSessionCount()
+      session_count: this.getSessionCount(),
+      ...metadata
     });
   }
 }

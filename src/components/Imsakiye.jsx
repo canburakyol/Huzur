@@ -3,6 +3,7 @@ import { MapPin, ChevronLeft, ChevronRight, Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { offlineCalculatorService } from '../services/offlineCalculatorService';
+import { logger } from '../utils/logger';
 
 const Imsakiye = ({ onClose, locationName }) => {
     const { t } = useTranslation();
@@ -54,7 +55,7 @@ const Imsakiye = ({ onClose, locationName }) => {
 
                 setDays(monthData);
             } catch (err) {
-                console.error('Imsakiye calculation error:', err);
+                logger.error('Imsakiye calculation error:', err);
                 setError('Namaz saatleri hesaplanamadı. Lütfen tekrar deneyin.');
             } finally {
                 setLoading(false);

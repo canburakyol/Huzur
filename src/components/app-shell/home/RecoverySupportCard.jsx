@@ -21,7 +21,7 @@ function RecoverySupportCard({ recoveryPlan, isProUser, onSelectFeature }) {
 
   const handleOpenAssistant = () => {
     logPremiumRecoveryMomentOpened('home_recovery_support', recoveryPlan.riskBand, recoveryPlan.feature);
-    onSelectFeature('assistant');
+    onSelectFeature('assistant', 'home_recovery_support');
   };
 
   const handleOpenPremium = () => {

@@ -16,6 +16,94 @@
   secureCallableOptions,
 } = require('../common/runtime');
 
+function timestampToMillis(value) {
+  if (!value) return null;
+  if (typeof value.toMillis === 'function') return value.toMillis();
+  if (typeof value.toDate === 'function') return value.toDate().getTime();
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+  const parsed = Date.parse(String(value));
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function timestampToIso(value) {
+  const millis = timestampToMillis(value);
+  return Number.isFinite(millis) ? new Date(millis).toISOString() : null;
+}
+
+function resolveActiveStatus(data = {}, nowMillis = Date.now()) {
+  const expiresAtMs = timestampToMillis(data?.expiresAt);
+  const active = data?.isPro === true && (!expiresAtMs || expiresAtMs > nowMillis);
+  return {
+    active,
+    expiresAt: timestampToIso(data?.expiresAt),
+    productId: data?.productId || null,
+    store: data?.store || null,
+    entitlementId: data?.entitlementId || null,
+    source: data?.source || (data?.entitlementId === 'referral_reward' ? 'referral_reward' : 'revenuecat'),
+  };
+}
+
+async function readCombinedProStatus(dbRef, adminSdk, userId) {
+  const now = adminSdk.firestore.Timestamp.now();
+  const nowMillis = now.toMillis();
+  const subscriptionRef = dbRef.collection('users').doc(userId).collection('subscription').doc('status');
+  const referralRewardRef = dbRef.collection('users').doc(userId).collection('subscription').doc('referralReward');
+  const [subDoc, referralRewardDoc] = await Promise.all([
+    subscriptionRef.get(),
+    referralRewardRef.get(),
+  ]);
+
+  const subData = subDoc.exists ? subDoc.data() || {} : {};
+  const rewardData = referralRewardDoc.exists ? referralRewardDoc.data() || {} : {};
+  const paid = subDoc.exists ? resolveActiveStatus(subData, nowMillis) : { active: false };
+  const reward = referralRewardDoc.exists ? resolveActiveStatus(rewardData, nowMillis) : { active: false };
+
+  if (subDoc.exists && subData?.isPro === true && !paid.active) {
+    await subDoc.ref.update({
+      isPro: false,
+      lastUpdated: adminSdk.firestore.FieldValue.serverTimestamp(),
+    });
+  }
+
+  if (referralRewardDoc.exists && rewardData?.isPro === true && !reward.active) {
+    await referralRewardDoc.ref.update({
+      isPro: false,
+      lastUpdated: adminSdk.firestore.FieldValue.serverTimestamp(),
+    });
+  }
+
+  if (paid.active) {
+    return {
+      isPro: true,
+      expiresAt: paid.expiresAt,
+      productId: paid.productId,
+      store: paid.store,
+      entitlementId: paid.entitlementId || 'pro_access',
+      source: 'revenuecat',
+    };
+  }
+
+  if (reward.active) {
+    return {
+      isPro: true,
+      expiresAt: reward.expiresAt,
+      productId: 'referral_reward_24h',
+      store: 'referral',
+      entitlementId: 'referral_reward',
+      source: 'referral_reward',
+    };
+  }
+
+  return {
+    isPro: false,
+    expiresAt: null,
+    productId: null,
+    store: null,
+    entitlementId: null,
+    source: 'none',
+  };
+}
+
 /**
  * Check Pro Status (Callable Function)
  * Client-side Pro dogrulama icin
@@ -68,38 +156,7 @@ exports.checkProStatus = functionsV1
     }
 
     try {
-      // 2. Firestore'dan subscription durumunu al
-      const subDoc = await db.collection('users').doc(userId).collection('subscription').doc('status').get();
-
-      if (!subDoc.exists) {
-        return {
-          isPro: false,
-          expiresAt: null,
-          message: 'No subscription found',
-        };
-      }
-
-      const subData = subDoc.data();
-      const now = admin.firestore.Timestamp.now();
-      const expiresAt = subData.expiresAt;
-
-      // 3. Expiry kontrolu
-      let isPro = subData.isPro;
-      if (isPro && expiresAt && expiresAt.toMillis() < now.toMillis()) {
-        isPro = false;
-        // Update Firestore
-        await subDoc.ref.update({
-          isPro: false,
-          lastUpdated: admin.firestore.FieldValue.serverTimestamp(),
-        });
-      }
-
-      return {
-        isPro,
-        expiresAt: expiresAt ? expiresAt.toDate().toISOString() : null,
-        productId: subData.productId,
-        store: subData.store,
-      };
+      return readCombinedProStatus(db, admin, userId);
     } catch (error) {
       throw new HttpsError(
         'internal',
@@ -205,9 +262,10 @@ exports.syncProStatus = functionsV1
           lastSynced: admin.firestore.FieldValue.serverTimestamp(),
         }, { merge: true });
 
+        const combinedStatus = await readCombinedProStatus(db, admin, userId);
         return {
           success: true,
-          isPro: false,
+          ...combinedStatus,
         };
       }
     } catch (error) {
@@ -293,4 +351,6 @@ exports.syncFcmToken = onCall(
 
 exports.__test = {
   createSyncFcmTokenHandler,
+  readCombinedProStatus,
+  resolveActiveStatus,
 };

@@ -1,18 +1,7 @@
 import { useState, useEffect, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MapPin, Sun, Cloud, CloudRain, CloudSnow, UserPlus, Flame } from 'lucide-react';
+import { MapPin, Flame, Moon } from 'lucide-react';
 import { useTime } from '../context/TimeContext';
-
-/**
- * Weather Icon Helper
- */
-const getWeatherIcon = (code) => {
-    if (code === undefined || code <= 3) return <Sun size={18} className="crisp-icon" />;
-    if (code <= 48) return <Cloud size={18} className="crisp-icon" />;
-    if (code <= 67) return <CloudRain size={18} className="crisp-icon" />;
-    if (code <= 77) return <CloudSnow size={18} className="crisp-icon" />;
-    return <CloudRain size={18} className="crisp-icon" />;
-};
 
 /**
  * Timer logic helper
@@ -33,12 +22,11 @@ const calculateTimeLeft = (timings, nextPrayer) => {
 
 const PremiumHomeHero = memo(({
     locationName,
-    weather,
     streakData,
-    onOpenInvite,
     timings,
     nextPrayer,
-    recoveryPlan = null
+    recoveryPlan = null,
+    onSelectFeature
 }) => {
     const { t } = useTranslation();
     const { greetingKey, timeOfDay } = useTime();
@@ -75,20 +63,14 @@ const PremiumHomeHero = memo(({
         return t(prayerMap[key] || key);
     };
 
-    // Hero background gradients based on time of day - Tuned to Islamic Green & Gold theme
+    // Simplified gradients based on time of day
     const getHeroGradient = () => {
-        if (recoveryPlan?.riskBand === 'comeback') {
-            return 'linear-gradient(135deg, #0B2E23 0%, #6B4F24 100%)';
-        }
-        if (recoveryPlan?.riskBand === 'at_risk') {
-            return 'linear-gradient(135deg, #124D3A 0%, #8B6914 100%)';
-        }
         switch (timeOfDay) {
-            case 'morning': return 'linear-gradient(135deg, #0F3D2E 0%, #D4AF37 100%)'; // Dawn: Green to Gold
-            case 'noon': return 'linear-gradient(135deg, #124D3A 0%, #1A5C45 100%)'; // Noon: Vibrant Green
-            case 'afternoon': return 'linear-gradient(135deg, #0B2E23 0%, #8B6914 100%)'; // Afternoon: Deep Green to Bronze
-            case 'evening': return 'linear-gradient(135deg, #07241B 0%, #6B4F24 100%)'; // Evening: Dark Emerald to Sunset Gold
-            case 'night': return 'linear-gradient(135deg, #041410 0%, #0B2E23 100%)'; // Night: Darkest Green
+            case 'morning': return 'linear-gradient(135deg, #0F3D2E 0%, #D4AF37 100%)';
+            case 'noon': return 'linear-gradient(135deg, #124D3A 0%, #1A5C45 100%)';
+            case 'afternoon': return 'linear-gradient(135deg, #0B2E23 0%, #8B6914 100%)';
+            case 'evening': return 'linear-gradient(135deg, #07241B 0%, #6B4F24 100%)';
+            case 'night': return 'linear-gradient(135deg, #041410 0%, #0B2E23 100%)';
             default: return 'linear-gradient(135deg, #0F3D2E 0%, #1A5C45 100%)';
         }
     };
@@ -96,137 +78,39 @@ const PremiumHomeHero = memo(({
     return (
         <div className="premium-hero-container" style={{
             background: getHeroGradient(),
-            borderRadius: '24px',
-            padding: '24px',
-            marginBottom: '20px',
+            borderRadius: '28px',
+            padding: '18px 16px 14px',
+            marginBottom: '8px',
             position: 'relative',
             overflow: 'hidden',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
+            boxShadow: '0 12px 28px rgba(0,0,0,0.2)'
         }}>
             {/* Background Calligraphy Glow */}
             <div style={{
                 position: 'absolute',
-                top: '-20px',
-                right: '-20px',
-                fontSize: '120px',
-                color: 'rgba(255,255,255,0.05)',
+                top: '-16px',
+                right: '-16px',
+                fontSize: '80px',
+                color: 'rgba(255,255,255,0.04)',
                 fontFamily: 'serif',
                 pointerEvents: 'none',
                 transform: 'rotate(-15deg)'
             }}>الله</div>
 
-            {/* Header: Location & Weather */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', position: 'relative', zIndex: 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'rgba(255,255,255,0.9)' }}>
-                    <MapPin size={16} />
-                    <span style={{ fontWeight: '600', fontSize: '14px' }}>{locationName}</span>
+            {/* Header: Location + Streak */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', position: 'relative', zIndex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.85)' }}>
+                    <MapPin size={14} />
+                    <span style={{ fontWeight: '600', fontSize: '13px' }}>{locationName}</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'rgba(255,255,255,0.9)' }}>
-                    {weather && (
-                        <>
-                            {getWeatherIcon(weather.weathercode)}
-                            <span style={{ fontWeight: '600', fontSize: '14px' }}>{Math.round(weather.temperature)}°C</span>
-                        </>
-                    )}
-                </div>
-            </div>
-
-            {/* Main Content: Greeting & Countdown */}
-            <div style={{ textAlign: 'center', marginBottom: '24px', position: 'relative', zIndex: 1 }}>
-                <h2 style={{ margin: '0 0 10px 0', fontSize: '16px', color: 'rgba(255,255,255,0.7)', fontWeight: '500' }}>
-                    {recoveryPlan?.headline || t(greetingKey)}
-                </h2>
-                {recoveryPlan?.description ? (
-                    <p style={{
-                        margin: '0 0 14px 0',
-                        fontSize: '0.8rem',
-                        color: 'rgba(255,255,255,0.78)',
-                        fontWeight: '600',
-                        lineHeight: '1.5',
-                        maxWidth: '320px',
-                        marginInline: 'auto'
-                    }}>
-                        {recoveryPlan.description}
-                    </p>
-                ) : null}
-                
-                {nextPrayer && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <div style={{ fontSize: '14px', color: '#D4AF37', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '8px' }}>
-                            {getPrayerName(nextPrayer.key)} {t('prayer.time')}
-                        </div>
-                        
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <div className="countdown-unit">
-                                <span className="unit-value">{timeLeft ? formatNum(timeLeft.hours) : '--'}</span>
-                                <span className="unit-label">{t('countdown.hours')}</span>
-                            </div>
-                            <span style={{ color: 'white', fontSize: '24px', fontWeight: '700', opacity: 0.5 }}>:</span>
-                            <div className="countdown-unit">
-                                <span className="unit-value">{timeLeft ? formatNum(timeLeft.minutes) : '--'}</span>
-                                <span className="unit-label">{t('countdown.min')}</span>
-                            </div>
-                            <span style={{ color: 'white', fontSize: '24px', fontWeight: '700', opacity: 0.5 }}>:</span>
-                            <div className="countdown-unit">
-                                <span className="unit-value">{timeLeft ? formatNum(timeLeft.seconds) : '--'}</span>
-                                <span className="unit-label">{t('countdown.sec')}</span>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            {/* Bottom: Prayer Strip */}
-            <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: '16px',
-                padding: '12px 10px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                position: 'relative',
-                zIndex: 1,
-                border: '1px solid rgba(255,255,255,0.1)'
-            }}>
-                {prayerList.map((prayer) => (
-                    <div key={prayer.key} style={{
-                        textAlign: 'center',
-                        flex: 1,
-                        opacity: nextPrayer?.key === prayer.key ? 1 : 0.6,
-                        position: 'relative'
-                    }}>
-                        <div style={{ fontSize: '9px', color: '#fff', fontWeight: '500', marginBottom: '2px' }}>
-                            {t(prayer.nameKey)}
-                        </div>
-                        <div style={{ fontSize: '12px', color: nextPrayer?.key === prayer.key ? '#D4AF37' : '#fff', fontWeight: '700' }}>
-                            {timings?.[prayer.key]?.substring(0, 5) || '--:--'}
-                        </div>
-                        {nextPrayer?.key === prayer.key && (
-                            <div style={{ position: 'absolute', bottom: '-4px', left: '50%', transform: 'translateX(-50%)', width: '4px', height: '4px', borderRadius: '50%', background: '#D4AF37' }}></div>
-                        )}
-                    </div>
-                ))}
-            </div>
-
-            {/* Floating Quick Stats (Invite & Streak) */}
-            <div style={{
-                position: 'absolute',
-                top: '50px',
-                right: '0px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '8px',
-                zIndex: 2
-            }}>
                 {streakData.current > 0 && (
                     <div style={{
-                        background: 'rgba(0,0,0,0.3)',
-                        padding: '6px 12px 6px 8px',
-                        borderTopLeftRadius: '20px',
-                        borderBottomLeftRadius: '20px',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '4px',
+                        background: 'rgba(255,255,255,0.1)',
+                        padding: '4px 10px',
+                        borderRadius: '20px',
                         color: 'white',
                         fontSize: '11px',
                         fontWeight: '700'
@@ -235,20 +119,94 @@ const PremiumHomeHero = memo(({
                         {streakData.current}
                     </div>
                 )}
-                 <button onClick={onOpenInvite} style={{
-                    background: 'rgba(212, 175, 55, 0.9)',
-                    border: 'none',
-                    padding: '6px 12px 6px 8px',
-                    borderTopLeftRadius: '20px',
-                    borderBottomLeftRadius: '20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    color: '#0F3D2E',
-                    cursor: 'pointer'
-                }}>
-                    <UserPlus size={12} />
-                </button>
+            </div>
+
+            {/* Main Content: Greeting + Countdown */}
+            <div style={{ textAlign: 'center', marginBottom: '14px', position: 'relative', zIndex: 1 }}>
+                <h2 style={{ margin: '0 0 6px 0', fontSize: '14px', color: 'rgba(255,255,255,0.65)', fontWeight: '500' }}>
+                    {recoveryPlan?.headline || t(greetingKey)}
+                </h2>
+                
+                {nextPrayer && (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <div style={{ fontSize: '10px', color: '#D4AF37', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '4px' }}>
+                            {getPrayerName(nextPrayer.key)} {t('prayer.time')}
+                        </div>
+                        
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <div className="countdown-unit">
+                                <span className="unit-value">{timeLeft ? formatNum(timeLeft.hours) : '--'}</span>
+                                <span className="unit-label">{t('countdown.hours')}</span>
+                            </div>
+                            <span style={{ color: 'white', fontSize: '18px', fontWeight: '700', opacity: 0.4 }}>:</span>
+                            <div className="countdown-unit">
+                                <span className="unit-value">{timeLeft ? formatNum(timeLeft.minutes) : '--'}</span>
+                                <span className="unit-label">{t('countdown.min')}</span>
+                            </div>
+                            <span style={{ color: 'white', fontSize: '18px', fontWeight: '700', opacity: 0.4 }}>:</span>
+                            <div className="countdown-unit">
+                                <span className="unit-value">{timeLeft ? formatNum(timeLeft.seconds) : '--'}</span>
+                                <span className="unit-label">{t('countdown.sec')}</span>
+                            </div>
+                        </div>
+
+                        <button 
+                            onClick={() => onSelectFeature && onSelectFeature('huzurMode', 'home_hero')}
+                            className="huzur-mode-hero-btn"
+                            style={{
+                                marginTop: '12px',
+                                background: 'rgba(255,255,255,0.12)',
+                                border: '1px solid rgba(255,255,255,0.15)',
+                                borderRadius: '10px',
+                                padding: '6px 14px',
+                                color: 'white',
+                                fontSize: '12px',
+                                fontWeight: '700',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease',
+                                marginInline: 'auto'
+                            }}
+                        >
+                            <Moon size={14} fill="white" />
+                            {t('menu.huzurMode')}
+                        </button>
+                    </div>
+                )}
+            </div>
+
+            {/* Bottom: Prayer Strip */}
+            <div style={{
+                background: 'rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(10px)',
+                borderRadius: '14px',
+                padding: '8px 6px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                position: 'relative',
+                zIndex: 1,
+                border: '1px solid rgba(255,255,255,0.08)'
+            }}>
+                {prayerList.map((prayer) => (
+                    <div key={prayer.key} style={{
+                        textAlign: 'center',
+                        flex: 1,
+                        opacity: nextPrayer?.key === prayer.key ? 1 : 0.55,
+                        position: 'relative'
+                    }}>
+                        <div style={{ fontSize: '7px', color: '#fff', fontWeight: '500', marginBottom: '1px' }}>
+                            {t(prayer.nameKey)}
+                        </div>
+                        <div style={{ fontSize: '10px', color: nextPrayer?.key === prayer.key ? '#D4AF37' : '#fff', fontWeight: '700' }}>
+                            {timings?.[prayer.key]?.substring(0, 5) || '--:--'}
+                        </div>
+                        {nextPrayer?.key === prayer.key && (
+                            <div style={{ position: 'absolute', bottom: '-3px', left: '50%', transform: 'translateX(-50%)', width: '3px', height: '3px', borderRadius: '50%', background: '#D4AF37' }}></div>
+                        )}
+                    </div>
+                ))}
             </div>
 
             <style>{`
@@ -259,23 +217,23 @@ const PremiumHomeHero = memo(({
                 }
                 .unit-value {
                     color: white;
-                    font-size: 32px;
+                    font-size: 24px;
                     font-weight: 800;
                     font-family: 'Inter', system-ui, sans-serif;
                     line-height: 1;
                 }
                 .unit-label {
-                    color: rgba(255,255,255,0.6);
-                    font-size: 9px;
+                    color: rgba(255,255,255,0.55);
+                    font-size: 7px;
                     text-transform: uppercase;
                     font-weight: 700;
-                    margin-top: 4px;
+                    margin-top: 2px;
                 }
                 .premium-hero-container::before {
                     content: '';
                     position: absolute;
                     top: 0; left: 0; right: 0; bottom: 0;
-                    background: radial-gradient(circle at top right, rgba(255,255,255,0.1) 0%, transparent 60%);
+                    background: radial-gradient(circle at top right, rgba(255,255,255,0.08) 0%, transparent 60%);
                     pointer-events: none;
                 }
             `}</style>

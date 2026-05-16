@@ -1,14 +1,16 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getSurahComplete, getAyahAudioUrl, getAvailableTranslations } from '../services/quranService';
-import { ChevronLeft, Play, Pause, Menu, X, SkipBack, SkipForward, Bookmark, Globe } from 'lucide-react';
+import { ChevronLeft, Play, Pause, Menu, X, SkipBack, SkipForward, Bookmark, Globe, Eye, EyeOff } from 'lucide-react';
 import { storageService } from '../services/storageService';
 import { surahList as staticSurahList, reciters as staticReciters } from '../data/surahList';
+import { logger } from '../utils/logger';
 import './Quran.css';
 
 const QURAN_STORAGE_KEYS = {
     FAVORITES: 'quranFavorites',
-    LAST_READ: 'quranLastRead'
+    LAST_READ: 'quranLastRead',
+    SIMPLE_MODE: 'quranSimpleMode'
 };
 
 const EMPTY_ARRAY = [];
@@ -41,6 +43,7 @@ function Quran({ onClose }) {
     const [isFihristLoading, setIsFihristLoading] = useState(false);
     const [favorites, setFavorites] = useState([]);
     const [volume] = useState(1);
+    const [simpleMode, setSimpleMode] = useState(() => storageService.getItem(QURAN_STORAGE_KEYS.SIMPLE_MODE, false));
 
     const audioRef = useRef(null);
     const contentRef = useRef(null);
@@ -68,7 +71,7 @@ function Quran({ onClose }) {
             const fihristModule = await import('../data/detailedFihrist');
             setDetailedFihrist(fihristModule.detailedFihrist || EMPTY_ARRAY);
         } catch (error) {
-            console.error('Detailed fihrist load error:', error);
+            logger.error('Detailed fihrist load error:', error);
         } finally {
             setIsFihristLoading(false);
         }
@@ -124,7 +127,7 @@ function Quran({ onClose }) {
                     setTranslations(availableTranslations);
                 }
             } catch (error) {
-                console.error('Translations load error:', error);
+                logger.error('Translations load error:', error);
             }
         };
 
@@ -182,7 +185,7 @@ function Quran({ onClose }) {
                 contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
             }
         } catch (error) {
-            console.error('Surah load error:', error);
+            logger.error('Surah load error:', error);
             if (currentRequestId === latestLoadRequestRef.current) {
                 setSurahLoadError('Sure yuklenemedi');
             }
@@ -211,7 +214,7 @@ function Quran({ onClose }) {
 
                 await loadSurah(startSurahId, startAyahId);
             } catch (error) {
-                console.error('Initialization error:', error);
+                logger.error('Initialization error:', error);
             }
         };
 
@@ -278,6 +281,12 @@ function Quran({ onClose }) {
         storageService.setItem(QURAN_STORAGE_KEYS.FAVORITES, newFavorites);
     };
 
+    const toggleSimpleMode = () => {
+        const newMode = !simpleMode;
+        setSimpleMode(newMode);
+        storageService.setItem(QURAN_STORAGE_KEYS.SIMPLE_MODE, newMode);
+    };
+
     useEffect(() => {
         const audio = audioRef.current;
 
@@ -302,7 +311,7 @@ function Quran({ onClose }) {
                         if (playPromise !== undefined) {
                             playPromise.catch((error) => {
                                 if (isMounted) {
-                                    console.error('Playback prevented:', error);
+                                    logger.error('Playback prevented:', error);
                                     if (error.name === 'NotAllowedError') {
                                         setIsPlaying(false);
                                     }
@@ -316,7 +325,7 @@ function Quran({ onClose }) {
                     audio.pause();
                 }
             } catch (error) {
-                console.error('Audio setup error:', error);
+                logger.error('Audio setup error:', error);
                 if (isMounted) {
                     setIsPlaying(false);
                 }
@@ -469,6 +478,13 @@ function Quran({ onClose }) {
                     </div>
 
                     <div className="header-actions">
+                        <button
+                            onClick={toggleSimpleMode}
+                            className="player-action-btn"
+                            title={simpleMode ? 'Detaylı Mod' : 'Basit Mod'}
+                        >
+                            {simpleMode ? <EyeOff size={24} /> : <Eye size={24} />}
+                        </button>
                         <button
                             onClick={() => {
                                 setActiveMenuTab('translations');
@@ -669,6 +685,17 @@ function Quran({ onClose }) {
                             <div className="basmala-container-premium">{BASMALA_TEXT}</div>
                         )}
 
+                        {simpleMode && (
+                            <div style={{
+                                textAlign: 'center', padding: '8px 16px', marginBottom: '16px',
+                                background: 'rgba(212, 175, 55, 0.1)', borderRadius: '20px',
+                                border: '1px solid rgba(212, 175, 55, 0.2)',
+                                fontSize: '0.75rem', fontWeight: '700', color: 'var(--accent-gold)'
+                            }}>
+                                Basit Mod - Meal için Detayları Göster'e tıklayın
+                            </div>
+                        )}
+
                         {surahContent.ayahs.map((ayah, index) => {
                             const isFavorite = favorites.some(
                                 (favorite) => favorite.surahId === activeSurah.number && favorite.ayahId === ayah.number
@@ -715,17 +742,39 @@ function Quran({ onClose }) {
                                         </div>
                                     </div>
 
-                                    <div className="ayah-arabic-display">{ayah.arabic}</div>
+                                    <div className="ayah-arabic-display" style={{ fontSize: simpleMode ? '2rem' : '1.5rem' }}>{ayah.arabic}</div>
 
-                                    {ayah.transliteration && (
+                                    {!simpleMode && ayah.transliteration && (
                                         <>
                                             <div className="ayah-section-label">{transliterationLabel}</div>
                                             <div className="ayah-latin-display">{ayah.transliteration}</div>
                                         </>
                                     )}
 
-                                    <div className="ayah-section-label">{selectedTranslationLabel}</div>
-                                    <div className="ayah-meaning-display">{ayah.translation}</div>
+                                    {!simpleMode && (
+                                        <>
+                                            <div className="ayah-section-label">{selectedTranslationLabel}</div>
+                                            <div className="ayah-meaning-display">{ayah.translation}</div>
+                                        </>
+                                    )}
+
+                                    {simpleMode && (
+                                        <button
+                                            className="show-details-btn"
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                setSimpleMode(false);
+                                            }}
+                                            style={{
+                                                marginTop: '12px', padding: '8px 16px', borderRadius: '20px',
+                                                background: 'rgba(212, 175, 55, 0.15)', border: '1px solid rgba(212, 175, 55, 0.3)',
+                                                color: 'var(--accent-gold)', fontSize: '0.8rem', fontWeight: '700',
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                                            Detayları Göster
+                                        </button>
+                                    )}
                                 </div>
                             );
                         })}

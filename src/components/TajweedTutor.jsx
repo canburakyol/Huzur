@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useCallback, useState, useRef, useEffect, useMemo } from 'react';
 import { BookOpen, Play, Info, CheckCircle, ChevronRight, GraduationCap, Star, Trophy, Sparkles } from 'lucide-react';
 import IslamicBackButton from './shared/IslamicBackButton';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ import './Education.css';
 const TajweedTutor = ({ onClose }) => {
   const { t } = useTranslation('tajweed');
   const { showToast } = useToast();
-  const tt = (key, defaultValue, options) => t(key, { defaultValue, ...options });
+  const tt = useCallback((key, defaultValue, options) => t(key, { defaultValue, ...options }), [t]);
   const [selectedRule, setSelectedRule] = useState(null);
   const [activeLevel, setActiveLevel] = useState(TAJWEED_LEVELS.BEGINNER);
   const [showQuiz, setShowQuiz] = useState(false);
@@ -25,7 +25,7 @@ const TajweedTutor = ({ onClose }) => {
     [tt('tajweed.faq.items.ihfa.question', 'Ihfa nasil yapilir?')]: tt('tajweed.faq.items.ihfa.answer', 'Ihfa, sozlukte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiginde, nun sesini genizden getirerek hafifce gizleyerek okumaktir.'),
     [tt('tajweed.faq.items.sekte.question', 'Sekte nedir?')]: tt('tajweed.faq.items.sekte.answer', 'Sekte, sesi bir an icin kesip nefes almadan beklemektir. Kuran-i Kerim\'de 4 yerde sekte bulunur (Kehf, Yasin, Kiyame ve Mutaffifin surelerinde).'),
     [tt('tajweed.faq.items.izhar.question', 'Izhar nedir?')]: tt('tajweed.faq.items.izhar.answer', 'Izhar, acikca okumaktir. Sakin nun veya tenvinden sonra bogaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hic tutulmadan ve gizlenmeden oldugu gibi okunur.')
-  }), [t]);
+  }), [tt]);
   /*
   const TAJWEED_QA_REMOVED = {
     'Tenvin nedir?': 'Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Üç çeşidi vardır:\n• Fethatân (ً): Üstün tenvin\n• Kesretân (ٍ): Esre tenvin\n• Dammetân (ٌ): Ötre tenvin\nTenvin, kelimenin sonundaki nunun yazılmadan okunmasıdır.',

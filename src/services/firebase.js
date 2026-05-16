@@ -1,7 +1,12 @@
 import { Capacitor } from "@capacitor/core";
 import { FirebaseAppCheck } from "@capacitor-firebase/app-check";
 import { initializeApp } from "firebase/app";
-import { CustomProvider, initializeAppCheck } from "firebase/app-check";
+import {
+    CustomProvider,
+    ReCaptchaEnterpriseProvider,
+    ReCaptchaV3Provider,
+    initializeAppCheck,
+} from "firebase/app-check";
 import { getAuth } from "firebase/auth";
 import {
     initializeFirestore,
@@ -32,6 +37,37 @@ const isNativeRuntime = () => {
 
 const getFallbackExpireTimeMillis = () => Date.now() + (30 * 60 * 1000);
 
+const configureWebAppCheckDebugToken = () => {
+    if (!import.meta.env.DEV || typeof self === "undefined") {
+        return;
+    }
+
+    const debugToken = import.meta.env.VITE_FIREBASE_APPCHECK_DEBUG_TOKEN
+        || import.meta.env.VITE_APPCHECK_DEBUG_TOKEN;
+
+    if (!debugToken) {
+        return;
+    }
+
+    self.FIREBASE_APPCHECK_DEBUG_TOKEN = debugToken === "true" ? true : debugToken;
+};
+
+const getWebAppCheckProvider = () => {
+    const enterpriseSiteKey = import.meta.env.VITE_RECAPTCHA_ENTERPRISE_SITE_KEY;
+    const recaptchaSiteKey = enterpriseSiteKey || import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+    const providerType = String(import.meta.env.VITE_RECAPTCHA_PROVIDER || "").toLowerCase();
+
+    if (!recaptchaSiteKey) {
+        return null;
+    }
+
+    if (enterpriseSiteKey || providerType === "enterprise") {
+        return new ReCaptchaEnterpriseProvider(recaptchaSiteKey);
+    }
+
+    return new ReCaptchaV3Provider(recaptchaSiteKey);
+};
+
 // ─── Lazy Singletons ────────────────────────────────────────────
 // Firebase SDK instances are NOT created on module load.
 // Each singleton is created on first access via the exported
@@ -45,22 +81,30 @@ let _appCheckDisabled = false;
 let _functions = null;
 let _analytics = null;
 let _analyticsLogEvent = null;
-
-/**
- * Lazy Firebase App — initialized on first call, not on import.
- */
-const ensureApp = () => {
-    if (!_app) {
-        _app = initializeApp(firebaseConfig);
-    }
-    return _app;
-};
+let _remoteConfig = null;
 
 /**
  * Lazy App Check — initialized after app is created.
  */
 const ensureAppCheck = (app) => {
-    if (_appCheck || _appCheckDisabled || !isNativeRuntime()) {
+    if (_appCheck || _appCheckDisabled) {
+        return _appCheck;
+    }
+
+    if (!isNativeRuntime()) {
+        const provider = getWebAppCheckProvider();
+        if (!provider) {
+            logger.warn("[Firebase] Web App Check skipped: reCAPTCHA site key is missing");
+            return null;
+        }
+
+        configureWebAppCheckDebugToken();
+
+        _appCheck = initializeAppCheck(app, {
+            provider,
+            isTokenAutoRefreshEnabled: true,
+        });
+
         return _appCheck;
     }
 
@@ -91,14 +135,22 @@ const ensureAppCheck = (app) => {
     return _appCheck;
 };
 
-// ─── Lazy Getter Proxy ──────────────────────────────────────────
-// These proxy objects allow existing `import { db }` / `import { auth }`
-// consumers to keep working WITHOUT code changes. The Firestore/Auth
-// instances are created on FIRST property access, not on import.
+/**
+ * Lazy Firebase App — initialized on first call, not on import.
+ */
+const ensureApp = () => {
+    if (!_app) {
+        _app = initializeApp(firebaseConfig);
+    }
+    return _app;
+};
 
 const createLazyProxy = (factory) => new Proxy({}, {
     get(_target, prop) {
         return Reflect.get(factory(), prop);
+    },
+    set(_target, prop, value) {
+        return Reflect.set(factory(), prop, value);
     },
     has(_target, prop) {
         return Reflect.has(factory(), prop);
@@ -107,7 +159,18 @@ const createLazyProxy = (factory) => new Proxy({}, {
         return Reflect.ownKeys(factory());
     },
     getOwnPropertyDescriptor(_target, prop) {
-        return Reflect.getOwnPropertyDescriptor(factory(), prop);
+        const descriptor = Reflect.getOwnPropertyDescriptor(factory(), prop);
+        if (!descriptor) return undefined;
+        return {
+            ...descriptor,
+            configurable: true,
+        };
+    },
+    defineProperty(_target, prop, descriptor) {
+        return Reflect.defineProperty(factory(), prop, descriptor);
+    },
+    deleteProperty(_target, prop) {
+        return Reflect.deleteProperty(factory(), prop);
     },
     getPrototypeOf() {
         return Reflect.getPrototypeOf(factory());
@@ -136,26 +199,10 @@ const getAuthRaw = () => {
     return _auth;
 };
 
-/**
- * Lazy Firestore proxy — initialized on first property access.
- * Consumers can keep using `import { db }` without changes.
- */
 export const db = createLazyProxy(getDbInstance);
-
-/**
- * Lazy Auth proxy — initialized on first property access.
- * Consumers can keep using `import { auth }` without changes.
- */
 export const auth = createLazyProxy(getAuthRaw);
 
-/**
- * Direct getter for Firestore (for new code).
- */
 export const getDb = getDbInstance;
-
-/**
- * Direct getter for Auth (for new code).
- */
 export const getAuthInstance = getAuthRaw;
 
 /**
@@ -201,5 +248,36 @@ export const getAnalyticsInstance = async () => {
     } catch (error) {
         logger.error('[Firebase] Analytics initialization failed', error);
         return { analytics: null, logEvent: null };
+    }
+};
+
+/**
+ * Get Firebase Remote Config instance lazily.
+ * Remote Config is used for operational safety switches and low-risk experiments.
+ * @returns {Promise<{ remoteConfig: object|null, fetchAndActivate: Function|null, getValue: Function|null }>}
+ */
+export const getRemoteConfigInstance = async () => {
+    if (_remoteConfig) {
+        const { fetchAndActivate, getValue } = await import("firebase/remote-config");
+        return { remoteConfig: _remoteConfig, fetchAndActivate, getValue };
+    }
+
+    try {
+        const { getRemoteConfig, fetchAndActivate, getValue, isSupported } = await import("firebase/remote-config");
+        const supported = await isSupported();
+        if (!supported) {
+            return { remoteConfig: null, fetchAndActivate: null, getValue: null };
+        }
+
+        const app = ensureApp();
+        _remoteConfig = getRemoteConfig(app);
+        _remoteConfig.settings = {
+            minimumFetchIntervalMillis: import.meta.env.DEV ? 60_000 : 15 * 60 * 1000,
+            fetchTimeoutMillis: 8_000,
+        };
+        return { remoteConfig: _remoteConfig, fetchAndActivate, getValue };
+    } catch (error) {
+        logger.warn('[Firebase] Remote Config unavailable', error);
+        return { remoteConfig: null, fetchAndActivate: null, getValue: null };
     }
 };

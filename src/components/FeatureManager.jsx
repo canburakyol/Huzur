@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 
 import { featureConfig } from '../data/featureConfig';
 import LoadingSpinner from './LoadingSpinner';
+import { logger } from '../utils/logger';
 
 /**
  * FeatureManager Component
@@ -16,7 +17,7 @@ const FeatureManager = ({ activeFeature, setActiveFeature, locationName }) => {
   const FeatureComponent = featureConfig[activeFeature]?.component;
 
   if (!FeatureComponent) {
-    console.warn(`Feature "${activeFeature}" not found in configuration.`);
+    logger.warn(`Feature "${activeFeature}" not found in configuration.`);
     return null;
   }
 

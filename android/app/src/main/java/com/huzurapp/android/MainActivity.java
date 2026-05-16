@@ -46,10 +46,9 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(NativeAdBridgePlugin.class);
         registerPlugin(InstallReferrerPlugin.class);
 
-        super.onCreate(savedInstanceState);
-        
-        // Initialize Firebase App Check
         initializeAppCheck();
+
+        super.onCreate(savedInstanceState);
 
         // Defer periodic scheduling until the first frame has been attached.
         getWindow().getDecorView().post(() -> PrayerDataSyncWorker.Companion.enqueueIfStale(this));
