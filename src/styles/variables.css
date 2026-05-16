@@ -64,6 +64,8 @@
 
   /* Nav extras */
   --nav-hover: rgba(255, 255, 255, 0.08);
+  --nav-text: var(--text-primary);
+  --nav-text-muted: var(--text-muted);
 }
 
 /* Dark Mode */

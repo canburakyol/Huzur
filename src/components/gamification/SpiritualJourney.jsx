@@ -107,10 +107,7 @@ const SpiritualJourney = ({ onClose }) => {
   }
 
   const renderLevelProgress = () => (
-    <div className="settings-card reveal-stagger" style={{
-      flexDirection: 'column',
-      padding: '24px',
-      marginBottom: '16px',
+    <div className="settings-card reveal-stagger flex-col p-24 mb-16" style={{
       background: 'linear-gradient(145deg, var(--nav-bg), var(--nav-hover))',
       border: `1px solid ${tierConfig.primary}40`,
       position: 'relative',
@@ -128,8 +125,8 @@ const SpiritualJourney = ({ onClose }) => {
         borderRadius: '50%'
       }} />
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', position: 'relative' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <div className="flex-between-center mb-20 relative">
+        <div className="flex-center-gap-12">
           <div style={{
             width: '56px',
             height: '56px',
@@ -144,32 +141,32 @@ const SpiritualJourney = ({ onClose }) => {
             <Star size={28} fill="#fff" />
           </div>
           <div>
-            <div style={{ fontSize: '0.8rem', fontWeight: '800', color: tierConfig.primary, textTransform: 'uppercase', letterSpacing: '1px' }}>
+            <div className="text-xs font-extrabold uppercase" style={{ color: tierConfig.primary, letterSpacing: '1px' }}>
               {t('gamification.level', 'Seviye')} {currentLevelInfo.level}
             </div>
-            <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: '950', color: 'var(--nav-text)' }}>
+            <h2 className="m-0 text-2xl font-black text-nav">
               {currentLevelInfo.title}
             </h2>
           </div>
         </div>
 
-        <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: '1.5rem', fontWeight: '900', color: 'var(--accent-gold)' }}>
+        <div className="text-right">
+          <div className="text-3xl font-black text-primary">
             {points.toLocaleString()}
           </div>
-          <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+          <div className="text-xs font-bold uppercase text-nav-muted">
             {t('gamification.totalXp', 'Toplam XP')}
           </div>
         </div>
       </div>
 
       {nextLevelInfo && (
-        <div style={{ position: 'relative' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)' }}>
+        <div className="relative">
+          <div className="flex-between-center mb-8">
+            <span className="text-sm font-extrabold text-nav-muted">
               {t('gamification.progress', 'Sonraki Seviye Ilerlemesi')}
             </span>
-            <span style={{ fontSize: '0.75rem', fontWeight: '900', color: tierConfig.primary }}>
+            <span className="text-sm font-black" style={{ color: tierConfig.primary }}>
               {progressPercent}%
             </span>
           </div>
@@ -200,11 +197,11 @@ const SpiritualJourney = ({ onClose }) => {
             </div>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
-            <span style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)' }}>
+          <div className="flex-between-center mt-8">
+            <span className="text-xs font-bold text-nav-muted">
               {points.toLocaleString()} XP
             </span>
-            <span style={{ fontSize: '0.7rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+            <span className="text-xs font-extrabold text-nav">
               {t('gamification.nextLevel', 'Seviye')} {nextLevelInfo.level}: {nextLevelInfo.title} ({nextLevelInfo.minPoints.toLocaleString()} XP)
             </span>
           </div>
@@ -218,16 +215,7 @@ const SpiritualJourney = ({ onClose }) => {
     const remaining = nextLevelInfo.minPoints - points;
 
     return (
-      <div className="reveal-stagger" style={{
-        background: 'var(--nav-hover)',
-        padding: '16px',
-        borderRadius: '16px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '16px',
-        marginBottom: '24px',
-        border: '1px solid var(--nav-border)'
-      }}>
+      <div className="reveal-stagger flex-center-gap-16 p-16 rounded-16 mb-24 border-glass bg-nav-hover">
         <div style={{
           width: '48px',
           height: '48px',
@@ -240,11 +228,11 @@ const SpiritualJourney = ({ onClose }) => {
         }}>
           <Target size={24} />
         </div>
-        <div style={{ flex: 1 }}>
-          <h4 style={{ margin: '0 0 4px 0', fontSize: '0.9rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+        <div className="flex-1">
+          <h4 className="m-0 mb-4 text-lg font-extrabold text-nav">
             {t('gamification.targetTitle', 'Hedefe Cok Yakinsin')}
           </h4>
-          <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--nav-text-muted)', lineHeight: '1.4' }}>
+          <p className="m-0 text-sm text-nav-muted leading-relaxed">
             {t('gamification.targetDesc', {
               remaining: remaining.toLocaleString(),
               nextTitle: nextLevelInfo.title,
@@ -257,57 +245,46 @@ const SpiritualJourney = ({ onClose }) => {
   };
 
   const renderWeeklyRhythm = () => (
-    <div className="settings-card reveal-stagger" style={{
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      padding: '22px',
-      marginBottom: '20px',
+    <div className="settings-card reveal-stagger flex-col p-22 mb-20" style={{
       background: 'linear-gradient(145deg, rgba(15, 118, 110, 0.12), rgba(212, 175, 55, 0.08))',
       border: '1px solid rgba(15, 118, 110, 0.18)'
     }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: '16px' }}>
+      <div className="flex-between-center items-start gap-12 mb-16">
         <div>
-          <div style={{ fontSize: '0.75rem', fontWeight: '900', color: 'var(--accent-gold)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
+          <div className="text-sm font-black text-primary uppercase mb-6" style={{ letterSpacing: '1px' }}>
             {t('socialRetention.weeklyYou', 'Bu hafta sen')}
           </div>
-          <h3 style={{ margin: 0, color: 'var(--nav-text)', fontSize: '1.1rem', fontWeight: '900' }}>
+          <h3 className="m-0 text-nav text-xl font-black">
             {weeklySummary.consistencyBand.label}
           </h3>
-          <p style={{ margin: '6px 0 0', color: 'var(--nav-text-muted)', fontSize: '0.8rem', fontWeight: '600', lineHeight: '1.5' }}>
+          <p className="mt-6 m-0 text-nav-muted text-sm font-semibold leading-relaxed">
             {weeklySummary.consistencyBand.description}
           </p>
         </div>
-        <div style={{
-          minWidth: '68px',
-          padding: '10px 12px',
-          borderRadius: '16px',
-          background: 'rgba(255,255,255,0.06)',
-          textAlign: 'center',
-          border: '1px solid var(--nav-border)'
-        }}>
-          <div style={{ fontSize: '1.3rem', fontWeight: '950', color: weeklySummary.consistencyBand.accent }}>
+        <div className="min-w-70 p-12 rounded-16 text-center border-glass" style={{ background: 'rgba(255,255,255,0.06)' }}>
+          <div className="text-3xl font-black" style={{ color: weeklySummary.consistencyBand.accent }}>
             {weeklySummary.consistencyScore}
           </div>
-          <div style={{ fontSize: '0.62rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+          <div className="text-xs font-extrabold uppercase text-nav-muted">
             {t('socialRetention.rhythmScore', 'Ritim skoru')}
           </div>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
-        <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-          <div style={{ fontSize: '1.15rem', fontWeight: '950', color: 'var(--nav-text)' }}>{weeklySummary.current.activeDays}</div>
-          <div style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('socialRetention.activeDays', 'Aktif gun')}</div>
+      <div className="grid-3 gap-10">
+        <div className="nav-card">
+          <div className="text-xl font-black text-nav">{weeklySummary.current.activeDays}</div>
+          <div className="card-label">{t('socialRetention.activeDays', 'Aktif gun')}</div>
         </div>
-        <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-          <div style={{ fontSize: '1.15rem', fontWeight: '950', color: 'var(--nav-text)' }}>{weeklySummary.ritualCount}</div>
-          <div style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('socialRetention.completedSteps', 'Tamamlanan adim')}</div>
+        <div className="nav-card">
+          <div className="text-xl font-black text-nav">{weeklySummary.ritualCount}</div>
+          <div className="card-label">{t('socialRetention.completedSteps', 'Tamamlanan adim')}</div>
         </div>
-        <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-          <div style={{ fontSize: '1.15rem', fontWeight: '950', color: 'var(--nav-text)' }}>
+        <div className="nav-card">
+          <div className="text-xl font-black text-nav">
             {weeklySummary.deltas.activeDays >= 0 ? '+' : ''}{weeklySummary.deltas.activeDays}
           </div>
-          <div style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('socialRetention.vsLastWeek', 'Gecen haftaya gore')}</div>
+          <div className="card-label">{t('socialRetention.vsLastWeek', 'Gecen haftaya gore')}</div>
         </div>
       </div>
     </div>
@@ -317,56 +294,52 @@ const SpiritualJourney = ({ onClose }) => {
     if (!familySummary) return null;
 
     return (
-      <div className="settings-card reveal-stagger" style={{
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        padding: '22px',
-        marginBottom: '24px',
+      <div className="settings-card reveal-stagger flex-col p-22 mb-24" style={{
         background: 'linear-gradient(145deg, rgba(249, 115, 22, 0.10), rgba(16, 185, 129, 0.08))',
         border: '1px solid rgba(249, 115, 22, 0.18)'
       }}>
-        <div style={{ fontSize: '0.75rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
+        <div className="text-sm font-black uppercase mb-6" style={{ color: 'var(--nav-accent)', letterSpacing: '1px' }}>
           {t('socialRetention.weeklyGroup', 'Bu hafta grubun')}
         </div>
-        <h3 style={{ margin: 0, color: 'var(--nav-text)', fontSize: '1.05rem', fontWeight: '900' }}>
+        <h3 className="m-0 text-nav text-xl font-black">
           {family?.name || 'Ailenin ritmi'}
         </h3>
-        <p style={{ margin: '8px 0 18px', color: 'var(--nav-text-muted)', fontSize: '0.8rem', fontWeight: '600', lineHeight: '1.5' }}>
+        <p className="mt-8 mb-18 text-nav-muted text-sm font-semibold leading-relaxed">
           {familySummary.encouragement}
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '16px' }}>
-          <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-            <div style={{ fontSize: '1.15rem', fontWeight: '950', color: 'var(--nav-text)' }}>{familySummary.memberCount}</div>
-            <div style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('socialRetention.members', 'Uye')}</div>
+        <div className="grid-3 gap-10 mb-16">
+          <div className="nav-card">
+            <div className="text-xl font-black text-nav">{familySummary.memberCount}</div>
+            <div className="card-label">{t('socialRetention.members', 'Uye')}</div>
           </div>
-          <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-            <div style={{ fontSize: '1.15rem', fontWeight: '950', color: 'var(--nav-text)' }}>{familySummary.familyStrength}</div>
-            <div style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('socialRetention.streakStrength', 'Seri gucu')}</div>
+          <div className="nav-card">
+            <div className="text-xl font-black text-nav">{familySummary.familyStrength}</div>
+            <div className="card-label">{t('socialRetention.streakStrength', 'Seri gucu')}</div>
           </div>
-          <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-            <div style={{ fontSize: '1.15rem', fontWeight: '950', color: 'var(--nav-text)' }}>{familySummary.totalBadgeCount}</div>
-            <div style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('socialRetention.badges', 'Toplam rozet')}</div>
+          <div className="nav-card">
+            <div className="text-xl font-black text-nav">{familySummary.totalBadgeCount}</div>
+            <div className="card-label">{t('socialRetention.badges', 'Toplam rozet')}</div>
           </div>
         </div>
 
-        <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid var(--nav-border)', borderRadius: '16px', padding: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', marginBottom: '8px' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+        <div className="p-16 rounded-16 border-glass" style={{ background: 'rgba(255,255,255,0.04)' }}>
+          <div className="flex-between-center gap-12 mb-8">
+            <span className="text-base font-extrabold text-nav">
               {familySummary.recommendedGoal.title}
             </span>
-            <span style={{ fontSize: '0.78rem', fontWeight: '900', color: 'var(--nav-accent)' }}>
+            <span className="text-base font-black" style={{ color: 'var(--nav-accent)' }}>
               %{familySummary.recommendedGoal.progressPercent}
             </span>
           </div>
-          <div style={{ height: '10px', background: 'rgba(0,0,0,0.18)', borderRadius: '999px', overflow: 'hidden', marginBottom: '10px' }}>
+          <div className="h-10 rounded-full overflow-hidden mb-10" style={{ background: 'rgba(0,0,0,0.18)' }}>
             <div style={{
               width: `${familySummary.recommendedGoal.progressPercent}%`,
               height: '100%',
               background: 'linear-gradient(90deg, var(--nav-accent), #10b981)'
             }} />
           </div>
-          <p style={{ margin: 0, color: 'var(--nav-text-muted)', fontSize: '0.76rem', fontWeight: '600', lineHeight: '1.45' }}>
+          <p className="m-0 text-nav-muted text-sm font-semibold leading-relaxed">
             {familySummary.recommendedGoal.description}
           </p>
         </div>
@@ -375,74 +348,52 @@ const SpiritualJourney = ({ onClose }) => {
   };
 
   const renderMiniLeague = () => (
-    <div className="settings-card reveal-stagger" style={{
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      padding: '22px',
-      marginBottom: '24px',
+    <div className="settings-card reveal-stagger flex-col p-22 mb-24" style={{
       background: 'linear-gradient(145deg, rgba(59, 130, 246, 0.10), rgba(14, 165, 233, 0.06))',
       border: '1px solid rgba(59, 130, 246, 0.18)'
     }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: '14px' }}>
+      <div className="flex-between-center items-start gap-12 mb-14">
         <div>
-          <div style={{ fontSize: '0.75rem', fontWeight: '900', color: '#60a5fa', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
+          <div className="text-sm font-black uppercase mb-6 text-blue-400" style={{ letterSpacing: '1px', color: '#60a5fa' }}>
             {t('socialRetention.gentleCompetition', 'Hafif rekabet')}
           </div>
-          <h3 style={{ margin: 0, color: 'var(--nav-text)', fontSize: '1.05rem', fontWeight: '900' }}>
+          <h3 className="m-0 text-nav text-xl font-black">
             {miniLeagueSummary.enabled
               ? t(miniLeagueSummary.bandKey, 'Isinma turu')
               : t(miniLeagueSummary.titleKey, 'Ritim halkasi kapali')}
           </h3>
-          <p style={{ margin: '8px 0 0', color: 'var(--nav-text-muted)', fontSize: '0.8rem', fontWeight: '600', lineHeight: '1.5' }}>
+          <p className="mt-8 m-0 text-nav-muted text-sm font-semibold leading-relaxed">
             {miniLeagueSummary.enabled
               ? t(miniLeagueSummary.encouragementKey, 'Ritmini sakin sekilde kurarken kendi gecen haftan en iyi referans olsun.')
               : t(miniLeagueSummary.descriptionKey, 'Istersen anonim mini lige katilip sadece istikrar bandini gorebilirsin.')}
           </p>
         </div>
-        <div style={{
-          width: '48px',
-          height: '48px',
-          borderRadius: '16px',
-          background: 'rgba(59, 130, 246, 0.14)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#60a5fa'
-        }}>
+        <div className="w-48 h-48 rounded-16 flex-center" style={{ background: 'rgba(59, 130, 246, 0.14)', color: '#60a5fa' }}>
           <Trophy size={22} />
         </div>
       </div>
 
       {miniLeagueSummary.enabled ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '14px' }}>
-          <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-            <div style={{ fontSize: '1.1rem', fontWeight: '950', color: 'var(--nav-text)' }}>%{miniLeagueSummary.percentile}</div>
-            <div style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('socialRetention.band', 'Band')}</div>
+        <div className="grid-3 gap-10 mb-14">
+          <div className="nav-card">
+            <div className="text-xl font-black text-nav">%{miniLeagueSummary.percentile}</div>
+            <div className="card-label">{t('socialRetention.band', 'Band')}</div>
           </div>
-          <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-            <div style={{ fontSize: '1.1rem', fontWeight: '950', color: 'var(--nav-text)' }}>{miniLeagueSummary.leagueSize}</div>
-            <div style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('socialRetention.circleSize', 'Kisilik halka')}</div>
+          <div className="nav-card">
+            <div className="text-xl font-black text-nav">{miniLeagueSummary.leagueSize}</div>
+            <div className="card-label">{t('socialRetention.circleSize', 'Kisilik halka')}</div>
           </div>
-          <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-            <div style={{ fontSize: '0.9rem', fontWeight: '950', color: 'var(--nav-text)' }}>
+          <div className="nav-card">
+            <div className="text-lg font-black text-nav">
               {t(`socialRetention.visibility_${miniLeagueSummary.visibilityMode}`, miniLeagueSummary.visibilityMode)}
             </div>
-            <div style={{ fontSize: '0.68rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('socialRetention.visibility', 'Gorunurluk')}</div>
+            <div className="card-label">{t('socialRetention.visibility', 'Gorunurluk')}</div>
           </div>
         </div>
       ) : null}
 
-      <div style={{
-        background: 'rgba(255,255,255,0.04)',
-        borderRadius: '16px',
-        padding: '14px 16px',
-        border: '1px solid var(--nav-border)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '12px'
-      }}>
-        <div style={{ fontSize: '0.8rem', fontWeight: '700', color: 'var(--nav-text)' }}>
+      <div className="p-14 px-16 rounded-16 border-glass flex-between-center gap-12" style={{ background: 'rgba(255,255,255,0.04)' }}>
+        <div className="text-base font-bold text-nav">
           {miniLeagueSummary.enabled
             ? t(miniLeagueSummary.standingKey, 'Ritmin oturdukca yukari cikiyorsun')
             : t('socialRetention.defaultStanding', 'Ayarlardan acarsan anonim ritim bandini gorebilirsin.')}
@@ -452,15 +403,8 @@ const SpiritualJourney = ({ onClose }) => {
             onClose?.();
             useAppStore.getState().setActiveFeature('settings');
           }}
-          style={{
-            border: 'none',
-            borderRadius: '999px',
-            padding: '10px 14px',
-            background: 'rgba(59, 130, 246, 0.16)',
-            color: '#60a5fa',
-            fontWeight: '800',
-            cursor: 'pointer'
-          }}
+          className="rounded-full px-14 py-10 font-extrabold border-none cursor-pointer"
+          style={{ background: 'rgba(59, 130, 246, 0.16)', color: '#60a5fa' }}
         >
           {t(miniLeagueSummary.ctaKey, 'Gorunurlugu duzenle')}
         </button>
@@ -474,77 +418,57 @@ const SpiritualJourney = ({ onClose }) => {
         <IslamicBackButton onClick={onClose} label={t('journey.title', 'Manevi Yolculugum')} />
       </div>
 
-      <div className="feature-content" style={{ padding: '20px' }}>
+      <div className="feature-content p-20">
         {renderLevelProgress()}
         {renderGoalBox()}
         {renderWeeklyRhythm()}
         {renderFamilyRhythm()}
         {miniLeaguePreferences ? renderMiniLeague() : null}
 
-        <div className="reveal-stagger" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '12px',
-          marginBottom: '20px'
-        }}>
-          <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-            <div style={{ fontSize: '1.2rem', fontWeight: '950', color: 'var(--nav-text)' }}>{weeklySummary.current.activeDays}</div>
-            <div style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>Aktif gun</div>
+        <div className="reveal-stagger grid-3 gap-12 mb-20">
+          <div className="nav-card">
+            <div className="text-2xl font-black text-nav">{weeklySummary.current.activeDays}</div>
+            <div className="text-sm font-extrabold uppercase text-nav-muted">Aktif gun</div>
           </div>
-          <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-            <div style={{ fontSize: '1.2rem', fontWeight: '950', color: 'var(--nav-text)' }}>+{weeklySummary.current.xpEarned}</div>
-            <div style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>Haftalik XP</div>
+          <div className="nav-card">
+            <div className="text-2xl font-black text-nav">+{weeklySummary.current.xpEarned}</div>
+            <div className="text-sm font-extrabold uppercase text-nav-muted">Haftalik XP</div>
           </div>
-          <div style={{ background: 'var(--nav-hover)', borderRadius: '16px', padding: '14px 12px', border: '1px solid var(--nav-border)' }}>
-            <div style={{ fontSize: '1.2rem', fontWeight: '950', color: 'var(--nav-text)' }}>{earnedBadges.length}</div>
-            <div style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>Rozet</div>
+          <div className="nav-card">
+            <div className="text-2xl font-black text-nav">{earnedBadges.length}</div>
+            <div className="text-sm font-extrabold uppercase text-nav-muted">Rozet</div>
           </div>
         </div>
 
-        <div className="reveal-stagger" style={{ marginBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', padding: '0 8px' }}>
-            <div style={{ width: '4px', height: '16px', background: 'var(--accent-gold)', borderRadius: '999px' }} />
-            <h3 style={{ margin: 0, fontSize: '0.92rem', fontWeight: '900', color: 'var(--nav-text)', textTransform: 'uppercase' }}>
+        <div className="reveal-stagger mb-24">
+          <div className="flex-center-gap-8 mb-14 px-8">
+            <div className="w-4 h-16 rounded-full" style={{ width: '4px', height: '16px', background: 'var(--accent-gold)', borderRadius: '999px' }} />
+            <h3 className="m-0 text-base font-black text-nav uppercase">
               Bugunku akisin
             </h3>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div className="flex-col-gap-10">
             {quickActions.map((item) => (
               <button
                 key={item.id}
                 onClick={item.onClick}
-                className="hover-lift"
+                className="hover-lift w-full p-16 rounded-18 border-glass text-left cursor-pointer"
                 style={{
-                  width: '100%',
-                  padding: '16px',
                   background: 'linear-gradient(145deg, var(--nav-bg), var(--nav-hover))',
-                  border: '1px solid var(--nav-border)',
-                  borderRadius: '18px',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '14px',
-                  textAlign: 'left',
-                  cursor: 'pointer'
+                  gap: '14px'
                 }}
               >
-                <div style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '14px',
-                  background: 'rgba(255,255,255,0.04)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
+                <div className="w-44 h-44 rounded-14 flex-center" style={{ width: '44px', height: '44px', borderRadius: '14px', background: 'rgba(255,255,255,0.04)', flexShrink: 0 }}>
                   {item.icon}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '0.92rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: '4px' }}>
+                <div className="flex-1">
+                  <div className="text-base font-black text-nav mb-4">
                     {item.title}
                   </div>
-                  <div style={{ fontSize: '0.78rem', fontWeight: '600', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                  <div className="text-sm font-semibold text-nav-muted leading-relaxed">
                     {item.description}
                   </div>
                 </div>
