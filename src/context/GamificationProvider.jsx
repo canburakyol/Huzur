@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { doc, onSnapshot, updateDoc, increment, arrayUnion, serverTimestamp } from 'firebase/firestore';
 import { db } from '../services/firebase';
 import { getCurrentUserId } from '../services/authService';
@@ -48,6 +49,7 @@ const writeUserDoc = async (userId, updates) => {
 };
 
 export const GamificationProvider = ({ children }) => {
+  const { t } = useTranslation();
   const cached = readCache();
   const [points, setPoints] = useState(cached?.points ?? 0);
   const [earnedBadges, setEarnedBadges] = useState(cached?.earnedBadges ?? []);
@@ -279,7 +281,7 @@ export const GamificationProvider = ({ children }) => {
   const contextValue = useMemo(() => ({
     points,
     level,
-    title: level?.title || 'Yeni Baslayan',
+    title: level?.title || t('gamification.beginnerTitle'),
     showLevelUp,
     setShowLevelUp,
     earnedBadges,
@@ -303,7 +305,8 @@ export const GamificationProvider = ({ children }) => {
     awardBadge,
     checkQuestProgress,
     claimQuestReward,
-    refreshQuests
+    refreshQuests,
+    t
   ]);
 
   return (

@@ -404,7 +404,12 @@
     "quoteAuthor": "النبي محمد ﷺ",
     "prayerDetail": "تفاصيل الدعاء",
     "pronunciation": "النطق",
-    "meaning": "المعنى"
+    "meaning": "المعنى",
+    "errors": {
+      "loadFailed": "تعذر تحميل أوقات الصلاة. يرجى التحقق من اتصالك بالإنترنت.",
+      "fetchError": "حدث خطأ أثناء تحميل أوقات الصلاة. يرجى المحاولة مرة أخرى.",
+      "timeout": "انتهت مهلة الاتصال."
+    }
   },
   "assistant": {
     "title": "المساعد الإسلامي",
@@ -3751,9 +3756,10 @@
     "family_first": "Family First"
   },
   "gamification": {
-    "badgesTitle": "Badge Collection",
-    "streakTitle": "My Streaks",
-    "streakTip": "Try to keep your streak by performing your worship on time every day."
+    "badgesTitle": "مجموعة الشارات",
+    "streakTitle": "سلاسلاتي",
+    "streakTip": "حاول الحفاظ على سلسلتك بأداء عباداتك في وقتها كل يوم.",
+    "beginnerTitle": "مبتدئ"
   },
   "modules": {
     "core": "Core Features",
@@ -3935,7 +3941,14 @@
     "title": "Günlük Rutinlerim"
   },
   "quiz": {
-    "title": "Günün Testi"
+    "title": "اختبار اليوم",
+    "perfect": "ممتاز!",
+    "congrats": "تهانينا!",
+    "goodTry": "محاولة جيدة!",
+    "alreadyPlayed": "لقد أكملت اختبار اليوم بالفعل. عد غداً لأسئلة جديدة!",
+    "completed": "لقد أكملت اختبار المعرفة اليومي بنجاح.",
+    "correct": "صحيح",
+    "xpEarned": "XP مكتسب"
   },
   "shareCard": {
     "title": "İstatistik Kartı",

@@ -18,7 +18,7 @@ const buildFallbackChain = (languageCode) => {
     return [DEFAULT_LANGUAGE_CODE, FALLBACK_BASE_LANGUAGE];
   }
 
-  return [languageCode, FALLBACK_BASE_LANGUAGE];
+  return [languageCode, DEFAULT_LANGUAGE_CODE, FALLBACK_BASE_LANGUAGE];
 };
 
 const fallbackLng = SUPPORTED_LANGUAGE_CODES.reduce(

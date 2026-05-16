@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getPrayerTimes, getNextPrayer } from '../services/prayerService';
 import { updateWidget as updateAndroidWidget } from '../services/widgetService';
 import { storageService } from '../services/storageService';
@@ -42,6 +43,7 @@ const loadFcmRuntime = async () => {
 };
 
 export const usePrayerTimes = () => {
+  const { t } = useTranslation();
   const initialPrayerSnapshotRef = useRef(null);
   if (!initialPrayerSnapshotRef.current) {
     initialPrayerSnapshotRef.current = getInitialPrayerSnapshot();
@@ -100,11 +102,11 @@ export const usePrayerTimes = () => {
           void schedulePrayerSideEffects(data.timings, coords);
         }
       } else {
-        setError('Namaz vakitleri yüklenemedi. Lütfen internet bağlantınızı kontrol edin.');
+        setError(t('prayers.errors.loadFailed'));
       }
     } catch (err) {
       logger.error('Prayer times fetch error:', err);
-      setError('Namaz vakitleri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
+      setError(t('prayers.errors.fetchError'));
     } finally {
       setLoading(false);
     }
@@ -116,7 +118,7 @@ export const usePrayerTimes = () => {
         logger.warn('[usePrayerTimes] Loading timed out, forcing completion');
         setLoading(false);
         if (!timings) {
-          setError('Bağlantı zaman aşımına uğradı.');
+          setError(t('prayers.errors.timeout'));
         }
       }
     }, 10000);

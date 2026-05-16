@@ -98,24 +98,24 @@ const DailyIslamicQuiz = ({ onClose }) => {
             </div>
             
             <h2 style={{ fontSize: '1.8rem', fontWeight: '950', color: 'var(--nav-text)', margin: '0 0 10px' }}>
-              {score === 5 ? 'Mükemmel!' : score >= 3 ? 'Tebrikler!' : 'İyi Deneme!'}
+              {score === 5 ? t('quiz.perfect') : score >= 3 ? t('quiz.congrats') : t('quiz.goodTry')}
             </h2>
             
             <p style={{ fontSize: '1rem', color: 'var(--nav-text-muted)', marginBottom: '24px' }}>
               {hasPlayedToday 
-                ? 'Bugünkü testi zaten tamamladın. Yarın yeni sorularla tekrar gel!' 
-                : 'Bugünkü bilgi testini başarıyla tamamladın.'}
+                ? t('quiz.alreadyPlayed')
+                : t('quiz.completed')}
             </p>
 
             <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '30px' }}>
               <div>
                 <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--accent-gold)' }}>{score}/5</div>
-                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>Doğru</div>
+                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('quiz.correct')}</div>
               </div>
               <div style={{ width: '1px', background: 'var(--nav-border)' }} />
               <div>
                 <div style={{ fontSize: '2rem', fontWeight: '900', color: '#10b981' }}>+{score * 15}</div>
-                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>XP Kazanıldı</div>
+                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('quiz.xpEarned')}</div>
               </div>
             </div>
 

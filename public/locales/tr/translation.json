@@ -507,7 +507,12 @@
     "quoteAuthor": "Hz. Muhammed (s.a.v.)",
     "prayerDetail": "Dua Detayı",
     "pronunciation": "Okunuşu",
-    "meaning": "Anlamı"
+    "meaning": "Anlamı",
+    "errors": {
+      "loadFailed": "Namaz vakitleri yüklenemedi. Lütfen internet bağlantınızı kontrol edin.",
+      "fetchError": "Namaz vakitleri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.",
+      "timeout": "Bağlantı zaman aşımına uğradı."
+    }
   },
   "assistant": {
     "title": "Huzur Rehberi",
@@ -3511,7 +3516,8 @@
   "gamification": {
     "badgesTitle": "Rozet Koleksiyonu",
     "streakTitle": "Zincirlerim",
-    "streakTip": "Zincirini korumak için ibadetlerini her gün vaktinde yapmaya çalış."
+    "streakTip": "Zincirini korumak için ibadetlerini her gün vaktinde yapmaya çalış.",
+    "beginnerTitle": "Yeni Başlayan"
   },
   "journey": {
     "title": "Manevi Yolculuğum"
@@ -3520,7 +3526,14 @@
     "title": "Günlük Rutinlerim"
   },
   "quiz": {
-    "title": "Günün Testi"
+    "title": "Günün Testi",
+    "perfect": "Mükemmel!",
+    "congrats": "Tebrikler!",
+    "goodTry": "İyi Deneme!",
+    "alreadyPlayed": "Bugünkü testi zaten tamamladın. Yarın yeni sorularla tekrar gel!",
+    "completed": "Bugünkü bilgi testini başarıyla tamamladın.",
+    "correct": "Doğru",
+    "xpEarned": "XP Kazanıldı"
   },
   "agenda": {
     "weekdays": {
