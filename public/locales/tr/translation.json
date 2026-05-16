@@ -1238,6 +1238,47 @@
     "dailyPrayer": "Günün Duası",
     "dailyVerse": "Günün Ayeti"
   },
+  "homeFeed": {
+    "priorityCard": {
+      "eyebrow": "Bugünün 2 dakikalik adimi",
+      "supportingStreak": "{{count}} gunluk serin devam ediyor. Bugunku 2 dakikalik adim bu akisi korumana yardim eder.",
+      "supportingStart": "Baslamak icin tek bir net adim yeter. Ana ekran once bu gunluk ritmi korumana yardim edecek."
+    },
+    "recovery": {
+      "eyebrow": "Derin rehberlik momenti",
+      "title": "Bugun kendine daha sakin bir destek acabilirsin",
+      "description": "Huzur Rehberi ile bugunluk tek bir adim belirle, haftalik ritmini tekrar yumusak bicimde kur.",
+      "assistantBtn": "Huzur Rehberi'ni ac",
+      "proBtn": "Pro destegi gor"
+    },
+    "aiRecommendation": {
+      "eyebrow": "Gunluk ritim notu"
+    },
+    "personalization": {
+      "title": "Bu ekran artik sana gore siralaniyor",
+      "description": "Ana odagini ayarlardan degistirdiginde home, menu ve hizli erisim kartlari yeni ritmine gore guncellenir."
+    },
+    "family": {
+      "eyebrow": "Aile momentumu",
+      "noFamilyTitle": "Ailece ilerlemeyi ac",
+      "noFamilyDesc": "Ortak hedefler ve birlikte istikrar icin bir aile grubu kur ya da bir davet kodu ile katil.",
+      "noFamilyBtn": "Aile alanini ac",
+      "progressLabel": "Tamam",
+      "detailBtn": "Detayi gor",
+      "defaultGoal": "Bu hafta birlikte kucuk ama istikrarli bir adim atin.",
+      "hasGoalDesc": "{{current}}/{{target}} katki kaydi var.",
+      "noGoalDesc": "Aile hedefini olusturup gunluk katkilari bir araya getirebilirsin."
+    },
+    "activation": {
+      "eyebrow": "Ilk adim",
+      "time": "2 dakika",
+      "promise": {
+        "prayer_rhythm": "Bugunu bos gecirme.",
+        "quran_learning": "Kuran veya dua ile kisa bir bag kur.",
+        "family_consistency": "Ailece bugunun tek adimini gorunur kil."
+      }
+    }
+  },
   "features": {
     "quickAccess": "Hedefe göre hızlı erişim",
     "qibla": "Kıble",

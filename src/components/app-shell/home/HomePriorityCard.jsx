@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight, BookOpen, HeartHandshake, Target } from 'lucide-react';
 import { getPrimaryGoalConfig, getStoredPrimaryGoal } from '../../../utils/primaryGoal';
 
@@ -9,12 +10,13 @@ const iconMap = {
 };
 
 const HomePriorityCard = memo(function HomePriorityCard({ onSelectFeature, streakData }) {
+  const { t } = useTranslation();
   const primaryGoal = getStoredPrimaryGoal();
   const goalConfig = getPrimaryGoalConfig(primaryGoal);
   const action = goalConfig.homeAction;
   const supportingCopy = streakData?.current > 0
-    ? `${streakData.current} gunluk serin devam ediyor. Bugunku 2 dakikalik adim bu akisi korumana yardim eder.`
-    : 'Baslamak icin tek bir net adim yeter. Ana ekran once bu gunluk ritmi korumana yardim edecek.';
+    ? t('homeFeed.priorityCard.supportingStreak', { count: streakData.current })
+    : t('homeFeed.priorityCard.supportingStart');
 
   return (
     <div
@@ -30,7 +32,7 @@ const HomePriorityCard = memo(function HomePriorityCard({ onSelectFeature, strea
       }}
     >
       <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
-        Bugunun 2 dakikalik adimi
+        {t('homeFeed.priorityCard.eyebrow')}
       </div>
       <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
         <div

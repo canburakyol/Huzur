@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight, BookOpen, Sparkles, Target, Users } from 'lucide-react';
 import { ANALYTICS_EVENTS, logEvent } from '../../../services/analyticsService';
 import { getPrimaryGoalConfig, getStoredPrimaryGoal } from '../../../utils/primaryGoal';
@@ -8,23 +9,24 @@ const activationCopy = {
     eyebrow: 'Ilk adim',
     icon: <Target size={22} />,
     time: '2 dakika',
-    promise: 'Bugunu bos gecirme.',
+    promiseKey: 'homeFeed.activation.promise.prayer_rhythm',
   },
   quran_learning: {
     eyebrow: 'Ilk adim',
     icon: <BookOpen size={22} />,
     time: '2 dakika',
-    promise: 'Kuran veya dua ile kisa bir bag kur.',
+    promiseKey: 'homeFeed.activation.promise.quran_learning',
   },
   family_consistency: {
     eyebrow: 'Ilk adim',
     icon: <Users size={22} />,
     time: '2 dakika',
-    promise: 'Ailece bugunun tek adimini gorunur kil.',
+    promiseKey: 'homeFeed.activation.promise.family_consistency',
   },
 };
 
 function FirstActivationCard({ onSelectFeature }) {
+  const { t } = useTranslation();
   const viewedRef = useRef(false);
   const primaryGoal = getStoredPrimaryGoal();
   const goalConfig = getPrimaryGoalConfig(primaryGoal);
@@ -59,7 +61,7 @@ function FirstActivationCard({ onSelectFeature }) {
 
       <div className="first-activation-card__body">
         <h2>{action.title}</h2>
-        <p>{copy.promise} {action.description}</p>
+        <p>{t(copy.promiseKey)} {action.description}</p>
       </div>
 
       <button type="button" className="first-activation-card__button" onClick={handleStart}>

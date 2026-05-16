@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ANALYTICS_EVENTS, logEvent, logPremiumRecoveryMomentOpened } from '../../../services/analyticsService';
 import {
   buildPremiumMomentAnalyticsPayload,
@@ -8,6 +9,7 @@ import {
 import { getStoredPrimaryGoal } from '../../../utils/primaryGoal';
 
 const RecoverySupportCard = memo(function RecoverySupportCard({ recoveryPlan, isProUser, onSelectFeature }) {
+  const { t } = useTranslation();
   if (isProUser || !['at_risk', 'comeback'].includes(recoveryPlan?.riskBand)) {
     return null;
   }
@@ -45,13 +47,13 @@ const RecoverySupportCard = memo(function RecoverySupportCard({ recoveryPlan, is
       }}
     >
       <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
-        Derin rehberlik momenti
+        {t('homeFeed.recovery.eyebrow')}
       </div>
       <div style={{ fontSize: '0.98rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: '6px' }}>
-        Bugun kendine daha sakin bir destek acabilirsin
+        {t('homeFeed.recovery.title')}
       </div>
       <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.55', fontWeight: '600', marginBottom: '14px' }}>
-        Huzur Rehberi ile bugunluk tek bir adim belirle, haftalik ritmini tekrar yumusak bicimde kur.
+        {t('homeFeed.recovery.description')}
       </div>
       <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
         <button
@@ -68,7 +70,7 @@ const RecoverySupportCard = memo(function RecoverySupportCard({ recoveryPlan, is
             flex: '1 1 190px'
           }}
         >
-          Huzur Rehberi'ni ac
+          {t('homeFeed.recovery.assistantBtn')}
         </button>
         {premiumMoment.showUpgrade ? (
           <button
@@ -85,7 +87,7 @@ const RecoverySupportCard = memo(function RecoverySupportCard({ recoveryPlan, is
               flex: '1 1 190px'
             }}
           >
-            Pro destegi gor
+            {t('homeFeed.recovery.proBtn')}
           </button>
         ) : null}
       </div>

@@ -1,8 +1,10 @@
 import { memo, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Users } from 'lucide-react';
 import { useFamily } from '../../../context/FamilyContext';
 
 const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature }) {
+  const { t } = useTranslation();
   const { family, weeklyGoal, weeklyGoalLoading } = useFamily();
 
   const progressPercent = useMemo(() => {
@@ -37,10 +39,10 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
             <Users size={18} color="var(--nav-accent)" />
           </div>
           <div>
-            <div style={{ fontSize: '0.82rem', fontWeight: '900', color: 'var(--nav-text)' }}>Ailece ilerlemeyi ac</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', lineHeight: '1.45' }}>
-              Ortak hedefler ve birlikte istikrar icin bir aile grubu kur ya da bir davet kodu ile katil.
-            </div>
+          <div style={{ fontSize: '0.82rem', fontWeight: '900', color: 'var(--nav-text)' }}>{t('homeFeed.family.noFamilyTitle')}</div>
+          <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', lineHeight: '1.45' }}>
+            {t('homeFeed.family.noFamilyDesc')}
+          </div>
           </div>
         </div>
         <button
@@ -56,7 +58,7 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
             cursor: 'pointer'
           }}
         >
-          Aile alanini ac
+          {t('homeFeed.family.noFamilyBtn')}
         </button>
       </div>
     );
@@ -78,13 +80,13 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 12 }}>
         <div>
           <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 6 }}>
-            Aile momentumu
+            {t('homeFeed.family.eyebrow')}
           </div>
           <div style={{ fontSize: '1rem', fontWeight: '900', color: 'var(--nav-text)' }}>
             {family.name || 'Ailen'}
           </div>
           <div style={{ fontSize: '0.78rem', color: 'var(--nav-text-muted)', lineHeight: '1.45', marginTop: 4 }}>
-            {weeklyGoal?.title || 'Bu hafta birlikte kucuk ama istikrarli bir adim atin.'}
+            {weeklyGoal?.title || t('homeFeed.family.defaultGoal')}
           </div>
         </div>
         <div style={{
@@ -99,7 +101,7 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
             {weeklyGoalLoading ? '...' : `${progressPercent}%`}
           </div>
           <div style={{ fontSize: '0.64rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
-            Tamam
+            {t('homeFeed.family.progressLabel')}
           </div>
         </div>
       </div>
@@ -117,8 +119,8 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
         <div style={{ fontSize: '0.76rem', color: 'var(--nav-text-muted)', lineHeight: '1.45' }}>
           {weeklyGoal
-            ? `${weeklyGoal.currentValue || 0}/${weeklyGoal.targetValue || 0} katki kaydi var.`
-            : 'Aile hedefini olusturup gunluk katkilari bir araya getirebilirsin.'}
+            ? t('homeFeed.family.hasGoalDesc', { current: weeklyGoal.currentValue || 0, target: weeklyGoal.targetValue || 0 })
+            : t('homeFeed.family.noGoalDesc')}
         </div>
         <button
           onClick={() => onSelectFeature('family')}
@@ -134,7 +136,7 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
             whiteSpace: 'nowrap'
           }}
         >
-          Detayi gor
+          {t('homeFeed.family.detailBtn')}
         </button>
       </div>
     </div>

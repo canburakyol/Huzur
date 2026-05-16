@@ -1,6 +1,8 @@
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const HomeAiRecommendationCard = memo(function HomeAiRecommendationCard({ onSelectFeature, rankingState }) {
+  const { t } = useTranslation();
   if (!rankingState?.headline) {
     return null;
   }
@@ -18,7 +20,7 @@ const HomeAiRecommendationCard = memo(function HomeAiRecommendationCard({ onSele
       }}
     >
       <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
-        Gunluk ritim notu
+        {t('homeFeed.aiRecommendation.eyebrow')}
       </div>
       <div style={{ fontSize: '0.96rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: '6px' }}>
         {rankingState.headline}
