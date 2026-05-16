@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useState, useMemo } from 'react';
+import { useVisibilityAwareInterval } from '../hooks/useVisibilityAwareInterval';
 
 const TimeContext = createContext();
 
@@ -11,48 +12,34 @@ export const useTime = () => {
   return context;
 };
 
+const computeTimeState = () => {
+  const hour = new Date().getHours();
+  
+  if (hour >= 5 && hour < 12) {
+    return { period: 'morning', greeting: 'greeting.morning' };
+  } else if (hour >= 12 && hour < 15) {
+    return { period: 'noon', greeting: 'greeting.noon' };
+  } else if (hour >= 15 && hour < 18) {
+    return { period: 'afternoon', greeting: 'greeting.afternoon' };
+  } else if (hour >= 18 && hour < 22) {
+    return { period: 'evening', greeting: 'greeting.evening' };
+  }
+  return { period: 'night', greeting: 'greeting.night' };
+};
+
 export const TimeProvider = ({ children }) => {
-  const [timeOfDay, setTimeOfDay] = useState('day'); // morning, noon, afternoon, evening, night
-  const [greetingKey, setGreetingKey] = useState('greeting.generic');
+  const [timeState, setTimeState] = useState(computeTimeState);
 
-  useEffect(() => {
-    const updateTime = () => {
-      const hour = new Date().getHours();
-      
-      let currentPeriod = 'day';
-      let currentGreeting = 'greeting.generic';
+  const updateTime = () => {
+    setTimeState(computeTimeState());
+  };
 
-      if (hour >= 5 && hour < 12) {
-        currentPeriod = 'morning';
-        currentGreeting = 'greeting.morning';
-      } else if (hour >= 12 && hour < 15) {
-        currentPeriod = 'noon';
-        currentGreeting = 'greeting.noon';
-      } else if (hour >= 15 && hour < 18) {
-        currentPeriod = 'afternoon';
-        currentGreeting = 'greeting.afternoon';
-      } else if (hour >= 18 && hour < 22) {
-        currentPeriod = 'evening';
-        currentGreeting = 'greeting.evening';
-      } else {
-        currentPeriod = 'night';
-        currentGreeting = 'greeting.night';
-      }
-
-      setTimeOfDay(currentPeriod);
-      setGreetingKey(currentGreeting);
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 60000); // Update every minute
-
-    return () => clearInterval(interval);
-  }, []);
+  useVisibilityAwareInterval(updateTime, 60000);
 
   const value = useMemo(() => ({
-    timeOfDay,
-    greetingKey
-  }), [timeOfDay, greetingKey]);
+    timeOfDay: timeState.period,
+    greetingKey: timeState.greeting
+  }), [timeState]);
 
   return (
     <TimeContext.Provider value={value}>

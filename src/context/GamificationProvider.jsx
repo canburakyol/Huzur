@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { doc, onSnapshot, updateDoc, increment, arrayUnion, serverTimestamp } from 'firebase/firestore';
+import { db } from '../services/firebase';
+import { getCurrentUserId } from '../services/authService';
 import { LEVELS, BADGES } from '../data/gamificationData';
 import { getRandomDailyQuests } from '../data/questsData';
 import { GamificationContext } from './GamificationContext';
@@ -8,53 +11,107 @@ import { ANALYTICS_EVENTS, logBadgeEarned, logEvent, logLevelUp } from '../servi
 import { markFirstIbadahActionCompleted } from '../services/activationService';
 import { contributeFamilyGoalOncePerDay } from '../services/familyGoalContributionService';
 import { getXpMultiplier } from '../utils/xpMultiplier';
+import { logger } from '../utils/logger';
+import crashlyticsReporter from '../utils/crashlyticsReporter';
 
-const GAMIFICATION_KEYS = {
-  USER_POINTS: 'userPoints',
-  USER_BADGES: 'userBadges',
-  DAILY_QUESTS: 'dailyQuests'
+const CACHE_KEY = 'gamification_cache';
+const CACHE_TTL_MS = 5 * 60 * 1000;
+
+const readCache = () => {
+  try {
+    const raw = storageService.getItem(CACHE_KEY, null);
+    if (!raw) return null;
+    const { data, timestamp } = raw;
+    if (Date.now() - timestamp > CACHE_TTL_MS) return null;
+    return data;
+  } catch (err) {
+    logger.warn('[GamificationProvider] Cache read failed:', err);
+    return null;
+  }
+};
+
+const writeCache = (data) => {
+  try {
+    storageService.setItem(CACHE_KEY, { data, timestamp: Date.now() });
+  } catch (err) {
+    logger.warn('[GamificationProvider] Cache write failed:', err);
+  }
+};
+
+const writeUserDoc = async (userId, updates) => {
+  try {
+    await updateDoc(doc(db, 'users', userId), updates);
+  } catch (err) {
+    logger.error('[GamificationProvider] Firestore write failed:', err);
+    crashlyticsReporter.logExceptionWithContext(err, { surface: 'gamification_write' });
+  }
 };
 
 export const GamificationProvider = ({ children }) => {
-  const [points, setPoints] = useState(() => parseInt(storageService.getString(GAMIFICATION_KEYS.USER_POINTS, '0'), 10) || 0);
-  const [earnedBadges, setEarnedBadges] = useState(() => storageService.getItem(GAMIFICATION_KEYS.USER_BADGES, []));
-  
-  // Derived Level State
-  const level = useMemo(() => LEVELS.slice().reverse().find(l => points >= l.minPoints) || LEVELS[0], [points]);
+  const cached = readCache();
+  const [points, setPoints] = useState(cached?.points ?? 0);
+  const [earnedBadges, setEarnedBadges] = useState(cached?.earnedBadges ?? []);
   const [showLevelUp, setShowLevelUp] = useState(false);
-  const prevLevelRef = useRef(level);
-  const prevBadgesRef = useRef(earnedBadges);
+  const prevLevelRef = useRef(null);
+  const prevBadgesRef = useRef([]);
 
-  // Daily Quests State
   const [dailyQuests, setDailyQuests] = useState(() => {
-    const saved = storageService.getItem(GAMIFICATION_KEYS.DAILY_QUESTS, {});
+    const saved = storageService.getItem('dailyQuests', {});
     const today = new Date().toDateString();
     if (saved.date !== today) {
-        return { date: today, quests: getRandomDailyQuests() };
+      return { date: today, quests: getRandomDailyQuests() };
     }
     return saved;
   });
 
   useEffect(() => {
-    storageService.setString(GAMIFICATION_KEYS.USER_POINTS, points.toString());
-    
-    // Check for Level Up
-    let levelUpTimer;
-    if (level.level > prevLevelRef.current.level) {
-      logLevelUp(level.level, points);
-      levelUpTimer = setTimeout(() => setShowLevelUp(true), 0);
-      // Play sound or other effects here if needed
-    }
-    prevLevelRef.current = level;
-
-    return () => {
-      if (levelUpTimer) clearTimeout(levelUpTimer);
-    };
-  }, [points, level]);
+    storageService.setItem('dailyQuests', dailyQuests);
+  }, [dailyQuests]);
 
   useEffect(() => {
-    storageService.setItem(GAMIFICATION_KEYS.USER_BADGES, earnedBadges);
-  }, [earnedBadges]);
+    const userId = getCurrentUserId();
+    if (!userId) return;
+
+    const userRef = doc(db, 'users', userId);
+    const unsubscribe = onSnapshot(
+      userRef,
+      (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.data();
+          const fsPoints = data.points ?? 0;
+          const fsBadges = (data.earnedBadges ?? []).map((b) =>
+            typeof b === 'string' ? b : b.badgeId ?? b.id ?? null
+          ).filter(Boolean);
+
+          setPoints(fsPoints);
+          setEarnedBadges(fsBadges);
+          writeCache({ points: fsPoints, earnedBadges: fsBadges });
+        }
+      },
+      (error) => {
+        logger.error('[GamificationProvider] Firestore snapshot error:', error);
+        crashlyticsReporter.logExceptionWithContext(error, {
+          surface: 'gamification_onSnapshot',
+        });
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  const level = useMemo(() => LEVELS.slice().reverse().find((l) => points >= l.minPoints) || LEVELS[0], [points]);
+
+  useEffect(() => {
+    if (!prevLevelRef.current) {
+      prevLevelRef.current = level;
+      return;
+    }
+    if (level.level > prevLevelRef.current.level) {
+      logLevelUp(level.level, points);
+      requestAnimationFrame(() => setShowLevelUp(true));
+    }
+    prevLevelRef.current = level;
+  }, [level, points]);
 
   useEffect(() => {
     const previousBadgeIds = new Set(
@@ -74,14 +131,6 @@ export const GamificationProvider = ({ children }) => {
     prevBadgesRef.current = earnedBadges;
   }, [earnedBadges]);
 
-  useEffect(() => {
-    storageService.setItem(GAMIFICATION_KEYS.DAILY_QUESTS, dailyQuests);
-  }, [dailyQuests]);
-
-
-  // Removed getLevel function as we now use state
-
-
   const addPoints = useCallback((amount, options = {}) => {
     const numericAmount = Number(amount) || 0;
     if (numericAmount === 0) return 0;
@@ -94,7 +143,18 @@ export const GamificationProvider = ({ children }) => {
     const multiplier = applyMultiplier ? getXpMultiplier() : 1;
     const appliedAmount = Math.round(numericAmount * multiplier);
 
-    setPoints(prev => prev + appliedAmount);
+    setPoints((prev) => {
+      const newPoints = prev + appliedAmount;
+      const userId = getCurrentUserId();
+      if (userId) {
+        void writeUserDoc(userId, {
+          points: increment(appliedAmount),
+          updatedAt: serverTimestamp(),
+        });
+      }
+      return newPoints;
+    });
+
     recordXpEvent({
       baseAmount: numericAmount,
       appliedAmount,
@@ -112,31 +172,28 @@ export const GamificationProvider = ({ children }) => {
   }, []);
 
   const awardBadge = useCallback((badgeId) => {
-    setEarnedBadges(prev => {
+    setEarnedBadges((prev) => {
       if (!prev.includes(badgeId)) {
+        const userId = getCurrentUserId();
+        if (userId) {
+          void writeUserDoc(userId, {
+            earnedBadges: arrayUnion({ badgeId, earnedAt: new Date().toISOString() }),
+            updatedAt: serverTimestamp(),
+          });
+        }
         return [...prev, badgeId];
       }
       return prev;
     });
   }, []);
 
-  /**
-   * Görev ilerlemesini güncelle
-   * @param {string} type - Görev tipi (zikir, reading, social)
-   * @param {string} subType - Alt tip (örn: subhanallah) - null ise tüm quests güncellenir
-   * @param {number} amount - İlerleme miktarı
-   */
   const checkQuestProgress = useCallback((type, subType, amount = 1) => {
     setDailyQuests(prev => {
         let updated = false;
         const newQuests = prev.quests.map(q => {
             if (q.completed) return q;
             
-            // Tip eşleşiyor mu?
             const typeMatch = q.type === type;
-            
-            // subType null geçilirse, tüm ilgili tipdeki görevleri güncelle
-            // subType verilirse, sadece o subType'a sahip görevleri güncelle
             const subTypeMatch = !subType || !q.subType || q.subType === subType;
 
             if (typeMatch && subTypeMatch) {
@@ -154,7 +211,6 @@ export const GamificationProvider = ({ children }) => {
         return { ...prev, quests: newQuests };
     });
   }, []);
-
 
   const claimQuestReward = useCallback((questId) => {
     setDailyQuests(prev => {
@@ -175,16 +231,12 @@ export const GamificationProvider = ({ children }) => {
       setDailyQuests({ date: today, quests: getRandomDailyQuests() });
   }, []);
 
-  // Listen for Streak Service Events to award XP
   useEffect(() => {
     const handleStreakActivity = async (event) => {
       const { category, count } = event.detail;
       
+      addPoints(50, { source: `streak_${category}` });
       
-      // Award XP
-      addPoints(50, { source: `streak_${category}` }); // Base XP for any activity
-      
-      // Update Daily Quests
       if (category === 'zikir') {
         markFirstIbadahActionCompleted({ feature: 'zikirmatik', source: 'streak:zikir' });
         checkQuestProgress('zikir', null, count || 1);

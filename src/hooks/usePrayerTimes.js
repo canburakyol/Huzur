@@ -11,6 +11,7 @@ import { syncPrayerSchedule } from '../services/prayerScheduleService';
 import { TIMING, STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 import { scheduleDeferredTask } from '../utils/startupScheduler';
+import { useVisibilityAwareInterval } from './useVisibilityAwareInterval';
 
 const getInitialPrayerSnapshot = () => {
   try {
@@ -178,10 +179,12 @@ export const usePrayerTimes = () => {
     };
   }, []);
 
+  const updateNextPrayerRef = useRef(() => {});
+
   useEffect(() => {
     if (!timings) return;
 
-    const updateNextPrayer = () => {
+    updateNextPrayerRef.current = () => {
       const next = getNextPrayer(timings);
       setNextPrayer((prev) => {
         if (!prev || prev.key !== next.key || prev.time !== next.time || prev.isTomorrow !== next.isTomorrow) {
@@ -191,11 +194,12 @@ export const usePrayerTimes = () => {
       });
     };
 
-    updateNextPrayer();
-    const timer = setInterval(updateNextPrayer, TIMING.REFRESH_INTERVAL_MS);
-
-    return () => clearInterval(timer);
+    updateNextPrayerRef.current();
   }, [timings]);
+
+  useVisibilityAwareInterval(() => {
+    updateNextPrayerRef.current();
+  }, timings ? TIMING.REFRESH_INTERVAL_MS : null);
 
   const handleEnableNotifications = async () => {
     const granted = await requestNotificationPermission();
@@ -291,7 +295,9 @@ export const useStickyNotification = (timings, nextPrayer) => {
       await pushStickyUpdate();
       if (stickyInterval) clearInterval(stickyInterval);
       stickyInterval = setInterval(() => {
-        void pushStickyUpdate();
+        if (!document.hidden) {
+          void pushStickyUpdate();
+        }
       }, TIMING.REFRESH_INTERVAL_MS);
     };
 
