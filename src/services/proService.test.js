@@ -26,9 +26,8 @@ const secureStorageMock = {
   setItem: vi.fn()
 };
 
-vi.mock('./secureStorage', () => ({
+vi.mock('./persistentStorage', () => ({
   secureStorage: secureStorageMock,
-  default: secureStorageMock
 }));
 
 vi.mock('../utils/logger', () => ({
