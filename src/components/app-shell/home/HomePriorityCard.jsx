@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { ArrowRight, BookOpen, HeartHandshake, Target } from 'lucide-react';
 import { getPrimaryGoalConfig, getStoredPrimaryGoal } from '../../../utils/primaryGoal';
 
@@ -7,7 +8,7 @@ const iconMap = {
   family: <HeartHandshake size={18} color="var(--bg-emerald-light)" />
 };
 
-function HomePriorityCard({ onSelectFeature, streakData }) {
+const HomePriorityCard = memo(function HomePriorityCard({ onSelectFeature, streakData }) {
   const primaryGoal = getStoredPrimaryGoal();
   const goalConfig = getPrimaryGoalConfig(primaryGoal);
   const action = goalConfig.homeAction;
@@ -82,6 +83,6 @@ function HomePriorityCard({ onSelectFeature, streakData }) {
       </button>
     </div>
   );
-}
+});
 
 export default HomePriorityCard;

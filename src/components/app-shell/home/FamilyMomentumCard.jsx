@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Users } from 'lucide-react';
 import { useFamily } from '../../../context/FamilyContext';
 
-function FamilyMomentumCard({ onSelectFeature }) {
+const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature }) {
   const { family, weeklyGoal, weeklyGoalLoading } = useFamily();
 
   const progressPercent = useMemo(() => {
@@ -139,6 +139,6 @@ function FamilyMomentumCard({ onSelectFeature }) {
       </div>
     </div>
   );
-}
+});
 
 export default FamilyMomentumCard;

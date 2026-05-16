@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { ANALYTICS_EVENTS, logEvent, logPremiumRecoveryMomentOpened } from '../../../services/analyticsService';
 import {
   buildPremiumMomentAnalyticsPayload,
@@ -6,7 +7,7 @@ import {
 } from '../../../services/domains/home';
 import { getStoredPrimaryGoal } from '../../../utils/primaryGoal';
 
-function RecoverySupportCard({ recoveryPlan, isProUser, onSelectFeature }) {
+const RecoverySupportCard = memo(function RecoverySupportCard({ recoveryPlan, isProUser, onSelectFeature }) {
   if (isProUser || !['at_risk', 'comeback'].includes(recoveryPlan?.riskBand)) {
     return null;
   }
@@ -90,6 +91,6 @@ function RecoverySupportCard({ recoveryPlan, isProUser, onSelectFeature }) {
       </div>
     </div>
   );
-}
+});
 
 export default RecoverySupportCard;

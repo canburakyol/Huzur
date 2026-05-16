@@ -1,4 +1,6 @@
-function HomeAiRecommendationCard({ onSelectFeature, rankingState }) {
+import { memo } from 'react';
+
+const HomeAiRecommendationCard = memo(function HomeAiRecommendationCard({ onSelectFeature, rankingState }) {
   if (!rankingState?.headline) {
     return null;
   }
@@ -49,6 +51,6 @@ function HomeAiRecommendationCard({ onSelectFeature, rankingState }) {
       ) : null}
     </div>
   );
-}
+});
 
 export default HomeAiRecommendationCard;

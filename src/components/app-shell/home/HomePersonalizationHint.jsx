@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import { TrendingUp } from 'lucide-react';
 
-function HomePersonalizationHint() {
+const HomePersonalizationHint = memo(function HomePersonalizationHint() {
   return (
     <div style={{
       margin: '0 5px 16px',
@@ -34,6 +35,6 @@ function HomePersonalizationHint() {
       </div>
     </div>
   );
-}
+});
 
 export default HomePersonalizationHint;
