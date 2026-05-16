@@ -67,17 +67,17 @@ function Tespihat({ onClose }) {
     const renderMenu = () => (
         <div className="reveal-stagger">
             {/* Progress Card */}
-            <div className="settings-card" style={{ background: 'linear-gradient(135deg, #10b981, #059669)', border: 'none', padding: '24px', color: 'white', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="settings-card p-24 flex-col gap-16 mb-32" style={{ background: 'linear-gradient(135deg, #10b981, #059669)', border: 'none', color: 'white' }}>
+                <div className="flex-between-center">
                     <div>
                         <div style={{ fontSize: '1.5rem', fontWeight: '900' }}>{totalProgress()}%</div>
-                        <div style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, textTransform: 'uppercase', letterSpacing: '1px' }}>{t('tespihat.ui.progressToday', 'Bugünkü İlerleme')}</div>
+                        <div className="uppercase" style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, letterSpacing: '1px' }}>{t('tespihat.ui.progressToday', 'Bugünkü İlerleme')}</div>
                     </div>
-                    <button onClick={resetAll} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '12px', padding: '10px', color: 'white', cursor: 'pointer' }}>
+                    <button onClick={resetAll} className="rounded-12 p-10 cursor-pointer" style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white' }}>
                         <RotateCcw size={18} />
                     </button>
                 </div>
-                <div style={{ height: '8px', background: 'rgba(255,255,255,0.2)', borderRadius: '4px', overflow: 'hidden' }}>
+                <div className="h-10 rounded-8 overflow-hidden" style={{ background: 'rgba(255,255,255,0.2)' }}>
                     <div style={{ width: `${totalProgress()}%`, height: '100%', background: 'white', borderRadius: '4px', transition: 'width 0.5s cubic-bezier(0.16, 1, 0.3, 1)' }} />
                 </div>
             </div>
@@ -85,24 +85,22 @@ function Tespihat({ onClose }) {
             {/* Sections */}
             <div className="settings-group">
                 <div className="settings-group-title">{t('tespihat.ui.postPrayerDhikr', 'Namaz Sonrası Zikirler')}</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div className="flex flex-col gap-12">
                     {TESPIHAT_SECTIONS.map(section => (
                         <div
                             key={section.id}
-                            className="settings-card"
+                            className="settings-card p-16 cursor-pointer"
                             style={{ 
-                                padding: '16px',
                                 borderLeft: completedSections.includes(section.id) ? '4px solid #10b981' : '1px solid var(--nav-border)',
-                                cursor: 'pointer',
                                 transition: 'all 0.2s'
                             }}
                             onClick={() => setActiveSection(section)}
                         >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
+                            <div className="flex items-center gap-16 w-full">
                                 <div className="settings-icon-box" style={{ background: 'var(--nav-hover)', fontSize: '1.5rem' }}>
                                     {section.icon}
                                 </div>
-                                <div style={{ flex: 1 }}>
+                                <div className="flex-1">
                                     <div style={{ fontWeight: '800', color: 'var(--nav-text)' }}>{section.title}</div>
                                     <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)' }}>{section.subtitle}</div>
                                 </div>
@@ -118,9 +116,9 @@ function Tespihat({ onClose }) {
             </div>
 
             {/* 33'lük Tesbihler */}
-            <div className="settings-group" style={{ marginTop: '32px' }}>
+            <div className="settings-group mt-32">
                 <div className="settings-group-title">{t('tespihat.ui.tasbih33', "33'lük Tesbihler")}</div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+                <div className="grid-3 gap-12">
                     {TESBIHLER.map(tesbih => {
                         const count = tesbihCounts[tesbih.id];
                         const isComplete = count >= 33;
@@ -128,28 +126,23 @@ function Tespihat({ onClose }) {
                             <div 
                                 key={tesbih.id}
                                 onClick={() => incrementTesbih(tesbih.id)}
-                                className="settings-card"
+                                className="settings-card flex-col text-center gap-12 cursor-pointer p-16"
                                 style={{
-                                    flexDirection: 'column',
-                                    padding: '16px 12px',
-                                    textAlign: 'center',
-                                    gap: '12px',
                                     background: isComplete ? 'rgba(16, 185, 129, 0.05)' : 'var(--nav-bg)',
-                                    border: isComplete ? '1px solid rgba(16, 185, 129, 0.2)' : '1px solid var(--nav-border)',
-                                    cursor: 'pointer'
+                                    border: isComplete ? '1px solid rgba(16, 185, 129, 0.2)' : '1px solid var(--nav-border)'
                                 }}
                             >
                                 <div style={{ fontSize: '1.2rem', fontFamily: 'var(--arabic-font)', color: isComplete ? '#10b981' : 'var(--nav-text)' }}>{tesbih.arabic}</div>
-                                <div style={{ position: 'relative', width: '60px', height: '60px', margin: '0 auto' }}>
-                                    <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
+                                <div className="relative mx-auto" style={{ width: '60px', height: '60px' }}>
+                                    <svg className="absolute inset-0" style={{ transform: 'rotate(-90deg)' }}>
                                         <circle cx="30" cy="30" r="28" fill="none" stroke="var(--nav-hover)" strokeWidth="4" />
                                         <circle cx="30" cy="30" r="28" fill="none" stroke={isComplete ? '#10b981' : 'var(--nav-accent)'} strokeWidth="4" strokeDasharray="175.9" strokeDashoffset={175.9 - (count / 33 * 175.9)} style={{ transition: 'stroke-dashoffset 0.3s' }} />
                                     </svg>
-                                    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '900', fontSize: '1.1rem', color: isComplete ? '#10b981' : 'var(--nav-text)' }}>
+                                    <div className="absolute inset-0 flex-center font-black" style={{ fontSize: '1.1rem', color: isComplete ? '#10b981' : 'var(--nav-text)' }}>
                                         {count}
                                     </div>
                                 </div>
-                                <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{tesbih.latin}</div>
+                                <div className="text-xs uppercase font-extrabold" style={{ color: 'var(--nav-text-muted)' }}>{tesbih.latin}</div>
                             </div>
                         );
                     })}
@@ -157,27 +150,24 @@ function Tespihat({ onClose }) {
             </div>
 
             {/* Tawhid & Duas */}
-            <div className="settings-group" style={{ marginTop: '32px' }}>
+            <div className="settings-group mt-32">
                 <div className="settings-group-title">{t('tespihat.ui.postPrayerDuas', 'Tevhid ve Dualar')}</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                    <div className="settings-card" style={{ padding: '16px', flexDirection: 'column', gap: '12px' }} onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                            <div style={{ fontWeight: '800', color: 'var(--nav-text)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div className="flex flex-col gap-12">
+                    <div className="settings-card p-16 flex-col gap-12" onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}>
+                        <div className="flex-between-center w-full">
+                            <div className="flex items-center gap-12 font-bold" style={{ color: 'var(--nav-text)' }}>
                                 <Sparkles size={18} color="#f59e0b" />
                                 {TEVHID.title}
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <div className="flex items-center gap-12">
                                 <button
                                     onClick={(e) => { e.stopPropagation(); toggleComplete('tevhid'); }}
+                                    className="rounded-8 p-6 cursor-pointer font-extrabold"
                                     style={{
                                         background: completedSections.includes('tevhid') ? '#10b981' : 'var(--nav-hover)',
                                         border: 'none',
-                                        borderRadius: '8px',
-                                        padding: '6px 12px',
                                         color: completedSections.includes('tevhid') ? 'white' : 'var(--nav-text-muted)',
-                                        cursor: 'pointer',
-                                        fontSize: '0.75rem',
-                                        fontWeight: '800'
+                                        fontSize: '0.75rem'
                                     }}
                                 >
                                     {completedSections.includes('tevhid') ? 'TAMAM' : 'BİTTİ'}
@@ -186,7 +176,7 @@ function Tespihat({ onClose }) {
                             </div>
                         </div>
                         {expandedItem === 'tevhid' && (
-                            <div style={{ paddingTop: '16px', borderTop: '1px solid var(--nav-border)', animation: 'slideDown 0.3s ease-out' }}>
+                            <div className="pt-16" style={{ borderTop: '1px solid var(--nav-border)', animation: 'slideDown 0.3s ease-out' }}>
                                 <div style={{ fontSize: '1.5rem', fontFamily: 'var(--arabic-font)', color: 'var(--nav-text)', marginBottom: '16px', textAlign: 'right', direction: 'rtl', lineHeight: '1.8' }}>{TEVHID.arabic}</div>
                                 <div style={{ fontSize: '0.9rem', color: 'var(--nav-text)', marginBottom: '8px', lineHeight: '1.5' }}>{TEVHID.latin}</div>
                                 <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontStyle: 'italic' }}>{TEVHID.meaning}</div>
@@ -195,16 +185,16 @@ function Tespihat({ onClose }) {
                     </div>
 
                     {NAMAZSONRASI_DUALAR.map(dua => (
-                        <div key={dua.id} className="settings-card" style={{ padding: '16px', flexDirection: 'column', gap: '12px' }} onClick={() => setExpandedItem(expandedItem === dua.id ? null : dua.id)}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                                <div style={{ fontWeight: '800', color: 'var(--nav-text)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <div key={dua.id} className="settings-card p-16 flex-col gap-12" onClick={() => setExpandedItem(expandedItem === dua.id ? null : dua.id)}>
+                            <div className="flex-between-center w-full">
+                                <div className="flex items-center gap-12 font-bold" style={{ color: 'var(--nav-text)' }}>
                                     <BookOpen size={18} color="var(--nav-accent)" />
                                     {dua.title}
                                 </div>
                                 {expandedItem === dua.id ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
                             </div>
                             {expandedItem === dua.id && (
-                                <div style={{ paddingTop: '16px', borderTop: '1px solid var(--nav-border)', animation: 'slideDown 0.3s ease-out' }}>
+                                <div className="pt-16" style={{ borderTop: '1px solid var(--nav-border)', animation: 'slideDown 0.3s ease-out' }}>
                                     <div style={{ fontSize: '1.3rem', fontFamily: 'var(--arabic-font)', color: 'var(--nav-text)', marginBottom: '16px', textAlign: 'right', direction: 'rtl', lineHeight: '1.8' }}>{dua.arabic}</div>
                                     <div style={{ fontSize: '0.9rem', color: 'var(--nav-text)', marginBottom: '8px', lineHeight: '1.5' }}>{dua.latin}</div>
                                     <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontStyle: 'italic' }}>{dua.meaning}</div>
@@ -219,18 +209,18 @@ function Tespihat({ onClose }) {
 
     const renderSectionDetail = () => (
         <div className="reveal-stagger">
-            <div className="settings-card" style={{ flexDirection: 'column', padding: '32px', textAlign: 'center', gap: '24px', background: 'var(--nav-hover)', border: 'none' }}>
+            <div className="settings-card flex-col p-24 text-center gap-24 border-none" style={{ background: 'var(--nav-hover)' }}>
                 <div style={{ fontSize: '3rem' }}>{activeSection.icon}</div>
                 <div>
-                    <h2 style={{ margin: '0 0 8px', fontSize: '1.25rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{activeSection.title}</h2>
-                    <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text-muted)' }}>{activeSection.subtitle}</p>
+                    <h2 className="m-0 mb-8" style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{activeSection.title}</h2>
+                    <p className="m-0" style={{ fontSize: '0.9rem', color: 'var(--nav-text-muted)' }}>{activeSection.subtitle}</p>
                 </div>
 
-                <div style={{ fontSize: '1.8rem', fontFamily: 'var(--arabic-font)', color: 'var(--nav-text)', lineHeight: '1.8', direction: 'rtl', background: 'var(--nav-bg)', padding: '24px', borderRadius: '16px', border: '1px solid var(--nav-border)' }}>
+                <div className="rounded-16 p-24" style={{ fontSize: '1.8rem', fontFamily: 'var(--arabic-font)', color: 'var(--nav-text)', lineHeight: '1.8', direction: 'rtl', background: 'var(--nav-bg)', border: '1px solid var(--nav-border)' }}>
                     {activeSection.arabic}
                 </div>
 
-                <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div className="text-left flex flex-col gap-12">
                     <div style={{ fontSize: '0.95rem', color: 'var(--nav-text)', fontWeight: '500', lineHeight: '1.5' }}>{activeSection.latin}</div>
                     <div style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontStyle: 'italic', lineHeight: '1.5' }}>{activeSection.meaning}</div>
                 </div>
@@ -240,20 +230,12 @@ function Tespihat({ onClose }) {
                         toggleComplete(activeSection.id);
                         setActiveSection(null);
                     }}
+                    className="w-full rounded-16 p-18 font-bold cursor-pointer flex-center gap-12"
                     style={{
-                        width: '100%',
-                        padding: '18px',
                         background: completedSections.includes(activeSection.id) ? 'var(--nav-hover)' : 'var(--nav-accent)',
                         border: 'none',
-                        borderRadius: '16px',
                         color: 'white',
                         fontSize: '1rem',
-                        fontWeight: '800',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '12px',
                         transition: 'all 0.2s',
                         marginTop: '12px',
                         boxShadow: completedSections.includes(activeSection.id) ? 'none' : '0 8px 24px rgba(249, 115, 22, 0.3)'
@@ -267,11 +249,11 @@ function Tespihat({ onClose }) {
     );
 
     return (
-        <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
+        <div className="settings-container reveal-stagger min-h-screen pb-40">
             {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+            <div className="flex items-center gap-16 mb-32">
                 <IslamicBackButton onClick={() => activeSection ? setActiveSection(null) : onClose()} size="medium" />
-                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                <h2 className="m-0" style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
                     {activeSection ? activeSection.title : t('tespihat.ui.title', 'Tespihat')}
                 </h2>
             </div>

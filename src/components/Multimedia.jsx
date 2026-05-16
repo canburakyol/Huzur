@@ -104,41 +104,19 @@ function Multimedia({ onClose }) {
             </p>
 
             {/* Category Grid - Velocity Style */}
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '16px'
-            }}>
+            <div className="grid-2 gap-16">
                 {MULTIMEDIA_CATEGORIES.map((category, index) => (
                     <div
                         key={category.id}
-                        className="settings-card reveal-stagger"
-                        style={{
-                            '--delay': `${index * 0.1}s`,
-                            padding: '24px 16px',
-                            cursor: 'pointer',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                            gap: '12px'
-                        }}
+                        className="settings-card reveal-stagger p-24 cursor-pointer flex-col items-center text-center gap-12"
+                        style={{ '--delay': `${index * 0.1}s` }}
                         onClick={() => setActiveCategory(category.id)}
                     >
-                        <div className="settings-icon-box" style={{ 
-                            width: '64px', 
-                            height: '64px', 
-                            background: 'var(--nav-hover)',
-                            fontSize: '2rem'
-                        }}>
+                        <div className="settings-icon-box w-48 h-48" style={{ background: 'var(--nav-hover)', fontSize: '2rem' }}>
                             {category.icon}
                         </div>
                         <div>
-                            <div style={{
-                                fontWeight: '900',
-                                color: 'var(--nav-text)',
-                                fontSize: '1rem',
-                                marginBottom: '4px'
-                            }}>
+                            <div className="mb-4" style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1rem' }}>
                                 {category.title}
                             </div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
@@ -151,8 +129,8 @@ function Multimedia({ onClose }) {
 
             {/* Favorites section - Velocity Style */}
             {favorites.length > 0 && (
-                <div className="settings-group reveal-stagger" style={{ marginTop: '32px', '--delay': '0.5s' }}>
-                    <div className="settings-group-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div className="settings-group reveal-stagger mt-32" style={{ '--delay': '0.5s' }}>
+                    <div className="settings-group-title flex-center-gap-8">
                         <Heart size={18} fill="var(--nav-accent)" color="var(--nav-accent)" />
                         {t('multimedia.favorites', 'FAVORILERIM')} ({favorites.length})
                     </div>
@@ -173,48 +151,25 @@ function Multimedia({ onClose }) {
                     <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                         {t('multimedia.duaCardsDesc', 'Sevdiklerinizle paylasabileceginiz ozel tasarim dua kartlari.')}
                     </p>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+                    <div className="grid-2 gap-16">
                         {DUA_IMAGES.map((dua, index) => (
                             <div
                                 key={dua.id}
-                                className="reveal-stagger"
+                                className="reveal-stagger rounded-24 p-24 flex flex-col justify-between cursor-pointer relative"
                                 style={{
                                     '--delay': `${index * 0.05}s`,
                                     background: dua.bgColor,
-                                    borderRadius: '24px',
-                                    padding: '24px',
                                     minHeight: '220px',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-between',
-                                    cursor: 'pointer',
-                                    position: 'relative',
                                     boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
                                     border: '1px solid rgba(255,255,255,0.1)'
                                 }}
                                 onClick={() => setSelectedImage({ ...dua, type: 'dua' })}
                             >
-                                <div style={{
-                                    position: 'absolute',
-                                    top: '12px',
-                                    right: '12px',
-                                    display: 'flex',
-                                    gap: '8px'
-                                }}>
+                                <div className="absolute flex gap-8" style={{ top: '12px', right: '12px' }}>
                                     <button
                                         onClick={(e) => { e.stopPropagation(); toggleFavorite(dua.id); }}
-                                        style={{
-                                            background: 'rgba(255,255,255,0.2)',
-                                            backdropFilter: 'blur(10px)',
-                                            border: 'none',
-                                            borderRadius: '12px',
-                                            width: '36px',
-                                            height: '36px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            cursor: 'pointer'
-                                        }}
+                                        className="rounded-12 w-44 h-44 flex-center cursor-pointer"
+                                        style={{ background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', border: 'none' }}
                                     >
                                         <Heart
                                             size={18}
@@ -223,44 +178,16 @@ function Multimedia({ onClose }) {
                                         />
                                     </button>
                                 </div>
-                                <div style={{ marginTop: '20px' }}>
-                                    <div style={{
-                                        fontSize: '0.75rem',
-                                        color: dua.textColor,
-                                        opacity: 0.7,
-                                        marginBottom: '12px',
-                                        fontWeight: '800',
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '1px'
-                                    }}>
+                                <div className="mt-20">
+                                    <div className="uppercase mb-12" style={{ fontSize: '0.75rem', color: dua.textColor, opacity: 0.7, fontWeight: '800', letterSpacing: '1px' }}>
                                         {dua.title}
                                     </div>
-                                    <div style={{
-                                        fontSize: '1rem',
-                                        color: dua.textColor,
-                                        fontWeight: '700',
-                                        lineHeight: '1.6',
-                                        fontStyle: 'italic'
-                                    }}>
+                                    <div style={{ fontSize: '1rem', color: dua.textColor, fontWeight: '700', lineHeight: '1.6', fontStyle: 'italic' }}>
                                         "{dua.text}"
                                     </div>
                                 </div>
-                                <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'flex-end',
-                                    marginTop: '16px'
-                                }}>
-                                    <div style={{
-                                        background: 'rgba(255,255,255,0.2)',
-                                        padding: '8px 12px',
-                                        borderRadius: '12px',
-                                        color: dua.textColor,
-                                        fontSize: '0.75rem',
-                                        fontWeight: '900',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '6px'
-                                    }} onClick={(e) => { e.stopPropagation(); shareImage(dua); }}>
+                                <div className="flex justify-end mt-16">
+                                    <div className="rounded-12 p-8 font-black flex-center-gap-6" style={{ background: 'rgba(255,255,255,0.2)', color: dua.textColor, fontSize: '0.75rem' }} onClick={(e) => { e.stopPropagation(); shareImage(dua); }}>
                                         <Share2 size={14} /> {t('common.share', 'Paylas')}
                                     </div>
                                 </div>
@@ -279,80 +206,41 @@ function Multimedia({ onClose }) {
                 <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                     {category?.description}
                 </p>
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
-                    gap: '16px'
-                }}>
+                <div className="grid-2 gap-16">
                     {images.map((image, index) => (
                         <div
                             key={image.id}
-                            className="settings-card reveal-stagger"
-                            style={{
-                                '--delay': `${index * 0.05}s`,
-                                padding: '0',
-                                overflow: 'hidden',
-                                cursor: 'pointer',
-                                position: 'relative',
-                                flexDirection: 'column',
-                                borderRadius: '24px'
-                            }}
+                            className="settings-card reveal-stagger p-0 overflow-hidden cursor-pointer relative flex-col rounded-24"
+                            style={{ '--delay': `${index * 0.05}s` }}
                             onClick={() => setSelectedImage({ ...image, type: 'image' })}
                         >
-                            <div style={{
-                                width: '100%',
-                                height: '140px',
-                                background: 'var(--nav-hover)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                position: 'relative',
-                                overflow: 'hidden'
-                            }}>
+                            <div className="w-full flex-center relative overflow-hidden" style={{ height: '140px', background: 'var(--nav-hover)' }}>
                                 <img
                                     src={image.thumbnail || image.url}
                                     alt={image.title}
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'cover',
-                                        transition: 'transform 0.5s ease'
-                                    }}
+                                    className="w-full h-full"
+                                    style={{ objectFit: 'cover', transition: 'transform 0.5s ease' }}
                                     onError={(e) => { e.target.style.display = 'none'; }}
                                 />
                                 {/* Overlay Gradient */}
-                                <div style={{
-                                    position: 'absolute',
-                                    bottom: 0,
-                                    left: 0,
-                                    right: 0,
-                                    height: '50%',
-                                    background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)',
-                                    pointerEvents: 'none'
-                                }} />
+                                <div className="absolute pointer-events-none" style={{ bottom: 0, left: 0, right: 0, height: '50%', background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)' }} />
                                 {/* Fallback icon */}
                                 <ImageIcon
                                     size={32}
                                     color="var(--nav-text-muted)"
-                                    style={{ position: 'absolute', opacity: 0.2 }}
+                                    className="absolute"
+                                    style={{ opacity: 0.2 }}
                                 />
                                 {/* Favorite button over image */}
                                 <button
                                     onClick={(e) => { e.stopPropagation(); toggleFavorite(image.id); }}
+                                    className="absolute rounded-12 w-44 h-44 flex-center cursor-pointer"
                                     style={{
-                                        position: 'absolute',
                                         top: '12px',
                                         right: '12px',
                                         background: 'rgba(var(--nav-bg-rgb, 4, 47, 46), 0.82)',
                                         backdropFilter: 'blur(10px)',
                                         border: 'none',
-                                        borderRadius: '12px',
-                                        width: '32px',
-                                        height: '32px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        cursor: 'pointer',
                                         boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                                     }}
                                 >
@@ -363,13 +251,8 @@ function Multimedia({ onClose }) {
                                     />
                                 </button>
                             </div>
-                            <div style={{ padding: '16px' }}>
-                                <div style={{
-                                    fontWeight: '800',
-                                    color: 'var(--nav-text)',
-                                    fontSize: '0.9rem',
-                                    marginBottom: '4px'
-                                }}>
+                            <div className="p-16">
+                                <div className="mb-4" style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '0.9rem' }}>
                                     {image.title}
                                 </div>
                                 <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
@@ -389,134 +272,55 @@ function Multimedia({ onClose }) {
         const isDua = selectedImage.type === 'dua';
 
         return (
-            <div className="reveal-stagger" style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'rgba(var(--nav-bg-rgb, 4, 47, 46), 0.98)',
-                backdropFilter: 'blur(20px)',
-                zIndex: 2000,
-                display: 'flex',
-                flexDirection: 'column'
-            }}>
+            <div className="reveal-stagger fixed inset-0 flex flex-col z-200" style={{ background: 'rgba(var(--nav-bg-rgb, 4, 47, 46), 0.98)', backdropFilter: 'blur(20px)' }}>
                 {/* Modal Header */}
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '24px 20px',
-                    borderBottom: '1px solid var(--nav-border)'
-                }}>
+                <div className="flex-between-center px-20 py-24" style={{ borderBottom: '1px solid var(--nav-border)' }}>
                     <IslamicBackButton onClick={() => setSelectedImage(null)} size="medium" />
                     <div style={{ color: 'var(--nav-text)', fontWeight: '950', fontSize: '1.25rem' }}>
                         {selectedImage.title}
                     </div>
-                    <div style={{ width: '48px' }} />
+                    <div className="w-48" />
                 </div>
 
                 {/* Image Content Area */}
-                <div style={{
-                    flex: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '24px'
-                }}>
+                <div className="flex-center p-24 grow">
                     {isDua ? (
-                        <div className="reveal-stagger" style={{
-                            background: selectedImage.bgColor,
-                            borderRadius: '32px',
-                            padding: '48px 32px',
-                            maxWidth: '400px',
-                            width: '100%',
-                            textAlign: 'center',
-                            boxShadow: '0 30px 60px rgba(0,0,0,0.15)',
-                            position: 'relative',
-                            overflow: 'hidden'
-                        }}>
+                        <div className="reveal-stagger rounded-32 p-48 text-center relative overflow-hidden max-w-400 w-full" style={{ background: selectedImage.bgColor, boxShadow: '0 30px 60px rgba(0,0,0,0.15)' }}>
                             {/* Decorative elements */}
-                            <div style={{
-                                position: 'absolute',
-                                top: '-20px',
-                                right: '-20px',
-                                width: '100px',
-                                height: '100px',
-                                background: 'rgba(255,255,255,0.1)',
-                                borderRadius: '50%'
-                            }} />
+                            <div className="absolute rounded-full" style={{ top: '-20px', right: '-20px', width: '100px', height: '100px', background: 'rgba(255,255,255,0.1)' }} />
                             
-                            <div style={{
-                                fontSize: '1rem',
-                                color: selectedImage.textColor,
-                                opacity: 0.7,
-                                marginBottom: '24px',
-                                fontWeight: '800',
-                                textTransform: 'uppercase',
-                                letterSpacing: '2px'
-                            }}>
+                            <div className="uppercase mb-24" style={{ fontSize: '1rem', color: selectedImage.textColor, opacity: 0.7, fontWeight: '800', letterSpacing: '2px' }}>
                                 {selectedImage.title}
                             </div>
-                            <div style={{
-                                fontSize: '1.75rem',
-                                color: selectedImage.textColor,
-                                fontWeight: '900',
-                                lineHeight: '1.4',
-                                fontStyle: 'italic'
-                            }}>
+                            <div style={{ fontSize: '1.75rem', color: selectedImage.textColor, fontWeight: '900', lineHeight: '1.4', fontStyle: 'italic' }}>
                                 "{selectedImage.text}"
                             </div>
-                            <div style={{
-                                marginTop: '40px',
-                                fontSize: '0.85rem',
-                                color: selectedImage.textColor,
-                                opacity: 0.6,
-                                fontWeight: '900'
-                            }}>
+                            <div className="mt-40 font-black" style={{ fontSize: '0.85rem', color: selectedImage.textColor, opacity: 0.6 }}>
                                 🕌 {t('app.name', 'Huzur')}
                             </div>
                         </div>
                     ) : (
-                        <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div className="relative w-full h-full flex-center">
                             <img
                                 src={selectedImage.url}
                                 alt={selectedImage.title}
-                                style={{
-                                    maxWidth: '100%',
-                                    maxHeight: '70vh',
-                                    borderRadius: '32px',
-                                    objectFit: 'contain',
-                                    boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
-                                }}
+                                className="rounded-32"
+                                style={{ maxWidth: '100%', maxHeight: '70vh', objectFit: 'contain', boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}
                             />
                         </div>
                     )}
                 </div>
 
                 {/* Footer Actions - Velocity Style */}
-                <div style={{
-                    padding: '32px 20px',
-                    display: 'flex',
-                    gap: '16px',
-                    background: 'var(--nav-bg)',
-                    borderTop: '1px solid var(--nav-border)',
-                    borderRadius: '40px 40px 0 0',
-                    boxShadow: '0 -10px 30px rgba(0,0,0,0.03)'
-                }}>
+                <div className="flex gap-16 px-20 py-32" style={{ background: 'var(--nav-bg)', borderTop: '1px solid var(--nav-border)', borderRadius: '40px 40px 0 0', boxShadow: '0 -10px 30px rgba(0,0,0,0.03)' }}>
                     <button
                         onClick={() => toggleFavorite(selectedImage.id)}
-                        className="settings-card"
+                        className="settings-card flex-1 justify-center p-16 rounded-20 font-black"
                         style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            padding: '16px',
                             background: favorites.includes(selectedImage.id) ? 'rgba(239, 68, 68, 0.12)' : 'var(--nav-hover)',
                             border: favorites.includes(selectedImage.id) ? '1px solid rgba(239, 68, 68, 0.28)' : '1px solid var(--nav-border)',
-                            borderRadius: '20px',
                             color: favorites.includes(selectedImage.id) ? 'var(--error-color)' : 'var(--nav-text)',
                             fontSize: '0.95rem',
-                            fontWeight: '900',
                             gap: '10px'
                         }}
                     >
@@ -529,17 +333,12 @@ function Multimedia({ onClose }) {
                     {!isDua && (
                         <button
                             onClick={() => downloadImage(selectedImage)}
-                            className="settings-card"
+                            className="settings-card flex-1 justify-center p-16 rounded-20 font-black"
                             style={{
-                                flex: 1,
-                                justifyContent: 'center',
-                                padding: '16px',
                                 background: 'var(--nav-hover)',
                                 border: '1px solid var(--nav-border)',
-                                borderRadius: '20px',
                                 color: 'var(--nav-text)',
                                 fontSize: '0.95rem',
-                                fontWeight: '900',
                                 gap: '10px'
                             }}
                         >
@@ -549,15 +348,13 @@ function Multimedia({ onClose }) {
                     )}
                     <button
                         onClick={() => shareImage(selectedImage)}
-                        className="velocity-target-btn"
+                        className="velocity-target-btn rounded-20 font-black"
                         style={{
                             flex: 1.5,
                             padding: '16px',
                             background: 'var(--nav-accent)',
                             color: 'white',
-                            borderRadius: '20px',
                             fontSize: '0.95rem',
-                            fontWeight: '900',
                             gap: '10px',
                             width: 'auto',
                             boxShadow: '0 8px 16px rgba(var(--nav-accent-rgb, 249, 115, 22), 0.3)'
@@ -574,22 +371,9 @@ function Multimedia({ onClose }) {
     return (
         <div className="settings-container reveal-stagger" style={{ padding: 0 }}>
             {/* Header - Velocity Style */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '24px',
-                padding: '24px 20px',
-                background: 'linear-gradient(135deg, var(--nav-bg), var(--nav-hover))',
-                borderBottom: '1px solid var(--nav-border)'
-            }}>
+            <div className="flex items-center gap-12 mb-24 px-20 py-24" style={{ background: 'linear-gradient(135deg, var(--nav-bg), var(--nav-hover))', borderBottom: '1px solid var(--nav-border)' }}>
                 <IslamicBackButton onClick={goBack} size="medium" />
-                <h1 style={{
-                    margin: 0,
-                    fontSize: '1.5rem',
-                    color: 'var(--nav-text)',
-                    fontWeight: '900'
-                }}>
+                <h1 className="m-0" style={{ fontSize: '1.5rem', color: 'var(--nav-text)', fontWeight: '900' }}>
                     {activeCategory
                         ? MULTIMEDIA_CATEGORIES.find(c => c.id === activeCategory)?.title
                         : t('multimedia.title', 'Multimedya')}
@@ -597,7 +381,7 @@ function Multimedia({ onClose }) {
             </div>
 
             {/* Content Container - With Padding */}
-            <div style={{ padding: '0 20px 40px 20px' }}>
+            <div className="px-20 pb-40">
 
             {/* Content */}
             <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
