@@ -164,7 +164,7 @@ export const useAppInit = (timings) => {
         const proState = getProStateSnapshot();
         crashlyticsReporter.logCrash(
           `[useAppInit] pro resolved active=${activeProStatus} source=${proState.source} state=${proState.verificationState}`
-        ).catch(() => {});
+        );
         setIsProUser(activeProStatus);
       } catch (error) {
         if (!isCancelled) {

@@ -174,7 +174,7 @@ export const usePrayerTimes = () => {
     return () => {
       isCancelled = true;
       cancelDeferredInit();
-      fcmModuleRef.current?.removeListeners?.().catch(() => {});
+      void fcmModuleRef.current?.removeListeners?.();
     };
   }, []);
 
