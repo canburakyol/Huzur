@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import html2canvas from 'html2canvas';
 import { Activity, CalendarDays, Share2, Sparkles, Star, Trophy } from 'lucide-react';
 import { useGamification } from '../../hooks/useGamification';
 import IslamicBackButton from '../shared/IslamicBackButton';
@@ -47,6 +46,7 @@ const ShareableStatCard = ({ onClose }) => {
     try {
       setIsCapturing(true);
 
+      const { default: html2canvas } = await import('html2canvas');
       const canvas = await html2canvas(cardRef.current, {
         scale: 3,
         useCORS: true,

@@ -8,6 +8,30 @@ import { storageService } from '../storageService';
 import { getPrivacySettingsSync, setTelemetryConsent } from '../privacyModeService';
 import { ANALYTICS_CONFIG, ANALYTICS_EVENTS, ANALYTICS_STORAGE_KEYS } from './constants';
 
+const PII_FIELDS = ['userId', 'referralCode', 'familyId', 'email', 'phone', 'uid', 'user_id'];
+
+const hashAnonymize = (value) => {
+  if (!value || typeof value !== 'string') return null;
+  let hash = 0;
+  for (let i = 0; i < value.length; i++) {
+    const char = value.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return `h_${Math.abs(hash).toString(36)}`;
+};
+
+const sanitizeParams = (params) => {
+  const sanitized = { ...params };
+  PII_FIELDS.forEach((field) => {
+    if (sanitized[field]) {
+      sanitized[field] = hashAnonymize(sanitized[field]);
+    }
+  });
+  sanitized.pii_sanitized = true;
+  return sanitized;
+};
+
 export class AnalyticsService {
   constructor() {
     this.enabled = false;
@@ -154,10 +178,12 @@ export class AnalyticsService {
       return this.stubEvent(eventName, params);
     }
 
+    const sanitizedParams = sanitizeParams(params);
+
     const event = {
       name: eventName,
       params: {
-        ...params,
+        ...sanitizedParams,
         timestamp: new Date().toISOString(),
         platform: this.getPlatform(),
         locale: this.getLocale(),
