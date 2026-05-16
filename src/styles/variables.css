@@ -1,0 +1,96 @@
+:root {
+  /* Premium Deep Islamic Palette */
+  --bg-emerald-deep: #064e3b;
+  --bg-emerald-med: #065f46;
+  --bg-emerald-light: #0f766e;
+  --bg-gradient-start: var(--bg-emerald-deep);
+  --bg-gradient-end: #042f2e;
+  --accent-gold: #b45309;
+  --accent-gold-light: #f59e0b;
+  --accent-gold-shimmer: #fbbf24;
+  --primary-color: var(--accent-gold);
+  --primary-dark: #78350f;
+  --accent-color: var(--accent-gold-light);
+  --text-primary: #f8fafc;
+  --text-secondary: #d1d5db;
+  --text-gold: #fde68a;
+  --text-muted: rgba(209, 213, 219, 0.6);
+  --text-on-light-primary: #1f2937;
+  --text-on-light-muted: #4b5563;
+
+  /* Compatibility aliases */
+  --text-color: var(--text-primary);
+  --text-color-light: var(--text-secondary);
+  --text-color-muted: var(--text-muted);
+  --card-bg: var(--glass-bg);
+  --secondary-color: var(--accent-gold-shimmer);
+  --arabic-font-family: var(--font-arabic);
+  --nav-accent-rgb: 245, 158, 11;
+  --nav-bg-rgb: 4, 47, 46;
+  --nav-surface: rgba(4, 47, 46, 0.9);
+  --nav-surface-strong: rgba(3, 31, 28, 0.96);
+  --text-contrast-boost: 1;
+  --bg-color: var(--bg-gradient-start);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(6, 78, 59, 0.65);
+  --glass-border: rgba(180, 83, 9, 0.25);
+  --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
+  --surface-opacity: 0.12;
+  --surface-opacity-strong: 0.18;
+  --surface-border-opacity: 0.12;
+  --elevation-soft: 0 10px 30px rgba(0, 0, 0, 0.18);
+  --elevation-medium: 0 18px 38px rgba(0, 0, 0, 0.24);
+
+  /* Typography */
+  --font-display: 'Outfit', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-main: 'Inter', 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  --font-arabic: 'Amiri', 'Noto Naskh Arabic', serif;
+  --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-quick: all 0.2s ease;
+
+  /* Glassmorphism Tokens */
+  --surface-blur: 16px;
+  --surface-blur-strong: 24px;
+  --surface-saturate: 180%;
+  --elevation-premium: 0 20px 50px rgba(0, 0, 0, 0.3);
+
+  /* Semantic Tokens */
+  --accent-vibrant: var(--accent-gold-light);
+  --error-color: #ef4444;
+  --notification-dot: #e74c3c;
+  --icon-stroke-width: 2px;
+
+  /* Nav extras */
+  --nav-hover: rgba(255, 255, 255, 0.08);
+}
+
+/* Dark Mode */
+[data-theme='dark'] {
+  --bg-gradient-start: #042f2e;
+  --bg-gradient-end: #022c22;
+  --text-color: #e5e7eb;
+  --text-color-light: #fde68a;
+  --text-color-muted: rgba(209, 213, 219, 0.72);
+  --card-bg: rgba(2, 44, 34, 0.88);
+  --bg-color: var(--bg-gradient-start);
+  --glass-bg: rgba(2, 44, 34, 0.82);
+  --nav-bg-rgb: 2, 44, 34;
+  --nav-surface: rgba(2, 44, 34, 0.9);
+  --nav-surface-strong: rgba(2, 31, 28, 0.96);
+}
+
+/* Android WebView overrides */
+html.android-webview,
+body.android-webview {
+  --surface-blur: 1.5px;
+  --surface-blur-strong: 2px;
+  --surface-saturate: 112%;
+  --surface-opacity: 0.9;
+  --surface-opacity-strong: 0.96;
+  --surface-border-opacity: 0.5;
+  --icon-stroke-width: 2.25px;
+  --elevation-soft: 0 3px 10px rgba(0, 0, 0, 0.12);
+  --elevation-medium: 0 5px 14px rgba(0, 0, 0, 0.14);
+}

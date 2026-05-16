@@ -1,0 +1,9 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap');
+
+@import './variables.css';
+@import './reset.css';
+@import './typography.css';
+@import './components.css';
+@import './animations.css';
+@import './utilities.css';
+

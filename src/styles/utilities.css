@@ -1,0 +1,105 @@
+/* Utility Animation Classes */
+.animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
+.animate-fadeInUp { animation: fadeInUp 0.4s ease-out forwards; }
+.animate-fadeInDown { animation: fadeInDown 0.4s ease-out forwards; }
+.animate-slideUp { animation: slideUp 0.3s ease-out forwards; }
+.animate-slideDown { animation: slideDown 0.3s ease-out forwards; }
+.animate-scaleIn { animation: scaleIn 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+.animate-pulse { animation: pulse 0.4s ease-out; }
+.animate-shake { animation: shake 0.5s ease-out; }
+.animate-bounce { animation: bounce 0.5s ease-out; }
+.animate-heartbeat { animation: heartbeat 0.3s ease-out; }
+
+/* Button Tap Feedback */
+.button-tap-effect { position: relative; overflow: hidden; }
+.button-tap-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+[dir="rtl"] .button-tap-effect::after { transform: translate(50%, -50%); }
+.button-tap-effect:active::after { width: 200%; height: 200%; }
+
+/* Card Stagger */
+.card-stagger:nth-child(1) { animation-delay: 0.05s; }
+.card-stagger:nth-child(2) { animation-delay: 0.1s; }
+.card-stagger:nth-child(3) { animation-delay: 0.15s; }
+.card-stagger:nth-child(4) { animation-delay: 0.2s; }
+.card-stagger:nth-child(5) { animation-delay: 0.25s; }
+.card-stagger:nth-child(6) { animation-delay: 0.3s; }
+.card-stagger:nth-child(7) { animation-delay: 0.35s; }
+.card-stagger:nth-child(8) { animation-delay: 0.4s; }
+.card-stagger:nth-child(9) { animation-delay: 0.45s; }
+.card-stagger:nth-child(10) { animation-delay: 0.5s; }
+
+/* Skeleton Loading */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* Hover Float */
+.hover-float { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.hover-float:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); }
+
+/* Glow Effect */
+.glow-effect { transition: box-shadow 0.3s ease; }
+.glow-effect:focus, .glow-effect.active { box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+
+/* Progress Bar */
+.progress-animate { transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Counter */
+.counter-animate { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Checkmark */
+.checkmark-animate { animation: checkmark 0.4s ease-out forwards; stroke-dasharray: 50; stroke-dashoffset: 50; }
+
+/* Like Button */
+.like-button { transition: transform 0.15s ease; }
+.like-button:active { transform: scale(0.85); }
+.like-button.liked { animation: heartbeat 0.3s ease-out; }
+
+/* Page Transitions */
+.page-enter { animation: fadeInUp 0.35s ease-out forwards; }
+.page-exit { animation: fadeOut 0.2s ease-in forwards; }
+
+/* Tooltip */
+.tooltip-animate { animation: tooltipPop 0.2s ease-out forwards; }
+
+/* Count Up */
+.count-up { animation: countUp 0.4s ease-out forwards; }
+
+/* Daily Tasks Widget */
+.daily-tasks-widget:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(34, 197, 94, 0.2); }
+.daily-tasks-widget:active { transform: scale(0.98); }
+
+/* Icon Transition */
+.icon-transition { transition: transform 0.2s ease, color 0.2s ease; }
+.icon-transition:hover { transform: scale(1.1); }
+
+/* Badge New */
+.badge-new { animation: badgeEarned 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+
+/* Toggle Switch */
+.toggle-switch { transition: background-color 0.3s ease; }
+.toggle-switch::before { transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+
+/* Loading Spinner */
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}

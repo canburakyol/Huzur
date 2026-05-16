@@ -99,21 +99,22 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,webp,png,svg,woff2}'],
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'google-fonts-cache',
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 }
+              cacheName: 'google-fonts-cache-v2',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 30 }
             }
           },
           {
             urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'gstatic-fonts-cache',
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 }
+              cacheName: 'gstatic-fonts-cache-v2',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 30 }
             }
           }
         ]
