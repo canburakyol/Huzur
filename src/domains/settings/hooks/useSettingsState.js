@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { STORAGE_KEYS } from '../../../constants';
 import { changeLanguage, getSupportedLanguages } from '../../../services/languageService';
 import { buildMiniLeagueSnapshot, getMiniLeaguePreferences, updateMiniLeaguePreferences } from '../../../services/miniLeagueService';
 import { logMiniLeagueOptedIn } from '../../../services/analyticsService';
 import { requestNotificationPermission } from '../../../services/smartNotificationService';
-import { storageService } from '../../../services/storageService';
 import { syncProStatusFromServer } from '../../../services/subscriptionSyncService';
 import { buildWeeklySocialSummary } from '../../../services/weeklySocialService';
 import { isPro } from '../../../services/proService';
 import { logger } from '../../../utils/logger';
+import { useAppStore } from '../../../stores/useAppStore';
 
 const THEME_DARK = 'dark';
 const THEME_LIGHT = 'light';
@@ -22,22 +21,14 @@ const applyTheme = (isDarkMode) => {
   document.documentElement.setAttribute('data-theme', isDarkMode ? THEME_DARK : THEME_LIGHT);
 };
 
-const getInitialDarkMode = () => {
-  const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
-  const prefersDark = typeof window !== 'undefined'
-    && typeof window.matchMedia === 'function'
-    && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  return savedTheme === THEME_DARK || (!savedTheme && prefersDark);
-};
-
 export function useSettingsState({ i18n, onClose }) {
   const [activeOverlay, setActiveOverlay] = useState(null);
   const [miniLeaguePreferences, setMiniLeaguePreferences] = useState(null);
-  const [darkMode, setDarkMode] = useState(getInitialDarkMode);
-  const [stickyNotification, setStickyNotification] = useState(() => (
-    storageService.getBoolean(STORAGE_KEYS.STICKY_NOTIFICATION)
-  ));
+
+  const darkMode = useAppStore((s) => s.settings.theme === 'dark');
+  const setTheme = useAppStore((s) => s.setTheme);
+  const stickyNotification = useAppStore((s) => s.settings.stickyNotification);
+  const setStickyNotification = useAppStore((s) => s.setStickyNotification);
 
   const userIsPro = isPro();
   const currentLang = i18n.language?.split('-')[0] || 'tr';
@@ -80,28 +71,22 @@ export function useSettingsState({ i18n, onClose }) {
 
   const openFeature = useCallback((featureKey) => {
     onClose?.();
-    window.dispatchEvent(new CustomEvent('openFeature', { detail: featureKey }));
+    useAppStore.getState().setActiveFeature(featureKey);
   }, [onClose]);
 
   const toggleDarkMode = useCallback(() => {
-    setDarkMode((currentValue) => {
-      const nextValue = !currentValue;
-      applyTheme(nextValue);
-      storageService.setString(STORAGE_KEYS.THEME, nextValue ? THEME_DARK : THEME_LIGHT);
-      return nextValue;
-    });
-  }, []);
+    setTheme(darkMode ? 'light' : 'dark');
+    applyTheme(!darkMode);
+  }, [darkMode, setTheme]);
 
   const toggleStickyNotification = useCallback(async () => {
     const nextState = !stickyNotification;
     setStickyNotification(nextState);
-    storageService.setBoolean(STORAGE_KEYS.STICKY_NOTIFICATION, nextState);
-    window.dispatchEvent(new Event('stickyNotificationChanged'));
 
     if (nextState) {
       await requestNotificationPermission();
     }
-  }, [stickyNotification]);
+  }, [stickyNotification, setStickyNotification]);
 
   const handleLanguageChange = useCallback(async (languageCode) => {
     await changeLanguage(languageCode);

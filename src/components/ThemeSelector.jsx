@@ -5,6 +5,7 @@ import IslamicBackButton from './shared/IslamicBackButton';
 import { storageService } from '../services/storageService';
 import { STORAGE_KEYS } from '../constants';
 import { ACCENT_COLORS } from '../data/themes';
+import { useAppStore } from '../stores/useAppStore';
 import './Navigation.css';
 
 const LEGACY_ACCENT_MAP = {
@@ -22,19 +23,21 @@ const normalizeAccentId = (id) => {
 
 function ThemeSelector({ onClose }) {
     const { t } = useTranslation();
+    const setTheme = useAppStore((s) => s.setTheme);
+    const setAccentColor = useAppStore((s) => s.setAccentColor);
     
     const [themeMode, setThemeMode] = useState(() => {
         return storageService.getString(STORAGE_KEYS.THEME) || 'light';
     });
 
-    const [accentColor, setAccentColor] = useState(() => {
+    const [accentColor, setAccentColorLocal] = useState(() => {
         const stored = storageService.getString('app_accent_color');
         return normalizeAccentId(stored);
     });
 
     const handleThemeModeChange = (mode) => {
         setThemeMode(mode);
-        storageService.setString(STORAGE_KEYS.THEME, mode);
+        setTheme(mode);
         
         let targetTheme = mode;
         if (mode === 'system') {
@@ -42,15 +45,14 @@ function ThemeSelector({ onClose }) {
         }
         
         document.documentElement.setAttribute('data-theme', targetTheme);
-        window.dispatchEvent(new CustomEvent('themeModeChanged', { detail: { mode } }));
     };
 
     const handleAccentChange = (accentId) => {
         const accent = ACCENT_COLORS.find(a => a.id === accentId);
         if (!accent) return;
 
+        setAccentColorLocal(accentId);
         setAccentColor(accentId);
-        storageService.setString('app_accent_color', accentId);
         
         document.documentElement.style.setProperty('--nav-accent', accent.color);
         document.documentElement.style.setProperty('--primary-color', accent.color);
@@ -64,10 +66,6 @@ function ThemeSelector({ onClose }) {
         if (accent.rgb) {
             document.documentElement.style.setProperty('--nav-accent-rgb', accent.rgb);
         }
-
-        window.dispatchEvent(new CustomEvent('accentColorChanged', {
-            detail: { color: accent.color, dark: accent.dark, rgb: accent.rgb, accentId }
-        }));
     };
 
     return (

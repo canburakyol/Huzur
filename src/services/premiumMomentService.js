@@ -5,6 +5,7 @@ import { getExperimentVariant } from './experimentService';
 import { getRecoveryLoopPlan } from './recoveryLoopService';
 import { storageService } from './storageService';
 import { DEFAULT_PREMIUM_MOMENTS_CONFIG, getCachedPremiumMomentsConfig } from './premiumMomentConfigService';
+import { useAppStore } from '../stores/useAppStore';
 
 const PREMIUM_SURFACES = new Set([
   'home_recovery_support',
@@ -140,8 +141,12 @@ export const openPremiumMoment = (context = {}) => {
 
   storageService.setItem(STORAGE_KEYS.PREMIUM_MOMENT_PENDING, moment);
 
-  if (typeof window !== 'undefined') {
-    window.dispatchEvent(new CustomEvent('openFeature', { detail: 'pro' }));
+  try {
+    useAppStore.getState().setActiveFeature('pro');
+  } catch {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('openFeature', { detail: 'pro' }));
+    }
   }
 
   return moment;

@@ -1,30 +1,14 @@
-import { createContext, useCallback, useState } from 'react';
+import { useAppStore } from '../stores/useAppStore';
 import ToastNotification from '../components/ToastNotification';
 
-export const ToastContext = createContext(null);
+export const ToastContext = null;
 
-/**
- * Global toast notification provider.
- * Wraps the app and renders a stack of up to 3 toasts.
- */
 export function ToastProvider({ children }) {
-  const [toasts, setToasts] = useState([]);
-
-  const showToast = useCallback((message, type = 'info', duration = 4000) => {
-    const id = Date.now() + Math.random();
-    setToasts(prev => {
-      const next = [...prev, { id, message, type, duration }];
-      // Keep max 3 visible toasts
-      return next.length > 3 ? next.slice(-3) : next;
-    });
-  }, []);
-
-  const removeToast = useCallback((id) => {
-    setToasts(prev => prev.filter(t => t.id !== id));
-  }, []);
+  const toasts = useAppStore((s) => s.toasts);
+  const removeToast = useAppStore((s) => s.removeToast);
 
   return (
-    <ToastContext.Provider value={{ showToast }}>
+    <>
       {children}
       <div
         aria-live="polite"
@@ -37,10 +21,10 @@ export function ToastProvider({ children }) {
           display: 'flex',
           flexDirection: 'column',
           gap: '8px',
-          pointerEvents: 'none'
+          pointerEvents: 'none',
         }}
       >
-        {toasts.map(toast => (
+        {toasts.map((toast) => (
           <div key={toast.id} style={{ pointerEvents: 'auto' }}>
             <ToastNotification
               message={toast.message}
@@ -51,6 +35,6 @@ export function ToastProvider({ children }) {
           </div>
         ))}
       </div>
-    </ToastContext.Provider>
+    </>
   );
 }

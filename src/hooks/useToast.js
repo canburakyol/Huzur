@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import { ToastContext } from '../context/ToastContext';
+import { useAppStore } from '../stores/useAppStore';
 import { logger } from '../utils/logger';
 
 /**
@@ -7,14 +6,13 @@ import { logger } from '../utils/logger';
  * @returns {{ showToast: (message: string, type?: 'info'|'success'|'error', duration?: number) => void }}
  */
 export function useToast() {
-  const ctx = useContext(ToastContext);
-  if (!ctx) {
-    // Graceful fallback when used outside provider (e.g. in tests)
+  const showToast = useAppStore((s) => s.showToast);
+  if (!showToast) {
     return {
       showToast: (message) => {
-        logger.warn('[Toast] Provider not found, falling back:', message);
+        logger.warn('[Toast] Store not initialized, falling back:', message);
       }
     };
   }
-  return ctx;
+  return { showToast };
 }

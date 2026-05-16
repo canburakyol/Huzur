@@ -1,3 +1,5 @@
+import { useAppStore } from '../stores/useAppStore';
+
 const ACTION_ROUTE_MAP = {
   '/': { tab: 'home' },
   '/ayet': { feature: 'quran' },
@@ -19,14 +21,11 @@ const ACTION_PROGRESS_MAP = {
   '/kible': { type: 'utility', subType: 'qibla', amount: 1 }
 };
 
-const emitEvent = (name, detail) => {
-  window.dispatchEvent(new CustomEvent(name, { detail }));
-};
-
 export const emitProgressForAction = (action) => {
   const detail = ACTION_PROGRESS_MAP[action];
   if (detail) {
-    emitEvent('quest:progress', detail);
+    const store = useAppStore.getState();
+    store.updateQuestProgress(detail.type, detail.subType, detail.amount);
   }
 };
 
@@ -49,13 +48,13 @@ export const navigateFromAction = (action, onNavigate) => {
     if (typeof onNavigate === 'function') {
       onNavigate(config.feature);
     } else {
-      emitEvent('openFeature', config.feature);
+      useAppStore.getState().setActiveFeature(config.feature);
     }
     return true;
   }
 
   if (config.tab) {
-    emitEvent('setActiveTab', config.tab);
+    useAppStore.getState().setActiveTab(config.tab);
     return true;
   }
 

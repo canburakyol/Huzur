@@ -16,6 +16,7 @@ import {
 } from '../../services/analyticsService';
 import { buildMiniLeagueSnapshot, getMiniLeaguePreferences } from '../../services/miniLeagueService';
 import { navigateFromAction } from '../../utils/actionNavigation';
+import { useAppStore } from '../../stores/useAppStore';
 import BadgeGrid from './BadgeGrid';
 import ShareableStatCard from '../social/ShareableStatCard';
 
@@ -449,7 +450,7 @@ const SpiritualJourney = ({ onClose }) => {
         <button
           onClick={() => {
             onClose?.();
-            window.dispatchEvent(new CustomEvent('openFeature', { detail: 'settings' }));
+            useAppStore.getState().setActiveFeature('settings');
           }}
           style={{
             border: 'none',

@@ -64,7 +64,8 @@
     "react-dom": "^19.2.0",
     "react-i18next": "^16.5.1",
     "react-leaflet": "^5.0.0",
-    "react-router-dom": "^7.13.0"
+    "react-router-dom": "^7.13.0",
+    "zustand": "^5.0.13"
   },
   "devDependencies": {
     "@capacitor/android": "^8.0.1",

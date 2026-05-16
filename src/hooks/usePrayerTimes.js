@@ -13,6 +13,7 @@ import { TIMING, STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 import { scheduleDeferredTask } from '../utils/startupScheduler';
 import { useVisibilityAwareInterval } from './useVisibilityAwareInterval';
+import { useAppStore } from '../stores/useAppStore';
 
 const getInitialPrayerSnapshot = () => {
   try {
@@ -252,6 +253,8 @@ export const usePrayerTimes = () => {
 };
 
 export const useStickyNotification = (timings, nextPrayer) => {
+  const isStickyEnabled = useAppStore((s) => s.settings.stickyNotification);
+
   useEffect(() => {
     if (!timings || !nextPrayer) return;
 
@@ -263,7 +266,6 @@ export const useStickyNotification = (timings, nextPrayer) => {
         return;
       }
 
-      const isStickyEnabled = storageService.getBoolean(STORAGE_KEYS.STICKY_NOTIFICATION);
       if (!isStickyEnabled) {
         await cancelStickyNotification();
         if (stickyInterval) clearInterval(stickyInterval);
@@ -303,19 +305,13 @@ export const useStickyNotification = (timings, nextPrayer) => {
       }, TIMING.REFRESH_INTERVAL_MS);
     };
 
-    const handleStickyChange = () => {
-      void updateStickyNotification();
-    };
-
-    window.addEventListener('stickyNotificationChanged', handleStickyChange);
     void updateStickyNotification();
 
     return () => {
       isDisposed = true;
-      window.removeEventListener('stickyNotificationChanged', handleStickyChange);
       if (stickyInterval) clearInterval(stickyInterval);
     };
-  }, [timings, nextPrayer]);
+  }, [timings, nextPrayer, isStickyEnabled]);
 };
 
 export const useAndroidWidget = (timings, nextPrayer, locationName) => {

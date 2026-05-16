@@ -3,6 +3,7 @@ import { secureStorage } from './persistentStorage';
 import { STORAGE_KEYS } from '../constants';
 import { logger } from '../utils/logger';
 import crashlyticsReporter from '../utils/crashlyticsReporter';
+import { useAppStore } from '../stores/useAppStore';
 
 const FREE_LIMITS = {
   nuzul_ai: 2,
@@ -101,16 +102,20 @@ const setTrustedResult = (result) => {
 };
 
 const emitProStatusChanged = (state) => {
-  if (typeof window === 'undefined' || typeof window.dispatchEvent !== 'function') {
-    return;
-  }
-
-  window.dispatchEvent(new CustomEvent('proStatusChanged', {
-    detail: {
-      active: isProStateActive(state),
-      state
+  try {
+    useAppStore.getState().setIsProUser(isProStateActive(state));
+  } catch {
+    // Store not initialized yet, fall back to window event
+    if (typeof window === 'undefined' || typeof window.dispatchEvent !== 'function') {
+      return;
     }
-  }));
+    window.dispatchEvent(new CustomEvent('proStatusChanged', {
+      detail: {
+        active: isProStateActive(state),
+        state
+      }
+    }));
+  }
 };
 
 const persistLocalState = (state) => {

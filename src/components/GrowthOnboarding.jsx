@@ -18,6 +18,7 @@ import {
   buildReferralOnboardingAnalyticsPayload,
   buildReferralOnboardingPlan,
 } from '../services/referralOnboardingService';
+import { useAppStore } from '../stores/useAppStore';
 import { SUPPORTED_LANGUAGE_OPTIONS } from '../config/i18nConfig';
 import { STORAGE_KEYS } from '../constants';
 import { storageService } from '../services/storageService';
@@ -338,12 +339,10 @@ function GrowthOnboarding({
     completeOnboarding({ premiumTeaserOverride: false });
 
     window.setTimeout(() => {
-      window.dispatchEvent(new CustomEvent('openInviteModal', {
-        detail: {
-          source: 'onboarding_huzur_ritmi_reward',
-          primaryGoal: selectedGoal,
-        },
-      }));
+      useAppStore.getState().openInviteModal({
+        source: 'onboarding_huzur_ritmi_reward',
+        primaryGoal: selectedGoal,
+      });
     }, 250);
   };
 

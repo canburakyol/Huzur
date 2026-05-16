@@ -9,6 +9,7 @@ import { storageService } from '../services/storageService';
 import { logger } from '../utils/logger';
 import { scheduleDeferredTask } from '../utils/startupScheduler';
 import crashlyticsReporter from '../utils/crashlyticsReporter';
+import { useAppStore } from '../stores/useAppStore';
 
 const LEGACY_ACCENT_MAP = {
   orange: 'amber',
@@ -100,14 +101,20 @@ export const useAppInit = (timings) => {
   });
 
   const [newBadge, setNewBadge] = useState(initialBadge);
-  const [isProUser, setIsProUser] = useState(() => checkIsPro());
+  const [isProUserLocal, setIsProUserLocal] = useState(() => checkIsPro());
+  const setIsProUser = useAppStore((s) => s.setIsProUser);
+
+  // Sync local isProUser to Zustand store
+  useEffect(() => {
+    setIsProUser(isProUserLocal);
+  }, [isProUserLocal, setIsProUser]);
 
   const handleProStatusChange = (event) => {
     logger.log('[useAppInit] Pro status changed:', event.detail);
     if (event.detail && typeof event.detail.active !== 'undefined') {
-      setIsProUser(event.detail.active);
+      setIsProUserLocal(event.detail.active);
     } else {
-      setIsProUser(checkIsPro());
+      setIsProUserLocal(checkIsPro());
     }
   };
 
@@ -165,7 +172,7 @@ export const useAppInit = (timings) => {
         crashlyticsReporter.logCrash(
           `[useAppInit] pro resolved active=${activeProStatus} source=${proState.source} state=${proState.verificationState}`
         );
-        setIsProUser(activeProStatus);
+        setIsProUserLocal(activeProStatus);
       } catch (error) {
         if (!isCancelled) {
           logger.error('[useAppInit] Critical initialization error:', error);
@@ -248,7 +255,7 @@ export const useAppInit = (timings) => {
   useEffect(() => {
     let isCancelled = false;
 
-    if (isProUser) {
+    if (isProUserLocal) {
       void import('../services/admobService')
         .then(({ adMobService }) => {
           if (!isCancelled) {
@@ -291,14 +298,14 @@ export const useAppInit = (timings) => {
       isCancelled = true;
       cancelAdMobInitialization();
     };
-  }, [isProUser]);
+  }, [isProUserLocal]);
 
   const clearBadge = () => setNewBadge(null);
 
   const installDate = storageService.getNumber('APP_INSTALL_DATE', Date.now());
   const isNewUser = (Date.now() - installDate) < (7 * 24 * 60 * 60 * 1000);
 
-  return { streakData, newBadge, clearBadge, isProUser, isNewUser };
+  return { streakData, newBadge, clearBadge, isProUser: isProUserLocal, isNewUser };
 };
 
 export default useAppInit;
