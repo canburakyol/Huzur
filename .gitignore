@@ -15,6 +15,7 @@ sha_output.txt
 translations_output*.json
 test_*.html
 *.mjs
+!scripts/**/*.mjs
 
 node_modules
 dist
