@@ -1,3 +1,5 @@
+import { useAiHealthPanel } from '../hooks/useAiHealthPanel';
+
 const renderBadge = (theme, label) => (
   <div
     style={{
@@ -25,21 +27,23 @@ const renderBulletList = (items = []) => (
   </div>
 );
 
-function SettingsAiHealthPanel({
-  aiGlobalReleaseStatus,
-  aiHealthSummary,
-  aiIncidentSummary,
-  aiOpsChecklist,
-  aiReleaseBrief,
-  globalReleaseTheme,
-  overallHealthTheme,
-  releaseBriefTheme,
-  releaseReadiness,
-  releaseReadinessTheme,
-  rolloutGate,
-  rolloutGateTheme,
-  surfacePalette
-}) {
+function SettingsAiHealthPanel() {
+  const {
+    aiGlobalReleaseStatus,
+    aiHealthSummary,
+    aiIncidentSummary,
+    aiOpsChecklist,
+    aiReleaseBrief,
+    globalReleaseTheme,
+    overallHealthTheme,
+    releaseBriefTheme,
+    releaseReadiness,
+    releaseReadinessTheme,
+    rolloutGate,
+    rolloutGateTheme,
+    surfacePalette
+  } = useAiHealthPanel();
+
   return (
     <div className="settings-group">
       <div className="settings-group-title premium-text">AI guven durumu</div>

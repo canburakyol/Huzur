@@ -36,7 +36,11 @@
     "add": "Ekle",
     "areYouSure": "Emin misiniz?",
     "user": "Kullanıcı",
-    "clear": "Temizle"
+    "clear": "Temizle",
+    "processing": "??leniyor...",
+    "home": "Ana Ekrana D?n",
+    "all": "T?m?",
+    "source": "Kaynak"
   },
   "notifications": {
     "prayer": {
@@ -116,7 +120,13 @@
     "me": "Ben",
     "prayers": "Dua",
     "pray": "Dua Et",
-    "prayed": "Dua Edildi"
+    "prayed": "Dua Edildi",
+    "mock": {
+      "work": "Hay?rl? bir i? i?in dua bekliyorum.",
+      "health": "Hastam?z i?in ?ifa duas? eder misiniz?",
+      "exam": "S?navlar?mda ba?ar? i?in dua istiyorum.",
+      "family": "Aile huzuru i?in dualar?n?z? bekliyorum."
+    }
   },
   "dailyFiqh": {
     "title": "Günün Fıkıh Bilgisi",
@@ -398,7 +408,11 @@
     "start": "Başlangıç",
     "end": "Bitiş",
     "historyClearConfirm": "Tüm bildirim geçmişini silmek istediğinize emin misiniz?",
-    "historyEmpty": "Henüz bildirim yok."
+    "historyEmpty": "Henüz bildirim yok.",
+    "accentColorDesc": "Uygulama genelindeki buton ve simgelerin rengini de?i?tirir.",
+    "preview": "?nizleme",
+    "previewTitle": "Harika De?il mi?",
+    "previewDesc": "Bu renk size ?ok yak??t?."
   },
   "pro": {
     "title": "Huzur Pro'ya Geçin",
@@ -476,7 +490,21 @@
   },
   "nuzul": {
     "error": "Bir sorun oluştu.",
-    "connectionError": "Bağlantı hatası. Lütfen tekrar deneyin."
+    "connectionError": "Bağlantı hatası. Lütfen tekrar deneyin.",
+    "title": "N?zul Sebebi",
+    "subtitle": "Ayetlerin ini? sebeplerini ??renin",
+    "explorerTitle": "N?zul Sebebi Gezgini",
+    "explorerDesc": "Ayetlerin hangi olay ?zerine indirildi?ini ??renmek i?in soru sorun.",
+    "exampleQuestions": "?rnek Sorular:",
+    "noResult": "Bu ayet/sure hakk?nda veritaban?m?zda hen?z detayl? n?zul bilgisi bulunamad?. L?tfen \"Alaq Suresi\", \"Fatiha\" veya \"Ayetel K?rsi\" gibi daha genel ba?l?klar? denemeyi unutma.",
+    "suggestedQuestions": [
+      "Fatiha suresinin n?zul sebebi nedir?",
+      "Ayetel K?rsi (Bakara 255) neden indi?",
+      "Kevser suresi hangi olay ?zerine indi?",
+      "Maide 3. ayet ne zaman indi?",
+      "?lk inen ayetler (Alak Suresi)",
+      "?hlas suresi neden indirildi?"
+    ]
   },
   "quran": {
     "menu": "Menü",
@@ -1212,7 +1240,8 @@
         "transliteration": "Estağfirullahellezi la ilahe illa hu",
         "meaning": "Kendisinden başka ilah olmayan Allah'tan bağışlanma dilerim"
       }
-    }
+    },
+    "confirmReset": "?lerlemeyi s?f?rlamak istiyor musunuz?"
   },
   "qibla": {
     "title": "Kıble Pusulası",
@@ -2862,7 +2891,21 @@
       "thursday": "Perşembe",
       "friday": "Cuma",
       "saturday": "Cumartesi"
-    }
+    },
+    "months": [
+      "Ocak",
+      "?ubat",
+      "Mart",
+      "Nisan",
+      "May?s",
+      "Haziran",
+      "Temmuz",
+      "A?ustos",
+      "Eyl?l",
+      "Ekim",
+      "Kas?m",
+      "Aral?k"
+    ]
   },
   "prayerBook": {
     "categories": {
@@ -3517,7 +3560,39 @@
     "badgesTitle": "Rozet Koleksiyonu",
     "streakTitle": "Zincirlerim",
     "streakTip": "Zincirini korumak için ibadetlerini her gün vaktinde yapmaya çalış.",
-    "beginnerTitle": "Yeni Başlayan"
+    "beginnerTitle": "Yeni Başlayan",
+    "levels": {
+      "1": "Yeni Ba?layan",
+      "2": "Ad?m Atan",
+      "3": "Gayretli",
+      "4": "Azimli",
+      "5": "Kararl?",
+      "6": "Geli?en",
+      "7": "?stikrarl?",
+      "8": "D?zenli",
+      "9": "Bilin?li",
+      "10": "Fark?nda",
+      "11": "Adanm??",
+      "12": "Sab?rl?",
+      "13": "M?tevaz?",
+      "14": "??k?rl?",
+      "15": "Sad?k",
+      "16": "?lim Talip",
+      "17": "Hikmet Arayan",
+      "18": "?rfan Ehli",
+      "19": "Ferasetli",
+      "20": "Basiretli",
+      "21": "Rehber",
+      "22": "Yol G?sterici",
+      "23": "Nur Sa?an",
+      "24": "?lham Veren",
+      "25": "?mmet Dostu",
+      "26": "Huzur Yolcusu",
+      "27": "G?n?l Eri",
+      "28": "Huzur El?isi",
+      "29": "Manevi ?nc?",
+      "30": "Huzur Ustas?"
+    }
   },
   "journey": {
     "title": "Manevi Yolculuğum"
@@ -3533,7 +3608,169 @@
     "alreadyPlayed": "Bugünkü testi zaten tamamladın. Yarın yeni sorularla tekrar gel!",
     "completed": "Bugünkü bilgi testini başarıyla tamamladın.",
     "correct": "Doğru",
-    "xpEarned": "XP Kazanıldı"
+    "xpEarned": "XP Kazanıldı",
+    "info": "Bilgi",
+    "questionProgress": "Soru {{current}}/{{total}}",
+    "nextQuestion": "Sonraki Soru ?",
+    "viewResults": "Sonu?lar? G?r",
+    "categories": {
+      "Siyer": "Siyer",
+      "F?k?h": "F?k?h",
+      "Kuran-? Kerim": "Kuran-? Kerim",
+      "Hadis": "Hadis"
+    },
+    "questions": {
+      "q1": {
+        "question": "Peygamber Efendimiz (s.a.v) hangi y?lda do?mu?tur?",
+        "options": [
+          "570",
+          "571",
+          "610",
+          "622"
+        ],
+        "explanation": "Hz. Muhammed (s.a.v), Fil Vakas?'ndan yakla??k 50 g?n sonra, Miladi 571 y?l?nda Mekke'de d?nyaya gelmi?tir."
+      },
+      "q2": {
+        "question": "Kur'an-? Kerim'in en uzun suresi hangisidir?",
+        "options": [
+          "Yasin",
+          "M?lk",
+          "Bakara",
+          "Al-i ?mran"
+        ],
+        "explanation": "Bakara Suresi 286 ayetten olu?ur ve Kuran'?n en uzun suresidir. Medine'de inmi?tir."
+      },
+      "q3": {
+        "question": "A?a??dakilerden hangisi abdestin farzlar?ndan biri de?ildir?",
+        "options": [
+          "Y?z? y?kamak",
+          "Kollar? y?kamak",
+          "A?za su vermek",
+          "Ayaklar? y?kamak"
+        ],
+        "explanation": "Abdestin 4 farz? vard?r: Y?z? y?kamak, kollar? y?kamak, ba??n d?rtte birini mesh etmek ve ayaklar? y?kamak. A?za su vermek s?nnettir."
+      },
+      "q4": {
+        "question": "\"Ameller niyetlere g?redir.\" hadisini kim rivayet etmi?tir?",
+        "options": [
+          "Buhari",
+          "Tirmizi",
+          "Ebu Davud",
+          "?bn Mace"
+        ],
+        "explanation": "Bu hadis-i ?erif, Hz. ?mer (r.a.)'den rivayet edilmi? ve Sahih-i Buhari'nin ilk hadisidir. \"Ameller niyetlere g?redir\" anlam?na gelir."
+      },
+      "q5": {
+        "question": "?lk vahiy nerede inmi?tir?",
+        "options": [
+          "Sevr Ma?aras?",
+          "Hira Ma?aras?",
+          "Kabe",
+          "Mescid-i Nebevi"
+        ],
+        "explanation": "?lk vahiy, 610 y?l?nda Hira Ma?aras?'nda Cebrail (a.s.) taraf?ndan getirilmi?tir. Alak Suresi'nin ilk 5 ayeti nazil olmu?tur."
+      },
+      "q6": {
+        "question": "Kur'an-? Kerim ka? c?zden olu?ur?",
+        "options": [
+          "20",
+          "30",
+          "40",
+          "114"
+        ],
+        "explanation": "Kuran-? Kerim 30 c?zden olu?ur. Her c?z yakla??k 20 sayfad?r ve Ramazan ay?nda her g?n bir c?z okunmas? gelenektir."
+      },
+      "q7": {
+        "question": "Namazda Fatiha suresinden sonra okunan sureye ne ad verilir?",
+        "options": [
+          "Besmele",
+          "Zamm-? Sure",
+          "S?bhaneke",
+          "Tahiyyat"
+        ],
+        "explanation": "Fatiha'dan sonra okunan k?sa sureye \"Zamm-? Sure\" denir. Namaz?n vaciplerinden biridir ve her rekatta okunur."
+      },
+      "q8": {
+        "question": "Hz. Muhammed'in (s.a.v) s?t annesinin ad? nedir?",
+        "options": [
+          "Hz. Amine",
+          "Hz. Hatice",
+          "Halime",
+          "Hz. Fat?ma"
+        ],
+        "explanation": "Hz. Muhammed (s.a.v), gelenek gere?i ??l havas?n?n sa?l?kl? olmas? i?in Halime es-Sa'diye'ye s?tanneli?e verilmi?tir ve 4-5 y?l yan?nda kalm??t?r."
+      },
+      "q9": {
+        "question": "\"Besmele\" ile ba?lamayan tek sure hangisidir?",
+        "options": [
+          "Fatiha",
+          "Tevbe",
+          "Yasin",
+          "M?lk"
+        ],
+        "explanation": "Tevbe (Berat) Suresi, besmele ile ba?lamayan tek suredir. Bunun sebebi, bu surenin m??riklere kar?? sert uyar?lar i?ermesidir."
+      },
+      "q10": {
+        "question": "\"Cennet annelerin ayaklar? alt?ndad?r.\" s?z? kime aittir?",
+        "options": [
+          "Hz. Ebubekir",
+          "Hz. ?mer",
+          "Hz. Muhammed (s.a.v)",
+          "Hz. Ali"
+        ],
+        "explanation": "Bu hadis-i ?erif Hz. Muhammed'e (s.a.v) aittir. Annelerin de?erini ve haklar?n? vurgulayan en ?nemli hadislerden biridir."
+      },
+      "q11": {
+        "question": "Cuma namaz? kimlere farzd?r?",
+        "options": [
+          "Sadece erkeklere",
+          "Sadece kad?nlara",
+          "Herkese",
+          "Sadece ya?l?lara"
+        ],
+        "explanation": "Cuma namaz?, h?r, ak?ll?, ergen, mukim ve sa?l?kl? erkeklere farzd?r. Kad?nlar, yolcular ve hastalar i?in farz de?ildir."
+      },
+      "q12": {
+        "question": "Kur'an-? Kerim'de ad? ge?en tek kad?n kimdir?",
+        "options": [
+          "Hz. Hatice",
+          "Hz. Ay?e",
+          "Hz. Meryem",
+          "Hz. Asiye"
+        ],
+        "explanation": "Hz. Meryem, Kuran'da ad? ge?en tek kad?nd?r. Kuran'da 34 kez ismi zikredilir ve Meryem Suresi onun ad?yla an?l?r."
+      },
+      "q13": {
+        "question": "M?sl?manlar?n ilk k?blesi neresidir?",
+        "options": [
+          "Kabe",
+          "Mescid-i Aksa",
+          "Kuba Mescidi",
+          "Mescid-i Nebevi"
+        ],
+        "explanation": "M?sl?manlar?n ilk k?blesi Mescid-i Aksa (Kud?s) idi. 17 ay sonra k?ble Kabe'ye (Mekke) ?evrilmi?tir."
+      },
+      "q14": {
+        "question": "Hangi durumda teyemm?m yap?l?r?",
+        "options": [
+          "Su bulunmad???nda",
+          "Zaman darald???nda",
+          "Yolculukta",
+          "K?? aylar?nda"
+        ],
+        "explanation": "Teyemm?m, su bulunamad???nda veya hastal?k gibi sebeplerle su kullan?lamad???nda temiz toprak veya ta? ile yap?lan sembolik abdesttir."
+      },
+      "q15": {
+        "question": "\"Kolayla?t?r?n?z, zorla?t?rmay?n?z...\" hadisinin devam? nedir?",
+        "options": [
+          "Korkutmay?n?z, m?jdeleyiniz",
+          "G?l?mseyiniz, a?latmay?n?z",
+          "M?jdeleyiniz, nefret ettirmeyiniz",
+          "??retiniz, gizlemeyiniz"
+        ],
+        "explanation": "Bu hadis-i ?erifin tam metni: \"Kolayla?t?r?n?z, zorla?t?rmay?n?z; m?jdeleyiniz, nefret ettirmeyiniz.\" ?nsanlar? dinden so?utacak davran??lardan ka??n?lmas?n? ???tler."
+      }
+    }
   },
   "agenda": {
     "weekdays": {
@@ -3760,7 +3997,14 @@
     "useTokenLabel": "Dondurma Hakkı Kullan",
     "tokensAvailable": "{{count}} adet mevcut",
     "applyAndProtect": "Uygula ve Seriyi Koru",
-    "cancelAndReset": "Vazgeç (Seri Sıfırlanır)"
+    "cancelAndReset": "Vazgeç (Seri Sıfırlanır)",
+    "appRiskTitle": "Uygulama seriniz tehlikede",
+    "appRiskBody": "Bug?n hen?z uygulamaya girmediniz. {{count}} g?nl?k serinizi korumak i?in son saatler.",
+    "categoryRiskTitle": "Seri hat?rlatmas?",
+    "categoryRiskBody": "Bug?n {{category}} kaydetmeyi unuttunuz mu?",
+    "categories": {
+      "prayer": "namazlar?n?z?"
+    }
   },
   "streak24h": {
     "title": "24 Saat Telafi",
@@ -3800,7 +4044,69 @@
       "showResults": "Sonuçları Gör"
     },
     "questionLabel": "Soru {{number}}",
-    "explanation": "Açıklama"
+    "explanation": "Açıklama",
+    "questions": {
+      "1": {
+        "question": "A?a??daki ayette '?' harfinden sonra '?' harfi gelmi?tir. Hangi tecvid kural? uygulan?r?",
+        "options": [
+          "?zhar",
+          "?dgam Meal Gunne",
+          "?hfa",
+          "?klab"
+        ],
+        "explanation": "Sakin Nun'dan sonra Yemnu harflerinden 'Ye' geldi?i i?in ?dgam Meal Gunne olur."
+      },
+      "2": {
+        "question": "Harf-i medden sonra sebeb-i med gelmezse hangi kural olu?ur?",
+        "options": [
+          "Med-i Muttas?l",
+          "Med-i Tabii",
+          "Med-i Laz?m",
+          "?hfa"
+        ],
+        "explanation": "Harf-i medden sonra sebeb-i med gelmedi?i i?in asli uzatma olan Med-i Tabii olur."
+      },
+      "3": {
+        "question": "Kalkale harfleri hangileridir?",
+        "options": [
+          "? ? ? ? ?",
+          "? ? ? ?",
+          "? ?",
+          "? ?? ? ? ? ?"
+        ],
+        "explanation": "Kalkale harfleri Kaf, Ta, Be, Cim ve Dal harfleridir."
+      },
+      "4": {
+        "question": "Sakin Nun veya Tenvin'den sonra '?' harfi gelirse ne olur?",
+        "options": [
+          "?hfa",
+          "?zhar",
+          "?klab",
+          "Kalkale"
+        ],
+        "explanation": "Be harfi ?klab harfidir, Nun sesi Mim'e d?n???r."
+      },
+      "5": {
+        "question": "?hfa harfleri ka? tanedir?",
+        "options": [
+          "6",
+          "15",
+          "4",
+          "2"
+        ],
+        "explanation": "?hfa harfleri toplam 15 tanedir."
+      },
+      "6": {
+        "question": "Hangi durumda 'Ra' harfi ince okunur?",
+        "options": [
+          "?st?n oldu?unda",
+          "?tre oldu?unda",
+          "Esre oldu?unda",
+          "?eddeli ?st?n oldu?unda"
+        ],
+        "explanation": "Ra harfi esreli oldu?unda ince okunur."
+      }
+    }
   },
   "tespihat": {
     "ui": {
@@ -3868,6 +4174,98 @@
         "excellent": "Harika. Çok iyi biliyorsunuz.",
         "good": "İyi. Biraz daha çalışabilirsiniz.",
         "retry": "Tekrar çalışmanız önerilir."
+      },
+      "questions": {
+        "1": {
+          "question": "Namaza ba?larken s?ylenen tekbirin ad? nedir?",
+          "options": [
+            "Sena",
+            "?ftitah Tekbiri",
+            "Selam?n Aleyk?m",
+            "Tekbir-i Te?rik"
+          ]
+        },
+        "2": {
+          "question": "R?k?da ka? kere tesbih ?ekilir?",
+          "options": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ]
+        },
+        "3": {
+          "question": "Sabah namaz? toplam ka? rekattir?",
+          "options": [
+            "2",
+            "4",
+            "6",
+            "8"
+          ]
+        },
+        "4": {
+          "question": "Vitir namaz? hangi h?k?mdedir?",
+          "options": [
+            "Farz",
+            "Vacip",
+            "S?nnet",
+            "M?stehap"
+          ]
+        },
+        "5": {
+          "question": "A?a??dakilerden hangisi namaz? bozmaz?",
+          "options": [
+            "Konu?mak",
+            "G?lmek",
+            "A?lamak (Allah korkusuyla)",
+            "Yemek"
+          ]
+        },
+        "6": {
+          "question": "Namazda Fatiha suresi okumak hangi h?k?mdedir?",
+          "options": [
+            "Farz",
+            "Vacip",
+            "S?nnet",
+            "M?bah"
+          ]
+        },
+        "7": {
+          "question": "Secde tesbihi hangisidir?",
+          "options": [
+            "S?bhane Rabbiyel Azim",
+            "S?bhane Rabbiyel Ala",
+            "Semiallahu limen hamideh",
+            "Rabbena lekel hamd"
+          ]
+        },
+        "8": {
+          "question": "Yats? namaz?n?n farz? ka? rekattir?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "9": {
+          "question": "?ki secde aras?ndaki oturu?un ad? nedir?",
+          "options": [
+            "Ka'de",
+            "Celse",
+            "Kavme",
+            "K?yam"
+          ]
+        },
+        "10": {
+          "question": "Namazda ettehiyyat? ne zaman okunur?",
+          "options": [
+            "?lk rekatta",
+            "R?k?da",
+            "Son oturu?ta",
+            "Secdede"
+          ]
+        }
       }
     }
   },
@@ -3917,7 +4315,8 @@
       "firstActionTitle": "Bugunun Ilk Adimini Sec",
       "firstActionDescription": "Uzun bir plan degil; namaz, Kuran veya dua icin kisa bir ritim baslat.",
       "startNow": "Ilk Adimi Ac",
-      "stepCounter": "Adım {{current}} / {{total}}"
+      "stepCounter": "Adım {{current}} / {{total}}",
+      "goalTitle": "Bug?n hangi ritmi ba?latal?m?"
     },
     "funnel": {
       "title": "Growth Funnel Özeti",
@@ -3974,7 +4373,9 @@
     "description": "İslami görseller, özel tasarım dua kartları ve paylaşılabilir manevi içerikler.",
     "contentLabel": "İÇERİK",
     "favorites": "FAVORİLERİM",
-    "duaCardsDesc": "Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları."
+    "duaCardsDesc": "Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları.",
+    "shareCopied": "Payla??m metni kopyaland?!",
+    "downloadHint": "G?rsel yeni sekmede a??lacak. Sa? t?klay?p \"Resmi Kaydet\" se?ene?ini kullanabilirsiniz."
   },
   "stats": {
     "errors": {
@@ -4018,5 +4419,95 @@
       "name": "Hasbunallah",
       "meaning": "Allah bize yeter, O ne guzel vekildir"
     }
+  },
+  "churn": {
+    "offer": {
+      "helpDesc": "Daha iyi bir deneyim i?in ?zel destek ekibimizle g?r??mek ister misiniz? M??teri memnuniyeti bizim i?in her ?eydir."
+    },
+    "survey": {
+      "title": "Bizi Neden B?rak?yorsunuz?",
+      "desc": "Deneyiminizi geli?tirmek i?in ayr?lma sebebinizi ??renebilir miyiz?"
+    },
+    "confirm": {
+      "title": "Emin Misiniz?",
+      "canceling": "?ptal Ediliyor..."
+    }
+  },
+  "mood": {
+    "ask": "Bug?n Nas?l Hissediyorsun?"
+  },
+  "countries": {
+    "turkey": "T?rkiye"
+  },
+  "dua": {
+    "categories": {
+      "health": "Sa?l?k",
+      "exam": "S?nav",
+      "work": "??",
+      "family": "Aile",
+      "marriage": "Evlilik",
+      "children": "?ocuk",
+      "travel": "Seyahat",
+      "forgiveness": "Af",
+      "general": "Genel"
+    },
+    "suggestions": {
+      "marriage_0": "Rabbim bana hay?rl? bir e? nasip et",
+      "exam_1": "S?nav?m? ba?ar?yla ge?meyi nasip et",
+      "health_2": "Hastal???mdan ?ifa ver",
+      "work_3": "??imde ba?ar?l? olmay? nasip et",
+      "family_4": "Ailemi koru ve ba???la"
+    },
+    "stats": {
+      "accepted": "KABUL",
+      "total": "TOPLAM",
+      "rate": "ORAN"
+    },
+    "filters": {
+      "pending": "Bekleyen",
+      "accepted": "Kabul"
+    },
+    "addNew": "Yeni Dua Ekle",
+    "placeholder": "Duan?z? yaz?n...",
+    "suggestionsTitle": "?NER?LENLER",
+    "listTitle": "Dua Listesi",
+    "empty": "Hen?z dua bulunmuyor",
+    "etiquette": {
+      "title": "Dua Adab?",
+      "desc": "Dualar?n?z? ihlasla, d?zenli olarak tekrarlay?n ve her t?rl? hay?rl? iste?iniz i?in Rabbimize s???n?n."
+    }
+  },
+  "levelUp": {
+    "congrats": "TEBR?KLER!",
+    "subtitle": "Yeni Seviyeye Ula?t?n?z!"
+  },
+  "prayerTracker": {
+    "infoTitle": "Kaza Namaz? Nedir?",
+    "infoDesc": "Vaktinde k?l?namayan farz namazlar i?in kaza namaz? k?l?n?r. Kaza namazlar?, farz namazlar?n yerine ge?er ve bor? ?denir gibi eda edilir.",
+    "timeUnit": "VAK?T",
+    "rakatUnit": "REKAT",
+    "rakatCount": "{{count}} Rekat"
+  },
+  "reminders": {
+    "morning": {
+      "title": "?? G?nayd?n!",
+      "body": "Sabah namaz?n? k?ld?n m?? G?ne bereketli ba?la."
+    },
+    "evening": {
+      "title": "?? Ak?am Hat?rlatmas?",
+      "body": "Bug?n ka? vakit namaz k?ld?n? Takibini yap."
+    }
+  },
+  "discovery": {
+    "typeLabels": {
+      "ayah": "G?n?n Ayeti",
+      "hadith": "G?n?n Hadisi",
+      "esma": "G?n?n Esmas?",
+      "dua": "G?n?n Duas?",
+      "hikmet": "G?n?n Hikmeti",
+      "fact": "Biliyor muydun?"
+    },
+    "cardFallbackTitle": "Bug?n?n ke?fini a?",
+    "cardFallbackSource": "Huzur"
   }
 }

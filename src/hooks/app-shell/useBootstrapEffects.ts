@@ -1,0 +1,82 @@
+import { useEffect } from "react";
+import { ensureAuthenticated } from "../../services/authService";
+import crashlyticsReporter, { initCrashlyticsTestHook, logExceptionWithContext, buildCrashContext } from "../../utils/crashlyticsReporter";
+import { analyticsService } from "../../services/analyticsService";
+import { runPrivacyGatedInitialization } from "../../services/privacyConsentStore";
+import { recordAppOpen } from "../../services/userActivityTracker";
+import { logger } from "../../utils/logger";
+
+export function useBootstrapEffects(): void {
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        await ensureAuthenticated();
+      } catch (error) {
+        logger.error("[Bootstrap] Auth init error", error);
+      }
+    };
+    initAuth();
+  }, []);
+
+  useEffect(() => {
+    const appOpenContext = recordAppOpen();
+    return runPrivacyGatedInitialization({
+      kind: "analytics",
+      label: "Firebase Analytics",
+      task: () => {
+        analyticsService.init();
+        analyticsService.logAppOpen("cold_start", appOpenContext);
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    try {
+      crashlyticsReporter?.logCrash?.("App mounted - startup");
+      initCrashlyticsTestHook();
+    } catch (error) {
+      logger.error("[Bootstrap] Crashlytics startup hook failed", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    const onError = (event: ErrorEvent) => {
+      logger.error("[GlobalError]", event.message);
+      try {
+        logExceptionWithContext(
+          event?.error || new Error(event.message),
+          buildCrashContext("global_error", {
+            source: "window.error",
+            filename: event?.filename,
+            line: event?.lineno,
+            column: event?.colno,
+          })
+        );
+      } catch (error) {
+        logger.error("[Bootstrap] Failed to report global error to Crashlytics", error);
+      }
+    };
+
+    const onUnhandledRejection = (event: PromiseRejectionEvent) => {
+      logger.error("[UnhandledRejection]", event.reason);
+      try {
+        logExceptionWithContext(
+          event?.reason instanceof Error ? event.reason : new Error(String(event.reason)),
+          buildCrashContext("unhandled_rejection", {
+            source: "window.unhandledrejection",
+          })
+        );
+      } catch (error) {
+        logger.error("[Bootstrap] Failed to report unhandled rejection to Crashlytics", error);
+      }
+    };
+
+    window.addEventListener("error", onError);
+    window.addEventListener("unhandledrejection", onUnhandledRejection);
+
+    return () => {
+      window.removeEventListener("error", onError);
+      window.removeEventListener("unhandledrejection", onUnhandledRejection);
+    };
+  }, []);
+}

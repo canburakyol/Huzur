@@ -20,8 +20,8 @@ const PremiumHomeHero = lazy(() => import('../PremiumHomeHero'));
 const HomeQuickAccessStrip = lazy(() => import('./home/HomeQuickAccessStrip'));
 const FeatureGrid = lazy(() => import('../FeatureGrid'));
 const NativeAdCard = lazy(() => import('../NativeAdCard'));
-const DailyQuests = lazy(() => import('../DailyQuests'));
-const DailyContentGrid = lazy(() => import('../DailyContentGrid'));
+const DailyQuests = lazy(() => import('../../domains/ibadet/components/DailyQuests'));
+const DailyContentGrid = lazy(() => import('../../domains/content/components/DailyContentGrid'));
 
 function AppHomeTabContent({
   timings,

@@ -1,10 +1,10 @@
 import { Suspense, lazy } from 'react';
 import LoadingFallback from './home/LoadingFallback';
 
-const Prayers = lazy(() => import('../Prayers'));
-const Quran = lazy(() => import('../Quran'));
-const SocialDashboard = lazy(() => import('../social/SocialDashboard'));
-const Assistant = lazy(() => import('../Assistant'));
+const Prayers = lazy(() => import('../../domains/prayer/components/Prayers'));
+const Quran = lazy(() => import('../../domains/quran/components/Quran'));
+const SocialDashboard = lazy(() => import('../../domains/social/components/SocialDashboard'));
+const Assistant = lazy(() => import('../../domains/assistant/components/AssistantShell'));
 
 function AppTabRouter({
   activeTab,

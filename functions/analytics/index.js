@@ -10,8 +10,7 @@
  * ============================================================
  */
 
-// GA4 Property ID - Replace with your actual property ID
-const GA4_PROPERTY_ID = '123456789';
+const GA4_PROPERTY_ID = process.env.GA4_PROPERTY_ID || '';
 
 /**
  * Get DAU/MAU statistics from Google Analytics Data API
@@ -24,6 +23,13 @@ exports.getAnalyticsStats = onCall(
       throw new HttpsError(
         'permission-denied',
         'Bu islem icin admin yetkisi gerekiyor.'
+      );
+    }
+
+    if (!GA4_PROPERTY_ID) {
+      throw new HttpsError(
+        'failed-precondition',
+        'GA4_PROPERTY_ID ortam degiskeni ayarlanmamis.'
       );
     }
 

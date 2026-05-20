@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useEffect, useRef, useCallback } from 'react';
-import launchIcon from '../../play_store_assets/2026-03-refresh/app-icon-512.png';
+import launchIcon from '../assets/app-icon-512.png';
 
 /**
  * SplashScreen Component

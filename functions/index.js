@@ -31,6 +31,7 @@ module.exports = {
     createGenerateWeeklyInsightsV1Handler: aiTest.createGenerateWeeklyInsightsV1Handler,
     createSyncFcmTokenHandler: authTest.createSyncFcmTokenHandler,
     readCombinedProStatus: authTest.readCombinedProStatus,
+    resolveRevenueCatProEntitlement: authTest.resolveRevenueCatProEntitlement,
     resolveActiveStatus: authTest.resolveActiveStatus,
     createPrayForDuaHandler: socialTest.createPrayForDuaHandler,
     createSyncReferralStateHandler: referralTest.createSyncReferralStateHandler,

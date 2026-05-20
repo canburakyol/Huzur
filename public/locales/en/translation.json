@@ -28,7 +28,11 @@
     "add": "Add",
     "areYouSure": "Are you sure?",
     "clear": "Clear",
-    "user": "User"
+    "user": "User",
+    "processing": "Processing...",
+    "home": "Back to Home",
+    "all": "All",
+    "source": "Source"
   },
   "notifications": {
     "prayer": {
@@ -207,7 +211,7 @@
     "daily": "Hadith of the Day",
     "categories": "Categories",
     "count_suffix": "hadiths",
-    "shareDialogTitle": "Hadisi Paylaş"
+    "shareDialogTitle": "Share Hadith"
   },
   "nav": {
     "home": "Home",
@@ -282,7 +286,7 @@
     "spiritualCoach": "Spiritual Guide",
     "prayerCircle": "Prayer Circle",
     "dailyFiqh": "Daily Fiqh",
-    "muezzinSelector": "Müezzin Seçimi"
+    "muezzinSelector": "Muezzin Selection"
   },
   "settings": {
     "title": "Settings",
@@ -327,7 +331,11 @@
     "start": "Start",
     "end": "End",
     "historyClearConfirm": "Are you sure you want to clear notification history?",
-    "historyEmpty": "No notifications yet."
+    "historyEmpty": "No notifications yet.",
+    "accentColorDesc": "Changes the color of buttons and icons throughout the app.",
+    "preview": "Preview",
+    "previewTitle": "Looks good, right?",
+    "previewDesc": "This color suits your app well."
   },
   "pro": {
     "title": "Upgrade to Huzur Pro",
@@ -392,7 +400,21 @@
   },
   "nuzul": {
     "error": "An issue occurred.",
-    "connectionError": "Connection issue. Please try again."
+    "connectionError": "Connection issue. Please try again.",
+    "title": "Reason for Revelation",
+    "subtitle": "Learn why verses were revealed",
+    "explorerTitle": "Revelation Context Explorer",
+    "explorerDesc": "Ask a question to learn which event a verse was revealed about.",
+    "exampleQuestions": "Example Questions:",
+    "noResult": "We do not yet have detailed revelation context for this verse or surah in the local database. Try broader titles such as \"Surah Al-Alaq\", \"Al-Fatihah\", or \"Ayat al-Kursi\".",
+    "suggestedQuestions": [
+      "What is the reason for the revelation of Surah Al-Fatihah?",
+      "Why was Ayat al-Kursi (Al-Baqarah 255) revealed?",
+      "Which event was Surah Al-Kawthar revealed about?",
+      "When was Al-Ma?idah verse 3 revealed?",
+      "The first revealed verses (Surah Al-Alaq)",
+      "Why was Surah Al-Ikhlas revealed?"
+    ]
   },
   "quran": {
     "menu": "Menu",
@@ -408,7 +430,12 @@
     "relatedAyah": "Related verse",
     "turkishReading": "TRANSLITERATION",
     "translation": "TRANSLATION",
-    "start": "Start"
+    "start": "Start",
+    "ayahSelectorTitle": "Select verse",
+    "ayahSelectorHint": "When you scroll, the selected verse starts playing immediately.",
+    "selectedAyahLabel": "Selected verse",
+    "playingAyahLabel": "Playing verse",
+    "totalAyahsLabel": "Total"
   },
   "prayers": {
     "title": "Prayer Book",
@@ -418,7 +445,12 @@
     "quoteAuthor": "Prophet Muhammad (pbuh)",
     "prayerDetail": "Prayer Detail",
     "pronunciation": "Pronunciation",
-    "meaning": "Meaning"
+    "meaning": "Meaning",
+    "errors": {
+      "loadFailed": "Prayer times could not be loaded. Please check your internet connection.",
+      "fetchError": "An error occurred while loading prayer times. Please try again.",
+      "timeout": "Connection timed out."
+    }
   },
   "assistant": {
     "title": "Huzur Guide",
@@ -498,37 +530,37 @@
       "sabah_duasi": {
         "title": "دعاء الصباح",
         "arabic": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ",
-        "transliteration": "Esbahna ve esbahal mülkü lillah",
+        "transliteration": "Esbahna wa esbahal mulku lillah",
         "meaning": "أصبحنا وأصبح الملك لله"
       },
       "tevekkul_duasi": {
         "title": "دعاء التوكل",
         "arabic": "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ",
-        "transliteration": "Hasbiyallahu la ilahe illa hu aleyhi tevekkeltü",
+        "transliteration": "Hasbiyallahu la ilahe illa hu aleyhi tevekkeltu",
         "meaning": "حسبي الله لا إله إلا هو عليه توكلت"
       },
       "subhanallah": {
         "title": "سبحان الله وبحمده",
         "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
-        "transliteration": "Sübhanallahi ve bihamdihi",
+        "transliteration": "Subhanallahi wa bihamdihi",
         "meaning": "سبحان الله وبحمده"
       },
       "aksam_duasi": {
         "title": "دعاء المساء",
         "arabic": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ",
-        "transliteration": "Emseyna ve emsel mülkü lillah",
+        "transliteration": "Emseyna wa emsel mulku lillah",
         "meaning": "أمسينا وأمسى الملك لله"
       },
       "uyku_oncesi": {
         "title": "دعاء قبل النوم",
         "arabic": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
-        "transliteration": "Bismikellahümme emutü ve ahya",
+        "transliteration": "Bismikellahumme emutu wa ahya",
         "meaning": "باسمك اللهم أموت وأحيا"
       },
       "estagfirullah": {
         "title": "الاستغفار",
         "arabic": "أَسْتَغْفِرُ اللَّهَ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ",
-        "transliteration": "Estağfirullahellezi la ilahe illa hu",
+        "transliteration": "Estaghfirullahellezi la ilahe illa hu",
         "meaning": "أستغفر الله الذي لا إله إلا هو"
       }
     }
@@ -607,10 +639,10 @@
       "codeCopied": "Code copied.",
       "inviteCopied": "Invitation text copied.",
       "authRequired": "Connecting to server...",
-      "cuzTaken": "Bu cüz {{name}} tarafından alınmış.",
-      "cuzCompleted": "Bu cüz {{name}} tarafından okunmuş. Allah kabul etsin.",
-      "confirmTake": "{{partNum}}. cüzü okumak için almak istiyor musunuz?",
-      "partActions": "Bu cüz sizin tarafınızdan alındı.\n\"okudum\" yazarak tamamlayın\n\"vazgeç\" yazarak bırakın"
+      "cuzTaken": "This juz has been assigned to {{name}}.",
+      "cuzCompleted": "This juz was read by {{name}}. May Allah accept it.",
+      "confirmTake": "Do you want to take juz {{partNum}} to read?",
+      "partActions": "This juz has been assigned to you.\nType \"read\" to complete it.\nType \"cancel\" to release it."
     }
   },
   "deedJournal": {
@@ -1085,40 +1117,41 @@
       "sabah_duasi": {
         "title": "Morning Dua",
         "arabic": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ",
-        "transliteration": "Esbahna ve esbahal mülkü lillah",
+        "transliteration": "Esbahna wa esbahal mulku lillah",
         "meaning": "We have reached the morning and at this very time all sovereignty belongs to Allah"
       },
       "tevekkul_duasi": {
         "title": "Reliance Dua",
         "arabic": "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ",
-        "transliteration": "Hasbiyallahu la ilahe illa hu aleyhi tevekkeltü",
+        "transliteration": "Hasbiyallahu la ilahe illa hu aleyhi tevekkeltu",
         "meaning": "Sufficient for me is Allah; there is no deity except Him. On Him I have relied"
       },
       "subhanallah": {
         "title": "Subhanallah wa bihamdihi",
         "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
-        "transliteration": "Sübhanallahi ve bihamdihi",
+        "transliteration": "Subhanallahi wa bihamdihi",
         "meaning": "Glory be to Allah and His is the praise"
       },
       "aksam_duasi": {
         "title": "Evening Dua",
         "arabic": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ",
-        "transliteration": "Emseyna ve emsel mülkü lillah",
+        "transliteration": "Emseyna wa emsel mulku lillah",
         "meaning": "We have reached the evening and at this very time all sovereignty belongs to Allah"
       },
       "uyku_oncesi": {
         "title": "Before Sleep",
         "arabic": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
-        "transliteration": "Bismikellahümme emutü ve ahya",
+        "transliteration": "Bismikellahumme emutu wa ahya",
         "meaning": "In Your Name, O Allah, I die and I live"
       },
       "estagfirullah": {
         "title": "Istighfar",
         "arabic": "أَسْتَغْفِرُ اللَّهَ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ",
-        "transliteration": "Estağfirullahellezi la ilahe illa hu",
+        "transliteration": "Estaghfirullahellezi la ilahe illa hu",
         "meaning": "I seek forgiveness from Allah, there is no deity but Him"
       }
-    }
+    },
+    "confirmReset": "Do you want to reset your progress?"
   },
   "qibla": {
     "title": "Qibla Compass",
@@ -1158,7 +1191,7 @@
     "new": "New",
     "categoriesTitle": "Categories",
     "favorites": "Favorites",
-    "shareText": "\"{{text}}\" - {{source}} (Huzur App)",
+    "shareText": "\"{{text}}\" - {{source}} {{ref}} ({{appName}})",
     "categories": {
       "hadis": {
         "title": "Hadiths",
@@ -1904,7 +1937,7 @@
         "desc": "Record your recitation, let AI find your mistakes.",
         "comingSoon": "Coming Soon"
       },
-      "audioError": "Could not load audio file: {{issue}}",
+      "audioError": "Could not load audio file: {{error}}",
       "audioNotReady": "Audio file for this example is not ready yet.",
       "rules": {
         "idgam_meal_gunne": {
@@ -1974,8 +2007,8 @@
         },
         "kalkale": {
           "title": "Qalqalah",
-          "desc": "When Qalqalah letters are sakin (with sukoon), they are read with a vibration (echoing sound).",
-          "rule": "It occurs when Qalqalah letters are sakin (with sukoon).",
+          "desc": "When Qalqalah letters are calm (with sukoon), they are read with a vibration (echoing sound).",
+          "rule": "It occurs when Qalqalah letters are calm (with sukoon).",
           "examples": {
             "0": {
               "explanation": "The letter Qaf is vibrated."
@@ -2034,496 +2067,496 @@
       },
       "items": {
         "1": {
-          "title": "Sabah Duası",
-          "meaning": "Sabahladık ve mülk Allah'ındır, hamd Allah'adır."
+          "title": "Morning Prayer",
+          "meaning": "We woke up in the morning and the sovereignty belongs to Allah, all praise is to Allah."
         },
         "2": {
-          "title": "Akşam Duası",
-          "meaning": "Akşamladık ve mülk Allah'ındır, hamd Allah'adır."
+          "title": "Evening Prayer",
+          "meaning": "We have evening and the sovereignty belongs to Allah, all praise is to Allah."
         },
         "3": {
           "title": "Yatarken Okunacak Dua",
-          "meaning": "Allah'ım. Senin adınla ölür ve senin adınla diriliyorum."
+          "meaning": "My God. I die in your name and I resurrect in your name."
         },
         "4": {
-          "title": "Evden Çıkarken Dua",
-          "meaning": "Allah'ın adıyla, Allah'a tevekkül ettim."
+          "title": "Prayer When Leaving Home",
+          "meaning": "In the name of Allah, I put my trust in Allah."
         },
         "5": {
           "title": "Eve Girerken Dua",
-          "meaning": "Allah'ım. Senden giriş ve çıkışın hayırlısını isterim."
+          "meaning": "My God. I ask you for the best in your entry and exit."
         },
         "6": {
-          "title": "Ayetel Kürsi",
-          "meaning": "Allah, O'ndan başka ilah yoktur. Diridir, Kaim'dir."
+          "title": "Ayetel Kursi",
+          "meaning": "Allah, there is no god but Him. He is alive, He is the Qaim."
         },
         "7": {
-          "title": "Sübhanallah Tesbih",
-          "meaning": "Allah'ı hamd ile tesbih ederim."
+          "title": "Subhanallah Tasbih",
+          "meaning": "I praise Allah with praise."
         },
         "8": {
-          "title": "Korunma Duası",
-          "meaning": "O'nun ismiyle beraber hiçbir şey zarar vermez."
+          "title": "Protection Prayer",
+          "meaning": "Nothing harms with His name."
         },
         "9": {
-          "title": "Şifa Duası",
-          "meaning": "Allah'ım. Bedenime afiyet ver."
+          "title": "Healing Prayer",
+          "meaning": "My God. Give pleasure to my body."
         },
         "10": {
-          "title": "İstiğfar",
-          "meaning": "Allah'tan bağışlanma dilerim ve O'na tevbe ederim."
+          "title": "Istighfar",
+          "meaning": "I ask God for forgiveness and I repent to Him."
         },
         "11": {
           "title": "Salavat",
-          "meaning": "Allah'ım. Muhammed'e salat eyle."
+          "meaning": "My God. Bless Muhammad."
         },
         "12": {
-          "title": "Rıza Duası",
-          "meaning": "Allah'a Rab olarak razı oldum."
+          "title": "Prayer of Consent",
+          "meaning": "I am pleased with Allah as Lord."
         },
         "13": {
-          "title": "Hamd Duası",
-          "meaning": "Hamd Allah'adır."
+          "title": "Prayer of Praise",
+          "meaning": "Praise be to Allah."
         },
         "14": {
-          "title": "Selamet Duası",
-          "meaning": "Allah'ım. Senden afiyet istiyorum."
+          "title": "Salvation Prayer",
+          "meaning": "My God. I ask for your bon appetit."
         },
         "15": {
-          "title": "Şükür Duası",
-          "meaning": "Allah'ım. Hamd ve şükür sanadır."
+          "title": "Prayer of thanksgiving",
+          "meaning": "My God. Praise and thanks be to You."
         },
         "16": {
-          "title": "Borçtan Kurtulma",
-          "meaning": "Allah'ım. Helalinle haramdan beni kurtar."
+          "title": "Getting Out of Debt",
+          "meaning": "My God. Save me from haram with your halal."
         },
         "17": {
-          "title": "Rızık Genişliği",
-          "meaning": "Allah'ım. Keder ve üzüntüden sana sığınırım."
+          "title": "Breadth of Sustenance",
+          "meaning": "My God. I seek refuge in you from grief and sadness."
         },
         "18": {
-          "title": "Bereket Duası",
-          "meaning": "Allah'ım. Bize verdiğin rızkı bereketli kıl."
+          "title": "Prayer of Abundance",
+          "meaning": "My God. Make the sustenance you give us abundant."
         },
         "19": {
-          "title": "Hayırlı Kazanç",
-          "meaning": "Allah'ım. Senden temiz rızık istiyorum."
+          "title": "Good Earnings",
+          "meaning": "My God. I want pure sustenance from you."
         },
         "20": {
-          "title": "Kapı Açılması",
-          "meaning": "Allah'ım. Rahmet kapılarını aç."
+          "title": "Door Opening",
+          "meaning": "My God. Open the doors of mercy."
         },
         "21": {
-          "title": "Bolluk İstemek",
-          "meaning": "Rabbim. Nimetine şükredebilmeyi nasip et."
+          "title": "Asking for Abundance",
+          "meaning": "Lord. Let me be thankful for your blessing."
         },
         "22": {
-          "title": "Zenginlik Duası",
-          "meaning": "Allah'ım. Senden zenginlik istiyorum."
+          "title": "Prayer of Wealth",
+          "meaning": "My God. I want wealth from you."
         },
         "23": {
-          "title": "Helal Rızık",
-          "meaning": "Allah'ım. Bana helal rızık ver."
+          "title": "Halal Rizq",
+          "meaning": "My God. Give me halal sustenance."
         },
         "24": {
-          "title": "İşlerin Kolaylaşması",
-          "meaning": "Allah'ım. Sen kolaylaştırmadıkça hiçbir şey kolay olmaz."
+          "title": "Making Things Easier",
+          "meaning": "My God. Nothing gets easy unless you make it easy."
         },
         "25": {
-          "title": "Hasbünallah",
-          "meaning": "Allah bize yeter, O ne güzel vekildir."
+          "title": "Hasbunallah",
+          "meaning": "Allah is sufficient for us, what a wonderful guardian He is."
         },
         "26": {
-          "title": "Genişlik Duası",
-          "meaning": "Allah'ım. Rızkımı genişlet."
+          "title": "Prayer of Expansion",
+          "meaning": "My God. Expand my sustenance."
         },
         "27": {
-          "title": "Çıkış Yolu",
-          "meaning": "Kim Allah'tan korkarsa, ona çıkış yolu gösterir."
+          "title": "Way out",
+          "meaning": "Whoever fears Allah, He will show him the way out."
         },
         "28": {
           "title": "Aile Huzuru",
-          "meaning": "Rabbimiz. Eşlerimizden ve çocuklarımızdan göz aydınlığı ver."
+          "meaning": "Our Lord. Give us comfort from our spouses and children."
         },
         "29": {
           "title": "Evlilik Bereket",
           "meaning": "Allah sana bereket versin."
         },
         "30": {
-          "title": "Çocuklar İçin",
-          "meaning": "Rabbim. Bana temiz bir nesil bağışla."
+          "title": "For Kids",
+          "meaning": "Lord. Grant me a clean generation."
         },
         "31": {
-          "title": "Ana Baba İçin",
-          "meaning": "Rabbim. Onlara merhamet et."
+          "title": "For Parents",
+          "meaning": "Lord. Have mercy on them."
         },
         "32": {
           "title": "Ev Bereket",
-          "meaning": "Allah'ım. Evimize bereket ver."
+          "meaning": "My God. Give blessings to our home."
         },
         "33": {
-          "title": "Çocukların Salihlği",
-          "meaning": "Rabbim. Beni ve neslimden gelenleri namaz kılan eyle."
+          "title": "Children's Righteousness",
+          "meaning": "Lord. Make me and my descendants pray."
         },
         "34": {
-          "title": "Aile Koruması",
-          "meaning": "Rabbimiz. Cehennem azabını bizden uzaklaştır."
+          "title": "Family Protection",
+          "meaning": "Our Lord. Take away the torment of hell from us."
         },
         "35": {
           "title": "Mutlu Yuva",
-          "meaning": "Rabbimiz. Bize katından rahmet ver."
+          "meaning": "Our Lord. Give us mercy from Yourself."
         },
         "36": {
-          "title": "Kalplerin Kaymaması",
-          "meaning": "Rabbimiz. Kalplerimizi kaydırma."
+          "title": "Hearts Don't Slip",
+          "meaning": "Our Lord. Don't let our hearts slide."
         },
         "37": {
-          "title": "Komşularla İyi Geçinme",
-          "meaning": "Allah'ım. Komşularımızla aramızı ıslah et."
+          "title": "Getting along with neighbors",
+          "meaning": "My God. Make peace between us and our neighbors."
         },
         "38": {
-          "title": "Aile Birliği",
-          "meaning": "Rabbimiz. Bizi sana teslim olanlardan eyle."
+          "title": "Family Union",
+          "meaning": "Our Lord. Make us among those who surrender to you."
         },
         "39": {
-          "title": "Dünya ve Ahiret Hayır",
-          "meaning": "Rabbimiz. Bize dünyada iyilik ver."
+          "title": "World and Hereafter No",
+          "meaning": "Our Lord. Give us goodness in the world."
         },
         "40": {
-          "title": "Şeytandan Korunma",
-          "meaning": "Kovulmuş şeytandan Allah'a sığınırım."
+          "title": "Protection from Satan",
+          "meaning": "I seek refuge in Allah from the accursed devil."
         },
         "41": {
-          "title": "Nazar Duası",
-          "meaning": "Allah'ın dilediği oldu, güç ancak Allah'tandır."
+          "title": "Evil Eye Prayer",
+          "meaning": "It was what Allah wished, the power is only from Allah."
         },
         "42": {
           "title": "Kelime-i Tevhid",
-          "meaning": "Allah'tan başka ilah yoktur, Muhammed Allah'ın Resulüdür."
+          "meaning": "There is no god but Allah, Muhammad is the Messenger of Allah."
         },
         "43": {
-          "title": "Kötülüklerden Sığınma",
-          "meaning": "Yarattığı şeylerin şerrinden Allah'ın tam kelimelerine sığınırım."
+          "title": "Refuge from Evil",
+          "meaning": "I seek refuge in the complete words of Allah from the evil of what He created."
         },
         "44": {
-          "title": "Hastalıklardan Korunma",
-          "meaning": "Allah'ın adıyla sana okuyorum."
+          "title": "Protection from Diseases",
+          "meaning": "I am reading it to you in the name of Allah."
         },
         "45": {
-          "title": "Cin ve İnslardan Korunma",
-          "meaning": "De ki: İnsanların Rabbine sığınırım."
+          "title": "Protection from Jinn and Humans",
+          "meaning": "Say: I seek refuge in the Lord of mankind."
         },
         "46": {
-          "title": "Sabah Akşam Korunma",
-          "meaning": "İslam fıtratı üzere sabahladık."
+          "title": "Morning and Evening Protection",
+          "meaning": "We woke up in accordance with the nature of Islam."
         },
         "47": {
           "title": "Muavvizeteyn",
-          "meaning": "De ki: Felak'in Rabbine sığınırım."
+          "meaning": "Say: I seek refuge in the Lord of disaster."
         },
         "48": {
           "title": "Kaza Beladan Korunma",
-          "meaning": "Allah'ım. Nimetin yok olmasından sana sığınırım."
+          "meaning": "My God. I seek refuge in You from the loss of blessing."
         },
         "49": {
-          "title": "Güç ve Kuvvet",
-          "meaning": "Güç ve kuvvet ancak Allah'tandır."
+          "title": "Power and Strength",
+          "meaning": "Power and strength come only from Allah."
         },
         "50": {
-          "title": "İman Korunması",
-          "meaning": "Allah'ım. Kalpleri çeviren. Kalbimi dinin üzere sabit kıl."
+          "title": "Protection of Faith",
+          "meaning": "My God. The one who turns hearts. Make my heart firm on your religion."
         },
         "51": {
           "title": "Fitnedenkorunma",
-          "meaning": "Allah'ım. Deccal fitnesinden sana sığınırım."
+          "meaning": "My God. I seek refuge in you from the fitnah of the Antichrist."
         },
         "52": {
-          "title": "Hayır Dua",
-          "meaning": "Rabbimiz. Dünyada da ahirette de iyilik ver."
+          "title": "Blessing",
+          "meaning": "Our Lord. Give goodness in this world and in the hereafter."
         },
         "53": {
-          "title": "İlim İsteme",
-          "meaning": "Rabbim. İlmimi artır."
+          "title": "Seeking Knowledge",
+          "meaning": "Lord. Increase my knowledge."
         },
         "54": {
-          "title": "Af ve Mağfiret",
-          "meaning": "Rabbimiz. Günahlarımızı bağışla."
+          "title": "Amnesty and Forgiveness",
+          "meaning": "Our Lord. Forgive our sins."
         },
         "55": {
-          "title": "Hidayet İsteme",
-          "meaning": "Bizi doğru yola ilet."
+          "title": "Asking for Guidance",
+          "meaning": "Guide us to the right path."
         },
         "56": {
           "title": "Rahmet Dileme",
-          "meaning": "Rabbim. Bize merhamet et."
+          "meaning": "Lord. Have mercy on us."
         },
         "57": {
-          "title": "Sabır İsteme",
-          "meaning": "Rabbimiz. Üzerimize sabır yağdır."
+          "title": "Asking for Patience",
+          "meaning": "Our Lord. Rain patience upon us."
         },
         "58": {
-          "title": "Kolaylık Dileme",
-          "meaning": "Rabbim. Kolaylaştır, zorlaştırma."
+          "title": "Wish for Convenience",
+          "meaning": "Lord. Make it easy, don't make it difficult."
         },
         "59": {
-          "title": "Kabul Duası",
-          "meaning": "Rabbimiz. Bizden kabul buyur."
+          "title": "Prayer of Acceptance",
+          "meaning": "Our Lord. Please accept it from us."
         },
         "60": {
           "title": "Salih Amel",
-          "meaning": "Beni rahmetinle salih kulların arasına kat."
+          "meaning": "Include me among your righteous servants with your mercy."
         },
         "61": {
-          "title": "Şükür Duası",
-          "meaning": "Rabbim. Nimetine şükretmeyi nasip et."
+          "title": "Prayer of thanksgiving",
+          "meaning": "Lord. Let us be thankful for your blessing."
         },
         "62": {
-          "title": "İbadet Kabul",
-          "meaning": "Rabbimiz. Bizden kabul et, sen işitensin, bilensin."
+          "title": "Acceptance of Worship",
+          "meaning": "Our Lord. Accept it from us, you are the hearer, the knower."
         },
         "63": {
           "title": "Makbul Dua",
-          "meaning": "Allah'ım. Sen affedicisin, affetmeyi seversin, beni affet."
+          "meaning": "My God. You are forgiving, you love to forgive, forgive me."
         },
         "64": {
-          "title": "Kunut Duası",
-          "meaning": "Allah'ım. Hidayete erdirdiklerinle beni de hidayete erdir."
+          "title": "Qunut Prayer",
+          "meaning": "My God. Guide me with those you guided me to."
         },
         "65": {
-          "title": "Seyyidul İstiğfar",
-          "meaning": "Allah'ım. Sen benim Rabbimsin, senden başka ilah yoktur."
+          "title": "Sayyidul Istighfar",
+          "meaning": "My God. You are my Lord, there is no god but you."
         },
         "66": {
-          "title": "Yolculuk Duası",
-          "meaning": "Bunu bize boyun eğdireni tespih ederim."
+          "title": "Journey Prayer",
+          "meaning": "I praise the one who made us submit to this."
         },
         "67": {
-          "title": "Yemek Duası",
-          "meaning": "Allah'ım. Bize verdiğin rızkı bereketli kıl."
+          "title": "Food Prayer",
+          "meaning": "My God. Make the sustenance you give us abundant."
         },
         "68": {
           "title": "Hasta Ziyareti",
-          "meaning": "Zarar yok, inşallah temizliktir."
+          "meaning": "No harm, hopefully it's cleaning."
         },
         "69": {
-          "title": "Öfke Anında",
-          "meaning": "Kovulmuş şeytandan Allah'a sığınırım."
+          "title": "Instant Anger",
+          "meaning": "I seek refuge in Allah from the accursed devil."
         },
         "70": {
-          "title": "Rüya Duası",
-          "meaning": "Allah'ım. Kabir azabından sana sığınırım."
+          "title": "Dream Prayer",
+          "meaning": "My God. I seek refuge in you from the torment of the grave."
         },
         "71": {
-          "title": "Mescide Giriş",
-          "meaning": "Allah'ım. Rahmet kapılarını aç."
+          "title": "Entrance to the Masjid",
+          "meaning": "My God. Open the doors of mercy."
         },
         "72": {
-          "title": "Mescidden Çıkış",
-          "meaning": "Allah'ım. Senden fazlını dilerim."
+          "title": "Exiting the Masjid",
+          "meaning": "My God. I wish you more."
         },
         "73": {
-          "title": "Abdest Duası",
-          "meaning": "Allah'tan başka ilah olmadığına şehadet ederim."
+          "title": "Ablution Prayer",
+          "meaning": "I testify that there is no god but Allah."
         },
         "74": {
-          "title": "Cenaze Duası",
-          "meaning": "Allah'ım. Onu bağışla ve ona merhamet et."
+          "title": "Funeral Prayer",
+          "meaning": "My God. Forgive him and have mercy on him."
         },
         "75": {
-          "title": "Hacet Namazı Duası",
-          "meaning": "Allah'ım. Rahmetinle senden isterim."
+          "title": "Prayer of Need",
+          "meaning": "My God. I ask from you with your mercy."
         },
         "76": {
-          "title": "Cuma Günü Duası",
-          "meaning": "Allah'ım. Efendimiz Muhammed'e salat eyle."
+          "title": "Friday Prayer",
+          "meaning": "My God. Bless our master Muhammad."
         },
         "77": {
           "title": "Regaib Gecesi",
-          "meaning": "Allah'ı tesbih ederim ve hamd Allah'adır."
+          "meaning": "I praise Allah and praise be to Allah."
         },
         "78": {
-          "title": "Miraç Kandili",
-          "meaning": "Allah'ım. Peygamberinin şefaatini bize nasip et."
+          "title": "Miraj Kandil",
+          "meaning": "My God. Grant us the intercession of your Prophet."
         },
         "79": {
           "title": "Berat Kandili",
-          "meaning": "Allah'ım. Günahlarımı bağışla."
+          "meaning": "My God. Forgive my sins."
         },
         "80": {
           "title": "Kadir Gecesi",
-          "meaning": "Allah'ım. Sen affedicisin, affet beni."
+          "meaning": "My God. You are forgiving, forgive me."
         },
         "81": {
-          "title": "Ramazan Duası",
-          "meaning": "Allah'ım. Bizi Ramazan'a ulaştır."
+          "title": "Ramadan Prayer",
+          "meaning": "My God. Bring us to Ramadan."
         },
         "82": {
-          "title": "Arefe Günü",
-          "meaning": "Allah'tan başka ilah yok, tektir, ortağı yoktur."
+          "title": "Eve of Eve",
+          "meaning": "There is no god but Allah, He is one and has no partner."
         },
         "83": {
-          "title": "Kurban Bayramı",
-          "meaning": "Allah en büyüktür, Allah'tan başka ilah yoktur."
+          "title": "Eid al-Adha",
+          "meaning": "Allah is the greatest, there is no god but Allah."
         },
         "84": {
-          "title": "Hac Duası",
-          "meaning": "Buyur Allah'ım buyur, emrine amadeyim."
+          "title": "Pilgrimage Prayer",
+          "meaning": "Here you go, my God, I am at your service."
         },
         "85": {
-          "title": "Muharrem Ayı",
-          "meaning": "Allah'ım. Bu ayı üzerimize bereket ve imanla helal kıl."
+          "title": "Month of Muharram",
+          "meaning": "My God. Make this month halal for us with blessings and faith."
         },
         "86": {
-          "title": "Şaban Ayı",
-          "meaning": "Allah'ım. Şaban ayında bize bereket ver."
+          "title": "Month of Shaban",
+          "meaning": "My God. Give us blessings in the month of Shaban."
         },
         "87": {
-          "title": "Zilhicce Ayı",
-          "meaning": "Allah'ım. Bu günleri mübarek kıl."
+          "title": "Month of Dhu al-Hijjah",
+          "meaning": "My God. Make these days blessed."
         },
         "88": {
-          "title": "Basit İstiğfar",
-          "meaning": "Allah'tan bağışlanma dilerim."
+          "title": "Simple Istighfar",
+          "meaning": "I ask God for forgiveness."
         },
         "89": {
-          "title": "Tevbe Duası",
+          "title": "Prayer of Repentance",
           "meaning": "Allah'a tevbe ediyorum."
         },
         "90": {
-          "title": "Bağışlanma",
-          "meaning": "Rabbim. Beni bağışla ve bana merhamet et."
+          "title": "forgiveness",
+          "meaning": "Lord. Forgive me and have mercy on me."
         },
         "91": {
-          "title": "Pişmanlık",
-          "meaning": "Allah'ım. Nefsime zulmettim."
+          "title": "Regret",
+          "meaning": "My God. I wronged my soul."
         },
         "92": {
-          "title": "Günahtan Dönüş",
-          "meaning": "Rabbimiz. Biz kendimize zulmettik."
+          "title": "Return from Sin",
+          "meaning": "Our Lord. We oppressed ourselves."
         },
         "93": {
           "title": "Af Dileme",
-          "meaning": "Rabbim. Bağışla, merhamet et, sen merhametlilerin en hayırlısısın."
+          "meaning": "Lord. Forgive, have mercy, you are the best of the merciful."
         },
         "94": {
           "title": "Temizlenme",
-          "meaning": "Allah'ım. Hatalarımdan beni temizle."
+          "meaning": "My God. Cleanse me from my mistakes."
         },
         "95": {
           "title": "Samimi Tevbe",
-          "meaning": "Kendisinden başka ilah olmayan Allah'tan bağışlanma dilerim."
+          "meaning": "I seek forgiveness from Allah, besides whom there is no god."
         },
         "96": {
-          "title": "Afv İsteme",
-          "meaning": "Allah'ım. Sen affedicisin, kerim olansan."
+          "title": "Requesting a Pardon",
+          "meaning": "My God. You are forgiving, generous."
         },
         "97": {
           "title": "Rahmet Dileme",
-          "meaning": "Rabbimiz. Unutur veya yanılırsak bizi sorguya çekme."
+          "meaning": "Our Lord. Don't question us if we forget or make a mistake."
         },
         "98": {
-          "title": "Günahlardan Arınma",
-          "meaning": "Allah'ım. Beni günahlardan temizle."
+          "title": "Purification from Sins",
+          "meaning": "My God. Cleanse me from sins."
         },
         "99": {
-          "title": "Yeniden Başlama",
+          "title": "Resumption",
           "meaning": "Allah'a tevbe ettim."
         },
         "100": {
-          "title": "İftitah Tekbiri",
-          "meaning": "Allah en büyüktür."
+          "title": "Iftitah Takbir",
+          "meaning": "Allah is the greatest."
         },
         "101": {
-          "title": "Sübhaneke",
-          "meaning": "Allah'ım. Seni hamd ile tesbih ederim."
+          "title": "subhanake",
+          "meaning": "My God. I praise you with praise."
         },
         "102": {
           "title": "Fatiha",
-          "meaning": "Hamd, alemlerin Rabbi Allah'adır."
+          "meaning": "Praise be to Allah, the Lord of the worlds."
         },
         "103": {
-          "title": "Rükû Tesbih",
-          "meaning": "Yüce Rabbimi tesbih ederim."
+          "title": "Ruku Rosary",
+          "meaning": "I praise my Almighty Lord."
         },
         "104": {
           "title": "Secdedua",
-          "meaning": "En yüce Rabbimi tesbih ederim."
+          "meaning": "I praise my Almighty Lord."
         },
         "105": {
-          "title": "Teşehhüd",
-          "meaning": "Dil ile, beden ile, mal ile yapılan ibadetler Allah'adır."
+          "title": "Tashahhud",
+          "meaning": "Worship done with tongue, body and property is for Allah."
         },
         "106": {
           "title": "Allahumme Salli",
-          "meaning": "Allah'ım. Muhammed'e salat eyle."
+          "meaning": "My God. Bless Muhammad."
         },
         "107": {
           "title": "Allahumme Barik",
-          "meaning": "Allah'ım. Muhammed'e bereket ver."
+          "meaning": "My God. Give blessings to Muhammad."
         },
         "108": {
-          "title": "Rabbena Duası",
-          "meaning": "Rabbimiz. Dünyada iyilik ver."
+          "title": "Rabbena Prayer",
+          "meaning": "Our Lord. Give goodness in the world."
         },
         "109": {
           "title": "Selam Verme",
-          "meaning": "Selam ve Allah'ın rahmeti üzerinize olsun."
+          "meaning": "Peace and God's mercy be upon you."
         },
         "110": {
-          "title": "Namaz Sonrası",
-          "meaning": "Allah'ım. Sen selamsan."
+          "title": "After Prayer",
+          "meaning": "My God. If you are hello."
         },
         "111": {
           "title": "Vitir Kannet",
-          "meaning": "Allah'ım. Senden yardım dileriz."
+          "meaning": "My God. We ask for your help."
         },
         "112": {
-          "title": "Üzüntü Duası",
-          "meaning": "Senden başka ilah yoktur. Seni tesbih ederim. Ben zalimlerden oldum."
+          "title": "Prayer of Sorrow",
+          "meaning": "There is no god but you. I praise you. I became one of the oppressors."
         },
         "113": {
           "title": "Keder Giderme",
-          "meaning": "Allah'ım. Ben senin kulunum."
+          "meaning": "My God. I am your servant."
         },
         "114": {
-          "title": "Sıkıntı Anında",
-          "meaning": "Allah bana yeter, O'ndan başka ilah yoktur."
+          "title": "In Trouble",
+          "meaning": "Allah is sufficient for me, there is no god but Him."
         },
         "115": {
-          "title": "Ferahlama Duası",
-          "meaning": "Allah'ım. Rahmetini umarım."
+          "title": "Prayer for Refreshment",
+          "meaning": "My God. I hope for your mercy."
         },
         "116": {
           "title": "Zor Zamanlarda",
-          "meaning": "Ey diri olan, ey kaim olan. Rahmetinle yardım dilerim."
+          "meaning": "O the living one, O the eternal one. I ask for your help with your mercy."
         },
         "117": {
           "title": "Elem Giderme",
-          "meaning": "Allah'ım. Kolaylaştırmadıkça hiçbir şey kolay olmaz."
+          "meaning": "My God. Nothing is easy unless you make it easy."
         },
         "118": {
-          "title": "Hüzün Giderme",
-          "meaning": "Allah'ım. Kaygıdan sana sığınırım."
+          "title": "Sadness Relief",
+          "meaning": "My God. I seek refuge in you from anxiety."
         },
         "119": {
-          "title": "Teselli Duası",
-          "meaning": "Biz Allah'a aitiz ve O'na döneceğiz."
+          "title": "Prayer of Consolation",
+          "meaning": "We belong to Allah and to Him we will return."
         },
         "120": {
-          "title": "Sabır Dileme",
-          "meaning": "Rabbimiz. Üzerimize sabır yağdır."
+          "title": "Asking for Patience",
+          "meaning": "Our Lord. Rain patience upon us."
         },
         "121": {
-          "title": "Yalnızlık Anında",
-          "meaning": "Allah benimle, Allah beni görüyor."
+          "title": "In a Moment of Loneliness",
+          "meaning": "God is with me, God sees me."
         },
         "122": {
-          "title": "Umut Duası",
-          "meaning": "Allah'ın rahmetinden ümit kesmeyin."
+          "title": "Prayer of Hope",
+          "meaning": "Do not despair of Allah's mercy."
         },
         "123": {
-          "title": "Güven Duası",
-          "meaning": "Müminler Allah'a tevekkül etsinler."
+          "title": "Prayer of Trust",
+          "meaning": "Let believers put their trust in Allah."
         },
         "february": "February",
         "march": "March",
@@ -2607,7 +2640,21 @@
       "thursday": "Thursday",
       "friday": "Friday",
       "saturday": "Saturday"
-    }
+    },
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ]
   },
   "prayerBook": {
     "categories": {
@@ -3204,7 +3251,7 @@
     "support": "Support",
     "pro": "Upgrade to Pro",
     "familyDashboard": "Family Dashboard",
-    "quickAccess": "Hedefe göre hızlı erişim"
+    "quickAccess": "Quick access by destination"
   },
   "social": {
     "title": "Social",
@@ -3496,7 +3543,14 @@
     "useTokenLabel": "Use Freeze Token",
     "tokensAvailable": "{{count}} available",
     "applyAndProtect": "Apply and Protect Streak",
-    "cancelAndReset": "maybe later (Streak Resets)"
+    "cancelAndReset": "maybe later (Streak Resets)",
+    "appRiskTitle": "Your app streak is at risk",
+    "appRiskBody": "You have not opened the app today. These are the final hours to protect your {{count}}-day streak.",
+    "categoryRiskTitle": "Streak reminder",
+    "categoryRiskBody": "Did you forget to record your {{category}} today?",
+    "categories": {
+      "prayer": "prayers"
+    }
   },
   "streak24h": {
     "title": "24-Hour Recovery",
@@ -3536,7 +3590,69 @@
       "showResults": "Show Results"
     },
     "questionLabel": "Question {{number}}",
-    "explanation": "Explanation"
+    "explanation": "Explanation",
+    "questions": {
+      "1": {
+        "question": "In the verse below, the letter '?' comes after '?'. Which tajweed rule applies?",
+        "options": [
+          "Izhar",
+          "Idgham with ghunnah",
+          "Ikhfa",
+          "Iqlab"
+        ],
+        "explanation": "Because one of the letters of idgham with ghunnah comes after sakin nun, idgham with ghunnah applies."
+      },
+      "2": {
+        "question": "Which rule applies when no cause of madd comes after a letter of madd?",
+        "options": [
+          "Madd Muttasil",
+          "Natural Madd",
+          "Madd Lazim",
+          "Ikhfa"
+        ],
+        "explanation": "When no cause of madd follows a letter of madd, the basic elongation is Natural Madd."
+      },
+      "3": {
+        "question": "Which letters are qalqalah letters?",
+        "options": [
+          "? ? ? ? ?",
+          "? ? ? ?",
+          "? ?",
+          "? ?? ? ? ? ?"
+        ],
+        "explanation": "The qalqalah letters are qaf, ta, ba, jim, and dal."
+      },
+      "4": {
+        "question": "What happens if the letter '?' comes after sakin nun or tanwin?",
+        "options": [
+          "Ikhfa",
+          "Izhar",
+          "Iqlab",
+          "Qalqalah"
+        ],
+        "explanation": "Ba is the letter of iqlab, so the nun sound changes into a mim sound."
+      },
+      "5": {
+        "question": "How many ikhfa letters are there?",
+        "options": [
+          "6",
+          "15",
+          "4",
+          "2"
+        ],
+        "explanation": "There are 15 ikhfa letters."
+      },
+      "6": {
+        "question": "When is the letter 'Ra' pronounced lightly?",
+        "options": [
+          "When it has fatha",
+          "When it has damma",
+          "When it has kasra",
+          "When it has shadda with fatha"
+        ],
+        "explanation": "The letter Ra is pronounced lightly when it has kasra."
+      }
+    }
   },
   "tespihat": {
     "ui": {
@@ -3604,6 +3720,98 @@
         "excellent": "Excellent. You know it very well.",
         "good": "Good. You can improve with more practice.",
         "retry": "It is recommended to review again."
+      },
+      "questions": {
+        "1": {
+          "question": "What is the opening takbir of prayer called?",
+          "options": [
+            "Sana",
+            "Opening Takbir",
+            "Peace be upon you",
+            "Takbir of Tashriq"
+          ]
+        },
+        "2": {
+          "question": "How many times is tasbih usually recited in ruku?",
+          "options": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ]
+        },
+        "3": {
+          "question": "How many rakats are in Fajr prayer in total?",
+          "options": [
+            "2",
+            "4",
+            "6",
+            "8"
+          ]
+        },
+        "4": {
+          "question": "What is the ruling of Witr prayer?",
+          "options": [
+            "Obligatory",
+            "Wajib",
+            "Sunnah",
+            "Recommended"
+          ]
+        },
+        "5": {
+          "question": "Which of the following does not invalidate prayer?",
+          "options": [
+            "Speaking",
+            "Laughing",
+            "Crying out of fear of Allah",
+            "Eating"
+          ]
+        },
+        "6": {
+          "question": "What is the ruling of reciting Al-Fatihah in prayer?",
+          "options": [
+            "Obligatory",
+            "Wajib",
+            "Sunnah",
+            "Permissible"
+          ]
+        },
+        "7": {
+          "question": "Which is the tasbih of sujud?",
+          "options": [
+            "Subhana Rabbiyal Azim",
+            "Subhana Rabbiyal A'la",
+            "Sami Allahu liman hamidah",
+            "Rabbana lakal hamd"
+          ]
+        },
+        "8": {
+          "question": "How many rakats are in the obligatory Isha prayer?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "9": {
+          "question": "What is the sitting between two prostrations called?",
+          "options": [
+            "Qa'dah",
+            "Jalsah",
+            "Qawmah",
+            "Qiyam"
+          ]
+        },
+        "10": {
+          "question": "When is At-Tahiyyat recited in prayer?",
+          "options": [
+            "In the first rakat",
+            "In ruku",
+            "In the final sitting",
+            "In sujud"
+          ]
+        }
       }
     }
   },
@@ -3643,7 +3851,13 @@
     "me": "Me",
     "prayers": "Prayers",
     "pray": "Pray",
-    "prayed": "Prayed"
+    "prayed": "Prayed",
+    "mock": {
+      "work": "Please make dua for a good work opportunity.",
+      "health": "Would you make dua for healing for our patient?",
+      "exam": "I ask for your duas for success in my exams.",
+      "family": "Please make dua for peace in my family."
+    }
   },
   "dailyFiqh": {
     "title": "Daily Fiqh Knowledge",
@@ -3768,7 +3982,40 @@
   "gamification": {
     "badgesTitle": "Badge Collection",
     "streakTitle": "My Streaks",
-    "streakTip": "Try to keep your streak by performing your worship on time every day."
+    "streakTip": "Try to keep your streak by performing your worship on time every day.",
+    "beginnerTitle": "Beginner",
+    "levels": {
+      "1": "Beginner",
+      "2": "Taking the First Step",
+      "3": "Diligent",
+      "4": "Determined",
+      "5": "Steady",
+      "6": "Growing",
+      "7": "Consistent",
+      "8": "Regular",
+      "9": "Mindful",
+      "10": "Aware",
+      "11": "Devoted",
+      "12": "Patient",
+      "13": "Humble",
+      "14": "Grateful",
+      "15": "Faithful",
+      "16": "Seeker of Knowledge",
+      "17": "Seeker of Wisdom",
+      "18": "Person of Insight",
+      "19": "Discerning",
+      "20": "Clear-Sighted",
+      "21": "Guide",
+      "22": "Wayfinder",
+      "23": "Bearer of Light",
+      "24": "Inspiring",
+      "25": "Friend of the Ummah",
+      "26": "Traveler of Huzur",
+      "27": "Person of Heart",
+      "28": "Ambassador of Huzur",
+      "29": "Spiritual Pioneer",
+      "30": "Master of Huzur"
+    }
   },
   "streakFeature": {
     "title": "Streak Calendar",
@@ -3849,7 +4096,8 @@
       "firstActionTitle": "Choose today's first step",
       "firstActionDescription": "No long plan; start a short rhythm for prayer, Quran, or dua.",
       "startNow": "Open First Step",
-      "stepCounter": "Step {{current}} / {{total}}"
+      "stepCounter": "Step {{current}} / {{total}}",
+      "goalTitle": "Which rhythm should we start today?"
     },
     "funnel": {
       "title": "Growth Funnel Summary",
@@ -3888,38 +4136,209 @@
     }
   },
   "journey": {
-    "title": "Manevi Yolculuğum"
+    "title": "My Spiritual Journey"
   },
   "routine": {
-    "title": "Günlük Rutinlerim"
+    "title": "My Daily Routines"
   },
   "quiz": {
-    "title": "Günün Testi"
+    "title": "Test of the Day",
+    "perfect": "Perfect!",
+    "congrats": "Congratulations!",
+    "goodTry": "Good try!",
+    "alreadyPlayed": "You already completed today's quiz. Come back tomorrow for new questions!",
+    "completed": "You successfully completed today's knowledge quiz.",
+    "correct": "Correct",
+    "xpEarned": "XP earned",
+    "info": "Info",
+    "questionProgress": "Question {{current}}/{{total}}",
+    "nextQuestion": "Next Question ?",
+    "viewResults": "View Results",
+    "categories": {
+      "Siyer": "Seerah",
+      "F?k?h": "Fiqh",
+      "Kuran-? Kerim": "Quran",
+      "Hadis": "Hadith"
+    },
+    "questions": {
+      "q1": {
+        "question": "In which year was the Prophet Muhammad (peace be upon him) born?",
+        "options": [
+          "570",
+          "571",
+          "610",
+          "622"
+        ],
+        "explanation": "The Prophet Muhammad (peace be upon him) was born in Makkah in 571 CE, about 50 days after the Event of the Elephant."
+      },
+      "q2": {
+        "question": "Which is the longest surah in the Quran?",
+        "options": [
+          "Yasin",
+          "Al-Mulk",
+          "Al-Baqarah",
+          "Al-i Imran"
+        ],
+        "explanation": "Surah Al-Baqarah has 286 verses and is the longest surah in the Quran. It was revealed in Madinah."
+      },
+      "q3": {
+        "question": "Which of the following is not one of the obligatory acts of wudu?",
+        "options": [
+          "Washing the face",
+          "Washing the arms",
+          "Rinsing the mouth",
+          "Washing the feet"
+        ],
+        "explanation": "Wudu has four obligatory acts: washing the face, washing the arms, wiping a quarter of the head, and washing the feet. Rinsing the mouth is sunnah."
+      },
+      "q4": {
+        "question": "Who narrated the hadith \"Actions are judged by intentions\"?",
+        "options": [
+          "Bukhari",
+          "Tirmidhi",
+          "Abu Dawud",
+          "Ibn Majah"
+        ],
+        "explanation": "This hadith was narrated from Umar (may Allah be pleased with him) and is the first hadith in Sahih al-Bukhari."
+      },
+      "q5": {
+        "question": "Where was the first revelation sent down?",
+        "options": [
+          "Cave of Thawr",
+          "Cave of Hira",
+          "Kaaba",
+          "Masjid an-Nabawi"
+        ],
+        "explanation": "The first revelation was brought by Jibril (peace be upon him) in the Cave of Hira in 610 CE. The first five verses of Surah Al-Alaq were revealed."
+      },
+      "q6": {
+        "question": "How many juz does the Quran contain?",
+        "options": [
+          "20",
+          "30",
+          "40",
+          "114"
+        ],
+        "explanation": "The Quran consists of 30 juz. Each juz is about 20 pages, and reading one juz per day in Ramadan is a common practice."
+      },
+      "q7": {
+        "question": "What is the surah recited after Al-Fatihah in prayer called?",
+        "options": [
+          "Basmala",
+          "Additional Surah",
+          "Subhanaka",
+          "Tahiyyat"
+        ],
+        "explanation": "The short surah recited after Al-Fatihah is commonly called an additional surah. It is one of the required parts of prayer in many fiqh rulings."
+      },
+      "q8": {
+        "question": "What was the name of the Prophet Muhammad's milk mother?",
+        "options": [
+          "Aminah",
+          "Khadijah",
+          "Halimah",
+          "Fatimah"
+        ],
+        "explanation": "According to tradition, the Prophet Muhammad (peace be upon him) was nursed by Halimah as-Sa'diyyah and stayed with her for several years."
+      },
+      "q9": {
+        "question": "Which surah is the only one that does not begin with the Basmala?",
+        "options": [
+          "Al-Fatihah",
+          "At-Tawbah",
+          "Yasin",
+          "Al-Mulk"
+        ],
+        "explanation": "Surah At-Tawbah is the only surah that does not begin with the Basmala. It contains strong warnings to those who opposed the Muslims."
+      },
+      "q10": {
+        "question": "Who said, \"Paradise lies beneath the feet of mothers\"?",
+        "options": [
+          "Abu Bakr",
+          "Umar",
+          "Prophet Muhammad (peace be upon him)",
+          "Ali"
+        ],
+        "explanation": "This narration is attributed to the Prophet Muhammad (peace be upon him) and emphasizes the great status and rights of mothers."
+      },
+      "q11": {
+        "question": "For whom is the Friday prayer obligatory?",
+        "options": [
+          "Only men",
+          "Only women",
+          "Everyone",
+          "Only the elderly"
+        ],
+        "explanation": "Friday prayer is obligatory for free, sane, adult, resident, and healthy men. It is not obligatory for women, travelers, or the sick."
+      },
+      "q12": {
+        "question": "Who is the only woman mentioned by name in the Quran?",
+        "options": [
+          "Khadijah",
+          "Aisha",
+          "Maryam",
+          "Asiyah"
+        ],
+        "explanation": "Maryam is the only woman mentioned by name in the Quran. Her name appears many times, and Surah Maryam is named after her."
+      },
+      "q13": {
+        "question": "What was the first qiblah of the Muslims?",
+        "options": [
+          "Kaaba",
+          "Masjid al-Aqsa",
+          "Masjid Quba",
+          "Masjid an-Nabawi"
+        ],
+        "explanation": "The first qiblah of the Muslims was Masjid al-Aqsa in Jerusalem. Later, the qiblah was changed to the Kaaba in Makkah."
+      },
+      "q14": {
+        "question": "When is tayammum performed?",
+        "options": [
+          "When water is unavailable",
+          "When time is short",
+          "During travel",
+          "In winter"
+        ],
+        "explanation": "Tayammum is performed with clean earth or stone when water is unavailable or cannot be used because of illness or similar reasons."
+      },
+      "q15": {
+        "question": "How does the hadith continue: \"Make things easy, do not make them difficult...\"?",
+        "options": [
+          "Do not frighten; give glad tidings",
+          "Smile; do not make people cry",
+          "Give glad tidings; do not repel people",
+          "Teach; do not hide"
+        ],
+        "explanation": "The full meaning is: \"Make things easy and do not make them difficult; give glad tidings and do not repel people.\" It teaches gentleness in inviting people to faith."
+      }
+    }
   },
   "shareCard": {
-    "title": "İstatistik Kartı",
+    "title": "Statistics Card",
     "subtitle": "Manevi ritmim",
     "level": "Seviye",
-    "xpCollected": "{{count}} XP toplandı",
-    "activeDays": "Aktif gün",
-    "weeklyXP": "Haftalık XP",
+    "xpCollected": "{{count}} XP collected",
+    "activeDays": "active day",
+    "weeklyXP": "Weekly XP",
     "badges": "Rozet",
-    "featuredBadges": "Öne çıkan rozetler",
-    "noBadges": "Henüz rozet kazanılmadı.",
-    "tagline": "Huzur ile ibadet ritmini sakin ve istikrarlı şekilde koru",
-    "preparing": "Kart hazırlanıyor...",
-    "shareButton": "Kartı Paylaş"
+    "featuredBadges": "Featured badges",
+    "noBadges": "No badges have been earned yet.",
+    "tagline": "Maintain peace and the rhythm of worship calmly and steadily",
+    "preparing": "Card is being prepared...",
+    "shareButton": "Share Card"
   },
   "multimedia": {
     "title": "Multimedya",
-    "description": "İslami görseller, özel tasarım dua kartları ve paylaşılabilir manevi içerikler.",
-    "contentLabel": "İÇERİK",
-    "favorites": "FAVORİLERİM",
-    "duaCardsDesc": "Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları."
+    "description": "Islamic images, custom prayer cards and shareable spiritual content.",
+    "contentLabel": "CONTENTS",
+    "favorites": "MY FAVORITES",
+    "duaCardsDesc": "Specially designed prayer cards that you can share with your loved ones.",
+    "shareCopied": "Share text copied!",
+    "downloadHint": "The image will open in a new tab. You can right-click and choose \"Save image as\"."
   },
   "stats": {
     "errors": {
-      "cardFailed": "Kart hazırlanırken bir sorun oluştu."
+      "cardFailed": "There was a problem preparing the card."
     }
   },
   "zikirmatikDhikrs": {
@@ -3949,7 +4368,7 @@
     },
     "lahavle": {
       "name": "La havle",
-      "meaning": "Guc ve kuvvet ancak Allah'tandir"
+      "meaning": "Power and strength come only from Allah"
     },
     "salavat": {
       "name": "Salavat",
@@ -3959,5 +4378,136 @@
       "name": "Hasbunallah",
       "meaning": "Allah bize yeter, O ne guzel vekildir"
     }
+  },
+  "homeFeed": {
+    "priorityCard": {
+      "eyebrow": "Today's 2-minute step",
+      "supportingStreak": "Your {{count}}-day streak is still active. Today's 2-minute step helps you keep that rhythm.",
+      "supportingStart": "One clear step is enough to begin. The home screen will first help you protect today's rhythm."
+    },
+    "recovery": {
+      "eyebrow": "Deeper guidance moment",
+      "title": "You can open calmer support today",
+      "description": "Choose one step for today with the Huzur Guide and gently rebuild your weekly rhythm.",
+      "assistantBtn": "Open Huzur Guide",
+      "proBtn": "See Pro support"
+    },
+    "aiRecommendation": {
+      "eyebrow": "Daily rhythm note"
+    },
+    "personalization": {
+      "title": "This screen is now ordered for you",
+      "description": "When you change your main focus in settings, home, menu, and quick access cards update to match your new rhythm."
+    },
+    "family": {
+      "eyebrow": "Family momentum",
+      "noFamilyTitle": "Start progressing together",
+      "noFamilyDesc": "Create a family group or join with an invitation code for shared goals and steady consistency.",
+      "noFamilyBtn": "Open family area",
+      "progressLabel": "Done",
+      "detailBtn": "See details",
+      "defaultGoal": "Take a small but steady step together this week.",
+      "hasGoalDesc": "{{current}}/{{target}} contributions recorded.",
+      "noGoalDesc": "You can create a family goal and bring daily contributions together."
+    },
+    "activation": {
+      "eyebrow": "First step",
+      "time": "2 minutes",
+      "promise": {
+        "prayer_rhythm": "Do not let today pass empty.",
+        "quran_learning": "Build a short connection with Quran or dua.",
+        "family_consistency": "Make today's one step visible as a family."
+      }
+    }
+  },
+  "churn": {
+    "offer": {
+      "helpDesc": "Would you like to speak with our support team for a better experience? Your satisfaction matters to us."
+    },
+    "survey": {
+      "title": "Why are you leaving?",
+      "desc": "Can you tell us why you are leaving so we can improve your experience?"
+    },
+    "confirm": {
+      "title": "Are you sure?",
+      "canceling": "Canceling..."
+    }
+  },
+  "mood": {
+    "ask": "How are you feeling today?"
+  },
+  "countries": {
+    "turkey": "Turkey"
+  },
+  "dua": {
+    "categories": {
+      "health": "Health",
+      "exam": "Exam",
+      "work": "Work",
+      "family": "Family",
+      "marriage": "Marriage",
+      "children": "Children",
+      "travel": "Travel",
+      "forgiveness": "Forgiveness",
+      "general": "General"
+    },
+    "suggestions": {
+      "marriage_0": "My Lord, grant me a righteous spouse",
+      "exam_1": "Grant me success in my exam",
+      "health_2": "Grant me healing from my illness",
+      "work_3": "Grant me success in my work",
+      "family_4": "Protect and forgive my family"
+    },
+    "stats": {
+      "accepted": "ACCEPTED",
+      "total": "TOTAL",
+      "rate": "RATE"
+    },
+    "filters": {
+      "pending": "Pending",
+      "accepted": "Accepted"
+    },
+    "addNew": "Add New Dua",
+    "placeholder": "Write your dua...",
+    "suggestionsTitle": "SUGGESTIONS",
+    "listTitle": "Dua List",
+    "empty": "No duas yet",
+    "etiquette": {
+      "title": "Dua Etiquette",
+      "desc": "Repeat your duas sincerely and regularly, and turn to our Lord for every good request."
+    }
+  },
+  "levelUp": {
+    "congrats": "CONGRATULATIONS!",
+    "subtitle": "You reached a new level!"
+  },
+  "prayerTracker": {
+    "infoTitle": "What Is a Missed Prayer?",
+    "infoDesc": "Missed obligatory prayers are made up as qada prayers. They are performed in place of the missed obligatory prayers, like repaying a debt.",
+    "timeUnit": "TIMES",
+    "rakatUnit": "RAKAT",
+    "rakatCount": "{{count}} rakat"
+  },
+  "reminders": {
+    "morning": {
+      "title": "?? Good morning!",
+      "body": "Have you prayed Fajr? Start the day with blessing."
+    },
+    "evening": {
+      "title": "?? Evening Reminder",
+      "body": "How many prayers did you complete today? Keep your tracker updated."
+    }
+  },
+  "discovery": {
+    "typeLabels": {
+      "ayah": "Verse of the Day",
+      "hadith": "Hadith of the Day",
+      "esma": "Name of the Day",
+      "dua": "Dua of the Day",
+      "hikmet": "Wisdom of the Day",
+      "fact": "Did you know?"
+    },
+    "cardFallbackTitle": "Open today?s discovery",
+    "cardFallbackSource": "Huzur"
   }
 }

@@ -22,8 +22,8 @@ describe('scope-files', () => {
   it('collects family scope files from feature imports', async () => {
     const files = await collectFeatureScope('family');
 
-    expect(files).toContain('src/features/family/index.js');
-    expect(files).toContain('src/components/family/FamilyDashboard.jsx');
+    expect(files).toContain('src/features/family/index.ts');
+    expect(files).toContain('src/domains/family/components/FamilyDashboard.jsx');
   });
 
   it('collects notifications static scope files', async () => {
@@ -31,7 +31,7 @@ describe('scope-files', () => {
     const files = await collectStaticScope('notifications', config);
 
     expect(files).toContain('android');
-    expect(files).toContain('src/services/smartNotificationService.js');
+    expect(files).toContain('src/services/smartNotificationService.ts');
   });
 
   it('resolves explicit scope requests deterministically', async () => {
@@ -84,7 +84,7 @@ describe('scope-files', () => {
     const info = await getScopeInfo('family');
 
     expect(info.summary).toContain('Aile');
-    expect(info.entrypoints).toContain('src/features/family/index.js');
+    expect(info.entrypoints).toContain('src/features/family/index.ts');
     expect(info.relatedScopes).toContain('social');
   });
 

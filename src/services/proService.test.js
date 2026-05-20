@@ -57,7 +57,7 @@ describe('proService', () => {
   it('keeps last verified active user as pro without ttl free fallback', async () => {
     const { getProStateSnapshot, isPro, setProStatus, verifyProStatus } = await import('./proService');
 
-    await setProStatus(true, '2099-01-01T00:00:00.000Z', 'server', {
+    await setProStatus(true, '2099-01-01T00:00:00.000Z', 'checkProStatus', {
       verifiedAt: '2025-01-01T00:00:00.000Z',
       lastCheckAt: '2025-01-01T00:00:00.000Z',
       verificationState: 'verified'
@@ -69,7 +69,7 @@ describe('proService', () => {
     await expect(verifyProStatus()).resolves.toBe(true);
     expect(getProStateSnapshot()).toMatchObject({
       active: true,
-      source: 'server',
+      source: 'checkProStatus',
       verificationState: 'verified'
     });
   });
@@ -91,7 +91,7 @@ describe('proService', () => {
   it('marks expired subscriptions as inactive', async () => {
     const { getProStateSnapshot, isPro, setProStatus } = await import('./proService');
 
-    await setProStatus(true, '2020-01-01T00:00:00.000Z', 'server', {
+    await setProStatus(true, '2020-01-01T00:00:00.000Z', 'checkProStatus', {
       verificationState: 'verified'
     });
 
@@ -102,13 +102,13 @@ describe('proService', () => {
   it('drops pro access on integrity failure', async () => {
     const { isPro, setProStatus, verifyProStatus } = await import('./proService');
 
-    await setProStatus(true, '2099-01-01T00:00:00.000Z', 'server', {
+    await setProStatus(true, '2099-01-01T00:00:00.000Z', 'checkProStatus', {
       verificationState: 'verified'
     });
     secureStorageMock.getProStatus.mockResolvedValue({
       active: true,
       expiresAt: '2099-01-01T00:00:00.000Z',
-      source: 'server',
+      source: 'checkProStatus',
       verificationState: 'verified',
       isValid: false
     });

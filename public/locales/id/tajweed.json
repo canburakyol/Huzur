@@ -17,7 +17,7 @@
       "idgam_meal_gunne": {
         "title": "Idgham Ma'al Ghunnah",
         "desc": "Merging with Nasalization",
-        "rule": "If Sakin Noon or Tanween is followed by one of the letters (ي م ن و), they are merged with a nasal sound.",
+        "rule": "Jika Sakin Noon atau Tanween diikuti oleh salah satu huruf (ي م ن و), keduanya digabungkan dengan bunyi sengau.",
         "examples": {
           "0": {
             "explanation": "Noon meets Ya, so Idgham occurs."
@@ -30,7 +30,7 @@
       "idgam-bila-gunne": {
         "title": "Idgham Bila Ghunnah",
         "desc": "Merging without Nasalization",
-        "rule": "If Sakin Noon or Tanween is followed by Lam (ل) or Ra (ر), they are merged without a nasal sound.",
+        "rule": "Jika Sakin Siang atau Tanween diikuti oleh Lam (ل) atau Ra (ر), keduanya digabungkan tanpa bunyi sengau.",
         "examples": {
           "0": {
             "explanation": "Noon meets Ra, so Idgham without Ghunnah occurs."
@@ -43,23 +43,23 @@
       "ihfa": {
         "title": "Ikhfa",
         "desc": "Concealment",
-        "rule": "If Sakin Noon or Tanween is followed by an Ikhfa letter, the Noon sound is concealed with a nasal sound.",
+        "rule": "Jika Sakin Siang atau Tanween diikuti dengan huruf Ikhfa, maka bunyi Siangnya disembunyikan dengan bunyi sengau.",
         "examples": {
           "0": {
-            "explanation": "Sakin Noon meets Za, so Ikhfa occurs."
+            "explanation": "Tenang Siang bertemu Za, maka terjadilah Ikhfa."
           },
           "1": {
-            "explanation": "Sakin Noon meets Shin, so Ikhfa occurs."
+            "explanation": "Tenang Siang bertemu Shin, maka terjadilah Ikhfa."
           }
         }
       },
       "izhar": {
         "title": "Izhar",
         "desc": "Clarification",
-        "rule": "If Sakin Noon or Tanween is followed by a throat letter, the Noon sound is pronounced clearly.",
+        "rule": "Jika Sakin Noon atau Tanween diikuti dengan huruf tenggorokan, maka bunyi Noon diucapkan dengan jelas.",
         "examples": {
           "0": {
-            "explanation": "Sakin Noon meets Kha, so Izhar occurs."
+            "explanation": "Tenang Siang bertemu Kha, maka terjadilah Izhar."
           },
           "1": {
             "explanation": "Tanween meets Alif, so Izhar occurs."
@@ -69,10 +69,10 @@
       "iklab": {
         "title": "Iqlab",
         "desc": "Conversion",
-        "rule": "If Sakin Noon or Tanween is followed by Ba (ب), the Noon sound changes to Meem (م) with a nasal sound.",
+        "rule": "Jika Sakin Siang atau Tanween diikuti oleh Ba (ب), bunyi Siang berubah menjadi Meem (م) dengan bunyi sengau.",
         "examples": {
           "0": {
-            "explanation": "Sakin Noon meets Ba, so it converts to Meem."
+            "explanation": "Calm Noon bertemu Ba, sehingga berubah menjadi Meem."
           },
           "1": {
             "explanation": "Tanween meets Ba, so it converts to Meem."
@@ -82,13 +82,13 @@
       "kalkale": {
         "title": "Qalqalah",
         "desc": "Echoing / Vibration",
-        "rule": "When Qalqalah letters (ق ط ب ج د) are Sakin (have Sukoon), they are pronounced with an echoing sound.",
+        "rule": "Bila huruf Qalqalah (ق ط ب ج د) bersifat Sakin (memiliki Sukoon), maka diucapkan dengan bunyi yang menggema.",
         "examples": {
           "0": {
-            "explanation": "Qaf is Sakin, so Qalqalah occurs."
+            "explanation": "Qaf itu Sakin, maka terjadilah Qalqalah."
           },
           "1": {
-            "explanation": "Dal is Sakin, so Qalqalah occurs."
+            "explanation": "Dal adalah Sakin, jadi Qalqalah terjadi."
           }
         }
       },
@@ -146,36 +146,36 @@
     "faq": {
       "items": {
         "tenvin": {
-          "question": "Tenvin nedir?",
-          "answer": "Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Uc cesidi vardir:\n• Fethatan (ً): Ustun tenvin\n• Kesretan (ٍ): Esre tenvin\n• Dammetan (ٌ): Otre tenvin\nTenvin, kelimenin sonundaki nunun yazilmadan okunmasidir."
+          "question": "Apa itu Tenvin?",
+          "answer": "Tenvin adalah efek suara huruf nun di akhir kata. Ada tiga jenis:\n• Fethatan (ً): Tanvin unggul\n• Kesretan (ٍ): Esre tanvin\n• Dammetan (ٌ): Otre tenvin\nTenvin adalah pembacaan nun di akhir kata tanpa menuliskannya."
         },
         "gunne": {
-          "question": "Gunneli okuyus nasil olur?",
-          "answer": "Gunne, nun ve mim harflerinin genizden okunmasidir. Iki hareke miktari tutulur.\n• Idgam (mealgunne): Nun sakineden sonra ي، ن، م، و gelirse\n• Ihfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• Iklab: Nun sakineden sonra ب gelirse, mime donusur ve gunneli okunur."
+          "question": "Bagaimana cara membaca dengan cara yang cerah?",
+          "answer": "Ini adalah pembacaan sengau dari huruf gunne, nun dan mim. Dua jumlah gerakan disimpan.\n• Idgam (mealgunne): Jika ي، ن، م، و muncul setelah Nun Calmine\n• Ihfa : Jika ada 15 huruf setelah Nun Calmine (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• Iklab: Jika ب muncul setelah Nun Sakine, maka berubah menjadi pantomim dan dibaca gunneli."
         },
         "kalkale": {
-          "question": "Kalkale harfleri hangileri?",
-          "answer": "Kalkale harfleri 5 tanedir ve \"قطب جد\" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) oldugunda, cikis noktasinda bir sicrama veya titresim yapilir."
+          "question": "Yang manakah huruf Kalkale?",
+          "answer": "Kalkale ada 5 huruf dan dihafal dengan kata \"قطب جد\":\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Cabang)\nKetika huruf-huruf ini tenang (diinfleksikan), terjadi pantulan atau getaran di titik awal."
         },
         "med": {
-          "question": "Med harfleri nelerdir?",
-          "answer": "Uzatma (Med) harfleri uctur: Elif (ا), Vav (و) ve Ya (ي). Bu harfler kendinden onceki harfi bir elif miktari (yaklasik 1-1.5 saniye) uzatir."
+          "question": "Apa huruf Med?",
+          "answer": "Huruf ekstensi (Med) ada tiga: Elif (ا), Vav (و) dan Ya (ي). Huruf-huruf ini memanjangkan huruf di depannya sebanyak satu elif (kira-kira 1-1,5 detik)."
         },
         "makhraj": {
-          "question": "Mahrec nedir?",
-          "answer": "Mahrec, harflerin agizdan cikis yeridir. Kuran okurken harflerin dogru mahreclerinden cikarilmasi anlamin bozulmamasi icin cok onemlidir."
+          "question": "Apa itu Mahraj?",
+          "answer": "Mahrec adalah tempat keluarnya huruf dari mulut. Saat membaca Al-Qur'an, sangat penting untuk mengekstraksi huruf-huruf dari asal yang benar agar maknanya tidak terdistorsi."
         },
         "ihfa": {
-          "question": "Ihfa nasil yapilir?",
-          "answer": "Ihfa, sozlukte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiginde, nun sesini genizden getirerek hafifce gizleyerek okumaktir."
+          "question": "Bagaimana Ihfa dilakukan?",
+          "answer": "Ihfa artinya bersembunyi dalam kamus. Bila huruf ihfa muncul setelah nun kalem atau tanvin, maksudnya melafalkan bunyi nun dengan cara di sengau dan sedikit disembunyikan."
         },
         "sekte": {
-          "question": "Sekte nedir?",
-          "answer": "Sekte, sesi bir an icin kesip nefes almadan beklemektir. Kuran-i Kerim'de 4 yerde sekte bulunur (Kehf, Yasin, Kiyame ve Mutaffifin surelerinde)."
+          "question": "Apa itu sekte?",
+          "answer": "Bangjo artinya menghentikan bunyi sejenak dan menunggu tanpa bernapas. Terdapat interupsi di 4 tempat dalam Al-Quran (dalam surat al-Kahfi, Yasin, Kiyame dan Mutaffifin)."
         },
         "izhar": {
-          "question": "Izhar nedir?",
-          "answer": "Izhar, acikca okumaktir. Sakin nun veya tenvinden sonra bogaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hic tutulmadan ve gizlenmeden oldugu gibi okunur."
+          "question": "Apa itu Izhar?",
+          "answer": "Izhar artinya membaca dengan jelas. Jika huruf tenggorokan (ء ه ح خ ع غ) muncul setelah nun atau tenvin yang tenang, maka bunyi nun tersebut dibaca apa adanya, tanpa ditahan atau disembunyikan."
         }
       }
     }

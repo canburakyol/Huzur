@@ -143,6 +143,14 @@ public class NativeAdBridgePlugin extends Plugin {
         }
     }
 
+    @PluginMethod
+    public void destroy(PluginCall call) {
+        destroyCachedAds();
+        JSObject ret = new JSObject();
+        ret.put("success", true);
+        call.resolve(ret);
+    }
+
     private JSObject extractAdData(NativeAd nativeAd, String adId) {
         JSObject adData = new JSObject();
         adData.put("adId", adId);
@@ -184,6 +192,10 @@ public class NativeAdBridgePlugin extends Plugin {
     @Override
     protected void handleOnDestroy() {
         super.handleOnDestroy();
+        destroyCachedAds();
+    }
+
+    private void destroyCachedAds() {
         try {
             for (NativeAd ad : adCache.values()) {
                 try {

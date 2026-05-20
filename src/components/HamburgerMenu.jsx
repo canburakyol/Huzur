@@ -41,7 +41,7 @@ import { useTranslation } from 'react-i18next';
 import { useGamification } from '../hooks/useGamification';
 import { APP_VERSION } from '../constants';
 import { getPrimaryGoalConfig, getStoredPrimaryGoal } from '../utils/primaryGoal';
-import './Navigation.css';
+import './app-shell/Navigation.css';
 
 const CORE_MENU_ITEMS = [
   { id: 'dailyTasks', icon: <Target size={20} />, labelKey: 'menu.dailyTasks', component: 'dailyTasks' },

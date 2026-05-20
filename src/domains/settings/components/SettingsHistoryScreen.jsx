@@ -1,5 +1,5 @@
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
-import NotificationHistory from '../../../components/NotificationHistory';
+import NotificationHistory from '../../system/components/NotificationHistory';
 
 function SettingsHistoryScreen({ onClose, title }) {
   return (

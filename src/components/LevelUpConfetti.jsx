@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import confetti from 'canvas-confetti';
 import { useGamification } from '../hooks/useGamification';
 import './LevelUpConfetti.css';
 
 const LevelUpConfetti = () => {
+  const { t } = useTranslation();
   const { level, showLevelUp, setShowLevelUp } = useGamification();
 
   useEffect(() => {
@@ -47,16 +49,16 @@ const LevelUpConfetti = () => {
       <div className="level-up-content animate-bounce-in">
         <div className="level-up-shine"></div>
         <div className="level-up-header">
-            TEBRİKLER!
+            {t('levelUp.congrats', 'TEBRİKLER!')}
         </div>
         <div className="level-up-badge">
             <span className="level-number">{level.id}</span>
         </div>
         <div className="level-up-title">
-            {level.title}
+            {t(`gamification.levels.${level.level}`, level.title)}
         </div>
         <div className="level-up-subtitle">
-            Yeni Seviyeye Ulaştınız!
+            {t('levelUp.subtitle', 'Yeni Seviyeye Ulaştınız!')}
         </div>
       </div>
     </div>

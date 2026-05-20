@@ -158,12 +158,18 @@ async function walkLocalImports(entryFile, files) {
 }
 
 export async function collectFeatureScope(scope) {
-  const indexFile = path.join(featuresRoot, scope, 'index.js');
+  const featureDir = path.join(featuresRoot, scope);
+  let indexFile = path.join(featureDir, 'index.ts');
+  if (!(await exists(indexFile))) {
+    indexFile = path.join(featureDir, 'index.js');
+  }
   if (!(await exists(indexFile))) {
     return null;
   }
 
-  const files = new Set([path.join(featuresRoot, 'index.js')]);
+  const mainIndexFile = path.join(featuresRoot, 'index.ts');
+  const mainIndexFileJs = path.join(featuresRoot, 'index.js');
+  const files = new Set(await exists(mainIndexFile) ? mainIndexFile : mainIndexFileJs);
   await walkLocalImports(indexFile, files);
 
   return [...files]

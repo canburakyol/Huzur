@@ -1,23 +1,83 @@
-import { Sparkles } from 'lucide-react';
+import React, { useMemo } from 'react';
 
-const TRUST_TONE_LABELS = {
-  high: 'Guven yuksek',
-  medium: 'Guven dengeli',
-  low: 'Genel rehberlik',
-};
+const mapEnglishToTurkishSource = (label) => {
+  if (!label) return '';
+  let clean = label.trim();
 
-const REVIEW_STATUS_LABELS = {
-  reviewed: 'Kaynakli',
-  contextual: 'Baglamsal',
-  general_guidance: 'Genel rehberlik',
-  unreviewed: 'Sinirli kaynak',
+  // Hadiths
+  if (clean.toLowerCase().includes('bukhari')) {
+    const num = clean.replace(/[^0-9]/g, '');
+    return `Buhari, ${num ? 'Hadis ' + num : clean}`;
+  }
+  if (clean.toLowerCase().includes('muslim')) {
+    const num = clean.replace(/[^0-9]/g, '');
+    return `Muslim, ${num ? 'Hadis ' + num : clean}`;
+  }
+
+  // Qur'an surahs mapping
+  const surahs = {
+    'ali \'imran': 'Ali İmran',
+    'al-ahzab': 'Ahzab',
+    'al-anfal': 'Enfal',
+    'al-\'ankabut': 'Ankebut',
+    'al-baqarah': 'Bakara',
+    'ad-duha': 'Duha',
+    'adh-dhariyat': 'Zariyat',
+    'al-furqan': 'Furkan',
+    'ghafir': 'Mü\'min (Gafir)',
+    'al-isra': 'İsra',
+    'al-jumu\'ah': 'Cuma',
+    'al-kahf': 'Kehf',
+    'al-muzzammil': 'Müzzemmil',
+    'an-nahl': 'Nahl',
+    'qaf': 'Kaf',
+    'ar-ra\'d': 'Ra\'d',
+    'ash-sharh': 'İnşirah',
+    'ta-ha': 'Taha',
+    'at-tawbah': 'Tevbe',
+    'yunus': 'Yunus',
+    'yusuf': 'Yusuf',
+    'az-zumar': 'Zümer'
+  };
+
+  const lower = clean.toLowerCase();
+  for (const [eng, tr] of Object.entries(surahs)) {
+    if (lower.includes(eng)) {
+      // Extract chapter:verse
+      const match = clean.match(/\d+[:\-]\d+/);
+      if (match) {
+        const parts = match[0].split(/[:\-]/);
+        if (parts.length >= 2) {
+          return `Diyanet Meal: ${tr} ${parts[1]}`;
+        }
+      }
+      return `Diyanet Meal: ${tr}`;
+    }
+  }
+
+  return clean;
 };
 
 /**
- * Single chat message bubble with trust badges, source pills, and suggested actions.
+ * Single chat message bubble with suggested actions.
+ * Trust / confidence scores and metrics are fully removed from the UI.
+ * Validated source references are integrated naturally at the end of the text.
  */
 const ChatMessageBubble = ({ msg, onSuggestedAction }) => {
   const isUser = msg.type === 'user';
+
+  const displaySources = useMemo(() => {
+    if (isUser || !msg.meta?.sources || msg.meta.sources.length === 0) return '';
+    
+    // Filter to reviewed sources
+    const reviewed = msg.meta.sources.filter(s => s.reviewStatus === 'reviewed');
+    if (reviewed.length === 0) return '';
+
+    const formatted = reviewed.map(s => mapEnglishToTurkishSource(s.label)).filter(Boolean);
+    if (formatted.length === 0) return '';
+
+    return ` *(${formatted.join(', ')})*`;
+  }, [msg.meta?.sources, isUser]);
 
   return (
     <div
@@ -45,6 +105,7 @@ const ChatMessageBubble = ({ msg, onSuggestedAction }) => {
         }}
       >
         {msg.text}
+        {displaySources}
       </div>
 
       {/* Suggested Actions */}
@@ -71,78 +132,8 @@ const ChatMessageBubble = ({ msg, onSuggestedAction }) => {
           ))}
         </div>
       )}
-
-      {/* Confidence badge (simple) */}
-      {msg.meta?.confidence && (
-        <div style={{ fontSize: '0.7rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
-          Guven: {msg.meta.confidence}
-        </div>
-      )}
-
-      {/* Source pills */}
-      {msg.meta?.sources?.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-          {msg.meta.sources.map((source, index) => (
-            <Pill
-              key={`${source.label}-${index}`}
-              bg="rgba(245, 158, 11, 0.10)"
-              border="rgba(245, 158, 11, 0.18)"
-              label={source.label}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Trust badges row */}
-      {msg.meta && !isUser && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-          <Pill
-            bg="rgba(212, 175, 55, 0.12)"
-            border="rgba(212, 175, 55, 0.2)"
-            label={TRUST_TONE_LABELS[msg.meta.confidence] || 'Genel rehberlik'}
-          />
-          <Pill
-            bg="rgba(16, 185, 129, 0.10)"
-            border="rgba(16, 185, 129, 0.18)"
-            label={REVIEW_STATUS_LABELS[msg.meta.reviewStatus] || 'Sinirli kaynak'}
-          />
-          {Number.isFinite(Number(msg.meta.trustScore)) && (
-            <Pill
-              bg="rgba(59, 130, 246, 0.10)"
-              border="rgba(59, 130, 246, 0.18)"
-              label={`Trust ${Math.round(Number(msg.meta.trustScore) * 100)}%`}
-            />
-          )}
-          {msg.meta?.sources?.slice(0, 2).map((source, index) => (
-            <Pill
-              key={`trust_${source.label || 'source'}_${index}`}
-              bg="var(--nav-hover)"
-              border="var(--nav-border)"
-              label={source.label}
-              muted
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 };
-
-/** Reusable pill badge */
-const Pill = ({ bg, border, label, muted = false }) => (
-  <div
-    style={{
-      padding: '6px 10px',
-      borderRadius: '999px',
-      background: bg,
-      border: `1px solid ${border}`,
-      color: muted ? 'var(--nav-text-muted)' : 'var(--nav-text)',
-      fontSize: '0.7rem',
-      fontWeight: muted ? '700' : '800',
-    }}
-  >
-    {label}
-  </div>
-);
 
 export default ChatMessageBubble;

@@ -6,7 +6,7 @@ import { storageService } from '../services/storageService';
 import { STORAGE_KEYS } from '../constants';
 import { ACCENT_COLORS } from '../data/themes';
 import { useAppStore } from '../stores/useAppStore';
-import './Navigation.css';
+import './app-shell/Navigation.css';
 
 const LEGACY_ACCENT_MAP = {
     orange: 'amber',
@@ -147,21 +147,21 @@ function ThemeSelector({ onClose }) {
                         ))}
                     </div>
                     <div className="settings-desc" style={{ textAlign: 'center' }}>
-                        Uygulama genelindeki buton ve simgelerin rengini değiştirir.
+                        {t('settings.accentColorDesc', 'Uygulama genelindeki buton ve simgelerin rengini değiştirir.')}
                     </div>
                 </div>
             </div>
 
             <div className="settings-group">
-                <div className="settings-group-title">Önizleme</div>
+                <div className="settings-group-title">{t('settings.preview', 'Önizleme')}</div>
                 <div className="settings-card" style={{ background: 'var(--nav-accent)', color: 'white' }}>
                     <div className="settings-card-left">
                         <div className="settings-icon-box" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
                             <Palette size={20} />
                         </div>
                         <div>
-                            <div className="settings-label" style={{ color: 'white' }}>Harika Değil mi?</div>
-                            <div className="settings-desc" style={{ color: 'rgba(255,255,255,0.8)' }}>Bu renk size çok yakıştı.</div>
+                            <div className="settings-label" style={{ color: 'white' }}>{t('settings.previewTitle', 'Harika Değil mi?')}</div>
+                            <div className="settings-desc" style={{ color: 'rgba(255,255,255,0.8)' }}>{t('settings.previewDesc', 'Bu renk size çok yakıştı.')}</div>
                         </div>
                     </div>
                 </div>

@@ -130,4 +130,40 @@ describe('Pro status with referral rewards', () => {
       store: 'play_store',
     });
   });
+
+  it('treats expired RevenueCat entitlements as inactive', () => {
+    const result = __test.resolveRevenueCatProEntitlement({
+      entitlements: {
+        pro_access: {
+          expires_date_ms: Date.parse('2026-03-27T10:00:00.000Z'),
+          product_identifier: 'huzur_monthly',
+          store: 'PLAY_STORE',
+        },
+      },
+    }, NOW_MS);
+
+    expect(result).toMatchObject({
+      active: false,
+      expiresAtMs: null,
+    });
+  });
+
+  it('accepts only unexpired RevenueCat entitlements as active', () => {
+    const result = __test.resolveRevenueCatProEntitlement({
+      entitlements: {
+        pro_access: {
+          expires_date_ms: Date.parse('2026-03-27T18:00:00.000Z'),
+          product_identifier: 'huzur_monthly',
+          store: 'PLAY_STORE',
+        },
+      },
+    }, NOW_MS);
+
+    expect(result).toMatchObject({
+      active: true,
+      expiresAtMs: Date.parse('2026-03-27T18:00:00.000Z'),
+      productId: 'huzur_monthly',
+      store: 'PLAY_STORE',
+    });
+  });
 });

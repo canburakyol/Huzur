@@ -4,8 +4,10 @@ import android.content.Context
 import org.json.JSONObject
 
 object PrayerScheduleStore {
-    private const val PREFS_NAME = "PrayerScheduleStore"
-    private const val KEY_CONTEXT = "schedule_context"
+    private const val PREFS_NAME = "CapacitorStorage"
+    private const val LEGACY_PREFS_NAME = "PrayerScheduleStore"
+    private const val KEY_CONTEXT = "huzur_prayer_schedule_context"
+    private const val LEGACY_KEY_CONTEXT = "schedule_context"
 
     data class ScheduleContext(
         val timingsJson: String,
@@ -26,6 +28,8 @@ object PrayerScheduleStore {
         adhanSound: String?
     ) {
         val payload = JSONObject().apply {
+            put("schemaVersion", 2)
+            put("source", "web_bridge")
             put("timingsJson", timingsJson)
             put("latitude", latitude)
             put("longitude", longitude)
@@ -42,8 +46,7 @@ object PrayerScheduleStore {
 
     @JvmStatic
     fun getScheduleContext(context: Context): ScheduleContext? {
-        val raw = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .getString(KEY_CONTEXT, null)
+        val raw = getStoredContext(context)
             ?: return null
 
         return try {
@@ -67,6 +70,33 @@ object PrayerScheduleStore {
             .edit()
             .remove(KEY_CONTEXT)
             .apply()
+        context.getSharedPreferences(LEGACY_PREFS_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .remove(LEGACY_KEY_CONTEXT)
+            .apply()
+    }
+
+    private fun getStoredContext(context: Context): String? {
+        val currentPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val current = currentPrefs.getString(KEY_CONTEXT, null)
+        if (!current.isNullOrBlank()) {
+            return current
+        }
+
+        val legacyPrefs = context.getSharedPreferences(LEGACY_PREFS_NAME, Context.MODE_PRIVATE)
+        val legacy = legacyPrefs.getString(LEGACY_KEY_CONTEXT, null)
+        if (legacy.isNullOrBlank()) {
+            return null
+        }
+
+        currentPrefs.edit()
+            .putString(KEY_CONTEXT, legacy)
+            .apply()
+        legacyPrefs.edit()
+            .remove(LEGACY_KEY_CONTEXT)
+            .apply()
+
+        return legacy
     }
 }
 

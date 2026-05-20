@@ -28,7 +28,11 @@
     "add": "Add",
     "areYouSure": "Are you sure?",
     "clear": "Leeren",
-    "user": "User"
+    "user": "User",
+    "processing": "Verarbeitung...",
+    "home": "Zurück nach Hause",
+    "all": "Alle",
+    "source": "Quelle"
   },
   "notifications": {
     "prayer": {
@@ -327,7 +331,11 @@
     "start": "Beginn",
     "end": "Ende",
     "historyClearConfirm": "Möchten Sie den Benachrichtigungsverlauf wirklich löschen?",
-    "historyEmpty": "Noch keine Benachrichtigungen."
+    "historyEmpty": "Noch keine Benachrichtigungen.",
+    "accentColorDesc": "Ändert die Farbe von Schaltflächen und Symbolen in der gesamten App.",
+    "preview": "Vorschau",
+    "previewTitle": "Sieht gut aus, oder?",
+    "previewDesc": "Diese Farbe passt gut zu Ihrer App."
   },
   "pro": {
     "title": "Huzur Pro",
@@ -392,7 +400,21 @@
   },
   "nuzul": {
     "error": "An error occurred.",
-    "connectionError": "Connection error. Please try again."
+    "connectionError": "Connection error. Please try again.",
+    "title": "Grund der Offenbarung",
+    "subtitle": "Erfahren Sie, warum Verse offenbart wurden",
+    "explorerTitle": "Offenbarungskontext-Explorer",
+    "explorerDesc": "Stellen Sie eine Frage, um zu erfahren, über welches Ereignis ein Vers offenbart wurde.",
+    "exampleQuestions": "Beispielfragen:",
+    "noResult": "Wir haben noch keinen detaillierten Offenbarungskontext für diesen Vers oder diese Sure in der lokalen Datenbank. Versuchen Sie es mit umfassenderen Titeln wie „Surah Al-Alaq“, „Al-Fatihah“ oder „Ayat al-Kursi“.",
+    "suggestedQuestions": [
+      "Was ist der Grund für die Offenbarung der Sure Al-Fatihah?",
+      "Warum wurde Ayat al-Kursi (Al-Baqarah 255) offenbart?",
+      "Über welches Ereignis wurde in der Sure Al-Kawthar berichtet?",
+      "Wann wurde Al-Ma?idah Vers 3 offenbart?",
+      "Die ersten offenbarten Verse (Sure Al-Alaq)",
+      "Warum wurde Sure Al-Ikhlas offenbart?"
+    ]
   },
   "quran": {
     "menu": "Menu",
@@ -408,7 +430,12 @@
     "relatedAyah": "Related verse",
     "turkishReading": "TRANSLITERATION",
     "translation": "TRANSLATION",
-    "start": "Start"
+    "start": "Start",
+    "ayahSelectorTitle": "Vers auswählen",
+    "ayahSelectorHint": "Wenn Sie scrollen, wird die ausgewählte Strophe sofort abgespielt.",
+    "selectedAyahLabel": "Ausgewählter Vers",
+    "playingAyahLabel": "Verse spielen",
+    "totalAyahsLabel": "Gesamt"
   },
   "prayers": {
     "title": "Prayer Book",
@@ -418,7 +445,12 @@
     "quoteAuthor": "Prophet Muhammad (pbuh)",
     "prayerDetail": "Prayer Detail",
     "pronunciation": "Pronunciation",
-    "meaning": "Meaning"
+    "meaning": "Meaning",
+    "errors": {
+      "loadFailed": "Gebetszeiten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Internetverbindung.",
+      "fetchError": "Beim Laden der Gebetszeiten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+      "timeout": "Zeitüberschreitung bei der Verbindung."
+    }
   },
   "assistant": {
     "title": "Islamic Assistant",
@@ -1118,7 +1150,8 @@
         "transliteration": "Estağfirullahellezi la ilahe illa hu",
         "meaning": "I seek forgiveness from Allah, there is no deity but Him"
       }
-    }
+    },
+    "confirmReset": "Möchten Sie Ihren Fortschritt zurücksetzen?"
   },
   "qibla": {
     "title": "Qibla Compass",
@@ -2607,7 +2640,21 @@
       "thursday": "Thursday",
       "friday": "Friday",
       "saturday": "Saturday"
-    }
+    },
+    "months": [
+      "Januar",
+      "Februar",
+      "Marsch",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember"
+    ]
   },
   "prayerBook": {
     "categories": {
@@ -3338,7 +3385,8 @@
       "firstActionTitle": "Waehle den ersten Schritt fuer heute",
       "firstActionDescription": "Kein langer Plan; starte einen kurzen Rhythmus fuer Gebet, Koran oder Dua.",
       "startNow": "Ersten Schritt oeffnen",
-      "stepCounter": "Schritt {{current}} / {{total}}"
+      "stepCounter": "Schritt {{current}} / {{total}}",
+      "goalTitle": "Mit welchem ​​Rhythmus sollen wir heute beginnen?"
     },
     "funnel": {
       "title": "Growth-Funnel-Übersicht",
@@ -3548,7 +3596,14 @@
     "useTokenLabel": "Freeze-Recht verwenden",
     "tokensAvailable": "{{count}} verfügbar",
     "applyAndProtect": "Anwenden und Serie schützen",
-    "cancelAndReset": "Abbrechen (Serie wird zurückgesetzt)"
+    "cancelAndReset": "Abbrechen (Serie wird zurückgesetzt)",
+    "appRiskTitle": "Ihr App Streak ist gefährdet",
+    "appRiskBody": "Sie haben die App heute nicht geöffnet. Dies sind die letzten Stunden, um Ihre {{count}}-Tagessträhne zu schützen.",
+    "categoryRiskTitle": "Streak-Erinnerung",
+    "categoryRiskBody": "Haben Sie heute vergessen, Ihren {{category}} aufzuzeichnen?",
+    "categories": {
+      "prayer": "Gebete"
+    }
   },
   "streak24h": {
     "title": "24-Stunden-Wiederherstellung",
@@ -3588,7 +3643,69 @@
       "showResults": "Ergebnisse Anzeigen"
     },
     "questionLabel": "Frage {{number}}",
-    "explanation": "Erklärung"
+    "explanation": "Erklärung",
+    "questions": {
+      "1": {
+        "question": "Im folgenden Vers steht der Buchstabe „?“ kommt nach '?'. Welche Tajweed-Regel gilt?",
+        "options": [
+          "Izhar",
+          "Idgham mit Ghunnah",
+          "Ikhfa",
+          "Iqlab"
+        ],
+        "explanation": "Da einer der Buchstaben „Idgham mit Ghunnah“ nach „Sakin Nun“ kommt, gilt „Idgham mit Ghunnah“."
+      },
+      "2": {
+        "question": "Welche Regel gilt, wenn nach einem Madd-Brief keine Ursache für Madd folgt?",
+        "options": [
+          "Madd Muttasil",
+          "Natürlicher Madd",
+          "Madd Lazim",
+          "Ikhfa"
+        ],
+        "explanation": "Wenn auf einen Madd-Buchstaben kein Madd-Ursache folgt, ist die Grundverlängerung Natural Madd."
+      },
+      "3": {
+        "question": "Welche Buchstaben sind Qalqalah-Buchstaben?",
+        "options": [
+          "? ? ? ? ?",
+          "? ? ? ?",
+          "? ?",
+          "? ?? ? ? ? ?"
+        ],
+        "explanation": "Die Qalqalah-Buchstaben sind Qaf, Ta, Ba, Jim und Dal."
+      },
+      "4": {
+        "question": "Was passiert, wenn der Buchstabe „?“ kommt nach Sakin Nonne oder Tanwin?",
+        "options": [
+          "Ikhfa",
+          "Izhar",
+          "Iqlab",
+          "Qalqalah"
+        ],
+        "explanation": "Ba ist der Buchstabe von iqlab, daher ändert sich der Nonnenlaut in einen Mim-Laut."
+      },
+      "5": {
+        "question": "Wie viele Ikhfa-Buchstaben gibt es?",
+        "options": [
+          "6",
+          "15",
+          "4",
+          "2"
+        ],
+        "explanation": "Es gibt 15 Ikhfa-Buchstaben."
+      },
+      "6": {
+        "question": "Wann wird der Buchstabe „Ra“ leicht ausgesprochen?",
+        "options": [
+          "Wenn es Fatha hat",
+          "Wenn es Damma hat",
+          "Wenn es Kasra hat",
+          "Wenn es Shadda mit Fatha gibt"
+        ],
+        "explanation": "Der Buchstabe Ra wird leicht ausgesprochen, wenn er Kasra hat."
+      }
+    }
   },
   "tespihat": {
     "ui": {
@@ -3656,6 +3773,98 @@
         "excellent": "Großartig. Du weißt sehr viel.",
         "good": "Gut. Mit mehr Übung geht noch mehr.",
         "retry": "Eine erneute Wiederholung wird empfohlen."
+      },
+      "questions": {
+        "1": {
+          "question": "Wie heißt der Eröffnungs-Takbir des Gebets?",
+          "options": [
+            "Sana",
+            "Eröffnung des Takbir",
+            "Friede sei mit dir",
+            "Takbir von Tashriq"
+          ]
+        },
+        "2": {
+          "question": "Wie oft wird Tasbih normalerweise in Ruku rezitiert?",
+          "options": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ]
+        },
+        "3": {
+          "question": "Wie viele Rakats gibt es insgesamt im Fajr-Gebet?",
+          "options": [
+            "2",
+            "4",
+            "6",
+            "8"
+          ]
+        },
+        "4": {
+          "question": "Was ist die Regelung des Witr-Gebets?",
+          "options": [
+            "Obligatorisch",
+            "Wajib",
+            "Sunnah",
+            "Empfohlen"
+          ]
+        },
+        "5": {
+          "question": "Welche der folgenden Aussagen macht das Gebet nicht ungültig?",
+          "options": [
+            "Apropos",
+            "Lachen",
+            "Weinen aus Angst vor Allah",
+            "Essen"
+          ]
+        },
+        "6": {
+          "question": "Was ist die Regel für das Rezitieren von Al-Fatihah im Gebet?",
+          "options": [
+            "Obligatorisch",
+            "Wajib",
+            "Sunnah",
+            "Zulässig"
+          ]
+        },
+        "7": {
+          "question": "Welches ist der Tasbih des Sujud?",
+          "options": [
+            "Subhana Rabbiyal Azim",
+            "Subhana Rabbiyal A'la",
+            "Sami Allahu liman hamidah",
+            "Rabbana lakal hamd"
+          ]
+        },
+        "8": {
+          "question": "Wie viele Rakats enthält das obligatorische Isha-Gebet?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "9": {
+          "question": "Wie nennt man das Sitzen zwischen zwei Niederwerfungen?",
+          "options": [
+            "Qa'dah",
+            "Jalsah",
+            "Qawmah",
+            "Qiyam"
+          ]
+        },
+        "10": {
+          "question": "Wann wird At-Tahiyyat im Gebet rezitiert?",
+          "options": [
+            "Im ersten Rakat",
+            "In Ruku",
+            "In der letzten Sitzung",
+            "Im Sujud"
+          ]
+        }
       }
     }
   },
@@ -3695,7 +3904,13 @@
     "me": "Me",
     "prayers": "Prayers",
     "pray": "Pray",
-    "prayed": "Prayed"
+    "prayed": "Prayed",
+    "mock": {
+      "work": "Bitte machen Sie Dua für eine gute Arbeitsmöglichkeit.",
+      "health": "Würden Sie für die Heilung unseres Patienten ein Dua machen?",
+      "exam": "Ich bitte um Ihr Duas für den Erfolg meiner Prüfungen.",
+      "family": "Bitte machen Sie ein Dua für den Frieden in meiner Familie."
+    }
   },
   "dailyFiqh": {
     "title": "Daily Fiqh Knowledge",
@@ -3781,7 +3996,40 @@
   "gamification": {
     "badgesTitle": "Badge Collection",
     "streakTitle": "My Streaks",
-    "streakTip": "Try to keep your streak by performing your worship on time every day."
+    "streakTip": "Try to keep your streak by performing your worship on time every day.",
+    "beginnerTitle": "Anfänger",
+    "levels": {
+      "1": "Anfänger",
+      "2": "Den ersten Schritt machen",
+      "3": "Fleißig",
+      "4": "Bestimmt",
+      "5": "Stetig",
+      "6": "Anbau",
+      "7": "Konsistent",
+      "8": "Regulär",
+      "9": "Achtsam",
+      "10": "Bewusst",
+      "11": "Hingebungsvoll",
+      "12": "Geduldig",
+      "13": "Bescheiden",
+      "14": "Dankbar",
+      "15": "Treu",
+      "16": "Sucher nach Wissen",
+      "17": "Sucher der Weisheit",
+      "18": "Person der Einsicht",
+      "19": "Anspruchsvoll",
+      "20": "Klarsichtig",
+      "21": "Führung",
+      "22": "Wegfinder",
+      "23": "Lichtträger",
+      "24": "Inspirierend",
+      "25": "Freund der Ummah",
+      "26": "Reisender von Huzur",
+      "27": "Person des Herzens",
+      "28": "Botschafter von Huzur",
+      "29": "Spiritueller Pionier",
+      "30": "Meister von Huzur"
+    }
   },
   "streakFeature": {
     "title": "Streak Calendar",
@@ -3894,7 +4142,176 @@
     "title": "Günlük Rutinlerim"
   },
   "quiz": {
-    "title": "Günün Testi"
+    "title": "Günün Testi",
+    "perfect": "Perfekt!",
+    "congrats": "Glückwunsch!",
+    "goodTry": "Guter Versuch!",
+    "alreadyPlayed": "Sie haben das heutige Quiz bereits abgeschlossen. Kommen Sie morgen wieder für neue Fragen!",
+    "completed": "Sie haben das heutige Wissensquiz erfolgreich abgeschlossen.",
+    "correct": "Richtig",
+    "xpEarned": "XP verdient",
+    "info": "Info",
+    "questionProgress": "Frage {{current}}/{{total}}",
+    "nextQuestion": "Nächste Frage?",
+    "viewResults": "Ergebnisse anzeigen",
+    "categories": {
+      "Siyer": "Seerah",
+      "F?k?h": "Fiqh",
+      "Kuran-? Kerim": "Koran",
+      "Hadis": "Hadith"
+    },
+    "questions": {
+      "q1": {
+        "question": "In welchem ​​Jahr wurde der Prophet Muhammad (Friede sei mit ihm) geboren?",
+        "options": [
+          "570",
+          "571",
+          "610",
+          "622"
+        ],
+        "explanation": "Der Prophet Muhammad (Friede sei mit ihm) wurde 571 n. Chr. in Mekka geboren, etwa 50 Tage nach dem Elefantenereignis."
+      },
+      "q2": {
+        "question": "Welche ist die längste Sure im Koran?",
+        "options": [
+          "Yasin",
+          "Al-Mulk",
+          "Al-Baqara",
+          "Al-i Imran"
+        ],
+        "explanation": "Sure Al-Baqarah hat 286 Verse und ist die längste Sure im Koran. Es wurde in Medina offenbart."
+      },
+      "q3": {
+        "question": "Welche der folgenden Handlungen gehört nicht zu den Pflichthandlungen des Wudu?",
+        "options": [
+          "Das Gesicht waschen",
+          "Waschen der Arme",
+          "Mund ausspülen",
+          "Waschen der Füße"
+        ],
+        "explanation": "Beim Wudu gibt es vier obligatorische Handlungen: das Waschen des Gesichts, das Waschen der Arme, das Abwischen eines Viertels des Kopfes und das Waschen der Füße. Den Mund auszuspülen ist Sunnah."
+      },
+      "q4": {
+        "question": "Wer hat den Hadith „Handlungen werden nach Absichten beurteilt“ überliefert?",
+        "options": [
+          "Buchari",
+          "Tirmidhi",
+          "Abu Dawud",
+          "Ibn Majah"
+        ],
+        "explanation": "Dieser Hadith wurde von Umar (möge Allah mit ihm zufrieden sein) überliefert und ist der erste Hadith in Sahih al-Bukhari."
+      },
+      "q5": {
+        "question": "Wo wurde die erste Offenbarung herabgesandt?",
+        "options": [
+          "Höhle von Thawr",
+          "Höhle von Hira",
+          "Kaaba",
+          "Masjid an-Nabawi"
+        ],
+        "explanation": "Die erste Offenbarung wurde von Jibril (Friede sei mit ihm) in der Höhle von Hira im Jahr 610 n. Chr. überbracht. Die ersten fünf Verse der Sure Al-Alaq wurden offenbart."
+      },
+      "q6": {
+        "question": "Wie viele Juz enthält der Koran?",
+        "options": [
+          "20",
+          "30",
+          "40",
+          "114"
+        ],
+        "explanation": "Der Koran besteht aus 30 Juz. Jeder Juz umfasst etwa 20 Seiten und das Lesen eines Juz pro Tag im Ramadan ist eine gängige Praxis."
+      },
+      "q7": {
+        "question": "Wie heißt die Sure, die nach Al-Fatihah im Gebet rezitiert wird?",
+        "options": [
+          "Basmala",
+          "Zusätzliche Sure",
+          "Subhanaka",
+          "Tahiyyat"
+        ],
+        "explanation": "Die kurze Sure, die nach Al-Fatihah rezitiert wird, wird allgemein als zusätzliche Sure bezeichnet. In vielen Fiqh-Regeln ist es einer der erforderlichen Teile des Gebets."
+      },
+      "q8": {
+        "question": "Wie hieß die Milchmutter des Propheten Mohammed?",
+        "options": [
+          "Aminah",
+          "Khadija",
+          "Halima",
+          "Fatima"
+        ],
+        "explanation": "Der Überlieferung nach wurde der Prophet Muhammad (Friede sei mit ihm) von Halimah as-Sa'diyyah gepflegt und blieb mehrere Jahre bei ihr."
+      },
+      "q9": {
+        "question": "Welche Sure ist die einzige, die nicht mit der Basmala beginnt?",
+        "options": [
+          "Al-Fatihah",
+          "At-Tauba",
+          "Yasin",
+          "Al-Mulk"
+        ],
+        "explanation": "Sure At-Tawbah ist die einzige Sure, die nicht mit der Basmala beginnt. Es enthält eindringliche Warnungen an diejenigen, die sich den Muslimen widersetzten."
+      },
+      "q10": {
+        "question": "Wer hat gesagt: „Das Paradies liegt unter den Füßen der Mütter“?",
+        "options": [
+          "Abu Bakr",
+          "Umar",
+          "Prophet Muhammad (Friede sei mit ihm)",
+          "Ali"
+        ],
+        "explanation": "Diese Erzählung wird dem Propheten Muhammad (Friede sei mit ihm) zugeschrieben und betont den hohen Status und die Rechte von Müttern."
+      },
+      "q11": {
+        "question": "Für wen ist das Freitagsgebet Pflicht?",
+        "options": [
+          "Nur Männer",
+          "Nur Frauen",
+          "Alle",
+          "Nur ältere Menschen"
+        ],
+        "explanation": "Das Freitagsgebet ist für freie, gesunde, erwachsene, ortsansässige und gesunde Männer obligatorisch. Für Frauen, Reisende oder Kranke ist es nicht verpflichtend."
+      },
+      "q12": {
+        "question": "Wer ist die einzige Frau, die im Koran namentlich erwähnt wird?",
+        "options": [
+          "Khadija",
+          "Aisha",
+          "Maryam",
+          "Asiyah"
+        ],
+        "explanation": "Maryam ist die einzige Frau, die im Koran namentlich erwähnt wird. Ihr Name kommt oft vor und die Sure Maryam ist nach ihr benannt."
+      },
+      "q13": {
+        "question": "Was war die erste Qiblah der Muslime?",
+        "options": [
+          "Kaaba",
+          "Masjid al-Aqsa",
+          "Masjid Quba",
+          "Masjid an-Nabawi"
+        ],
+        "explanation": "Die erste Qiblah der Muslime war die Masjid al-Aqsa in Jerusalem. Später wurde die Qibla in Mekka in die Kaaba umgewandelt."
+      },
+      "q14": {
+        "question": "Wann wird Tayammum durchgeführt?",
+        "options": [
+          "Wenn kein Wasser verfügbar ist",
+          "Wenn die Zeit knapp ist",
+          "Während der Reise",
+          "Im Winter"
+        ],
+        "explanation": "Tayammum wird mit sauberer Erde oder Steinen durchgeführt, wenn kein Wasser verfügbar ist oder aus Krankheitsgründen oder aus ähnlichen Gründen nicht genutzt werden kann."
+      },
+      "q15": {
+        "question": "Wie geht es im Hadith weiter: „Macht die Dinge einfach, macht sie nicht schwierig…“?",
+        "options": [
+          "Erschrecken Sie nicht; verkünde frohe Botschaft",
+          "Lächeln; Bring die Leute nicht zum Weinen",
+          "Verkünde frohe Botschaft; stößt die Menschen nicht ab",
+          "Unterrichten; versteck dich nicht"
+        ],
+        "explanation": "Die volle Bedeutung lautet: „Machen Sie die Dinge einfach und machen Sie sie nicht schwierig; verkünden Sie frohe Botschaft und stoßen Sie die Menschen nicht ab.“ Es lehrt die Sanftmut, Menschen zum Glauben einzuladen."
+      }
+    }
   },
   "shareCard": {
     "title": "İstatistik Kartı",
@@ -3915,7 +4332,9 @@
     "description": "İslami görseller, özel tasarım dua kartları ve paylaşılabilir manevi içerikler.",
     "contentLabel": "İÇERİK",
     "favorites": "FAVORİLERİM",
-    "duaCardsDesc": "Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları."
+    "duaCardsDesc": "Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları.",
+    "shareCopied": "Teilen Sie den Text kopiert!",
+    "downloadHint": "Das Bild wird in einem neuen Tab geöffnet. Sie können mit der rechten Maustaste klicken und „Bild speichern unter“ wählen."
   },
   "stats": {
     "errors": {
@@ -3959,5 +4378,136 @@
       "name": "Hasbunallah",
       "meaning": "Allah bize yeter, O ne guzel vekildir"
     }
+  },
+  "homeFeed": {
+    "priorityCard": {
+      "eyebrow": "Der heutige 2-Minuten-Schritt",
+      "supportingStreak": "Ihr {{count}}-tägiger Streak ist noch aktiv. Der heutige 2-Minuten-Schritt hilft Ihnen, diesen Rhythmus beizubehalten.",
+      "supportingStart": "Ein klarer Schritt genügt, um zu beginnen. Der Startbildschirm hilft Ihnen zunächst dabei, den heutigen Rhythmus zu wahren."
+    },
+    "recovery": {
+      "eyebrow": "Tieferer Orientierungsmoment",
+      "title": "Sie können noch heute einen ruhigeren Support eröffnen",
+      "description": "Wählen Sie mit dem Huzur-Leitfaden einen Schritt für heute und bauen Sie Ihren Wochenrhythmus sanft wieder auf.",
+      "assistantBtn": "Öffnen Sie den Huzur-Führer",
+      "proBtn": "Siehe Pro-Support"
+    },
+    "aiRecommendation": {
+      "eyebrow": "Tägliche Rhythmusnotiz"
+    },
+    "personalization": {
+      "title": "Dieser Bildschirm ist jetzt für Sie bestellt",
+      "description": "Wenn Sie Ihren Schwerpunkt in den Einstellungen ändern, werden die Startseite, das Menü und die Schnellzugriffskarten entsprechend Ihrem neuen Rhythmus aktualisiert."
+    },
+    "family": {
+      "eyebrow": "Familienschwung",
+      "noFamilyTitle": "Machen Sie gemeinsam Fortschritte",
+      "noFamilyDesc": "Erstellen Sie eine Familiengruppe oder treten Sie mit einem Einladungscode bei, um gemeinsame Ziele und eine stabile Konsistenz zu erreichen.",
+      "noFamilyBtn": "Offener Familienbereich",
+      "progressLabel": "Erledigt",
+      "detailBtn": "Siehe Details",
+      "defaultGoal": "Machen Sie diese Woche gemeinsam einen kleinen, aber stetigen Schritt.",
+      "hasGoalDesc": "{{current}}/{{target}} Beiträge erfasst.",
+      "noGoalDesc": "Sie können ein Familienziel erstellen und die täglichen Beiträge zusammenführen."
+    },
+    "activation": {
+      "eyebrow": "Erster Schritt",
+      "time": "2 Minuten",
+      "promise": {
+        "prayer_rhythm": "Lass den heutigen Tag nicht leer vergehen.",
+        "quran_learning": "Bauen Sie eine kurze Verbindung zum Koran oder Dua auf.",
+        "family_consistency": "Machen Sie den heutigen einen Schritt als Familie sichtbar."
+      }
+    }
+  },
+  "churn": {
+    "offer": {
+      "helpDesc": "Möchten Sie für ein besseres Erlebnis mit unserem Support-Team sprechen? Ihre Zufriedenheit ist uns wichtig."
+    },
+    "survey": {
+      "title": "Warum gehst du?",
+      "desc": "Können Sie uns sagen, warum Sie uns verlassen, damit wir Ihr Erlebnis verbessern können?"
+    },
+    "confirm": {
+      "title": "Bist du sicher?",
+      "canceling": "Stornieren..."
+    }
+  },
+  "mood": {
+    "ask": "Wie fühlst du dich heute?"
+  },
+  "countries": {
+    "turkey": "Truthahn"
+  },
+  "dua": {
+    "categories": {
+      "health": "Gesundheit",
+      "exam": "Prüfung",
+      "work": "Arbeiten",
+      "family": "Familie",
+      "marriage": "Hochzeit",
+      "children": "Kinder",
+      "travel": "Reisen",
+      "forgiveness": "Vergebung",
+      "general": "Allgemein"
+    },
+    "suggestions": {
+      "marriage_0": "Mein Herr, gewähre mir einen gerechten Ehepartner",
+      "exam_1": "Gewähre mir Erfolg bei meiner Prüfung",
+      "health_2": "Schenke mir Heilung von meiner Krankheit",
+      "work_3": "Schenke mir Erfolg bei meiner Arbeit",
+      "family_4": "Beschütze und vergib meiner Familie"
+    },
+    "stats": {
+      "accepted": "AKZEPTIERT",
+      "total": "GESAMT",
+      "rate": "RATE"
+    },
+    "filters": {
+      "pending": "Ausstehend",
+      "accepted": "Akzeptiert"
+    },
+    "addNew": "Neues Dua hinzufügen",
+    "placeholder": "Schreibe dein Dua...",
+    "suggestionsTitle": "VORSCHLÄGE",
+    "listTitle": "Dua-Liste",
+    "empty": "Noch keine Duas",
+    "etiquette": {
+      "title": "Dua-Etikette",
+      "desc": "Wiederholen Sie Ihre Duas aufrichtig und regelmäßig und wenden Sie sich für jede gute Bitte an unseren Herrn."
+    }
+  },
+  "levelUp": {
+    "congrats": "GLÜCKWUNSCH!",
+    "subtitle": "Du hast ein neues Level erreicht!"
+  },
+  "prayerTracker": {
+    "infoTitle": "Was ist ein verpasstes Gebet?",
+    "infoDesc": "Versäumte Pflichtgebete werden als Qada-Gebete nachgeholt. Sie werden anstelle der versäumten Pflichtgebete verrichtet, wie etwa bei der Rückzahlung einer Schuld.",
+    "timeUnit": "MAL",
+    "rakatUnit": "RAKAT",
+    "rakatCount": "{{count}} Rakat"
+  },
+  "reminders": {
+    "morning": {
+      "title": "?? Guten Morgen!",
+      "body": "Haben Sie Fajr gebetet? Beginnen Sie den Tag mit Segen."
+    },
+    "evening": {
+      "title": "?? Abenderinnerung",
+      "body": "Wie viele Gebete haben Sie heute verrichtet? Halten Sie Ihren Tracker auf dem neuesten Stand."
+    }
+  },
+  "discovery": {
+    "typeLabels": {
+      "ayah": "Vers des Tages",
+      "hadith": "Hadith des Tages",
+      "esma": "Name des Tages",
+      "dua": "Dua des Tages",
+      "hikmet": "Weisheit des Tages",
+      "fact": "Wussten Sie?"
+    },
+    "cardFallbackTitle": "Öffnen Sie die heutige Entdeckung",
+    "cardFallbackSource": "Huzur"
   }
 }

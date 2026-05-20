@@ -26,34 +26,18 @@ function SettingsBasicsSection({
     <>
       <div className="settings-group">
         <div className="settings-group-title premium-text">{t('settings.language')}</div>
-        <div className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <div className="settings-card premium-glass hover-lift flex flex-col items-stretch">
+          <div className="flex gap-8 flex-wrap">
             {supportedLanguages.map((language) => {
               const isActive = currentLang === language.code;
 
               return (
                 <button
                   key={language.code}
+                  className={`settings-language-button ${isActive ? 'active' : ''}`}
                   onClick={() => onLanguageChange(language.code)}
-                  style={{
-                    flex: '1',
-                    minWidth: '80px',
-                    padding: '12px',
-                    borderRadius: '16px',
-                    border: isActive ? '2px solid var(--nav-accent)' : '1px solid var(--nav-border)',
-                    background: isActive ? 'rgba(245, 158, 11, 0.1)' : 'var(--nav-hover)',
-                    cursor: 'pointer',
-                    fontSize: '13px',
-                    fontWeight: isActive ? '800' : '600',
-                    color: 'var(--nav-text)',
-                    transition: 'all 0.2s',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '4px'
-                  }}
                 >
-                  <span style={{ fontSize: '16px', fontWeight: '900', letterSpacing: '0.08em' }}>
+                  <span className="settings-language-badge">
                     {getLanguageBadge(language.code)}
                   </span>
                   <span>{language.nativeName}</span>
@@ -75,26 +59,76 @@ function SettingsBasicsSection({
         />
       </div>
 
-      <div
-        style={{
-          marginBottom: '16px',
-          padding: '16px',
-          background: 'var(--card-bg)',
-          borderRadius: '14px',
-          border: '1px solid var(--glass-border)'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+      <div className="settings-basics-about-card">
+        <div className="settings-basics-about-header">
           <Info size={22} color="var(--primary-color)" />
-          <div style={{ fontWeight: '600', fontSize: '15px', color: 'var(--text-color)' }}>
+          <div className="settings-basics-about-title">
             {t('settings.about')}
           </div>
         </div>
-        <div style={{ fontSize: '14px', color: 'var(--text-color-muted)' }}>
+        <div className="settings-basics-about-body">
           <div>{t('app.name')} {t('settings.appName')} v{APP_VERSION}</div>
-          <div style={{ marginTop: '4px' }}>{t('settings.appDescription')}</div>
+          <div className="mt-4">{t('settings.appDescription')}</div>
         </div>
       </div>
+
+      <style>{`
+        .settings-language-button {
+          flex: 1;
+          min-width: 80px;
+          padding: 12px;
+          border-radius: 16px;
+          border: 1px solid var(--nav-border);
+          background: var(--nav-hover);
+          cursor: pointer;
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--nav-text);
+          transition: all 0.2s;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .settings-language-button.active {
+          border: 2px solid var(--nav-accent);
+          background: rgba(245, 158, 11, 0.1);
+          font-weight: 800;
+        }
+
+        .settings-language-badge {
+          font-size: 16px;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+        }
+
+        .settings-basics-about-card {
+          margin-bottom: 16px;
+          padding: 16px;
+          background: var(--card-bg);
+          border-radius: 14px;
+          border: 1px solid var(--glass-border);
+        }
+
+        .settings-basics-about-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 10px;
+        }
+
+        .settings-basics-about-title {
+          font-weight: 600;
+          font-size: 15px;
+          color: var(--text-color);
+        }
+
+        .settings-basics-about-body {
+          font-size: 14px;
+          color: var(--text-color-muted);
+        }
+      `}</style>
     </>
   );
 }

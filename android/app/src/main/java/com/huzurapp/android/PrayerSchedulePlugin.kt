@@ -1,5 +1,11 @@
 package com.huzurapp.android
 
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import com.getcapacitor.JSObject
 import com.getcapacitor.Plugin
@@ -13,6 +19,36 @@ import org.json.JSONObject
 class PrayerSchedulePlugin : Plugin() {
     companion object {
         private const val TAG = "PrayerSchedulePlugin"
+    }
+
+    @PluginMethod
+    fun getExactAlarmPermissionStatus(call: PluginCall) {
+        try {
+            call.resolve(buildExactAlarmPermissionStatus())
+        } catch (error: Exception) {
+            Log.e(TAG, "Failed to read exact alarm permission status", error)
+            call.reject("Failed to read exact alarm permission status: ${error.message}")
+        }
+    }
+
+    @PluginMethod
+    fun openExactAlarmSettings(call: PluginCall) {
+        try {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                call.resolve(buildExactAlarmPermissionStatus())
+                return
+            }
+
+            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                data = Uri.parse("package:${context.packageName}")
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+            call.resolve(buildExactAlarmPermissionStatus())
+        } catch (error: Exception) {
+            Log.e(TAG, "Failed to open exact alarm settings", error)
+            call.reject("Failed to open exact alarm settings: ${error.message}")
+        }
     }
 
     @PluginMethod
@@ -73,6 +109,20 @@ class PrayerSchedulePlugin : Plugin() {
             }
 
             PrayerDataSyncWorker.saveMonthlyData(context, year, month, payload.toString())
+        }
+    }
+
+    private fun buildExactAlarmPermissionStatus(): JSObject {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val requiresUserApproval = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+        val granted = !requiresUserApproval || alarmManager.canScheduleExactAlarms()
+
+        return JSObject().apply {
+            put("granted", granted)
+            put("canScheduleExactAlarms", granted)
+            put("requiresUserApproval", requiresUserApproval)
+            put("platform", "android")
+            put("sdkInt", Build.VERSION.SDK_INT)
         }
     }
 }

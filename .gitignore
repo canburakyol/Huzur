@@ -57,6 +57,8 @@ play_store_assets/
 .env.local
 .env.production
 .env.*.local
+functions/.env
+functions/.env.*
 google-services.json
 .secrets/
 

@@ -15,7 +15,7 @@
     "examples": "Examples",
     "understood": "Understood, Continue",
     "audioNotReady": "Audio file is not ready.",
-    "audioError": "An issue occurred while playing audio: {{issue}}",
+    "audioError": "An issue occurred while playing audio: {{error}}",
     "makhraj": "Articulation Points",
     "levels": {
       "beginner": "Beginner",
@@ -76,10 +76,10 @@
         "rule": "If Sakin Noon or Tanween is followed by an Ikhfa letter, the Noon sound is concealed with a nasal sound.",
         "examples": {
           "0": {
-            "explanation": "The Sakin Noon meets Za, so Ikhfa occurs."
+            "explanation": "The Calm Noon meets Za, so Ikhfa occurs."
           },
           "1": {
-            "explanation": "The Sakin Noon meets Shin, so Ikhfa occurs."
+            "explanation": "The Calm Noon meets Shin, so Ikhfa occurs."
           }
         }
       },
@@ -89,7 +89,7 @@
         "rule": "If Sakin Noon or Tanween is followed by a throat letter, the Noon sound is pronounced clearly.",
         "examples": {
           "0": {
-            "explanation": "The Sakin Noon meets Kha, so Izhar occurs."
+            "explanation": "The Calm Noon meets Kha, so Izhar occurs."
           },
           "1": {
             "explanation": "The Tanween meets Alif, so Izhar occurs."
@@ -112,13 +112,13 @@
       "kalkale": {
         "title": "Qalqalah",
         "desc": "Echoing and vibration",
-        "rule": "When the letters of Qalqalah are sakin, they are pronounced with an echoing vibration.",
+        "rule": "When the letters of Qalqalah are calm, they are pronounced with an echoing vibration.",
         "examples": {
           "0": {
-            "explanation": "Qaf is sakin, so Qalqalah occurs."
+            "explanation": "Qaf is calm, so Qalqalah occurs."
           },
           "1": {
-            "explanation": "Dal is sakin, so Qalqalah occurs."
+            "explanation": "Dal is calm, so Qalqalah occurs."
           }
         }
       },
@@ -146,36 +146,36 @@
     "faq": {
       "items": {
         "tenvin": {
-          "question": "Tenvin nedir?",
-          "answer": "Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Uc cesidi vardir:\n• Fethatan (ً): Ustun tenvin\n• Kesretan (ٍ): Esre tenvin\n• Dammetan (ٌ): Otre tenvin\nTenvin, kelimenin sonundaki nunun yazilmadan okunmasidir."
+          "question": "What is Tenvin?",
+          "answer": "Tenvin is the sound effect of the letter nun at the end of the word. There are three types:\n• Fethatan (ً): Superior tanvin\n• Kesretan (ٍ): Esre tanvin\n• Dammetan (ٌ): Otre tenvin\nTenvin is the reading of the nun at the end of the word without writing it."
         },
         "gunne": {
-          "question": "Gunneli okuyus nasil olur?",
-          "answer": "Gunne, nun ve mim harflerinin genizden okunmasidir. Iki hareke miktari tutulur.\n• Idgam (mealgunne): Nun sakineden sonra ي، ن، م، و gelirse\n• Ihfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• Iklab: Nun sakineden sonra ب gelirse, mime donusur ve gunneli okunur."
+          "question": "How to read in a sunny way?",
+          "answer": "It is the nasal reading of the letters gunne, nun and mim. Two movement amounts are kept.\n• Idgam (mealgunne): If ي، ن، م، و comes after Nun calmine\n• Ihfa: If there are 15 letters after Nun calmine (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• Iklab: If ب comes after Nun Sakine, it turns into mime and is read as gunneli."
         },
         "kalkale": {
-          "question": "Kalkale harfleri hangileri?",
-          "answer": "Kalkale harfleri 5 tanedir ve \"قطب جد\" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) oldugunda, cikis noktasinda bir sicrama veya titresim yapilir."
+          "question": "Which are the letters Kalkale?",
+          "answer": "There are 5 letters of Kalkale and they are memorized with the word \"قطب جد\":\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Branch)\nWhen these letters are calm (inflected), a bounce or vibration is made at the starting point."
         },
         "med": {
-          "question": "Med harfleri nelerdir?",
-          "answer": "Uzatma (Med) harfleri uctur: Elif (ا), Vav (و) ve Ya (ي). Bu harfler kendinden onceki harfi bir elif miktari (yaklasik 1-1.5 saniye) uzatir."
+          "question": "What are the letters Med?",
+          "answer": "The extension (Med) letters are three: Elif (ا), Vav (و) and Ya (ي). These letters lengthen the letter before them by one elif amount (approximately 1-1.5 seconds)."
         },
         "makhraj": {
-          "question": "Mahrec nedir?",
-          "answer": "Mahrec, harflerin agizdan cikis yeridir. Kuran okurken harflerin dogru mahreclerinden cikarilmasi anlamin bozulmamasi icin cok onemlidir."
+          "question": "What is Mahraj?",
+          "answer": "Mahrec is the place where letters come out of the mouth. While reading the Quran, it is very important to extract the letters from their correct origins so that the meaning is not distorted."
         },
         "ihfa": {
-          "question": "Ihfa nasil yapilir?",
-          "answer": "Ihfa, sozlukte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiginde, nun sesini genizden getirerek hafifce gizleyerek okumaktir."
+          "question": "How is Ihfa done?",
+          "answer": "Ihfa means to hide in the dictionary. When the letters of ihfa come after the calm nun or tanvin, it means reciting the nun sound by nasally and slightly hiding it."
         },
         "sekte": {
-          "question": "Sekte nedir?",
-          "answer": "Sekte, sesi bir an icin kesip nefes almadan beklemektir. Kuran-i Kerim'de 4 yerde sekte bulunur (Kehf, Yasin, Kiyame ve Mutaffifin surelerinde)."
+          "question": "What is secta?",
+          "answer": "Sekte means stopping the sound for a moment and waiting without breathing. There are interruptions in 4 places in the Holy Quran (in the Surahs al-Kahf, Yasin, Kiyame and Mutaffifin)."
         },
         "izhar": {
-          "question": "Izhar nedir?",
-          "answer": "Izhar, acikca okumaktir. Sakin nun veya tenvinden sonra bogaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hic tutulmadan ve gizlenmeden oldugu gibi okunur."
+          "question": "What is Izhar?",
+          "answer": "Izhar means reading clearly. If the throat letters (ء ه ح خ ع غ) come after the tranquil nun or tenvin, the sound of the nun is read as it is, without being held or hidden."
         }
       }
     }

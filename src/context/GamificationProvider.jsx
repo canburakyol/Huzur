@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../services/firebase';
+import { getDb } from '../services/firebase';
 import { getCurrentUserId } from '../services/authService';
 import { LEVELS, BADGES } from '../data/gamificationData';
 import { getRandomDailyQuests } from '../data/questsData';
@@ -83,31 +83,51 @@ export const GamificationProvider = ({ children }) => {
     const userId = getCurrentUserId();
     if (!userId) return;
 
-    const userRef = doc(db, 'users', userId);
-    const unsubscribe = onSnapshot(
-      userRef,
-      (snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.data();
-          const fsPoints = data.points ?? 0;
-          const fsBadges = (data.earnedBadges ?? [])
-            .map((b) => (typeof b === 'string' ? b : b.badgeId ?? b.id ?? null))
-            .filter(Boolean);
+    let unsubscribe = null;
+    let isCancelled = false;
 
-          setPoints(fsPoints);
-          setBadges(fsBadges);
-          writeCache({ points: fsPoints, earnedBadges: fsBadges });
-        }
-      },
-      (error) => {
-        logger.error('[GamificationProvider] Firestore snapshot error:', error);
+    const subscribe = async () => {
+      try {
+        const database = await getDb();
+        if (isCancelled) return;
+
+        const userRef = doc(database, 'users', userId);
+        unsubscribe = onSnapshot(
+          userRef,
+          (snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.data();
+              const fsPoints = data.points ?? 0;
+              const fsBadges = (data.earnedBadges ?? [])
+                .map((b) => (typeof b === 'string' ? b : b.badgeId ?? b.id ?? null))
+                .filter(Boolean);
+
+              setPoints(fsPoints);
+              setBadges(fsBadges);
+              writeCache({ points: fsPoints, earnedBadges: fsBadges });
+            }
+          },
+          (error) => {
+            logger.error('[GamificationProvider] Firestore snapshot error:', error);
+            crashlyticsReporter.logExceptionWithContext(error, {
+              surface: 'gamification_onSnapshot',
+            });
+          }
+        );
+      } catch (error) {
+        logger.error('[GamificationProvider] Firestore subscription setup error:', error);
         crashlyticsReporter.logExceptionWithContext(error, {
-          surface: 'gamification_onSnapshot',
+          surface: 'gamification_onSnapshot_setup',
         });
       }
-    );
+    };
 
-    return () => unsubscribe();
+    void subscribe();
+
+    return () => {
+      isCancelled = true;
+      unsubscribe?.();
+    };
   }, [setPoints, setBadges]);
 
   // Level up detection

@@ -104,6 +104,27 @@ async function readCombinedProStatus(dbRef, adminSdk, userId) {
   };
 }
 
+function resolveRevenueCatProEntitlement(subscriber = {}, nowMillis = Date.now()) {
+  const entitlement = subscriber?.entitlements?.pro_access;
+  const expiresAtMs = Number(entitlement?.expires_date_ms);
+
+  if (!entitlement || !Number.isFinite(expiresAtMs) || expiresAtMs <= nowMillis) {
+    return {
+      active: false,
+      expiresAtMs: null,
+      productId: null,
+      store: null,
+    };
+  }
+
+  return {
+    active: true,
+    expiresAtMs,
+    productId: entitlement.product_identifier || entitlement.product_id || null,
+    store: entitlement.store || null,
+  };
+}
+
 /**
  * Check Pro Status (Callable Function)
  * Client-side Pro dogrulama icin
@@ -237,14 +258,17 @@ exports.syncProStatus = functionsV1
       );
 
       const subscriber = response.data.subscriber;
-      const proEntitlement = subscriber.entitlements?.pro_access;
+      const proEntitlement = resolveRevenueCatProEntitlement(subscriber);
 
-      if (proEntitlement) {
+      if (proEntitlement.active) {
         // Pro aktif
         const subscriptionData = {
           isPro: true,
           entitlementId: 'pro_access',
-          expiresAt: admin.firestore.Timestamp.fromMillis(proEntitlement.expires_date_ms),
+          source: 'revenuecat',
+          productId: proEntitlement.productId,
+          store: proEntitlement.store || null,
+          expiresAt: admin.firestore.Timestamp.fromMillis(proEntitlement.expiresAtMs),
           lastSynced: admin.firestore.FieldValue.serverTimestamp(),
         };
 
@@ -253,7 +277,10 @@ exports.syncProStatus = functionsV1
         return {
           success: true,
           isPro: true,
-          expiresAt: new Date(proEntitlement.expires_date_ms).toISOString(),
+          expiresAt: new Date(proEntitlement.expiresAtMs).toISOString(),
+          entitlementId: 'pro_access',
+          source: 'revenuecat',
+          verificationState: 'verified',
         };
       } else {
         // Pro degil
@@ -352,5 +379,6 @@ exports.syncFcmToken = onCall(
 exports.__test = {
   createSyncFcmTokenHandler,
   readCombinedProStatus,
+  resolveRevenueCatProEntitlement,
   resolveActiveStatus,
 };

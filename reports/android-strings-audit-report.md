@@ -1,10 +1,10 @@
 # Android Strings Audit Report
 
-Generated: 2026-04-24T22:48:50.228Z
+Generated: 2026-05-19T09:21:07.750Z
 
 ## Scope
 - Reference: `android/app/src/main/res/values/strings.xml`
-- Compared locales: `tr`, `ar`, `de`, `es`, `fr`, `id` (+ `en` reference mapping)
+- Compared locales: `tr`, `id`, `de` (+ `en` reference mapping)
 
 ## Reference Keys
 - Total keys: 9
@@ -14,11 +14,8 @@ Generated: 2026-04-24T22:48:50.228Z
 |---|---|---|---|---|---|
 | en | values | yes | — | — | — |
 | tr | values-tr | yes | — | — | — |
-| ar | values-ar | yes | — | — | — |
-| de | values-de | yes | — | — | — |
-| es | values-es | yes | — | — | — |
-| fr | values-fr | yes | — | — | — |
 | id | values-id | yes | — | — | — |
+| de | values-de | yes | — | — | — |
 
 ## Result
 - Android strings consistency: PASS

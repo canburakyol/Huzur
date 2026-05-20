@@ -1,14 +1,14 @@
 # Localization Audit Report
 
-Generated: 2026-04-24T22:48:49.932Z
+Generated: 2026-05-19T09:21:07.465Z
 
 ## Scope
 - Namespace integrity: `src/config/i18nConfig.js` vs `public/locales/*/*.json`
 - Key diff targets: `translation.json`, `tajweed.json` (reference locale: `tr`)
 
 ## Language Folder Check
-- Supported language codes: `tr`, `en`, `ar`, `id`, `es`, `fr`, `de`
-- Locale folders: `ar`, `de`, `en`, `es`, `fr`, `id`, `tr`
+- Supported language codes: `tr`, `en`, `id`, `de`
+- Locale folders: `de`, `en`, `id`, `tr`
 - Missing language folders: —
 - Extra language folders: —
 
@@ -19,29 +19,20 @@ Generated: 2026-04-24T22:48:49.932Z
 
 | Locale | Missing configured namespaces | Extra namespaces on disk |
 |---|---|---|
-| ar | — | — |
 | de | — | — |
 | en | — | — |
-| es | — | — |
-| fr | — | — |
 | id | — | — |
 | tr | — | — |
 
 ## Key Diff Summary
 | Namespace | Locale | Missing Keys | Extra Keys | Missing Sample | Extra Sample |
 |---|---|---:|---:|---|---|
-| translation | ar | 0 | 0 | — | — |
 | translation | de | 0 | 0 | — | — |
 | translation | en | 0 | 0 | — | — |
-| translation | es | 0 | 0 | — | — |
-| translation | fr | 0 | 0 | — | — |
 | translation | id | 0 | 0 | — | — |
 | translation | tr | 0 | 0 | — | — |
-| tajweed | ar | 0 | 0 | — | — |
 | tajweed | de | 0 | 0 | — | — |
 | tajweed | en | 0 | 0 | — | — |
-| tajweed | es | 0 | 0 | — | — |
-| tajweed | fr | 0 | 0 | — | — |
 | tajweed | id | 0 | 0 | — | — |
 | tajweed | tr | 0 | 0 | — | — |
 

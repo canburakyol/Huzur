@@ -52,7 +52,7 @@
       "src/services/fcmService.js",
       "src/services/notificationPlatformService.js",
       "src/services/reminderService.js",
-      "src/services/smartNotificationService.js",
+      "src/services/smartNotificationService.ts",
       "android"
     ],
     "release": [

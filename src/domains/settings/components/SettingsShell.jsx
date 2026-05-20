@@ -1,13 +1,12 @@
+import React, { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import CancelFlowModal from '../../../components/CancelFlowModal';
-import LicensesCredits from '../../../components/LicensesCredits';
-import PrivacyPolicy from '../../../components/PrivacyPolicy';
-import TermsOfService from '../../../components/TermsOfService';
-import { useAiHealthPanel } from '../hooks/useAiHealthPanel';
+import CancelFlowModal from '../../onboarding/components/CancelFlowModal';
+import LicensesCredits from '../../system/components/LicensesCredits';
+import PrivacyPolicy from '../../system/components/PrivacyPolicy';
+import TermsOfService from '../../system/components/TermsOfService';
 import { useSettingsState } from '../hooks/useSettingsState';
 import SettingsAccessSection from './SettingsAccessSection';
-import SettingsAiHealthPanel from './SettingsAiHealthPanel';
 import SettingsBasicsSection from './SettingsBasicsSection';
 import SettingsHeader from './SettingsHeader';
 import SettingsHistoryScreen from './SettingsHistoryScreen';
@@ -15,10 +14,13 @@ import SettingsLegalSection from './SettingsLegalSection';
 import SettingsMiniLeagueSection from './SettingsMiniLeagueSection';
 import SettingsNotificationSection from './SettingsNotificationSection';
 
+const SettingsAiHealthPanel = import.meta.env.DEV
+  ? React.lazy(() => import('./SettingsAiHealthPanel'))
+  : () => null;
+
 function SettingsShell({ onClose }) {
   const { t, i18n } = useTranslation();
   const settingsState = useSettingsState({ i18n, onClose });
-  const aiHealthPanel = useAiHealthPanel();
 
   if (settingsState.activeOverlay === 'cancelFlow') {
     return (
@@ -86,21 +88,11 @@ function SettingsShell({ onClose }) {
         userIsPro={settingsState.userIsPro}
       />
 
-      <SettingsAiHealthPanel
-        aiGlobalReleaseStatus={aiHealthPanel.aiGlobalReleaseStatus}
-        aiHealthSummary={aiHealthPanel.aiHealthSummary}
-        aiIncidentSummary={aiHealthPanel.aiIncidentSummary}
-        aiOpsChecklist={aiHealthPanel.aiOpsChecklist}
-        aiReleaseBrief={aiHealthPanel.aiReleaseBrief}
-        globalReleaseTheme={aiHealthPanel.globalReleaseTheme}
-        overallHealthTheme={aiHealthPanel.overallHealthTheme}
-        releaseBriefTheme={aiHealthPanel.releaseBriefTheme}
-        releaseReadiness={aiHealthPanel.releaseReadiness}
-        releaseReadinessTheme={aiHealthPanel.releaseReadinessTheme}
-        rolloutGate={aiHealthPanel.rolloutGate}
-        rolloutGateTheme={aiHealthPanel.rolloutGateTheme}
-        surfacePalette={aiHealthPanel.surfacePalette}
-      />
+      {import.meta.env.DEV && (
+        <Suspense fallback={null}>
+          <SettingsAiHealthPanel />
+        </Suspense>
+      )}
 
       <SettingsLegalSection
         onShowLicenses={() => settingsState.openOverlay('licenses')}

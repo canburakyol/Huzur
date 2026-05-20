@@ -1,6 +1,6 @@
 import { Bell, Clock, History } from 'lucide-react';
 
-import NotificationSettings from '../../../components/NotificationSettings';
+import NotificationSettings from '../../system/components/NotificationSettings';
 import SettingsActionRow from './SettingsActionRow';
 import SettingsToggle from './SettingsToggle';
 

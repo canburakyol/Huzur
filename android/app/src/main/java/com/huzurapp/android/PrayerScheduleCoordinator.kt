@@ -3,10 +3,16 @@ package com.huzurapp.android
 import android.content.Context
 import android.util.Log
 import org.json.JSONObject
+import java.security.MessageDigest
+import java.util.concurrent.TimeUnit
 
 object PrayerScheduleCoordinator {
     private const val TAG = "PrayerScheduleCoordinator"
+    private const val PREFS_NAME = "PrayerScheduleCoordinator"
+    private const val KEY_LAST_SYNC_SIGNATURE = "last_sync_signature"
+    private const val KEY_LAST_SYNC_AT = "last_sync_at"
     private const val SCHEDULE_WINDOW_DAYS = 2
+    private val SYNC_DEBOUNCE_MS = TimeUnit.MINUTES.toMillis(15)
 
     private val prayerNamesTr = mapOf(
         "Fajr" to "İmsak",
@@ -28,6 +34,19 @@ object PrayerScheduleCoordinator {
         source: String
     ): Boolean {
         return try {
+            val signature = buildScheduleSignature(
+                timingsJson = timingsJson,
+                latitude = latitude,
+                longitude = longitude,
+                locationName = locationName,
+                adhanSound = adhanSound
+            )
+
+            if (shouldSkipDuplicateSync(context, signature)) {
+                logSchedule("sync_skipped_duplicate:$source")
+                return true
+            }
+
             PrayerScheduleStore.saveScheduleContext(
                 context = context,
                 timingsJson = timingsJson,
@@ -42,7 +61,8 @@ object PrayerScheduleCoordinator {
             }
 
             PrayerDataSyncWorker.enqueue(context)
-            PrayerDataSyncWorker.enqueueImmediate(context)
+            PrayerDataSyncWorker.enqueueImmediateIfStale(context)
+            markSyncCompleted(context, signature)
             rescheduleFromStore(context, source)
         } catch (error: Exception) {
             logSchedule("sync_failed:$source:${error.message}")
@@ -113,5 +133,41 @@ object PrayerScheduleCoordinator {
 
     private fun logSchedule(message: String) {
         Log.d(TAG, "[PrayerSchedule] $message")
+    }
+
+    private fun shouldSkipDuplicateSync(context: Context, signature: String): Boolean {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val lastSignature = prefs.getString(KEY_LAST_SYNC_SIGNATURE, null)
+        val lastSyncAt = prefs.getLong(KEY_LAST_SYNC_AT, 0L)
+        val ageMs = System.currentTimeMillis() - lastSyncAt
+
+        return lastSignature == signature && ageMs in 0 until SYNC_DEBOUNCE_MS
+    }
+
+    private fun markSyncCompleted(context: Context, signature: String) {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .putString(KEY_LAST_SYNC_SIGNATURE, signature)
+            .putLong(KEY_LAST_SYNC_AT, System.currentTimeMillis())
+            .apply()
+    }
+
+    private fun buildScheduleSignature(
+        timingsJson: String,
+        latitude: Double?,
+        longitude: Double?,
+        locationName: String?,
+        adhanSound: String?
+    ): String {
+        val raw = listOf(
+            timingsJson,
+            latitude?.let { String.format("%.4f", it) } ?: "",
+            longitude?.let { String.format("%.4f", it) } ?: "",
+            locationName.orEmpty(),
+            adhanSound.orEmpty()
+        ).joinToString("|")
+
+        val digest = MessageDigest.getInstance("SHA-256").digest(raw.toByteArray(Charsets.UTF_8))
+        return digest.joinToString("") { "%02x".format(it) }
     }
 }

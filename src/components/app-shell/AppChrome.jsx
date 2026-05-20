@@ -4,8 +4,8 @@ import AppOverlays from './AppOverlays';
 
 const BottomNav = lazy(() => import('../BottomNav'));
 const HamburgerMenu = lazy(() => import('../HamburgerMenu'));
-const WelcomeBackBonus = lazy(() => import('../WelcomeBackBonus'));
-const WeeklyReportModal = lazy(() => import('../gamification/WeeklyReportModal'));
+const WelcomeBackBonus = lazy(() => import('../../domains/system/components/WelcomeBackBonus'));
+const WeeklyReportModal = lazy(() => import('../../domains/gamification/components/WeeklyReportModal'));
 const AppTabRouter = lazy(() => import('./AppTabRouter'));
 
 function AppChrome({ controller }) {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import StreakCalendar from '../../components/StreakCalendar';
+import StreakCalendar from '../../domains/gamification/components/StreakCalendar';
 import { getStreakData } from '../../services/streakService';
 import { ChevronLeft } from 'lucide-react';
-import WeeklyGoalSelector from '../../components/WeeklyGoalSelector';
+import WeeklyGoalSelector from '../../domains/gamification/components/WeeklyGoalSelector';
 
 const StreakFeature = ({ onClose }) => {
   const { t } = useTranslation();

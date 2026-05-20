@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { getStreakData, recordActivity, useFreezeToken, getStreakDisplay, checkAndUpdateStreak, getWeeklyGoalPreference, setWeeklyGoalPreference } from './streakService';
+import { getStreakData, recordActivity, getStreakDisplay, checkAndUpdateStreak, getWeeklyGoalPreference } from './streakService';
 
 describe('streakService', () => {
   beforeEach(() => {

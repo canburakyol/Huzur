@@ -2,10 +2,10 @@ import { Suspense, lazy } from 'react';
 
 const SplashScreen = lazy(() => import('../SplashScreen'));
 const GrowthOnboarding = lazy(() => import('../GrowthOnboarding'));
-const Streak24hRecoveryModal = lazy(() => import('../Streak24hRecoveryModal'));
-const InviteModal = lazy(() => import('../InviteModal'));
-const MoodSelector = lazy(() => import('../MoodSelector'));
-const StreakProtectionModal = lazy(() => import('../StreakProtectionModal'));
+const Streak24hRecoveryModal = lazy(() => import('../../domains/gamification/components/Streak24hRecoveryModal'));
+const InviteModal = lazy(() => import('../../domains/referral/components/InviteModal'));
+const MoodSelector = lazy(() => import('../../domains/lifestyle/components/MoodSelector'));
+const StreakProtectionModal = lazy(() => import('../../domains/gamification/components/StreakProtectionModal'));
 const LevelUpConfetti = lazy(() => import('../LevelUpConfetti'));
 
 function AppOverlays({

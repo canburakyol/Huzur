@@ -2,7 +2,7 @@
   "ai": {
     "summary": "Assistant ve Spiritual Coach deneyimleri. Genelde metin yaniti, tone, prompt, local AI guardrail ve FAQ akislari buradan etkilenir.",
     "entrypoints": [
-      "src/features/ai/index.js",
+      "src/features/ai/index.ts",
       "src/components/Assistant.jsx",
       "src/components/SpiritualCoach.jsx"
     ],
@@ -20,8 +20,8 @@
   "family": {
     "summary": "Aile paneli ve aile icindeki ilerleme/gamification baglari. Davet, uye kartlari ve aile katkisi davranislari bu alanda yogunlasir.",
     "entrypoints": [
-      "src/features/family/index.js",
-      "src/components/family/FamilyDashboard.jsx"
+      "src/features/family/index.ts",
+      "src/domains/family/components/FamilyDashboard.jsx"
     ],
     "commonFiles": [
       "src/services/familyService.js",
@@ -36,18 +36,18 @@
   "social": {
     "summary": "Grup Hatim ve Dua kardesligi ekranlari. Listeleme, detay, olusturma modal ve sosyal paylasim akislarini kapsar.",
     "entrypoints": [
-      "src/features/social/index.js",
-      "src/components/social/SocialDashboard.jsx"
+      "src/features/social/index.ts",
+      "src/domains/social/components/SocialDashboard.jsx"
     ],
     "commonFiles": [
-      "src/components/social/DuaList.jsx",
-      "src/components/social/HatimDetail.jsx",
+      "src/domains/social/components/DuaList.jsx",
+      "src/domains/social/components/HatimDetail.jsx",
       "src/services/hatimService.js",
       "src/services/duaService.js",
       "src/services/weeklySocialService.js"
     ],
     "sharedRisks": [
-      "src/components/InviteModal.jsx",
+      "src/domains/referral/components/InviteModal.jsx",
       "src/services/referralService.js"
     ],
     "relatedScopes": ["family", "ibadet", "onboarding"]
@@ -55,9 +55,9 @@
   "ibadet": {
     "summary": "Gunluk ibadet araclari. Dua tracker, hatim coach, zikirmatik, missed prayers ve benzeri bireysel ibadet yuzeyleri burada.",
     "entrypoints": [
-      "src/features/ibadet/index.js",
-      "src/components/DuaTracker.jsx",
-      "src/components/HatimCoach.jsx"
+      "src/features/ibadet/index.ts",
+      "src/domains/ibadet/components/DuaTracker.jsx",
+      "src/domains/tools/components/HatimCoach.jsx"
     ],
     "commonFiles": [
       "src/services/prayerService.js",
@@ -76,7 +76,7 @@
     "entrypoints": [
       "src/hooks/app-shell/useGrowthOnboardingFlow.js",
       "src/components/GrowthOnboarding.jsx",
-      "src/components/InviteModal.jsx"
+      "src/domains/referral/components/InviteModal.jsx"
     ],
     "commonFiles": [
       "src/services/onboardingConfigService.js",
@@ -95,7 +95,7 @@
   "monetization": {
     "summary": "Premium, RevenueCat, AdMob ve upgrade yuzeyleri. Restore, entitlement, rewarded ad ve premium moment davranislari burada toplanir.",
     "entrypoints": [
-      "src/components/ProUpgrade.jsx",
+      "src/domains/onboarding/components/ProUpgrade.jsx",
       "src/components/PremiumHomeHero.jsx",
       "src/services/revenueCatService.js"
     ],
@@ -115,7 +115,7 @@
   "notifications": {
     "summary": "Push, local reminder ve notification platform entegrasyonlari. Native taraf ve izin akislari birlikte dusunulmeli.",
     "entrypoints": [
-      "src/services/smartNotificationService.js",
+      "src/services/smartNotificationService.ts",
       "src/services/fcmService.js",
       "src/services/reminderService.js"
     ],
@@ -160,8 +160,8 @@
     "commonFiles": [
       "src/components/PremiumHomeHero.jsx",
       "src/components/FeatureGrid.jsx",
-      "src/components/DailyQuests.jsx",
-      "src/components/DailyDiscovery.jsx",
+      "src/domains/ibadet/components/DailyQuests.jsx",
+      "src/domains/content/components/DailyDiscovery.jsx",
       "src/components/ReferralTriggerCard.jsx",
       "src/services/domains/home/index.js"
     ],
