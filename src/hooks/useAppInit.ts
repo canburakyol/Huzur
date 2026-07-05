@@ -132,7 +132,7 @@ const getVakitTheme = (timings: PrayerTimings | undefined): Theme => {
   return VAKIT_THEMES.NIGHT;
 };
 
-export const useAppInit = (timings?: PrayerTimings | null): UseAppInitResult => {
+export const useAppInit = (timings?: PrayerTimings | null, activeTab = "home"): UseAppInitResult => {
   const [{ streakData, newBadge: initialBadge }] = useState(() => {
     const result = checkAndUpdateStreak();
     return {
@@ -303,6 +303,20 @@ export const useAppInit = (timings?: PrayerTimings | null): UseAppInitResult => 
       };
     }
 
+    if (activeTab === "quran") {
+      void import("../services/admobService")
+        .then(({ adMobService }) => adMobService.hideBanner())
+        .catch((error) => {
+          if (!isCancelled) {
+            logger.warn("[useAppInit] Quran banner cleanup failed:", error);
+          }
+        });
+
+      return () => {
+        isCancelled = true;
+      };
+    }
+
     const cancelAdMobInitialization = runPrivacyGatedInitialization({
       kind: "ads",
       label: "AdMob",
@@ -347,7 +361,7 @@ export const useAppInit = (timings?: PrayerTimings | null): UseAppInitResult => 
       cancelAdMobInitialization();
       window.removeEventListener("huzur:privacy-settings-updated", handlePrivacyUpdate);
     };
-  }, [isProUserLocal]);
+  }, [activeTab, isProUserLocal]);
 
   const clearBadge = () => setNewBadge(null);
 

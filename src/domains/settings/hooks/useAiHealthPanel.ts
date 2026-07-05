@@ -15,50 +15,50 @@ const HEALTH_PALETTE: Record<string, { bg: string; border: string; color: string
   healthy: {
     bg: 'rgba(16, 185, 129, 0.1)',
     border: 'rgba(16, 185, 129, 0.18)',
-    color: '#10b981',
+    color: 'var(--secondary)',
     label: 'Saglam'
   },
   watch: {
     bg: 'rgba(212, 175, 55, 0.12)',
     border: 'rgba(212, 175, 55, 0.22)',
-    color: '#d4af37',
+    color: 'var(--tertiary)',
     label: 'Izle'
   },
   action: {
     bg: 'rgba(249, 115, 22, 0.12)',
     border: 'rgba(249, 115, 22, 0.22)',
-    color: '#f97316',
+    color: 'var(--error)',
     label: 'Dikkat'
   }
 };
 
 const ROLLOUT_THEME: Record<string, { bg: string; color: string; label: string }> = {
-  go: { bg: 'rgba(16, 185, 129, 0.1)', color: '#10b981', label: 'Devam et' },
-  cautious: { bg: 'rgba(212, 175, 55, 0.12)', color: '#d4af37', label: 'Izleyerek devam et' },
-  hold: { bg: 'rgba(249, 115, 22, 0.12)', color: '#f97316', label: 'Yavaslat' }
+  go: { bg: 'color-mix(in srgb, var(--secondary) 10%, transparent)', color: 'var(--secondary)', label: 'Devam et' },
+  cautious: { bg: 'color-mix(in srgb, var(--tertiary) 12%, transparent)', color: 'var(--tertiary)', label: 'Izleyerek devam et' },
+  hold: { bg: 'color-mix(in srgb, var(--error) 12%, transparent)', color: 'var(--error)', label: 'Yavaslat' }
 };
 
 const RELEASE_READINESS_THEME: Record<string, { bg: string; color: string; label: string }> = {
-  ready: { bg: 'rgba(16, 185, 129, 0.1)', color: '#10b981', label: 'Hazir' },
-  monitor: { bg: 'rgba(212, 175, 55, 0.12)', color: '#d4af37', label: 'Izlenmeli' },
-  blocked: { bg: 'rgba(249, 115, 22, 0.12)', color: '#f97316', label: 'Beklet' }
+  ready: { bg: 'color-mix(in srgb, var(--secondary) 10%, transparent)', color: 'var(--secondary)', label: 'Hazir' },
+  monitor: { bg: 'color-mix(in srgb, var(--tertiary) 12%, transparent)', color: 'var(--tertiary)', label: 'Izlenmeli' },
+  blocked: { bg: 'color-mix(in srgb, var(--error) 12%, transparent)', color: 'var(--error)', label: 'Beklet' }
 };
 
 const RELEASE_BRIEF_THEME: Record<string, { bg: string; border: string; color: string }> = {
   healthy: {
     bg: 'rgba(16, 185, 129, 0.1)',
     border: 'rgba(16, 185, 129, 0.16)',
-    color: '#10b981'
+    color: 'var(--secondary)'
   },
   watch: {
     bg: 'rgba(212, 175, 55, 0.12)',
     border: 'rgba(212, 175, 55, 0.18)',
-    color: '#d4af37'
+    color: 'var(--tertiary)'
   },
   critical: {
     bg: 'rgba(249, 115, 22, 0.1)',
     border: 'rgba(249, 115, 22, 0.16)',
-    color: '#f97316'
+    color: 'var(--error)'
   }
 };
 

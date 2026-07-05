@@ -50,7 +50,7 @@ const ShareableStatCard = ({ onClose }) => {
       const canvas = await html2canvas(cardRef.current, {
         scale: 3,
         useCORS: true,
-        backgroundColor: '#042f2e'
+        backgroundColor: 'var(--primary)'
       });
 
       const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png', 1));
@@ -104,7 +104,7 @@ const ShareableStatCard = ({ onClose }) => {
             width: '100%',
             maxWidth: '360px',
             aspectRatio: '9 / 16',
-            background: 'linear-gradient(180deg, #064e3b 0%, #022c22 60%, #042f2e 100%)',
+            background: 'linear-gradient(180deg, var(--primary-container) 0%, var(--inverse-surface) 60%, var(--primary) 100%)',
             borderRadius: '28px',
             position: 'relative',
             overflow: 'hidden',
@@ -112,7 +112,7 @@ const ShareableStatCard = ({ onClose }) => {
             display: 'flex',
             flexDirection: 'column',
             padding: '30px 28px',
-            color: '#fff'
+            color: 'var(--on-primary)'
           }}
         >
           <div style={{ position: 'absolute', top: '-12%', right: '-8%', width: '190px', height: '190px', background: 'rgba(212, 175, 55, 0.14)', borderRadius: '50%', filter: 'blur(36px)' }} />
@@ -120,7 +120,7 @@ const ShareableStatCard = ({ onClose }) => {
           <div style={{ position: 'absolute', inset: '16px', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '22px' }} />
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 1 }}>
-            <h1 style={{ fontSize: '1.45rem', fontWeight: '950', color: '#f6d365', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '8px' }}>HUZUR</h1>
+            <h1 style={{ fontSize: '1.45rem', fontWeight: '950', color: 'var(--tertiary)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '8px' }}>HUZUR</h1>
             <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.72)', margin: '0 0 26px', textTransform: 'uppercase', letterSpacing: '1px' }}>{t('shareCard.subtitle', 'Manevi ritmim')}</p>
 
             <div style={{
@@ -137,9 +137,9 @@ const ShareableStatCard = ({ onClose }) => {
               backdropFilter: 'blur(10px)',
               boxShadow: '0 0 30px rgba(245, 158, 11, 0.22)'
             }}>
-              <Trophy size={40} color="#f6d365" />
+              <Trophy size={40} color="var(--tertiary)" />
               <div style={{ fontSize: '0.78rem', fontWeight: '800', marginTop: '8px', color: 'rgba(255,255,255,0.86)', textTransform: 'uppercase' }}>{t('shareCard.level', 'Seviye')}</div>
-              <div style={{ fontSize: '2rem', fontWeight: '950', lineHeight: '1', color: '#f6d365' }}>{levelInfo.level}</div>
+              <div style={{ fontSize: '2rem', fontWeight: '950', lineHeight: '1', color: 'var(--tertiary)' }}>{levelInfo.level}</div>
             </div>
 
             <h2 style={{ fontSize: '1.5rem', fontWeight: '800', margin: '0 0 10px', textAlign: 'center' }}>
@@ -147,23 +147,23 @@ const ShareableStatCard = ({ onClose }) => {
             </h2>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,0,0,0.26)', padding: '8px 16px', borderRadius: '999px', marginBottom: '22px' }}>
-              <Star size={16} color="#f6d365" />
+              <Star size={16} color="var(--tertiary)" />
               <span style={{ fontWeight: '800' }}>{t('shareCard.xpCollected', { count: points.toLocaleString(), defaultValue: '{{count}} XP toplandi' })}</span>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', width: '100%', marginBottom: '18px' }}>
               <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px', padding: '14px 8px', textAlign: 'center' }}>
-                <CalendarDays size={18} color="#86efac" style={{ marginBottom: '8px' }} />
+                <CalendarDays size={18} color="var(--secondary)" style={{ marginBottom: '8px' }} />
                 <div style={{ fontSize: '1.05rem', fontWeight: '900' }}>{weeklyStats.activeDays}</div>
                 <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>{t('shareCard.activeDays', 'Aktif gun')}</div>
               </div>
               <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px', padding: '14px 8px', textAlign: 'center' }}>
-                <Sparkles size={18} color="#f6d365" style={{ marginBottom: '8px' }} />
+                <Sparkles size={18} color="var(--tertiary)" style={{ marginBottom: '8px' }} />
                 <div style={{ fontSize: '1.05rem', fontWeight: '900' }}>+{weeklyStats.xpEarned}</div>
                 <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>{t('shareCard.weeklyXP', 'Haftalik XP')}</div>
               </div>
               <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px', padding: '14px 8px', textAlign: 'center' }}>
-                <Trophy size={18} color="#fde68a" style={{ marginBottom: '8px' }} />
+                <Trophy size={18} color="var(--tertiary-fixed-dim)" style={{ marginBottom: '8px' }} />
                 <div style={{ fontSize: '1.05rem', fontWeight: '900' }}>{badgeDetails.length}</div>
                 <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>{t('shareCard.badges', 'Rozet')}</div>
               </div>
@@ -207,8 +207,8 @@ const ShareableStatCard = ({ onClose }) => {
             width: '100%',
             maxWidth: '360px',
             padding: '16px',
-            background: 'linear-gradient(135deg, #0f766e, #d4af37)',
-            color: '#fff',
+            background: 'linear-gradient(135deg, var(--primary), var(--tertiary))',
+            color: 'var(--on-primary)',
             border: 'none',
             borderRadius: '18px',
             fontSize: '1.1rem',

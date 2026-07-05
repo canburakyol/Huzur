@@ -81,7 +81,7 @@ const SpiritualJourney = ({ onClose }) => {
   const quickActions = [
     {
       id: 'daily-quiz',
-      icon: <Brain size={18} color="#d4af37" />,
+      icon: <Brain size={18} color="var(--tertiary)" />,
       title: t('quiz.title', 'Gunun Testi'),
       description: 'Kisa bir bilgi turu ile serini besle.',
       onClick: () => navigateFromAction('/daily-quiz')
@@ -135,10 +135,10 @@ const SpiritualJourney = ({ onClose }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#fff',
+            color: 'var(--on-primary)',
             boxShadow: `0 8px 24px ${tierConfig.primary}40`
           }}>
-            <Star size={28} fill="#fff" />
+            <Star size={28} fill='var(--on-primary)' />
           </div>
           <div>
             <div className="text-xs font-extrabold uppercase" style={{ color: tierConfig.primary, letterSpacing: '1px' }}>
@@ -246,8 +246,8 @@ const SpiritualJourney = ({ onClose }) => {
 
   const renderWeeklyRhythm = () => (
     <div className="settings-card reveal-stagger flex-col p-22 mb-20" style={{
-      background: 'linear-gradient(145deg, rgba(15, 118, 110, 0.12), rgba(212, 175, 55, 0.08))',
-      border: '1px solid rgba(15, 118, 110, 0.18)'
+      background: 'linear-gradient(145deg, color-mix(in srgb, var(--secondary) 12%, transparent), color-mix(in srgb, var(--tertiary) 8%, transparent))',
+      border: '1px solid color-mix(in srgb, var(--secondary) 18%, transparent)'
     }}>
       <div className="flex-between-center items-start gap-12 mb-16">
         <div>
@@ -336,7 +336,7 @@ const SpiritualJourney = ({ onClose }) => {
             <div style={{
               width: `${familySummary.recommendedGoal.progressPercent}%`,
               height: '100%',
-              background: 'linear-gradient(90deg, var(--nav-accent), #10b981)'
+              background: 'linear-gradient(90deg, var(--tertiary), var(--secondary))'
             }} />
           </div>
           <p className="m-0 text-nav-muted text-sm font-semibold leading-relaxed">

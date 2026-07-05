@@ -64,11 +64,11 @@ const DailyTasks = ({ onClose }) => {
 
   const getCategoryColor = (category) => {
     const colors = {
-      namaz: 'var(--bg-emerald-light)',
+      namaz: 'var(--surface-container)',
       kuran: 'var(--accent-gold-light)',
       zikir: 'var(--accent-gold-shimmer)',
       ilim: 'var(--accent-gold)',
-      iyilik: 'var(--bg-emerald-med)'
+      iyilik: 'var(--secondary-container)'
     };
     return colors[category] || 'var(--text-secondary)';
   };
@@ -95,8 +95,8 @@ const DailyTasks = ({ onClose }) => {
       {/* Progress Card */}
       <div className="settings-card reveal-stagger flex flex-col items-stretch mb-24 border-none rounded-24" style={{ 
         padding: '32px 24px',
-        background: 'linear-gradient(135deg, var(--nav-accent) 0%, var(--primary-dark) 100%)',
-        color: 'white',
+        background: 'linear-gradient(135deg, var(--nav-accent) 0%, var(--primary) 100%)',
+        color: 'var(--on-primary)',
         boxShadow: '0 15px 35px rgba(var(--nav-accent-rgb, 245, 158, 11), 0.25)'
       }}>
         <div className="flex items-center gap-24 mb-32">
@@ -111,21 +111,21 @@ const DailyTasks = ({ onClose }) => {
               <path
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 fill="none"
-                stroke="white"
+                stroke='var(--on-primary)'
                 strokeWidth="3.5"
                 strokeDasharray={`${progress.percentage}, 100`}
                 strokeLinecap="round"
                 style={{ transition: 'stroke-dasharray 0.8s cubic-bezier(0.4, 0, 0.2, 1)' }}
               />
             </svg>
-            <div className="flex-center" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '1.25rem', fontWeight: '950', color: 'white' }}>
+            <div className="flex-center" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '1.25rem', fontWeight: '950', color: 'var(--on-primary)' }}>
                 {progress.percentage}%
             </div>
           </div>
           <div className="flex-1">
-            <h3 style={{ margin: 0, fontSize: '1.5rem', color: 'white', fontWeight: '950' }}>{progress.completed} / {progress.total}</h3>
+            <h3 style={{ margin: 0, fontSize: '1.5rem', color: 'var(--on-primary)', fontWeight: '950' }}>{progress.completed} / {progress.total}</h3>
             <div className="flex items-center gap-6" style={{ marginTop: '4px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.9)', fontWeight: '700' }}>
-                <Star size={16} fill="white" />
+                <Star size={16} fill='var(--on-primary)' />
                 +{progress.points} {t('dailyTasks.pointsToday')}
             </div>
           </div>
@@ -134,18 +134,18 @@ const DailyTasks = ({ onClose }) => {
         {stats && (
           <div className="flex justify-between" style={{ paddingTop: '24px', borderTop: '1px solid rgba(255,255,255,0.2)' }}>
             <div className="flex flex-col items-center gap-4">
-              <Trophy size={20} color="white" />
-              <span style={{ fontSize: '1.25rem', fontWeight: '950', color: 'white' }}>{stats.totalPoints}</span>
+              <Trophy size={20} color='var(--on-primary)' />
+              <span style={{ fontSize: '1.25rem', fontWeight: '950', color: 'var(--on-primary)' }}>{stats.totalPoints}</span>
               <small className="uppercase" style={{ fontSize: '0.65rem', fontWeight: '800', opacity: 0.8 }}>Puan</small>
             </div>
             <div className="flex flex-col items-center gap-4">
-              <Flame size={20} color="white" />
-              <span style={{ fontSize: '1.25rem', fontWeight: '950', color: 'white' }}>{stats.consecutiveDays}</span>
+              <Flame size={20} color='var(--on-primary)' />
+              <span style={{ fontSize: '1.25rem', fontWeight: '950', color: 'var(--on-primary)' }}>{stats.consecutiveDays}</span>
               <small className="uppercase" style={{ fontSize: '0.65rem', fontWeight: '800', opacity: 0.8 }}>Seri</small>
             </div>
             <div className="flex flex-col items-center gap-4">
-              <Target size={20} color="white" />
-              <span style={{ fontSize: '1.25rem', fontWeight: '950', color: 'white' }}>{stats.totalTasksCompleted}</span>
+              <Target size={20} color='var(--on-primary)' />
+              <span style={{ fontSize: '1.25rem', fontWeight: '950', color: 'var(--on-primary)' }}>{stats.totalTasksCompleted}</span>
               <small className="uppercase" style={{ fontSize: '0.65rem', fontWeight: '800', opacity: 0.8 }}>Görev</small>
             </div>
           </div>
@@ -248,8 +248,8 @@ const DailyTasks = ({ onClose }) => {
           <div className="text-center reveal-stagger">
             <div className="celebrate-animation mb-20" style={{ fontSize: '6rem' }}>🎉</div>
             <h2 className="m-0 mb-8" style={{ fontSize: '2.5rem', fontWeight: '950', color: 'var(--accent-gold-light)' }}>{t('dailyTasks.congrats')}</h2>
-            <p className="m-0 mb-12" style={{ fontSize: '1.25rem', fontWeight: '800', color: 'white' }}>{t('dailyTasks.allTasksCompleted')}</p>
-            <p style={{ color: 'var(--bg-emerald-light)', fontWeight: '950', fontSize: '1.5rem' }}>{t('dailyTasks.bonusPoints', { points: 50 })}</p>
+            <p className="m-0 mb-12" style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--on-primary)' }}>{t('dailyTasks.allTasksCompleted')}</p>
+            <p style={{ color: 'var(--surface-container)', fontWeight: '950', fontSize: '1.5rem' }}>{t('dailyTasks.bonusPoints', { points: 50 })}</p>
           </div>
         </div>
       )}

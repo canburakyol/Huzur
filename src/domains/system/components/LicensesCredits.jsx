@@ -120,7 +120,7 @@ const LicensesCredits = ({ onClose }) => {
             {/* Intro */}
             <div className="settings-card thanks-banner" style={{ marginBottom: '32px', padding: '24px', gap: '16px' }}>
                 <div className="heart-box">
-                    <Heart size={24} fill="#ef4444" color="#ef4444" />
+                    <Heart size={24} fill="var(--error)" color="var(--error)" />
                 </div>
                 <div style={{ flex: 1 }}>
                     <h4 style={{ margin: '0 0 4px 0', fontSize: '1rem', fontWeight: '900', color: 'var(--nav-text)' }}>
@@ -171,9 +171,9 @@ const LicensesCredits = ({ onClose }) => {
 
             {/* Disclaimer */}
             <div className="settings-card disclaimer-banner" style={{ marginTop: '32px' }}>
-                <AlertTriangle size={20} color="#f59e0b" style={{ flexShrink: 0 }} />
+                <AlertTriangle size={20} color="var(--tertiary)" style={{ flexShrink: 0 }} />
                 <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '700', lineHeight: '1.6' }}>
-                    <span style={{ color: '#f59e0b', marginRight: '6px' }}>{t('licenses.disclaimer', 'UYARI:')}</span>
+                    <span style={{ color: 'var(--tertiary)', marginRight: '6px' }}>{t('licenses.disclaimer', 'UYARI:')}</span>
                     {t('licenses.disclaimerDesc', 'Uygulama üzerinden sağlanan veriler bilgilendirme amaçlıdır. Önemli dini tercihleriniz için resmi kurumların verilerini teyit etmenizi öneririz.')}
                 </p>
             </div>

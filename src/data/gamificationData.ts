@@ -80,13 +80,14 @@ export const LEVELS: Level[] = [
   { level: 30, minPoints: 150000, title: 'Huzur Ustası', tier: 'pioneer' }
 ];
 
+// Concrete Stitch palette colors support legacy alpha-suffix composition in badge visuals.
 export const TIER_COLORS: Record<string, TierColor> = {
-  beginner: { primary: '#6b7280', secondary: '#9ca3af', gradient: 'linear-gradient(135deg, #6b7280, #9ca3af)' },
-  developing: { primary: '#22c55e', secondary: '#4ade80', gradient: 'linear-gradient(135deg, #22c55e, #86efac)' },
-  dedicated: { primary: '#3b82f6', secondary: '#60a5fa', gradient: 'linear-gradient(135deg, #3b82f6, #93c5fd)' },
-  scholar: { primary: '#a855f7', secondary: '#c084fc', gradient: 'linear-gradient(135deg, #a855f7, #d8b4fe)' },
-  guide: { primary: '#f59e0b', secondary: '#fbbf24', gradient: 'linear-gradient(135deg, #f59e0b, #fde68a)' },
-  pioneer: { primary: '#d4af37', secondary: '#ffd700', gradient: 'linear-gradient(135deg, #d4af37, #ffd700)' }
+  beginner: { primary: '#434843', secondary: '#434843', gradient: 'linear-gradient(135deg, #434843, #434843)' },
+  developing: { primary: '#8daa91', secondary: '#8daa91', gradient: 'linear-gradient(135deg, #8daa91, #f5f2e9)' },
+  dedicated: { primary: '#1b3022', secondary: '#1b3022', gradient: 'linear-gradient(135deg, #1b3022, #f5f2e9)' },
+  scholar: { primary: '#8daa91', secondary: '#8daa91', gradient: 'linear-gradient(135deg, #8daa91, #f5f2e9)' },
+  guide: { primary: '#aa8343', secondary: '#aa8343', gradient: 'linear-gradient(135deg, #aa8343, #f5f2e9)' },
+  pioneer: { primary: '#aa8343', secondary: '#aa8343', gradient: 'linear-gradient(135deg, #aa8343, #aa8343)' }
 };
 
 export function getNextLevel(currentLevel: number): Level | null {
@@ -139,24 +140,24 @@ export const BADGES: Record<string, Badge> = {
 };
 
 export const BADGE_CATEGORIES: Record<string, { icon: string; label: string; color: string }> = {
-  prayer: { icon: '🕌', label: 'Namaz', color: '#22c55e' },
-  quran: { icon: '📖', label: 'Kuran', color: '#3b82f6' },
-  dhikr: { icon: '📿', label: 'Zikir', color: '#a855f7' },
-  streak: { icon: '🔥', label: 'Seri', color: '#f59e0b' },
-  social: { icon: '👥', label: 'Sosyal', color: '#ec4899' },
-  special: { icon: '🌙', label: 'Özel', color: '#d4af37' },
-  knowledge: { icon: '📚', label: 'İlim', color: '#06b6d4' }
+  prayer: { icon: '🕌', label: 'Namaz', color: '#8daa91' },
+  quran: { icon: '📖', label: 'Kuran', color: '#1b3022' },
+  dhikr: { icon: '📿', label: 'Zikir', color: '#8daa91' },
+  streak: { icon: '🔥', label: 'Seri', color: '#aa8343' },
+  social: { icon: '👥', label: 'Sosyal', color: '#8daa91' },
+  special: { icon: '🌙', label: 'Özel', color: '#aa8343' },
+  knowledge: { icon: '📚', label: 'İlim', color: '#1b3022' }
 };
 
 export const WEEKLY_CHALLENGES: Challenge[] = [
-  { id: 'quran_week', icon: '📖', title: 'Kuran Haftası', description: 'Bu hafta 7 cüz Kuran oku', target: 7, unit: 'cüz', category: 'quran', rewardPoints: 100, reward: { xp: 100 }, color: '#22c55e' },
-  { id: 'namaz_week', icon: '🕌', title: 'Namaz Haftası', description: 'Bu hafta 40 rekat nafile namaz kıl', target: 40, unit: 'rekat', category: 'prayer', rewardPoints: 100, reward: { xp: 100 }, color: '#3b82f6' },
-  { id: 'zikir_week', icon: '📿', title: 'Zikir Haftası', description: 'Bu hafta 1000 tesbih çek', target: 1000, unit: 'tesbih', category: 'dhikr', rewardPoints: 100, reward: { xp: 100 }, color: '#a855f7' },
-  { id: 'sabah_week', icon: '🌅', title: 'Sabah Namazı', description: 'Bu hafta 7 gün sabah namazını vaktinde kıl', target: 7, unit: 'gün', category: 'prayer', rewardPoints: 150, reward: { xp: 150 }, color: '#f59e0b' },
-  { id: 'tespihat_week', icon: '🤲', title: 'Tespihat Haftası', description: 'Bu hafta 7 gün tespihat (sabah/akşam) tamamla', target: 7, unit: 'gün', category: 'dhikr', rewardPoints: 100, reward: { xp: 100 }, color: '#ec4899' },
-  { id: 'hatim_week', icon: '📚', title: 'Hatim Haftası', description: 'Bu hafta 1 hatim tamamla', target: 1, unit: 'hatim', category: 'quran', rewardPoints: 200, reward: { xp: 200 }, color: '#14b8a6' },
-  { id: 'fasting_week', icon: '🌙', title: 'Oruç Haftası', description: 'Bu hafta 2 gün nafile oruç tut', target: 2, unit: 'gün', category: 'fasting', rewardPoints: 150, reward: { xp: 150 }, color: '#8b5cf6' },
-  { id: 'charity_week', icon: '💝', title: 'Sadaka Haftası', description: 'Bu hafta 7 gün sadaka ver', target: 7, unit: 'gün', category: 'charity', rewardPoints: 100, reward: { xp: 100 }, color: '#f97316' }
+  { id: 'quran_week', icon: '📖', title: 'Kuran Haftası', description: 'Bu hafta 7 cüz Kuran oku', target: 7, unit: 'cüz', category: 'quran', rewardPoints: 100, reward: { xp: 100 }, color: '#8daa91' },
+  { id: 'namaz_week', icon: '🕌', title: 'Namaz Haftası', description: 'Bu hafta 40 rekat nafile namaz kıl', target: 40, unit: 'rekat', category: 'prayer', rewardPoints: 100, reward: { xp: 100 }, color: '#1b3022' },
+  { id: 'zikir_week', icon: '📿', title: 'Zikir Haftası', description: 'Bu hafta 1000 tesbih çek', target: 1000, unit: 'tesbih', category: 'dhikr', rewardPoints: 100, reward: { xp: 100 }, color: '#8daa91' },
+  { id: 'sabah_week', icon: '🌅', title: 'Sabah Namazı', description: 'Bu hafta 7 gün sabah namazını vaktinde kıl', target: 7, unit: 'gün', category: 'prayer', rewardPoints: 150, reward: { xp: 150 }, color: '#aa8343' },
+  { id: 'tespihat_week', icon: '🤲', title: 'Tespihat Haftası', description: 'Bu hafta 7 gün tespihat (sabah/akşam) tamamla', target: 7, unit: 'gün', category: 'dhikr', rewardPoints: 100, reward: { xp: 100 }, color: '#8daa91' },
+  { id: 'hatim_week', icon: '📚', title: 'Hatim Haftası', description: 'Bu hafta 1 hatim tamamla', target: 1, unit: 'hatim', category: 'quran', rewardPoints: 200, reward: { xp: 200 }, color: '#8daa91' },
+  { id: 'fasting_week', icon: '🌙', title: 'Oruç Haftası', description: 'Bu hafta 2 gün nafile oruç tut', target: 2, unit: 'gün', category: 'fasting', rewardPoints: 150, reward: { xp: 150 }, color: '#8daa91' },
+  { id: 'charity_week', icon: '💝', title: 'Sadaka Haftası', description: 'Bu hafta 7 gün sadaka ver', target: 7, unit: 'gün', category: 'charity', rewardPoints: 100, reward: { xp: 100 }, color: '#aa8343' }
 ];
 
 const CHALLENGES_STORAGE_KEY = 'huzur_weekly_challenges_progress';
@@ -220,10 +221,10 @@ export function completeChallenge(challengeId: string): ChallengeProgress {
 }
 
 export const CHALLENGE_CATEGORIES: Record<string, { icon: string; label: string; color: string }> = {
-  prayer: { icon: '🕌', label: 'Namaz', color: '#22c55e' },
-  quran: { icon: '📖', label: 'Kuran', color: '#3b82f6' },
-  dhikr: { icon: '📿', label: 'Zikir', color: '#d4af37' },
-  fasting: { icon: '🌙', label: 'Oruç', color: '#8b5cf6' },
-  charity: { icon: '💝', label: 'Sadaka', color: '#f97316' },
-  community: { icon: '👥', label: 'Topluluk', color: '#ec4899' }
+  prayer: { icon: '🕌', label: 'Namaz', color: '#8daa91' },
+  quran: { icon: '📖', label: 'Kuran', color: '#1b3022' },
+  dhikr: { icon: '📿', label: 'Zikir', color: '#aa8343' },
+  fasting: { icon: '🌙', label: 'Oruç', color: '#8daa91' },
+  charity: { icon: '💝', label: 'Sadaka', color: '#aa8343' },
+  community: { icon: '👥', label: 'Topluluk', color: '#8daa91' }
 };

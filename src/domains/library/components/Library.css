@@ -134,7 +134,7 @@
     width: 52px;
     height: 52px;
     border-radius: 14px;
-    background: var(--primary-dark);
+    background: var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;

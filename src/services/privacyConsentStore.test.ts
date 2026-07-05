@@ -54,8 +54,8 @@ describe("privacyConsentStore", () => {
     });
   });
 
-  it("runs an ad-gated task only after telemetry and ad consent are granted", async () => {
-    const { runPrivacyGatedInitialization, updateAnalyticsConsent, updateAdsConsent } = await importStore();
+  it("runs an ad-gated task after ad consent without requiring analytics consent", async () => {
+    const { runPrivacyGatedInitialization, updateAdsConsent } = await importStore();
     const task = vi.fn();
 
     const dispose = runPrivacyGatedInitialization({
@@ -67,10 +67,6 @@ describe("privacyConsentStore", () => {
     expect(task).not.toHaveBeenCalled();
 
     updateAdsConsent({ adsEnabled: true });
-    expect(task).not.toHaveBeenCalled();
-
-    updateAnalyticsConsent(true);
-
     expect(task).toHaveBeenCalledTimes(1);
     dispose();
   });

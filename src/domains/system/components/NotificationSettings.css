@@ -44,8 +44,8 @@
 }
 
 .themed-select-min option {
-  background: #1a5c45;
-  color: white;
+  background: var(--primary-container);
+  color: var(--on-primary);
 }
 
 .notification-settings-container .toggle-switch {
@@ -80,13 +80,13 @@
   width: 16px;
   left: 3px;
   bottom: 3px;
-  background-color: white;
+  background-color: var(--surface-card);
   transition: .4s;
 }
 
 .notification-settings-container input:checked + .slider {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  border-color: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary), var(--primary));
+  border-color: var(--primary);
 }
 
 .notification-settings-container input:checked + .slider:before {

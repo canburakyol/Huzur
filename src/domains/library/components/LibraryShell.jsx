@@ -232,7 +232,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
           <div
             className="hamburger-level-badge"
             style={{
-              background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1)',
+              background: 'color-mix(in srgb, var(--nav-accent) 10%, transparent)',
               color: 'var(--nav-accent)',
               borderColor: 'var(--nav-accent)',
               display: 'flex',
@@ -324,7 +324,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'rgba(0,0,0,0.8)',
+            background: 'color-mix(in srgb, var(--surface-dim) 80%, transparent)',
             backdropFilter: 'blur(20px)',
             display: 'flex',
             alignItems: 'center',
@@ -345,7 +345,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
               gap: '24px',
               background: 'var(--nav-bg)',
               border: '1px solid var(--nav-accent)',
-              boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
+              boxShadow: '0 24px 48px color-mix(in srgb, var(--surface-dim) 50%, transparent)',
               borderRadius: '40px',
               animation: 'modalOpen 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
             }}
@@ -355,15 +355,15 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
               style={{
                 width: '80px',
                 height: '80px',
-                background: 'linear-gradient(135deg, var(--nav-accent) 0%, #f59e0b 100%)',
+                background: 'linear-gradient(135deg, var(--nav-accent) 0%, var(--tertiary) 100%)',
                 borderRadius: '30px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 12px 24px rgba(var(--nav-accent-rgb), 0.4)'
+                boxShadow: '0 12px 24px color-mix(in srgb, var(--nav-accent) 40%, transparent)'
               }}
             >
-              <Crown size={40} color="white" fill="white" />
+              <Crown size={40} color='var(--on-primary)' fill='var(--on-primary)' />
             </div>
 
             <div>
@@ -398,7 +398,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
                 style={{
                   width: '100%',
                   background: 'var(--nav-accent)',
-                  color: 'white',
+                  color: 'var(--on-primary)',
                   borderColor: 'transparent',
                   height: '64px',
                   fontSize: '1.1rem',
@@ -407,7 +407,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
                 }}
                 onClick={handleShowPro}
               >
-                <Sparkles size={20} fill="white" /> {t('common.upgrade_pro', "Pro'ya Yükselt")}
+                <Sparkles size={20} fill='var(--on-primary)' /> {t('common.upgrade_pro', "Pro'ya Yükselt")}
               </button>
 
               <button

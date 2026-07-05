@@ -50,8 +50,5 @@ project(':capacitor-share').projectDir = new File('../node_modules/@capacitor/sh
 include ':capawesome-capacitor-app-update'
 project(':capawesome-capacitor-app-update').projectDir = new File('../node_modules/@capawesome/capacitor-app-update/android')
 
-include ':capgo-capacitor-data-storage-sqlite'
-project(':capgo-capacitor-data-storage-sqlite').projectDir = new File('../node_modules/@capgo/capacitor-data-storage-sqlite/android')
-
 include ':revenuecat-purchases-capacitor'
 project(':revenuecat-purchases-capacitor').projectDir = new File('../node_modules/@revenuecat/purchases-capacitor/android')

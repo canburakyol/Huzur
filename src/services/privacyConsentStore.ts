@@ -23,7 +23,7 @@ const PRIVACY_UPDATE_EVENT = "huzur:privacy-settings-updated";
 export const getPrivacyConsentSnapshot = (): PrivacyConsentSnapshot => {
   const settings = getPrivacySettingsSync() as Record<string, unknown>;
   const analyticsEnabled = settings.telemetryEnabled === true || settings.analytics === true;
-  const adsEnabled = analyticsEnabled && settings.adsEnabled === true;
+  const adsEnabled = settings.adsEnabled === true;
 
   return {
     analyticsEnabled,

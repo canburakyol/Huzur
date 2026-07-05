@@ -70,7 +70,7 @@ const SettingsAmbientPulseToggle = () => {
             width: '18px',
             height: '18px',
             borderRadius: '50%',
-            background: enabled ? 'white' : 'var(--nav-text-muted)',
+            background: enabled ? 'var(--on-primary)' : 'var(--nav-text-muted)',
             position: 'absolute',
             top: '2px',
             left: enabled ? '22px' : '2px',

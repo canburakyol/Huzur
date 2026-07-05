@@ -53,7 +53,7 @@ function ItemContent({
                       height: '44px',
                       borderRadius: '50%',
                       background: isPlaying ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                      color: isPlaying ? 'white' : 'var(--nav-accent)'
+                      color: isPlaying ? 'var(--on-primary)' : 'var(--nav-accent)'
                     }}
                   >
                     {isPlaying ? <Pause size={20} /> : <Play size={20} />}
@@ -212,7 +212,7 @@ function ItemContent({
           }}
         >
           <div className="settings-card-left">
-            <div className="settings-icon-box" style={{ width: '72px', height: '72px', background: 'white' }}>
+            <div className="settings-icon-box" style={{ width: '72px', height: '72px', background: 'var(--surface-card)' }}>
               <span style={{ fontSize: '2.5rem' }}>{item.icon}</span>
             </div>
             <div className="settings-user-info">
@@ -267,7 +267,7 @@ function ItemContent({
                         boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
                       }}
                     >
-                      <Play size={12} color="#fff" fill="white" />
+                      <Play size={12} color='var(--on-primary)' fill='var(--on-primary)' />
                     </div>
                   </div>
                   <div className="settings-user-info">
@@ -322,16 +322,16 @@ function ItemContent({
             marginBottom: '24px',
             padding: '20px',
             background: 'linear-gradient(135deg, #ff0000 0%, #cc0000 100%)',
-            color: 'white',
+            color: 'var(--on-primary)',
             border: 'none'
           }}
         >
           <div className="settings-card-left">
-            <div className="settings-icon-box" style={{ width: '56px', height: '56px', background: 'rgba(255,255,255,0.2)', color: 'white' }}>
-              <Youtube size={28} fill="white" />
+            <div className="settings-icon-box" style={{ width: '56px', height: '56px', background: 'rgba(255,255,255,0.2)', color: 'var(--on-primary)' }}>
+              <Youtube size={28} fill='var(--on-primary)' />
             </div>
             <div className="settings-user-info">
-              <div className="settings-label" style={{ color: 'white', fontSize: '1.1rem' }}>
+              <div className="settings-label" style={{ color: 'var(--on-primary)', fontSize: '1.1rem' }}>
                 {item.source}
               </div>
               <div className="settings-desc" style={{ color: 'rgba(255,255,255,0.8)', fontWeight: '700' }}>
@@ -371,13 +371,13 @@ function ItemContent({
               style={{
                 width: '100%',
                 background: '#ff0000',
-                color: 'white',
+                color: 'var(--on-primary)',
                 borderColor: 'transparent',
                 justifyContent: 'center',
                 fontWeight: '900'
               }}
             >
-              <Play size={20} fill="white" /> {t('library.go_to_channel', 'YouTube Kanalına Git')}
+              <Play size={20} fill='var(--on-primary)' /> {t('library.go_to_channel', 'YouTube Kanalına Git')}
             </button>
           ) : null}
 
@@ -453,7 +453,7 @@ function ItemContent({
                         height: '32px',
                         borderRadius: '8px',
                         background: isExpanded ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                        color: isExpanded ? 'white' : 'var(--nav-accent)'
+                        color: isExpanded ? 'var(--on-primary)' : 'var(--nav-accent)'
                       }}
                     >
                       <Book size={16} />
@@ -516,7 +516,7 @@ function ItemContent({
                   <div
                     style={{
                       background: isExpanded ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                      color: isExpanded ? 'white' : 'var(--nav-accent)',
+                      color: isExpanded ? 'var(--on-primary)' : 'var(--nav-accent)',
                       width: '36px',
                       height: '36px',
                       borderRadius: '50%',
@@ -683,7 +683,7 @@ function ItemContent({
                           boxShadow: isPlaying ? '0 0 12px rgba(var(--nav-accent-rgb), 0.3)' : 'none'
                         }}
                       >
-                        <Volume2 size={20} color={isPlaying ? '#fff' : 'var(--nav-accent)'} />
+                        <Volume2 size={20} color={isPlaying ? 'var(--on-primary)' : 'var(--nav-accent)'} />
                       </button>
                     ) : null}
                     {isExpanded ? <ChevronDown size={18} color="var(--nav-accent)" /> : <ChevronRight size={18} color="var(--nav-text-muted)" />}

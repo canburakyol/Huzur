@@ -55,12 +55,12 @@ function ThemeSelector({ onClose }) {
         setAccentColor(accentId);
         
         document.documentElement.style.setProperty('--nav-accent', accent.color);
-        document.documentElement.style.setProperty('--primary-color', accent.color);
-        document.documentElement.style.setProperty('--accent-color', accent.color);
+        document.documentElement.style.setProperty('--primary', accent.color);
+        document.documentElement.style.setProperty('--accent', accent.color);
         document.documentElement.style.setProperty('--accent-vibrant', accent.color);
         document.documentElement.style.setProperty('--accent-gold-light', accent.color);
         if (accent.dark) {
-            document.documentElement.style.setProperty('--primary-dark', accent.dark);
+            document.documentElement.style.setProperty('--primary', accent.dark);
             document.documentElement.style.setProperty('--accent-gold', accent.dark);
         }
         if (accent.rgb) {
@@ -82,7 +82,7 @@ function ThemeSelector({ onClose }) {
                 
                 <div className="settings-card" onClick={() => handleThemeModeChange('light')} style={{ border: themeMode === 'light' ? '2px solid var(--nav-accent)' : '' }}>
                     <div className="settings-card-left">
-                        <div className="settings-icon-box" style={{ background: themeMode === 'light' ? 'var(--nav-accent)' : '', color: themeMode === 'light' ? 'white' : '' }}>
+                        <div className="settings-icon-box" style={{ background: themeMode === 'light' ? 'var(--nav-accent)' : '', color: themeMode === 'light' ? 'var(--on-primary)' : '' }}>
                             <Sun size={20} />
                         </div>
                         <div>
@@ -95,7 +95,7 @@ function ThemeSelector({ onClose }) {
 
                 <div className="settings-card" onClick={() => handleThemeModeChange('dark')} style={{ border: themeMode === 'dark' ? '2px solid var(--nav-accent)' : '' }}>
                     <div className="settings-card-left">
-                        <div className="settings-icon-box" style={{ background: themeMode === 'dark' ? 'var(--nav-accent)' : '', color: themeMode === 'dark' ? 'white' : '' }}>
+                        <div className="settings-icon-box" style={{ background: themeMode === 'dark' ? 'var(--nav-accent)' : '', color: themeMode === 'dark' ? 'var(--on-primary)' : '' }}>
                             <Moon size={20} />
                         </div>
                         <div>
@@ -108,7 +108,7 @@ function ThemeSelector({ onClose }) {
 
                 <div className="settings-card" onClick={() => handleThemeModeChange('system')} style={{ border: themeMode === 'system' ? '2px solid var(--nav-accent)' : '' }}>
                     <div className="settings-card-left">
-                        <div className="settings-icon-box" style={{ background: themeMode === 'system' ? 'var(--nav-accent)' : '', color: themeMode === 'system' ? 'white' : '' }}>
+                        <div className="settings-icon-box" style={{ background: themeMode === 'system' ? 'var(--nav-accent)' : '', color: themeMode === 'system' ? 'var(--on-primary)' : '' }}>
                             <Monitor size={20} />
                         </div>
                         <div>
@@ -142,7 +142,7 @@ function ThemeSelector({ onClose }) {
                                 }}
                                 className="accent-btn"
                             >
-                                {accentColor === accent.id && <Check size={24} color="white" />}
+                                {accentColor === accent.id && <Check size={24} color='var(--on-primary)' />}
                             </button>
                         ))}
                     </div>
@@ -154,13 +154,13 @@ function ThemeSelector({ onClose }) {
 
             <div className="settings-group">
                 <div className="settings-group-title">{t('settings.preview', 'Önizleme')}</div>
-                <div className="settings-card" style={{ background: 'var(--nav-accent)', color: 'white' }}>
+                <div className="settings-card" style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)' }}>
                     <div className="settings-card-left">
-                        <div className="settings-icon-box" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
+                        <div className="settings-icon-box" style={{ background: 'rgba(255,255,255,0.2)', color: 'var(--on-primary)' }}>
                             <Palette size={20} />
                         </div>
                         <div>
-                            <div className="settings-label" style={{ color: 'white' }}>{t('settings.previewTitle', 'Harika Değil mi?')}</div>
+                            <div className="settings-label" style={{ color: 'var(--on-primary)' }}>{t('settings.previewTitle', 'Harika Değil mi?')}</div>
                             <div className="settings-desc" style={{ color: 'rgba(255,255,255,0.8)' }}>{t('settings.previewDesc', 'Bu renk size çok yakıştı.')}</div>
                         </div>
                     </div>

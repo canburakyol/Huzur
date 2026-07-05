@@ -1,0 +1,1163 @@
+.home-shell {
+  min-height: 100vh;
+  padding: 24px 16px 140px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at top right, rgba(var(--brand-warm-rgb), 0.12), transparent 32%),
+    linear-gradient(180deg, var(--surface-page) 0%, var(--surface-page-alt) 100%);
+}
+
+.navigation-update-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 20px;
+  background: color-mix(in srgb, var(--inverse-surface) 48%, transparent);
+  backdrop-filter: blur(5px);
+  animation: navigation-update-fade 180ms ease-out both;
+}
+
+.navigation-update-notice {
+  width: min(100%, 420px);
+  padding: 26px 24px 22px;
+  border-radius: 26px;
+  background: var(--surface-card);
+  color: var(--on-surface);
+  box-shadow: var(--shadow-float);
+  animation: navigation-update-rise 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.navigation-update-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 20px;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--tertiary) 14%, transparent);
+  color: var(--tertiary);
+}
+
+.navigation-update-notice h2 {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.navigation-update-notice p {
+  margin: 0 0 24px;
+  color: var(--on-surface-variant);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.navigation-update-notice button {
+  width: 100%;
+  min-height: 50px;
+  border: 0;
+  border-radius: 15px;
+  background: var(--tertiary);
+  color: var(--on-primary);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 140ms ease, filter 140ms ease;
+}
+
+.navigation-update-notice button:active {
+  transform: scale(0.98);
+}
+
+.navigation-update-notice button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--tertiary) 36%, transparent);
+  outline-offset: 3px;
+}
+
+@keyframes navigation-update-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes navigation-update-rise {
+  from { opacity: 0; transform: translateY(18px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (min-width: 640px) {
+  .navigation-update-backdrop { align-items: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navigation-update-backdrop,
+  .navigation-update-notice { animation: none; }
+}
+
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding: 0 4px;
+}
+
+.home-greeting {
+  margin: 0;
+  color: var(--text-heading);
+  font-family: var(--font-main);
+  font-size: 1.18rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.22;
+}
+
+.home-header-actions {
+  display: flex;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.home-weather-pill {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  color: var(--brand-warm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--elevation-soft);
+}
+
+.home-icon-button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  color: var(--brand-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--elevation-soft);
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.home-icon-button:hover,
+.home-icon-button:focus-visible {
+  background: var(--surface-action-soft);
+  border-color: var(--border-strong);
+  outline: none;
+}
+
+.home-icon-button:active {
+  transform: scale(0.96);
+}
+
+.home-feed-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.premium-home-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 22px 18px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+  background: var(--primary);
+  box-shadow: var(--shadow-card);
+}
+
+/* Current PremiumHomeHero renders the legacy hero-card contract. */
+.home-main-content .hero-card {
+  border: 1px solid rgba(181, 138, 71, 0.34);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(181, 138, 71, 0.2), transparent 32%),
+    linear-gradient(145deg, #0f5b42 0%, #123f31 100%);
+  color: #fffdf7;
+  box-shadow: 0 18px 42px rgba(22, 59, 43, 0.2);
+}
+
+.home-main-content .hero-card .hero-greeting-text,
+.home-main-content .hero-card .hero-location,
+.home-main-content .hero-card .hero-streak-badge,
+.home-main-content .hero-card .unit-value,
+.home-main-content .hero-card .huzur-mode-hero-btn,
+.home-main-content .hero-card .prayer-strip-name,
+.home-main-content .hero-card .prayer-strip-time {
+  color: #fffdf7;
+}
+
+.home-main-content .hero-card .unit-label,
+.home-main-content .hero-card .countdown-separator {
+  color: rgba(255, 253, 247, 0.72);
+}
+
+.home-main-content .hero-card .prayer-strip-item.active {
+  border-color: rgba(223, 183, 102, 0.78);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.home-main-content .hero-card .prayer-strip-item.active .prayer-strip-time {
+  color: #f2c872;
+}
+
+.premium-home-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.045), transparent 46%),
+    radial-gradient(circle at 94% 2%, rgba(232, 188, 106, 0.14), transparent 34%);
+  pointer-events: none;
+}
+
+.premium-home-hero__watermark {
+  position: absolute;
+  top: -18px;
+  inset-inline-end: -12px;
+  z-index: 0;
+  color: var(--text-subtle);
+  opacity: 0.035;
+  font-family: var(--font-arabic);
+  font-size: 5rem;
+  line-height: 1;
+  pointer-events: none;
+  transform: rotate(-14deg);
+}
+
+.premium-home-hero__content {
+  position: relative;
+  z-index: 1;
+}
+
+.premium-home-hero__mosque-art {
+  position: absolute;
+  right: -18px;
+  bottom: 150px;
+  z-index: 0;
+  width: min(54%, 210px);
+  height: auto;
+  opacity: 0.58;
+  pointer-events: none;
+}
+
+.premium-home-hero__mosque-art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.premium-home-hero__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.premium-home-hero__next {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  max-width: 68%;
+  margin-bottom: 14px;
+}
+
+.premium-home-hero__section-label {
+  display: block;
+  color: rgba(248, 250, 252, 0.76);
+  font-family: var(--font-main);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.premium-home-hero__streak {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--on-primary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.premium-home-hero__main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.premium-home-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 8px;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(248, 250, 252, 0.82);
+  font-family: var(--font-main);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.premium-home-hero__title {
+  margin: 0;
+  color: var(--on-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 7vw, 2.05rem);
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.premium-home-hero__subtitle {
+  margin: 6px 0 0;
+  color: rgba(248, 250, 252, 0.72);
+  font-family: var(--font-main);
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.premium-home-hero__countdown {
+  margin-bottom: 18px;
+  text-align: start;
+  max-width: 68%;
+}
+
+.premium-home-hero__timer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 3px;
+  margin-top: 7px;
+  color: var(--tertiary);
+  font-family: var(--font-main);
+  font-size: clamp(1.8rem, 8vw, 2.45rem);
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.premium-home-hero__timer-separator {
+  color: rgba(248, 250, 252, 0.52);
+  font-size: 0.82em;
+  animation: colon-blink 1s steps(1) infinite;
+}
+
+@keyframes colon-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.25; }
+}
+
+/* ── Floating birds ── */
+.premium-home-hero__birds {
+  display: none;
+  position: absolute;
+  top: 18%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.premium-home-hero__bird {
+  position: absolute;
+  opacity: 0;
+  animation: bird-fly linear infinite;
+}
+
+.premium-home-hero__bird:nth-child(1) {
+  top: 12%;
+  animation-duration: 18s;
+  animation-delay: 0s;
+}
+
+.premium-home-hero__bird:nth-child(2) {
+  top: 32%;
+  animation-duration: 22s;
+  animation-delay: 6s;
+}
+
+.premium-home-hero__bird:nth-child(3) {
+  top: 22%;
+  animation-duration: 25s;
+  animation-delay: 11s;
+}
+
+@keyframes bird-fly {
+  0%   { left: -8%; opacity: 0; transform: translateY(0) scaleX(1); }
+  5%   { opacity: 0.55; }
+  50%  { opacity: 0.55; transform: translateY(-6px) scaleX(1); }
+  95%  { opacity: 0.55; }
+  100% { left: 108%; opacity: 0; transform: translateY(4px) scaleX(1); }
+}
+
+/* ── Celestial glow pulse ── */
+.premium-home-hero__mosque-art svg circle {
+  opacity: 0.24;
+}
+
+@keyframes celestial-glow {
+  0%, 100% { opacity: 0.22; filter: blur(0px); }
+  50%      { opacity: 0.35; filter: blur(2px); }
+}
+
+/* ── Respect reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .premium-home-hero__timer-separator {
+    animation: none !important;
+  }
+}
+
+.premium-home-hero__timer-muted {
+  color: var(--brand-warm);
+  opacity: 0.58;
+}
+
+.premium-home-hero__timer-label {
+  display: block;
+  margin-top: 5px;
+  color: rgba(248, 250, 252, 0.7);
+  font-family: var(--font-main);
+  font-size: 0.58rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.premium-home-hero__adhan-note {
+  margin: 6px 0 0;
+  color: rgba(248, 250, 252, 0.72);
+  font-family: var(--font-main);
+  font-size: 0.68rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.home-prayer-strip {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+  padding: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.home-prayer-strip__item {
+  appearance: none;
+  min-width: 0;
+  min-height: 58px;
+  padding: 7px 3px 6px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  opacity: 0.72;
+  cursor: pointer;
+  transition: background 0.22s ease, border-color 0.22s ease, opacity 0.22s ease, transform 0.18s ease;
+}
+
+.home-prayer-strip__item.is-active {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(var(--brand-warm-rgb), 0.48);
+}
+
+.home-prayer-strip__item.is-completed {
+  opacity: 1;
+  background: rgba(var(--brand-primary-rgb), 0.16);
+  border-color: rgba(var(--brand-primary-rgb), 0.34);
+}
+
+.home-prayer-strip__item:hover,
+.home-prayer-strip__item:focus-visible {
+  opacity: 1;
+  background: rgba(var(--brand-primary-rgb), 0.1);
+  outline: none;
+}
+
+.home-prayer-strip__item:active {
+  transform: scale(0.97);
+}
+
+.home-prayer-strip__name {
+  display: block;
+  overflow: hidden;
+  color: rgba(248, 250, 252, 0.76);
+  font-family: var(--font-main);
+  font-size: 0.58rem;
+  font-weight: 750;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-prayer-strip__time {
+  display: block;
+  margin-top: 3px;
+  color: var(--on-primary);
+  font-family: var(--font-main);
+  font-size: 0.68rem;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-prayer-strip__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  color: rgba(248, 250, 252, 0.7);
+}
+
+.home-prayer-strip__item.is-active .home-prayer-strip__time {
+  color: var(--tertiary);
+}
+
+.home-prayer-strip__item.is-active .home-prayer-strip__icon {
+  color: var(--brand-warm);
+}
+
+.home-prayer-strip__item.is-completed .home-prayer-strip__icon,
+.home-prayer-strip__item.is-completed .home-prayer-strip__time {
+  color: var(--hero-mosque-accent, var(--primary));
+}
+
+.home-quick-access-strip {
+  position: relative;
+  z-index: 14;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.home-quick-access-item {
+  appearance: none;
+  --quick-bg: rgba(var(--brand-primary-rgb), 0.13);
+  --quick-bg-hover: rgba(var(--brand-primary-rgb), 0.18);
+  --quick-icon-bg: rgba(var(--brand-primary-rgb), 0.16);
+  --quick-color: var(--primary);
+  min-width: 0;
+  min-height: 92px;
+  padding: 12px 6px 11px;
+  border: 1px solid rgba(var(--surface-card-rgb), 0.65);
+  border-radius: 24px;
+  background: var(--quick-bg);
+  color: var(--quick-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(83, 110, 98, 0.07);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-quick-access-item:hover,
+.home-quick-access-item:focus-visible {
+  transform: translateY(-2px);
+  background: var(--quick-bg-hover);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 14px 30px rgba(83, 110, 98, 0.1);
+  outline: none;
+}
+
+.home-quick-access-item:active {
+  transform: scale(0.97);
+}
+
+.home-quick-access-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 17px;
+  background: var(--quick-icon-bg);
+  color: var(--quick-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.46);
+}
+
+.home-quick-access-label {
+  overflow-wrap: anywhere;
+  color: var(--text-heading);
+  font-family: var(--font-main);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.home-quick-access-item--sage {
+  --quick-bg: rgba(141, 170, 157, 0.16);
+  --quick-bg-hover: rgba(141, 170, 157, 0.22);
+  --quick-icon-bg: rgba(141, 170, 157, 0.22);
+  --quick-color: var(--on-secondary-fixed-variant);
+}
+
+.home-quick-access-item--warm {
+  --quick-bg: rgba(224, 169, 150, 0.17);
+  --quick-bg-hover: rgba(224, 169, 150, 0.24);
+  --quick-icon-bg: rgba(224, 169, 150, 0.24);
+  --quick-color: var(--on-tertiary-fixed-variant);
+}
+
+.home-quick-access-item--clay {
+  --quick-bg: rgba(217, 197, 178, 0.24);
+  --quick-bg-hover: rgba(217, 197, 178, 0.32);
+  --quick-icon-bg: rgba(217, 197, 178, 0.34);
+  --quick-color: var(--on-tertiary-container);
+}
+
+.home-quick-access-item--moss {
+  --quick-bg: rgba(200, 218, 210, 0.35);
+  --quick-bg-hover: rgba(200, 218, 210, 0.48);
+  --quick-icon-bg: rgba(141, 170, 157, 0.22);
+  --quick-color: var(--secondary);
+}
+
+.first-activation-card {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 16px;
+  padding: 20px;
+  border: 1px solid var(--border-soft);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(var(--brand-primary-rgb), 0.1), transparent 34%),
+    linear-gradient(135deg, var(--surface-card-strong), var(--surface-card));
+  box-shadow: 0 12px 30px rgba(83, 110, 98, 0.08);
+  color: var(--text-heading);
+}
+
+.first-activation-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  margin-bottom: 16px;
+}
+
+.first-activation-card__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: var(--brand-primary);
+  background: var(--surface-action-soft);
+}
+
+.first-activation-card__eyebrow {
+  min-width: 0;
+  color: var(--text-body);
+  font-family: var(--font-main);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.first-activation-card__time {
+  margin-left: auto;
+  padding: 7px 10px;
+  border: 1px solid rgba(var(--brand-warm-rgb), 0.18);
+  border-radius: var(--radius-pill);
+  background: var(--surface-warm-soft);
+  color: var(--brand-warm);
+  font-family: var(--font-main);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.first-activation-card__body h2 {
+  margin: 0 0 8px;
+  color: var(--text-heading);
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.first-activation-card__body p {
+  margin: 0;
+  color: var(--text-body);
+  font-family: var(--font-main);
+  font-size: 0.88rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.52;
+}
+
+.first-activation-card__button {
+  appearance: none;
+  width: 100%;
+  min-height: 50px;
+  margin-top: 18px;
+  border: 1px solid rgba(var(--brand-primary-rgb), 0.22);
+  border-radius: var(--radius-control);
+  background: var(--surface-action-soft);
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font: inherit;
+  font-family: var(--font-main);
+  font-weight: 850;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.first-activation-card__button:hover,
+.first-activation-card__button:focus-visible {
+  transform: translateY(-1px);
+  background: var(--surface-action-hover);
+  border-color: var(--border-strong);
+  outline: none;
+}
+
+.first-activation-card__button:active {
+  transform: scale(0.98);
+}
+
+.home-daily-verse-card {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 18px;
+  border: 1px solid var(--border-soft);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(var(--brand-warm-rgb), 0.1), transparent 32%),
+    linear-gradient(135deg, var(--surface-card-strong), var(--surface-card));
+  box-shadow: 0 12px 30px rgba(83, 110, 98, 0.08);
+}
+
+.home-daily-verse-card__topline {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.home-daily-verse-card__icon {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border-radius: 15px;
+  background: var(--surface-action-soft);
+  color: var(--brand-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-daily-verse-card__eyebrow {
+  color: var(--text-heading);
+  font-family: var(--font-main);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.home-daily-verse-card__reference {
+  margin-inline-start: auto;
+  max-width: 42%;
+  overflow: hidden;
+  padding: 6px 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+  background: rgba(var(--surface-card-rgb), 0.66);
+  color: var(--text-body);
+  font-family: var(--font-main);
+  font-size: 0.68rem;
+  font-weight: 850;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-daily-verse-card__body {
+  position: relative;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.home-daily-verse-card__arabic {
+  direction: rtl;
+  margin: 0;
+  color: var(--text-heading);
+  font-family: var(--font-arabic);
+  font-size: 1.42rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.65;
+  text-align: right;
+  word-spacing: 2px;
+}
+
+.home-daily-verse-card__translation {
+  position: relative;
+  padding-inline-start: 28px;
+}
+
+.home-daily-verse-card__quote {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  color: var(--brand-warm);
+  opacity: 0.75;
+}
+
+.home-daily-verse-card__text {
+  margin: 0;
+  color: var(--text-heading);
+  font-family: var(--font-main);
+  font-size: 1.08rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+
+[data-theme='dark'] .home-quick-access-item {
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] .home-quick-access-item--sage,
+[data-theme='dark'] .home-quick-access-item--moss {
+  --quick-bg: rgba(217, 160, 91, 0.13);
+  --quick-bg-hover: rgba(217, 160, 91, 0.2);
+  --quick-icon-bg: rgba(243, 192, 107, 0.16);
+  --quick-color: var(--tertiary);
+}
+
+[data-theme='dark'] .home-quick-access-item--warm,
+[data-theme='dark'] .home-quick-access-item--clay {
+  --quick-bg: rgba(142, 154, 166, 0.1);
+  --quick-bg-hover: rgba(142, 154, 166, 0.16);
+  --quick-icon-bg: rgba(142, 154, 166, 0.16);
+  --quick-color: var(--tertiary);
+}
+
+.home-priority-card {
+  margin: 0;
+  padding: 20px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-card);
+}
+
+.home-priority-card__eyebrow {
+  margin-bottom: 10px;
+  color: var(--text-body);
+  font-family: var(--font-main);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-priority-card__body {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.home-priority-card__icon {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  border-radius: 16px;
+  background: var(--surface-action-soft);
+  color: var(--brand-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-priority-card__title {
+  margin: 0 0 6px;
+  color: var(--text-heading);
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.22;
+}
+
+.home-priority-card__description,
+.home-priority-card__support {
+  margin: 0;
+  color: var(--text-body);
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.home-priority-card__support {
+  margin-top: 8px;
+  font-size: 0.76rem;
+}
+
+.home-priority-card__button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 16px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-control);
+  background: var(--surface-action-soft);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-main);
+  font-weight: 850;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.home-priority-card__button:hover,
+.home-priority-card__button:focus-visible {
+  transform: translateY(-1px);
+  background: var(--surface-action-hover);
+  outline: none;
+}
+
+.home-priority-card__button:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 420px) {
+  .home-shell {
+    padding-inline: 14px;
+  }
+
+  .home-greeting {
+    font-size: 1.05rem;
+  }
+
+  .premium-home-hero {
+    padding: 20px 15px 16px;
+  }
+
+  .premium-home-hero__mosque-art {
+    right: -28px;
+    bottom: 154px;
+    width: 58%;
+  }
+
+  .premium-home-hero__next,
+  .premium-home-hero__countdown {
+    max-width: 66%;
+  }
+
+  .premium-home-hero__main {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .premium-home-hero__countdown {
+    width: 100%;
+  }
+
+  .home-prayer-strip {
+    gap: 4px;
+    padding: 6px;
+  }
+
+  .home-prayer-strip__item {
+    min-height: 56px;
+    padding-inline: 2px;
+  }
+
+  .home-prayer-strip__name {
+    font-size: 0.52rem;
+  }
+
+  .home-prayer-strip__time {
+    font-size: 0.62rem;
+  }
+
+  .home-quick-access-strip {
+    gap: 8px;
+  }
+
+  .home-quick-access-item {
+    min-height: 86px;
+    padding-inline: 4px;
+  }
+
+  .home-quick-access-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+  }
+
+  .first-activation-card {
+    padding: 18px;
+  }
+
+  .first-activation-card__body h2 {
+    font-size: 1.1rem;
+  }
+
+  .first-activation-card__body p {
+    font-size: 0.84rem;
+  }
+
+  .home-daily-verse-card {
+    padding: 16px;
+  }
+
+  .home-daily-verse-card__text {
+    font-size: 1.08rem;
+  }
+
+  .home-daily-verse-card__reference {
+    max-width: 38%;
+  }
+}
+
+/* Imagegen premium-light implementation layer. */
+.home-redesign-container {
+  background: var(--surface-page);
+}
+
+.home-header {
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 8%, transparent);
+  background: color-mix(in srgb, var(--surface-page) 94%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.home-header-logo-container {
+  border-radius: 14px;
+  background: var(--primary);
+  box-shadow: 0 8px 20px rgba(22, 59, 43, 0.16);
+}
+
+.home-welcome-subtitle {
+  color: var(--text-subtle);
+  letter-spacing: 0.025em;
+}
+
+.premium-home-hero {
+  border-color: rgba(181, 138, 71, 0.28);
+  background: #0f563f;
+  box-shadow: 0 18px 42px rgba(22, 59, 43, 0.18);
+}
+
+.premium-home-hero::before {
+  background:
+    radial-gradient(circle at 88% 15%, rgba(181, 138, 71, 0.17), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.045), transparent 52%);
+}
+
+.premium-home-hero__timer,
+.premium-home-hero__item.is-active .premium-home-hero__time,
+.home-prayer-strip__item.is-active .home-prayer-strip__time,
+.home-prayer-strip__item.is-active .home-prayer-strip__icon {
+  color: #dfb766;
+}
+
+.home-prayer-strip__item.is-active {
+  border-color: rgba(223, 183, 102, 0.75);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.home-daily-verse-card {
+  border-color: rgba(181, 138, 71, 0.22);
+  background: var(--surface-card-strong);
+  box-shadow: var(--shadow-card);
+}
+
+.home-daily-verse-card__reference,
+.home-daily-verse-card__quote {
+  color: #8b642b;
+}
+
+.home-quick-access-item {
+  --quick-bg: var(--surface-container-low);
+  --quick-bg-hover: var(--primary-container);
+  --quick-icon-bg: var(--surface-card-strong);
+  --quick-color: var(--primary);
+  border-color: var(--card-border);
+  border-radius: 20px;
+  box-shadow: none;
+}
+
+.home-quick-access-item--sage,
+.home-quick-access-item--warm,
+.home-quick-access-item--clay,
+.home-quick-access-item--moss {
+  --quick-bg: var(--surface-container-low);
+  --quick-bg-hover: var(--primary-container);
+  --quick-icon-bg: var(--surface-card-strong);
+  --quick-color: var(--primary);
+}
+
+.home-quick-access-item:hover,
+.home-quick-access-item:focus-visible {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card);
+}
+
+/* Supplied home reference: warm paper, editorial typography, quiet green accents. */
+.home-header { min-height: 78px; padding: 18px 20px 10px; border: 0; background: var(--surface-page); backdrop-filter: none; }
+.home-header-logo-container, .home-welcome-subtitle { display: none; }
+.home-header-title-text { color: var(--primary); font: 600 2.45rem/1 var(--font-display); letter-spacing: -0.035em; }
+.home-header-actions { display: none; }
+.home-main-content { gap: 16px; padding-top: 8px; }
+.premium-home-hero { border-color: color-mix(in srgb, var(--outline-variant) 62%, transparent); background: linear-gradient(145deg, var(--surface-bright), var(--surface-container-low)); box-shadow: 0 9px 26px rgba(23, 60, 42, 0.08); }
+.premium-home-hero::before { background: radial-gradient(circle at 82% 22%, color-mix(in srgb, var(--tertiary) 12%, transparent), transparent 35%); }
+.home-quick-access-strip::before { content: 'Hızlı erişim'; grid-column: 1 / -1; color: var(--on-surface); font: 650 1.22rem/1.2 var(--font-display); }
+.home-quick-access-item, .home-quick-access-item--sage, .home-quick-access-item--warm, .home-quick-access-item--clay, .home-quick-access-item--moss { --quick-bg: var(--surface-card-strong); --quick-bg-hover: var(--primary-container); --quick-icon-bg: transparent; --quick-color: var(--primary); min-height: 104px; border-color: color-mix(in srgb, var(--outline-variant) 58%, transparent); border-radius: 15px; box-shadow: 0 5px 16px rgba(23, 60, 42, 0.06); }
+.home-quick-access-icon { width: 46px; height: 46px; border-radius: 0; box-shadow: none; }
+.home-quick-access-label { color: var(--on-surface); font-size: 0.75rem; }
+.home-daily-verse-card { border-radius: 15px; background: var(--surface-card-strong); box-shadow: 0 5px 16px rgba(23, 60, 42, 0.06); }

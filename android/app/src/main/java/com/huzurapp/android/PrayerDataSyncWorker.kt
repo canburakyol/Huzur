@@ -116,8 +116,8 @@ class PrayerDataSyncWorker(
         fun updateCoordinates(context: Context, latitude: Double, longitude: Double) {
             context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
                 .edit()
-                .putFloat(KEY_LATITUDE, latitude.toFloat())
-                .putFloat(KEY_LONGITUDE, longitude.toFloat())
+                .putString(KEY_LATITUDE, latitude.toString())
+                .putString(KEY_LONGITUDE, longitude.toString())
                 .putBoolean(KEY_HAS_USER_COORDS, true)
                 .apply()
         }
@@ -177,12 +177,12 @@ class PrayerDataSyncWorker(
             val prefs = applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             val hasUserCoords = prefs.getBoolean(KEY_HAS_USER_COORDS, false)
             val latitude = if (hasUserCoords) {
-                prefs.getFloat(KEY_LATITUDE, DEFAULT_LAT.toFloat()).toDouble()
+                prefs.getString(KEY_LATITUDE, null)?.toDoubleOrNull() ?: DEFAULT_LAT
             } else {
                 DEFAULT_LAT
             }
             val longitude = if (hasUserCoords) {
-                prefs.getFloat(KEY_LONGITUDE, DEFAULT_LON.toFloat()).toDouble()
+                prefs.getString(KEY_LONGITUDE, null)?.toDoubleOrNull() ?: DEFAULT_LON
             } else {
                 DEFAULT_LON
             }

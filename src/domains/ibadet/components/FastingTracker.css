@@ -1,8 +1,8 @@
 /* Fasting Tracker - Lifestyle & Velocity Modern Styles */
 
 .active-fasting-card {
-    background: rgba(16, 185, 129, 0.05) !important;
-    border-color: rgba(16, 185, 129, 0.3) !important;
+    background: color-mix(in srgb, var(--secondary) 5%, transparent) !important;
+    border-color: color-mix(in srgb, var(--secondary) 30%, transparent) !important;
 }
 
 .velocity-dial-btn {

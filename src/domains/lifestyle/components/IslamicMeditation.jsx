@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Play, Pause, RotateCcw, Volume2, VolumeX, Moon, Sun, Wind, Heart } from 'lucide-react';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import { useAppStore } from '../../../stores/useAppStore';
+import { cancelFocusSession, completeFocusSession, getActiveFocusSession, pauseFocusSession, remainingMs, resumeFocusSession, startFocusSession } from '../../../services/focusSessionService';
+import { logger } from '../../../utils/logger';
 
 // Meditasyon Seansları
 const MEDITATION_SESSIONS = [
@@ -37,41 +40,65 @@ const MEDITATION_SESSIONS = [
 
 const IslamicMeditation = ({ onClose }) => {
   const { t } = useTranslation();
+  const activeSession = useAppStore((state) => state.activeFocusSession?.kind === 'islamic_meditation' ? state.activeFocusSession : null);
+  const setActiveSession = useAppStore((state) => state.setActiveFocusSession);
   const [selectedSession, setSelectedSession] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
-  const intervalRef = useRef(null);
+  const timerRef = useRef(null);
 
   // Zamanlayıcı
   useEffect(() => {
-    if (isPlaying && timeRemaining > 0) {
-      intervalRef.current = setInterval(() => {
-        setTimeRemaining(prev => {
-          if (prev <= 1) {
-            setIsPlaying(false);
-            clearInterval(intervalRef.current);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(intervalRef.current);
-  }, [isPlaying, timeRemaining]);
+    let cancelled = false;
+    getActiveFocusSession('islamic_meditation').then((session) => {
+      if (cancelled || !session) return;
+      const preset = MEDITATION_SESSIONS.find((item) => item.id === session.presetId);
+      if (!preset) return;
+      setSelectedSession(preset);
+      setActiveSession(session);
+      setIsPlaying(session.status === 'active');
+      setTimeRemaining(Math.ceil(remainingMs(session) / 1000));
+    }).catch((error) => logger.error('Meditation restore error:', error));
+    return () => { cancelled = true; };
+  }, [setActiveSession]);
 
-  const startSession = (session) => {
+  useEffect(() => {
+    if (!activeSession) return;
+    const refresh = async () => {
+      const next = Math.ceil(remainingMs(activeSession) / 1000);
+      setTimeRemaining(next);
+      if (next <= 0 && activeSession.status === 'active') {
+        await completeFocusSession(activeSession);
+        setActiveSession(null);
+        setIsPlaying(false);
+        return;
+      }
+      if (activeSession.status === 'active') timerRef.current = setTimeout(refresh, Math.min(1000, Math.max(100, activeSession.deadlineAt - Date.now())));
+    };
+    void refresh();
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [activeSession, setActiveSession]);
+
+  const startSession = async (session) => {
+    const persisted = await startFocusSession('islamic_meditation', session.id, session.duration * 60 * 1000);
     setSelectedSession(session);
+    setActiveSession(persisted);
     setTimeRemaining(session.duration * 60);
     setIsPlaying(true);
   };
 
-  const togglePlay = () => {
+  const togglePlay = async () => {
+    if (!activeSession) return;
+    const updated = isPlaying ? await pauseFocusSession(activeSession) : await resumeFocusSession(activeSession);
+    setActiveSession(updated);
     setIsPlaying(!isPlaying);
   };
 
-  const resetSession = () => {
-    setIsPlaying(false);
+  const resetSession = async () => {
+    const persisted = await startFocusSession('islamic_meditation', selectedSession.id, selectedSession.duration * 60 * 1000);
+    setActiveSession(persisted);
+    setIsPlaying(true);
     setTimeRemaining(selectedSession.duration * 60);
   };
 
@@ -89,7 +116,7 @@ const IslamicMeditation = ({ onClose }) => {
       <div className="app-container" style={{ minHeight: '100vh', padding: '20px', background: 'var(--bg-color)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '25px' }}>
           <IslamicBackButton onClick={onClose} />
-          <h2 style={{ margin: 0, fontSize: '22px', color: 'var(--primary-color)' }}>
+          <h2 style={{ margin: 0, fontSize: '22px', color: 'var(--primary)' }}>
             🧘 {t('meditation.title')}
           </h2>
         </div>
@@ -107,7 +134,7 @@ const IslamicMeditation = ({ onClose }) => {
                 padding: '20px',
                 borderRadius: '16px',
                 background: session.gradient,
-                color: 'white',
+                color: 'var(--on-primary)',
                 cursor: 'pointer',
                 textAlign: 'center',
                 transition: 'transform 0.2s ease',
@@ -134,16 +161,21 @@ const IslamicMeditation = ({ onClose }) => {
       alignItems: 'center',
       justifyContent: 'center',
       padding: '20px',
-      color: 'white'
+      color: 'var(--on-primary)'
     }}>
       {/* Geri Butonu */}
       <button
-        onClick={() => { setSelectedSession(null); setIsPlaying(false); }}
+        onClick={async () => {
+          await cancelFocusSession('islamic_meditation');
+          setActiveSession(null);
+          setSelectedSession(null);
+          setIsPlaying(false);
+        }}
         style={{
           position: 'absolute', top: '20px', left: '20px',
           background: 'rgba(255,255,255,0.2)', border: 'none',
           borderRadius: '50%', width: '40px', height: '40px',
-          color: 'white', cursor: 'pointer', display: 'flex',
+          color: 'var(--on-primary)', cursor: 'pointer', display: 'flex',
           alignItems: 'center', justifyContent: 'center'
         }}
       >
@@ -157,7 +189,7 @@ const IslamicMeditation = ({ onClose }) => {
           position: 'absolute', top: '20px', right: '20px',
           background: 'rgba(255,255,255,0.2)', border: 'none',
           borderRadius: '50%', width: '40px', height: '40px',
-          color: 'white', cursor: 'pointer', display: 'flex',
+          color: 'var(--on-primary)', cursor: 'pointer', display: 'flex',
           alignItems: 'center', justifyContent: 'center'
         }}
       >
@@ -174,7 +206,7 @@ const IslamicMeditation = ({ onClose }) => {
         <svg width="200" height="200" style={{ transform: 'rotate(-90deg)' }}>
           <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="8" />
           <circle
-            cx="100" cy="100" r="90" fill="none" stroke="white" strokeWidth="8"
+            cx="100" cy="100" r="90" fill="none" stroke='var(--on-primary)' strokeWidth="8"
             strokeDasharray={2 * Math.PI * 90}
             strokeDashoffset={2 * Math.PI * 90 * (1 - progress / 100)}
             strokeLinecap="round"
@@ -197,7 +229,7 @@ const IslamicMeditation = ({ onClose }) => {
           style={{
             width: '50px', height: '50px', borderRadius: '50%',
             background: 'rgba(255,255,255,0.2)', border: 'none',
-            color: 'white', cursor: 'pointer', display: 'flex',
+            color: 'var(--on-primary)', cursor: 'pointer', display: 'flex',
             alignItems: 'center', justifyContent: 'center'
           }}
         >
@@ -207,7 +239,7 @@ const IslamicMeditation = ({ onClose }) => {
           onClick={togglePlay}
           style={{
             width: '70px', height: '70px', borderRadius: '50%',
-            background: 'white', border: 'none',
+            background: 'var(--surface-card)', border: 'none',
             color: selectedSession.color, cursor: 'pointer', display: 'flex',
             alignItems: 'center', justifyContent: 'center'
           }}

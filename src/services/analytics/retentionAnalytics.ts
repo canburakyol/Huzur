@@ -21,16 +21,27 @@ class RetentionAnalyticsMethods {
     });
   }
 
-  logFirstActivationFeatureOpened(this: RetentionThis, feature = "unknown", actionSource = "onboarding"): void {
+  logFirstActivationFeatureOpened(
+    this: RetentionThis,
+    feature = "unknown",
+    actionSource = "onboarding",
+    metadata: Record<string, unknown> = {}
+  ): void {
     this.logEvent(ANALYTICS_EVENTS.FIRST_ACTIVATION_FEATURE_OPENED, {
       feature,
       source: actionSource,
+      ...(metadata && typeof metadata === "object" ? metadata : {}),
     });
   }
 
-  logFirstPrayerActionCompleted(this: RetentionThis, actionSource = "onboarding"): void {
+  logFirstPrayerActionCompleted(
+    this: RetentionThis,
+    actionSource = "onboarding",
+    metadata: Record<string, unknown> = {}
+  ): void {
     this.logEvent(ANALYTICS_EVENTS.FIRST_PRAYER_ACTION_COMPLETED, {
       source: actionSource,
+      ...(metadata && typeof metadata === "object" ? metadata : {}),
     });
   }
 

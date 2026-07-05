@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { STORAGE_KEYS } from '../constants';
 import {
+  FIRST_IBADAH_ACTION_COMPLETED_EVENT,
   hasCompletedFirstActivationAction,
   hasCompletedFirstIbadahAction,
   isActivationFeature,
@@ -27,6 +28,7 @@ vi.mock('./storageService', () => ({
   storageService: {
     getBoolean: vi.fn(),
     setBoolean: vi.fn(),
+    getString: vi.fn(),
   },
 }));
 
@@ -34,20 +36,28 @@ describe('activationService', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     storageService.getBoolean.mockImplementation(() => false);
+    storageService.getString.mockReturnValue('prayer_rhythm');
   });
 
   it('marks core spiritual feature opens as first activation without granting referral ibadah', () => {
     const result = markFirstActivationAction({
-      feature: 'huzurMode',
+      feature: 'routineBuilder',
       source: 'home_hero',
     });
 
     expect(result).toMatchObject({
       marked: true,
-      source: 'home_hero:huzurMode',
+      source: 'home_hero:routineBuilder',
     });
     expect(storageService.setBoolean).toHaveBeenCalledWith(STORAGE_KEYS.FIRST_ACTIVATION_FEATURE_OPENED, true);
-    expect(logFirstActivationFeatureOpened).toHaveBeenCalledWith('huzurMode', 'home_hero:huzurMode');
+    expect(logFirstActivationFeatureOpened).toHaveBeenCalledWith(
+      'routineBuilder',
+      'home_hero:routineBuilder',
+      expect.objectContaining({
+        activation_stage: 'feature_opened',
+        primary_goal: 'prayer_rhythm',
+      })
+    );
     expect(logFirstPrayerActionCompleted).not.toHaveBeenCalled();
     expect(markFirstIbadahCompletedForReferral).not.toHaveBeenCalled();
   });
@@ -90,6 +100,7 @@ describe('activationService', () => {
     expect(hasCompletedFirstActivationAction()).toBe(true);
     expect(hasCompletedFirstIbadahAction()).toBe(true);
     expect(isActivationFeature('dailyTasks')).toBe(true);
+    expect(isActivationFeature('duaTracker')).toBe(true);
     expect(isActivationFeature('settings')).toBe(false);
   });
 
@@ -100,6 +111,9 @@ describe('activationService', () => {
   });
 
   it('marks a real spiritual action as first ibadah and syncs referral once', () => {
+    const eventListener = vi.fn();
+    window.addEventListener(FIRST_IBADAH_ACTION_COMPLETED_EVENT, eventListener);
+
     const result = markFirstIbadahActionCompleted({
       feature: 'zikirmatik',
       source: 'zikir_increment',
@@ -111,8 +125,21 @@ describe('activationService', () => {
     });
     expect(storageService.setBoolean).toHaveBeenCalledWith(STORAGE_KEYS.FIRST_IBADAH_ACTION_DONE, true);
     expect(storageService.setBoolean).toHaveBeenCalledWith(STORAGE_KEYS.FIRST_ACTIVATION_FEATURE_OPENED, true);
-    expect(logFirstPrayerActionCompleted).toHaveBeenCalledWith('zikir_increment:zikirmatik');
+    expect(logFirstPrayerActionCompleted).toHaveBeenCalledWith(
+      'zikir_increment:zikirmatik',
+      expect.objectContaining({
+        activation_stage: 'ibadah_completed',
+        primary_goal: 'prayer_rhythm',
+      })
+    );
     expect(markFirstIbadahCompletedForReferral).toHaveBeenCalledTimes(1);
+    expect(eventListener).toHaveBeenCalledTimes(1);
+    expect(eventListener.mock.calls[0][0].detail).toMatchObject({
+      marked: true,
+      source: 'zikir_increment:zikirmatik',
+    });
+
+    window.removeEventListener(FIRST_IBADAH_ACTION_COMPLETED_EVENT, eventListener);
   });
 
   it('does not duplicate the first ibadah referral milestone', () => {

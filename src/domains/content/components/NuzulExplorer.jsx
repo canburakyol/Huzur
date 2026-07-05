@@ -293,7 +293,7 @@ const NuzulExplorer = ({ onClose }) => {
         }
 
         .message.user .message-avatar {
-          background: var(--primary-color);
+          background: var(--primary);
         }
 
         .message-content {
@@ -310,7 +310,7 @@ const NuzulExplorer = ({ onClose }) => {
         .result-title {
           margin: 0 0 8px 0;
           font-size: 1.1rem;
-          color: var(--primary-color);
+          color: var(--primary);
         }
 
         .message-content p {
@@ -385,7 +385,7 @@ const NuzulExplorer = ({ onClose }) => {
           width: 50px;
           height: 50px;
           border-radius: 50%;
-          background: var(--primary-color);
+          background: var(--primary);
           color: white;
           border: none;
           display: flex;
@@ -423,7 +423,7 @@ const NuzulExplorer = ({ onClose }) => {
         }
 
         .pro-badge-mini {
-          color: var(--primary-color);
+          color: var(--primary);
         }
 
         .nuzul-messages {
@@ -510,7 +510,7 @@ const NuzulExplorer = ({ onClose }) => {
           border: 1px solid rgba(212, 175, 55, 0.3);
           border-radius: 10px;
           font-size: 12px;
-          color: var(--primary-color);
+          color: var(--primary);
         }
 
         .message {
@@ -533,7 +533,7 @@ const NuzulExplorer = ({ onClose }) => {
         }
 
         .message.user .message-avatar {
-          background: var(--primary-color);
+          background: var(--primary);
         }
 
         .message-content {
@@ -550,7 +550,7 @@ const NuzulExplorer = ({ onClose }) => {
         .result-title {
           margin: 0 0 8px 0;
           font-size: 1.1rem;
-          color: var(--primary-color);
+          color: var(--primary);
         }
 
         .message-content p {
@@ -644,14 +644,14 @@ const NuzulExplorer = ({ onClose }) => {
         }
 
         .input-wrapper input:focus {
-          border-color: var(--primary-color);
+          border-color: var(--primary);
         }
 
         .send-btn {
           width: 50px;
           height: 50px;
           border-radius: 50%;
-          background: var(--primary-color);
+          background: var(--primary);
           color: white;
           border: none;
           display: flex;

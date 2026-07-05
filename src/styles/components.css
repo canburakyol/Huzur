@@ -109,13 +109,13 @@ body.android-webview .glass-card {
 .btn:active { transform: scale(0.95); }
 
 .btn-primary {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--primary);
+  color: var(--on-primary);
   box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-dark);
+  background-color: var(--primary);
   box-shadow: 0 6px 20px rgba(211, 84, 0, 0.4);
 }
 
@@ -169,8 +169,8 @@ body.android-webview .glass-card {
 }
 
 .prayer-time-card.active {
-  background: var(--primary-color);
-  color: white;
+  background: var(--primary);
+  color: var(--on-primary);
   box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
   transform: scale(1.05);
   border: none;
@@ -228,27 +228,52 @@ body.android-webview .glass-card {
 /* Bottom Navigation */
 .bottom-nav {
   position: fixed;
-  bottom: 50px;
-  padding-bottom: env(safe-area-inset-bottom);
-  height: 70px;
+  bottom: env(safe-area-inset-bottom, 0px);
+  height: var(--bottom-nav-height);
   inset-inline-start: 0;
   inset-inline-end: 0;
-  background: var(--nav-surface);
-  backdrop-filter: blur(var(--surface-blur-strong)) saturate(var(--surface-saturate));
-  -webkit-backdrop-filter: blur(var(--surface-blur-strong)) saturate(var(--surface-saturate));
-  border-top: 1px solid var(--glass-border);
-  box-shadow: var(--elevation-medium);
+  background: var(--surface-card-strong);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 0;
+  border-top: 1px solid var(--border-soft);
+  border-radius: 0;
+  box-shadow: none;
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 0;
   z-index: 100;
-  max-width: 600px;
+  max-width: none;
   margin: 0 auto;
 }
 
+.app-container.has-bottom-banner .bottom-nav {
+  bottom: calc(var(--ad-height) + env(safe-area-inset-bottom, 0px));
+}
+
+/* Native AdMob renders outside the DOM at the physical bottom edge. Full-screen
+   feature routes must reserve their own scroll space because router padding
+   does not affect fixed/overlay children. */
+.ad-safe-screen {
+  box-sizing: border-box;
+  padding-bottom: calc(var(--ad-height) + 16px + env(safe-area-inset-bottom, 0px)) !important;
+  scroll-padding-bottom: calc(var(--ad-height) + 16px + env(safe-area-inset-bottom, 0px));
+}
+
+.ad-safe-feature-shell > .settings-container,
+.ad-safe-feature-shell > .app-container {
+  box-sizing: border-box;
+  padding-bottom: calc(var(--ad-height) + 16px + env(safe-area-inset-bottom, 0px)) !important;
+  scroll-padding-bottom: calc(var(--ad-height) + 16px + env(safe-area-inset-bottom, 0px));
+}
+
+.ad-safe-feature-shell > [style*="position: fixed"][style*="bottom: 0"] {
+  bottom: calc(var(--ad-height) + env(safe-area-inset-bottom, 0px)) !important;
+}
+
 @media (min-width: 601px) {
-  .bottom-nav { inset-inline-start: 50%; transform: translateX(-50%); }
+  .bottom-nav { inset-inline-start: 50%; inset-inline-end: auto; width: min(600px, 100vw); transform: translateX(-50%); }
 }
 
 [dir="rtl"] .bottom-nav { transform: translateX(50%); }
@@ -259,12 +284,12 @@ body.android-webview .glass-card {
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 8px 12px;
+  padding: 8px 10px;
   cursor: pointer;
   transition: var(--transition-smooth);
-  color: var(--text-primary);
-  border-radius: 12px;
-  min-width: 70px;
+  color: var(--text-body, var(--text-primary));
+  border-radius: 18px;
+  min-width: 58px;
   opacity: 1 !important;
 }
 
@@ -279,20 +304,33 @@ body.android-webview .glass-card {
 
 html.android-webview .bottom-nav,
 body.android-webview .bottom-nav {
-  background: var(--nav-surface-strong);
-  border-top: 1px solid var(--glass-border);
+  background: var(--surface-card-strong, var(--nav-surface-strong));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid var(--border-soft, var(--glass-border));
 }
 
 .nav-item span {
-  font-size: 0.6875rem;
-  font-weight: 700;
+  font-size: 0.64rem;
+  font-weight: 800;
   transition: var(--transition-smooth);
   opacity: 1 !important;
 }
 
 .nav-item.active {
-  color: var(--accent-vibrant) !important;
-  background: rgba(var(--nav-accent-rgb), 0.14);
+  color: var(--brand-primary, var(--accent-vibrant)) !important;
+  background: transparent;
+  position: relative;
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--soft-sage);
 }
 
 .nav-item.active svg {
@@ -302,8 +340,8 @@ body.android-webview .bottom-nav {
 }
 
 .nav-item:hover:not(.active) {
-  color: var(--primary-dark);
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--primary);
+  background: var(--surface-action-soft, rgba(255, 255, 255, 0.06));
 }
 
 .assistant-icon-wrapper { position: relative; }
@@ -334,8 +372,8 @@ body.android-webview .bottom-nav {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  color: white;
+  background: linear-gradient(135deg, var(--primary), var(--primary));
+  color: var(--on-primary);
   border: none;
   cursor: pointer;
   display: flex;
@@ -389,7 +427,7 @@ body.android-webview .bottom-nav {
 }
 
 .hamburger-logo { font-size: 3rem; margin-bottom: 8px; }
-.hamburger-title { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin: 0 0 4px 0; }
+.hamburger-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin: 0 0 4px 0; }
 .hamburger-subtitle { font-size: 0.75rem; color: var(--text-color-muted); margin: 0; }
 
 .hamburger-grid {
@@ -404,7 +442,7 @@ body.android-webview .bottom-nav {
 
 .hamburger-grid::-webkit-scrollbar { width: 4px; }
 .hamburger-grid::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.1); border-radius: 2px; }
-.hamburger-grid::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 2px; }
+.hamburger-grid::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
 
 .hamburger-item {
   display: flex;
@@ -427,8 +465,8 @@ body.android-webview .bottom-nav {
 }
 
 .hamburger-item:active { transform: scale(0.95); }
-.hamburger-item.active { background: var(--primary-color); border-color: var(--primary-color); }
-.hamburger-item.active .hamburger-item-label { color: #fff; }
+.hamburger-item.active { background: var(--primary); border-color: var(--primary); }
+.hamburger-item.active .hamburger-item-label { color: var(--on-primary); }
 
 .hamburger-item-icon { font-size: 1.75rem; margin-bottom: 8px; transition: transform 0.2s; }
 .hamburger-item:hover .hamburger-item-icon { transform: scale(1.15); }
@@ -465,13 +503,13 @@ body.android-webview .bottom-nav {
   color: var(--text-color-muted);
   transition: color 0.2s;
 }
-.close-button:hover { color: var(--primary-color); }
-.religious-days-title { color: var(--primary-color); margin-bottom: 20px; }
+.close-button:hover { color: var(--primary); }
+.religious-days-title { color: var(--primary); margin-bottom: 20px; }
 .days-list { text-align: start; }
 .day-item { padding: 15px; border-bottom: 1px solid var(--glass-border); transition: background-color 0.2s; }
 .day-item.past { opacity: 0.5; background: rgba(255, 255, 255, 0.03); }
 .day-name { font-weight: bold; color: var(--text-primary); font-size: 1.125rem; }
-.day-date { color: var(--primary-color); font-size: 1rem; }
+.day-date { color: var(--primary); font-size: 1rem; }
 
 /* Streak Badge */
 .streak-badge {
@@ -489,11 +527,11 @@ body.android-webview .bottom-nav {
 }
 
 .streak-badge .streak-emoji { font-size: 1rem; }
-.streak-badge .streak-count { color: var(--primary-color); font-weight: 700; }
+.streak-badge .streak-count { color: var(--primary); font-weight: 700; }
 
 .streak-badge.milestone {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(255, 193, 7, 0.2));
-  border-color: var(--primary-color);
+  border-color: var(--primary);
   box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
   animation: streakGlow 2s ease-in-out infinite alternate;
 }
@@ -524,7 +562,7 @@ body.android-webview .bottom-nav {
   text-align: center;
   max-width: 340px;
   width: 90%;
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--primary);
   box-shadow: 0 20px 60px rgba(212, 175, 55, 0.4);
   animation: celebrationPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -545,12 +583,12 @@ body.android-webview .bottom-nav {
   50% { transform: scale(1.2); }
 }
 
-.badge-celebration .badge-title { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 12px; }
+.badge-celebration .badge-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
 .badge-celebration .badge-message { font-size: 1rem; color: var(--text-color); margin-bottom: 24px; line-height: 1.5; }
 
 .badge-celebration .badge-close-btn {
-  background: var(--primary-color);
-  color: white;
+  background: var(--primary);
+  color: var(--on-primary);
   border: none;
   padding: 14px 40px;
   border-radius: 12px;
@@ -561,7 +599,7 @@ body.android-webview .bottom-nav {
   transition: all 0.2s ease;
 }
 
-.badge-celebration .badge-close-btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.badge-celebration .badge-close-btn:hover { background: var(--primary); transform: translateY(-2px); }
 .badge-celebration .badge-close-btn:active { transform: scale(0.95); }
 
 /* RTL Support */
@@ -641,4 +679,41 @@ body.android-webview .bottom-nav {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15));
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Modern Sage & Linen Theme Classes */
+.bg-huzur-linen-100 {
+  background-color: var(--surface-card) !important;
+}
+[data-theme='dark'] .bg-huzur-linen-100 {
+  background-color: var(--bg-gradient-start) !important;
+}
+
+.bg-white {
+  background-color: var(--surface-card) !important;
+}
+[data-theme='dark'] .bg-white {
+  background-color: var(--glass-bg) !important;
+}
+
+.rounded-3xl {
+  border-radius: 28px !important;
+}
+
+.rounded-2xl {
+  border-radius: 16px !important;
+}
+
+.border-huzur-sage-100 {
+  border: 1px solid rgba(141, 170, 157, 0.2) !important;
+}
+[data-theme='dark'] .border-huzur-sage-100 {
+  border: 1px solid var(--glass-border) !important;
+}
+
+.shadow-huzur-soft {
+  box-shadow: 0 12px 40px 0 rgba(141, 170, 157, 0.08) !important;
+}
+[data-theme='dark'] .shadow-huzur-soft {
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45) !important;
 }

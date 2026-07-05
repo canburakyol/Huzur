@@ -1,4 +1,16 @@
-/* Zikirmatik - Lifestyle & Velocity Theme */
+/* Zikirmatik - Huzur Serene Design System */
+
+.zikirmatik-screen {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    padding-bottom: calc(var(--bottom-stack-height) + 24px) !important;
+    background: var(--surface-page);
+    color: var(--text-primary);
+}
 
 .velocity-dial-wrapper {
     position: relative;
@@ -9,6 +21,15 @@
     justify-content: center;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    z-index: 2;
+    touch-action: manipulation;
+    user-select: none;
+    margin: 0 auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
 }
 
 .velocity-dial-svg {
@@ -20,64 +41,83 @@
 
 .velocity-dial-bg {
     fill: none;
-    stroke: var(--nav-border, var(--glass-border, rgba(180, 83, 9, 0.25)));
+    stroke: var(--border-soft);
     stroke-width: 8;
-    opacity: 0.3;
+    opacity: 0.45;
 }
 
 .velocity-dial-progress {
     fill: none;
-    stroke: var(--nav-accent, var(--accent-gold-light, #f59e0b));
+    stroke: var(--nav-accent, var(--tertiary));
     stroke-width: 8;
     stroke-linecap: round;
-    transition: stroke-dashoffset 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: stroke-dashoffset 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .velocity-dial-button {
-    width: 220px;
-    height: 220px;
-    background: var(--nav-bg, var(--glass-bg, rgba(6, 78, 59, 0.65)));
+    width: 228px;
+    height: 228px;
+    background: var(--surface-container-lowest);
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), inset 0 0 20px rgba(0, 0, 0, 0.02);
-    border: 1px solid var(--nav-border, var(--glass-border, rgba(180, 83, 9, 0.25)));
-    transition: transform 0.1s ease;
+    box-shadow: var(--elevation-soft), inset 0 2px 10px rgba(0, 0, 0, 0.01);
+    border: 1px solid var(--border-soft);
+    transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.15s ease;
+}
+
+.velocity-dial-wrapper:active .velocity-dial-button {
+    transform: scale(0.96);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.dhikr-input-custom {
+    font-family: var(--font-main);
+    color: var(--text-heading) !important;
+}
+
+.dhikr-input-custom::placeholder {
+    color: var(--text-subtle);
+    opacity: 0.6;
 }
 
 .velocity-target-btn {
-    background: var(--nav-bg, var(--glass-bg, rgba(6, 78, 59, 0.65)));
-    border: 1px solid var(--nav-border, var(--glass-border, rgba(180, 83, 9, 0.25)));
-    border-radius: 12px;
-    padding: 12px 20px;
-    color: var(--nav-text-muted, var(--text-muted, rgba(209, 213, 219, 0.6)));
+    background: var(--surface-container-low);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-default);
+    padding: 10px 18px;
+    color: var(--text-subtle);
     font-weight: 800;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: var(--transition-smooth);
+}
+
+.velocity-target-btn:hover {
+    background: var(--surface-container);
+    color: var(--text-primary);
 }
 
 .velocity-target-btn.active {
-    background: var(--nav-accent, var(--accent-gold-light, #f59e0b));
+    background: var(--nav-accent, var(--tertiary));
     border-color: transparent;
-    color: white;
-    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+    color: var(--on-primary);
+    box-shadow: var(--elevation-soft);
 }
 
+.velocity-target-btn:active {
+    transform: scale(0.95);
+}
+
+/* Confetti Scale Up Anim */
 @keyframes scaleUp {
     from { transform: scale(0.5); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-/* Dark Mode Tweaks */
+/* Muted state for focus mode */
 [data-theme='dark'] .velocity-dial-button {
-    background: #1a1b1e;
-    border-color: #2c2d30;
+    background: var(--surface-container-lowest);
+    border-color: var(--border-soft);
 }

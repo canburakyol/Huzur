@@ -27,6 +27,14 @@ const nativeAdServiceMock = vi.hoisted(() => ({
   },
 }));
 
+const analyticsMock = vi.hoisted(() => ({
+  logEvent: vi.fn(),
+  ANALYTICS_EVENTS: {
+    AD_REWARDED_REQUESTED: "ad_rewarded_requested",
+    AD_REWARDED_GRANTED: "ad_rewarded_granted",
+  },
+}));
+
 vi.mock("@capacitor/core", () => ({
   Capacitor: capacitorMock,
 }));
@@ -63,6 +71,7 @@ vi.mock("./adEnvironmentService", () => ({
 }));
 
 vi.mock("./nativeAdService", () => nativeAdServiceMock);
+vi.mock("./analyticsService", () => analyticsMock);
 
 vi.mock("../utils/logger", () => ({
   logger: {
@@ -88,6 +97,7 @@ describe("admobService consent and cleanup", () => {
     capacitorMock.getPlatform.mockReturnValue("android");
     privacyMock.canInitializeAdMob.mockReturnValue(true);
     adMobMock.requestConsentInfo.mockResolvedValue({ isConsentFormAvailable: false, status: "NOT_REQUIRED" });
+    adMobMock.addListener.mockImplementation(async () => ({ remove: vi.fn(async () => undefined) }));
   });
 
   it("does not simulate rewarded ad on web without ad consent", async () => {
@@ -128,5 +138,25 @@ describe("admobService consent and cleanup", () => {
 
     expect(adMobMock.initialize).not.toHaveBeenCalled();
     expect(adMobMock.addListener).not.toHaveBeenCalled();
+  });
+
+  it("tracks rewarded requests and granted rewards", async () => {
+    const { showRewardedAd } = await importAdMobService();
+
+    await expect(showRewardedAd()).resolves.toEqual({
+      success: true,
+      reward: { amount: 1, type: "streak_recovery" },
+    });
+
+    expect(analyticsMock.logEvent).toHaveBeenCalledWith("ad_rewarded_requested", expect.objectContaining({
+      surface: "streak_recovery",
+      use_test_ads: true,
+    }));
+    expect(analyticsMock.logEvent).toHaveBeenCalledWith("ad_rewarded_granted", expect.objectContaining({
+      surface: "streak_recovery",
+      reward_type: "streak_recovery",
+      reward_amount: 1,
+      use_test_ads: true,
+    }));
   });
 });

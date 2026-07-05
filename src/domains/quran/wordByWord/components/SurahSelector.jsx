@@ -36,7 +36,7 @@ const SurahSelector = ({ t, userIsPro, freeSurahs, onSelectSurah, onUpgrade }) =
               gap: '12px',
               opacity: isAvailable ? 1 : 0.4,
               cursor: isAvailable ? 'pointer' : 'default',
-              border: isFree && !userIsPro ? '1px solid #22c55e' : '1px solid var(--nav-border)',
+              border: isFree && !userIsPro ? '1px solid var(--success-color)' : '1px solid var(--nav-border)',
             }}
             onClick={() => isAvailable && onSelectSurah(surah.number)}
           >
@@ -45,8 +45,8 @@ const SurahSelector = ({ t, userIsPro, freeSurahs, onSelectSurah, onUpgrade }) =
               style={{
                 width: '32px',
                 height: '32px',
-                background: isFree && !userIsPro ? 'rgba(34, 197, 94, 0.1)' : 'var(--nav-hover)',
-                color: isFree && !userIsPro ? '#22c55e' : 'var(--nav-accent)',
+                background: isFree && !userIsPro ? 'var(--surface-action-soft)' : 'var(--nav-hover)',
+                color: isFree && !userIsPro ? 'var(--success-color)' : 'var(--nav-accent)',
                 fontSize: '0.8rem',
                 borderRadius: '10px',
               }}
@@ -72,7 +72,7 @@ const SurahSelector = ({ t, userIsPro, freeSurahs, onSelectSurah, onUpgrade }) =
             </div>
             {isLocked && <Lock size={14} color="var(--nav-text-muted)" />}
             {isFree && !userIsPro && (
-              <div style={{ color: '#22c55e', fontWeight: '900', fontSize: '0.7rem' }}>FREE</div>
+              <div style={{ color: 'var(--success-color)', fontWeight: '900', fontSize: '0.7rem' }}>FREE</div>
             )}
           </div>
         );
@@ -85,18 +85,18 @@ const SurahSelector = ({ t, userIsPro, freeSurahs, onSelectSurah, onUpgrade }) =
         style={{
           marginTop: '32px',
           padding: '24px',
-          background: 'linear-gradient(135deg, var(--nav-accent), #f59e0b)',
+          background: 'var(--primary)',
           border: 'none',
           cursor: 'pointer',
           '--delay': '0.5s',
         }}
         onClick={onUpgrade}
       >
-        <div className="settings-icon-box" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
+        <div className="settings-icon-box" style={{ background: 'rgba(255,255,255,0.2)', color: 'var(--on-primary)' }}>
           <Crown size={24} />
         </div>
         <div style={{ flex: 1 }}>
-          <h4 style={{ margin: 0, color: 'white', fontWeight: '900', fontSize: '1.1rem' }}>
+          <h4 style={{ margin: 0, color: 'var(--on-primary)', fontWeight: '900', fontSize: '1.1rem' }}>
             {t('wordByWord.unlockAll')}
           </h4>
           <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.9)', fontSize: '0.85rem', fontWeight: '600' }}>

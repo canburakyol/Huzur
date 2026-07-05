@@ -5,7 +5,7 @@ import { getDb } from './firebase';
 import { storageService } from './storageService';
 
 const CACHE_TTL_MS = 5 * 60 * 1000;
-const ALLOWED_STEPS = ['language', 'permissions', 'goal', 'preview'];
+const ALLOWED_STEPS = ['language', 'goal', 'preview'];
 
 type OnboardingConfig = {
   flowVersion: string;

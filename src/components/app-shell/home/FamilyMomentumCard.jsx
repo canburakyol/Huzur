@@ -15,46 +15,48 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
   if (!family) {
     return (
       <div
-        className="settings-card reveal-stagger"
+        className="settings-card reveal-stagger bg-white rounded-3xl border-huzur-sage-100 shadow-huzur-soft"
         style={{
           margin: '0 5px 16px',
-          padding: '18px 18px',
+          padding: '22px 20px',
+          display: 'flex',
           flexDirection: 'column',
-          alignItems: 'stretch',
-          borderRadius: '22px',
-          background: 'linear-gradient(145deg, rgba(180, 83, 9, 0.12), rgba(15, 118, 110, 0.08))',
-          border: '1px solid rgba(180, 83, 9, 0.18)'
+          alignItems: 'stretch'
         }}
       >
-        <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 10 }}>
+        <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: 16 }}>
           <div style={{
-            width: 42,
-            height: 42,
+            width: 46,
+            height: 46,
             borderRadius: 14,
-            background: 'rgba(255,255,255,0.08)',
+            background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            flexShrink: 0
           }}>
-            <Users size={18} color="var(--nav-accent)" />
+            <Users size={18} color="var(--accent-gold)" />
           </div>
           <div>
-          <div style={{ fontSize: '0.82rem', fontWeight: '900', color: 'var(--nav-text)' }}>{t('homeFeed.family.noFamilyTitle')}</div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', lineHeight: '1.45' }}>
-            {t('homeFeed.family.noFamilyDesc')}
-          </div>
+            <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-primary)', marginBottom: 4 }}>
+              {t('homeFeed.family.noFamilyTitle')}
+            </div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.45' }}>
+              {t('homeFeed.family.noFamilyDesc')}
+            </div>
           </div>
         </div>
         <button
           onClick={() => onSelectFeature('family')}
           className="hover-lift"
           style={{
-            border: 'none',
-            borderRadius: '14px',
-            background: 'rgba(212, 175, 55, 0.16)',
-            color: 'var(--nav-accent)',
-            padding: '12px 14px',
-            fontWeight: '800',
+            border: '1px solid color-mix(in srgb, var(--secondary) 20%, transparent)',
+            borderRadius: '16px',
+            background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
+            color: 'var(--primary)',
+            padding: '14px 16px',
+            fontFamily: 'var(--font-main)',
+            fontWeight: '700',
             cursor: 'pointer'
           }}
         >
@@ -66,58 +68,57 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
 
   return (
     <div
-      className="settings-card reveal-stagger"
+      className="settings-card reveal-stagger bg-white rounded-3xl border-huzur-sage-100 shadow-huzur-soft"
       style={{
         margin: '0 5px 16px',
-        padding: '18px 18px',
+        padding: '22px 20px',
+        display: 'flex',
         flexDirection: 'column',
-        alignItems: 'stretch',
-        borderRadius: '22px',
-        background: 'linear-gradient(145deg, rgba(180, 83, 9, 0.12), rgba(15, 118, 110, 0.08))',
-        border: '1px solid rgba(180, 83, 9, 0.18)'
+        alignItems: 'stretch'
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 12 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 14, marginBottom: 14 }}>
         <div>
-          <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 6 }}>
+          <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 6 }}>
             {t('homeFeed.family.eyebrow')}
           </div>
-          <div style={{ fontSize: '1rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+          <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>
             {family.name || 'Ailen'}
           </div>
-          <div style={{ fontSize: '0.78rem', color: 'var(--nav-text-muted)', lineHeight: '1.45', marginTop: 4 }}>
+          <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.45', marginTop: 4 }}>
             {weeklyGoal?.title || t('homeFeed.family.defaultGoal')}
           </div>
         </div>
         <div style={{
           minWidth: 64,
           borderRadius: 16,
-          background: 'rgba(255,255,255,0.08)',
+          background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
           padding: '10px 12px',
           textAlign: 'center',
-          border: '1px solid rgba(255,255,255,0.1)'
+          border: '1px solid color-mix(in srgb, var(--secondary) 20%, transparent)'
         }}>
-          <div style={{ fontSize: '1.1rem', fontWeight: '900', color: 'var(--bg-emerald-light)' }}>
+          <div style={{ fontSize: '1.1rem', fontWeight: '900', color: 'var(--primary)', fontFamily: 'var(--font-main)' }}>
             {weeklyGoalLoading ? '...' : `${progressPercent}%`}
           </div>
-          <div style={{ fontSize: '0.64rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+          <div style={{ fontSize: '0.64rem', fontWeight: '800', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', textTransform: 'uppercase' }}>
             {t('homeFeed.family.progressLabel')}
           </div>
         </div>
       </div>
 
-      <div style={{ height: 10, borderRadius: 999, background: 'rgba(0,0,0,0.16)', overflow: 'hidden', marginBottom: 10 }}>
+      <div style={{ height: 8, borderRadius: 10, background: 'color-mix(in srgb, var(--secondary) 12%, transparent)', overflow: 'hidden', marginBottom: 14 }}>
         <div
           style={{
             width: `${progressPercent}%`,
             height: '100%',
-            background: 'linear-gradient(90deg, var(--nav-accent), var(--bg-emerald-light))'
+            background: 'linear-gradient(90deg, var(--accent-gold-light), var(--accent-gold))',
+            borderRadius: 10
           }}
         />
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-        <div style={{ fontSize: '0.76rem', color: 'var(--nav-text-muted)', lineHeight: '1.45' }}>
+        <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.45' }}>
           {weeklyGoal
             ? t('homeFeed.family.hasGoalDesc', { current: weeklyGoal.currentValue || 0, target: weeklyGoal.targetValue || 0 })
             : t('homeFeed.family.noGoalDesc')}
@@ -126,12 +127,13 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
           onClick={() => onSelectFeature('family')}
           className="hover-lift"
           style={{
-            border: 'none',
-            borderRadius: '14px',
-            background: 'rgba(15, 118, 110, 0.16)',
-            color: 'var(--bg-emerald-light)',
+            border: '1px solid color-mix(in srgb, var(--secondary) 20%, transparent)',
+            borderRadius: '16px',
+            background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
+            color: 'var(--primary)',
             padding: '10px 14px',
-            fontWeight: '800',
+            fontFamily: 'var(--font-main)',
+            fontWeight: '700',
             cursor: 'pointer',
             whiteSpace: 'nowrap'
           }}

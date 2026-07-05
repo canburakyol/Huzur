@@ -13,6 +13,8 @@ const QURAN_STORAGE_KEYS = {
     SIMPLE_MODE: 'quranSimpleMode'
 };
 
+
+
 const EMPTY_ARRAY = [];
 const DEFAULT_TRANSLATIONS = [
     { identifier: 'tr.vakfi', name: 'Diyanet Vakfi (Turkce)', language: 'tr', type: 'translation' },
@@ -22,7 +24,42 @@ const DEFAULT_TRANSLATIONS = [
 const normalizeTranslationId = (translationId) => (translationId === 'tr.diyanet' ? 'tr.vakfi' : translationId);
 const BASMALA_TEXT = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
 
+const smoothScrollTo = (container, targetY, duration = 350) => {
+    const startY = container.scrollTop;
+    const difference = targetY - startY;
+    const startTime = performance.now();
+
+    const animateScroll = (currentTime) => {
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+
+        // Easing: easeInOutCubic
+        const ease = progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+        container.scrollTop = startY + difference * ease;
+
+        if (timeElapsed < duration) {
+            window.requestAnimationFrame(animateScroll);
+        }
+    };
+
+    window.requestAnimationFrame(animateScroll);
+};
+
 function Quran({ onClose }) {
+    useEffect(() => {
+        let isMounted = true;
+
+        void import('../../../services/admobService')
+            .then(({ adMobService }) => isMounted && adMobService.hideBanner())
+            .catch(() => undefined);
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
     const { t, i18n } = useTranslation();
 
     const [currentSurahNumber, setCurrentSurahNumber] = useState(null);
@@ -33,6 +70,8 @@ function Quran({ onClose }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [selectedReciter, setSelectedReciter] = useState(null);
     const [showBars, setShowBars] = useState(true);
+    const [activeReadingAyah, setActiveReadingAyah] = useState(1);
+    const [isReaderScrolling, setIsReaderScrolling] = useState(false);
     const [showSideMenu, setShowSideMenu] = useState(false);
     const [activeMenuTab, setActiveMenuTab] = useState('surahs');
     const [playingAyah, setPlayingAyah] = useState(null);
@@ -49,6 +88,8 @@ function Quran({ onClose }) {
     const contentRef = useRef(null);
     const latestLoadRequestRef = useRef(0);
     const hasInitializedRef = useRef(false);
+    const scrollIdleTimerRef = useRef(null);
+    const scrollFrameRef = useRef(null);
 
     const surahList = useMemo(() => staticSurahList || EMPTY_ARRAY, []);
     const reciters = useMemo(() => staticReciters || EMPTY_ARRAY, []);
@@ -140,11 +181,54 @@ function Quran({ onClose }) {
 
     const scrollToAyah = useCallback((ayahId) => {
         window.setTimeout(() => {
+            const container = contentRef.current;
             const ayahElement = document.getElementById(`ayah-${ayahId}`);
-            if (ayahElement) {
-                ayahElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (container && ayahElement) {
+                const elementOffsetTop = ayahElement.offsetTop;
+                const elementHeight = ayahElement.offsetHeight;
+                const containerHeight = container.clientHeight;
+
+                const targetY = elementOffsetTop - (containerHeight / 2) + (elementHeight / 2);
+                smoothScrollTo(container, targetY, 350);
             }
         }, 100);
+    }, []);
+
+    const handleReaderScroll = useCallback(() => {
+        setIsReaderScrolling(true);
+        setShowBars(false);
+        window.clearTimeout(scrollIdleTimerRef.current);
+
+        if (!scrollFrameRef.current) {
+            scrollFrameRef.current = window.requestAnimationFrame(() => {
+                scrollFrameRef.current = null;
+                const viewportCenter = window.innerHeight / 2;
+                const blocks = contentRef.current?.querySelectorAll('.mushaf-ayah-block') || [];
+                let closestAyah = null;
+                let closestDistance = Number.POSITIVE_INFINITY;
+
+                blocks.forEach((block) => {
+                    const rect = block.getBoundingClientRect();
+                    const distance = Math.abs((rect.top + rect.bottom) / 2 - viewportCenter);
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestAyah = Number(block.dataset.ayahNumber);
+                    }
+                });
+
+                if (closestAyah) setActiveReadingAyah(closestAyah);
+            });
+        }
+
+        scrollIdleTimerRef.current = window.setTimeout(() => {
+            setIsReaderScrolling(false);
+            setShowBars(true);
+        }, 700);
+    }, []);
+
+    useEffect(() => () => {
+        window.clearTimeout(scrollIdleTimerRef.current);
+        if (scrollFrameRef.current) window.cancelAnimationFrame(scrollFrameRef.current);
     }, []);
 
     const loadSurah = useCallback(async (surahId, initialAyahId = null, translationIdOverride = null) => {
@@ -182,7 +266,7 @@ function Quran({ onClose }) {
             if (initialAyahId) {
                 scrollToAyah(initialAyahId);
             } else if (contentRef.current) {
-                contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+                smoothScrollTo(contentRef.current, 0, 300);
             }
         } catch (error) {
             logger.error('Surah load error:', error);
@@ -345,14 +429,54 @@ function Quran({ onClose }) {
         }
     }, [volume]);
 
-    const handlePlayPause = () => {
-        if (!playingAyah) {
-            setPlayingAyah(1);
-            setIsPlaying(true);
+    const prepareAudioForAyah = useCallback((ayahNumber) => {
+        const audio = audioRef.current;
+
+        if (!audio || !activeSurah || !selectedReciter) {
+            return null;
+        }
+
+        const url = getAyahAudioUrl(activeSurah.number, ayahNumber, selectedReciter.id);
+
+        if ((audio.currentSrc || audio.src) !== url) {
+            audio.src = url;
+            audio.load();
+        }
+
+        return audio;
+    }, [activeSurah, selectedReciter]);
+
+    const playAyah = useCallback(async (ayahNumber) => {
+        const audio = prepareAudioForAyah(ayahNumber);
+
+        setPlayingAyah(ayahNumber);
+        setIsPlaying(true);
+
+        if (!audio) {
             return;
         }
 
-        setIsPlaying((prev) => !prev);
+        try {
+            await audio.play();
+        } catch (error) {
+            logger.error('Playback failed:', error);
+            setIsPlaying(false);
+        }
+    }, [prepareAudioForAyah]);
+
+    const handlePlayPause = () => {
+        if (!playingAyah) {
+            void playAyah(1);
+            return;
+        }
+
+        if (isPlaying) {
+            audioRef.current?.pause();
+            setIsPlaying(false);
+            return;
+        }
+
+        void playAyah(playingAyah);
     };
 
     const handleAyahEnd = () => {
@@ -379,21 +503,18 @@ function Quran({ onClose }) {
 
     const handleSeek = (event) => {
         const ayahNumber = Number(event.target.value);
-        setPlayingAyah(ayahNumber);
-        setIsPlaying(true);
+        void playAyah(ayahNumber);
     };
 
     const handleNextAyah = () => {
         if (activeSurah && playingAyah < ayahCount) {
-            setPlayingAyah((prev) => prev + 1);
-            setIsPlaying(true);
+            void playAyah(playingAyah + 1);
         }
     };
 
     const handlePrevAyah = () => {
         if (playingAyah > 1) {
-            setPlayingAyah((prev) => prev - 1);
-            setIsPlaying(true);
+            void playAyah(playingAyah - 1);
         }
     };
 
@@ -412,18 +533,21 @@ function Quran({ onClose }) {
             ]
         });
 
-        navigator.mediaSession.setActionHandler('play', () => setIsPlaying(true));
-        navigator.mediaSession.setActionHandler('pause', () => setIsPlaying(false));
+        navigator.mediaSession.setActionHandler('play', () => {
+            void playAyah(playingAyah);
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+            audioRef.current?.pause();
+            setIsPlaying(false);
+        });
         navigator.mediaSession.setActionHandler('previoustrack', () => {
             if (playingAyah > 1) {
-                setPlayingAyah((prev) => prev - 1);
-                setIsPlaying(true);
+                void playAyah(playingAyah - 1);
             }
         });
         navigator.mediaSession.setActionHandler('nexttrack', () => {
             if (playingAyah < ayahCount) {
-                setPlayingAyah((prev) => prev + 1);
-                setIsPlaying(true);
+                void playAyah(playingAyah + 1);
             }
         });
         navigator.mediaSession.setActionHandler('seekto', (details) => {
@@ -439,7 +563,7 @@ function Quran({ onClose }) {
             navigator.mediaSession.setActionHandler('nexttrack', null);
             navigator.mediaSession.setActionHandler('seekto', null);
         };
-    }, [activeSurah, ayahCount, playingAyah, selectedReciter]);
+    }, [activeSurah, ayahCount, playAyah, playingAyah, selectedReciter]);
 
     if (!activeSurah || !selectedReciter || isSurahLoading || !surahContent) {
         return (
@@ -666,10 +790,16 @@ function Quran({ onClose }) {
             </div>
 
             <div
-                className={`quran-scroll-area ${showBars ? '' : 'bars-hidden'}`.trim()}
-                onClick={() => setShowBars((prev) => !prev)}
+                className={`quran-scroll-area ${showBars ? '' : 'bars-hidden'} ${isReaderScrolling ? 'is-scrolling' : 'is-idle'}`.trim()}
+                onScroll={handleReaderScroll}
+                onClick={() => setShowBars(true)}
                 ref={contentRef}
             >
+                <div className="quran-reading-strip">
+                    <span>{activeSurah.nameTranslation}</span>
+                    <span aria-hidden="true">·</span>
+                    <span>{activeReadingAyah}. {t('quran.ayah')}</span>
+                </div>
                 <div className="mushaf-frame">
                     <div className="mushaf-paper">
                         <div className="mushaf-surah-heading">
@@ -688,9 +818,9 @@ function Quran({ onClose }) {
                         {simpleMode && (
                             <div style={{
                                 textAlign: 'center', padding: '8px 16px', marginBottom: '16px',
-                                background: 'rgba(212, 175, 55, 0.1)', borderRadius: '20px',
-                                border: '1px solid rgba(212, 175, 55, 0.2)',
-                                fontSize: '0.75rem', fontWeight: '700', color: 'var(--accent-gold)'
+                                background: 'var(--surface-action-soft)', borderRadius: '20px',
+                                border: '1px solid var(--border-soft)',
+                                fontSize: '0.75rem', fontWeight: '700', color: 'var(--brand-primary)'
                             }}>
                                 Basit Mod - Meal için Detayları Göster'e tıklayın
                             </div>
@@ -705,7 +835,8 @@ function Quran({ onClose }) {
                                 <div
                                     key={ayah.number}
                                     id={`ayah-${ayah.number}`}
-                                    className={`mushaf-ayah-block reveal-stagger ${playingAyah === ayah.number ? 'active' : ''}`}
+                                    data-ayah-number={ayah.number}
+                                    className={`mushaf-ayah-block reveal-stagger ${playingAyah === ayah.number ? 'active' : ''} ${activeReadingAyah === ayah.number ? 'is-reading-focus' : 'is-reading-muted'}`}
                                     style={{ '--delay': `${index * 0.02}s` }}
                                 >
                                     <div className="ayah-meta-row">
@@ -730,10 +861,14 @@ function Quran({ onClose }) {
                                                 onClick={(event) => {
                                                     event.stopPropagation();
                                                     if (playingAyah === ayah.number) {
-                                                        setIsPlaying(!isPlaying);
+                                                        if (isPlaying) {
+                                                            audioRef.current?.pause();
+                                                            setIsPlaying(false);
+                                                        } else {
+                                                            void playAyah(ayah.number);
+                                                        }
                                                     } else {
-                                                        setPlayingAyah(ayah.number);
-                                                        setIsPlaying(true);
+                                                        void playAyah(ayah.number);
                                                     }
                                                 }}
                                             >
@@ -767,8 +902,8 @@ function Quran({ onClose }) {
                                             }}
                                             style={{
                                                 marginTop: '12px', padding: '8px 16px', borderRadius: '20px',
-                                                background: 'rgba(212, 175, 55, 0.15)', border: '1px solid rgba(212, 175, 55, 0.3)',
-                                                color: 'var(--accent-gold)', fontSize: '0.8rem', fontWeight: '700',
+                                                background: 'var(--surface-action-hover)', border: '1px solid var(--border-strong)',
+                                                color: 'var(--brand-primary)', fontSize: '0.8rem', fontWeight: '700',
                                                 cursor: 'pointer'
                                             }}
                                         >

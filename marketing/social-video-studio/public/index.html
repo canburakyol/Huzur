@@ -1,0 +1,9 @@
+<!doctype html><html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Huzur Video Studio</title><link rel="stylesheet" href="/styles.css"></head><body>
+<main><header><div class="brand"><span class="mark">H</span><div><strong>Huzur</strong><small>Social Video Studio</small></div></div><div class="local"><i></i> Yerel çalışma alanı</div></header>
+<section class="workspace"><div class="controls"><p class="eyebrow">KISA VİDEO ÜRETİCİ</p><h1>Bir fikir seç.<br><em>Videonu al.</em></h1><p class="lead">Huzur'un onaylı içerikleri ve gerçek uygulama ekranlarıyla 25 saniyelik dikey videolar üret.</p>
+<label for="category">Video kategorisi</label><div class="select-wrap"><select id="category"></select></div>
+<div class="spec"><span>1080 × 1920</span><span>13 saniye</span><span>MP4</span></div>
+<button id="generate"><span>Video üret</span><b>→</b></button><p id="message" role="status">FFmpeg ve varlıklar kontrol ediliyor…</p>
+<div class="assets" id="assets"></div></div>
+<aside class="preview"><div class="phone"><div class="phone-top"></div><div id="empty" class="empty"><span class="mini-logo">H</span><p>Video önizlemesi</p><small>Üretilen video burada oynatılır</small></div><video id="video" controls playsinline></video><div id="progress" class="progress"><i></i><strong>Video hazırlanıyor</strong><small id="stage">Senaryo akışı oluşturuluyor…</small></div></div><div id="result" class="result"><div><small>SON ÇIKTI</small><strong id="result-title">Henüz video yok</strong></div><a id="download" download>MP4 indir</a></div></aside></section></main>
+<script type="module" src="/app.js"></script></body></html>

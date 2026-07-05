@@ -20,38 +20,36 @@ const DailyQuests = memo(() => {
     const claimableCount = dailyQuests.quests.filter(q => q.completed && !q.isClaimed).length;
 
     return (
-        <div className="settings-card reveal-stagger" style={{
-            margin: '20px',
-            padding: '24px',
+        <div className="settings-card reveal-stagger bg-white rounded-3xl border-huzur-sage-100 shadow-huzur-soft" style={{
+            margin: '0 5px 16px',
+            padding: '22px 20px',
             flexDirection: 'column',
-            alignItems: 'stretch',
-            background: 'var(--nav-bg)',
-            border: '1px solid var(--nav-border)',
-            borderRadius: '24px'
+            alignItems: 'stretch'
         }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <h3 style={{ 
-                    margin: 0, 
-                    fontSize: '1rem', 
-                    fontWeight: '950', 
-                    color: 'var(--nav-text)', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '10px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                }}>
-                    <div className="settings-icon-box" style={{ background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
-                        <RefreshCw size={18} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '10px',
+                        background: 'rgba(141, 170, 157, 0.12)',
+                        color: 'var(--accent-gold)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <RefreshCw size={16} />
                     </div>
-                    {t('quests.dailyTitle', 'Günün Görevleri')}
+                    <span style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>
+                        {t('quests.dailyTitle', 'Günün Görevleri')}
+                    </span>
                     {claimableCount > 0 && (
                         <span className="badge-pulse" style={{ 
-                            background: 'var(--error-color)', color: 'white', fontSize: '0.65rem', 
-                            padding: '2px 8px', borderRadius: '10px', fontWeight: '950'
+                            background: 'var(--error-color)', color: 'var(--on-primary)', fontSize: '0.65rem',
+                            padding: '2px 8px', borderRadius: '10px', fontWeight: '950', marginLeft: '6px'
                         }}>{claimableCount}</span>
                     )}
-                </h3>
+                </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} className="reveal-stagger">
@@ -62,10 +60,10 @@ const DailyQuests = memo(() => {
 
                     return (
                         <div key={quest.id} className="reveal-stagger" style={{
-                            background: isClaimed ? 'rgba(255, 255, 255, 0.02)' : 'var(--nav-hover)',
-                            borderRadius: '20px',
+                            background: isClaimed ? 'rgba(255, 255, 255, 0.02)' : 'rgba(141, 170, 157, 0.05)',
+                            borderRadius: '16px',
                             padding: '16px',
-                            border: isClaimed ? '1px dashed var(--nav-border)' : '1px solid var(--nav-border)',
+                            border: isClaimed ? '1px dashed var(--glass-border)' : '1px solid var(--glass-border)',
                             position: 'relative',
                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                             opacity: isClaimed ? 0.6 : 1,
@@ -75,7 +73,8 @@ const DailyQuests = memo(() => {
                                 <div style={{ 
                                     fontSize: '0.95rem', 
                                     fontWeight: '800', 
-                                    color: 'var(--nav-text)', 
+                                    color: 'var(--text-primary)',
+                                    fontFamily: 'var(--font-main)',
                                     textDecoration: isClaimed ? 'line-through' : 'none',
                                     flex: 1,
                                     paddingRight: '12px',
@@ -86,8 +85,9 @@ const DailyQuests = memo(() => {
                                 <div style={{ 
                                     fontSize: '0.75rem', 
                                     fontWeight: '900', 
-                                    color: isClaimed ? 'var(--nav-text-muted)' : 'var(--nav-accent)',
-                                    background: isClaimed ? 'transparent' : 'rgba(79, 70, 229, 0.1)',
+                                    color: isClaimed ? 'var(--text-muted)' : 'var(--text-secondary)',
+                                    fontFamily: 'var(--font-main)',
+                                    background: isClaimed ? 'transparent' : 'rgba(141, 170, 157, 0.1)',
                                     padding: '4px 8px',
                                     borderRadius: '8px'
                                 }}>
@@ -97,29 +97,32 @@ const DailyQuests = memo(() => {
 
                             {!isClaimed ? (
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                    <div style={{ flex: 1, height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden' }}>
+                                    <div style={{ flex: 1, height: '8px', background: 'rgba(141, 170, 157, 0.12)', borderRadius: '10px', overflow: 'hidden' }}>
                                         <div style={{ 
                                             height: '100%', 
                                             width: `${progressPercent}%`, 
                                             background: isCompleted 
-                                                ? 'linear-gradient(90deg, var(--bg-emerald-light), var(--bg-emerald-deep))' 
-                                                : 'linear-gradient(90deg, var(--nav-accent), var(--primary-color))',
+                                                ? 'linear-gradient(90deg, var(--accent-gold), var(--primary))'
+                                                : 'linear-gradient(90deg, var(--accent-gold-light), var(--accent-gold))',
                                             transition: 'width 1s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                                            boxShadow: isCompleted ? '0 0 10px rgba(15, 118, 110, 0.3)' : 'none',
+                                            boxShadow: isCompleted ? '0 0 10px rgba(141, 170, 157, 0.3)' : 'none',
                                             borderRadius: '10px'
                                         }}></div>
                                     </div>
-                                    <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', minWidth: '45px', textAlign: 'right', fontWeight: '900' }}>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', minWidth: '45px', textAlign: 'right', fontWeight: '900' }}>
                                         {quest.progress}/{quest.target}
                                     </div>
                                     
                                     {isCompleted ? (
                                         <button 
                                             onClick={() => claimQuestReward(quest.id)}
-                                            className="velocity-target-btn pulse"
+                                            className="velocity-target-btn pulse hover-lift"
                                             style={{
                                                 padding: '8px 16px', fontSize: '0.75rem', height: 'auto',
-                                                background: 'var(--bg-emerald-light)', boxShadow: '0 4px 12px rgba(15, 118, 110, 0.2)'
+                                                borderRadius: '12px', border: 'none', fontWeight: '700',
+                                                background: 'var(--accent-gold-shimmer)', color: 'var(--on-primary)',
+                                                boxShadow: '0 4px 12px rgba(224, 169, 150, 0.2)',
+                                                cursor: 'pointer'
                                             }}
                                         >
                                             <Gift size={14} /> {t('quests.claim', 'Al')}
@@ -128,11 +131,12 @@ const DailyQuests = memo(() => {
                                         quest.action && (
                                             <button 
                                                 onClick={() => openQuestAction(quest.action)} 
-                                                className="settings-card"
+                                                className="hover-lift"
                                                 style={{
-                                                    padding: '8px 16px', fontSize: '0.75rem', fontWeight: '900',
-                                                    color: 'var(--nav-text)', background: 'var(--nav-hover)',
-                                                    border: '1px solid var(--nav-border)'
+                                                    padding: '8px 16px', fontSize: '0.75rem', fontWeight: '700',
+                                                    borderRadius: '12px', border: '1px solid rgba(141, 170, 157, 0.2)',
+                                                    color: 'var(--primary)', background: 'rgba(141, 170, 157, 0.12)',
+                                                    cursor: 'pointer'
                                                 }}
                                             >
                                                 {t('quests.go', 'Git')}
@@ -141,7 +145,7 @@ const DailyQuests = memo(() => {
                                     )}
                                 </div>
                             ) : (
-                                <div style={{ fontSize: '0.75rem', color: 'var(--bg-emerald-light)', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '900' }}>
+                                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '900' }}>
                                     <Check size={14} /> {t('quests.claimed', 'Ödül alındı')}
                                 </div>
                             )}

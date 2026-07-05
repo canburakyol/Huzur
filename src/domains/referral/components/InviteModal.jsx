@@ -103,7 +103,6 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
       return proDetails.remaining;
     }
     return null;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -494,7 +493,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
         }
 
         .referral-expiry-icon {
-          color: #10b981;
+          color: var(--secondary);
           flex-shrink: 0;
           margin-top: 2px;
         }
@@ -505,21 +504,21 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
 
         .referral-expiry-title {
           margin: 0 0 6px 0;
-          color: #d1fae5;
+          color: var(--on-secondary-container);
           font-size: 0.88rem;
           font-weight: 800;
         }
 
         .referral-expiry-timer {
           margin: 0 0 6px 0;
-          color: #fbbf24;
+          color: var(--tertiary);
           font-size: 1.1rem;
           font-weight: 950;
         }
 
         .referral-expiry-hint {
           margin: 0;
-          color: #a7f3d0;
+          color: var(--secondary-fixed-dim);
           font-size: 0.74rem;
           line-height: 1.5;
           font-weight: 600;
@@ -531,7 +530,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
           border-radius: 22px;
           margin: 0 auto 14px;
           background: rgba(212, 175, 55, 0.14);
-          color: #d4af37;
+          color: var(--tertiary);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -559,13 +558,13 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
 
         .invite-badge {
           background: rgba(212, 175, 55, 0.16);
-          color: #f3d27b;
+          color: var(--tertiary-fixed-dim);
           border: 1px solid rgba(212, 175, 55, 0.22);
         }
 
         .invite-sync-pill {
           background: rgba(15, 118, 110, 0.18);
-          color: #9de8d8;
+          color: var(--secondary-fixed-dim);
           border: 1px solid rgba(15, 118, 110, 0.2);
         }
 
@@ -638,7 +637,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
           gap: 12px;
           border-color: rgba(245, 158, 11, 0.25);
           background: rgba(180, 83, 9, 0.10);
-          color: #ffe8c2;
+          color: var(--on-tertiary-container);
         }
 
         .invite-warning-card strong {
@@ -651,7 +650,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
           margin: 0;
           font-size: 0.76rem;
           line-height: 1.5;
-          color: #f9ddb5;
+          color: var(--tertiary-fixed-dim);
         }
 
         .invite-section-title {
@@ -840,8 +839,8 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
           border: none;
           border-radius: 18px;
           padding: 15px 16px;
-          background: linear-gradient(135deg, var(--nav-accent), var(--bg-emerald-light));
-          color: #fff;
+          background: linear-gradient(135deg, var(--nav-accent), var(--surface-container));
+          color: var(--on-primary);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -862,7 +861,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
         }
 
         .invite-feedback {
-          color: #dff7ef;
+          color: var(--on-secondary-container);
           border-color: rgba(16, 185, 129, 0.18);
           background: rgba(16, 185, 129, 0.10);
           font-size: 0.78rem;

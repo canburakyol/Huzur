@@ -8,6 +8,8 @@ export const createFocusSlice: StateCreator<
   FocusSlice
 > = (set) => ({
   isFocusMode: false,
+  activeFocusSession: null,
+  setActiveFocusSession: (activeFocusSession) => set({ activeFocusSession }),
   toggleFocusMode: () => set((state) => ({ isFocusMode: !state.isFocusMode })),
   enableFocusMode: () => set({ isFocusMode: true }),
   disableFocusMode: () => set({ isFocusMode: false }),

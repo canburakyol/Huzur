@@ -51,8 +51,8 @@ const TajweedQuiz = ({ onBack }) => {
           <div style={{ position: 'relative', width: '100px', height: '100px', margin: '0 auto 24px' }}>
               <div className="trophy-pulse" />
               <div className="settings-icon-box" style={{ 
-                  width: '100px', height: '100px', background: 'rgba(212, 175, 55, 0.15)', 
-                  color: '#d4af37', borderRadius: '30px' 
+                  width: '100px', height: '100px', background: 'color-mix(in srgb, var(--tertiary) 15%, transparent)',
+                  color: 'var(--tertiary)', borderRadius: '30px'
               }}>
                 <Trophy size={48} />
               </div>
@@ -297,7 +297,7 @@ const TajweedQuiz = ({ onBack }) => {
         .trophy-pulse {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(212, 175, 55, 0.2);
+            background: color-mix(in srgb, var(--tertiary) 20%, transparent);
             border-radius: 30px;
             animation: pulse 2s infinite;
         }

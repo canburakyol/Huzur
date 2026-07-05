@@ -169,7 +169,7 @@ function DeedJournal({ onClose }) {
                 }}>
                     {calculateTodayPoints()}
                 </div>
-                <div className="hamburger-level-badge" style={{ marginTop: '12px', background: 'var(--nav-accent)', color: 'white' }}>
+                <div className="hamburger-level-badge" style={{ marginTop: '12px', background: 'var(--nav-accent)', color: 'var(--on-primary)' }}>
                     🔥 {allTimeStats.currentStreak} {t('deedJournal.today.streak')}
                 </div>
             </div>
@@ -226,7 +226,7 @@ function DeedJournal({ onClose }) {
                             }}
                         >
                             <div className="settings-card-left">
-                                <div className="settings-icon-box" style={{ background: todayDeeds[deed.id] ? 'var(--nav-accent)' : '', color: todayDeeds[deed.id] ? 'white' : 'var(--nav-accent)' }}>
+                                <div className="settings-icon-box" style={{ background: todayDeeds[deed.id] ? 'var(--nav-accent)' : '', color: todayDeeds[deed.id] ? 'var(--on-primary)' : 'var(--nav-accent)' }}>
                                     <span style={{ fontSize: '1.2rem' }}>{deed.icon}</span>
                                 </div>
                                 <div className="settings-user-info">
@@ -361,7 +361,7 @@ function DeedJournal({ onClose }) {
                             </div>
                         </div>
                         <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '2rem', fontWeight: '900', color: '#f59e0b' }}>
+                            <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--secondary)' }}>
                                 🔥 {allTimeStats.currentStreak}
                             </div>
                             <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
@@ -464,7 +464,7 @@ function DeedJournal({ onClose }) {
                             <div className="settings-card-left">
                                 <div className="settings-icon-box" style={{ 
                                     background: unlocked ? 'var(--nav-accent)' : 'var(--nav-hover)', 
-                                    color: unlocked ? 'white' : 'var(--nav-text-muted)',
+                                    color: unlocked ? 'var(--on-primary)' : 'var(--nav-text-muted)',
                                     width: '48px',
                                     height: '48px'
                                 }}>
@@ -531,7 +531,7 @@ function DeedJournal({ onClose }) {
                         style={{
                             flex: 1,
                             padding: '12px 8px',
-                            background: activeTab === tab.id ? 'white' : 'transparent',
+                            background: activeTab === tab.id ? 'var(--on-primary)' : 'transparent',
                             border: 'none',
                             borderRadius: '16px',
                             color: activeTab === tab.id ? 'var(--nav-accent)' : 'var(--nav-text-muted)',

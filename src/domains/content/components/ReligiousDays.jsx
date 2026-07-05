@@ -57,7 +57,7 @@ const ReligiousDays = ({ onClose }) => {
                     padding: '32px 24px', 
                     marginBottom: '32px',
                     background: 'linear-gradient(135deg, var(--nav-accent) 0%, #818cf8 100%)',
-                    color: 'white',
+                    color: 'var(--on-primary)',
                     border: 'none',
                     borderRadius: '28px',
                     boxShadow: '0 15px 40px rgba(79, 70, 229, 0.25)',
@@ -65,7 +65,7 @@ const ReligiousDays = ({ onClose }) => {
                     alignItems: 'stretch'
                 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
-                        <div className="settings-icon-box" style={{ background: 'rgba(255,255,255,0.2)', color: 'white', border: 'none' }}>
+                        <div className="settings-icon-box" style={{ background: 'rgba(255,255,255,0.2)', color: 'var(--on-primary)', border: 'none' }}>
                             <Calendar size={24} />
                         </div>
                         <div style={{ 
@@ -81,7 +81,7 @@ const ReligiousDays = ({ onClose }) => {
                         </div>
                     </div>
                     
-                    <h3 style={{ margin: '0 0 8px 0', fontSize: '1.5rem', fontWeight: '950', color: 'white' }}>
+                    <h3 style={{ margin: '0 0 8px 0', fontSize: '1.5rem', fontWeight: '950', color: 'var(--on-primary)' }}>
                         {nextDay.name}
                     </h3>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', opacity: 0.9, fontWeight: '700' }}>

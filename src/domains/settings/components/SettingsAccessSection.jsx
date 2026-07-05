@@ -10,7 +10,7 @@ function SettingsAccessSection({ onManageSubscription, onOpenFeature, t, userIsP
         <SettingsActionRow
           description={t('settings.removeAdsDesc')}
           icon={<Shield size={20} />}
-          iconStyle={{ background: 'rgba(245, 158, 11, 0.1)', color: 'var(--accent-color)' }}
+          iconStyle={{ background: 'rgba(245, 158, 11, 0.1)', color: 'var(--accent)' }}
           onClick={() => onOpenFeature('pro')}
           title={t('settings.removeAdsTitle')}
         />

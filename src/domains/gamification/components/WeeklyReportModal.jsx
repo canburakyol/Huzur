@@ -116,9 +116,9 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
       const lower = clean.toLowerCase();
       for (const [eng, tr] of Object.entries(surahs)) {
         if (lower.includes(eng)) {
-          const match = clean.match(/\d+[:\-]\d+/);
+          const match = clean.match(/\d+[:-]\d+/);
           if (match) {
-            const parts = match[0].split(/[:\-]/);
+            const parts = match[0].split(/[:-]/);
             if (parts.length >= 2) {
               return `Diyanet Meal: ${tr} ${parts[1]}`;
             }
@@ -278,7 +278,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
     {
       label: t('weeklyReport.prayerDays', 'Namaz Gunu'),
       value: weeklyStats.prayerDays,
-      icon: <Sparkles size={18} color="#d4af37" />
+      icon: <Sparkles size={18} color="var(--tertiary)" />
     },
     {
       label: t('weeklyReport.quranDays', 'Kuran Gunu'),
@@ -288,7 +288,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
     {
       label: t('weeklyReport.routines', 'Rutin'),
       value: weeklyStats.routinesCompleted,
-      icon: <Flame size={18} color="#f59e0b" />
+      icon: <Flame size={18} color="var(--secondary)" />
     }
   ];
 
@@ -302,13 +302,13 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
           left: '16px',
           right: '16px',
           zIndex: 998,
-          background: 'linear-gradient(135deg, #064e3b, #0f766e)',
+          background: 'linear-gradient(135deg, var(--primary-container), var(--secondary-container))',
           borderRadius: '16px',
           padding: '12px 16px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          boxShadow: '0 8px 24px rgba(16, 185, 129, 0.25)',
+          boxShadow: '0 8px 24px color-mix(in srgb, var(--secondary) 25%, transparent)',
           cursor: 'pointer',
           animation: 'reportFadeIn 0.5s ease'
         }}
@@ -319,10 +319,10 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
             padding: '8px',
             borderRadius: '12px'
           }}>
-            <Award size={20} color="#fff" />
+            <Award size={20} color='var(--on-primary)' />
           </div>
           <div>
-            <div style={{ color: '#fff', fontSize: '0.9rem', fontWeight: '800' }}>
+            <div style={{ color: 'var(--on-primary)', fontSize: '0.9rem', fontWeight: '800' }}>
               {t('weeklyReport.bannerTitle', 'Haftalık Özetin Hazır')}
             </div>
             <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.75rem', fontWeight: '600' }}>
@@ -369,12 +369,12 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
-        border: '1px solid rgba(16, 185, 129, 0.28)',
-        boxShadow: '0 24px 52px rgba(0,0,0,0.5), 0 0 40px rgba(16, 185, 129, 0.12)',
+        border: '1px solid color-mix(in srgb, var(--secondary) 28%, transparent)',
+        boxShadow: '0 24px 52px color-mix(in srgb, var(--surface-dim) 50%, transparent), 0 0 40px color-mix(in srgb, var(--secondary) 12%, transparent)',
         textAlign: 'center'
       }}>
         <div style={{
-          background: 'linear-gradient(135deg, #064e3b, #0f766e 60%, #d4af37)',
+          background: 'linear-gradient(135deg, var(--primary-container), var(--secondary-container) 60%, var(--tertiary))',
           padding: '38px 22px 30px',
           position: 'relative'
         }}>
@@ -386,7 +386,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
               right: '16px',
               background: 'rgba(255,255,255,0.18)',
               border: 'none',
-              color: '#fff',
+              color: 'var(--on-primary)',
               width: '32px',
               height: '32px',
               borderRadius: '50%',
@@ -410,13 +410,13 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
             justifyContent: 'center',
             boxShadow: '0 10px 24px rgba(0,0,0,0.12)'
           }}>
-            <Award size={34} color="#fff" />
+            <Award size={34} color='var(--on-primary)' />
           </div>
 
           <h2 style={{
             margin: 0,
             fontSize: '1.35rem',
-            color: '#fff',
+            color: 'var(--on-primary)',
             fontWeight: '950',
             letterSpacing: '-0.4px'
           }}>
@@ -525,14 +525,14 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
 
           {premiumMoment?.showUpgrade ? (
             <div style={{
-              background: 'rgba(212, 175, 55, 0.10)',
-              border: '1px solid rgba(212, 175, 55, 0.18)',
+              background: 'color-mix(in srgb, var(--tertiary) 10%, transparent)',
+              border: '1px solid color-mix(in srgb, var(--tertiary) 18%, transparent)',
               borderRadius: '18px',
               padding: '16px',
               marginBottom: '18px',
               textAlign: 'left'
             }}>
-              <div style={{ fontSize: '0.74rem', color: '#d4af37', fontWeight: '900', textTransform: 'uppercase', marginBottom: '6px' }}>
+              <div style={{ fontSize: '0.74rem', color: 'var(--tertiary)', fontWeight: '900', textTransform: 'uppercase', marginBottom: '6px' }}>
                 Daha derin haftalik destek
               </div>
               <div style={{ fontSize: '0.92rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: '6px' }}>
@@ -551,7 +551,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
                   border: 'none',
                   borderRadius: '14px',
                   background: 'linear-gradient(135deg, var(--nav-accent), var(--accent-gold))',
-                  color: '#fff',
+                  color: 'var(--on-primary)',
                   padding: '12px 14px',
                   fontWeight: '900',
                   cursor: 'pointer',
@@ -569,7 +569,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
               width: '100%',
               padding: '16px',
               background: 'linear-gradient(135deg, var(--nav-accent), var(--accent-gold))',
-              color: '#fff',
+              color: 'var(--on-primary)',
               border: 'none',
               borderRadius: '16px',
               fontSize: '0.95rem',

@@ -31,6 +31,7 @@ export const ANALYTICS_EVENTS = {
   SCREEN_VIEW: "screen_view",
   HOME_VIEWED: "home_viewed",
   FEATURE_OPENED: "feature_opened",
+  FEATURE_SCREEN_VIEWED: "feature_screen_viewed",
   FEATURE_OPEN_FAILED: "feature_open_failed",
   FIRST_ACTIVATION_CARD_VIEWED: "first_activation_card_viewed",
   FIRST_ACTIVATION_CARD_CLICKED: "first_activation_card_clicked",
@@ -108,6 +109,16 @@ export const ANALYTICS_EVENTS = {
   PAYWALL_RESTORE_SUCCEEDED: "paywall_restore_succeeded",
   PAYWALL_RESTORE_NOT_FOUND: "paywall_restore_not_found",
   PREMIUM_MOMENT_OPENED: "premium_moment_opened",
+  AD_BANNER_LOADED: "ad_banner_loaded",
+  AD_BANNER_FAILED: "ad_banner_failed",
+  AD_BANNER_IMPRESSION: "ad_banner_impression",
+  AD_REWARDED_LOADED: "ad_rewarded_loaded",
+  AD_REWARDED_FAILED: "ad_rewarded_failed",
+  AD_REWARDED_REQUESTED: "ad_rewarded_requested",
+  AD_REWARDED_GRANTED: "ad_rewarded_granted",
+  AD_REWARDED_NOT_GRANTED: "ad_rewarded_not_granted",
+  SUBSCRIPTION_SYNC_COMPLETED: "subscription_sync_completed",
+  SUBSCRIPTION_SYNC_FAILED: "subscription_sync_failed",
 } as const;
 
 export const SCREENS = {

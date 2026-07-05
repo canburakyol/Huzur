@@ -64,7 +64,7 @@ const WordByWordShell = ({ onClose, onUpgrade, initialSurah = null }) => {
         {!userIsPro && (
           <div
             className="hamburger-level-badge"
-            style={{ background: 'rgba(34, 197, 94, 0.1)', color: '#22c55e', border: '1px solid #22c55e' }}
+            style={{ background: 'var(--surface-action-soft)', color: 'var(--success-color)', border: '1px solid var(--border-strong)' }}
           >
             {t('wordByWord.freeSurahsBadge', { count: freeSurahs.length })}
           </div>

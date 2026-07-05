@@ -90,14 +90,14 @@ function EsmaUlHusna({ onClose }) {
                 border: 'none', 
                 padding: '32px', 
                 textAlign: 'center', 
-                color: 'white', 
+                color: 'var(--on-primary)',
                 marginBottom: '40px',
                 boxShadow: '0 12px 24px rgba(249, 115, 22, 0.2)',
                 position: 'relative',
                 overflow: 'hidden'
             }}>
                 <div style={{ position: 'absolute', top: '15px', left: '20px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.7rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.8 }}>
-                    <Star size={12} fill="white" /> {t('esma.daily', 'Günün Esması')}
+                    <Star size={12} fill='var(--on-primary)' /> {t('esma.daily', 'Günün Esması')}
                 </div>
                 
                 <div style={{ fontFamily: 'var(--arabic-font)', fontSize: '4rem', marginBottom: '16px', textShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>

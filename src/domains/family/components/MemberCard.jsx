@@ -23,7 +23,7 @@ const MemberCard = ({ member, isChild = false, onClick, style }) => {
         alignItems: 'center',
         cursor: onClick ? 'pointer' : 'default',
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        borderLeft: `4px solid ${isChild ? '#10b981' : 'var(--nav-accent)'}`,
+        borderLeft: `4px solid ${isChild ? 'var(--secondary)' : 'var(--nav-accent)'}`,
         ...style
       }}
     >
@@ -52,8 +52,8 @@ const MemberCard = ({ member, isChild = false, onClick, style }) => {
           {isChild && (
             <span style={{ 
                 fontSize: '0.7rem', 
-                color: '#10b981', 
-                background: 'rgba(16, 185, 129, 0.1)', 
+                color: 'var(--secondary)',
+                background: 'color-mix(in srgb, var(--secondary) 10%, transparent)',
                 padding: '2px 8px', 
                 borderRadius: '6px',
                 fontWeight: '800',
@@ -66,7 +66,7 @@ const MemberCard = ({ member, isChild = false, onClick, style }) => {
         
         <div style={{ display: 'flex', gap: '16px', fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Flame size={14} color="#f59e0b" fill="#f59e0b" />
+            <Flame size={14} color="var(--tertiary)" fill="var(--tertiary)" />
             <span>{fajrStreak}</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -74,7 +74,7 @@ const MemberCard = ({ member, isChild = false, onClick, style }) => {
             <span>{quranStreak}</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Trophy size={14} color="#f59e0b" />
+            <Trophy size={14} color="var(--tertiary)" />
             <span>{badgeCount}</span>
           </div>
         </div>

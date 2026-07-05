@@ -388,7 +388,7 @@ const ProUpgrade = ({
 
         <div className="pro-header">
           <div className="crown-icon">
-            <Crown size={44} color="#FFD700" fill="#FFD700" />
+            <Crown size={44} color="var(--tertiary)" fill="var(--tertiary)" />
           </div>
           <div className="moment-chip">
             <Sparkles size={14} />
@@ -508,7 +508,7 @@ const ProUpgrade = ({
         }
 
         .pro-modal {
-          background: linear-gradient(135deg, #0f3d2e 0%, #1a5c45 100%);
+          background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
           width: 100%;
           max-width: 420px;
           border-radius: 24px;
@@ -526,7 +526,7 @@ const ProUpgrade = ({
           right: 16px;
           background: rgba(212, 175, 55, 0.16);
           border: 1px solid rgba(212, 175, 55, 0.25);
-          color: #d4af37;
+          color: var(--tertiary);
           width: 40px;
           height: 40px;
           border-radius: 50%;
@@ -554,7 +554,7 @@ const ProUpgrade = ({
           border-radius: 999px;
           background: rgba(212, 175, 55, 0.14);
           border: 1px solid rgba(212, 175, 55, 0.22);
-          color: #f0e68c;
+          color: var(--on-tertiary-container);
           font-size: 12px;
           font-weight: 800;
           padding: 6px 10px;
@@ -562,7 +562,7 @@ const ProUpgrade = ({
         }
 
         .pro-header h2 {
-          color: #d4af37;
+          color: var(--tertiary);
           margin: 0 0 8px 0;
           font-size: 28px;
           font-weight: 800;
@@ -570,7 +570,7 @@ const ProUpgrade = ({
 
         .pro-header p {
           margin: 0;
-          color: #d9e6db;
+          color: var(--on-surface);
           font-size: 14px;
           line-height: 1.6;
           font-weight: 600;
@@ -587,7 +587,7 @@ const ProUpgrade = ({
 
         .social-proof p {
           margin: 0;
-          color: #d4af37;
+          color: var(--tertiary);
           font-size: 13px;
           font-weight: 600;
           line-height: 1.45;
@@ -604,14 +604,14 @@ const ProUpgrade = ({
 
         .referral-active-banner p {
           margin: 0;
-          color: #d1fae5;
+          color: var(--on-secondary-container);
           font-size: 13px;
           font-weight: 600;
           line-height: 1.5;
         }
 
         .referral-active-banner .expiring-soon {
-          color: #fbbf24;
+          color: var(--tertiary);
           font-weight: 700;
         }
 
@@ -636,7 +636,7 @@ const ProUpgrade = ({
           height: 32px;
           border-radius: 10px;
           background: rgba(212, 175, 55, 0.14);
-          color: #d4af37;
+          color: var(--tertiary);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -645,14 +645,14 @@ const ProUpgrade = ({
 
         .feature-text strong {
           display: block;
-          color: #f7f5ef;
+          color: var(--on-surface);
           margin-bottom: 4px;
           font-size: 14px;
         }
 
         .feature-text p {
           margin: 0;
-          color: #c7d8cc;
+          color: var(--on-surface-variant);
           font-size: 12px;
           line-height: 1.55;
         }
@@ -676,7 +676,7 @@ const ProUpgrade = ({
 
         .package-card.popular {
           background: linear-gradient(135deg, rgba(212, 175, 55, 0.26), rgba(212, 175, 55, 0.08));
-          border-color: #d4af37;
+          border-color: var(--tertiary);
           box-shadow: 0 0 24px rgba(212, 175, 55, 0.18);
         }
 
@@ -684,8 +684,8 @@ const ProUpgrade = ({
           position: absolute;
           top: -10px;
           left: 16px;
-          background: linear-gradient(135deg, #d4af37, #b8860b);
-          color: #0f3d2e;
+          background: linear-gradient(135deg, var(--tertiary), var(--on-tertiary-fixed-variant));
+          color: var(--on-tertiary);
           font-size: 11px;
           font-weight: 900;
           padding: 5px 10px;
@@ -693,19 +693,19 @@ const ProUpgrade = ({
         }
 
         .package-title {
-          color: #f0e68c;
+          color: var(--on-tertiary-container);
           font-weight: 700;
           margin-bottom: 6px;
         }
 
         .package-price {
-          color: #d4af37;
+          color: var(--tertiary);
           font-size: 24px;
           font-weight: 800;
         }
 
         .package-desc {
-          color: #d9e6db;
+          color: var(--on-surface);
           font-size: 12px;
           line-height: 1.5;
           margin-top: 8px;
@@ -713,7 +713,7 @@ const ProUpgrade = ({
 
         .package-cta {
           margin-top: 12px;
-          color: #ffffff;
+          color: var(--on-primary);
           font-size: 13px;
           font-weight: 800;
         }
@@ -730,7 +730,7 @@ const ProUpgrade = ({
         .subscription-terms p {
           margin: 0 0 6px 0;
           font-size: 11px;
-          color: #a3b18a;
+          color: var(--secondary);
           line-height: 1.4;
         }
 
@@ -744,7 +744,7 @@ const ProUpgrade = ({
         }
 
         .legal-links a {
-          color: #d4af37;
+          color: var(--tertiary);
           text-decoration: none;
           font-size: 11px;
         }
@@ -753,7 +753,7 @@ const ProUpgrade = ({
           width: 100%;
           background: none;
           border: none;
-          color: #a3b18a;
+          color: var(--secondary);
           font-size: 12px;
           cursor: pointer;
           text-decoration: underline;
@@ -774,14 +774,14 @@ const ProUpgrade = ({
         .restore-success {
           background: rgba(16, 185, 129, 0.12);
           border: 1px solid rgba(16, 185, 129, 0.2);
-          color: #d1fae5;
+          color: var(--on-secondary-container);
         }
 
         .restore-not-found,
         .error-msg {
           background: rgba(249, 115, 22, 0.10);
           border: 1px solid rgba(249, 115, 22, 0.18);
-          color: #ffedd5;
+          color: var(--on-tertiary-container);
         }
 
         .processing-overlay {
@@ -799,7 +799,7 @@ const ProUpgrade = ({
           height: 34px;
           border-radius: 999px;
           border: 3px solid rgba(255,255,255,0.2);
-          border-top-color: #d4af37;
+          border-top-color: var(--tertiary);
           animation: spin 0.9s linear infinite;
         }
 

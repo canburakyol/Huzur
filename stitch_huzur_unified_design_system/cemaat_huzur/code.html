@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#474741",
+                        "tertiary": "#171812",
+                        "on-tertiary-fixed": "#1c1c17",
+                        "primary-fixed": "#d0e9d4",
+                        "outline-variant": "#c3c8c1",
+                        "surface-container-highest": "#e4e2e2",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-background": "#1b1c1c",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c9c6be",
+                        "secondary-container": "#c9e7cc",
+                        "on-surface": "#1b1c1c",
+                        "primary-container": "#1b3022",
+                        "on-tertiary-container": "#95938b",
+                        "on-secondary-fixed-variant": "#334d38",
+                        "surface-container-low": "#f5f3f3",
+                        "tertiary-fixed": "#e5e2da",
+                        "secondary": "#4a654f",
+                        "tertiary-container": "#2c2c26",
+                        "on-surface-variant": "#434843",
+                        "on-secondary-fixed": "#062010",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#4e6953",
+                        "inverse-on-surface": "#f2f0f0",
+                        "secondary-fixed": "#cceacf",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#b4cdb8",
+                        "on-primary-fixed-variant": "#364c3c",
+                        "inverse-surface": "#303030",
+                        "secondary-fixed-dim": "#b0ceb4",
+                        "surface-tint": "#4d6453",
+                        "surface-dim": "#dbdad9",
+                        "surface-bright": "#fbf9f8",
+                        "on-secondary": "#ffffff",
+                        "surface": "#fbf9f8",
+                        "on-primary-fixed": "#0b2013",
+                        "on-error": "#ffffff",
+                        "outline": "#737973",
+                        "inverse-primary": "#b4cdb8",
+                        "primary": "#061b0e",
+                        "surface-container-high": "#eae8e7",
+                        "surface-variant": "#e4e2e2",
+                        "on-primary-container": "#819986",
+                        "background": "#fbf9f8",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#efeded"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-main": "24px",
+                        "ad-height": "60px",
+                        "safe-area-bottom": "116px",
+                        "gutter-card": "16px",
+                        "nav-height": "56px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-xl": ["Literata"],
+                        "headline-lg-mobile": ["Literata"],
+                        "label-sm": ["Manrope"],
+                        "label-md": ["Manrope"],
+                        "headline-lg": ["Literata"],
+                        "headline-md": ["Literata"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-md": ["22px", {"lineHeight": "28px", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #fbf9f8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .spiritual-quote {
+            border-left: 2px solid #4a654f;
+            padding-left: 1rem;
+            font-style: italic;
+        }
+        .ios-scroll {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-primary/10 flex justify-between items-center px-margin-main h-nav-height w-full">
+<div class="flex items-center gap-4">
+<button class="hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Huzur</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-primary" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-[72px] pb-safe-area-bottom px-margin-main space-y-10">
+<!-- Header Section -->
+<section class="mt-4">
+<div class="flex items-end justify-between mb-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Cemaat</h2>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Community</span>
+</div>
+<p class="font-body-md text-on-surface-variant max-w-[85%]">Reflect together, grow in peace. Join the spiritual dialogue with your brothers and sisters.</p>
+</section>
+<!-- New Post Creator -->
+<section>
+<div class="bg-surface-container-low rounded-xl p-5 border border-primary/10 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-fixed text-[20px]" data-icon="person">person</span>
+</div>
+<div class="flex-1">
+<input class="w-full bg-transparent border-none focus:ring-0 text-on-surface-variant font-body-md placeholder:text-outline p-0" placeholder="Huzur bulduğunuz bir ayet paylaşın..." type="text"/>
+</div>
+<button class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-white text-[20px]" data-icon="send">send</span>
+</button>
+</div>
+</section>
+<!-- Feed -->
+<section class="space-y-6">
+<!-- Feed Card 1 -->
+<article class="bg-surface-container rounded-xl border border-primary/10 overflow-hidden">
+<div class="p-5 space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="account_circle">account_circle</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-primary">Ömer Faruk</h3>
+<p class="text-[10px] text-on-surface-variant/70 uppercase tracking-tighter">2 saat önce</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+<div class="space-y-3">
+<h4 class="font-headline-md text-headline-md text-primary leading-tight">Sabrın sonu selamet</h4>
+<p class="font-body-md text-on-surface-variant leading-relaxed">"Andolsun ki biz sizi biraz korku, biraz açlık, biraz da mallardan, canlardan ve ürünlerden eksiltme ile imtihan edeceğiz. Müjdele o sabredenleri!" (Bakara, 155). Bugün bu ayet ruhuma şifa oldu.</p>
+</div>
+<div class="pt-4 flex items-center justify-between border-t border-primary/5">
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-secondary hover:opacity-70 transition-opacity active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-sm text-label-sm">42</span>
+</button>
+<button class="flex items-center gap-1.5 text-secondary hover:opacity-70 transition-opacity active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-sm text-label-sm">8</span>
+</button>
+</div>
+<button class="text-secondary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="share">share</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Feed Card 2 (With Image) -->
+<article class="bg-surface-container rounded-xl border border-primary/10 overflow-hidden">
+<div class="h-48 w-full bg-center bg-cover" data-alt="A peaceful and serene landscape of a misty forest in the morning light, with soft sage green foliage and ivory-colored fog. The style is minimalist and cinematic, emphasizing natural beauty and spiritual tranquility with high-quality soft focus." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCW-EkPmdMf3fDVSq0-2q15BOliSLhpKWUPsS4LfLCryBflbdHUtRp3e6h4eWx2suEgkzm05uh-JgxUS_iv732KB94tiWJ9k92yRaKAJf4cUw1fREukLGgOfwJcsUJobv7K_Oc0kGk6GkRXb-3n5EF-q4o7rlgxiBrvc4gipkpBF_usvJ1yzomnisfB-v__6OcG8oIR-Q8f6P1MgpF4ymIESPsz0ed9z2v1mcFZeKJSMqCaL8pMcCqFlikG20DwNCz7PqRjZWfMjQ')"></div>
+<div class="p-5 space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container text-[18px]" data-icon="energy_savings_leaf">energy_savings_leaf</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-primary">Doğa ve Huzur</h3>
+<p class="text-[10px] text-on-surface-variant/70 uppercase tracking-tighter">5 saat önce</p>
+</div>
+</div>
+<div class="space-y-3">
+<h4 class="font-headline-md text-headline-md text-primary leading-tight">Yaratılanın Güzelliği</h4>
+<p class="font-body-md text-on-surface-variant leading-relaxed">Sabah namazı sonrası yürüyüşte karşılaştığım bu manzara... Tevekkül etmemek elde değil. Tüm sıkıntıları geride bırakan bir sükunet.</p>
+</div>
+<div class="pt-4 flex items-center justify-between border-t border-primary/5">
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-secondary hover:opacity-70 active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="favorite">favorite</span>
+<span class="font-label-sm text-label-sm">128</span>
+</button>
+<button class="flex items-center gap-1.5 text-secondary hover:opacity-70 active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-sm text-label-sm">24</span>
+</button>
+</div>
+<button class="text-secondary active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="share">share</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Feed Card 3 (Quote Block style) -->
+<article class="bg-surface-container rounded-xl border border-primary/10 overflow-hidden">
+<div class="p-5 space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed-dim flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="person_2">person_2</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-primary">Ayşe Nur</h3>
+<p class="text-[10px] text-on-surface-variant/70 uppercase tracking-tighter">Dün</p>
+</div>
+</div>
+<div class="spiritual-quote">
+<p class="font-body-lg text-secondary italic">"Allah de ötesini bırak. O, her şeyi hakkıyla görendir."</p>
+</div>
+<div class="pt-4 flex items-center justify-between border-t border-primary/5">
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-secondary hover:opacity-70 active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-sm text-label-sm">86</span>
+</button>
+<button class="flex items-center gap-1.5 text-secondary hover:opacity-70 active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-sm text-label-sm">12</span>
+</button>
+</div>
+<button class="text-secondary active:scale-90">
+<span class="material-symbols-outlined text-[20px]" data-icon="share">share</span>
+</button>
+</div>
+</div>
+</article>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-[60px] w-full h-[56px] z-[1000] bg-surface border-t border-primary/10 flex justify-around items-center px-margin-main w-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="home_max">home_max</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label-md text-label-md">Quran</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-md text-label-md">Tasbih</span>
+</a>
+<!-- Mapping Cemaat context to active state visually -->
+<a class="flex flex-col items-center justify-center text-primary relative after:content-[''] after:w-1 after:h-1 after:bg-secondary after:rounded-full after:mt-1" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-md text-label-md">Cemaat</span>
+</a>
+</nav>
+<!-- Footer / Ad Container -->
+<footer class="fixed bottom-0 w-full h-[60px] z-[1001] bg-surface-container border-t border-primary/5 flex items-center justify-center w-full">
+<span class="font-label-sm text-label-sm text-on-surface-variant/40 tracking-[0.2em] uppercase">Advertisement Container</span>
+</footer>
+<script>
+        // Simple micro-interaction for post cards
+        document.querySelectorAll('article').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.995)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.style.transition = 'transform 0.2s ease-out';
+        });
+
+        // Toggle like icon fill state
+        document.querySelectorAll('button[data-icon="favorite"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('.material-symbols-outlined');
+                const isFilled = icon.style.fontVariationSettings.includes("'FILL' 1");
+                icon.style.fontVariationSettings = isFilled ? "'FILL' 0" : "'FILL' 1";
+                
+                // Simple animation
+                icon.classList.add('scale-125');
+                setTimeout(() => icon.classList.remove('scale-125'), 200);
+            });
+        });
+    </script>
+</body></html>

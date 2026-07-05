@@ -167,7 +167,7 @@ const FontSettings = ({ onClose }) => {
                         </div>
                         {settings.arabicFontFamily === font.id && (
                             <div className="settings-selected-dot" style={{ top: '8px', right: '8px' }}>
-                                <Check size={12} color="white" />
+                                <Check size={12} color='var(--on-primary)' />
                             </div>
                         )}
                     </button>

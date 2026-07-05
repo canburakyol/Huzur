@@ -6,7 +6,7 @@
     gap: 8px;
     padding: 8px 16px;
     border-radius: 50px;
-    color: white;
+    color: var(--on-primary);
     font-size: 0.8rem;
     font-weight: 800;
     text-transform: uppercase;

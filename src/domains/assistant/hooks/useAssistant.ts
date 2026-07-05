@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFamily } from '../../../context/FamilyContext';
 import { getAiFeatureFlags } from '../../../services/aiFeatureFlagService';
 import { askAssistantV2 } from '../../../services/aiService';
 import { buildAiContext } from '../../../services/aiContextService';
-import { ASSISTANT_FAQ_ITEMS, getAssistantFaqAnswer } from '../../../services/assistantFaqService';
+import { ASSISTANT_FAQ_ITEMS, getAssistantFaqAnswer, findAssistantFaqItem } from '../../../services/assistantFaqService';
 import { getDailyContent } from '../../../services/contentService';
 import {
   buildPremiumMomentAnalyticsPayload,
@@ -58,6 +59,7 @@ const useAssistant = ({
   onSelectTab,
   onOpenInvite,
 }: UseAssistantProps) => {
+  const { t } = useTranslation();
   const { family, weeklyGoal } = useFamily();
 
   const [messages, setMessages] = useState<AssistantMessage[]>([]);
@@ -100,7 +102,7 @@ const useAssistant = ({
     return id;
   }, []);
 
-  const getFaqAnswer = useCallback((query: string) => getAssistantFaqAnswer(query, undefined), []);
+  const getFaqAnswer = useCallback((query: string) => getAssistantFaqAnswer(query, t), [t]);
 
   const formatAssistantReply = useCallback(
     (result: Record<string, unknown>, query: string) => {
@@ -182,9 +184,14 @@ const useAssistant = ({
       setInputValue('');
       setIsTyping(true);
 
-      if (!assistantV2Enabled) {
+      // Always use local Q&A matching as requested (AI is disabled for now)
+      const matched = findAssistantFaqItem(query, t);
+      if (matched || !assistantV2Enabled) {
         setTimeout(() => {
-          setMessages((prev) => [...prev, { id: getNextMessageId(), type: 'bot', text: getFaqAnswer(query), meta: null }]);
+          setMessages((prev) => [
+            ...prev,
+            { id: getNextMessageId(), type: 'bot', text: matched ? matched.answer : getFaqAnswer(query), meta: null },
+          ]);
           setIsTyping(false);
         }, 400);
         return;
@@ -256,6 +263,7 @@ const useAssistant = ({
       messages,
       premiumMomentsEnabled,
       streakData,
+      t,
     ]
   );
 

@@ -71,12 +71,12 @@ export const DISCOVERY_CARDS: DiscoveryCard[] = [
 ];
 
 export const CARD_TYPE_CONFIG: Record<DiscoveryCardType, CardTypeConfig> = {
-  [DISCOVERY_CARD_TYPES.AYAH]: { gradient: 'linear-gradient(135deg, #065f46, #047857)', bgColor: '#065f46' },
-  [DISCOVERY_CARD_TYPES.HADITH]: { gradient: 'linear-gradient(135deg, #1e3a5f, #2563eb)', bgColor: '#1e3a5f' },
-  [DISCOVERY_CARD_TYPES.ESMA]: { gradient: 'linear-gradient(135deg, #5b21b6, #7c3aed)', bgColor: '#5b21b6' },
-  [DISCOVERY_CARD_TYPES.DUA]: { gradient: 'linear-gradient(135deg, #92400e, #d97706)', bgColor: '#92400e' },
-  [DISCOVERY_CARD_TYPES.HIKMET]: { gradient: 'linear-gradient(135deg, #374151, #6b7280)', bgColor: '#374151' },
-  [DISCOVERY_CARD_TYPES.FACT]: { gradient: 'linear-gradient(135deg, #0e7490, #06b6d4)', bgColor: '#0e7490' }
+  [DISCOVERY_CARD_TYPES.AYAH]: { gradient: 'linear-gradient(135deg, var(--primary), var(--primary))', bgColor: 'var(--primary)' },
+  [DISCOVERY_CARD_TYPES.HADITH]: { gradient: 'linear-gradient(135deg, var(--primary), var(--primary))', bgColor: 'var(--primary)' },
+  [DISCOVERY_CARD_TYPES.ESMA]: { gradient: 'linear-gradient(135deg, var(--secondary), var(--secondary))', bgColor: 'var(--secondary)' },
+  [DISCOVERY_CARD_TYPES.DUA]: { gradient: 'linear-gradient(135deg, var(--tertiary), var(--tertiary))', bgColor: 'var(--tertiary)' },
+  [DISCOVERY_CARD_TYPES.HIKMET]: { gradient: 'linear-gradient(135deg, var(--on-surface-variant), var(--on-surface-variant))', bgColor: 'var(--on-surface-variant)' },
+  [DISCOVERY_CARD_TYPES.FACT]: { gradient: 'linear-gradient(135deg, var(--primary), var(--primary))', bgColor: 'var(--primary)' }
 };
 
 export function getDailyDiscoveryCards(): DiscoveryCard[] {

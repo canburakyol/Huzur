@@ -25,7 +25,6 @@ dependencies {
     implementation project(':capacitor-screen-orientation')
     implementation project(':capacitor-share')
     implementation project(':capawesome-capacitor-app-update')
-    implementation project(':capgo-capacitor-data-storage-sqlite')
     implementation project(':revenuecat-purchases-capacitor')
 
 }

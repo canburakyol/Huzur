@@ -63,7 +63,7 @@ const LimitReachedModal = ({
         {/* Hero Section */}
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div className="crown-glow">
-            <Crown size={48} color="#fbbf24" fill="#fbbf24" />
+            <Crown size={48} color="var(--tertiary)" fill="var(--tertiary)" />
           </div>
           <h2 style={{ margin: '16px 0 8px 0', fontSize: '1.5rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
             {t('limitModal.title', 'Günlük Limit Doldu')}
@@ -109,12 +109,12 @@ const LimitReachedModal = ({
           </div>
 
           <div className="limit-option-card pro-card">
-            <div className="option-icon-box" style={{ background: 'rgba(251, 191, 36, 0.1)', color: '#fbbf24' }}>
-              <Zap size={18} fill="#fbbf24" />
+            <div className="option-icon-box" style={{ background: 'color-mix(in srgb, var(--tertiary) 10%, transparent)', color: 'var(--tertiary)' }}>
+              <Zap size={18} fill="var(--tertiary)" />
             </div>
             <div style={{ flex: 1 }}>
               <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text)', fontWeight: '700' }}>
-                {t('limitModal.proOptionPrefix', 'Pro\'ya geçin ve')} <span style={{ color: '#fbbf24' }}>{t('limitModal.unlimited', 'sınırsız')}</span> {t('limitModal.proOptionSuffix', 'kullanın!')}
+                {t('limitModal.proOptionPrefix', 'Pro\'ya geçin ve')} <span style={{ color: 'var(--tertiary)' }}>{t('limitModal.unlimited', 'sınırsız')}</span> {t('limitModal.proOptionSuffix', 'kullanın!')}
               </p>
             </div>
           </div>
@@ -129,24 +129,24 @@ const LimitReachedModal = ({
           border: '1px solid var(--nav-border)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-            <Sparkles size={16} color="#fbbf24" />
+            <Sparkles size={16} color="var(--tertiary)" />
             <span style={{ fontSize: '0.75rem', fontWeight: '950', color: 'var(--nav-text)', textTransform: 'uppercase' }}>{t('limitModal.proBenefits', 'PRO AVANTAJLARI')}</span>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
             <div className="benefit-item">
-              <CheckCircle2 size={14} color="#10b981" />
+              <CheckCircle2 size={14} color="var(--secondary)" />
               <span>{t('limitModal.benefits.unlimitedAi', 'Sınırsız AI')}</span>
             </div>
             <div className="benefit-item">
-              <CheckCircle2 size={14} color="#10b981" />
+              <CheckCircle2 size={14} color="var(--secondary)" />
               <span>{t('limitModal.benefits.allSurahs', 'Tüm Sureler')}</span>
             </div>
             <div className="benefit-item">
-              <CheckCircle2 size={14} color="#10b981" />
+              <CheckCircle2 size={14} color="var(--secondary)" />
               <span>{t('limitModal.benefits.noAds', 'Reklamsız')}</span>
             </div>
             <div className="benefit-item">
-              <CheckCircle2 size={14} color="#10b981" />
+              <CheckCircle2 size={14} color="var(--secondary)" />
               <span>{t('limitModal.benefits.offline', 'Çevrimdışı')}</span>
             </div>
           </div>
@@ -237,8 +237,8 @@ const LimitReachedModal = ({
         }
 
         .upgrade-btn {
-          background: linear-gradient(135deg, #fbbf24, #f59e0b);
-          color: #000;
+          background: linear-gradient(135deg, var(--tertiary), var(--on-tertiary-fixed-variant));
+          color: var(--on-tertiary);
           border: none;
           padding: 16px;
           border-radius: 16px;

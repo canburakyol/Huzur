@@ -65,10 +65,6 @@ export default defineConfig({
             return 'vendor-lottie';
           }
 
-          if (id.includes('/lucide-react/')) {
-            return 'vendor-icons';
-          }
-
           if (id.includes('/date-fns/')) return 'vendor-date';
         }
       }

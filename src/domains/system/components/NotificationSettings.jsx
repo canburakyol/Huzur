@@ -72,12 +72,12 @@ const NotificationSettings = () => {
       <div className="settings-group-title" style={{ marginTop: '24px' }}>{t('settings.notificationSettingsTitle', 'Bildirim Kanalları')}</div>
 
       {!permissionGranted && (
-        <div className="settings-card" style={{ background: '#fffbeb', borderColor: '#fef3c7', flexDirection: 'column', alignItems: 'flex-start', gap: '12px' }}>
+        <div className="settings-card" style={{ background: 'var(--tertiary-container)', borderColor: 'var(--tertiary-fixed-dim)', flexDirection: 'column', alignItems: 'flex-start', gap: '12px' }}>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <AlertCircle size={24} color="#f59e0b" />
+            <AlertCircle size={24} color="var(--tertiary)" />
             <div>
-              <div className="settings-label" style={{ color: '#92400e' }}>{t('settings.notificationPermissionRequiredTitle')}</div>
-              <div className="settings-desc" style={{ color: '#b45309' }}>{t('settings.notificationPermissionRequiredDesc')}</div>
+              <div className="settings-label" style={{ color: 'var(--on-tertiary-container)' }}>{t('settings.notificationPermissionRequiredTitle')}</div>
+              <div className="settings-desc" style={{ color: 'var(--on-tertiary-container)' }}>{t('settings.notificationPermissionRequiredDesc')}</div>
             </div>
           </div>
           <button 
@@ -95,7 +95,7 @@ const NotificationSettings = () => {
         <div className="settings-card" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} onClick={() => handleToggle('prayer')}>
             <div className="settings-card-left">
-                <div className="settings-icon-box" style={{ background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
+                <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--tertiary) 10%, transparent)', color: 'var(--tertiary)' }}>
                     <BellRing size={20} />
                 </div>
                 <div>
@@ -134,7 +134,7 @@ const NotificationSettings = () => {
         {/* Günlük Hatırlatıcılar */}
         <div className="settings-card" onClick={() => handleToggle('reminder')}>
           <div className="settings-card-left">
-              <div className="settings-icon-box" style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
+              <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--secondary) 10%, transparent)', color: 'var(--secondary)' }}>
                   <Bell size={20} />
               </div>
               <div>
@@ -150,7 +150,7 @@ const NotificationSettings = () => {
         {/* Seri Koruması */}
         <div className="settings-card" onClick={() => handleToggle('streak')}>
           <div className="settings-card-left">
-              <div className="settings-icon-box" style={{ background: 'rgba(249, 115, 22, 0.1)', color: '#f97316' }}>
+              <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--tertiary) 10%, transparent)', color: 'var(--tertiary)' }}>
                   <Flame size={20} />
               </div>
               <div>
@@ -166,7 +166,7 @@ const NotificationSettings = () => {
         {/* Güncellemeler */}
         <div className="settings-card" onClick={() => handleToggle('updates')}>
           <div className="settings-card-left">
-              <div className="settings-icon-box" style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
+              <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--primary) 10%, transparent)', color: 'var(--primary)' }}>
                   <Megaphone size={20} />
               </div>
               <div>
@@ -183,7 +183,7 @@ const NotificationSettings = () => {
         <div className="settings-card" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} onClick={() => handleToggle('quietHoursEnabled')}>
             <div className="settings-card-left">
-                <div className="settings-icon-box" style={{ background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6' }}>
+                <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--secondary) 10%, transparent)', color: 'var(--secondary)' }}>
                     <Moon size={20} />
                 </div>
                 <div>

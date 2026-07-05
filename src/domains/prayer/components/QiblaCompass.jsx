@@ -11,6 +11,11 @@ const KAABA_LAT = 21.4225;
 const KAABA_LNG = 39.8262;
 const ALIGNMENT_THRESHOLD_DEG = 5;
 
+const semanticColor = (token, fallback = 'currentColor') => {
+    if (typeof window === 'undefined') return fallback;
+    return getComputedStyle(document.documentElement).getPropertyValue(token).trim() || fallback;
+};
+
 // ── Yardımcı Fonksiyonlar ────────────────────────────────────────
 const calculateMagneticDeclination = (lat, lng) => {
     if (lat >= 35 && lat <= 42 && lng >= 26 && lng <= 45) {
@@ -36,6 +41,10 @@ const drawAROverlay = (canvas, qiblaOffset, heading, isAligned) => {
 
     const cx = width / 2;
     const cy = height / 2;
+    const accent = semanticColor('--secondary', '#8daa91');
+    const primary = semanticColor('--primary', '#1b3022');
+    const surface = semanticColor('--inverse-surface', '#303030');
+    const onSurface = semanticColor('--on-surface', '#1b1c1c');
 
     // Kıble yönü açısı (kameraya göre)
     const angleDeg = (qiblaOffset - heading + 360) % 360;
@@ -47,14 +56,14 @@ const drawAROverlay = (canvas, qiblaOffset, heading, isAligned) => {
     const endY = cy + Math.sin(angleRad) * lineLength;
 
     // Glow efekti
-    ctx.shadowColor = isAligned ? '#f59e0b' : 'rgba(15, 118, 110, 0.8)';
+    ctx.shadowColor = accent;
     ctx.shadowBlur = isAligned ? 24 : 12;
 
     // Çizgi
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(endX, endY);
-    ctx.strokeStyle = isAligned ? '#fbbf24' : '#0f766e';
+    ctx.strokeStyle = isAligned ? accent : primary;
     ctx.lineWidth = isAligned ? 4 : 2.5;
     ctx.setLineDash(isAligned ? [] : [12, 6]);
     ctx.stroke();
@@ -74,7 +83,7 @@ const drawAROverlay = (canvas, qiblaOffset, heading, isAligned) => {
         endY - arrowSize * Math.sin(arrowAngle + Math.PI / 6)
     );
     ctx.closePath();
-    ctx.fillStyle = isAligned ? '#fbbf24' : '#0f766e';
+    ctx.fillStyle = isAligned ? accent : primary;
     ctx.fill();
 
     // Kabe ikonu (ok ucunda)
@@ -82,29 +91,29 @@ const drawAROverlay = (canvas, qiblaOffset, heading, isAligned) => {
     const iconSize = 28;
     const iconX = endX - iconSize / 2;
     const iconY = endY - iconSize - 10;
-    ctx.fillStyle = '#1a1a1a';
+    ctx.fillStyle = surface;
     ctx.beginPath();
     ctx.roundRect(iconX, iconY, iconSize, iconSize, 4);
     ctx.fill();
-    ctx.strokeStyle = '#d4af37';
+    ctx.strokeStyle = accent;
     ctx.lineWidth = 2;
     ctx.stroke();
     // Altın şerit
-    ctx.fillStyle = '#d4af37';
+    ctx.fillStyle = accent;
     ctx.fillRect(iconX, iconY + iconSize * 0.3, iconSize, 3);
 
     // Merkez nokta
     ctx.beginPath();
     ctx.arc(cx, cy, 8, 0, Math.PI * 2);
-    ctx.fillStyle = isAligned ? '#fbbf24' : 'rgba(15, 118, 110, 0.9)';
+    ctx.fillStyle = isAligned ? accent : primary;
     ctx.fill();
 
     // Hizalama metni
     if (isAligned) {
-        ctx.shadowColor = '#f59e0b';
+        ctx.shadowColor = accent;
         ctx.shadowBlur = 16;
-        ctx.fillStyle = '#fbbf24';
-        ctx.font = 'bold 18px Inter, sans-serif';
+        ctx.fillStyle = onSurface;
+        ctx.font = '600 18px Manrope, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('✓ Kıble Bulundu', cx, height - 40);
         ctx.shadowBlur = 0;
@@ -282,7 +291,7 @@ const QiblaCompass = ({ onClose }) => {
                         borderRadius: '14px',
                         border: '1px solid var(--nav-border)',
                         background: isARMode ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                        color: isARMode ? 'white' : 'var(--nav-text)',
+                        color: isARMode ? 'var(--on-primary)' : 'var(--nav-text)',
                         fontWeight: '800',
                         fontSize: '0.85rem',
                         cursor: 'pointer',

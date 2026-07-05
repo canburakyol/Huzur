@@ -61,7 +61,7 @@ function SettingsBasicsSection({
 
       <div className="settings-basics-about-card">
         <div className="settings-basics-about-header">
-          <Info size={22} color="var(--primary-color)" />
+          <Info size={22} color="var(--primary)" />
           <div className="settings-basics-about-title">
             {t('settings.about')}
           </div>

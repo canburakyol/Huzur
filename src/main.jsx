@@ -67,8 +67,8 @@ const mountStartupDebugOverlay = (label, errorLike) => {
     pre.style.overflow = 'auto'
     pre.style.whiteSpace = 'pre-wrap'
     pre.style.wordBreak = 'break-word'
-    pre.style.background = '#1b1f23'
-    pre.style.color = '#fecaca'
+    pre.style.background = 'var(--surface-dim)'
+    pre.style.color = 'var(--on-error-container)'
     pre.style.fontSize = '12px'
     document.body?.appendChild(pre)
   } catch (error) {
@@ -96,7 +96,7 @@ document.documentElement.setAttribute('data-theme', theme);
 try {
   createRoot(document.getElementById('root')).render(
     <StrictMode>
-      <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'linear-gradient(135deg, #064e3b, #042f2e)', color: '#fde68a', fontWeight: 700 }}>Yukleniyor...</div>}>
+      <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'linear-gradient(135deg, var(--primary-container), var(--surface-page))', color: 'var(--on-tertiary-container)', fontWeight: 700 }}>Yukleniyor...</div>}>
         <AppProviders />
       </Suspense>
     </StrictMode>,

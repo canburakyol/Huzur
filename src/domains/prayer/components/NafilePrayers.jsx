@@ -27,7 +27,7 @@ const NAFILE_PRAYERS = [
     description: 'Ramazan ayında yatsı namazından sonra kılınan 20 rekatlık namaz',
     icon: '🌙',
     rekat: 20,
-    color: 'var(--accent-color)',
+    color: 'var(--accent)',
     category: 'ramazan',
     time: 'yatsi_after'
   },
@@ -38,7 +38,7 @@ const NAFILE_PRAYERS = [
     description: 'Güneş doğduktan 15-20 dakika sonra kılınan 2-8 rekatlık namaz',
     icon: '☀️',
     rekat: 8,
-    color: 'var(--primary-color)',
+    color: 'var(--primary)',
     category: 'daily',
     time: 'morning'
   },
@@ -49,7 +49,7 @@ const NAFILE_PRAYERS = [
     description: 'Gece yarısından sonra kılınan 2-12 rekatlık namaz',
     icon: '🌟',
     rekat: 12,
-    color: 'var(--accent-color)',
+    color: 'var(--accent)',
     category: 'night',
     time: 'midnight'
   },
@@ -71,7 +71,7 @@ const NAFILE_PRAYERS = [
     description: 'Yatsı namazından sonra kılınan tek rekatlık namaz',
     icon: '✨',
     rekat: 3,
-    color: 'var(--bg-emerald-light)',
+    color: 'var(--surface-container)',
     category: 'daily',
     time: 'yatsi_after'
   },
@@ -82,7 +82,7 @@ const NAFILE_PRAYERS = [
     description: 'Bir işe başlamadan önce danışma namazı',
     icon: '🤲',
     rekat: 2,
-    color: 'var(--bg-emerald-deep)',
+    color: 'var(--primary-container)',
     category: 'special',
     time: 'any'
   },
@@ -104,7 +104,7 @@ const NAFILE_PRAYERS = [
     description: 'Bir ihtiyaç için kılınan namaz',
     icon: '💫',
     rekat: 2,
-    color: 'var(--primary-dark)',
+    color: 'var(--primary)',
     category: 'special',
     time: 'any'
   }
@@ -277,7 +277,7 @@ export function NafilePrayers({ onClose }) {
       {/* Stats Overview */}
       <div className="nafile-stats reveal-stagger" style={{ '--delay': '0.1s' }}>
         <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(15, 118, 110, 0.1)', color: 'var(--bg-emerald-light)' }}>
+          <div className="stat-icon" style={{ background: 'rgba(15, 118, 110, 0.1)', color: 'var(--surface-container)' }}>
             <CheckCircle2 size={24} />
           </div>
           <div className="stat-info">
@@ -297,7 +297,7 @@ export function NafilePrayers({ onClose }) {
         </div>
         
         <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(236, 72, 153, 0.1)', color: 'var(--accent-color)' }}>
+          <div className="stat-icon" style={{ background: 'rgba(236, 72, 153, 0.1)', color: 'var(--accent)' }}>
             <Flame size={24} />
           </div>
           <div className="stat-info">
@@ -371,7 +371,7 @@ export function NafilePrayers({ onClose }) {
                     className="progress-bar"
                     style={{ 
                       width: `${progress.percentage}%`,
-                      backgroundColor: progress.completed ? 'var(--bg-emerald-light)' : prayer.color
+                      backgroundColor: progress.completed ? 'var(--surface-container)' : prayer.color
                     }}
                   />
                 </div>

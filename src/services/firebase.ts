@@ -148,6 +148,18 @@ const ensureAppCheck = async (app: FirebaseApp): Promise<AppCheck | null> => {
     return _appCheck;
   }
 
+  // Native App Check shares the privacy-gated SDK bootstrap. Waiting here
+  // prevents Firestore/Auth from requesting a token before its provider exists.
+  if (!isTelemetryEnabledSync()) {
+    return null;
+  }
+
+  const nativeInitialization = await initializeTelemetryNativeSdks();
+  if (nativeInitialization.success !== true) {
+    logger.warn("[Firebase] Native App Check skipped: privacy SDK initialization failed", nativeInitialization);
+    return null;
+  }
+
   const [{ FirebaseAppCheck }, { CustomProvider }] = await Promise.all([
     import("@capacitor-firebase/app-check"),
     import("firebase/app-check"),

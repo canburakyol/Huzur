@@ -17,35 +17,35 @@ const DHIKR_TYPES = [
         arabic: 'سُبْحَانَ اللهِ',
         latin: 'Sübhanallah',
         icon: '🌳',
-        color: 'var(--bg-emerald-light)'
+        color: 'var(--surface-container)'
     },
     {
         id: 'elhamdulillah',
         arabic: 'الْحَمْدُ لِلهِ',
         latin: 'Elhamdülillah',
         icon: '⚖️',
-        color: 'var(--primary-color)'
+        color: 'var(--primary)'
     },
     {
         id: 'allahuekber',
         arabic: 'اللهُ أَكْبَرُ',
         latin: 'Allahu Ekber',
         icon: '🌟',
-        color: 'var(--accent-color)'
+        color: 'var(--accent)'
     },
     {
         id: 'lailaheillallah',
         arabic: 'لَا إِلٰهَ إِلَّا اللهُ',
         latin: 'Lâ ilâhe illallah',
         icon: '💎',
-        color: 'var(--accent-color)'
+        color: 'var(--accent)'
     },
     {
         id: 'estagfirullah',
         arabic: 'أَسْتَغْفِرُ اللهَ',
         latin: 'Estağfirullah',
         icon: '💧',
-        color: 'var(--bg-emerald-med)'
+        color: 'var(--secondary-container)'
     },
     {
         id: 'salavat',
@@ -229,7 +229,7 @@ function ZikirWorld({ onClose }) {
                         <div style={{
                             fontSize: '1.25rem',
                             fontWeight: '900',
-                            color: 'var(--accent-color)',
+                            color: 'var(--accent)',
                             marginBottom: '4px'
                         }}>
                             {personalStats.daysActive > 0 ? Math.round(personalStats.total / personalStats.daysActive) : 0}
@@ -349,7 +349,7 @@ function ZikirWorld({ onClose }) {
                                         background: 'rgba(15, 118, 110, 0.08)',
                                         borderRadius: '16px',
                                         fontSize: '0.9rem',
-                                        color: 'var(--bg-emerald-med)',
+                                        color: 'var(--secondary-container)',
                                         lineHeight: '1.6',
                                         border: '1px solid rgba(15, 118, 110, 0.1)'
                                     }}>

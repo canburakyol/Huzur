@@ -1,244 +1,408 @@
-import { useState, useEffect, memo } from 'react';
+import { memo, useEffect, useState } from 'react';
+import { CloudSun, Flame, Moon, Sun, SunDim, Sunrise, Sunset, Check, MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { MapPin, Flame, Moon } from 'lucide-react';
-import { useTime } from '../context/TimeContext';
 
-/**
- * Timer logic helper
- */
-const calculateTimeLeft = (timings, nextPrayer) => {
-    if (!timings || !nextPrayer || !timings[nextPrayer.key]) return null;
-    const now = new Date();
-    const [targetH, targetM] = timings[nextPrayer.key].split(':').map(Number);
-    const targetTime = new Date();
-    targetTime.setHours(targetH, targetM, 0, 0);
-    if (targetTime < now) targetTime.setDate(targetTime.getDate() + 1);
-    const diff = targetTime - now;
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    return { hours, minutes, seconds };
+const PRAYERS = [
+  { key: 'Fajr', nameKey: 'prayer.fajr' },
+  { key: 'Sunrise', nameKey: 'prayer.sunrise' },
+  { key: 'Dhuhr', nameKey: 'prayer.dhuhr' },
+  { key: 'Asr', nameKey: 'prayer.asr' },
+  { key: 'Maghrib', nameKey: 'prayer.maghrib' },
+  { key: 'Isha', nameKey: 'prayer.isha' },
+];
+
+const PRAYER_NAME_FALLBACKS = {
+  Fajr: 'İmsak',
+  Sunrise: 'Güneş',
+  Dhuhr: 'Öğle',
+  Asr: 'İkindi',
+  Maghrib: 'Akşam',
+  Isha: 'Yatsı',
 };
 
-const PremiumHomeHero = memo(({
-    locationName,
-    streakData,
-    timings,
-    nextPrayer,
-    recoveryPlan = null,
-    onSelectFeature
+const parsePrayerTime = (timeStr) => {
+  const match = typeof timeStr === 'string' ? timeStr.match(/^(\d{1,2}):(\d{2})/) : null;
+  if (!match) return null;
+
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return null;
+
+  return { hours, minutes };
+};
+
+const getPrayerTargetMs = (timings, nextPrayer, nowMs) => {
+  const prayerTime = nextPrayer?.time || timings?.[nextPrayer?.key];
+  const parsed = parsePrayerTime(prayerTime);
+  if (!parsed) return null;
+
+  const target = new Date(nowMs);
+  target.setHours(parsed.hours, parsed.minutes, 0, 0);
+
+  if (nextPrayer?.isTomorrow) {
+    target.setDate(target.getDate() + 1);
+  }
+
+  return target.getTime();
+};
+
+const GET_TURKISH_SUFFIX = (timeStr) => {
+  const parsed = parsePrayerTime(timeStr);
+  if (!parsed) return '';
+
+  const { hours, minutes } = parsed;
+  if (minutes === 0) {
+    if ([3, 4, 5, 13, 14, 15, 23].includes(hours)) return "'te";
+    if ([1, 2, 7, 8, 11, 12, 17, 18, 21, 22].includes(hours)) return "'de";
+    return "'da";
+  }
+
+  const lastDigit = minutes % 10;
+  if (lastDigit === 0) {
+    if (minutes === 20 || minutes === 50) return "'de";
+    if (minutes === 40) return "'ta";
+    return "'da";
+  }
+
+  if ([3, 4, 5].includes(lastDigit)) return "'te";
+  if ([1, 2, 7, 8].includes(lastDigit)) return "'de";
+  return "'da";
+};
+
+const GET_PRAYER_ICON = (key, size = 14) => {
+  switch (key) {
+    case 'Fajr':
+      return <Sunrise size={size} />;
+    case 'Sunrise':
+      return <SunDim size={size} />;
+    case 'Dhuhr':
+      return <Sun size={size} />;
+    case 'Asr':
+      return <CloudSun size={size} />;
+    case 'Maghrib':
+      return <Sunset size={size} />;
+    case 'Isha':
+      return <Moon size={size} />;
+    default:
+      return <Sun size={size} />;
+  }
+};
+
+const GET_AMBIENT_VARIABLES = (nextPrayerKey) => {
+  const semanticTheme = {
+    '--hero-card-bg': 'linear-gradient(135deg, var(--primary-container), var(--surface-container-low))',
+    '--hero-card-border': '1px solid var(--card-border)',
+    '--hero-mosque-sun': 'var(--tertiary)',
+    '--hero-mosque-back-hill': 'var(--secondary-container)',
+    '--hero-mosque-mid-hill': 'var(--secondary)',
+    '--hero-mosque-fore-hill': 'var(--primary)',
+    '--hero-mosque-structure': 'var(--primary)',
+    '--hero-mosque-accent': 'var(--on-primary-container)',
+    '--hero-mosque-glow': 'var(--tertiary-container)',
+    '--hero-countdown-color': 'var(--tertiary)',
+    '--hero-seconds-color': 'var(--on-surface-variant)',
+    '--text-primary': 'var(--on-surface)',
+    '--text-secondary': 'var(--on-surface-variant)',
+    '--text-muted': 'color-mix(in srgb, var(--on-surface) 55%, transparent)',
+    '--text-heading': 'var(--primary)',
+    '--text-body': 'var(--on-surface-variant)',
+  };
+
+  switch (nextPrayerKey) {
+    case 'Fajr': // Sıradaki İmsak (Şu an Yatsı/Gece vaktindeyiz)
+      return { ...semanticTheme,
+        '--hero-card-bg': 'linear-gradient(135deg, var(--surface-dim) 0%, var(--inverse-surface) 100%)',
+        '--hero-card-border': '1px solid color-mix(in srgb, var(--inverse-on-surface) 8%, transparent)',
+        '--hero-mosque-sun': 'var(--inverse-on-surface)',
+        '--hero-mosque-back-hill': 'var(--surface-container-highest)',
+        '--hero-mosque-mid-hill': 'var(--surface-container-high)',
+        '--hero-mosque-fore-hill': 'var(--surface-dim)',
+        '--hero-mosque-structure': 'var(--surface-container-high)',
+        '--hero-mosque-accent': 'var(--outline)',
+        '--hero-mosque-glow': 'var(--tertiary-container)',
+        '--hero-countdown-color': 'var(--tertiary)',
+        '--hero-seconds-color': 'var(--tertiary-fixed-dim)',
+        '--text-primary': 'var(--on-primary)',
+        '--text-secondary': 'var(--inverse-on-surface)',
+        '--text-muted': 'color-mix(in srgb, var(--inverse-on-surface) 45%, transparent)',
+        '--text-heading': 'var(--on-primary)',
+        '--text-body': 'var(--inverse-on-surface)',
+      };
+    case 'Sunrise': // Sıradaki Güneş (Şu an Sabah/İmsak vaktindeyiz - Şafak)
+      return { ...semanticTheme,
+        '--hero-card-bg': 'linear-gradient(135deg, var(--primary-container) 0%, var(--secondary-container) 50%, var(--inverse-surface) 100%)',
+        '--hero-card-border': '1px solid color-mix(in srgb, var(--secondary) 15%, transparent)',
+        '--hero-mosque-sun': 'var(--tertiary-fixed-dim)',
+        '--hero-mosque-back-hill': 'var(--primary-container)',
+        '--hero-mosque-mid-hill': 'var(--on-primary-fixed-variant)',
+        '--hero-mosque-fore-hill': 'var(--on-primary-fixed)',
+        '--hero-mosque-structure': 'var(--on-primary-fixed-variant)',
+        '--hero-mosque-accent': 'var(--secondary)',
+        '--hero-mosque-glow': 'var(--tertiary-container)',
+        '--hero-countdown-color': 'var(--tertiary)',
+        '--hero-seconds-color': 'var(--inverse-on-surface)',
+        '--text-primary': 'var(--on-primary)',
+        '--text-secondary': 'var(--inverse-on-surface)',
+        '--text-muted': 'color-mix(in srgb, var(--inverse-on-surface) 40%, transparent)',
+        '--text-heading': 'var(--on-primary)',
+        '--text-body': 'var(--inverse-on-surface)',
+      };
+    case 'Dhuhr': // Sıradaki Öğle (Şu an Sabah/Güneş vaktindeyiz - Kuşluk)
+      return { ...semanticTheme,
+        '--hero-card-bg': 'linear-gradient(135deg, var(--surface-bright) 0%, var(--surface-container-low) 100%)',
+        '--hero-card-border': '1px solid color-mix(in srgb, var(--secondary) 18%, transparent)',
+        '--hero-mosque-sun': 'var(--tertiary)',
+        '--hero-mosque-back-hill': 'var(--secondary-fixed)',
+        '--hero-mosque-mid-hill': 'var(--secondary-fixed-dim)',
+        '--hero-mosque-fore-hill': 'var(--secondary)',
+        '--hero-mosque-structure': 'var(--secondary)',
+        '--hero-mosque-accent': 'var(--on-secondary-fixed-variant)',
+        '--hero-mosque-glow': 'var(--tertiary-container)',
+        '--hero-countdown-color': 'var(--tertiary)',
+        '--hero-seconds-color': 'var(--tertiary-fixed-dim)',
+        '--text-primary': 'var(--on-surface)',
+        '--text-secondary': 'var(--on-surface-variant)',
+        '--text-muted': 'color-mix(in srgb, var(--on-surface) 60%, transparent)',
+        '--text-heading': 'var(--primary)',
+        '--text-body': 'var(--on-surface-variant)',
+      };
+    case 'Asr': // Sıradaki İkindi (Şu an Öğle vaktindeyiz)
+      return { ...semanticTheme,
+        '--hero-card-bg': 'linear-gradient(135deg, var(--primary-fixed) 0%, var(--secondary-fixed) 100%)',
+        '--hero-card-border': '1px solid color-mix(in srgb, var(--secondary) 18%, transparent)',
+        '--hero-mosque-sun': 'var(--tertiary)',
+        '--hero-mosque-back-hill': 'var(--secondary-fixed)',
+        '--hero-mosque-mid-hill': 'var(--secondary-fixed-dim)',
+        '--hero-mosque-fore-hill': 'var(--secondary)',
+        '--hero-mosque-structure': 'var(--secondary)',
+        '--hero-mosque-accent': 'var(--on-secondary-fixed-variant)',
+        '--hero-mosque-glow': 'var(--tertiary-container)',
+        '--hero-countdown-color': 'var(--tertiary)',
+        '--hero-seconds-color': 'var(--tertiary-fixed-dim)',
+        '--text-primary': 'var(--on-surface)',
+        '--text-secondary': 'var(--on-surface-variant)',
+        '--text-muted': 'color-mix(in srgb, var(--on-surface) 60%, transparent)',
+        '--text-heading': 'var(--primary)',
+        '--text-body': 'var(--on-surface-variant)',
+      };
+    case 'Maghrib': // Sıradaki Akşam (Şu an İkindi vaktindeyiz - Gün Batımı)
+      return { ...semanticTheme,
+        '--hero-card-bg': 'linear-gradient(135deg, var(--tertiary-container) 0%, var(--tertiary-fixed) 100%)',
+        '--hero-card-border': '1px solid color-mix(in srgb, var(--tertiary) 25%, transparent)',
+        '--hero-mosque-sun': 'var(--tertiary)',
+        '--hero-mosque-back-hill': 'var(--tertiary-fixed)',
+        '--hero-mosque-mid-hill': 'var(--tertiary-fixed-dim)',
+        '--hero-mosque-fore-hill': 'var(--tertiary)',
+        '--hero-mosque-structure': 'var(--tertiary)',
+        '--hero-mosque-accent': 'var(--on-tertiary-fixed-variant)',
+        '--hero-mosque-glow': 'var(--tertiary-container)',
+        '--hero-countdown-color': 'var(--tertiary)',
+        '--hero-seconds-color': 'var(--inverse-on-surface)',
+        '--text-primary': 'var(--on-surface)',
+        '--text-secondary': 'var(--on-tertiary-container)',
+        '--text-muted': 'color-mix(in srgb, var(--on-surface) 60%, transparent)',
+        '--text-heading': 'var(--primary)',
+        '--text-body': 'var(--on-tertiary-container)',
+      };
+    case 'Isha': // Sıradaki Yatsı (Şu an Akşam vaktindeyiz - Alacakaranlık)
+      return { ...semanticTheme,
+        '--hero-card-bg': 'linear-gradient(135deg, var(--tertiary) 0%, var(--inverse-surface) 50%, var(--surface-dim) 100%)',
+        '--hero-card-border': '1px solid color-mix(in srgb, var(--outline) 20%, transparent)',
+        '--hero-mosque-sun': 'var(--tertiary)',
+        '--hero-mosque-back-hill': 'var(--outline)',
+        '--hero-mosque-mid-hill': 'var(--surface-container-highest)',
+        '--hero-mosque-fore-hill': 'var(--surface-dim)',
+        '--hero-mosque-structure': 'var(--surface-container-highest)',
+        '--hero-mosque-accent': 'var(--outline)',
+        '--hero-mosque-glow': 'var(--tertiary-container)',
+        '--hero-countdown-color': 'var(--tertiary)',
+        '--hero-seconds-color': 'var(--tertiary-fixed-dim)',
+        '--text-primary': 'var(--on-primary)',
+        '--text-secondary': 'var(--inverse-on-surface)',
+        '--text-muted': 'color-mix(in srgb, var(--inverse-on-surface) 45%, transparent)',
+        '--text-heading': 'var(--on-primary)',
+        '--text-body': 'var(--inverse-on-surface)',
+      };
+    default:
+      return {};
+  }
+};
+
+const PremiumHomeHero = memo(({ 
+  timings, 
+  nextPrayer, 
+  locationName, 
+  weather, 
+  streakData, 
+  onSelectFeature,
+  recoveryPlan 
 }) => {
-    const { t } = useTranslation();
-    const { greetingKey, timeOfDay } = useTime();
-    const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft(timings, nextPrayer));
+  const { t } = useTranslation();
+  const [nowMs, setNowMs] = useState(() => Date.now());
 
-    useEffect(() => {
-        if (!timings || !nextPrayer) return;
-        const timer = setInterval(() => {
-            setTimeLeft(calculateTimeLeft(timings, nextPrayer));
-        }, 1000);
-        return () => clearInterval(timer);
-    }, [timings, nextPrayer]);
-
-    const formatNum = (n) => String(n).padStart(2, '0');
-
-    const prayerList = [
-        { key: 'Fajr', nameKey: 'prayer.fajr' },
-        { key: 'Sunrise', nameKey: 'prayer.sunrise' },
-        { key: 'Dhuhr', nameKey: 'prayer.dhuhr' },
-        { key: 'Asr', nameKey: 'prayer.asr' },
-        { key: 'Maghrib', nameKey: 'prayer.maghrib' },
-        { key: 'Isha', nameKey: 'prayer.isha' }
-    ];
-
-    const getPrayerName = (key) => {
-        const prayerMap = {
-            'Fajr': 'prayer.fajr',
-            'Sunrise': 'prayer.sunrise',
-            'Dhuhr': 'prayer.dhuhr',
-            'Asr': 'prayer.asr',
-            'Maghrib': 'prayer.maghrib',
-            'Isha': 'prayer.isha'
-        };
-        return t(prayerMap[key] || key);
-    };
-
-    // Simplified gradients based on time of day
-    const getHeroGradient = () => {
-        switch (timeOfDay) {
-            case 'morning': return 'linear-gradient(135deg, #0F3D2E 0%, #D4AF37 100%)';
-            case 'noon': return 'linear-gradient(135deg, #124D3A 0%, #1A5C45 100%)';
-            case 'afternoon': return 'linear-gradient(135deg, #0B2E23 0%, #8B6914 100%)';
-            case 'evening': return 'linear-gradient(135deg, #07241B 0%, #6B4F24 100%)';
-            case 'night': return 'linear-gradient(135deg, #041410 0%, #0B2E23 100%)';
-            default: return 'linear-gradient(135deg, #0F3D2E 0%, #1A5C45 100%)';
+  const [completedPrayers, setCompletedPrayers] = useState(() => {
+    try {
+      const today = new Date().toDateString();
+      const saved = localStorage.getItem('huzur_completed_prayers');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.date === today) {
+          return parsed.completed || {};
         }
-    };
+      }
+      return {};
+    } catch {
+      return {};
+    }
+  });
 
-    return (
-        <div className="premium-hero-container" style={{
-            background: getHeroGradient(),
-            borderRadius: '28px',
-            padding: '18px 16px 14px',
-            marginBottom: '8px',
-            position: 'relative',
-            overflow: 'hidden',
-            boxShadow: '0 12px 28px rgba(0,0,0,0.2)'
-        }}>
-            {/* Background Calligraphy Glow */}
-            <div style={{
-                position: 'absolute',
-                top: '-16px',
-                right: '-16px',
-                fontSize: '80px',
-                color: 'rgba(255,255,255,0.04)',
-                fontFamily: 'serif',
-                pointerEvents: 'none',
-                transform: 'rotate(-15deg)'
-            }}>الله</div>
+  const togglePrayer = (prayerKey) => {
+    try {
+      const today = new Date().toDateString();
+      const nextCompleted = { ...completedPrayers, [prayerKey]: !completedPrayers[prayerKey] };
+      localStorage.setItem('huzur_completed_prayers', JSON.stringify({
+        date: today,
+        completed: nextCompleted
+      }));
+      setCompletedPrayers(nextCompleted);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
-            {/* Header: Location + Streak */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', position: 'relative', zIndex: 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.85)' }}>
-                    <MapPin size={14} />
-                    <span style={{ fontWeight: '600', fontSize: '13px' }}>{locationName}</span>
-                </div>
-                {streakData.current > 0 && (
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                        background: 'rgba(255,255,255,0.1)',
-                        padding: '4px 10px',
-                        borderRadius: '20px',
-                        color: 'white',
-                        fontSize: '11px',
-                        fontWeight: '700'
-                    }}>
-                        <Flame size={12} color="#FF9966" />
-                        {streakData.current}
-                    </div>
-                )}
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setNowMs((previousNowMs) => {
+        const nextNowMs = Date.now();
+        return nextNowMs > previousNowMs ? nextNowMs : previousNowMs + 1000;
+      });
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const getPrayerName = (key) => t(`prayer.${String(key || '').toLowerCase()}`, PRAYER_NAME_FALLBACKS[key] || key);
+  const targetTime = nextPrayer?.time || timings?.[nextPrayer?.key];
+  const targetMs = getPrayerTargetMs(timings, nextPrayer, nowMs);
+  const remainingMs = targetMs ? Math.max(0, targetMs - nowMs) : 0;
+  const hasTime = Boolean(targetTime && targetMs);
+  const hours = hasTime ? Math.floor(remainingMs / 3600000) : 0;
+  const minutes = hasTime ? Math.floor((remainingMs % 3600000) / 60000) : 0;
+  const seconds = hasTime ? Math.floor((remainingMs % 60000) / 1000) : 0;
+  const formatNum = (value) => String(value).padStart(2, '0');
+
+  const ambientStyle = GET_AMBIENT_VARIABLES(nextPrayer?.key);
+
+  return (
+    <section 
+      className="skeuo-card hero-card relative overflow-hidden"
+      style={ambientStyle}
+    >
+      {/* Background Arabesque Texture */}
+      <div
+        className="absolute inset-0 opacity-5 pointer-events-none"
+        style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/arabesque.png')" }}
+      ></div>
+
+      {/* Background Calligraphy Glow */}
+      <div style={{
+          position: 'absolute',
+          top: '-16px',
+          right: '-16px',
+          fontSize: '90px',
+          color: 'rgba(255,255,255,0.035)',
+          fontFamily: 'Amiri, serif',
+          pointerEvents: 'none',
+          transform: 'rotate(-15deg)',
+          zIndex: 0
+      }}>الله</div>
+
+      <div className="relative z-10 flex flex-col w-full text-start">
+        {/* Header: Location + Streak */}
+        <div className="hero-header-row">
+          <div className="hero-location">
+            <MapPin size={13} style={{ opacity: 0.85 }} />
+            <span className="hero-location-text">{locationName || t('prayer.detectingLocation', 'Konum aranıyor...')}</span>
+            {weather && (
+              <span className="hero-weather-text">
+                • {Math.round(weather.temp || weather.temperature || 0)}°C
+              </span>
+            )}
+          </div>
+          {streakData?.current > 0 && (
+            <div className="hero-streak-badge">
+              <Flame size={12} color="#FF9966" fill="#FF9966" />
+              <span>{streakData.current} {t('streak.days', 'Gün')}</span>
             </div>
-
-            {/* Main Content: Greeting + Countdown */}
-            <div style={{ textAlign: 'center', marginBottom: '14px', position: 'relative', zIndex: 1 }}>
-                <h2 style={{ margin: '0 0 6px 0', fontSize: '14px', color: 'rgba(255,255,255,0.65)', fontWeight: '500' }}>
-                    {recoveryPlan?.headline || t(greetingKey)}
-                </h2>
-                
-                {nextPrayer && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <div style={{ fontSize: '10px', color: '#D4AF37', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '4px' }}>
-                            {getPrayerName(nextPrayer.key)} {t('prayer.time')}
-                        </div>
-                        
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <div className="countdown-unit">
-                                <span className="unit-value">{timeLeft ? formatNum(timeLeft.hours) : '--'}</span>
-                                <span className="unit-label">{t('countdown.hours')}</span>
-                            </div>
-                            <span style={{ color: 'white', fontSize: '18px', fontWeight: '700', opacity: 0.4 }}>:</span>
-                            <div className="countdown-unit">
-                                <span className="unit-value">{timeLeft ? formatNum(timeLeft.minutes) : '--'}</span>
-                                <span className="unit-label">{t('countdown.min')}</span>
-                            </div>
-                            <span style={{ color: 'white', fontSize: '18px', fontWeight: '700', opacity: 0.4 }}>:</span>
-                            <div className="countdown-unit">
-                                <span className="unit-value">{timeLeft ? formatNum(timeLeft.seconds) : '--'}</span>
-                                <span className="unit-label">{t('countdown.sec')}</span>
-                            </div>
-                        </div>
-
-                        <button 
-                            onClick={() => onSelectFeature && onSelectFeature('huzurMode', 'home_hero')}
-                            className="huzur-mode-hero-btn"
-                            style={{
-                                marginTop: '12px',
-                                background: 'rgba(255,255,255,0.12)',
-                                border: '1px solid rgba(255,255,255,0.15)',
-                                borderRadius: '10px',
-                                padding: '6px 14px',
-                                color: 'white',
-                                fontSize: '12px',
-                                fontWeight: '700',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px',
-                                cursor: 'pointer',
-                                transition: 'all 0.3s ease',
-                                marginInline: 'auto'
-                            }}
-                        >
-                            <Moon size={14} fill="white" />
-                            {t('menu.huzurMode')}
-                        </button>
-                    </div>
-                )}
-            </div>
-
-            {/* Bottom: Prayer Strip */}
-            <div style={{
-                background: 'rgba(255,255,255,0.08)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: '14px',
-                padding: '8px 6px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                position: 'relative',
-                zIndex: 1,
-                border: '1px solid rgba(255,255,255,0.08)'
-            }}>
-                {prayerList.map((prayer) => (
-                    <div key={prayer.key} style={{
-                        textAlign: 'center',
-                        flex: 1,
-                        opacity: nextPrayer?.key === prayer.key ? 1 : 0.55,
-                        position: 'relative'
-                    }}>
-                        <div style={{ fontSize: '7px', color: '#fff', fontWeight: '500', marginBottom: '1px' }}>
-                            {t(prayer.nameKey)}
-                        </div>
-                        <div style={{ fontSize: '10px', color: nextPrayer?.key === prayer.key ? '#D4AF37' : '#fff', fontWeight: '700' }}>
-                            {timings?.[prayer.key]?.substring(0, 5) || '--:--'}
-                        </div>
-                        {nextPrayer?.key === prayer.key && (
-                            <div style={{ position: 'absolute', bottom: '-3px', left: '50%', transform: 'translateX(-50%)', width: '3px', height: '3px', borderRadius: '50%', background: '#D4AF37' }}></div>
-                        )}
-                    </div>
-                ))}
-            </div>
-
-            <style>{`
-                .countdown-unit {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                }
-                .unit-value {
-                    color: white;
-                    font-size: 24px;
-                    font-weight: 800;
-                    font-family: 'Inter', system-ui, sans-serif;
-                    line-height: 1;
-                }
-                .unit-label {
-                    color: rgba(255,255,255,0.55);
-                    font-size: 7px;
-                    text-transform: uppercase;
-                    font-weight: 700;
-                    margin-top: 2px;
-                }
-                .premium-hero-container::before {
-                    content: '';
-                    position: absolute;
-                    top: 0; left: 0; right: 0; bottom: 0;
-                    background: radial-gradient(circle at top right, rgba(255,255,255,0.08) 0%, transparent 60%);
-                    pointer-events: none;
-                }
-            `}</style>
+          )}
         </div>
-    );
+
+        {/* Main Content: Greeting + Countdown */}
+        <div className="hero-main-display">
+          <h2 className="hero-greeting-text">
+            {nextPrayer ? t(`prayer.nextLabel`, { prayer: getPrayerName(nextPrayer.key), defaultValue: `${getPrayerName(nextPrayer.key)} Vakti` }) : t('prayer.loading')}
+          </h2>
+
+          {nextPrayer && (
+            <div className="hero-countdown-container">
+              <div className="countdown-display">
+                <div className="countdown-unit">
+                  <span className="unit-value">{hasTime ? formatNum(hours) : '--'}</span>
+                  <span className="unit-label">{t('countdown.hours', 'SAAT')}</span>
+                </div>
+                <span className="countdown-separator">:</span>
+                <div className="countdown-unit">
+                  <span className="unit-value">{hasTime ? formatNum(minutes) : '--'}</span>
+                  <span className="unit-label">{t('countdown.min', 'DK')}</span>
+                </div>
+                <span className="countdown-separator">:</span>
+                <div className="countdown-unit">
+                  <span className="unit-value">{hasTime ? formatNum(seconds) : '--'}</span>
+                  <span className="unit-label">{t('countdown.sec', 'SN')}</span>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => onSelectFeature && onSelectFeature('huzurMode', 'home_hero')}
+                className="huzur-mode-hero-btn"
+              >
+                <Moon size={13} fill="currentColor" />
+                <span>{t('menu.huzurMode', 'Huzur Modu')}</span>
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Bottom Strip: Prayer Times */}
+        <div className="prayer-strip-container">
+          {PRAYERS.map((prayer) => {
+            const isActive = nextPrayer?.key === prayer.key;
+            const isCompleted = completedPrayers[prayer.key];
+            const timeStr = timings?.[prayer.key]?.substring(0, 5) || '--:--';
+
+            return (
+              <div
+                key={prayer.key}
+                onClick={() => togglePrayer(prayer.key)}
+                className={`prayer-strip-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
+              >
+                <span className="prayer-strip-name">
+                  {t(prayer.nameKey, PRAYER_NAME_FALLBACKS[prayer.key]).substring(0, 5)}
+                </span>
+                <span className="prayer-strip-time">
+                  {timeStr}
+                </span>
+                {isActive && <div className="active-dot"></div>}
+                {isCompleted && !isActive && <Check size={10} className="completed-check" />}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 });
+
+PremiumHomeHero.displayName = 'PremiumHomeHero';
 
 export default PremiumHomeHero;

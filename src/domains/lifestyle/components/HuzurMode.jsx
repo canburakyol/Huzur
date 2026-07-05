@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { SLEEP_SOUNDS, CATEGORIES } from '../../../data/sleepModeData';
 import { logger } from '../../../utils/logger';
+import { useAppStore } from '../../../stores/useAppStore';
+import { cancelFocusSession, completeFocusSession, getActiveFocusSession, remainingMs, startFocusSession } from '../../../services/focusSessionService';
 import './HuzurMode.css';
 import '../../../components/app-shell/Navigation.css';
 
@@ -14,6 +16,8 @@ const HuzurMode = ({ onClose }) => {
     const [activeSound, setActiveSound] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(0.5);
+    const activeSession = useAppStore((state) => state.activeFocusSession?.kind === 'huzur_mode' ? state.activeFocusSession : null);
+    const setActiveSession = useAppStore((state) => state.setActiveFocusSession);
     const [timer, setTimer] = useState(null);
     const [timeLeft, setTimeLeft] = useState(null);
     const [isSleepMode, setIsSleepMode] = useState(false);
@@ -30,9 +34,38 @@ const HuzurMode = ({ onClose }) => {
                 audioRef.current.pause();
                 audioRef.current.src = '';
             }
-            if (timerRef.current) clearInterval(timerRef.current);
+            if (timerRef.current) clearTimeout(timerRef.current);
         };
     }, []);
+
+    useEffect(() => {
+        let cancelled = false;
+        getActiveFocusSession('huzur_mode').then((session) => {
+            if (cancelled || !session) return;
+            setActiveSession(session);
+            setTimer(Math.round(session.targetDuration / 60000));
+            setTimeLeft(Math.ceil(remainingMs(session) / 1000));
+        }).catch((error) => logger.error('Focus restore error:', error));
+        return () => { cancelled = true; };
+    }, [setActiveSession]);
+
+    useEffect(() => {
+        if (!activeSession) return;
+        const refresh = async () => {
+            const next = Math.ceil(remainingMs(activeSession) / 1000);
+            setTimeLeft(next);
+            if (next <= 0) {
+                await completeFocusSession(activeSession);
+                setActiveSession(null);
+                setTimer(null);
+                setIsPlaying(false);
+                return;
+            }
+            timerRef.current = setTimeout(refresh, Math.min(1000, Math.max(100, activeSession.deadlineAt - Date.now())));
+        };
+        void refresh();
+        return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+    }, [activeSession, setActiveSession]);
 
     useEffect(() => {
         if (!audioRef.current) return;
@@ -49,27 +82,17 @@ const HuzurMode = ({ onClose }) => {
         }
     }, [activeSound, isPlaying, volume]);
 
-    const handleTimerSet = (minutes) => {
+    const handleTimerSet = async (minutes) => {
         if (timer === minutes) {
+            await cancelFocusSession('huzur_mode');
+            setActiveSession(null);
             setTimer(null);
             setTimeLeft(null);
-            if (timerRef.current) clearInterval(timerRef.current);
         } else {
+            const session = await startFocusSession('huzur_mode', String(minutes), minutes * 60 * 1000);
+            setActiveSession(session);
             setTimer(minutes);
             setTimeLeft(minutes * 60);
-            if (timerRef.current) clearInterval(timerRef.current);
-            
-            timerRef.current = setInterval(() => {
-                setTimeLeft((prev) => {
-                    if (prev <= 1) {
-                        clearInterval(timerRef.current);
-                        setIsPlaying(false);
-                        setTimer(null);
-                        return 0;
-                    }
-                    return prev - 1;
-                });
-            }, 1000);
         }
     };
 

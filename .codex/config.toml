@@ -1,0 +1,11 @@
+[features]
+codex_hooks = true
+
+[[hooks.PostToolUse]]
+matcher = ".*"
+
+[[hooks.PostToolUse.hooks]]
+type = "command"
+command = "npm run codex:guard --silent"
+timeout = 120
+statusMessage = "Running Huzur guard checks"

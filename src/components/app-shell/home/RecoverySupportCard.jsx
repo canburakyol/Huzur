@@ -35,24 +35,22 @@ const RecoverySupportCard = memo(function RecoverySupportCard({ recoveryPlan, is
 
   return (
     <div
-      className="settings-card reveal-stagger"
+      className="settings-card reveal-stagger bg-white rounded-3xl border-huzur-sage-100 shadow-huzur-soft"
       style={{
         margin: '0 5px 16px',
-        padding: '18px 18px',
+        padding: '22px 20px',
+        display: 'flex',
         flexDirection: 'column',
-        alignItems: 'stretch',
-        borderRadius: '22px',
-        background: 'linear-gradient(145deg, rgba(212, 175, 55, 0.14), rgba(15, 118, 110, 0.12))',
-        border: '1px solid rgba(212, 175, 55, 0.22)'
+        alignItems: 'stretch'
       }}
     >
-      <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
+      <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
         {t('homeFeed.recovery.eyebrow')}
       </div>
-      <div style={{ fontSize: '0.98rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: '6px' }}>
+      <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-primary)', marginBottom: '6px' }}>
         {t('homeFeed.recovery.title')}
       </div>
-      <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.55', fontWeight: '600', marginBottom: '14px' }}>
+      <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.55', fontWeight: '600', marginBottom: '14px' }}>
         {t('homeFeed.recovery.description')}
       </div>
       <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
@@ -60,12 +58,13 @@ const RecoverySupportCard = memo(function RecoverySupportCard({ recoveryPlan, is
           onClick={handleOpenAssistant}
           className="hover-lift"
           style={{
-            border: 'none',
-            borderRadius: '14px',
-            background: 'linear-gradient(135deg, var(--nav-accent), var(--bg-emerald-light))',
-            color: '#fff',
+            border: '1px solid color-mix(in srgb, var(--secondary) 20%, transparent)',
+            borderRadius: '16px',
+            background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
+            color: 'var(--primary)',
             padding: '12px 14px',
-            fontWeight: '900',
+            fontFamily: 'var(--font-main)',
+            fontWeight: '700',
             cursor: 'pointer',
             flex: '1 1 190px'
           }}
@@ -77,12 +76,13 @@ const RecoverySupportCard = memo(function RecoverySupportCard({ recoveryPlan, is
             onClick={handleOpenPremium}
             className="hover-lift"
             style={{
-              border: '1px solid rgba(212, 175, 55, 0.28)',
-              borderRadius: '14px',
-              background: 'rgba(212, 175, 55, 0.12)',
-              color: 'var(--nav-text)',
+              border: '1px solid color-mix(in srgb, var(--tertiary) 20%, transparent)',
+              borderRadius: '16px',
+              background: 'color-mix(in srgb, var(--tertiary) 12%, transparent)',
+              color: 'var(--text-primary)',
               padding: '12px 14px',
-              fontWeight: '900',
+              fontFamily: 'var(--font-main)',
+              fontWeight: '700',
               cursor: 'pointer',
               flex: '1 1 190px'
             }}

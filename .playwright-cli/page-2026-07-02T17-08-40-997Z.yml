@@ -1,0 +1,117 @@
+- generic [ref=f16e2]:
+  - generic [ref=f16e5]:
+    - generic [ref=f16e1011]:
+      - banner [ref=f16e1012]:
+        - generic [ref=f16e1013]:
+          - img "Huzur Logo" [ref=f16e1015]
+          - heading "Huzur" [level=1] [ref=f16e1016]
+        - button "Bildirimler" [ref=f16e1018] [cursor=pointer]:
+          - generic [ref=f16e1019]: notifications
+      - main [ref=f16e1020]:
+        - generic [ref=f16e1022]:
+          - generic [ref=f16e1023]:
+            - generic [ref=f16e1024]: schedule
+            - generic [ref=f16e1025]: Sıradaki Vakit
+          - generic [ref=f16e1026]: 00:38:50
+          - paragraph [ref=f16e1027]: Akşam vaktine kalan süre
+          - generic [ref=f16e1028]:
+            - generic [ref=f16e1029] [cursor=pointer]:
+              - generic [ref=f16e1030]: İmsak
+              - generic [ref=f16e1031]: wb_twilight
+              - generic [ref=f16e1032]: 03:30
+            - generic [ref=f16e1033] [cursor=pointer]:
+              - generic [ref=f16e1034]: Güneş
+              - generic [ref=f16e1035]: light_mode
+              - generic [ref=f16e1036]: 05:29
+            - generic [ref=f16e1037] [cursor=pointer]:
+              - generic [ref=f16e1038]: Öğle
+              - generic [ref=f16e1039]: sunny
+              - generic [ref=f16e1040]: 13:13
+            - generic [ref=f16e1041] [cursor=pointer]:
+              - generic [ref=f16e1042]: İkind
+              - generic [ref=f16e1043]: wb_sunny
+              - generic [ref=f16e1044]: 18:26
+            - generic [ref=f16e1045] [cursor=pointer]:
+              - generic [ref=f16e1046]: Akşam
+              - generic [ref=f16e1047]: bedtime
+              - generic [ref=f16e1048]: 20:47
+            - generic [ref=f16e1049] [cursor=pointer]:
+              - generic [ref=f16e1050]: Yatsı
+              - generic [ref=f16e1051]: nights_stay
+              - generic [ref=f16e1052]: 22:37
+        - generic [ref=f16e1053]:
+          - generic [ref=f16e1054]: auto_stories
+          - generic [ref=f16e1055]:
+            - generic [ref=f16e1056]: Günün Ayeti
+            - heading "Taha, 114" [level=3] [ref=f16e1057]
+            - paragraph [ref=f16e1058]: Rabbim! İlmimi artır.
+            - generic [ref=f16e1059]:
+              - button "Paylaş" [ref=f16e1060] [cursor=pointer]:
+                - generic [ref=f16e1061]: share
+              - button "Kaydet" [ref=f16e1062] [cursor=pointer]:
+                - generic [ref=f16e1063]: bookmark
+        - generic [ref=f16e1064]:
+          - generic [ref=f16e1065]:
+            - heading "Hızlı Erişim" [level=3] [ref=f16e1066]
+            - generic [ref=f16e1067]:
+              - button "Düzenle" [ref=f16e1068] [cursor=pointer]
+              - button "Tümü" [ref=f16e1069] [cursor=pointer]
+          - generic [ref=f16e1070]:
+            - generic [ref=f16e1071] [cursor=pointer]:
+              - generic [ref=f16e1073]: explore
+              - generic [ref=f16e1074]: Kıble
+            - generic [ref=f16e1075] [cursor=pointer]:
+              - generic [ref=f16e1077]: menu_book
+              - generic [ref=f16e1078]: Dualar
+            - generic [ref=f16e1079] [cursor=pointer]:
+              - generic [ref=f16e1081]: mosque
+              - generic [ref=f16e1082]: Camiim
+            - generic [ref=f16e1083] [cursor=pointer]:
+              - generic [ref=f16e1085]: diamond
+              - generic [ref=f16e1086]: Esmalar
+            - generic [ref=f16e1087] [cursor=pointer]:
+              - generic [ref=f16e1089]: ads_click
+              - generic [ref=f16e1090]: Zikir
+            - generic [ref=f16e1091] [cursor=pointer]:
+              - generic [ref=f16e1093]: group
+              - generic [ref=f16e1094]: Topluluk
+            - generic [ref=f16e1095] [cursor=pointer]:
+              - generic [ref=f16e1097]: forum
+              - generic [ref=f16e1098]: Asistan
+            - generic [ref=f16e1099] [cursor=pointer]:
+              - generic [ref=f16e1101]: add
+              - generic [ref=f16e1102]: Ekle
+        - region "Ilk ibadet adimi" [ref=f16e1103]:
+          - generic [ref=f16e1104]:
+            - img [ref=f16e1106]
+            - generic [ref=f16e1110]: Ilk adim
+            - generic [ref=f16e1111]: 2 dakika
+          - generic [ref=f16e1112]:
+            - heading "Bugunun ibadet rutinini baslat" [level=2] [ref=f16e1113]
+            - paragraph [ref=f16e1114]: Bugunu bos gecirme. Namaz, zikir ve kisa gunluk adim tek, sakin bir akista dursun.
+          - button "Bugunku rutini ac" [ref=f16e1115] [cursor=pointer]:
+            - img [ref=f16e1116]
+            - generic [ref=f16e1119]: Bugunku rutini ac
+            - img [ref=f16e1120]
+        - generic [ref=f16e1123]:
+          - generic [ref=f16e1125]: tips_and_updates
+          - generic [ref=f16e1126]:
+            - heading "Günün İlhamı" [level=4] [ref=f16e1127]
+            - paragraph [ref=f16e1128]: "\"Güzel söz sadakadır.\" (Buhari)"
+    - navigation "Ana gezinme" [ref=f16e124]:
+      - button "Anasayfa" [ref=f16e125] [cursor=pointer]:
+        - img [ref=f16e126]
+        - generic [ref=f16e129]: Anasayfa
+      - button "Kuran" [ref=f16e130] [cursor=pointer]:
+        - img [ref=f16e131]
+        - generic [ref=f16e133]: Kuran
+      - button "Asistan" [ref=f16e134] [cursor=pointer]:
+        - img [ref=f16e136]
+        - generic [ref=f16e139]: Asistan
+      - button "Cemaat" [ref=f16e140] [cursor=pointer]:
+        - img [ref=f16e141]
+        - generic [ref=f16e146]: Cemaat
+      - button "Menü" [ref=f16e147] [cursor=pointer]:
+        - img [ref=f16e148]
+        - generic [ref=f16e149]: Menü
+  - generic "Notifications"

@@ -253,7 +253,7 @@ const Stories = memo(() => {
                     width: '100%',
                     height: '100%',
                     zIndex: 1100,
-                    background: '#000',
+                    background: 'var(--text-body)',
                     display: 'flex',
                     flexDirection: 'column'
                 }}>
@@ -266,7 +266,7 @@ const Stories = memo(() => {
                             right: '20px',
                             background: 'rgba(0,0,0,0.5)',
                             border: 'none',
-                            color: 'white',
+                            color: 'var(--on-primary)',
                             zIndex: 1002,
                             cursor: 'pointer',
                             padding: '8px',
@@ -331,7 +331,7 @@ const Stories = memo(() => {
                             padding: '20px'
                         }}>
                             <h2 style={{
-                                color: 'white',
+                                color: 'var(--on-primary)',
                                 marginBottom: '15px',
                                 fontSize: '24px',
                                 textShadow: '0 2px 10px rgba(0,0,0,0.5)',
@@ -351,7 +351,7 @@ const Stories = memo(() => {
                                 <p style={{
                                     fontSize: '18px',
                                     lineHeight: '1.6',
-                                    color: 'white',
+                                    color: 'var(--on-primary)',
                                     marginBottom: '20px',
                                     fontStyle: 'italic',
                                     fontWeight: '500',
@@ -394,7 +394,7 @@ const Stories = memo(() => {
                             style={{
                                 background: isSharing ? 'rgba(100,100,100,0.8)' : 'rgba(255, 255, 255, 0.2)',
                                 backdropFilter: 'blur(10px)',
-                                color: 'white',
+                                color: 'var(--on-primary)',
                                 border: '1px solid rgba(255,255,255,0.4)',
                                 padding: '14px 50px',
                                 borderRadius: '50px',

@@ -67,18 +67,18 @@ function Tespihat({ onClose }) {
     const renderMenu = () => (
         <div className="reveal-stagger">
             {/* Progress Card */}
-            <div className="settings-card p-24 flex-col gap-16 mb-32" style={{ background: 'linear-gradient(135deg, #10b981, #059669)', border: 'none', color: 'white' }}>
+            <div className="settings-card p-24 flex-col gap-16 mb-32" style={{ background: 'linear-gradient(135deg, var(--secondary), var(--primary))', border: 'none', color: 'var(--on-primary)' }}>
                 <div className="flex-between-center">
                     <div>
                         <div style={{ fontSize: '1.5rem', fontWeight: '900' }}>{totalProgress()}%</div>
                         <div className="uppercase" style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, letterSpacing: '1px' }}>{t('tespihat.ui.progressToday', 'Bugünkü İlerleme')}</div>
                     </div>
-                    <button onClick={resetAll} className="rounded-12 p-10 cursor-pointer" style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white' }}>
+                    <button onClick={resetAll} className="rounded-12 p-10 cursor-pointer" style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'var(--on-primary)' }}>
                         <RotateCcw size={18} />
                     </button>
                 </div>
                 <div className="h-10 rounded-8 overflow-hidden" style={{ background: 'rgba(255,255,255,0.2)' }}>
-                    <div style={{ width: `${totalProgress()}%`, height: '100%', background: 'white', borderRadius: '4px', transition: 'width 0.5s cubic-bezier(0.16, 1, 0.3, 1)' }} />
+                    <div style={{ width: `${totalProgress()}%`, height: '100%', background: 'var(--surface-card)', borderRadius: '4px', transition: 'width 0.5s cubic-bezier(0.16, 1, 0.3, 1)' }} />
                 </div>
             </div>
 
@@ -156,7 +156,7 @@ function Tespihat({ onClose }) {
                     <div className="settings-card p-16 flex-col gap-12" onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}>
                         <div className="flex-between-center w-full">
                             <div className="flex items-center gap-12 font-bold" style={{ color: 'var(--nav-text)' }}>
-                                <Sparkles size={18} color="#f59e0b" />
+                                <Sparkles size={18} color="var(--tertiary)" />
                                 {TEVHID.title}
                             </div>
                             <div className="flex items-center gap-12">
@@ -166,7 +166,7 @@ function Tespihat({ onClose }) {
                                     style={{
                                         background: completedSections.includes('tevhid') ? '#10b981' : 'var(--nav-hover)',
                                         border: 'none',
-                                        color: completedSections.includes('tevhid') ? 'white' : 'var(--nav-text-muted)',
+                                        color: completedSections.includes('tevhid') ? 'var(--on-primary)' : 'var(--nav-text-muted)',
                                         fontSize: '0.75rem'
                                     }}
                                 >
@@ -234,11 +234,11 @@ function Tespihat({ onClose }) {
                     style={{
                         background: completedSections.includes(activeSection.id) ? 'var(--nav-hover)' : 'var(--nav-accent)',
                         border: 'none',
-                        color: 'white',
+                        color: 'var(--on-primary)',
                         fontSize: '1rem',
                         transition: 'all 0.2s',
                         marginTop: '12px',
-                        boxShadow: completedSections.includes(activeSection.id) ? 'none' : '0 8px 24px rgba(249, 115, 22, 0.3)'
+                        boxShadow: completedSections.includes(activeSection.id) ? 'none' : '0 8px 24px color-mix(in srgb, var(--tertiary) 30%, transparent)'
                     }}
                 >
                     <Check size={20} />

@@ -1,7 +1,8 @@
 import React, { Suspense, useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, MapPin, Navigation, Loader, RefreshCw } from 'lucide-react';
+import { MapPin, Navigation, Loader, RefreshCw } from 'lucide-react';
 import { logger } from '../../../utils/logger';
+import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 
 const MosqueFinderMap = React.lazy(async () => {
     await import('leaflet/dist/leaflet.css');
@@ -154,26 +155,7 @@ const MosqueFinder = ({ onClose }) => {
                 alignItems: 'center'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <button
-                        type="button"
-                        onClick={onClose}
-                        aria-label={t('common.back', 'Geri')}
-                        style={{
-                            width: '44px',
-                            height: '44px',
-                            borderRadius: '14px',
-                            border: '1px solid var(--nav-border)',
-                            background: 'var(--nav-hover)',
-                            color: 'var(--nav-text)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            flexShrink: 0
-                        }}
-                    >
-                        <ArrowLeft size={20} />
-                    </button>
+                    <IslamicBackButton onClick={onClose} size="medium" />
                     <h2 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--nav-text)', fontWeight: '900' }}>
                         {t('mosqueFinder.title', 'En Yakın Camiler')}
                     </h2>
@@ -263,7 +245,7 @@ const MosqueFinder = ({ onClose }) => {
                             style={{
                                 padding: '20px 40px',
                                 background: 'var(--nav-accent)',
-                                color: 'white',
+                                color: 'var(--on-primary)',
                                 borderRadius: '20px',
                                 fontSize: '1.1rem',
                                 fontWeight: '900',
@@ -353,7 +335,7 @@ const MosqueFinder = ({ onClose }) => {
                                 width: 'auto',
                                 padding: '8px 16px',
                                 background: 'var(--nav-accent)',
-                                color: 'white',
+                                color: 'var(--on-primary)',
                                 borderRadius: '12px',
                                 fontSize: '0.85rem',
                                 fontWeight: '900'

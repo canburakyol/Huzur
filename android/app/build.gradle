@@ -34,7 +34,7 @@ android {
         applicationId "com.huzurapp.android"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 29
+        versionCode 30
         versionName "18.2.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resourceConfigurations += ['en', 'tr', 'id', 'de']

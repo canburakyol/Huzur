@@ -39,8 +39,8 @@
 
 .kaza-btn.plus {
     background: var(--nav-accent);
-    color: white;
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+    color: var(--on-primary);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--tertiary) 20%, transparent);
 }
 
 .kaza-btn:active:not(.disabled) {
@@ -67,7 +67,7 @@
 }
 
 .prayer-done {
-    border-left: 4px solid #10b981 !important;
+    border-left: 4px solid var(--secondary) !important;
 }
 
 .reveal-stagger {

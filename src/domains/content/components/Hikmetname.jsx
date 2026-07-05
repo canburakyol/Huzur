@@ -74,16 +74,16 @@ function Hikmetname({ onClose }) {
                 border: 'none', 
                 padding: '32px', 
                 textAlign: 'center', 
-                color: 'white', 
+                color: 'var(--on-primary)',
                 marginBottom: '32px',
                 boxShadow: '0 12px 24px rgba(142, 68, 173, 0.2)',
                 gap: '24px'
             }}>
                 <div style={{ fontSize: '0.7rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.9, display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}>
-                    <Sparkles size={14} fill="white" /> {t('hikmet.daily', 'Günün Hikmeti')}
+                    <Sparkles size={14} fill='var(--on-primary)' /> {t('hikmet.daily', 'Günün Hikmeti')}
                 </div>
 
-                <div style={{ fontSize: '1.25rem', color: 'white', fontStyle: 'italic', lineHeight: '1.7', fontWeight: '500' }}>
+                <div style={{ fontSize: '1.25rem', color: 'var(--on-primary)', fontStyle: 'italic', lineHeight: '1.7', fontWeight: '500' }}>
                     "{t(dailyHikmet.text)}"
                 </div>
 
@@ -95,13 +95,13 @@ function Hikmetname({ onClose }) {
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
-                    <button className={`velocity-target-btn ${favorites.includes(dailyHikmet.id) ? 'active' : ''}`} style={{ background: 'rgba(255,255,255,0.2)', borderColor: 'transparent', color: 'white' }} onClick={() => toggleFavorite(dailyHikmet.id)}>
-                        <Heart size={18} fill={favorites.includes(dailyHikmet.id) ? 'white' : 'transparent'} />
+                    <button className={`velocity-target-btn ${favorites.includes(dailyHikmet.id) ? 'active' : ''}`} style={{ background: 'rgba(255,255,255,0.2)', borderColor: 'transparent', color: 'var(--on-primary)' }} onClick={() => toggleFavorite(dailyHikmet.id)}>
+                        <Heart size={18} fill={favorites.includes(dailyHikmet.id) ? 'var(--on-primary)' : 'transparent'} />
                     </button>
-                    <button className="velocity-target-btn" style={{ background: 'rgba(255,255,255,0.2)', borderColor: 'transparent', color: 'white' }} onClick={() => shareHikmet(dailyHikmet)}>
+                    <button className="velocity-target-btn" style={{ background: 'rgba(255,255,255,0.2)', borderColor: 'transparent', color: 'var(--on-primary)' }} onClick={() => shareHikmet(dailyHikmet)}>
                         <Share2 size={18} />
                     </button>
-                    <button className="velocity-target-btn" style={{ background: 'rgba(255,255,255,0.2)', borderColor: 'transparent', color: 'white' }} onClick={getNewRandom}>
+                    <button className="velocity-target-btn" style={{ background: 'rgba(255,255,255,0.2)', borderColor: 'transparent', color: 'var(--on-primary)' }} onClick={getNewRandom}>
                         <RefreshCw size={18} />
                     </button>
                 </div>

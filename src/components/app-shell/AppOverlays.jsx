@@ -7,11 +7,13 @@ const InviteModal = lazy(() => import('../../domains/referral/components/InviteM
 const MoodSelector = lazy(() => import('../../domains/lifestyle/components/MoodSelector'));
 const StreakProtectionModal = lazy(() => import('../../domains/gamification/components/StreakProtectionModal'));
 const LevelUpConfetti = lazy(() => import('../LevelUpConfetti'));
+const AdConsentPrompt = lazy(() => import('../AdConsentPrompt'));
 
 function AppOverlays({
   showSplash,
   onHideSplash,
   showGrowthOnboarding,
+  showAdConsentPrompt,
   onboardingStep,
   onboardingConfig,
   onboardingLanguage,
@@ -87,6 +89,12 @@ function AppOverlays({
             entrySource={inviteModalContext?.source || 'invite_modal'}
             onClose={onCloseInvite}
           />
+        </Suspense>
+      )}
+
+      {showAdConsentPrompt && !showSplash && !showGrowthOnboarding && (
+        <Suspense fallback={null}>
+          <AdConsentPrompt />
         </Suspense>
       )}
 

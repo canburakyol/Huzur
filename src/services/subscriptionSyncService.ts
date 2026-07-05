@@ -61,6 +61,15 @@ const persistServerStatus = async (payload: ServerStatusPayload, source: string)
     });
   }
 
+  logEvent(ANALYTICS_EVENTS.SUBSCRIPTION_SYNC_COMPLETED, {
+    source,
+    authoritative_source: authoritativeSource,
+    is_pro: isPro,
+    verification_state: verificationState,
+    entitlement_id: payload?.entitlementId || undefined,
+    expires_at: expiresAt || undefined,
+  });
+
   crashlyticsReporter.logCrash(
       `[SubscriptionSync] ${source} active=${isPro} state=${verificationState}`
   );
@@ -76,6 +85,10 @@ export const syncProStatusFromServer = async (): Promise<SyncResult | null> => {
     return persistServerStatus((result?.data || {}) as ServerStatusPayload, 'checkProStatus');
   } catch (error) {
     logger.warn('[SubscriptionSync] Server sync failed', error);
+    logEvent(ANALYTICS_EVENTS.SUBSCRIPTION_SYNC_FAILED, {
+      source: 'checkProStatus',
+      error_message: (error as Error)?.message || 'server_sync_failed',
+    });
     crashlyticsReporter.logExceptionWithContext(
       error as Error,
       buildCrashContext('subscription_sync_check')
@@ -92,6 +105,10 @@ export const syncProStatusWithRevenueCat = async (): Promise<SyncResult | null> 
     return persistServerStatus((result?.data || {}) as ServerStatusPayload, 'syncProStatus');
   } catch (error) {
     logger.warn('[SubscriptionSync] RevenueCat sync failed', error);
+    logEvent(ANALYTICS_EVENTS.SUBSCRIPTION_SYNC_FAILED, {
+      source: 'syncProStatus',
+      error_message: (error as Error)?.message || 'revenuecat_sync_failed',
+    });
     crashlyticsReporter.logExceptionWithContext(
       error as Error,
       buildCrashContext('subscription_sync_revenuecat')

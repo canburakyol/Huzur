@@ -100,13 +100,13 @@ const RoutineBuilder = ({ onClose }) => {
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
         <button 
           onClick={() => setNewRoutineTime('morning')}
-          style={{ flex: 1, padding: '10px', borderRadius: '10px', background: newRoutineTime === 'morning' ? 'linear-gradient(135deg, #0f766e, #d4af37)' : 'var(--nav-hover)', color: newRoutineTime === 'morning' ? '#fff' : 'var(--nav-text)', border: 'none' }}
+          style={{ flex: 1, padding: '10px', borderRadius: '10px', background: newRoutineTime === 'morning' ? 'linear-gradient(135deg, var(--primary), var(--tertiary))' : 'var(--nav-hover)', color: newRoutineTime === 'morning' ? 'var(--on-primary)' : 'var(--nav-text)', border: 'none' }}
         >
           <Sun size={18} /> Sabah
         </button>
         <button 
           onClick={() => setNewRoutineTime('evening')}
-          style={{ flex: 1, padding: '10px', borderRadius: '10px', background: newRoutineTime === 'evening' ? 'linear-gradient(135deg, #0f766e, #d4af37)' : 'var(--nav-hover)', color: newRoutineTime === 'evening' ? '#fff' : 'var(--nav-text)', border: 'none' }}
+          style={{ flex: 1, padding: '10px', borderRadius: '10px', background: newRoutineTime === 'evening' ? 'linear-gradient(135deg, var(--primary), var(--tertiary))' : 'var(--nav-hover)', color: newRoutineTime === 'evening' ? 'var(--on-primary)' : 'var(--nav-text)', border: 'none' }}
         >
           <Moon size={18} /> Akşam
         </button>
@@ -116,7 +116,7 @@ const RoutineBuilder = ({ onClose }) => {
         <h4 style={{ margin: '0 0 8px 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)' }}>{t('routine.steps', 'Adımlar (Habit Stacking)')}</h4>
         {newTasks.map((t, idx) => (
           <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '8px 0', background: 'var(--nav-hover)', padding: '10px', borderRadius: '8px' }}>
-            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'var(--accent-gold)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>{idx + 1}</div>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'var(--accent-gold)', color: 'var(--on-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>{idx + 1}</div>
             <span style={{ fontSize: '0.9rem', flex: 1 }}>{t.title}</span>
           </div>
         ))}
@@ -129,7 +129,7 @@ const RoutineBuilder = ({ onClose }) => {
             onKeyDown={(e) => e.key === 'Enter' && handleAddCustomTask()}
             style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid var(--nav-border)', background: 'var(--nav-bg)' }}
           />
-          <button onClick={handleAddCustomTask} style={{ padding: '10px', borderRadius: '8px', background: 'var(--accent-gold)', color: '#fff', border: 'none' }}>
+          <button onClick={handleAddCustomTask} style={{ padding: '10px', borderRadius: '8px', background: 'var(--accent-gold)', color: 'var(--on-primary)', border: 'none' }}>
             <Plus size={20} />
           </button>
         </div>
@@ -139,7 +139,7 @@ const RoutineBuilder = ({ onClose }) => {
         <button onClick={() => setIsCreating(false)} style={{ flex: 1, padding: '12px', background: 'transparent', border: '1px solid var(--nav-border)', borderRadius: '12px', color: 'var(--nav-text)' }}>
           İptal
         </button>
-        <button onClick={handleSaveRoutine} style={{ flex: 1, padding: '12px', background: 'linear-gradient(135deg, #0f766e, #d4af37)', color: '#fff', border: 'none', borderRadius: '12px' }}>
+        <button onClick={handleSaveRoutine} style={{ flex: 1, padding: '12px', background: 'linear-gradient(135deg, var(--primary), var(--tertiary))', color: 'var(--on-primary)', border: 'none', borderRadius: '12px' }}>
           Kaydet
         </button>
       </div>
@@ -151,10 +151,10 @@ const RoutineBuilder = ({ onClose }) => {
     const pct = getPercentage(routine);
 
     return (
-      <div key={routine.id} className="glass-card reveal-stagger" style={{ padding: '20px', marginBottom: '16px', border: routineProg.isFullyCompleted ? '1px solid #10b981' : undefined }}>
+      <div key={routine.id} className="glass-card reveal-stagger" style={{ padding: '20px', marginBottom: '16px', border: routineProg.isFullyCompleted ? '1px solid var(--secondary)' : undefined }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: routine.timeOfDay === 'morning' ? 'rgba(245, 158, 11, 0.15)' : 'rgba(79, 70, 229, 0.15)', color: routine.timeOfDay === 'morning' ? '#f59e0b' : '#4f46e5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: routine.timeOfDay === 'morning' ? 'color-mix(in srgb, var(--tertiary) 15%, transparent)' : 'color-mix(in srgb, var(--secondary) 15%, transparent)', color: routine.timeOfDay === 'morning' ? 'var(--tertiary)' : 'var(--secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {routine.timeOfDay === 'morning' ? <Sun size={20} /> : <Moon size={20} />}
             </div>
             <div>
@@ -165,15 +165,15 @@ const RoutineBuilder = ({ onClose }) => {
             </div>
           </div>
           {routine.id.startsWith('custom_') && (
-            <button onClick={() => handleDeleteRoutine(routine.id)} style={{ background: 'transparent', border: 'none', color: '#ef4444', padding: '8px' }}>
+            <button onClick={() => handleDeleteRoutine(routine.id)} style={{ background: 'transparent', border: 'none', color: 'var(--error)', padding: '8px' }}>
               <Trash2 size={18} />
             </button>
           )}
         </div>
 
         {/* Dynamic Goal-Gradient Progress */}
-        <div style={{ height: '6px', background: 'rgba(0,0,0,0.1)', borderRadius: '6px', marginBottom: '20px', overflow: 'hidden' }}>
-          <div style={{ height: '100%', width: `${pct}%`, background: pct === 100 ? '#10b981' : 'var(--accent-gold)', borderRadius: '6px', transition: 'width 0.5s ease' }} />
+        <div style={{ height: '6px', background: 'color-mix(in srgb, var(--surface-dim) 10%, transparent)', borderRadius: '6px', marginBottom: '20px', overflow: 'hidden' }}>
+          <div style={{ height: '100%', width: `${pct}%`, background: pct === 100 ? 'var(--secondary)' : 'var(--accent-gold)', borderRadius: '6px', transition: 'width 0.5s ease' }} />
         </div>
 
         {/* Steps */}
@@ -189,7 +189,7 @@ const RoutineBuilder = ({ onClose }) => {
                 style={{ 
                   display: 'flex', alignItems: 'center', gap: '12px', 
                   padding: '12px', borderRadius: '12px',
-                  background: isDone ? 'rgba(16, 185, 129, 0.1)' : 'var(--nav-bg)',
+                  background: isDone ? 'color-mix(in srgb, var(--secondary) 10%, transparent)' : 'var(--nav-bg)',
                   border: isNext ? '1px solid var(--accent-gold)' : '1px solid transparent',
                   opacity: isDone ? 0.7 : (!isNext && !isDone) ? 0.4 : 1,
                   cursor: isNext ? 'pointer' : 'default',
@@ -198,12 +198,12 @@ const RoutineBuilder = ({ onClose }) => {
               >
                 <div style={{ 
                   width: '28px', height: '28px', borderRadius: '50%',
-                  background: isDone ? '#10b981' : isNext ? 'var(--accent-gold)' : 'var(--nav-border)', 
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff'
+                  background: isDone ? 'var(--secondary)' : isNext ? 'var(--accent-gold)' : 'var(--nav-border)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--on-primary)'
                 }}>
                   {isDone ? <Check size={16} /> : isNext ? <Play size={14} style={{ marginLeft: '2px' }} /> : <span>{idx + 1}</span>}
                 </div>
-                <div style={{ flex: 1, fontSize: '0.95rem', fontWeight: isNext ? '700' : '600', color: isDone ? '#10b981' : 'var(--nav-text)', textDecoration: isDone ? 'line-through' : 'none' }}>
+                <div style={{ flex: 1, fontSize: '0.95rem', fontWeight: isNext ? '700' : '600', color: isDone ? 'var(--secondary)' : 'var(--nav-text)', textDecoration: isDone ? 'line-through' : 'none' }}>
                   {task.title}
                 </div>
                 {isNext && <ChevronRight size={18} color="var(--accent-gold)" />}
@@ -228,9 +228,9 @@ const RoutineBuilder = ({ onClose }) => {
             className="hover-lift"
             style={{ 
               width: '100%', padding: '16px', background: 'linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold))', 
-              color: '#fff', border: 'none', borderRadius: '16px', fontSize: '1.05rem', fontWeight: '800', 
+              color: 'var(--on-primary)', border: 'none', borderRadius: '16px', fontSize: '1.05rem', fontWeight: '800',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '24px',
-              boxShadow: '0 8px 20px rgba(245, 158, 11, 0.3)'
+              boxShadow: '0 8px 20px color-mix(in srgb, var(--tertiary) 30%, transparent)'
             }}
           >
             <Plus size={22} /> {t('routine.createBtn', 'Kendi Rutinini Oluştur')}

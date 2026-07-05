@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/widget_next_prayer_label"
-            android:textColor="#d4af37"
+            android:textColor="@color/widget_accent"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textAllCaps="true"
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/widget_time_placeholder"
-            android:textColor="#ffffff"
+            android:textColor="@color/widget_text_primary"
             android:textSize="32sp"
             android:textStyle="bold"
             android:layout_marginTop="4dp" />
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/widget_app_name"
-            android:textColor="#a3b18a"
+            android:textColor="@color/widget_text_secondary"
             android:textSize="12sp"
             android:layout_marginTop="8dp" />
 

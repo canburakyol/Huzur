@@ -22,7 +22,7 @@ import '../../../components/app-shell/Navigation.css';
 const DUA_CATEGORIES = [
   { id: 'health', name: 'Sağlık', icon: '💚', color: '#10b981' },
   { id: 'exam', name: 'Sınav', icon: '📚', color: '#3b82f6' },
-  { id: 'work', name: 'İş', icon: '💼', color: '#f59e0b' },
+  { id: 'work', name: 'İş', icon: '💼', color: 'var(--secondary)' },
   { id: 'family', name: 'Aile', icon: '👨‍👩‍👧', color: '#ec4899' },
   { id: 'marriage', name: 'Evlilik', icon: '💍', color: '#8b5cf6' },
   { id: 'children', name: 'Çocuk', icon: '👶', color: '#14b8a6' },
@@ -136,7 +136,7 @@ export function DuaTracker({ onClose }) {
   const dateLocale = i18n.language === 'tr' ? 'tr-TR' : i18n.language === 'id' ? 'id-ID' : 'en-US';
 
   return (
-    <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
+    <div className="settings-container reveal-stagger ad-safe-screen" style={{ minHeight: '100vh' }}>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
         <IslamicBackButton onClick={onClose} size="medium" />
@@ -156,7 +156,7 @@ export function DuaTracker({ onClose }) {
             <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('dua.stats.accepted', 'KABUL')}</div>
         </div>
         <div className="settings-card" style={{ flexDirection: 'column', padding: '16px', textAlign: 'center', gap: '8px', background: 'rgba(245, 158, 11, 0.05)', border: '1px solid rgba(245, 158, 11, 0.1)' }}>
-            <Sparkles size={24} color="#f59e0b" />
+            <Sparkles size={24} color="var(--secondary)" />
             <div style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.total}</div>
             <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('dua.stats.total', 'TOPLAM')}</div>
         </div>

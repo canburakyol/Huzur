@@ -8,6 +8,39 @@ interface InviteModalContext {
   source: string;
 }
 
+const TAB_LABELS: Record<string, string> = {
+  home: "Home",
+  quran: "Quran",
+  assistant: "Assistant",
+  community: "Community",
+  prayers: "Prayer Times",
+};
+
+const buildTabScreenPayload = (tab: string, source: string) => ({
+  screen_name: `tab_${tab}`,
+  screen_class: `tab_${tab}`,
+  screen_title: TAB_LABELS[tab] || tab,
+  screen_type: "tab",
+  tab,
+  source,
+});
+
+const buildFeatureScreenPayload = (feature: string, source: string) => {
+  const config = featureConfig[feature];
+
+  return {
+    screen_name: `feature_${feature}`,
+    screen_class: `feature_${feature}`,
+    screen_title: feature,
+    screen_type: "feature",
+    feature,
+    feature_category: config?.category || "unknown",
+    feature_module: config?.module || "unknown",
+    has_upgrade: config?.hasUpgrade === true,
+    source,
+  };
+};
+
 export function useNavigationState() {
   const activeFeature = useAppStore((s) => s.activeFeature);
   const activeTab = useAppStore((s) => s.activeTab);
@@ -39,7 +72,10 @@ export function useNavigationState() {
 
       setActiveFeatureState(feature);
       if (feature) {
-        logEvent(ANALYTICS_EVENTS.FEATURE_OPENED, { feature, source });
+        const featurePayload = buildFeatureScreenPayload(feature, source);
+        logEvent(ANALYTICS_EVENTS.FEATURE_OPENED, featurePayload);
+        logEvent(ANALYTICS_EVENTS.SCREEN_VIEW, featurePayload);
+        logEvent(ANALYTICS_EVENTS.FEATURE_SCREEN_VIEWED, featurePayload);
         markFirstActivationAction({ feature, source });
       }
       return true;
@@ -54,11 +90,7 @@ export function useNavigationState() {
       }
 
       setActiveTabState(tab);
-      logEvent(ANALYTICS_EVENTS.SCREEN_VIEW, {
-        screen_name: tab,
-        screen_class: `tab_${tab}`,
-        source,
-      });
+      logEvent(ANALYTICS_EVENTS.SCREEN_VIEW, buildTabScreenPayload(tab, source));
       return true;
     },
     [setActiveTabState]

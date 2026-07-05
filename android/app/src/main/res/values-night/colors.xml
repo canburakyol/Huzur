@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Generated from src/styles/variables.css by scripts/sync-theme-tokens.mjs. -->
+    <color name="colorPrimary">#E2EBDA</color>
+    <color name="colorPrimaryDark">#0D1A12</color>
+    <color name="colorAccent">#9CB5A5</color>
+    <color name="splash_background">#0D1A12</color>
+    <color name="system_bar_background">#0D1A12</color>
+    <color name="widget_background">#161D1A</color>
+    <color name="widget_text_primary">#D9E2DB</color>
+    <color name="widget_text_secondary">#A6B2A8</color>
+    <color name="widget_accent">#9CB5A5</color>
+</resources>

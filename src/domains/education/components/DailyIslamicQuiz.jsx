@@ -94,7 +94,7 @@ const DailyIslamicQuiz = ({ onClose }) => {
               display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px',
               boxShadow: '0 10px 25px rgba(245, 158, 11, 0.4)'
             }}>
-              <Trophy size={40} color="#fff" />
+              <Trophy size={40} color='var(--on-primary)' />
             </div>
             
             <h2 style={{ fontSize: '1.8rem', fontWeight: '950', color: 'var(--nav-text)', margin: '0 0 10px' }}>
@@ -225,8 +225,8 @@ const DailyIslamicQuiz = ({ onClose }) => {
               onClick={handleNext}
               style={{
                 marginTop: '16px', width: '100%', padding: '14px', borderRadius: '12px',
-                background: 'linear-gradient(135deg, var(--nav-accent), #f59e0b)',
-                color: 'white', border: 'none', fontSize: '1rem', fontWeight: '800',
+                background: 'linear-gradient(135deg, var(--tertiary), var(--tertiary-fixed-dim))',
+                color: 'var(--on-primary)', border: 'none', fontSize: '1rem', fontWeight: '800',
                 cursor: 'pointer'
               }}
             >

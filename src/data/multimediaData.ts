@@ -63,15 +63,16 @@ export const MULTIMEDIA_CATEGORIES: MultimediaCategory[] = [
   { id: 'tesbih', title: 'Tesbih ve İbadet', icon: '📿', description: 'İbadet görselleri', count: 5 }
 ];
 
+// Concrete Stitch palette colors keep generated/shareable cards renderer-independent.
 export const DUA_IMAGES: DuaImage[] = [
-  { id: 'dua1', title: 'Sabah Duası', text: 'Ya Rabbi, bugün beni hayırlı işlere muvaffak kıl.', bgColor: 'linear-gradient(135deg, #064e3b 0%, #0f766e 100%)', textColor: '#fde68a' },
-  { id: 'dua2', title: 'Şükür Duası', text: 'Elhamdülillah, her halimde şükürler olsun.', bgColor: 'linear-gradient(135deg, #042f2e 0%, #065f46 100%)', textColor: '#f8fafc' },
-  { id: 'dua3', title: 'Bereket Duası', text: 'Allah\'ım evime, işime, aileme bereket ver.', bgColor: 'linear-gradient(135deg, #0f3d2e 0%, #1a5c45 100%)', textColor: '#d4af37' },
-  { id: 'dua4', title: 'Huzur Duası', text: 'Rabbim kalbime huzur, dilime doğru söz ver.', bgColor: 'linear-gradient(135deg, #065f46 0%, #0f766e 100%)', textColor: '#fff' },
-  { id: 'dua5', title: 'Af Duası', text: 'Ya Rabbi, günahlarımı affet, beni bağışla.', bgColor: 'linear-gradient(135deg, #78350f 0%, #b45309 100%)', textColor: '#fff' },
-  { id: 'dua6', title: 'Şifa Duası', text: 'Allah\'ım hastalarımıza şifa, dertlilerimize deva ver.', bgColor: 'linear-gradient(135deg, #064e3b 0%, #1a5c45 100%)', textColor: '#fde68a' },
-  { id: 'dua7', title: 'Sabır Duası', text: 'Rabbim bana sabır ver, sabredenlerden eyle.', bgColor: 'linear-gradient(135deg, #0f766e 0%, #064e3b 100%)', textColor: '#fff' },
-  { id: 'dua8', title: 'Akşam Duası', text: 'Ya Rabbi, bu geceyi hayırlı eyle, bizi koru.', bgColor: 'linear-gradient(135deg, #022c22 0%, #042f2e 100%)', textColor: '#d4af37' }
+  { id: 'dua1', title: 'Sabah Duası', text: 'Ya Rabbi, bugün beni hayırlı işlere muvaffak kıl.', bgColor: 'linear-gradient(135deg, #1b3022 0%, #1b3022 100%)', textColor: '#f5f2e9' },
+  { id: 'dua2', title: 'Şükür Duası', text: 'Elhamdülillah, her halimde şükürler olsun.', bgColor: 'linear-gradient(135deg, #1b3022 0%, #1b3022 100%)', textColor: '#f5f2e9' },
+  { id: 'dua3', title: 'Bereket Duası', text: 'Allah\'ım evime, işime, aileme bereket ver.', bgColor: 'linear-gradient(135deg, #1b3022 0%, #1b3022 100%)', textColor: '#aa8343' },
+  { id: 'dua4', title: 'Huzur Duası', text: 'Rabbim kalbime huzur, dilime doğru söz ver.', bgColor: 'linear-gradient(135deg, #1b3022 0%, #1b3022 100%)', textColor: '#f5f2e9' },
+  { id: 'dua5', title: 'Af Duası', text: 'Ya Rabbi, günahlarımı affet, beni bağışla.', bgColor: 'linear-gradient(135deg, #aa8343 0%, #aa8343 100%)', textColor: '#f5f2e9' },
+  { id: 'dua6', title: 'Şifa Duası', text: 'Allah\'ım hastalarımıza şifa, dertlilerimize deva ver.', bgColor: 'linear-gradient(135deg, #1b3022 0%, #1b3022 100%)', textColor: '#f5f2e9' },
+  { id: 'dua7', title: 'Sabır Duası', text: 'Rabbim bana sabır ver, sabredenlerden eyle.', bgColor: 'linear-gradient(135deg, #1b3022 0%, #1b3022 100%)', textColor: '#f5f2e9' },
+  { id: 'dua8', title: 'Akşam Duası', text: 'Ya Rabbi, bu geceyi hayırlı eyle, bizi koru.', bgColor: 'linear-gradient(135deg, #1b3022 0%, #1b3022 100%)', textColor: '#aa8343' }
 ];
 
 export const CAMI_IMAGES: MosqueImage[] = [

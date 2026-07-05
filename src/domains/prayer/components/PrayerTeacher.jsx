@@ -93,7 +93,7 @@ function PrayerTeacher({ onClose }) {
                         style={{
                             padding: '12px 16px',
                             background: activeTab === tab.id ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                            color: activeTab === tab.id ? 'white' : 'var(--nav-text)',
+                            color: activeTab === tab.id ? 'var(--on-primary)' : 'var(--nav-text)',
                             border: '1px solid var(--nav-border)',
                             minWidth: '85px',
                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -239,7 +239,7 @@ function PrayerTeacher({ onClose }) {
                                         <div style={{ fontWeight: '950', color: 'var(--nav-text)', fontSize: '1.1rem' }}>
                                             {prayer.name}
                                         </div>
-                                        <div className="hamburger-level-badge mt-4" style={{ background: 'var(--nav-accent)', color: 'white', fontSize: '0.7rem' }}>
+                                        <div className="hamburger-level-badge mt-4" style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)', fontSize: '0.7rem' }}>
                                             {t('prayerTeacher.totalRakat', {
                                                 count: prayer.totalRakat,
                                                 defaultValue: 'Toplam: {{count}} rekat'
@@ -278,7 +278,7 @@ function PrayerTeacher({ onClose }) {
                                                 <div className="settings-icon-box rounded-10" style={{
                                                     width: '36px', height: '36px',
                                                     background: detail.type === 'Farz' ? 'var(--nav-accent)' : 'var(--nav-text-muted)',
-                                                    color: 'white',
+                                                    color: 'var(--on-primary)',
                                                     fontWeight: '950',
                                                     fontSize: '1.1rem'
                                                 }}>
@@ -393,7 +393,7 @@ function PrayerTeacher({ onClose }) {
                                 <button
                                     className="velocity-target-btn w-full justify-center"
                                     onClick={() => setQuizStarted(true)}
-                                    style={{ background: 'var(--nav-accent)', color: 'white' }}
+                                    style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)' }}
                                 >
                                     {t('prayerTeacher.quiz.start', 'Başla')}
                                 </button>
@@ -406,7 +406,7 @@ function PrayerTeacher({ onClose }) {
                                 <h2 className="mb-8" style={{ color: 'var(--nav-text)', fontSize: '1.5rem', fontWeight: '950' }}>{t('prayerTeacher.quiz.finished', 'Quiz Tamamlandı!')}</h2>
                                 <div className="settings-icon-box rounded-20" style={{
                                     width: 'fit-content', padding: '12px 32px',
-                                    background: 'var(--nav-accent)', color: 'white',
+                                    background: 'var(--nav-accent)', color: 'var(--on-primary)',
                                     margin: '0 auto 16px', fontWeight: '950', fontSize: '2.5rem'
                                 }}>
                                     {score} / {QUIZ_QUESTIONS.length}
@@ -421,7 +421,7 @@ function PrayerTeacher({ onClose }) {
                                 <button
                                     className="velocity-target-btn w-full justify-center"
                                     onClick={resetQuiz}
-                                    style={{ background: 'var(--nav-accent)', color: 'white' }}
+                                    style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)' }}
                                 >
                                     {t('prayerTeacher.quiz.retry', 'Tekrar Dene')}
                                 </button>
@@ -436,7 +436,7 @@ function PrayerTeacher({ onClose }) {
                                             defaultValue: 'Soru {{current}}/{{total}}'
                                         })}
                                     </div>
-                                    <div className="hamburger-level-badge" style={{ background: 'var(--nav-accent)', color: 'white' }}>
+                                    <div className="hamburger-level-badge" style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)' }}>
                                         {t('prayerTeacher.quiz.score', {
                                             score,
                                             defaultValue: 'Puan: {{score}}'
@@ -483,12 +483,12 @@ function PrayerTeacher({ onClose }) {
                                         >
                                             <span className="flex-1">{option}</span>
                                             {showResult && i === currentQuizItem.correctAnswer && (
-                                                <div className="settings-icon-box rounded-8" style={{ width: '28px', height: '28px', background: '#22c55e', color: 'white' }}>
+                                                <div className="settings-icon-box rounded-8" style={{ width: '28px', height: '28px', background: '#22c55e', color: 'var(--on-primary)' }}>
                                                     <Check size={18} />
                                                 </div>
                                             )}
                                             {showResult && i === selectedAnswer && i !== currentQuizItem.correctAnswer && (
-                                                <div className="settings-icon-box rounded-8" style={{ width: '28px', height: '28px', background: '#ef4444', color: 'white' }}>
+                                                <div className="settings-icon-box rounded-8" style={{ width: '28px', height: '28px', background: '#ef4444', color: 'var(--on-primary)' }}>
                                                     <X size={18} />
                                                 </div>
                                             )}
@@ -500,7 +500,7 @@ function PrayerTeacher({ onClose }) {
                                         type="button"
                                         className="velocity-target-btn pulse w-full justify-center mt-32"
                                         onClick={nextQuestion}
-                                        style={{ background: 'var(--nav-accent)', color: 'white' }}
+                                        style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)' }}
                                     >
                                         {currentQuestion < QUIZ_QUESTIONS.length - 1
                                             ? t('prayerTeacher.quiz.nextQuestion', 'Sonraki Soru')

@@ -18,11 +18,11 @@ export interface Theme {
 }
 
 export const ACCENT_COLORS: AccentColor[] = [
-  { id: 'amber', name: 'Amber Altin', color: '#f59e0b', dark: '#b45309', rgb: '245, 158, 11' },
-  { id: 'antique-gold', name: 'Antik Altin', color: '#d4af37', dark: '#8c6a05', rgb: '212, 175, 55' },
-  { id: 'emerald', name: 'Zumrut', color: '#10b981', dark: '#065f46', rgb: '16, 185, 129' },
-  { id: 'deep-emerald', name: 'Derin Zumrut', color: '#0f766e', dark: '#064e3b', rgb: '15, 118, 110' },
-  { id: 'olive-gold', name: 'Zeytin Altin', color: '#c7a83b', dark: '#7a6221', rgb: '199, 168, 59' },
+  { id: 'amber', name: 'Adaçayı', color: 'var(--accent-amber)', dark: 'var(--accent-amber-dark)', rgb: '141, 170, 145' },
+  { id: 'antique-gold', name: 'Tezhip', color: 'var(--accent-antique)', dark: 'var(--accent-antique-dark)', rgb: '170, 131, 67' },
+  { id: 'emerald', name: 'Orman', color: 'var(--accent-emerald)', dark: 'var(--accent-emerald-dark)', rgb: '74, 101, 79' },
+  { id: 'deep-emerald', name: 'Derin Orman', color: 'var(--accent-deep-emerald)', dark: 'var(--accent-deep-emerald-dark)', rgb: '27, 48, 34' },
+  { id: 'olive-gold', name: 'Yumuşak Adaçayı', color: 'var(--accent-olive)', dark: 'var(--accent-olive-dark)', rgb: '141, 170, 145' },
 ];
 
 export const THEMES: Theme[] = [
@@ -30,14 +30,14 @@ export const THEMES: Theme[] = [
     id: 'green-gold',
     name: 'Yesil & Altin',
     colors: {
-      '--nav-accent': '#d4af37',
-      '--primary-color': '#d4af37',
-      '--primary-dark': '#8c6a05',
-      '--accent-color': '#d4af37',
-      '--accent-vibrant': '#d4af37',
-      '--accent-gold-light': '#d4af37',
-      '--nav-accent-rgb': '212, 175, 55',
+      '--nav-accent': 'var(--secondary)',
+      '--primary-color': 'var(--primary)',
+      '--primary-dark': 'var(--primary)',
+      '--accent-color': 'var(--secondary)',
+      '--accent-vibrant': 'var(--secondary)',
+      '--accent-gold-light': 'var(--secondary)',
+      '--nav-accent-rgb': '141, 170, 145',
     },
-    bodyGradient: 'linear-gradient(135deg, #0f3d2e 0%, #1a5c45 100%)'
+    bodyGradient: 'var(--surface-page)'
   },
 ];

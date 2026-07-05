@@ -1,0 +1,47 @@
+{
+  "default": {
+    "background": "#071A2B",
+    "keyword": {
+      "color": "#D6B25E",
+      "font_size": 118
+    },
+    "title": {
+      "color": "#FFFFFF",
+      "font_size": 72
+    },
+    "padding": 70,
+    "show_complete_frame": false
+  },
+  "data": [
+    {
+      "filter": "01_home",
+      "keyword": "Huzur",
+      "title": "İslami Yaşam Asistanın"
+    },
+    {
+      "filter": "02_prayer_times",
+      "keyword": "Namaz Vakitleri",
+      "title": "Vakitleri Kolayca Takip Et"
+    },
+    {
+      "filter": "03_quran",
+      "keyword": "Kur’an-ı Kerim",
+      "title": "Meal, Okunuş ve Arapça Metin"
+    },
+    {
+      "filter": "04_qibla",
+      "keyword": "Kıble Pusulası",
+      "title": "Yönünü Güvenle Bul"
+    },
+    {
+      "filter": "05_dhikr",
+      "keyword": "Zikirmatik",
+      "title": "Günlük Zikirlerini Kaydet"
+    },
+    {
+      "filter": "06_dua",
+      "keyword": "Dua Kardeşliği",
+      "title": "Dualarda Buluş"
+    }
+  ]
+}

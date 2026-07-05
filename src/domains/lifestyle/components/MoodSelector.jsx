@@ -133,7 +133,7 @@ const MoodSelector = ({ onClose }) => {
                       style={{ 
                           width: '40px', height: '40px',
                           background: isPlaying ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                          color: isPlaying ? 'white' : 'var(--nav-text)',
+                          color: isPlaying ? 'var(--on-primary)' : 'var(--nav-text)',
                           border: 'none', cursor: 'pointer', transition: 'all 0.3s'
                       }}
                     >

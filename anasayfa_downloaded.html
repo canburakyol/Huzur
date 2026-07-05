@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Huzur - Premium Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Outfit:wght@300;400;500;600&amp;family=Playfair+Display:wght@400;700&amp;family=Amiri&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#496459",
+                        "primary-container": "#8DAA9D",
+                        "secondary": "#6b5c4c",
+                        "secondary-container": "#f4dfcb",
+                        "tertiary": "#7f5444",
+                        "background": "#F9F6F0",
+                        "surface": "#ffffff",
+                        "bg-linen": "#F9F6F0",
+                        "bg-sage-light": "#C8DAD2",
+                        "sage-deep": "#536E62",
+                        "on-surface": "#151d1a",
+                        "outline": "#727975",
+                        "warm-amber": "#D9A05B"
+                    },
+                    borderRadius: {
+                        "premium": "28px",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "plus-jakarta": ["Plus Jakarta Sans", "sans-serif"],
+                        "outfit": ["Outfit", "sans-serif"],
+                        "playfair": ["Playfair Display", "serif"],
+                        "amiri": ["Amiri", "serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+        }
+        .skeuo-shadow {
+            box-shadow: 
+                0 4px 10px rgba(0,0,0,0.03),
+                inset 0 1px 1px rgba(255,255,255,0.8);
+        }
+        .skeuo-card {
+            background: #ffffff;
+            border: 1px solid rgba(73, 100, 89, 0.08);
+            box-shadow: 
+                0 10px 30px -10px rgba(73, 100, 89, 0.12),
+                0 4px 6px -2px rgba(73, 100, 89, 0.05);
+        }
+        body {
+            background-color: #F9F6F0;
+            color: #151d1a;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            width: 100%;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-bg-linen min-h-screen pb-32 antialiased">
+<!-- Header Section -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-bg-linen/90 backdrop-blur-md border-b border-primary/5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl overflow-hidden shadow-sm bg-white p-1">
+<img class="w-full h-full object-contain" data-alt="Huzur Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBB2Vnwfe5Ik83esNAEHbGmy-lvEk2-aDGYcg4y3hDD6tnpLhr3gRq9QsJQCpV7XNL-RDsi19N93-Kid8wlhB8OTR1QVr8-t76vEWo548cr0muD5b2uJycoW87sqMExVd-fgI_VtqQgoLdmsB3brqhcElcg9NnJaK_KGLAySIahDt0zp21GXw8c3YaqQoSXURD1_0cJxEjUeWOCiTKVV0vm390KWEHucW4JgRghi1ahpsMpUZ5VZkcdilQGXrrsZB3USwWli0pV6HWx"/>
+</div>
+<h1 class="text-xl font-extrabold font-plus-jakarta tracking-tight text-primary">Huzur</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm text-primary skeuo-shadow">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+</button>
+</div>
+</header>
+<main class="px-5 space-y-8 mt-4">
+<!-- Hero Section: Prayer Times Card -->
+<section class="skeuo-card rounded-premium p-6 flex flex-col items-center text-center">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-base">schedule</span>
+<span class="text-[11px] font-bold uppercase tracking-[0.1em] text-primary/70 font-plus-jakarta">SIRADAKİ VAKİT</span>
+</div>
+<div class="text-5xl font-extrabold font-plus-jakarta tracking-tighter text-primary mb-1" id="countdown">08:17:56</div>
+<p class="text-[13px] font-medium text-sage-deep/60 mb-8">Akşam vaktine kalan süre</p>
+<!-- Prayer Times Grid -->
+<div class="grid grid-cols-6 w-full gap-2">
+<div class="flex flex-col items-center gap-1">
+<span class="text-[10px] font-bold text-primary/40 uppercase">İmsak</span>
+<span class="material-symbols-outlined text-primary/50 text-xl">wb_twilight</span>
+<span class="text-[12px] font-bold text-primary">05:22</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="text-[10px] font-bold text-primary/40 uppercase">Güneş</span>
+<span class="material-symbols-outlined text-primary/50 text-xl">light_mode</span>
+<span class="text-[12px] font-bold text-primary">06:45</span>
+</div>
+<div class="flex flex-col items-center gap-1 bg-primary/5 rounded-2xl py-2 px-1 border border-primary/10 -mt-1">
+<span class="text-[10px] font-bold text-primary uppercase">Öğle</span>
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">sunny</span>
+<span class="text-[12px] font-bold text-primary">13:12</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="text-[10px] font-bold text-primary/40 uppercase">İkindi</span>
+<span class="material-symbols-outlined text-primary/50 text-xl">wb_sunny</span>
+<span class="text-[12px] font-bold text-primary">16:45</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="text-[10px] font-bold text-primary/40 uppercase">Akşam</span>
+<span class="material-symbols-outlined text-primary/50 text-xl">bedtime</span>
+<span class="text-[12px] font-bold text-primary">19:30</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="text-[10px] font-bold text-primary/40 uppercase">Yatsı</span>
+<span class="material-symbols-outlined text-primary/50 text-xl">nights_stay</span>
+<span class="text-[12px] font-bold text-primary">21:05</span>
+</div>
+</div>
+</section>
+<!-- Verse of the Day Section -->
+<section class="bg-bg-sage-light/40 rounded-premium p-8 relative overflow-hidden group border border-primary/5">
+<div class="absolute top-4 right-4 opacity-10">
+<span class="material-symbols-outlined text-[80px]">auto_stories</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-3 mb-4">
+<span class="px-3 py-1 bg-white/80 rounded-full text-[10px] font-bold text-primary uppercase tracking-widest skeuo-shadow">Günün Ayeti</span>
+</div>
+<h3 class="font-playfair text-2xl font-bold text-primary mb-3 leading-tight italic">Bakara 152</h3>
+<p class="text-[17px] font-medium leading-relaxed font-outfit text-primary/90 mb-6">
+                "Öyleyse Beni anın ki, Ben de sizi anayım. Bana şükredin, sakın nankörlük etmeyin."
+            </p>
+<div class="flex gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-primary shadow-sm skeuo-shadow">
+<span class="material-symbols-outlined text-xl">share</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white text-primary shadow-sm skeuo-shadow">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Quick Access Section -->
+<section>
+<div class="flex items-center justify-between mb-6 px-1">
+<h2 class="text-lg font-bold font-plus-jakarta text-primary">Hızlı Erişim</h2>
+<div class="flex gap-4">
+<button class="text-[13px] font-bold text-primary">Düzenle</button>
+<button class="text-[13px] font-bold text-sage-deep/50">Tümünü Gör</button>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-y-6 gap-x-4">
+<!-- Action 1: Kıble -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-full aspect-square rounded-premium bg-white flex items-center justify-center text-primary skeuo-shadow border border-primary/5 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">explore</span>
+</div>
+<span class="text-[11px] font-bold text-primary/70 uppercase tracking-tight text-center">Kıble</span>
+</div>
+<!-- Action 2: Dualar -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-full aspect-square rounded-premium bg-white flex items-center justify-center text-primary skeuo-shadow border border-primary/5 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">front_hand</span>
+</div>
+<span class="text-[11px] font-bold text-primary/70 uppercase tracking-tight text-center">Dualar</span>
+</div>
+<!-- Action 3: Camiim -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-full aspect-square rounded-premium bg-white flex items-center justify-center text-primary skeuo-shadow border border-primary/5 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">mosque</span>
+</div>
+<span class="text-[11px] font-bold text-primary/70 uppercase tracking-tight text-center">Camiim</span>
+</div>
+<!-- Action 4: Zekat -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-full aspect-square rounded-premium bg-white flex items-center justify-center text-primary skeuo-shadow border border-primary/5 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+</div>
+<span class="text-[11px] font-bold text-primary/70 uppercase tracking-tight text-center">Zekat</span>
+</div>
+<!-- Action 5: Tefsir -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-full aspect-square rounded-premium bg-white flex items-center justify-center text-primary skeuo-shadow border border-primary/5 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">menu_book</span>
+</div>
+<span class="text-[11px] font-bold text-primary/70 uppercase tracking-tight text-center">Tefsir</span>
+</div>
+<!-- Action 6: Tesbihat -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-full aspect-square rounded-premium bg-white flex items-center justify-center text-primary skeuo-shadow border border-primary/5 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">potted_plant</span>
+</div>
+<span class="text-[11px] font-bold text-primary/70 uppercase tracking-tight text-center">Tesbihat</span>
+</div>
+<!-- Action 7: Takvim -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-full aspect-square rounded-premium bg-white flex items-center justify-center text-primary skeuo-shadow border border-primary/5 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">calendar_month</span>
+</div>
+<span class="text-[11px] font-bold text-primary/70 uppercase tracking-tight text-center">Takvim</span>
+</div>
+<!-- Action 8: Ekle -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-full aspect-square rounded-premium bg-primary/5 flex items-center justify-center text-primary/40 border-2 border-dashed border-primary/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">add</span>
+</div>
+<span class="text-[11px] font-bold text-primary/40 uppercase tracking-tight text-center">Ekle</span>
+</div>
+</div>
+</section>
+<!-- Daily Insight Card -->
+<section class="pb-6">
+<div class="bg-primary rounded-premium p-6 text-white flex items-center gap-5 shadow-xl shadow-primary/20 border border-white/10">
+<div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-2xl text-white">lightbulb</span>
+</div>
+<div>
+<h4 class="font-bold text-lg leading-tight mb-1">Günün İlhamı</h4>
+<p class="text-[14px] text-white/80 italic leading-relaxed">"Gülümsemek sadakadır. Kalbinize huzur veren küçük anları fark edin."</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-t border-primary/5 pb-safe-offset-4 shadow-[0_-8px_30px_rgba(0,0,0,0.04)]">
+<div class="flex justify-between items-center px-4 pt-4 pb-8">
+<a class="flex flex-col items-center gap-1.5 transition-all w-1/5" href="#">
+<div class="flex h-10 w-14 items-center justify-center rounded-2xl bg-primary text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<p class="text-primary text-[10px] font-extrabold uppercase font-plus-jakarta tracking-wider">Ana Sayfa</p>
+</a>
+<a class="flex flex-col items-center gap-1.5 transition-all w-1/5 opacity-50" href="#">
+<div class="flex h-10 w-14 items-center justify-center rounded-2xl">
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+</div>
+<p class="text-primary text-[10px] font-bold uppercase font-plus-jakarta tracking-wider">Kuran</p>
+</a>
+<a class="flex flex-col items-center gap-1.5 transition-all w-1/5 opacity-50" href="#">
+<div class="flex h-10 w-14 items-center justify-center rounded-2xl">
+<span class="material-symbols-outlined text-[24px]">fingerprint</span>
+</div>
+<p class="text-primary text-[10px] font-bold uppercase font-plus-jakarta tracking-wider">İbadet</p>
+</a>
+<a class="flex flex-col items-center gap-1.5 transition-all w-1/5 opacity-50" href="#">
+<div class="flex h-10 w-14 items-center justify-center rounded-2xl">
+<span class="material-symbols-outlined text-[24px]">groups</span>
+</div>
+<p class="text-primary text-[10px] font-bold uppercase font-plus-jakarta tracking-wider">Cemaat</p>
+</a>
+<a class="flex flex-col items-center gap-1.5 transition-all w-1/5 opacity-50" href="#">
+<div class="flex h-10 w-14 items-center justify-center rounded-2xl">
+<span class="material-symbols-outlined text-[24px]">smart_toy</span>
+</div>
+<p class="text-primary text-[10px] font-bold uppercase font-plus-jakarta tracking-wider">AI Asistan</p>
+</a>
+</div>
+</nav>
+<script>
+    // Micro-interaction for countdown
+    function updateCountdown() {
+        const now = new Date();
+        
+        // Simulating a countdown toward 19:30:00 (Akşam)
+        let target = new Date();
+        target.setHours(19, 30, 0);
+        
+        let diff = target - now;
+        if (diff < 0) {
+            target.setDate(target.getDate() + 1);
+            diff = target - now;
+        }
+        
+        let h = Math.floor(diff / (1000 * 60 * 60));
+        let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        let s = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        document.getElementById('countdown').innerText = 
+            `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+    
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
+</body></html>

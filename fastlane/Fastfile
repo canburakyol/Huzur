@@ -1,0 +1,34 @@
+default_platform(:android)
+skip_docs
+
+SCREENSHOT_DIR = File.expand_path(
+  "metadata/android/tr-TR/images/phoneScreenshots",
+  __dir__
+)
+
+platform :android do
+  desc "Frame Turkish Google Play phone screenshots with Frameit"
+  lane :frame_screenshots do
+    expected_screenshots = %w[
+      01_home.png
+      02_prayer_times.png
+      03_quran.png
+      04_qibla.png
+      05_dhikr.png
+      06_dua.png
+      07_premium.png
+    ]
+
+    missing = expected_screenshots.reject do |filename|
+      File.file?(File.join(SCREENSHOT_DIR, filename))
+    end
+
+    UI.user_error!("Missing source screenshots: #{missing.join(', ')}") unless missing.empty?
+
+    UI.message("Framing only: #{SCREENSHOT_DIR}")
+    frameit(
+      path: SCREENSHOT_DIR,
+      white: false
+    )
+  end
+end

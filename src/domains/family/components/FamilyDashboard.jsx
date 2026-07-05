@@ -44,8 +44,8 @@ const DiscoveryList = ({ title, subtitle, items, t }) => {
                   width: '46px',
                   height: '46px',
                   borderRadius: '14px',
-                  background: publicFamily.isSeed ? 'rgba(249, 115, 22, 0.14)' : 'rgba(59, 130, 246, 0.12)',
-                  color: publicFamily.isSeed ? 'var(--nav-accent)' : '#3b82f6'
+                  background: publicFamily.isSeed ? 'color-mix(in srgb, var(--nav-accent) 14%, transparent)' : 'color-mix(in srgb, var(--primary) 12%, transparent)',
+                  color: publicFamily.isSeed ? 'var(--nav-accent)' : 'var(--primary)'
                 }}
               >
                 {publicFamily.isSeed ? <Sparkles size={20} /> : <Users size={20} />}
@@ -72,6 +72,7 @@ const FamilyDashboard = ({ onClose }) => {
     weeklyGoalLoading,
     loading,
     error,
+    refreshPublicFamilies,
     createFamily,
     joinFamily,
     contributeWeeklyGoal
@@ -106,6 +107,10 @@ const FamilyDashboard = ({ onClose }) => {
       || contributorState?.lastContributionType === 'manual_checkin'
       && contributorState?.lastContributionDateKey === todayKey
   );
+
+  useEffect(() => {
+    void refreshPublicFamilies();
+  }, [refreshPublicFamilies]);
 
   useEffect(() => {
     if (!family?.id || !familyWeeklySummary) return;
@@ -150,16 +155,16 @@ const FamilyDashboard = ({ onClose }) => {
           </h2>
         </div>
 
-        <div className="settings-card reveal-stagger flex flex-col items-stretch border-none mb-24" style={{ padding: '32px 24px', background: 'linear-gradient(135deg, var(--nav-accent) 0%, #f59e0b 100%)', color: 'white', boxShadow: '0 15px 35px rgba(249, 115, 22, 0.25)', borderRadius: '28px' }}>
-          <div className="settings-icon-box" style={{ width: '64px', height: '64px', background: 'rgba(255,255,255,0.2)', borderRadius: '18px', marginBottom: '20px', color: 'white' }}>
+        <div className="settings-card reveal-stagger flex flex-col items-stretch border-none mb-24" style={{ padding: '32px 24px', background: 'linear-gradient(135deg, var(--nav-accent) 0%, var(--tertiary) 100%)', color: 'var(--on-primary)', boxShadow: '0 15px 35px color-mix(in srgb, var(--nav-accent) 25%, transparent)', borderRadius: '28px' }}>
+          <div className="settings-icon-box" style={{ width: '64px', height: '64px', background: 'color-mix(in srgb, var(--on-primary) 20%, transparent)', borderRadius: '18px', marginBottom: '20px', color: 'var(--on-primary)' }}>
             <Users size={32} />
           </div>
-          <h3 style={{ margin: '0 0 8px 0', color: 'white', fontWeight: '950', fontSize: '1.5rem' }}>{t('family.title')}</h3>
-          <p className="leading-relaxed mb-0" style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.95rem', fontWeight: '600' }}>{t('family.intro')}</p>
+          <h3 style={{ margin: '0 0 8px 0', color: 'var(--on-primary)', fontWeight: '950', fontSize: '1.5rem' }}>{t('family.title')}</h3>
+          <p className="leading-relaxed mb-0" style={{ color: 'color-mix(in srgb, var(--on-primary) 90%, transparent)', fontSize: '0.95rem', fontWeight: '600' }}>{t('family.intro')}</p>
         </div>
 
         {error && (
-          <div className="settings-card pulse mb-24 p-16 rounded-16 font-extrabold" style={{ color: '#ef4444', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)', fontSize: '0.9rem', justifyContent: 'center' }}>
+          <div className="settings-card pulse mb-24 p-16 rounded-16 font-extrabold" style={{ color: 'var(--error)', background: 'color-mix(in srgb, var(--error) 5%, transparent)', border: '1px solid color-mix(in srgb, var(--error) 20%, transparent)', fontSize: '0.9rem', justifyContent: 'center' }}>
             {error}
           </div>
         )}
@@ -167,7 +172,7 @@ const FamilyDashboard = ({ onClose }) => {
         {mode === 'view' && (
           <div className="flex flex-col gap-12 reveal-stagger">
             <button className="settings-card" onClick={() => setMode('create')} style={{ padding: '24px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)' }}>
-              <div className="settings-icon-box" style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', borderRadius: '14px' }}>
+              <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--secondary) 10%, transparent)', color: 'var(--secondary)', borderRadius: '14px' }}>
                 <UserPlus size={24} />
               </div>
               <div className="flex-1 text-left">
@@ -176,7 +181,7 @@ const FamilyDashboard = ({ onClose }) => {
               </div>
             </button>
             <button className="settings-card" onClick={() => setMode('join')} style={{ padding: '24px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)' }}>
-              <div className="settings-icon-box" style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderRadius: '14px' }}>
+              <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--primary) 10%, transparent)', color: 'var(--primary)', borderRadius: '14px' }}>
                 <Activity size={24} />
               </div>
               <div className="flex-1 text-left">
@@ -237,7 +242,7 @@ const FamilyDashboard = ({ onClose }) => {
         </div>
 
         <div className="settings-card reveal-stagger mb-24 text-center flex flex-col items-stretch" style={{ padding: '32px 24px', background: 'var(--nav-hover)' }}>
-          <div className="settings-icon-box rounded-24" style={{ width: '84px', height: '84px', background: 'var(--nav-accent)', margin: '0 auto 20px', color: 'white', fontSize: '2.5rem' }}>
+          <div className="settings-icon-box rounded-24" style={{ width: '84px', height: '84px', background: 'var(--nav-accent)', margin: '0 auto 20px', color: 'var(--on-primary)', fontSize: '2.5rem' }}>
             {selectedMember.displayName?.charAt(0) || 'U'}
           </div>
           <h2 style={{ margin: '0 0 4px 0', color: 'var(--nav-text)', fontWeight: '950', fontSize: '1.75rem' }}>{selectedMember.displayName}</h2>
@@ -256,7 +261,7 @@ const FamilyDashboard = ({ onClose }) => {
     if (!familyWeeklySummary) return null;
 
     return (
-      <div className="settings-card reveal-stagger p-24 mb-24 flex flex-col items-stretch rounded-24" style={{ background: 'linear-gradient(145deg, var(--nav-bg), var(--nav-hover))', border: '1px solid rgba(249, 115, 22, 0.18)' }}>
+      <div className="settings-card reveal-stagger p-24 mb-24 flex flex-col items-stretch rounded-24" style={{ background: 'linear-gradient(145deg, var(--nav-bg), var(--nav-hover))', border: '1px solid color-mix(in srgb, var(--nav-accent) 18%, transparent)' }}>
         <div className="flex justify-between gap-16 mb-16 items-start">
           <div>
             <div className="uppercase mb-6" style={{ fontSize: '0.75rem', fontWeight: '900', color: 'var(--nav-accent)', letterSpacing: '1px' }}>
@@ -269,7 +274,7 @@ const FamilyDashboard = ({ onClose }) => {
               {sharedGoal?.description || familyWeeklySummary.encouragement}
             </p>
           </div>
-          <div className="text-center p-12 rounded-18" style={{ minWidth: '76px', background: 'rgba(249, 115, 22, 0.08)', border: '1px solid rgba(249, 115, 22, 0.18)' }}>
+          <div className="text-center p-12 rounded-18" style={{ minWidth: '76px', background: 'color-mix(in srgb, var(--nav-accent) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--nav-accent) 18%, transparent)' }}>
             <div style={{ fontSize: '1.2rem', fontWeight: '950', color: 'var(--nav-accent)' }}>
               %{sharedGoalProgress}
             </div>
@@ -279,11 +284,11 @@ const FamilyDashboard = ({ onClose }) => {
           </div>
         </div>
 
-        <div className="h-16 rounded-full overflow-hidden mb-12" style={{ background: 'rgba(0,0,0,0.12)' }}>
+        <div className="h-16 rounded-full overflow-hidden mb-12" style={{ background: 'color-mix(in srgb, var(--surface-dim) 12%, transparent)' }}>
           <div style={{
             height: '100%',
             width: `${sharedGoalProgress}%`,
-            background: 'linear-gradient(90deg, #f59e0b, #10b981)'
+            background: 'linear-gradient(90deg, var(--tertiary), var(--secondary))'
           }} />
         </div>
 
@@ -296,8 +301,8 @@ const FamilyDashboard = ({ onClose }) => {
             disabled={weeklyGoalLoading || alreadyContributedToday}
             className="hover-lift border-none rounded-16 flex items-center gap-8 font-black"
             style={{
-              background: 'linear-gradient(135deg, var(--nav-accent), #10b981)',
-              color: '#fff',
+              background: 'linear-gradient(135deg, var(--nav-accent), var(--secondary))',
+              color: 'var(--on-primary)',
               padding: '10px 14px',
               cursor: weeklyGoalLoading ? 'wait' : alreadyContributedToday ? 'default' : 'pointer',
               opacity: weeklyGoalLoading || alreadyContributedToday ? 0.7 : 1
@@ -332,18 +337,18 @@ const FamilyDashboard = ({ onClose }) => {
         <IslamicBackButton onClick={onClose} showLabel={true} label={t('family.title')} />
       </div>
 
-      <div className="settings-card reveal-stagger mb-32 border-none rounded-24 flex flex-row items-center gap-20 relative overflow-hidden" style={{ padding: '32px 24px', background: 'linear-gradient(135deg, var(--nav-accent) 0%, #f59e0b 100%)', color: 'white', boxShadow: '0 15px 35px rgba(249, 115, 22, 0.25)' }}>
+      <div className="settings-card reveal-stagger mb-32 border-none rounded-24 flex flex-row items-center gap-20 relative overflow-hidden" style={{ padding: '32px 24px', background: 'linear-gradient(135deg, var(--nav-accent) 0%, var(--tertiary) 100%)', color: 'var(--on-primary)', boxShadow: '0 15px 35px color-mix(in srgb, var(--nav-accent) 25%, transparent)' }}>
         <Shield size={120} style={{ position: 'absolute', right: '-20px', bottom: '-20px', opacity: 0.1, transform: 'rotate(-15deg)' }} />
 
         <div className="flex-1 relative z-1">
-          <h2 className="m-0 tracking-tight" style={{ color: 'white', fontWeight: '950', fontSize: '1.75rem' }}>{family?.name}</h2>
-          <div className="mt-8 flex items-center gap-6" style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.9)', fontWeight: '700' }}>
+          <h2 className="m-0 tracking-tight" style={{ color: 'var(--on-primary)', fontWeight: '950', fontSize: '1.75rem' }}>{family?.name}</h2>
+          <div className="mt-8 flex items-center gap-6" style={{ fontSize: '0.9rem', color: 'color-mix(in srgb, var(--on-primary) 90%, transparent)', fontWeight: '700' }}>
             <Users size={16} />
             {t('family.membersCount', { count: family?.members?.length })}
           </div>
         </div>
 
-        <div className="rounded-18 flex flex-col items-center relative z-1" style={{ background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', color: 'white', padding: '12px 20px', boxShadow: '0 8px 16px rgba(0,0,0,0.1)', border: '1px solid rgba(255,255,255,0.3)' }}>
+        <div className="rounded-18 flex flex-col items-center relative z-1" style={{ background: 'color-mix(in srgb, var(--on-primary) 20%, transparent)', backdropFilter: 'blur(10px)', color: 'var(--on-primary)', padding: '12px 20px', boxShadow: '0 8px 16px color-mix(in srgb, var(--surface-dim) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--on-primary) 30%, transparent)' }}>
           <span className="uppercase mb-4 opacity-80" style={{ fontSize: '0.7rem', fontWeight: '900', letterSpacing: '1px' }}>KOD</span>
           <b style={{ fontSize: '1.25rem', letterSpacing: '2px' }}>{family?.inviteCode}</b>
         </div>
@@ -364,7 +369,7 @@ const FamilyDashboard = ({ onClose }) => {
 
       <div className="mt-40 text-center reveal-stagger">
         <div className="settings-card p-24 flex flex-col items-center" style={{ background: 'var(--nav-hover)', border: '1px dashed var(--nav-border)' }}>
-          <div className="settings-icon-box mb-16" style={{ background: 'rgba(249, 115, 22, 0.1)', color: 'var(--nav-accent)' }}>
+          <div className="settings-icon-box mb-16" style={{ background: 'color-mix(in srgb, var(--nav-accent) 10%, transparent)', color: 'var(--nav-accent)' }}>
             <Share2 size={24} />
           </div>
           <p className="mb-8" style={{ fontSize: '0.95rem', color: 'var(--nav-text)', fontWeight: '700', margin: 0 }}>

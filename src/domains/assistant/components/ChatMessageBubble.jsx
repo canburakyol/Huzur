@@ -44,9 +44,9 @@ const mapEnglishToTurkishSource = (label) => {
   for (const [eng, tr] of Object.entries(surahs)) {
     if (lower.includes(eng)) {
       // Extract chapter:verse
-      const match = clean.match(/\d+[:\-]\d+/);
+      const match = clean.match(/\d+[:-]\d+/);
       if (match) {
-        const parts = match[0].split(/[:\-]/);
+        const parts = match[0].split(/[:-]/);
         if (parts.length >= 2) {
           return `Diyanet Meal: ${tr} ${parts[1]}`;
         }
@@ -65,67 +65,42 @@ const mapEnglishToTurkishSource = (label) => {
  */
 const ChatMessageBubble = ({ msg, onSuggestedAction }) => {
   const isUser = msg.type === 'user';
+  const sources = msg.meta?.sources;
 
-  const displaySources = useMemo(() => {
-    if (isUser || !msg.meta?.sources || msg.meta.sources.length === 0) return '';
+  const displaySourcesList = useMemo(() => {
+    if (isUser || !sources || sources.length === 0) return null;
     
     // Filter to reviewed sources
-    const reviewed = msg.meta.sources.filter(s => s.reviewStatus === 'reviewed');
-    if (reviewed.length === 0) return '';
+    const reviewed = sources.filter(s => s.reviewStatus === 'reviewed');
+    if (reviewed.length === 0) return null;
 
     const formatted = reviewed.map(s => mapEnglishToTurkishSource(s.label)).filter(Boolean);
-    if (formatted.length === 0) return '';
+    if (formatted.length === 0) return null;
 
-    return ` *(${formatted.join(', ')})*`;
-  }, [msg.meta?.sources, isUser]);
+    return formatted.join(', ');
+  }, [sources, isUser]);
 
   return (
-    <div
-      style={{
-        alignSelf: isUser ? 'flex-end' : 'flex-start',
-        maxWidth: '85%',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '8px',
-        animation: 'fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-      }}
-    >
+    <div className={`assistant-bubble-container ${isUser ? 'assistant-bubble-user' : 'assistant-bubble-bot'}`}>
       {/* Bubble */}
-      <div
-        style={{
-          padding: '16px 20px',
-          borderRadius: isUser ? '24px 24px 4px 24px' : '24px 24px 24px 4px',
-          background: isUser ? 'var(--nav-accent)' : 'var(--nav-hover)',
-          color: isUser ? 'white' : 'var(--nav-text)',
-          fontSize: '1rem',
-          lineHeight: '1.6',
-          fontWeight: '600',
-          border: isUser ? 'none' : '1px solid var(--nav-border)',
-          whiteSpace: 'pre-wrap',
-        }}
-      >
+      <div className="assistant-bubble">
         {msg.text}
-        {displaySources}
+        {displaySourcesList && (
+          <span className="assistant-source-ref">
+            Kaynak: {displaySourcesList}
+          </span>
+        )}
       </div>
 
       {/* Suggested Actions */}
       {msg.meta?.suggestedActions?.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+        <div className="assistant-tag-container">
           {msg.meta.suggestedActions.map((action) => (
             <button
               key={action.id}
               type="button"
               onClick={() => onSuggestedAction(action)}
-              style={{
-                padding: '8px 12px',
-                borderRadius: '999px',
-                background: 'rgba(16, 185, 129, 0.10)',
-                color: 'var(--nav-text)',
-                border: '1px solid rgba(16, 185, 129, 0.18)',
-                fontSize: '0.76rem',
-                fontWeight: '800',
-                cursor: 'pointer',
-              }}
+              className="assistant-tag-btn"
             >
               {action.label}
             </button>

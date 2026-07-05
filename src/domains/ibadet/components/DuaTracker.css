@@ -2,11 +2,11 @@
 
 .dua-modern-textarea {
     width: 100%;
-    background: var(--nav-bg);
+    background: var(--surface-card-strong);
     border: 1px solid var(--nav-border);
     border-radius: 12px;
     padding: 16px;
-    color: var(--nav-text);
+    color: var(--text-body);
     font-size: 1rem;
     font-weight: 500;
     min-height: 100px;
@@ -17,15 +17,15 @@
 
 .dua-modern-textarea:focus {
     border-color: var(--nav-accent);
-    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--tertiary) 10%, transparent);
 }
 
 .category-pill {
     padding: 8px 16px;
     border-radius: 50px;
-    background: var(--nav-bg);
+    background: var(--surface-card-strong);
     border: 1px solid var(--nav-border);
-    color: var(--nav-text-muted);
+    color: var(--text-subtle);
     font-size: 0.8rem;
     font-weight: 700;
     cursor: pointer;
@@ -38,7 +38,7 @@
 .category-pill.active {
     background: var(--cat-color);
     border-color: transparent;
-    color: white;
+    color: var(--on-primary);
     box-shadow: 0 4px 12px var(--cat-color);
 }
 
@@ -46,10 +46,10 @@
     width: 100%;
     text-align: left;
     padding: 12px 16px;
-    background: var(--nav-bg);
+    background: var(--surface-card-strong);
     border: 1px solid var(--nav-border);
     border-radius: 10px;
-    color: var(--nav-text);
+    color: var(--text-body);
     font-size: 0.85rem;
     font-weight: 500;
     cursor: pointer;
@@ -78,10 +78,10 @@
 }
 
 .dua-check-btn.active {
-    background: #10b981;
+    background: var(--secondary);
     border-color: transparent;
-    color: white;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    color: var(--on-primary);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--secondary) 30%, transparent);
 }
 
 .icon-btn-small {
@@ -100,11 +100,11 @@
 }
 
 .icon-btn-small.delete:hover {
-    color: #ef4444;
+    color: var(--error);
 }
 
 .completed-dua {
-    border-left: 4px solid #10b981 !important;
+    border-left: 4px solid var(--secondary) !important;
 }
 
 /* Animations */

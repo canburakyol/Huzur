@@ -1,0 +1,52 @@
+{
+  "default": {
+    "background": "./background.png",
+    "keyword": {
+      "color": "#D6B25E",
+      "font_size": 118
+    },
+    "title": {
+      "color": "#FFFFFF",
+      "font_size": 72
+    },
+    "padding": 70,
+    "show_complete_frame": false
+  },
+  "data": [
+    {
+      "filter": "01_home",
+      "keyword": { "text": "Huzur" },
+      "title": { "text": "İslami Yaşam Asistanın" }
+    },
+    {
+      "filter": "02_prayer_times",
+      "keyword": { "text": "Namaz Vakitleri" },
+      "title": { "text": "Vakitleri Kolayca Takip Et" }
+    },
+    {
+      "filter": "03_quran",
+      "keyword": { "text": "Kur’an-ı Kerim" },
+      "title": { "text": "Meal, Okunuş ve Arapça Metin" }
+    },
+    {
+      "filter": "04_qibla",
+      "keyword": { "text": "Kıble Pusulası" },
+      "title": { "text": "Yönünü Güvenle Bul" }
+    },
+    {
+      "filter": "05_dhikr",
+      "keyword": { "text": "Zikirmatik" },
+      "title": { "text": "Günlük Zikirlerini Kaydet" }
+    },
+    {
+      "filter": "06_dua",
+      "keyword": { "text": "Dua Kardeşliği" },
+      "title": { "text": "Dualarda Buluş" }
+    },
+    {
+      "filter": "07_premium",
+      "keyword": { "text": "Huzur Pro" },
+      "title": { "text": "Reklamsız ve Daha Fazla Özellik" }
+    }
+  ]
+}

@@ -85,7 +85,7 @@ const AyahList = ({ t, surahData, expandedAyah, onToggleAyah, onWordClick }) => 
                   width: '32px',
                   height: '32px',
                   background: 'var(--nav-accent)',
-                  color: 'white',
+                  color: 'var(--on-primary)',
                   fontSize: '0.8rem',
                   fontWeight: '900',
                   borderRadius: '50%',

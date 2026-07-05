@@ -104,7 +104,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     <CheckCircle size={40} color="#2ecc71" />
                 </div>
                 <h2 style={{
-                    color: 'var(--primary-color)',
+                    color: 'var(--primary)',
                     marginBottom: '12px',
                     fontSize: '22px'
                 }}>
@@ -123,10 +123,10 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     onClick={onClose}
                     style={{
                         padding: '14px 32px',
-                        background: 'var(--primary-color)',
+                        background: 'var(--primary)',
                         border: 'none',
                         borderRadius: '12px',
-                        color: '#fff',
+                        color: 'var(--on-primary)',
                         fontSize: '16px',
                         cursor: 'pointer'
                     }}
@@ -151,7 +151,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',
-                    color: 'var(--primary-color)',
+                    color: 'var(--primary)',
                     fontWeight: '700'
                 }}>
                     💬 {t('support.title', 'Support')}
@@ -188,10 +188,10 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                                 style={{
                                     flex: 1,
                                     padding: '12px',
-                                    background: formData.type === type.id ? 'var(--primary-color)' : 'var(--glass-bg)',
+                                    background: formData.type === type.id ? 'var(--primary)' : 'var(--glass-bg)',
                                     border: '1px solid var(--glass-border)',
                                     borderRadius: '10px',
-                                    color: formData.type === type.id ? '#fff' : 'var(--text-color)',
+                                    color: formData.type === type.id ? 'var(--on-primary)' : 'var(--text-color)',
                                     fontSize: '13px',
                                     cursor: 'pointer'
                                 }}
@@ -290,10 +290,10 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     style={{
                         width: '100%',
                         padding: '16px',
-                        background: isSubmitting ? 'rgba(155, 89, 182, 0.5)' : 'var(--primary-color)',
+                        background: isSubmitting ? 'rgba(155, 89, 182, 0.5)' : 'var(--primary)',
                         border: 'none',
                         borderRadius: '12px',
-                        color: '#fff',
+                        color: 'var(--on-primary)',
                         fontSize: '16px',
                         fontWeight: '600',
                         cursor: isSubmitting ? 'not-allowed' : 'pointer',

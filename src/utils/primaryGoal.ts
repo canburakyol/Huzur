@@ -18,35 +18,35 @@ type PrimaryGoal = {
 export const PRIMARY_GOALS: Record<string, PrimaryGoal> = {
   prayer_rhythm: {
     id: 'prayer_rhythm',
-    label: 'Namaz ve 2 dakikalik ritim',
+    label: 'Namaz ve gunluk ibadet rutini',
     icon: 'Prayer',
     homeAction: {
       feature: 'dailyTasks',
-      title: 'Bugunun ibadet ritmini kur',
-      description: 'Bir vakit hatirlatmasi ve kisa bir gunluk adimla bugunu bos gecirme.',
-      cta: '2 dakikalik adimi ac'
+      title: 'Bugunun ibadet rutinini baslat',
+      description: 'Namaz, zikir ve kisa gunluk adim tek, sakin bir akista dursun.',
+      cta: 'Bugunku rutini ac'
     }
   },
   quran_learning: {
     id: 'quran_learning',
-    label: 'Kuran ve dua ritmi',
+    label: 'Kuran ve dua rutini',
     icon: 'BookOpen',
     homeAction: {
-      feature: 'dailyQuiz',
-      title: 'Bugun Kuran ile kisa bir bag kur',
-      description: 'Uzun bir ders degil; sadece 2 dakikalik okuma, dua veya bilgi adimi.',
-      cta: 'Kisa adimi ac'
+      feature: 'quran',
+      title: 'Bugun Kuran ve dua ile basla',
+      description: 'Uzun bir ders degil; kisa okuma ve dua adimini gunluk rutine bagla.',
+      cta: 'Kuran adimini ac'
     }
   },
   family_consistency: {
     id: 'family_consistency',
-    label: 'Ailece gunluk ritim',
+    label: 'Ailece ibadet rutini',
     icon: 'Users',
     homeAction: {
-      feature: 'family',
-      title: 'Ailece bugunun kucuk adimini sec',
-      description: 'Aile hedefini buyutmeden, bugun gorunur bir ibadet ritmi baslat.',
-      cta: 'Aile ritmini ac'
+      feature: 'dailyTasks',
+      title: 'Ailece bugunun ibadet adimini sec',
+      description: 'Buyuk hedefler yerine bugun gorunur tek namaz, dua veya zikir adimi yeter.',
+      cta: 'Aile rutinini baslat'
     }
   }
 };

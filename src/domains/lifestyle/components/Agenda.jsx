@@ -165,7 +165,7 @@ const Agenda = ({ onClose }) => {
                                 <span style={{
                                     fontSize: '1rem',
                                     fontWeight: '800',
-                                    color: day.isToday ? 'white' : 'var(--nav-text)'
+                                    color: day.isToday ? 'var(--on-primary)' : 'var(--nav-text)'
                                 }}>
                                     {day.day}
                                 </span>
@@ -308,7 +308,7 @@ const Agenda = ({ onClose }) => {
                                 />
                                 <button
                                     type="submit"
-                                    style={{ width: '100%', padding: '16px', borderRadius: '16px', background: 'var(--nav-accent)', color: 'white', fontWeight: '800', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', boxShadow: '0 4px 12px rgba(249, 115, 22, 0.2)' }}
+                                    style={{ width: '100%', padding: '16px', borderRadius: '16px', background: 'var(--nav-accent)', color: 'var(--on-primary)', fontWeight: '800', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', boxShadow: '0 4px 12px rgba(249, 115, 22, 0.2)' }}
                                     disabled={!newEventTitle.trim()}
                                 >
                                     <Plus size={20} />

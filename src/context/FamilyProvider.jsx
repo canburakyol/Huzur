@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { familyService } from '../services/familyService';
 import { onAuthChange } from '../services/authService';
 import { logger } from '../utils/logger';
@@ -42,26 +42,26 @@ export const FamilyProvider = ({ children }) => {
     }
   };
 
-  const refreshPublicFamilies = async () => {
+  const refreshPublicFamilies = useCallback(async () => {
     try {
       const families = await familyService.listPublicFamilies();
       setPublicFamilies(Array.isArray(families) ? families : []);
     } catch (err) {
       logger.error('[FamilyContext] Public families error:', err);
     }
-  };
+  }, []);
 
   useEffect(() => {
+    let scheduledLoad = null;
+    let usesIdleCallback = false;
+
     const unsubscribe = onAuthChange((user) => {
       if (user) {
         // Defer Firestore calls — don't block main thread on mount
-        const scheduleLoad = typeof requestIdleCallback === 'function'
-          ? requestIdleCallback
-          : (cb) => setTimeout(cb, 100);
-
-        scheduleLoad(() => {
-          void Promise.all([refreshFamily(), refreshPublicFamilies()]);
-        }, { timeout: 3000 });
+        usesIdleCallback = typeof requestIdleCallback === 'function';
+        scheduledLoad = usesIdleCallback
+          ? requestIdleCallback(() => void refreshFamily(), { timeout: 3000 })
+          : setTimeout(() => void refreshFamily(), 100);
       } else {
         setFamily(null);
         setPublicFamilies([]);
@@ -70,7 +70,15 @@ export const FamilyProvider = ({ children }) => {
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      if (scheduledLoad === null) return;
+      if (usesIdleCallback && typeof cancelIdleCallback === 'function') {
+        cancelIdleCallback(scheduledLoad);
+      } else {
+        clearTimeout(scheduledLoad);
+      }
+    };
   }, []);
 
   const createFamily = async (name) => {

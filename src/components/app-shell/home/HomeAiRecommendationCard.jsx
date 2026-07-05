@@ -9,27 +9,23 @@ const HomeAiRecommendationCard = memo(function HomeAiRecommendationCard({ onSele
 
   return (
     <div
+      className="bg-white rounded-3xl border-huzur-sage-100 shadow-huzur-soft"
       style={{
         margin: '0 5px 16px',
-        padding: '18px 18px',
-        borderRadius: '22px',
-        background: rankingState.riskBand === 'at_risk'
-          ? 'linear-gradient(145deg, rgba(180, 83, 9, 0.14), rgba(15, 118, 110, 0.10))'
-          : 'linear-gradient(145deg, rgba(15, 118, 110, 0.16), rgba(212, 175, 55, 0.08))',
-        border: '1px solid rgba(212, 175, 55, 0.16)',
+        padding: '22px 20px',
       }}
     >
-      <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
+      <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
         {t('homeFeed.aiRecommendation.eyebrow')}
       </div>
-      <div style={{ fontSize: '0.96rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: '6px' }}>
+      <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-primary)', marginBottom: '6px' }}>
         {rankingState.headline}
       </div>
-      <div style={{ fontSize: '0.78rem', color: 'var(--nav-text-muted)', lineHeight: '1.55', fontWeight: '600' }}>
+      <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.55', fontWeight: '600' }}>
         {rankingState.explanation}
       </div>
       {rankingState.socialHint ? (
-        <div style={{ marginTop: '10px', fontSize: '0.76rem', color: 'var(--nav-text-muted)', lineHeight: '1.5', fontWeight: '700' }}>
+        <div style={{ marginTop: '10px', fontSize: '0.76rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.5', fontWeight: '700' }}>
           {rankingState.socialHint}
         </div>
       ) : null}
@@ -38,13 +34,14 @@ const HomeAiRecommendationCard = memo(function HomeAiRecommendationCard({ onSele
           onClick={() => onSelectFeature?.(rankingState.suggestedActionFeature, 'home_ai_recommendation')}
           style={{
             marginTop: '12px',
-            background: 'var(--nav-accent)',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '14px',
+            background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
+            color: 'var(--primary)',
+            border: '1px solid color-mix(in srgb, var(--secondary) 20%, transparent)',
+            borderRadius: '16px',
             padding: '10px 14px',
             fontSize: '0.8rem',
-            fontWeight: '800',
+            fontFamily: 'var(--font-main)',
+            fontWeight: '700',
             cursor: 'pointer'
           }}
         >

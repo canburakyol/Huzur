@@ -28,6 +28,7 @@ function AppChrome({ controller }) {
         showSplash={navigation.showSplash}
         onHideSplash={navigation.hideSplash}
         showGrowthOnboarding={growthOnboarding.showGrowthOnboarding}
+        showAdConsentPrompt={!growthOnboarding.showGrowthOnboarding && !appInit.isProUser}
         onboardingStep={growthOnboarding.onboardingStep}
         onboardingConfig={growthOnboarding.onboardingConfig}
         onboardingLanguage={growthOnboarding.onboardingLanguage}
@@ -65,7 +66,10 @@ function AppChrome({ controller }) {
       </Suspense>
 
       {!hasBlockingOverlay && (
-        <div className="app-container" style={{ position: 'relative', paddingBottom: '130px' }}>
+        <div
+          className={`app-container ${!appInit.isProUser && navigation.activeTab !== 'quran' ? 'has-bottom-banner' : ''}`}
+          style={{ position: 'relative', paddingBottom: navigation.activeTab === 'quran' ? '0' : 'var(--bottom-stack-height)' }}
+        >
           {navigation.activeTab === 'home' && (
             <AppHomeTabContent
               loading={prayer.loading}

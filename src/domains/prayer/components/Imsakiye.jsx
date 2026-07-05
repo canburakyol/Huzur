@@ -63,7 +63,7 @@ const Imsakiye = ({ onClose, locationName }) => {
         };
 
         calculateMonthlyPrayerTimes();
-    }, [currentMonth, currentYear]);
+    }, [currentMonth, currentYear, i18n.language, t]);
 
     const goToPreviousMonth = () => {
         if (currentMonth === 0) {
@@ -99,7 +99,7 @@ const Imsakiye = ({ onClose, locationName }) => {
             {/* Header */}
             <div style={{
                 padding: '20px',
-                background: 'var(--primary-color)',
+                background: 'var(--primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between'
@@ -107,7 +107,7 @@ const Imsakiye = ({ onClose, locationName }) => {
                 <IslamicBackButton onClick={onClose} variant="light" />
                 
                 <div style={{ textAlign: 'center' }}>
-                    <h2 style={{ margin: 0, color: 'white', fontSize: '22px' }}>📅 {t('menu.imsakiye')}</h2>
+                    <h2 style={{ margin: 0, color: 'var(--on-primary)', fontSize: '22px' }}>📅 {t('menu.imsakiye')}</h2>
                     <div style={{ 
                         display: 'flex', 
                         alignItems: 'center', 
@@ -207,8 +207,8 @@ const Imsakiye = ({ onClose, locationName }) => {
                     }}>
                         <thead>
                             <tr style={{ 
-                                background: 'var(--primary-color)',
-                                color: 'white',
+                                background: 'var(--primary)',
+                                color: 'var(--on-primary)',
                                 position: 'sticky',
                                 top: 0
                             }}>
@@ -246,7 +246,7 @@ const Imsakiye = ({ onClose, locationName }) => {
                                         padding: '10px 4px', 
                                         textAlign: 'center',
                                         fontWeight: 'bold',
-                                        color: 'var(--primary-color)',
+                                        color: 'var(--primary)',
                                         background: 'rgba(var(--primary-rgb), 0.1)'
                                     }}>
                                         {cleanTime(day.times.Maghrib)}

@@ -35,7 +35,7 @@
 
 .esma-modern-input:focus {
     border-color: var(--nav-accent);
-    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--tertiary) 10%, transparent);
 }
 
 .esma-fav-btn {
@@ -53,9 +53,9 @@
 }
 
 .esma-fav-btn.active {
-    background: rgba(239, 68, 68, 0.1);
-    border-color: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
+    background: color-mix(in srgb, var(--error) 10%, transparent);
+    border-color: color-mix(in srgb, var(--error) 20%, transparent);
+    color: var(--error);
 }
 
 .esma-id-badge-modern {
@@ -83,9 +83,9 @@
 }
 
 .active-fav {
-    background: rgba(239, 68, 68, 0.1) !important;
-    color: #ef4444 !important;
-    border-color: rgba(239, 68, 68, 0.2) !important;
+    background: color-mix(in srgb, var(--error) 10%, transparent) !important;
+    color: var(--error) !important;
+    border-color: color-mix(in srgb, var(--error) 20%, transparent) !important;
 }
 
 /* Animations */

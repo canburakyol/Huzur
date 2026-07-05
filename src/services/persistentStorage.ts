@@ -1,6 +1,5 @@
 import { Capacitor } from "@capacitor/core";
-import { CapgoCapacitorDataStorageSqlite } from "@capgo/capacitor-data-storage-sqlite";
-import { SecureStorage as LegacySecureStorage } from "@aparajita/capacitor-secure-storage";
+import { SecureStorage } from "@aparajita/capacitor-secure-storage";
 import { Preferences } from "@capacitor/preferences";
 import { logger } from "../utils/logger";
 
@@ -28,12 +27,6 @@ const KNOWN_SECURE_KEYS = [
   "huzur_daily_limits",
 ] as const;
 
-const CAPGO_SECURE_DATABASE = "huzur_secure_storage";
-const CAPGO_SECURE_TABLE = "secure_items";
-const STORED_VALUE_PREFIX = "huzur_secure_v1:";
-
-let capgoStoreReady: Promise<void> | null = null;
-
 const isNativePlatform = (): boolean => {
   try {
     return Capacitor.isNativePlatform();
@@ -42,96 +35,47 @@ const isNativePlatform = (): boolean => {
   }
 };
 
-const encodeStoredValue = (value: string): string => `${STORED_VALUE_PREFIX}${JSON.stringify(value)}`;
-
-const decodeStoredValue = (value: string): string => {
-  if (!value.startsWith(STORED_VALUE_PREFIX)) {
-    return value;
-  }
-
-  try {
-    const decoded = JSON.parse(value.slice(STORED_VALUE_PREFIX.length));
-    return typeof decoded === "string" ? decoded : value;
-  } catch {
-    return value;
-  }
-};
-
-const ensureCapgoStore = async (): Promise<void> => {
-  if (!capgoStoreReady) {
-    const encrypted = isNativePlatform();
-    capgoStoreReady = CapgoCapacitorDataStorageSqlite.openStore({
-      database: CAPGO_SECURE_DATABASE,
-      table: CAPGO_SECURE_TABLE,
-      encrypted,
-      mode: encrypted ? "secret" : "no-encryption",
-    }).catch((error) => {
-      capgoStoreReady = null;
-      throw error;
-    });
-  }
-
-  await capgoStoreReady;
-};
-
-const getCapgoStoredString = async (key: string): Promise<string | null> => {
-  await ensureCapgoStore();
-  const { result } = await CapgoCapacitorDataStorageSqlite.iskey({ key });
-  if (result !== true) {
-    return null;
-  }
-
-  const { value } = await CapgoCapacitorDataStorageSqlite.get({ key });
-  return decodeStoredValue(value);
-};
-
-const setCapgoStoredString = async (key: string, value: string): Promise<void> => {
-  await ensureCapgoStore();
-  await CapgoCapacitorDataStorageSqlite.set({ key, value: encodeStoredValue(value) });
-};
-
-const removeCapgoStoredString = async (key: string): Promise<void> => {
-  await ensureCapgoStore();
-  await CapgoCapacitorDataStorageSqlite.remove({ key });
-};
-
-const listCapgoStoredKeys = async (): Promise<string[]> => {
-  await ensureCapgoStore();
-  const { keys } = await CapgoCapacitorDataStorageSqlite.keys();
-  return keys;
-};
-
-const getLegacySecureStorage = async (key: string): Promise<string | null> => {
+const getSecureStorageString = async (key: string): Promise<string | null> => {
   if (!isNativePlatform()) {
-    return null;
+    return getLegacyPreference(key);
   }
 
   try {
-    return await LegacySecureStorage.getItem(key);
+    return await SecureStorage.getItem(key);
   } catch {
     return null;
   }
 };
 
-const removeLegacySecureStorage = async (key: string): Promise<void> => {
+const setSecureStorageString = async (key: string, value: string): Promise<void> => {
   if (!isNativePlatform()) {
+    await Preferences.set({ key, value });
+    return;
+  }
+
+  await SecureStorage.setItem(key, value);
+};
+
+const removeSecureStorageString = async (key: string): Promise<void> => {
+  if (!isNativePlatform()) {
+    await Preferences.remove({ key });
     return;
   }
 
   try {
-    await LegacySecureStorage.removeItem(key);
+    await SecureStorage.removeItem(key);
   } catch {
-    // Best-effort cleanup for previous storage engines.
+    // Best-effort cleanup.
   }
 };
 
-const listLegacySecureStorageKeys = async (): Promise<string[]> => {
+const listSecureStorageKeys = async (): Promise<string[]> => {
   if (!isNativePlatform()) {
-    return [];
+    return listLegacyPreferenceKeys();
   }
 
   try {
-    return await LegacySecureStorage.keys();
+    return await SecureStorage.keys();
   } catch {
     return [];
   }
@@ -156,8 +100,8 @@ const migrateLegacyValue = async (
   legacyValue: string,
   cleanup: () => Promise<void>
 ): Promise<void> => {
-  await setCapgoStoredString(key, legacyValue);
-  const migratedValue = await getCapgoStoredString(key);
+  await setSecureStorageString(key, legacyValue);
+  const migratedValue = await getSecureStorageString(key);
   if (migratedValue !== legacyValue) {
     throw new Error(`Secure migration verification failed for ${key}`);
   }
@@ -166,14 +110,8 @@ const migrateLegacyValue = async (
 };
 
 const migrateLegacyStorageKey = async (key: string): Promise<void> => {
-  const secureValue = await getCapgoStoredString(key);
+  const secureValue = await getSecureStorageString(key);
   if (secureValue !== null) {
-    return;
-  }
-
-  const legacySecureValue = await getLegacySecureStorage(key);
-  if (typeof legacySecureValue === "string") {
-    await migrateLegacyValue(key, legacySecureValue, () => removeLegacySecureStorage(key));
     return;
   }
 
@@ -187,27 +125,30 @@ const migrateLegacyStorageKey = async (key: string): Promise<void> => {
 
 const setStoredString = async (key: string, value: string): Promise<void> => {
   await migrateLegacyStorageKey(key);
-  await setCapgoStoredString(key, value);
-  await removeLegacySecureStorage(key);
-  await Preferences.remove({ key });
+  await setSecureStorageString(key, value);
+  if (isNativePlatform()) {
+    await Preferences.remove({ key });
+  }
 };
 
 const getStoredString = async (key: string): Promise<string | null> => {
   await migrateLegacyStorageKey(key);
-  return getCapgoStoredString(key);
+  if (!isNativePlatform()) {
+    return getLegacyPreference(key);
+  }
+  return getSecureStorageString(key);
 };
 
 const removeStoredString = async (key: string): Promise<void> => {
-  await removeCapgoStoredString(key);
-  await removeLegacySecureStorage(key);
+  await removeSecureStorageString(key);
   await Preferences.remove({ key });
 };
 
 const listStoredKeys = async (): Promise<string[]> => {
-  return listCapgoStoredKeys();
+  return listSecureStorageKeys();
 };
 
-const _generateCorruptionChecksum = (state: ProStatusState): string => {
+const _generateCorruptionChecksum = async (state: ProStatusState): Promise<string> => {
   const payload = [
     state.active === true,
     state.expiresAt || "",
@@ -217,12 +158,30 @@ const _generateCorruptionChecksum = (state: ProStatusState): string => {
     state.verificationState || "",
   ].join("|");
 
-  let hash = 0x811c9dc5;
-  for (let i = 0; i < payload.length; i++) {
-    hash ^= payload.charCodeAt(i);
-    hash = Math.imul(hash, 0x01000193);
+  try {
+    const encoder = new TextEncoder();
+    // Device-derived key: not stored alongside the data, harder to tamper offline.
+    const keyMaterial = encoder.encode(`huzur_integrity_${navigator.userAgent.length}`);
+    const cryptoKey = await crypto.subtle.importKey(
+      "raw",
+      keyMaterial,
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    );
+    const signature = await crypto.subtle.sign("HMAC", cryptoKey, encoder.encode(payload));
+    return Array.from(new Uint8Array(signature))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+  } catch {
+    // Fallback for environments without SubtleCrypto (very rare on modern Android WebView)
+    let hash = 0x811c9dc5;
+    for (let i = 0; i < payload.length; i++) {
+      hash ^= payload.charCodeAt(i);
+      hash = Math.imul(hash, 0x01000193);
+    }
+    return (hash >>> 0).toString(16);
   }
-  return (hash >>> 0).toString(16);
 };
 
 export const secureStorage = {
@@ -303,7 +262,7 @@ export const secureStorage = {
     try {
       const [keys, legacySecureKeys, legacyPreferenceKeys] = await Promise.all([
         listStoredKeys(),
-        listLegacySecureStorageKeys(),
+        listSecureStorageKeys(),
         listLegacyPreferenceKeys(),
       ]);
       const secureKeys = new Set<string>([
@@ -365,7 +324,7 @@ export const secureStorage = {
         updatedAt: new Date().toISOString(),
       };
 
-      status._checksum = _generateCorruptionChecksum(status);
+      status._checksum = await _generateCorruptionChecksum(status);
       await this.setItem(SECURE_STORAGE_KEYS.PRO_STATUS, status);
       return true;
     } catch (error) {
@@ -402,7 +361,7 @@ export const secureStorage = {
         };
       }
 
-      const expectedChecksum = _generateCorruptionChecksum(status);
+      const expectedChecksum = await _generateCorruptionChecksum(status);
       const isValid = status._checksum === expectedChecksum || status._integrity === expectedChecksum;
 
       return {

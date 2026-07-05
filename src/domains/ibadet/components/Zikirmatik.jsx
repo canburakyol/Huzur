@@ -25,7 +25,7 @@ const DHIKR_LIST = [
     { id: 'estagfirullah', name: 'Estağfirullah', arabic: 'أَسْتَغْفِرُ اللهَ', meaning: 'Allah\'tan bağışlanma dilerim', defaultTarget: 100 },
     { id: 'lahavle', name: 'La havle', arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ', meaning: 'Güç ve kuvvet ancak Allah\'tandır', defaultTarget: 33 },
     { id: 'salavat', name: 'Salavat', arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ', meaning: 'Allah\'ım Muhammed\'e salat eyle', defaultTarget: 100 },
-    { id: 'hasbunallah', name: 'Hasbünallah', arabic: 'حَسْبُنَا اللهُ وَنِعْمَ الوَكِيلُ', meaning: 'Allah bize yeter, O ne güzel vekildir', defaultTarget: 33 },
+    { id: 'hasbunallah', name: 'Hasbünallah', arabic: 'حَسْبُنَا اللهُ وَنِعْمَ الوَكِILÜ', meaning: 'Allah bize yeter, O ne güzel vekildir', defaultTarget: 33 },
 ];
 
 const DHIKR_TRANSLATIONS = {
@@ -145,9 +145,12 @@ const Zikirmatik = ({ onClose }) => {
     };
 
     const saveCount = (dhikrId, newCount) => {
-        const newCounts = { ...counts, [dhikrId]: newCount };
-        setCounts(newCounts);
-        storageService.setItem(ZIKIRMATIK_KEYS.COUNTS, newCounts);
+        setCounts((previousCounts) => {
+            const safeCounts = previousCounts && typeof previousCounts === 'object' ? previousCounts : {};
+            const nextCounts = { ...safeCounts, [dhikrId]: newCount };
+            storageService.setItem(ZIKIRMATIK_KEYS.COUNTS, nextCounts);
+            return nextCounts;
+        });
     };
 
     const updateStats = (increment = 1) => {
@@ -168,25 +171,41 @@ const Zikirmatik = ({ onClose }) => {
         setIsPressed(true);
         setTimeout(() => setIsPressed(false), 100);
 
-        const currentCount = counts[selectedDhikr.id] || 0;
+        const dhikrId = selectedDhikr.id;
+        const safeCounts = counts && typeof counts === 'object' ? counts : {};
+        const currentCount = Number(safeCounts[dhikrId]) || 0;
         const newCount = currentCount + 1;
-        saveCount(selectedDhikr.id, newCount);
+        const nextCounts = { ...safeCounts, [dhikrId]: newCount };
+
+        // Persist before quest/activation side effects. Those updates may remount
+        // this screen, which must then hydrate the incremented value, not zero.
+        storageService.setItem(ZIKIRMATIK_KEYS.COUNTS, nextCounts);
+        setCounts(nextCounts);
         updateStats(1);
         
-        checkQuestProgress('zikir', selectedDhikr.id, 1);
-        markFirstIbadahActionCompleted({
-            feature: 'zikirmatik',
-            source: 'zikir_increment',
-        });
+        try {
+            checkQuestProgress('zikir', dhikrId, 1);
+        } catch (err) {
+            console.warn('[Zikirmatik] checkQuestProgress error:', err);
+        }
+
+        try {
+            markFirstIbadahActionCompleted({
+                feature: 'zikirmatik',
+                source: 'zikir_increment',
+            });
+        } catch (err) {
+            console.warn('[Zikirmatik] markFirstIbadahActionCompleted error:', err);
+        }
 
         if (vibrateEnabled && navigator.vibrate) {
             navigator.vibrate(30);
         }
 
-        const target = targets[selectedDhikr.id];
+        const target = targets[dhikrId];
         if (target && newCount === target) {
             setShowSuccessAnim(true);
-            setTimeout(() => setShowSuccessAnim(false), 3000);
+            setTimeout(() => setShowSuccessAnim(false), 3500);
             if (vibrateEnabled && navigator.vibrate) {
                 navigator.vibrate([100, 50, 100, 50, 100]);
             }
@@ -226,7 +245,7 @@ const Zikirmatik = ({ onClose }) => {
                     <div style={{ display: 'flex', gap: '8px' }}>
                         <button 
                             onClick={() => setShowStats(!showStats)}
-                            style={{ background: showStats ? 'var(--nav-accent)' : 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '12px', padding: '10px', color: showStats ? 'white' : 'var(--nav-text-muted)', cursor: 'pointer', transition: 'all 0.2s' }}
+                            style={{ background: showStats ? 'var(--control-bg-active)' : 'var(--control-bg)', border: '1px solid var(--nav-border)', borderRadius: '14px', padding: '10px', color: showStats ? 'var(--control-text-on-active)' : 'var(--nav-text-muted)', cursor: 'pointer', transition: 'all 0.2s' }}
                         >
                             <BarChart3 size={20} />
                         </button>
@@ -235,7 +254,7 @@ const Zikirmatik = ({ onClose }) => {
 
                 {/* Stats Dashboard */}
                 {showStats && (
-                    <div className="settings-card reveal-stagger" style={{ background: 'linear-gradient(135deg, var(--primary-color), var(--primary-dark))', border: 'none', padding: '24px', marginBottom: '24px', color: 'white' }}>
+                    <div className="settings-card reveal-stagger" style={{ background: 'var(--primary)', border: 'none', padding: '24px', marginBottom: '24px', color: 'var(--on-primary)', boxShadow: 'var(--shadow-card)' }}>
                         <div style={{ flex: 1, textAlign: 'center' }}>
                             <div style={{ fontSize: '2.5rem', fontWeight: '900' }}>{stats.today}</div>
                             <div style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, textTransform: 'uppercase', letterSpacing: '1px' }}>Bugünkü Zikir</div>
@@ -267,14 +286,15 @@ const Zikirmatik = ({ onClose }) => {
                                     style={{ 
                                         '--delay': `${0.1 + index * 0.05}s`,
                                         padding: '16px',
-                                        background: isComplete ? 'rgba(15, 118, 110, 0.05)' : 'var(--nav-bg)',
-                                        border: isComplete ? '1px solid rgba(15, 118, 110, 0.4)' : '1px solid var(--nav-border)'
+                                        background: isComplete ? 'var(--surface-action-soft)' : 'var(--surface-card-strong)',
+                                        border: isComplete ? '1px solid var(--border-strong)' : '1px solid var(--nav-border)',
+                                        boxShadow: 'none'
                                     }}
                                 >
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <div>
-                                                <div style={{ fontWeight: '800', fontSize: '1.1rem', color: isComplete ? 'var(--bg-emerald-light)' : 'var(--nav-text)' }}>
+                                                <div style={{ fontWeight: '800', fontSize: '1.1rem', color: isComplete ? 'var(--primary)' : 'var(--nav-text)' }}>
                                                     {displayName}
                                                 </div>
                                                 <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontFamily: 'var(--arabic-font)' }}>
@@ -285,7 +305,7 @@ const Zikirmatik = ({ onClose }) => {
                                                 <div style={{ fontWeight: '900', fontSize: '1.1rem' }}>
                                                     {count} <span style={{ fontSize: '0.8rem', opacity: 0.5 }}>/ {target}</span>
                                                 </div>
-                                                {isComplete && <div style={{ fontSize: '0.7rem', color: 'var(--bg-emerald-light)', fontWeight: '800' }}>{t('common.completed', 'TAMAMLANDI')}</div>}
+                                                {isComplete && <div style={{ fontSize: '0.7rem', color: 'var(--success-color)', fontWeight: '800' }}>{t('common.completed', 'TAMAMLANDI')}</div>}
                                             </div>
                                         </div>
                                         {/* Progress Bar */}
@@ -293,7 +313,7 @@ const Zikirmatik = ({ onClose }) => {
                                             <div style={{ 
                                                 width: `${progress}%`, 
                                                 height: '100%', 
-                                                background: isComplete ? 'var(--bg-emerald-light)' : 'var(--nav-accent)',
+                                                background: isComplete ? 'var(--success-color)' : 'var(--primary)',
                                                 transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
                                             }} />
                                         </div>
@@ -314,7 +334,7 @@ const Zikirmatik = ({ onClose }) => {
     const dashOffset = dashCircum - (scrollProgress * dashCircum / 100);
 
     return (
-        <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px', background: isFocusMode ? 'var(--nav-bg)' : 'transparent' }}>
+        <div className="settings-container reveal-stagger ad-safe-screen zikirmatik-screen" style={{ minHeight: '100vh', background: isFocusMode ? 'var(--nav-bg)' : 'transparent' }}>
             {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
                 <button 
@@ -353,12 +373,17 @@ const Zikirmatik = ({ onClose }) => {
                 ) : (
                     <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{getDhikrName(selectedDhikr)}</h3>
                 )}
-                <div style={{ fontSize: '2rem', fontFamily: 'var(--arabic-font)', color: 'var(--nav-text)', margin: '16px 0' }}>{selectedDhikr?.arabic}</div>
+                <div style={{ fontSize: '2rem', fontFamily: 'var(--font-arabic)', color: 'var(--nav-text)', margin: '16px 0' }}>{selectedDhikr?.arabic}</div>
                 <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontStyle: 'italic', lineHeight: '1.4' }}>{getDhikrMeaning(selectedDhikr)}</p>
             </div>
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '40px 0' }}>
-                <div className="velocity-dial-wrapper" onClick={handleIncrement}>
+                <button
+                    type="button"
+                    className="velocity-dial-wrapper"
+                    onClick={handleIncrement}
+                    aria-label={`${getDhikrName(selectedDhikr)} sayacini artir`}
+                >
                     <svg className="velocity-dial-svg">
                         <circle className="velocity-dial-bg" cx="140" cy="140" r="132" />
                         <circle
@@ -374,10 +399,16 @@ const Zikirmatik = ({ onClose }) => {
                     </svg>
                     <div className="velocity-dial-button" style={{ transform: isPressed ? 'scale(0.92)' : 'scale(1)' }}>
                         <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase', letterSpacing: '2px' }}>OKUNAN</div>
-                        <div style={{ fontSize: '4rem', fontWeight: '900', color: 'var(--nav-text)', margin: '8px 0', lineHeight: 1 }}>{currentDhikrCount}</div>
+                        <div
+                            key={`${selectedDhikr?.id}-${currentDhikrCount}`}
+                            data-testid="zikirmatik-current-count"
+                            style={{ fontSize: '4rem', fontWeight: '900', color: 'var(--nav-text)', margin: '8px 0', lineHeight: 1 }}
+                        >
+                            {currentDhikrCount}
+                        </div>
                         <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--nav-accent)' }}>Hedef: {currentDhikrTarget}</div>
                     </div>
-                </div>
+                </button>
             </div>
 
             {/* Target Options */}
@@ -407,7 +438,7 @@ const Zikirmatik = ({ onClose }) => {
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(4px)' }}>
                     <div style={{ textAlign: 'center', animation: 'scaleUp 0.5s ease-out' }}>
                         <Sparkles size={120} color="var(--nav-accent)" />
-                        <h2 style={{ color: 'var(--nav-accent)', fontWeight: '900', textShadow: '0 4px 12px rgba(180, 83, 9, 0.4)' }}>TEBRİKLER!</h2>
+                        <h2 style={{ color: 'var(--primary)', fontWeight: '900' }}>TEBRİKLER!</h2>
                     </div>
                 </div>
             )}

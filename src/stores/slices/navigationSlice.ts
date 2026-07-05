@@ -11,7 +11,7 @@ export const createNavigationSlice: StateCreator<
   activeTab: "home",
   showHamburgerMenu: false,
   showMoodSelector: false,
-  showSplash: !sessionStorage.getItem("splashShown"),
+  showSplash: false,
   showInviteModal: false,
   inviteModalContext: { source: "invite_modal" } as InviteModalContext,
 

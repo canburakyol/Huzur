@@ -1,39 +1,25 @@
 import { useEffect, useState } from 'react';
 import {
   Award,
-  Book,
   BookOpen,
-  Brain,
-  Calendar,
   CheckCircle2,
   ChevronRight,
   ClipboardList,
-  Coins,
   Compass,
   Crown,
-  GraduationCap,
   Hash,
   Heart,
   Home,
-  Library,
-  Map,
-  MapPin,
   MessageCircle,
   Mic,
-  Mic2,
   Moon,
   Palette,
-  PlayCircle,
-  Quote,
-  ScrollText,
   Settings,
   Sparkles,
   Star,
   Target,
-  Tv,
   Type,
   User,
-  Wind,
   X,
   Clock
 } from 'lucide-react';
@@ -44,57 +30,49 @@ import { getPrimaryGoalConfig, getStoredPrimaryGoal } from '../utils/primaryGoal
 import './app-shell/Navigation.css';
 
 const CORE_MENU_ITEMS = [
+  { id: 'prayers', icon: <Heart size={20} />, labelKey: 'menu.prayers', component: 'prayers' },
+  { id: 'tracker', icon: <CheckCircle2 size={20} />, labelKey: 'features.tracker', component: 'tracker' },
   { id: 'dailyTasks', icon: <Target size={20} />, labelKey: 'menu.dailyTasks', component: 'dailyTasks' },
-  { id: 'spiritualJourney', icon: <Award size={20} />, labelKey: 'journey.title', component: 'spiritualJourney' },
   { id: 'routineBuilder', icon: <ClipboardList size={20} />, labelKey: 'routine.title', component: 'routineBuilder' },
-  { id: 'dailyQuiz', icon: <Brain size={20} />, labelKey: 'quiz.title', component: 'dailyQuiz' },
-  { id: 'family', icon: <Home size={20} />, labelKey: 'family.title', component: 'family' }
+  { id: 'zikirmatik', icon: <Hash size={20} />, labelKey: 'menu.zikirmatik', component: 'zikirmatik' },
+  { id: 'duaTracker', icon: <Sparkles size={20} />, labelKey: 'features.duaTracker', component: 'duaTracker' }
 ];
 
 const GOAL_MENU_ITEMS = {
   prayer_rhythm: [
-    { id: 'prayers', icon: <Heart size={20} />, labelKey: 'menu.prayers', component: 'prayers' },
-    { id: 'adhkar', icon: <Sparkles size={20} />, labelKey: 'features.adhkar', component: 'adhkar' },
-    { id: 'muezzinSelector', icon: <Mic size={20} />, labelKey: 'menu.muezzinSelector', component: 'muezzinSelector' }
+    { id: 'missedPrayers', icon: <Clock size={20} />, labelKey: 'menu.missedPrayers', component: 'missedPrayers' },
+    { id: 'imsakiye', icon: <Moon size={20} />, labelKey: 'menu.imsakiye', component: 'imsakiye' },
+    { id: 'qibla', icon: <Compass size={20} />, labelKey: 'features.qibla', component: 'qibla' }
   ],
   quran_learning: [
     { id: 'quran', icon: <BookOpen size={20} />, labelKey: 'features.quran', component: 'quran' },
-    { id: 'wordByWord', icon: <Type size={20} />, labelKey: 'menu.wordByWord', component: 'wordByWord' },
-    { id: 'tajweedTutor', icon: <Mic2 size={20} />, labelKey: 'menu.tajweedTutor', component: 'tajweedTutor' }
+    { id: 'hatim', icon: <BookOpen size={20} />, labelKey: 'menu.hatim', component: 'hatimCoach' },
+    { id: 'adhkar', icon: <Sparkles size={20} />, labelKey: 'features.adhkar', component: 'adhkar' },
+    { id: 'tespihat', icon: <Compass size={20} />, labelKey: 'menu.tespihat', component: 'tespihat' }
   ],
   family_consistency: [
-    { id: 'social', icon: <Sparkles size={20} />, labelKey: 'social.title', component: 'social' },
-    { id: 'hatim', icon: <BookOpen size={20} />, labelKey: 'menu.hatim', component: 'hatimCoach' },
-    { id: 'settings', icon: <Settings size={20} />, labelKey: 'menu.settings', component: 'settings' }
+    { id: 'family', icon: <Home size={20} />, labelKey: 'family.title', component: 'family' },
+    { id: 'spiritualJourney', icon: <Award size={20} />, labelKey: 'journey.title', component: 'spiritualJourney' },
+    { id: 'quran', icon: <BookOpen size={20} />, labelKey: 'features.quran', component: 'quran' },
+    { id: 'dailyTasks', icon: <Target size={20} />, labelKey: 'menu.dailyTasks', component: 'dailyTasks' }
   ]
 };
 
-const EXPLORE_MENU_ITEMS = [
-  { id: 'huzurMode', icon: <Moon size={20} />, labelKey: 'menu.huzurMode', component: 'huzurMode' },
-  { id: 'nuzulExplorer', icon: <ScrollText size={20} />, labelKey: 'menu.nuzulExplorer', component: 'nuzulExplorer' },
-  { id: 'prayerTeacher', icon: <GraduationCap size={20} />, labelKey: 'menu.prayerTeacher', component: 'prayerTeacher' },
-  { id: 'library', icon: <Library size={20} />, labelKey: 'menu.library', component: 'library' },
-  { id: 'tespihat', icon: <Compass size={20} />, labelKey: 'menu.tespihat', component: 'tespihat' },
-  { id: 'agenda', icon: <Calendar size={20} />, labelKey: 'menu.agenda', component: 'agenda' },
-  { id: 'multimedia', icon: <PlayCircle size={20} />, labelKey: 'menu.multimedia', component: 'multimedia' },
-  { id: 'theme', icon: <Palette size={20} />, labelKey: 'menu.theme', component: 'theme' },
+const SUPPORT_MENU_ITEMS = [
+  { id: 'quran', icon: <BookOpen size={20} />, labelKey: 'features.quran', component: 'quran' },
+  { id: 'qibla', icon: <Compass size={20} />, labelKey: 'features.qibla', component: 'qibla' },
   { id: 'imsakiye', icon: <Moon size={20} />, labelKey: 'menu.imsakiye', component: 'imsakiye' },
-  { id: 'zikirmatik', icon: <Hash size={20} />, labelKey: 'menu.zikirmatik', component: 'zikirmatik' },
-  { id: 'deedJournal', icon: <ClipboardList size={20} />, labelKey: 'menu.deedJournal', component: 'deedJournal' },
-  { id: 'liveBroadcast', icon: <Tv size={20} />, labelKey: 'menu.liveBroadcast', component: 'liveBroadcast' },
-  { id: 'hikmetname', icon: <Quote size={20} />, labelKey: 'menu.hikmetname', component: 'hikmetname' },
-  { id: 'esmaUlHusna', icon: <Sparkles size={20} />, labelKey: 'menu.esmaUlHusna', component: 'esmaUlHusna' },
-  { id: 'hadiths', icon: <Book size={20} />, labelKey: 'menu.hadiths', component: 'hadiths' },
-  { id: 'zakat', icon: <Coins size={20} />, labelKey: 'menu.zakat', component: 'zakat' },
-  { id: 'weeklySermon', icon: <Mic size={20} />, labelKey: 'menu.weeklySermon', component: 'weeklySermon' },
-  { id: 'support', icon: <MessageCircle size={20} />, labelKey: 'menu.support', component: 'support' },
-  { id: 'quranMemorize', icon: <Brain size={20} />, labelKey: 'menu.quranMemorize', component: 'quranMemorize' },
-  { id: 'mosque', icon: <MapPin size={20} />, labelKey: 'menu.mosque', component: 'mosque' },
-  { id: 'missedPrayers', icon: <Clock size={20} />, labelKey: 'menu.missedPrayers', component: 'missedPrayers' },
-  { id: 'islamicMeditation', icon: <Wind size={20} />, labelKey: 'menu.islamicMeditation', component: 'islamicMeditation' },
-  { id: 'seerahMap', icon: <Map size={20} />, labelKey: 'menu.seerahMap', component: 'seerahMap' },
-  { id: 'settings', icon: <Settings size={20} />, labelKey: 'menu.settings', component: 'settings' },
+  { id: 'adhkar', icon: <Sparkles size={20} />, labelKey: 'features.adhkar', component: 'adhkar' },
+  { id: 'tespihat', icon: <Compass size={20} />, labelKey: 'menu.tespihat', component: 'tespihat' },
+  { id: 'esmaUlHusna', icon: <Sparkles size={20} />, labelKey: 'menu.esmaUlHusna', component: 'esmaUlHusna' }
+];
+
+const SYSTEM_MENU_ITEMS = [
+  { id: 'theme', icon: <Palette size={20} />, labelKey: 'menu.theme', component: 'theme' },
   { id: 'fontSettings', icon: <Type size={20} />, labelKey: 'menu.fontSettings', component: 'fontSettings' },
+  { id: 'muezzinSelector', icon: <Mic size={20} />, labelKey: 'menu.muezzinSelector', component: 'muezzinSelector' },
+  { id: 'settings', icon: <Settings size={20} />, labelKey: 'menu.settings', component: 'settings' },
+  { id: 'support', icon: <MessageCircle size={20} />, labelKey: 'menu.support', component: 'support' },
   { id: 'pro', icon: <Crown size={20} />, labelKey: 'menu.goPro', component: 'pro' }
 ];
 
@@ -127,6 +105,8 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
 
   const topBadges = badgeDetails.slice(0, 3);
   const goalItems = GOAL_MENU_ITEMS[primaryGoal] || GOAL_MENU_ITEMS.prayer_rhythm;
+  const shownItemIds = new Set([...CORE_MENU_ITEMS, ...goalItems].map((item) => item.id));
+  const supportItems = SUPPORT_MENU_ITEMS.filter((item) => !shownItemIds.has(item.id));
 
   const renderSection = (title, subtitle, items, offset = 0) => (
     <div style={{ marginBottom: '22px' }}>
@@ -178,15 +158,15 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
             <div className="hamburger-header">
               <button
                 onClick={handleClose}
-                style={{ position: 'absolute', top: '16px', right: '16px', background: 'rgba(0,0,0,0.2)', border: 'none', color: 'white', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}
+                style={{ position: 'absolute', top: '16px', right: '16px', background: 'var(--surface-action-soft)', border: '1px solid var(--menu-border)', color: 'var(--menu-text)', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}
               >
                 <X size={18} />
               </button>
 
               <div className="hamburger-logo-area">
                 <div>
-                  <h2 className="hamburger-title" style={{ color: 'white' }}>{t('app.name')}</h2>
-                  <div style={{ fontSize: '0.7rem', opacity: 0.9, fontWeight: '800', letterSpacing: '0.5px' }}>
+                  <h2 className="hamburger-title">{t('app.name')}</h2>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--menu-muted)', opacity: 0.9, fontWeight: '800', letterSpacing: '0.5px' }}>
                     {t('app.tagline').toUpperCase()}
                   </div>
                 </div>
@@ -194,38 +174,38 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
 
               <div className="hamburger-profile-section">
                 <div className="hamburger-avatar-box">
-                  <User size={28} color="white" />
+                  <User size={28} color="var(--brand-primary)" />
                 </div>
                 <div className="hamburger-user-info">
                   <div className="hamburger-username">{currentTitle}</div>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <span className="hamburger-level-badge" style={{ background: 'var(--accent-gold)', color: 'white' }}>
+                    <span className="hamburger-level-badge" style={{ background: 'var(--surface-action-soft)', color: 'var(--primary)' }}>
                       {t('gamification.level', 'Seviye')} {currentLevel}
                     </span>
-                    <div style={{ fontSize: '0.75rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--accent-gold-shimmer)' }}>
+                    <div style={{ fontSize: '0.75rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--brand-warm)' }}>
                       <Star size={12} fill="currentColor" /> {points ?? 0} XP
                     </div>
                   </div>
                 </div>
                 {isPro ? (
-                  <div style={{ background: 'rgba(255,255,255,0.2)', padding: '8px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.3)' }}>
-                    <Crown size={20} color="#fcd34d" fill="#fcd34d" />
+                  <div style={{ background: 'var(--surface-warm-soft)', padding: '8px', borderRadius: '12px', border: '1px solid var(--border-soft)' }}>
+                    <Crown size={20} color="var(--brand-warm)" fill="var(--brand-warm)" />
                   </div>
                 ) : null}
               </div>
 
-              <div style={{ marginTop: '12px', padding: '12px 14px', background: 'rgba(0,0,0,0.16)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <div style={{ fontSize: '0.68rem', fontWeight: '900', color: '#fcd34d', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
+              <div style={{ marginTop: '12px', padding: '12px 14px', background: 'var(--surface-card)', borderRadius: '16px', border: '1px solid var(--menu-border)' }}>
+                <div style={{ fontSize: '0.68rem', fontWeight: '900', color: 'var(--brand-primary)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
                   Ana odak
                 </div>
-                <div style={{ fontSize: '0.9rem', fontWeight: '800', color: '#fff' }}>
+                <div style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--menu-text)' }}>
                   {primaryGoalConfig.label}
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: '8px', marginTop: '16px', flexWrap: 'wrap' }}>
                 {topBadges.map((badge, index) => (
-                  <div key={index} style={{ background: 'rgba(0,0,0,0.2)', padding: '4px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: '800', border: '1px solid rgba(255,255,255,0.1)' }}>
+                  <div key={index} style={{ background: 'var(--surface-action-soft)', color: 'var(--menu-text)', padding: '4px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: '800', border: '1px solid var(--menu-border)' }}>
                     {badge?.icon || 'B'} {badge?.id ? t(`badges.${badge.id}.name`, badge.name || badge.id) : t('common.badge', 'Rozet')}
                   </div>
                 ))}
@@ -233,9 +213,10 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
             </div>
 
             <div className="hamburger-scroll-area">
-              {renderSection('Cekirdek deneyim', 'Her gun geri gelmek icin once buradaki akisla ilerle.', CORE_MENU_ITEMS, 0)}
-              {renderSection('Sana ozel oneriler', primaryGoalConfig.label, goalItems, CORE_MENU_ITEMS.length)}
-              {renderSection('Diger ozellikler', 'Ihtiyac duydugunda kesfet; ilk deneyimi kalabaliklastirmiyoruz.', EXPLORE_MENU_ITEMS, CORE_MENU_ITEMS.length + goalItems.length)}
+              {renderSection('Gunluk ibadet rutini', 'Huzur artik ana olarak bu akisa odaklanir.', CORE_MENU_ITEMS, 0)}
+              {renderSection('Sana ozel destek', primaryGoalConfig.label, goalItems, CORE_MENU_ITEMS.length)}
+              {renderSection('Temel araclar', 'Ritmi bozmadan lazim olan yardimci ekranlar.', supportItems, CORE_MENU_ITEMS.length + goalItems.length)}
+              {renderSection('Ayarlar ve destek', null, SYSTEM_MENU_ITEMS, CORE_MENU_ITEMS.length + goalItems.length + supportItems.length)}
             </div>
 
             <div className="hamburger-footer">

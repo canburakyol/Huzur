@@ -10,7 +10,7 @@ const LIVE_CHANNELS = [
         icon: '🕋',
         youtubeUrl: 'https://www.youtube.com/results?search_query=makkah+live+now&sp=EgJAAQ%253D%253D',
         category: 'harem',
-        gradient: 'linear-gradient(135deg, var(--bg-emerald-deep) 0%, var(--bg-emerald-med) 100%)'
+        gradient: 'linear-gradient(135deg, var(--primary-container) 0%, var(--secondary-container) 100%)'
     },
     {
         id: 'madinah',
@@ -19,7 +19,7 @@ const LIVE_CHANNELS = [
         icon: '🕌',
         youtubeUrl: 'https://www.youtube.com/results?search_query=madinah+live+now&sp=EgJAAQ%253D%253D',
         category: 'harem',
-        gradient: 'linear-gradient(135deg, var(--bg-emerald-med) 0%, var(--bg-gradient-end) 100%)'
+        gradient: 'linear-gradient(135deg, var(--secondary-container) 0%, var(--bg-gradient-end) 100%)'
     },
     {
         id: 'quran-tv',
@@ -28,7 +28,7 @@ const LIVE_CHANNELS = [
         icon: '📖',
         youtubeUrl: 'https://www.youtube.com/results?search_query=quran+live+recitation&sp=EgJAAQ%253D%253D',
         category: 'quran',
-        gradient: 'linear-gradient(135deg, var(--bg-emerald-light) 0%, var(--accent-gold) 100%)'
+        gradient: 'linear-gradient(135deg, var(--surface-container) 0%, var(--accent-gold) 100%)'
     },
     {
         id: 'makkah-hd',
@@ -37,7 +37,7 @@ const LIVE_CHANNELS = [
         icon: '🇸🇦',
         youtubeUrl: 'https://www.youtube.com/@SaudiQuranTv/live',
         category: 'quran',
-        gradient: 'linear-gradient(135deg, var(--accent-gold-light) 0%, var(--primary-dark) 100%)'
+        gradient: 'linear-gradient(135deg, var(--accent-gold-light) 0%, var(--primary) 100%)'
     }
 ];
 
@@ -97,7 +97,7 @@ function LiveBroadcast({ onClose }) {
                                 </div>
                             </div>
                             <div className="play-btn-circle">
-                                <Play size={20} fill="white" color="white" />
+                                <Play size={20} fill='var(--on-primary)' color='var(--on-primary)' />
                             </div>
                         </div>
                     ))}
@@ -127,7 +127,7 @@ function LiveBroadcast({ onClose }) {
                                 </div>
                             </div>
                             <div className="play-btn-circle" style={{ background: 'var(--nav-accent)' }}>
-                                <Play size={20} fill="white" color="white" />
+                                <Play size={20} fill='var(--on-primary)' color='var(--on-primary)' />
                             </div>
                         </div>
                     ))}

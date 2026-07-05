@@ -199,7 +199,7 @@ const Hadiths = ({ onClose }) => {
                         background: 'linear-gradient(135deg, var(--nav-accent), #f97316)', 
                         border: 'none', 
                         padding: '32px', 
-                        color: 'white', 
+                        color: 'var(--on-primary)',
                         marginBottom: '32px',
                         cursor: 'pointer',
                         boxShadow: '0 12px 24px rgba(249, 115, 22, 0.2)'
@@ -207,7 +207,7 @@ const Hadiths = ({ onClose }) => {
                     onClick={() => { setSelectedHadith(dailyHadith); setView('detail'); }}
                 >
                     <div style={{ fontSize: '0.7rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.9, display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '16px' }}>
-                        <Sparkles size={14} fill="white" /> {t('hadith.daily', 'Günün Hadisi')}
+                        <Sparkles size={14} fill='var(--on-primary)' /> {t('hadith.daily', 'Günün Hadisi')}
                     </div>
                     <div style={{ fontSize: '1.1rem', lineHeight: '1.6', fontStyle: 'italic', fontWeight: '500' }}>
                         "{dailyHadith.text.substring(0, 150)}{dailyHadith.text.length > 150 ? '...' : ''}"

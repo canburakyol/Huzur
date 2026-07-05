@@ -47,9 +47,9 @@ const choiceButtonStyle = (selected = false) => ({
   gap: 12,
   textAlign: 'left',
   width: '100%',
-  background: selected ? 'rgba(212, 175, 55, 0.2)' : 'rgba(255,255,255,0.07)',
-  color: selected ? '#d4af37' : '#fff',
-  border: selected ? '1px solid #d4af37' : '1px solid rgba(255,255,255,0.12)',
+  background: selected ? 'color-mix(in srgb, var(--tertiary) 20%, transparent)' : 'color-mix(in srgb, var(--on-primary) 7%, transparent)',
+  color: selected ? 'var(--tertiary)' : 'var(--on-primary)',
+  border: selected ? '1px solid var(--tertiary)' : '1px solid color-mix(in srgb, var(--on-primary) 12%, transparent)',
   transition: 'all 0.2s ease'
 });
 
@@ -57,12 +57,12 @@ const permissionButtonStyle = (selected = false, primary = false) => ({
   ...baseButton,
   padding: '8px 12px',
   background: selected
-    ? (primary ? '#d4af37' : 'rgba(255,255,255,0.12)')
-    : 'rgba(255,255,255,0.04)',
-  color: selected && primary ? '#14352a' : '#fff',
+    ? (primary ? 'var(--tertiary)' : 'color-mix(in srgb, var(--on-primary) 12%, transparent)')
+    : 'color-mix(in srgb, var(--on-primary) 4%, transparent)',
+  color: selected && primary ? 'var(--on-tertiary)' : 'var(--on-primary)',
   border: selected
-    ? `1px solid ${primary ? '#d4af37' : 'rgba(255,255,255,0.18)'}`
-    : '1px solid rgba(255,255,255,0.1)',
+    ? `1px solid ${primary ? 'var(--tertiary)' : 'color-mix(in srgb, var(--on-primary) 18%, transparent)'}`
+    : '1px solid color-mix(in srgb, var(--on-primary) 10%, transparent)',
   minWidth: 110
 });
 
@@ -72,14 +72,15 @@ const GOAL_ICONS = {
   family_consistency: <HeartHandshake size={20} />
 };
 
-const ALLOWED_STEPS = ['language', 'permissions', 'goal', 'preview'];
+// Permissions are requested contextually after a meaningful user action.
+const ALLOWED_STEPS = ['language', 'goal', 'preview'];
 
 const sanitizeSteps = (steps = []) => {
   if (!Array.isArray(steps)) return DEFAULT_ONBOARDING_CONFIG.steps;
   const normalized = steps
     .map((item) => (typeof item === 'string' ? item.trim().toLowerCase() : null))
     .filter((item) => ALLOWED_STEPS.includes(item));
-  const deduped = normalized.length > 0 ? [...new Set(normalized)] : DEFAULT_ONBOARDING_CONFIG.steps;
+  const deduped = normalized.length > 0 ? [...new Set(normalized)] : ['language', 'goal', 'preview'];
   return deduped.includes('preview') ? deduped : [...deduped, 'preview'];
 };
 
@@ -121,18 +122,18 @@ function GrowthOnboarding({
   const goals = useMemo(() => ([
     {
       id: 'prayer_rhythm',
-      label: t('growth.goal.prayerRhythm', 'Namazimi ve gunluk ritmimi kacirmamak'),
-      subtitle: t('growth.goal.prayerRhythmDesc', 'Vakit hatirlatmasi ve 2 dakikalik adimla bugunu bos gecirme.')
+      label: t('growth.goal.prayerRhythm', 'Namazimi ve gunluk ibadet rutinimi takip etmek'),
+      subtitle: t('growth.goal.prayerRhythmDesc', 'Vakit, takip ve kisa zikir adimi tek sade akis olsun.')
     },
     {
       id: 'quran_learning',
-      label: t('growth.goal.quranLearning', 'Her gun Kuran veya dua ile bag kurmak'),
-      subtitle: t('growth.goal.quranLearningDesc', 'Uzun ders degil; kisa okuma, dua ve anlam adimlari one ciksin.')
+      label: t('growth.goal.quranLearning', 'Kuran ve duayi gunluk rutine baglamak'),
+      subtitle: t('growth.goal.quranLearningDesc', 'Uzun ders degil; kisa okuma ve dua adimi surdurulebilir olsun.')
     },
     {
       id: 'family_consistency',
-      label: t('growth.goal.familyConsistency', 'Ailece kucuk bir ibadet ritmi kurmak'),
-      subtitle: t('growth.goal.familyConsistencyDesc', 'Aile hedefleri buyumeden, bugun yapilacak tek adimi gorunur kil.')
+      label: t('growth.goal.familyConsistency', 'Ailece ibadet aliskanligi kurmak'),
+      subtitle: t('growth.goal.familyConsistencyDesc', 'Sosyal akisa dagilmadan bugunun tek namaz, dua veya zikir adimi gorunsun.')
     }
   ]), [t]);
 
@@ -143,31 +144,31 @@ function GrowthOnboarding({
     return {
       language: {
         title: headlineVariant === 'direct'
-          ? t('growth.onboarding.languageTitleDirect', 'Gunluk ritmini kendi dilinde kur')
+          ? t('growth.onboarding.languageTitleDirect', 'Huzur, kendi dilinde baslar')
           : t('growth.onboarding.languageTitle', 'Dilini sec'),
         description: headlineVariant === 'direct'
-          ? t('growth.onboarding.languageDescriptionDirect', 'Namaz, Kuran ve dua ritmini sana en rahat gelen dilde baslatalim.')
-          : t('growth.onboarding.languageDescription', 'Once dili netlestirelim; sonra seni tek bir kucuk ibadet adimina goturecegiz.'),
+          ? t('growth.onboarding.languageDescriptionDirect', 'Zihinsel netlik, manevi huzur ve gunluk rutinler tek bir guvenli limanda.')
+          : t('growth.onboarding.languageDescription', 'Zihinsel netlik, manevi huzur ve gunluk rutinler tek bir guvenli limanda.'),
         actionLabel: t('growth.onboarding.continue', 'Devam et'),
       },
       permissions: {
-        title: t('growth.onboarding.permissionsTitle', 'Ritmi kacirmamak icin iki ayar'),
+        title: t('growth.onboarding.permissionsTitle', 'Ibadet rutinini kacirmamak icin iki ayar'),
         description: permissionEmphasis === 'notifications_first'
-          ? t('growth.onboarding.permissionsDescriptionNotifications', 'Bildirim ve konum, ilk gun namaz vaktini ve kisa hatirlatmayi dogru kurar.')
-          : t('growth.onboarding.permissionsDescription', 'Sadece namaz vakti ve gunluk hatirlatma icin gereken ayarlari hazirlayalim.'),
+          ? t('growth.onboarding.permissionsDescriptionNotifications', 'Bildirim ve konum, namaz vaktini ve gunluk kisa ibadet adimini dogru kurar.')
+          : t('growth.onboarding.permissionsDescription', 'Sadece namaz vakti ve gunluk ibadet hatirlatmasi icin gereken ayarlari hazirlayalim.'),
         actionLabel: t('growth.onboarding.continue', 'Hazirim'),
       },
       goal: {
-        title: t('growth.onboarding.goalTitle', 'Bugun hangi ritmi baslatalim?'),
-        description: t('growth.onboarding.goalDescription', 'Ana ekran once tek bir net adim gosterecek; diger ozellikler sonra kalabilir.'),
+        title: t('growth.onboarding.goalTitle', 'Bugun neye alan acalim?'),
+        description: t('growth.onboarding.goalDescription', 'Ana ekran sana yalnizca siradaki anlamli adimi gosterecek.'),
         actionLabel: resolvedConfig.premiumTeaserEnabled && !isProUser
           ? t('growth.onboarding.startWithTeaser', 'Devam et')
           : t('growth.onboarding.startNow', 'Ilk adimi ac'),
       },
       preview: {
-        title: t('growth.onboarding.previewTitle', 'Huzur ritmin hazir'),
-        description: t('growth.onboarding.previewDescription', 'Bugun icin tek sakin adimi gor; istersen derin plani Pro ile veya bir dost davetiyle ac.'),
-        actionLabel: t('growth.onboarding.previewFinish', 'Ritmi baslat'),
+        title: t('growth.onboarding.previewTitle', 'Guvenli limanin hazir'),
+        description: t('growth.onboarding.previewDescription', 'Tek bir sakin adimla basla. Diger araclar ihtiyacin oldugunda Kesfet bolumunde.'),
+        actionLabel: t('growth.onboarding.previewFinish', 'Huzura gir'),
       },
     };
   }, [isProUser, resolvedConfig.headlineVariant, resolvedConfig.permissionEmphasis, resolvedConfig.premiumTeaserEnabled, t]);
@@ -285,6 +286,9 @@ function GrowthOnboarding({
 
   const completeOnboarding = ({ logGoalStep = false, premiumTeaserOverride = undefined } = {}) => {
     setStoredPrimaryGoal(selectedGoal);
+    // New users already learn the navigation in onboarding; the migration notice
+    // is reserved for existing users upgrading from the old navigation.
+    storageService.setBoolean(STORAGE_KEYS.NAVIGATION_UPDATE_V1_SEEN, true);
     if (logGoalStep) {
       logStepCompleted('goal', {
         selected_goal: selectedGoal,
@@ -440,7 +444,7 @@ function GrowthOnboarding({
         position: 'fixed',
         inset: 0,
         zIndex: 10001,
-        background: 'rgba(12, 32, 25, 0.92)',
+        background: 'color-mix(in srgb, var(--surface-page) 92%, transparent)',
         backdropFilter: 'blur(6px)',
         display: 'flex',
         alignItems: 'center',
@@ -453,19 +457,19 @@ function GrowthOnboarding({
           width: '100%',
           maxWidth: 420,
           borderRadius: 20,
-          background: 'linear-gradient(135deg, #0f3d2e 0%, #1a5c45 100%)',
-          border: '1px solid rgba(212, 175, 55, 0.25)',
+          background: 'linear-gradient(135deg, var(--primary-container) 0%, var(--surface-container-high) 100%)',
+          border: '1px solid color-mix(in srgb, var(--tertiary) 25%, transparent)',
           padding: 20,
-          color: '#f7f5ef',
-          boxShadow: '0 18px 50px rgba(0,0,0,0.45)'
+          color: 'var(--on-primary)',
+          boxShadow: 'var(--shadow-card)'
         }}
       >
         <div style={{ marginBottom: 16, fontSize: 13, opacity: 0.8 }}>
           {t('growth.onboarding.stepCounter', 'Adim {{current}} / {{total}}', { current: normalizedStep + 1, total: totalSteps })}
         </div>
 
-        <h2 style={{ margin: '0 0 8px', fontSize: 22, color: '#d4af37' }}>{currentStep.title}</h2>
-        <p style={{ margin: '0 0 20px', lineHeight: 1.6, color: '#d9e6db' }}>{currentStep.description}</p>
+        <h2 style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--tertiary)' }}>{currentStep.title}</h2>
+        <p style={{ margin: '0 0 20px', lineHeight: 1.6, color: 'var(--on-primary-container)' }}>{currentStep.description}</p>
 
         {referralPlan && (
           <div
@@ -474,11 +478,11 @@ function GrowthOnboarding({
               padding: 16,
               borderRadius: 16,
               border: referralPlan.rewardReady
-                ? '1px solid rgba(16, 185, 129, 0.28)'
-                : '1px solid rgba(212, 175, 55, 0.24)',
+                ? '1px solid color-mix(in srgb, var(--secondary) 28%, transparent)'
+                : '1px solid color-mix(in srgb, var(--tertiary) 24%, transparent)',
               background: referralPlan.rewardReady
-                ? 'rgba(16, 185, 129, 0.10)'
-                : 'rgba(212, 175, 55, 0.10)',
+                ? 'color-mix(in srgb, var(--secondary) 10%, transparent)'
+                : 'color-mix(in srgb, var(--tertiary) 10%, transparent)',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 8, alignItems: 'center' }}>
@@ -488,23 +492,23 @@ function GrowthOnboarding({
                 gap: 8,
                 borderRadius: 999,
                 padding: '6px 10px',
-                background: 'rgba(255,255,255,0.08)',
+                background: 'color-mix(in srgb, var(--on-primary) 8%, transparent)',
                 fontSize: 12,
                 fontWeight: 900,
-                color: referralPlan.rewardReady ? '#d1fae5' : '#f3d27b',
+                color: referralPlan.rewardReady ? 'var(--on-secondary-container)' : 'var(--on-tertiary-container)',
               }}>
                 <Sparkles size={14} />
                 {referralPlan.badge}
               </span>
-              <span style={{ fontSize: 12, fontWeight: 800, color: 'rgba(247,245,239,0.84)' }}>
+              <span style={{ fontSize: 12, fontWeight: 800, color: 'color-mix(in srgb, var(--on-primary) 84%, transparent)' }}>
                 {referralPlan.completedCount}/{referralPlan.totalCount}
               </span>
             </div>
 
-            <div style={{ fontSize: 16, fontWeight: 900, color: '#f7f5ef', marginBottom: 6 }}>
+            <div style={{ fontSize: 16, fontWeight: 900, color: 'var(--on-primary)', marginBottom: 6 }}>
               {referralPlan.headline}
             </div>
-            <div style={{ fontSize: 13, lineHeight: 1.55, color: '#d9e6db', marginBottom: 12 }}>
+            <div style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--on-primary-container)', marginBottom: 12 }}>
               {referralPlan.description}
             </div>
 
@@ -515,28 +519,28 @@ function GrowthOnboarding({
                   style={{
                     borderRadius: 12,
                     padding: '10px 12px',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    border: '1px solid color-mix(in srgb, var(--on-primary) 10%, transparent)',
                     background: step.status === 'done'
-                      ? 'rgba(16, 185, 129, 0.12)'
+                      ? 'color-mix(in srgb, var(--secondary) 12%, transparent)'
                       : step.status === 'active'
-                        ? 'rgba(212, 175, 55, 0.10)'
-                        : 'rgba(255,255,255,0.04)',
+                        ? 'color-mix(in srgb, var(--tertiary) 10%, transparent)'
+                        : 'color-mix(in srgb, var(--on-primary) 4%, transparent)',
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginBottom: 4 }}>
-                    <strong style={{ fontSize: 13, color: '#f7f5ef' }}>{step.label}</strong>
-                    <span style={{ fontSize: 11, fontWeight: 900, color: step.status === 'done' ? '#86efac' : '#f3d27b' }}>
+                    <strong style={{ fontSize: 13, color: 'var(--on-primary)' }}>{step.label}</strong>
+                    <span style={{ fontSize: 11, fontWeight: 900, color: step.status === 'done' ? 'var(--secondary)' : 'var(--on-tertiary-container)' }}>
                       {step.status === 'done' ? 'Hazir' : step.status === 'active' ? 'Siradaki' : 'Bekliyor'}
                     </span>
                   </div>
-                  <div style={{ fontSize: 12, lineHeight: 1.5, color: 'rgba(247,245,239,0.78)' }}>
+                  <div style={{ fontSize: 12, lineHeight: 1.5, color: 'color-mix(in srgb, var(--on-primary) 78%, transparent)' }}>
                     {step.description}
                   </div>
                 </div>
               ))}
             </div>
 
-            <div style={{ fontSize: 12, lineHeight: 1.55, color: 'rgba(247,245,239,0.74)' }}>
+            <div style={{ fontSize: 12, lineHeight: 1.55, color: 'color-mix(in srgb, var(--on-primary) 74%, transparent)' }}>
               {referralPlan.supportNote}
             </div>
           </div>
@@ -548,9 +552,9 @@ function GrowthOnboarding({
               marginBottom: 16,
               padding: '12px 14px',
               borderRadius: 14,
-              border: '1px solid rgba(248, 113, 113, 0.35)',
-              background: 'rgba(127, 29, 29, 0.28)',
-              color: '#fee2e2',
+              border: '1px solid color-mix(in srgb, var(--error) 35%, transparent)',
+              background: 'color-mix(in srgb, var(--error-container) 28%, transparent)',
+              color: 'var(--on-error-container)',
               fontSize: 13,
               lineHeight: 1.5
             }}
@@ -585,8 +589,8 @@ function GrowthOnboarding({
           <div style={{ display: 'grid', gap: 12, marginBottom: 20 }}>
             <div style={{
               borderRadius: 16,
-              border: '1px solid rgba(255,255,255,0.12)',
-              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid color-mix(in srgb, var(--on-primary) 12%, transparent)',
+              background: 'color-mix(in srgb, var(--on-primary) 6%, transparent)',
               padding: 16
             }}>
               <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
@@ -594,11 +598,11 @@ function GrowthOnboarding({
                   width: 40,
                   height: 40,
                   borderRadius: 12,
-                  background: 'rgba(212, 175, 55, 0.14)',
+                  background: 'color-mix(in srgb, var(--tertiary) 14%, transparent)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#d4af37',
+                  color: 'var(--tertiary)',
                   flexShrink: 0
                 }}>
                   <MapPinned size={18} />
@@ -630,8 +634,8 @@ function GrowthOnboarding({
 
             <div style={{
               borderRadius: 16,
-              border: '1px solid rgba(255,255,255,0.12)',
-              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid color-mix(in srgb, var(--on-primary) 12%, transparent)',
+              background: 'color-mix(in srgb, var(--on-primary) 6%, transparent)',
               padding: 16
             }}>
               <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
@@ -639,11 +643,11 @@ function GrowthOnboarding({
                   width: 40,
                   height: 40,
                   borderRadius: 12,
-                  background: 'rgba(16, 185, 129, 0.14)',
+                  background: 'color-mix(in srgb, var(--secondary) 14%, transparent)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#10b981',
+                  color: 'var(--secondary)',
                   flexShrink: 0
                 }}>
                   <Bell size={18} />
@@ -691,7 +695,7 @@ function GrowthOnboarding({
                     width: 40,
                     height: 40,
                     borderRadius: 12,
-                    background: selected ? 'rgba(212, 175, 55, 0.12)' : 'rgba(255,255,255,0.06)',
+                    background: selected ? 'color-mix(in srgb, var(--tertiary) 12%, transparent)' : 'color-mix(in srgb, var(--on-primary) 6%, transparent)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -712,8 +716,8 @@ function GrowthOnboarding({
               <div style={{
                 borderRadius: 16,
                 padding: '14px 16px',
-                background: 'rgba(212, 175, 55, 0.12)',
-                border: '1px solid rgba(212, 175, 55, 0.22)',
+                background: 'color-mix(in srgb, var(--tertiary) 12%, transparent)',
+                border: '1px solid color-mix(in srgb, var(--tertiary) 22%, transparent)',
                 display: 'flex',
                 gap: 12,
                 alignItems: 'flex-start'
@@ -722,20 +726,20 @@ function GrowthOnboarding({
                   width: 40,
                   height: 40,
                   borderRadius: 12,
-                  background: 'rgba(212, 175, 55, 0.18)',
+                  background: 'color-mix(in srgb, var(--tertiary) 18%, transparent)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#d4af37',
+                  color: 'var(--tertiary)',
                   flexShrink: 0
                 }}>
                   <Sparkles size={18} />
                 </div>
                 <div>
-                  <div style={{ fontWeight: 900, color: '#f7f5ef', marginBottom: 4 }}>
+                  <div style={{ fontWeight: 900, color: 'var(--on-primary)', marginBottom: 4 }}>
                     {t('growth.onboarding.premiumTeaserTitle', 'Ritim oturunca daha derin destek acilabilir')}
                   </div>
-                  <div style={{ fontSize: 13, lineHeight: 1.55, color: 'rgba(247,245,239,0.84)' }}>
+                  <div style={{ fontSize: 13, lineHeight: 1.55, color: 'color-mix(in srgb, var(--on-primary) 84%, transparent)' }}>
                     {t('growth.onboarding.premiumTeaserDesc', 'Once ilk adimi tamamla; sonra haftalik icgoru ve daha sakin rehberlik icin Pro onerisi gosterebiliriz.')}
                   </div>
                 </div>
@@ -749,8 +753,8 @@ function GrowthOnboarding({
             <div style={{
               borderRadius: 18,
               padding: 16,
-              border: '1px solid rgba(212, 175, 55, 0.24)',
-              background: 'rgba(255,255,255,0.07)'
+              border: '1px solid color-mix(in srgb, var(--tertiary) 24%, transparent)',
+              background: 'color-mix(in srgb, var(--on-primary) 7%, transparent)'
             }}>
               <div style={{
                 display: 'inline-flex',
@@ -759,18 +763,18 @@ function GrowthOnboarding({
                 marginBottom: 10,
                 borderRadius: 999,
                 padding: '6px 10px',
-                background: 'rgba(212, 175, 55, 0.14)',
-                color: '#f3d27b',
+                background: 'color-mix(in srgb, var(--tertiary) 14%, transparent)',
+                color: 'var(--on-tertiary-container)',
                 fontSize: 12,
                 fontWeight: 900
               }}>
                 <Sparkles size={14} />
                 {t('growth.onboarding.previewBadge', 'Bugunluk ritim')}
               </div>
-              <h3 style={{ margin: '0 0 6px', color: '#f7f5ef', fontSize: 20 }}>
+              <h3 style={{ margin: '0 0 6px', color: 'var(--on-primary)', fontSize: 20 }}>
                 {huzurRitmiPreview.title}
               </h3>
-              <p style={{ margin: 0, color: 'rgba(247,245,239,0.82)', lineHeight: 1.55, fontSize: 14 }}>
+              <p style={{ margin: 0, color: 'color-mix(in srgb, var(--on-primary) 82%, transparent)', lineHeight: 1.55, fontSize: 14 }}>
                 {huzurRitmiPreview.subtitle}
               </p>
             </div>
@@ -783,8 +787,8 @@ function GrowthOnboarding({
                   gap: 12,
                   padding: '12px 14px',
                   borderRadius: 14,
-                  border: '1px solid rgba(255,255,255,0.10)',
-                  background: 'rgba(255,255,255,0.05)'
+                  border: '1px solid color-mix(in srgb, var(--on-primary) 10%, transparent)',
+                  background: 'color-mix(in srgb, var(--on-primary) 5%, transparent)'
                 }}
               >
                 <div style={{
@@ -794,18 +798,18 @@ function GrowthOnboarding({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  background: 'rgba(16, 185, 129, 0.14)',
-                  color: '#86efac',
+                  background: 'color-mix(in srgb, var(--secondary) 14%, transparent)',
+                  color: 'var(--secondary)',
                   fontWeight: 900,
                   flexShrink: 0
                 }}>
                   {index + 1}
                 </div>
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 900, color: '#f7f5ef', marginBottom: 4 }}>
+                  <div style={{ fontSize: 14, fontWeight: 900, color: 'var(--on-primary)', marginBottom: 4 }}>
                     {step.label}
                   </div>
-                  <div style={{ fontSize: 13, lineHeight: 1.5, color: 'rgba(247,245,239,0.78)' }}>
+                  <div style={{ fontSize: 13, lineHeight: 1.5, color: 'color-mix(in srgb, var(--on-primary) 78%, transparent)' }}>
                     {step.text}
                   </div>
                 </div>
@@ -824,8 +828,8 @@ function GrowthOnboarding({
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: 8,
-                    background: '#f3d27b',
-                    color: '#14352a'
+                    background: 'var(--on-tertiary-container)',
+                    color: 'var(--on-tertiary)'
                   }}
                 >
                   <Crown size={18} />
@@ -841,9 +845,9 @@ function GrowthOnboarding({
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: 8,
-                    background: 'rgba(255,255,255,0.08)',
-                    color: '#f7f5ef',
-                    border: '1px solid rgba(255,255,255,0.14)'
+                    background: 'color-mix(in srgb, var(--on-primary) 8%, transparent)',
+                    color: 'var(--on-primary)',
+                    border: '1px solid color-mix(in srgb, var(--on-primary) 14%, transparent)'
                   }}
                 >
                   <Send size={18} />
@@ -860,8 +864,8 @@ function GrowthOnboarding({
           style={{
             ...baseButton,
             width: '100%',
-            background: '#d4af37',
-            color: '#14352a',
+            background: 'var(--tertiary)',
+            color: 'var(--on-tertiary)',
             opacity: isBusy ? 0.7 : 1
           }}
         >

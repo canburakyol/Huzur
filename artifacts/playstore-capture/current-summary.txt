@@ -1,0 +1,6 @@
+LinearLayout id=id/action_bar_root bounds=[0,75][1080,2265]
+  FrameLayout id=android:id/content bounds=[0,75][1080,2265]
+    WebView id=id/webview flags=clickable,focusable bounds=[0,75][1080,2265]
+    WebView flags=clickable,focusable bounds=[132,2213][948,2265]
+    TextView text="Test Reklamı" bounds=[446,2213][633,2257]
+View id=android:id/statusBarBackground bounds=[0,0][1080,75]

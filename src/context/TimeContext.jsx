@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useAppStore } from '../stores/useAppStore';
 import { useVisibilityAwareInterval } from '../hooks/useVisibilityAwareInterval';
 

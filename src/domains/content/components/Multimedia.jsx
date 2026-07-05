@@ -353,7 +353,7 @@ function Multimedia({ onClose }) {
                             flex: 1.5,
                             padding: '16px',
                             background: 'var(--nav-accent)',
-                            color: 'white',
+                            color: 'var(--on-primary)',
                             fontSize: '0.95rem',
                             gap: '10px',
                             width: 'auto',

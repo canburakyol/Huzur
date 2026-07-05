@@ -17,26 +17,26 @@ import { storageService } from '../../../services/storageService';
 const SPECIAL_DAYS = [
   // 2025
   { id: 'regaib-2025', name: 'Regaib Gecesi', date: '2025-01-02', type: 'kandil', icon: '✨', color: 'var(--accent-gold-light)', description: 'Üç ayların başlangıcı ve Regaib Gecesi' },
-  { id: 'mevlid-2025', name: 'Mevlid Kandili', date: '2025-01-26', type: 'kandil', icon: '🌙', color: 'var(--bg-emerald-light)', description: 'Peygamber Efendimiz\'in (s.a.v) doğum gecesi' },
-  { id: 'berat-2025', name: 'Berat Kandili', date: '2025-02-13', type: 'kandil', icon: '⭐', color: 'var(--bg-emerald-med)', description: 'Aff ve mağfiret gecesi' },
+  { id: 'mevlid-2025', name: 'Mevlid Kandili', date: '2025-01-26', type: 'kandil', icon: '🌙', color: 'var(--surface-container)', description: 'Peygamber Efendimiz\'in (s.a.v) doğum gecesi' },
+  { id: 'berat-2025', name: 'Berat Kandili', date: '2025-02-13', type: 'kandil', icon: '⭐', color: 'var(--secondary-container)', description: 'Aff ve mağfiret gecesi' },
   { id: 'ramazan-2025', name: 'Ramazan Başlangıcı', date: '2025-03-01', type: 'ramazan', icon: '🌙', color: 'var(--accent-gold-light)', description: 'Oruç ayının başlangıcı' },
   { id: 'kadir-2025', name: 'Kadir Gecesi', date: '2025-03-26', type: 'kandil', icon: '👑', color: 'var(--accent-gold-light)', description: 'Bin aydan hayırlı gece' },
-  { id: 'bayram-2025', name: 'Ramazan Bayramı', date: '2025-03-30', type: 'bayram', icon: '🎉', color: 'var(--bg-emerald-med)', description: 'Ramazan Bayramı 1. gün' },
+  { id: 'bayram-2025', name: 'Ramazan Bayramı', date: '2025-03-30', type: 'bayram', icon: '🎉', color: 'var(--secondary-container)', description: 'Ramazan Bayramı 1. gün' },
   { id: 'arefe-2025', name: 'Arefe Günü', date: '2025-06-05', type: 'hac', icon: '🕋', color: 'var(--accent-gold)', description: 'Hacı adaylarının Arafat\'ta toplandığı gün' },
   { id: 'kurban-2025', name: 'Kurban Bayramı', date: '2025-06-06', type: 'bayram', icon: '🐑', color: 'var(--accent-gold-shimmer)', description: 'Kurban Bayramı 1. gün' },
-  { id: 'hicri-2025', name: 'Hicri Yılbaşı', date: '2025-07-06', type: 'hicri', icon: '📅', color: 'var(--bg-emerald-deep)', description: 'Muharrem ayının başlangıcı' },
+  { id: 'hicri-2025', name: 'Hicri Yılbaşı', date: '2025-07-06', type: 'hicri', icon: '📅', color: 'var(--primary-container)', description: 'Muharrem ayının başlangıcı' },
   { id: 'asure-2025', name: 'Aşure Günü', date: '2025-07-15', type: 'hicri', icon: '🥣', color: 'var(--accent-gold-light)', description: 'Muharrem\'in 10. günü' },
   
   // 2026
   { id: 'regaib-2026', name: 'Regaib Gecesi', date: '2026-12-22', type: 'kandil', icon: '✨', color: 'var(--accent-gold-light)', description: 'Üç ayların başlangıcı' },
-  { id: 'mevlid-2026', name: 'Mevlid Kandili', date: '2026-01-15', type: 'kandil', icon: '🌙', color: 'var(--bg-emerald-light)', description: 'Peygamber Efendimiz\'in (s.a.v) doğum gecesi' },
-  { id: 'berat-2026', name: 'Berat Kandili', date: '2026-02-03', type: 'kandil', icon: '⭐', color: 'var(--bg-emerald-med)', description: 'Aff ve mağfiret gecesi' },
+  { id: 'mevlid-2026', name: 'Mevlid Kandili', date: '2026-01-15', type: 'kandil', icon: '🌙', color: 'var(--surface-container)', description: 'Peygamber Efendimiz\'in (s.a.v) doğum gecesi' },
+  { id: 'berat-2026', name: 'Berat Kandili', date: '2026-02-03', type: 'kandil', icon: '⭐', color: 'var(--secondary-container)', description: 'Aff ve mağfiret gecesi' },
   { id: 'ramazan-2026', name: 'Ramazan Başlangıcı', date: '2026-02-18', type: 'ramazan', icon: '🌙', color: 'var(--accent-gold-light)', description: 'Oruç ayının başlangıcı' },
   { id: 'kadir-2026', name: 'Kadir Gecesi', date: '2026-03-15', type: 'kandil', icon: '👑', color: 'var(--accent-gold-light)', description: 'Bin aydan hayırlı gece' },
-  { id: 'bayram-2026', name: 'Ramazan Bayramı', date: '2026-03-19', type: 'bayram', icon: '🎉', color: 'var(--bg-emerald-med)', description: 'Ramazan Bayramı 1. gün' },
+  { id: 'bayram-2026', name: 'Ramazan Bayramı', date: '2026-03-19', type: 'bayram', icon: '🎉', color: 'var(--secondary-container)', description: 'Ramazan Bayramı 1. gün' },
   { id: 'arefe-2026', name: 'Arefe Günü', date: '2026-05-26', type: 'hac', icon: '🕋', color: 'var(--accent-gold)', description: 'Hacı adaylarının Arafat\'ta toplandığı gün' },
   { id: 'kurban-2026', name: 'Kurban Bayramı', date: '2026-05-27', type: 'bayram', icon: '🐑', color: 'var(--accent-gold-shimmer)', description: 'Kurban Bayramı 1. gün' },
-  { id: 'hicri-2026', name: 'Hicri Yılbaşı', date: '2026-06-26', type: 'hicri', icon: '📅', color: 'var(--bg-emerald-deep)', description: 'Muharrem ayının başlangıcı' },
+  { id: 'hicri-2026', name: 'Hicri Yılbaşı', date: '2026-06-26', type: 'hicri', icon: '📅', color: 'var(--primary-container)', description: 'Muharrem ayının başlangıcı' },
   { id: 'asure-2026', name: 'Aşure Günü', date: '2026-07-05', type: 'hicri', icon: '🥣', color: 'var(--accent-gold-light)', description: 'Muharrem\'in 10. günü' },
 ];
 
@@ -44,9 +44,9 @@ const SPECIAL_DAYS = [
 const CATEGORY_COLORS = {
   kandil: { bg: 'rgba(var(--nav-accent-rgb, 245, 158, 11), 0.18)', border: 'var(--accent-gold-light)', icon: '✨' },
   ramazan: { bg: 'rgba(var(--nav-accent-rgb, 245, 158, 11), 0.18)', border: 'var(--accent-gold-light)', icon: '🌙' },
-  bayram: { bg: 'rgba(15, 118, 110, 0.18)', border: 'var(--bg-emerald-light)', icon: '🎉' },
-  hac: { bg: 'rgba(6, 95, 70, 0.18)', border: 'var(--bg-emerald-med)', icon: '🕋' },
-  hicri: { bg: 'rgba(6, 78, 59, 0.18)', border: 'var(--bg-emerald-deep)', icon: '📅' }
+  bayram: { bg: 'rgba(15, 118, 110, 0.18)', border: 'var(--surface-container)', icon: '🎉' },
+  hac: { bg: 'rgba(6, 95, 70, 0.18)', border: 'var(--secondary-container)', icon: '🕋' },
+  hicri: { bg: 'rgba(6, 78, 59, 0.18)', border: 'var(--primary-container)', icon: '📅' }
 };
 
 // Storage key
@@ -249,15 +249,15 @@ export function SpecialDaysCalendar({ onClose }) {
             <span>Ramazan</span>
           </div>
           <div className="legend-item">
-            <span className="legend-dot" style={{ background: 'var(--bg-emerald-light)' }}></span>
+            <span className="legend-dot" style={{ background: 'var(--surface-container)' }}></span>
             <span>Bayramlar</span>
           </div>
           <div className="legend-item">
-            <span className="legend-dot" style={{ background: 'var(--bg-emerald-med)' }}></span>
+            <span className="legend-dot" style={{ background: 'var(--secondary-container)' }}></span>
             <span>Hac</span>
           </div>
           <div className="legend-item">
-            <span className="legend-dot" style={{ background: 'var(--bg-emerald-deep)' }}></span>
+            <span className="legend-dot" style={{ background: 'var(--primary-container)' }}></span>
             <span>Hicri Günler</span>
           </div>
         </div>

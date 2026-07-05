@@ -1,0 +1,31 @@
+{
+  "id": "2026-06-28T21-31-21-807Z-d5b8",
+  "category": "general",
+  "categoryLabel": "Genel uygulama tanıtımı",
+  "createdAt": "2026-06-28T21:31:40.524Z",
+  "duration": 13,
+  "resolution": "1080x1920",
+  "script": {
+    "hook": "İbadet rutinin dağınık mı?",
+    "benefit": "Namaz, kıble, zikir ve daha fazlası tek yerde",
+    "approvedText": "Günlük ibadet rutinini tek yerde takip et.",
+    "approvedSource": "Huzur ürün metni",
+    "ctaTitle": "Huzur uygulamasını indir",
+    "ctaSubtitle": "Namaz vakitleri, kıble, zikir ve daha fazlası tek yerde",
+    "narration": "Namaz vakitleri, kıble yönü, zikir ve Kur’an okuma araçları Huzur’da bir arada. İhtiyacın olan özelliğe kolayca ulaş. Günlük ibadet rutinini sadeleştir.",
+    "duration": 13
+  },
+  "assets": {
+    "screenshots": [
+      "huzur-hires-phone-02-quran.png",
+      "huzur-hires-phone-06-greeting-cards.png",
+      "huzur-hires-phone-04-adhkar.png",
+      "huzur-hires-phone-01-prayer-times.png"
+    ],
+    "backgroundAudio": null
+  },
+  "religiousContent": {
+    "used": true,
+    "source": "Huzur ürün metni"
+  }
+}

@@ -57,8 +57,8 @@ const Streak24hRecoveryModal = ({
         maxWidth: '420px',
         width: '90%',
         position: 'relative',
-        border: '1px solid rgba(212, 175, 55, 0.3)',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212, 175, 55, 0.1)'
+        border: '1px solid color-mix(in srgb, var(--tertiary) 30%, transparent)',
+        boxShadow: '0 20px 40px color-mix(in srgb, var(--surface-dim) 40%, transparent), 0 0 20px color-mix(in srgb, var(--tertiary) 10%, transparent)'
       }}>
         <button
           onClick={onClose}
@@ -86,8 +86,8 @@ const Streak24hRecoveryModal = ({
           <div className="settings-icon-box" style={{
             width: '70px',
             height: '70px',
-            background: 'rgba(212, 175, 55, 0.15)',
-            color: '#d4af37',
+            background: 'color-mix(in srgb, var(--tertiary) 15%, transparent)',
+            color: 'var(--tertiary)',
             borderRadius: '20px',
             margin: '0 auto 24px'
           }}>
@@ -160,7 +160,7 @@ const Streak24hRecoveryModal = ({
               style={{
                 flex: 1,
                 padding: '16px',
-                background: '#d4af37',
+                background: 'var(--tertiary)',
                 opacity: isSubmitting ? 0.7 : 1,
                 cursor: isSubmitting ? 'wait' : 'pointer'
               }}

@@ -65,7 +65,7 @@ function MuezzinSelector({ onClose }) {
                 <h1 style={{
                     margin: 0,
                     fontSize: '22px',
-                    color: 'var(--primary-color)',
+                    color: 'var(--primary)',
                     fontWeight: '700'
                 }}>
                     📢 {t('muezzinSelector.title', 'Muezzin Selection')}
@@ -86,7 +86,7 @@ function MuezzinSelector({ onClose }) {
                             padding: '20px',
                             borderRadius: '16px',
                             border: selectedMuezzinId === muezzin.id
-                                ? '2px solid var(--primary-color)'
+                                ? '2px solid var(--primary)'
                                 : '1px solid var(--glass-border)',
                             background: 'var(--glass-bg)',
                             transition: 'all 0.3s ease',
@@ -105,13 +105,13 @@ function MuezzinSelector({ onClose }) {
                                 width: '48px',
                                 height: '48px',
                                 borderRadius: '50%',
-                                background: playingId === muezzin.id ? 'var(--primary-color)' : 'rgba(255,255,255,0.1)',
+                                background: playingId === muezzin.id ? 'var(--primary)' : 'rgba(255,255,255,0.1)',
                                 border: 'none',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 cursor: 'pointer',
-                                color: playingId === muezzin.id ? 'white' : 'var(--primary-color)',
+                                color: playingId === muezzin.id ? 'var(--on-primary)' : 'var(--primary)',
                                 flexShrink: 0
                             }}
                         >
@@ -123,7 +123,7 @@ function MuezzinSelector({ onClose }) {
                             <div style={{
                                 fontWeight: '700',
                                 fontSize: '16px',
-                                color: 'var(--primary-color)',
+                                color: 'var(--primary)',
                                 marginBottom: '4px'
                             }}>
                                 {muezzin.name}
@@ -143,7 +143,7 @@ function MuezzinSelector({ onClose }) {
                                 width: '24px',
                                 height: '24px',
                                 borderRadius: '50%',
-                                border: `2px solid ${selectedMuezzinId === muezzin.id ? 'var(--primary-color)' : 'var(--text-color-muted)'}`,
+                                border: `2px solid ${selectedMuezzinId === muezzin.id ? 'var(--primary)' : 'var(--text-color-muted)'}`,
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -155,7 +155,7 @@ function MuezzinSelector({ onClose }) {
                                     width: '12px',
                                     height: '12px',
                                     borderRadius: '50%',
-                                    background: 'var(--primary-color)'
+                                    background: 'var(--primary)'
                                 }} />
                             )}
                         </div>
@@ -178,7 +178,7 @@ function MuezzinSelector({ onClose }) {
                     display: 'flex',
                     gap: '10px'
                 }}>
-                    <Volume2 size={20} style={{ flexShrink: 0, color: 'var(--primary-color)' }} />
+                    <Volume2 size={20} style={{ flexShrink: 0, color: 'var(--primary)' }} />
                     <span>
                         <strong>{t('muezzinSelector.noteLabel', 'Note')}:</strong> {t('muezzinSelector.noteText', 'Your selected maqam will be used as the notification sound at the next adhan time. Audio files may need to be available on your device.')}
                     </span>

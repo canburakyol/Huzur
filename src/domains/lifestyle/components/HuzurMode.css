@@ -27,7 +27,7 @@
 
 .sleep-indicator {
     text-align: center;
-    color: white;
+    color: var(--on-primary);
     opacity: 0.2;
 }
 
@@ -49,7 +49,7 @@
 
 .gece-modu-btn:hover {
     background: var(--nav-accent);
-    color: white;
+    color: var(--on-primary);
     border-color: transparent;
 }
 
@@ -81,7 +81,7 @@
 
 .huzur-play-btn.playing {
     background: var(--nav-accent);
-    color: white;
+    color: var(--on-primary);
 }
 
 .huzur-pulse {

@@ -188,7 +188,7 @@
 .text-3xl { font-size: 1.75rem; }
 .text-nav { color: var(--nav-text); }
 .text-nav-muted { color: var(--nav-text-muted); }
-.text-primary { color: var(--primary-color); }
+.text-primary { color: var(--primary); }
 .text-muted { color: var(--text-muted); }
 .text-gold { color: var(--text-gold); }
 .uppercase { text-transform: uppercase; }
@@ -286,7 +286,7 @@
   width: 24px;
   height: 24px;
   border: 3px solid rgba(255, 255, 255, 0.2);
-  border-top-color: var(--primary-color);
+  border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }

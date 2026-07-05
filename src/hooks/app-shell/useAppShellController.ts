@@ -37,7 +37,7 @@ export function useAppShellController() {
   );
 
   const location = useLocationConsent(handleLocationUpdate);
-  const appInit = useAppInit(timings);
+  const appInit = useAppInit(timings, navigation.activeTab);
   const { dailyContent } = useDailyContent();
 
   useDirection();

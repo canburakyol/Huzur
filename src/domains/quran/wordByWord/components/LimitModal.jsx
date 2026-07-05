@@ -25,8 +25,8 @@ const LimitModal = ({ t, onUpgrade, onDismiss }) => (
           width: '80px',
           height: '80px',
           margin: '0 auto 24px',
-          background: 'linear-gradient(135deg, var(--nav-accent), #f59e0b)',
-          color: 'white',
+          background: 'var(--primary)',
+          color: 'var(--on-primary)',
           boxShadow: '0 12px 24px rgba(var(--nav-accent-rgb, 249, 115, 22), 0.4)',
         }}
       >
@@ -53,7 +53,7 @@ const LimitModal = ({ t, onUpgrade, onDismiss }) => (
             width: '100%',
             justifyContent: 'center',
             background: 'var(--nav-accent)',
-            color: 'white',
+            color: 'var(--on-primary)',
           }}
           onClick={() => {
             onDismiss();

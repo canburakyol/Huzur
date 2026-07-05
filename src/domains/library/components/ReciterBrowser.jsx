@@ -41,7 +41,7 @@ function ReciterBrowser({
                       className="settings-icon-box"
                       style={{
                         background: isPlaying ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                        color: isPlaying ? 'white' : 'var(--nav-accent)',
+                        color: isPlaying ? 'var(--on-primary)' : 'var(--nav-accent)',
                         width: '44px',
                         height: '44px',
                         borderRadius: '50%'

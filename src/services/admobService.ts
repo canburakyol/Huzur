@@ -15,6 +15,7 @@ import {
     isRewardedConfigured
 } from './adEnvironmentService';
 import { canInitializeAdMob } from './privacyConsentStore';
+import { ANALYTICS_EVENTS, logEvent } from './analyticsService';
 
 type AdRuntime = {
     isDebugBuild: boolean;
@@ -59,6 +60,8 @@ let isInitialized = false;
 let initializePromise: Promise<boolean> | null = null;
 let listenersRegistered = false;
 const adListenerHandles: PluginListenerHandle[] = [];
+// The native banner owns the physical bottom edge. Web navigation reserves
+// its own space above it so neither surface can intercept the other.
 const BOTTOM_BANNER_MARGIN = 0;
 
 const isNativePlatform = (): boolean => Capacitor.getPlatform() !== 'web';
@@ -90,24 +93,35 @@ const registerAdListeners = async (): Promise<void> => {
 
     adListenerHandles.push(await AdMob.addListener(BannerAdPluginEvents.Loaded, () => {
         void adLog('[AdMob] banner loaded');
+        logEvent(ANALYTICS_EVENTS.AD_BANNER_LOADED, { surface: 'banner' });
         void crashlyticsReporter.logCrash('[AdMob] banner_loaded');
     }));
 
     adListenerHandles.push(await AdMob.addListener(BannerAdPluginEvents.FailedToLoad, (info: { code?: number } | undefined) => {
         void adWarn('[AdMob] banner failed to load', info);
+        logEvent(ANALYTICS_EVENTS.AD_BANNER_FAILED, {
+            surface: 'banner',
+            error_code: info?.code ?? 'unknown'
+        });
         void crashlyticsReporter.logCrash(`[AdMob] banner_failed code=${info?.code ?? 'unknown'}`);
     }));
 
     adListenerHandles.push(await AdMob.addListener(BannerAdPluginEvents.AdImpression, () => {
         void adLog('[AdMob] banner impression');
+        logEvent(ANALYTICS_EVENTS.AD_BANNER_IMPRESSION, { surface: 'banner' });
     }));
 
     adListenerHandles.push(await AdMob.addListener(RewardAdPluginEvents.Loaded, () => {
         void adLog('[AdMob] rewarded loaded');
+        logEvent(ANALYTICS_EVENTS.AD_REWARDED_LOADED, { surface: 'streak_recovery' });
     }));
 
     adListenerHandles.push(await AdMob.addListener(RewardAdPluginEvents.FailedToLoad, (info: { code?: number } | undefined) => {
         void adWarn('[AdMob] rewarded failed to load', info);
+        logEvent(ANALYTICS_EVENTS.AD_REWARDED_FAILED, {
+            surface: 'streak_recovery',
+            error_code: info?.code ?? 'unknown'
+        });
         void crashlyticsReporter.logCrash(`[AdMob] rewarded_failed code=${info?.code ?? 'unknown'}`);
     }));
 };
@@ -328,6 +342,10 @@ export const showRewardedAd = async (): Promise<RewardedAdResult> => {
 
         const runtime = await getAdRuntime();
         const rewardedId = await getRewardedAdUnitId();
+        logEvent(ANALYTICS_EVENTS.AD_REWARDED_REQUESTED, {
+            surface: 'streak_recovery',
+            use_test_ads: runtime.useTestAds
+        });
 
         await AdMob.prepareRewardVideoAd({
             adId: rewardedId,
@@ -355,13 +373,28 @@ export const showRewardedAd = async (): Promise<RewardedAdResult> => {
 
         if (amount > 0) {
             await adLog('[AdMob] reward granted', { type, amount });
+            logEvent(ANALYTICS_EVENTS.AD_REWARDED_GRANTED, {
+                surface: 'streak_recovery',
+                reward_type: type,
+                reward_amount: amount,
+                use_test_ads: runtime.useTestAds
+            });
             void crashlyticsReporter.logCrash(`[AdMob] rewarded_success type=${type} amount=${amount}`);
             return { success: true, reward: { type, amount } };
         }
 
+        logEvent(ANALYTICS_EVENTS.AD_REWARDED_NOT_GRANTED, {
+            surface: 'streak_recovery',
+            reason: 'reward_not_granted',
+            use_test_ads: runtime.useTestAds
+        });
         return { success: false, error: 'Reward not granted' };
     } catch (error) {
         await adWarn('[AdMob] rewarded ad failed', error);
+        logEvent(ANALYTICS_EVENTS.AD_REWARDED_FAILED, {
+            surface: 'streak_recovery',
+            error_message: (error as Error)?.message || 'Rewarded ad failed'
+        });
         void crashlyticsReporter.logExceptionWithContext(error as Error, {
             surface: 'rewarded_ad'
         });

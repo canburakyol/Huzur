@@ -6,7 +6,7 @@ const StreakDetail = ({ streaks = {} }) => {
   const { t } = useTranslation();
 
   const streakItems = [
-    { key: 'fajr', icon: <Flame size={20} />, label: t('streak.fajr', 'Sabah Namazı'), color: '#f59e0b' },
+    { key: 'fajr', icon: <Flame size={20} />, label: t('streak.fajr', 'Sabah Namazı'), color: 'var(--secondary)' },
     { key: 'quran', icon: <BookOpen size={20} />, label: t('streak.quran', 'Kuran Okuma'), color: '#10b981' },
     { key: 'dhikr', icon: <Heart size={20} />, label: t('streak.dhikr', 'Zikir'), color: '#3b82f6' }
   ];
@@ -68,7 +68,7 @@ const StreakDetail = ({ streaks = {} }) => {
           border: '1px dashed rgba(245, 158, 11, 0.3)',
           gap: '12px'
       }}>
-        <div className="settings-icon-box" style={{ width: '32px', height: '32px', background: 'transparent', color: '#f59e0b' }}>
+        <div className="settings-icon-box" style={{ width: '32px', height: '32px', background: 'transparent', color: 'var(--secondary)' }}>
             <Info size={16} />
         </div>
         <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>

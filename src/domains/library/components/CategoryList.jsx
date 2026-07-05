@@ -98,7 +98,7 @@ function CategoryList({
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                {item.isPro ? <Crown size={14} color="#f59e0b" fill="#f59e0b" /> : null}
+                {item.isPro ? <Crown size={14} color="var(--tertiary)" fill="var(--tertiary)" /> : null}
                 <ChevronRight size={18} color="var(--nav-text-muted)" />
               </div>
             </div>
@@ -177,7 +177,7 @@ function CategoryList({
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                {result.requiresPro && !userIsPro ? <Crown size={14} color="#f59e0b" fill="#f59e0b" /> : null}
+                {result.requiresPro && !userIsPro ? <Crown size={14} color="var(--tertiary)" fill="var(--tertiary)" /> : null}
                 <ChevronRight size={18} color="var(--nav-text-muted)" />
               </div>
             </div>
@@ -226,7 +226,7 @@ function CategoryList({
               </div>
               {category.isPro ? (
                 <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
-                  <Crown size={14} color="#f59e0b" fill="#f59e0b" />
+                  <Crown size={14} color="var(--tertiary)" fill="var(--tertiary)" />
                 </div>
               ) : null}
             </div>

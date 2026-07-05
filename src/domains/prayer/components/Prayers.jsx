@@ -16,11 +16,11 @@ function Prayers({ onClose }) {
     const [selectedPrayer, setSelectedPrayer] = useState(null);
 
     // İslami renk paleti
-    const primaryGreen = 'var(--bg-emerald-deep)';
-    const lightGreen = 'var(--bg-emerald-light)';
-    const goldAccent = 'var(--accent-gold-light)';
-    const textOnLight = 'var(--text-on-light-primary)';
-    const textOnLightMuted = 'var(--text-on-light-muted)';
+    const primaryGreen = 'var(--primary)';
+    const lightGreen = 'var(--surface-container)';
+    const goldAccent = 'var(--tertiary)';
+    const textOnLight = 'var(--text-primary)';
+    const textOnLightMuted = 'var(--text-secondary)';
 
     // Category view
     if (!selectedCategory) {
@@ -31,7 +31,8 @@ function Prayers({ onClose }) {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: `linear-gradient(180deg, ${primaryGreen} 0%, var(--bg-emerald-med) 100%)`,
+                background: 'var(--bg-gradient-start, var(--surface-page))',
+                backgroundImage: 'radial-gradient(at 0% 0%, var(--ambient-teal, rgba(15, 118, 110, 0.15)) 0px, transparent 50%), radial-gradient(at 100% 0%, var(--ambient-gold, rgba(180, 83, 9, 0.1)) 0px, transparent 50%), linear-gradient(135deg, var(--bg-gradient-start, var(--surface-page)) 0%, var(--bg-gradient-end, var(--surface-page)) 100%)',
                 zIndex: 1000,
                 overflowY: 'auto',
                 padding: '20px',
@@ -46,10 +47,10 @@ function Prayers({ onClose }) {
                 }}>
                     <IslamicBackButton onClick={onClose} size="medium" />
                     <div>
-                        <h2 style={{ margin: 0, fontSize: '28px', fontWeight: '700', color: 'white' }}>
+                        <h2 style={{ margin: 0, fontSize: '28px', fontWeight: '700', color: 'var(--text-primary)' }}>
                             ☪️ {t('prayers.title')}
                         </h2>
-                        <p style={{ margin: '6px 0 0 0', opacity: 0.8, fontSize: '14px', color: 'white' }}>
+                        <p style={{ margin: '6px 0 0 0', opacity: 0.8, fontSize: '14px', color: 'var(--text-primary)' }}>
                             {prayerCategories.length} {t('prayers.categories')}, {prayers.length} {t('prayers.prayer')}
                         </p>
                     </div>
@@ -77,7 +78,7 @@ function Prayers({ onClose }) {
                     }} />
                     <p style={{ 
                         margin: 0, 
-                        color: 'white', 
+                        color: 'var(--text-primary)', 
                         fontSize: '16px', 
                         fontStyle: 'italic',
                         position: 'relative',
@@ -87,7 +88,7 @@ function Prayers({ onClose }) {
                     </p>
                     <p style={{ 
                         margin: '8px 0 0', 
-                        color: 'rgba(255,255,255,0.7)', 
+                        color: 'var(--text-secondary)', 
                         fontSize: '12px',
                         position: 'relative',
                         zIndex: 1
@@ -109,12 +110,12 @@ function Prayers({ onClose }) {
                                 key={category.id}
                                 onClick={() => setSelectedCategory(category.id)}
                                 style={{
-                                    background: 'rgba(255, 255, 255, 0.95)',
+                                    background: 'var(--glass-bg)',
                                     backdropFilter: 'blur(20px)',
                                     borderRadius: '16px',
                                     padding: '16px',
                                     cursor: 'pointer',
-                                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                                    border: '1px solid var(--glass-border)',
                                     boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
                                     transition: 'transform 0.2s',
                                     position: 'relative',
@@ -174,7 +175,8 @@ function Prayers({ onClose }) {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: `linear-gradient(180deg, ${primaryGreen} 0%, var(--bg-emerald-med) 100%)`,
+                background: 'var(--bg-gradient-start, var(--surface-page))',
+                backgroundImage: 'radial-gradient(at 0% 0%, var(--ambient-teal, rgba(15, 118, 110, 0.15)) 0px, transparent 50%), radial-gradient(at 100% 0%, var(--ambient-gold, rgba(180, 83, 9, 0.1)) 0px, transparent 50%), linear-gradient(135deg, var(--bg-gradient-start, var(--surface-page)) 0%, var(--bg-gradient-end, var(--surface-page)) 100%)',
                 zIndex: 1000,
                 overflowY: 'auto',
                 padding: '20px',
@@ -190,7 +192,7 @@ function Prayers({ onClose }) {
                     <button
                         onClick={() => setSelectedCategory(null)}
                         style={{
-                            background: 'rgba(255, 255, 255, 0.15)',
+                            background: 'var(--surface-container-high)',
                             backdropFilter: 'blur(10px)',
                             border: 'none',
                             borderRadius: '50%',
@@ -200,19 +202,19 @@ function Prayers({ onClose }) {
                             alignItems: 'center',
                             justifyContent: 'center',
                             cursor: 'pointer',
-                            color: 'white'
+                            color: 'var(--text-primary)'
                         }}
                     >
                         <ChevronLeft size={24} />
                     </button>
-                    <div style={{ color: 'white' }}>
+                    <div style={{ color: 'var(--text-primary)' }}>
                         <IconMapper iconName={category.icon} size={32} strokeWidth={1.5} />
                     </div>
                     <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, fontSize: '20px', color: 'white', fontWeight: '700' }}>
+                        <h2 style={{ margin: 0, fontSize: '20px', color: 'var(--text-primary)', fontWeight: '700' }}>
                             {t(category.name)}
                         </h2>
-                        <p style={{ margin: '4px 0 0', fontSize: '12px', color: 'rgba(255,255,255,0.7)' }}>
+                        <p style={{ margin: '4px 0 0', fontSize: '12px', color: 'var(--text-secondary)' }}>
                             {categoryPrayers.length} {t('prayers.prayer')}
                         </p>
                     </div>
@@ -225,12 +227,12 @@ function Prayers({ onClose }) {
                             key={prayer.id}
                             onClick={() => setSelectedPrayer(prayer)}
                             style={{
-                                background: 'rgba(255, 255, 255, 0.95)',
+                                background: 'var(--glass-bg)',
                                 backdropFilter: 'blur(20px)',
                                 borderRadius: '14px',
                                 padding: '14px 16px',
                                 cursor: 'pointer',
-                                border: '1px solid rgba(255, 255, 255, 0.3)',
+                                border: '1px solid var(--glass-border)',
                                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
                                 display: 'flex',
                                 alignItems: 'center',
@@ -245,7 +247,7 @@ function Prayers({ onClose }) {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                color: 'white',
+                                color: 'var(--text-primary)',
                                 fontWeight: '700',
                                 fontSize: '14px',
                                 flexShrink: 0
@@ -293,7 +295,8 @@ function Prayers({ onClose }) {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: `linear-gradient(180deg, ${primaryGreen} 0%, var(--bg-emerald-med) 100%)`,
+                background: 'var(--bg-gradient-start, var(--surface-page))',
+                backgroundImage: 'radial-gradient(at 0% 0%, var(--ambient-teal, rgba(15, 118, 110, 0.15)) 0px, transparent 50%), radial-gradient(at 100% 0%, var(--ambient-gold, rgba(180, 83, 9, 0.1)) 0px, transparent 50%), linear-gradient(135deg, var(--bg-gradient-start, var(--surface-page)) 0%, var(--bg-gradient-end, var(--surface-page)) 100%)',
                 zIndex: 1000,
                 overflowY: 'auto',
                 padding: '20px',
@@ -309,7 +312,7 @@ function Prayers({ onClose }) {
                     <button
                         onClick={() => setSelectedPrayer(null)}
                         style={{
-                            background: 'rgba(255, 255, 255, 0.15)',
+                            background: 'var(--surface-container-high)',
                             backdropFilter: 'blur(10px)',
                             border: 'none',
                             borderRadius: '50%',
@@ -319,23 +322,23 @@ function Prayers({ onClose }) {
                             alignItems: 'center',
                             justifyContent: 'center',
                             cursor: 'pointer',
-                            color: 'white'
+                            color: 'var(--text-primary)'
                         }}
                     >
                         <ChevronLeft size={24} />
                     </button>
-                    <h2 style={{ margin: 0, fontSize: '18px', color: 'white', flex: 1, fontWeight: '600' }}>
+                    <h2 style={{ margin: 0, fontSize: '18px', color: 'var(--text-primary)', flex: 1, fontWeight: '600' }}>
                         {t('prayers.prayerDetail')}
                     </h2>
                 </div>
 
                 {/* Prayer Content Card */}
                 <div style={{
-                    background: 'rgba(255, 255, 255, 0.98)',
+                    background: 'var(--surface-container-lowest)',
                     backdropFilter: 'blur(20px)',
                     borderRadius: '20px',
                     padding: '24px',
-                    border: '1px solid rgba(255, 255, 255, 0.5)',
+                    border: '1px solid var(--outline-variant)',
                     boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
                     position: 'relative',
                     overflow: 'hidden'

@@ -286,7 +286,7 @@ function GreetingCards({ onClose }) {
                             >
                                 <Heart
                                     size={18}
-                                    color={favorites.includes(card.id) ? '#ff4757' : '#fff'}
+                                    color={favorites.includes(card.id) ? '#ff4757' : 'var(--on-primary)'}
                                     fill={favorites.includes(card.id) ? '#ff4757' : 'transparent'}
                                 />
                             </button>
@@ -433,7 +433,7 @@ function GreetingCards({ onClose }) {
                             style={{
                                 padding: '8px 16px',
                                 background: editMode ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                                color: editMode ? 'white' : 'var(--nav-text)',
+                                color: editMode ? 'var(--on-primary)' : 'var(--nav-text)',
                                 borderRadius: '12px',
                                 fontSize: '0.8rem'
                             }}
@@ -501,7 +501,7 @@ function GreetingCards({ onClose }) {
                             flex: 3,
                             padding: '16px',
                             background: isSharing ? 'var(--nav-text-muted)' : 'var(--nav-accent)',
-                            color: 'white',
+                            color: 'var(--on-primary)',
                             justifyContent: 'center',
                             fontSize: '1rem'
                         }}

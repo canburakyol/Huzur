@@ -27,7 +27,7 @@ const fallbackRuntime: AdRuntime = {
   isNative: Capacitor.getPlatform() !== 'web',
   isAndroid: Capacitor.getPlatform() === 'android',
   isDebugBuild: import.meta.env.DEV || forceTestAds,
-  useTestAds: forceTestAds
+  useTestAds: import.meta.env.DEV || forceTestAds
 };
 
 export const getAdRuntime = async (): Promise<AdRuntime> => {
@@ -46,7 +46,7 @@ export const getAdRuntime = async (): Promise<AdRuntime> => {
           isNative: true,
           isAndroid: Capacitor.getPlatform() === 'android',
           isDebugBuild,
-          useTestAds: forceTestAds
+          useTestAds: isDebugBuild
         };
       } catch (error) {
         logger.error('[AdEnvironment] Failed to resolve runtime, using fallback', error);

@@ -181,6 +181,7 @@ export const STORAGE_KEYS = {
   ONBOARDING_COMPLETED: 'growthOnboardingCompleted',
   ONBOARDING_STARTED: 'growthOnboardingStarted',
   ONBOARDING_STEP: 'growthOnboardingStep',
+  NAVIGATION_UPDATE_V1_SEEN: 'huzur_navigation_update_v1_seen',
   FIRST_ACTIVATION_FEATURE_OPENED: 'firstActivationFeatureOpened',
   FIRST_IBADAH_ACTION_DONE: 'firstIbadahActionDone',
   APP_LANGUAGE: 'app_language',

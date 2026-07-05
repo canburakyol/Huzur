@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:text="Vakit"
-        android:textColor="#CCFFFFFF"
+        android:textColor="@color/widget_text_secondary"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -22,7 +22,7 @@
         android:layout_below="@id/widget_title"
         android:layout_marginTop="4dp"
         android:text="Yatsı"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/widget_text_primary"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -33,7 +33,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:text="20:45"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/widget_text_primary"
         android:textSize="32sp"
         android:textStyle="bold" />
 
@@ -44,7 +44,7 @@
         android:layout_alignParentBottom="true"
         android:drawablePadding="4dp"
         android:text="İstanbul"
-        android:textColor="#CCFFFFFF"
+        android:textColor="@color/widget_text_secondary"
         android:textSize="12sp" />
 
 </RelativeLayout>

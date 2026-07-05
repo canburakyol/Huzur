@@ -33,7 +33,7 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
             <div className="pulse-aura" style={{ background: 'rgba(245, 158, 11, 0.2)' }}></div>
             <div className="settings-icon-box" style={{ 
                 width: '80px', height: '80px', background: 'rgba(245, 158, 11, 0.15)', 
-                color: '#f59e0b', borderRadius: '24px' 
+                color: 'var(--secondary)', borderRadius: '24px'
             }}>
               <Flame size={40} />
             </div>

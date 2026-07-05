@@ -4,7 +4,12 @@ import { LazyImage } from './LazyImage';
 import './NativeAdCard.css';
 
 const IMPRESSION_THRESHOLD = 0.5;
-const MAX_STAR_RATING = 5;
+
+const getAssetSource = (asset) => {
+  if (!asset) return null;
+  if (typeof asset === 'string') return asset;
+  return asset.url || null;
+};
 
 const NativeAdCard = memo(({ isProUser = false }) => {
   const [ad, setAd] = useState(null);
@@ -16,17 +21,22 @@ const NativeAdCard = memo(({ isProUser = false }) => {
       return;
     }
 
+    let isMounted = true;
+
     const loadAd = async () => {
       const adData = await nativeAdService.load();
-      if (adData) {
+      if (isMounted && adData) {
         setAd(adData);
       }
     };
 
     loadAd();
+
+    return () => {
+      isMounted = false;
+    };
   }, [isProUser]);
 
-  // Intersection Observer for Impression Tracking
   useEffect(() => {
     if (!ad || !cardRef.current || impressionRecorded.current) return;
 
@@ -50,78 +60,69 @@ const NativeAdCard = memo(({ isProUser = false }) => {
 
   if (!ad || isProUser) return null;
 
-  const filledStars = Math.floor(ad.starRating);
-  const emptyStars = MAX_STAR_RATING - filledStars;
+  const mediaSource = getAssetSource(ad.images?.[0]) || getAssetSource(ad.mediaContent);
+  const iconSource = getAssetSource(ad.icon);
+  const rating = Number(ad.starRating || 0);
+  const hasRating = Number.isFinite(rating) && rating > 0;
 
   return (
-    <div
-      className="native-ad-container"
-      ref={cardRef}
-      onClick={() => nativeAdService.handleClick()}
-    >
-      {/* Ad Label - ZORUNLU (Google Policy) */}
+    <article className="native-ad-container" ref={cardRef} aria-label="Reklam">
       <div className="native-ad-label">
         <span className="ad-badge">Reklam</span>
-        <span className="ad-choices">ⓘ</span>
+        <span className="ad-choices" aria-label="Reklam bilgisi">i</span>
       </div>
 
       <div className="native-ad-content">
-        {/* Media (Video/Image) */}
         <div className="native-ad-media">
-          {ad.images && ad.images.length > 0 ? (
+          {mediaSource ? (
             <LazyImage
-              src={ad.images[0].url || ad.images[0]}
-              alt="Ad Media"
-              className="native-ad-lazy-image"
-            />
-          ) : ad.mediaContent ? (
-            <LazyImage
-              src={ad.mediaContent}
-              alt="Ad Media"
+              src={mediaSource}
+              alt=""
               className="native-ad-lazy-image"
             />
           ) : (
-            <div style={{ width: '100%', height: '100%', background: '#333' }} />
+            <div className="native-ad-media-placeholder" aria-hidden="true" />
           )}
         </div>
 
-        {/* Info */}
         <div className="native-ad-info">
           <div className="native-ad-header-row">
-            {ad.icon && (
+            {iconSource && (
               <LazyImage
-                src={ad.icon.url || ad.icon}
+                src={iconSource}
                 alt=""
                 className="native-ad-icon"
               />
             )}
             <div className="native-ad-title-group">
               <div className="native-ad-headline">{ad.headline}</div>
-              {ad.starRating > 0 && (
+              {hasRating && (
                 <div className="native-ad-rating">
-                  {'★'.repeat(filledStars)}
-                  {'☆'.repeat(emptyStars)}
-                  <span>{ad.starRating}</span>
+                  <span>{rating.toFixed(1)}</span>
+                  <span className="native-ad-rating-label">puan</span>
                 </div>
               )}
             </div>
           </div>
 
           {ad.store && (
-            <div className="native-ad-store">
-              🛍️ {ad.store}
-            </div>
+            <div className="native-ad-store">{ad.store}</div>
           )}
 
-          <div className="native-ad-body">{ad.body}</div>
+          {ad.body && (
+            <div className="native-ad-body">{ad.body}</div>
+          )}
         </div>
       </div>
 
-      {/* CTA Button */}
-      <button className="native-ad-cta">
-        🚀 {ad.callToAction || 'Yükle'}
+      <button
+        type="button"
+        className="native-ad-cta"
+        onClick={() => nativeAdService.handleClick()}
+      >
+        {ad.callToAction || 'Yükle'}
       </button>
-    </div>
+    </article>
   );
 });
 

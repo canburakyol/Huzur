@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Calculator, Info, RefreshCw } from 'lucide-react';
+import { Calculator, Info, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 
 // Zekat nisab değerleri (gram cinsinden)
 const NISAB = {
@@ -78,26 +79,7 @@ const ZakatCalculator = ({ onClose }) => {
                 marginBottom: '24px',
                 padding: '0 4px'
             }}>
-                <button
-                    type="button"
-                    onClick={onClose}
-                    aria-label={t('common.back', 'Geri')}
-                    style={{
-                        width: '44px',
-                        height: '44px',
-                        borderRadius: '14px',
-                        border: '1px solid var(--nav-border)',
-                        background: 'var(--nav-hover)',
-                        color: 'var(--nav-text)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        flexShrink: 0
-                    }}
-                >
-                    <ArrowLeft size={20} />
-                </button>
+                <IslamicBackButton onClick={onClose} size="medium" />
                 <h1 style={{
                     margin: 0,
                     fontSize: '1.5rem',
@@ -223,7 +205,7 @@ const ZakatCalculator = ({ onClose }) => {
                             width: '100%',
                             padding: '16px',
                             borderRadius: '16px',
-                            background: 'white',
+                            background: 'var(--surface-card)',
                             border: '1px solid var(--error-color)',
                             fontSize: '1.25rem',
                             fontWeight: '900',
@@ -259,16 +241,16 @@ const ZakatCalculator = ({ onClose }) => {
                 textAlign: 'center',
                 gap: '20px',
                 background: isNisabReached 
-                    ? 'linear-gradient(135deg, var(--bg-emerald-light), var(--bg-emerald-deep))' 
+                    ? 'linear-gradient(135deg, var(--surface-container), var(--primary-container))'
                     : 'var(--nav-hover)',
                 border: isNisabReached ? 'none' : '1px solid var(--nav-border)',
                 borderRadius: '32px',
-                color: isNisabReached ? 'white' : 'var(--nav-text)',
+                color: isNisabReached ? 'var(--on-primary)' : 'var(--nav-text)',
                 boxShadow: isNisabReached ? '0 20px 40px rgba(15, 118, 110, 0.3)' : 'none'
             }}>
                 <div className="hamburger-level-badge" style={{ 
                     background: isNisabReached ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.05)', 
-                    color: isNisabReached ? 'white' : 'var(--nav-text-muted)',
+                    color: isNisabReached ? 'var(--on-primary)' : 'var(--nav-text-muted)',
                     border: 'none',
                     fontWeight: '900'
                 }}>

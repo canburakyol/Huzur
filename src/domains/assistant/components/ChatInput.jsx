@@ -6,54 +6,23 @@ import { Send, Sparkles } from 'lucide-react';
 const ChatInput = ({ t, inputValue, onInputChange, onSend, onKeyDown, assistantV2Enabled, faqItems }) => (
   <>
     {/* FAQ Quick Actions */}
-    <div
-      style={{
-        padding: '0 20px 16px 20px',
-        display: 'flex',
-        gap: '12px',
-        overflowX: 'auto',
-        background: 'var(--nav-bg)',
-        scrollbarWidth: 'none',
-      }}
-    >
+    <div className="assistant-faq-scroll">
       {faqItems.map((item, idx) => (
         <button
           key={idx}
           onClick={() => onSend(t(item.key))}
-          className="settings-card"
-          style={{
-            padding: '12px 20px',
-            background: 'var(--nav-hover)',
-            border: '1px solid var(--nav-border)',
-            borderRadius: '16px',
-            fontSize: '0.85rem',
-            color: 'var(--nav-text)',
-            whiteSpace: 'nowrap',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            fontWeight: '800',
-          }}
+          className="assistant-faq-btn"
+          type="button"
         >
-          <Sparkles size={16} color="var(--nav-accent)" />
+          <Sparkles size={14} color="var(--brand-primary)" />
           {t(item.key)}
         </button>
       ))}
     </div>
 
-    {/* Text Input */}
-    <div
-      style={{
-        padding: '16px 20px',
-        background: 'var(--nav-bg)',
-        borderTop: '1px solid var(--nav-border)',
-        display: 'flex',
-        gap: '12px',
-        alignItems: 'center',
-      }}
-    >
-      <div style={{ flex: 1, position: 'relative' }}>
+    {/* Text Input Container */}
+    <div className="assistant-chat-input-container">
+      <div className="assistant-input-wrapper">
         <input
           type="text"
           value={inputValue}
@@ -61,45 +30,19 @@ const ChatInput = ({ t, inputValue, onInputChange, onSend, onKeyDown, assistantV
           onKeyDown={onKeyDown}
           placeholder={
             assistantV2Enabled
-              ? t('assistant.aiInputPlaceholder', 'Bugun neye ihtiyacin oldugunu kisaca yaz')
-              : t('assistant.betaInputPlaceholder', 'Hazir sorulardan birini yazin veya alttan secin')
+              ? t('assistant.aiInputPlaceholder', 'Bugün neye ihtiyacın olduğunu kısaca yaz')
+              : t('assistant.betaInputPlaceholder', 'Hazır sorulardan birini yazın veya alttan seçin')
           }
-          style={{
-            width: '100%',
-            padding: '16px 24px',
-            paddingRight: '60px',
-            borderRadius: '24px',
-            border: '2px solid var(--nav-border)',
-            fontSize: '1rem',
-            outline: 'none',
-            background: 'var(--nav-hover)',
-            color: 'var(--nav-text)',
-            fontWeight: '600',
-            transition: 'all 0.3s ease',
-          }}
+          className="assistant-input-field"
         />
         <button
           onClick={() => onSend()}
           disabled={!inputValue.trim()}
-          style={{
-            position: 'absolute',
-            right: '6px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            width: '44px',
-            height: '44px',
-            borderRadius: '20px',
-            background: inputValue.trim() ? 'var(--nav-accent)' : 'var(--nav-border)',
-            border: 'none',
-            color: 'white',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: inputValue.trim() ? 'pointer' : 'default',
-            transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
+          className="assistant-send-btn"
+          type="button"
+          aria-label="Gönder"
         >
-          <Send size={20} />
+          <Send size={18} />
         </button>
       </div>
     </div>

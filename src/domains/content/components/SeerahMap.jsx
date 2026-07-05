@@ -165,9 +165,9 @@ const SeerahMap = ({ onClose }) => {
             width: 2px;
             background: linear-gradient(to bottom, 
                 var(--nav-accent), 
-                #10b981, 
-                #f59e0b, 
-                #ef4444, 
+                var(--secondary),
+                var(--tertiary),
+                var(--error),
                 var(--nav-accent)
             );
             opacity: 0.3;

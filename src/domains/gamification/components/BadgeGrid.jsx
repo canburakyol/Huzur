@@ -82,7 +82,7 @@ const BadgeGrid = ({ earnedBadges = [] }) => {
                   </span>
                   <span style={{
                     background: catEarnedCount === badges.length ? catInfo.color : 'var(--nav-hover)',
-                    color: catEarnedCount === badges.length ? '#fff' : 'var(--nav-text-muted)',
+                    color: catEarnedCount === badges.length ? 'var(--on-primary)' : 'var(--nav-text-muted)',
                     padding: '2px 8px', borderRadius: '8px',
                     fontSize: '0.7rem', fontWeight: '900'
                   }}>

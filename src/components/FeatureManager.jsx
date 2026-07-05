@@ -27,7 +27,7 @@ const FeatureManager = ({ activeFeature, setActiveFeature, locationName }) => {
   }
 
   return (
-    <div className="app-container">
+    <div className="app-container feature-overlay-shell ad-safe-feature-shell">
       <Suspense fallback={<LoadingSpinner height="100vh" />}>
         <FeatureComponent onClose={closeFeature} locationName={locationName} {...extraProps} />
       </Suspense>

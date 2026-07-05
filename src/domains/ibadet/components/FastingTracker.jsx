@@ -87,7 +87,7 @@ const FastingTracker = ({ onClose }) => {
                     border: 'none', 
                     padding: '32px', 
                     textAlign: 'center', 
-                    color: 'white', 
+                    color: 'var(--on-primary)',
                     marginBottom: '32px',
                     boxShadow: '0 12px 24px rgba(249, 115, 22, 0.2)'
                 }}>
@@ -148,7 +148,7 @@ const FastingTracker = ({ onClose }) => {
                             borderRadius: '16px',
                             border: 'none',
                             background: isFastedToday ? '#10b981' : 'var(--nav-accent)',
-                            color: 'white',
+                            color: 'var(--on-primary)',
                             cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',

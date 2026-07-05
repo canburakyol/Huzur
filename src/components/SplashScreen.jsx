@@ -91,7 +91,7 @@ const SplashScreen = ({ onHide }) => {
               }}
             />
           </div>
-          <div className="sota-stagger-2" style={{ fontFamily: "var(--arabic-font-family)", fontSize: '28px', color: '#fff', marginBottom: '16px', textShadow: '0 4px 12px rgba(245,158,11,0.4)' }}>
+          <div className="sota-stagger-2" style={{ fontFamily: "var(--arabic-font-family)", fontSize: '28px', color: 'var(--on-primary)', marginBottom: '16px', textShadow: '0 4px 12px rgba(245,158,11,0.4)' }}>
             بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ
           </div>
           <div className="sota-stagger-3" style={{ fontFamily: "var(--arabic-font-family)", fontSize: '22px', color: '#fde68a', marginBottom: '16px', lineHeight: '1.6', textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
@@ -102,7 +102,7 @@ const SplashScreen = ({ onHide }) => {
             <div style={{ fontSize: '12px', marginTop: '8px', opacity: 0.7, fontWeight: '400' }}>{t('splash.reference')}</div>
           </div>
           <div className="sota-stagger-5" style={{ 
-            fontSize: '14px', color: '#fff', 
+            fontSize: '14px', color: 'var(--on-primary)',
             padding: '16px 28px', background: 'rgba(255,255,255,0.15)', 
             backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
             border: '1px solid rgba(255,255,255,0.2)',

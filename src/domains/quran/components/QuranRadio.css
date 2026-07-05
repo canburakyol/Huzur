@@ -27,15 +27,15 @@
     font-size: 18px;
     font-weight: 700;
     margin: 0;
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(to right, var(--primary), var(--secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 0.5px;
 }
 
 .icon-button {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: color-mix(in srgb, var(--on-primary) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--on-primary) 10%, transparent);
     border-radius: 14px;
     width: 44px;
     height: 44px;
@@ -49,7 +49,7 @@
 
 .icon-button:active {
     transform: scale(0.92);
-    background: rgba(255, 255, 255, 0.2);
+    background: color-mix(in srgb, var(--on-primary) 20%, transparent);
 }
 
 /* Visualizer & Info Section */
@@ -67,7 +67,7 @@
     width: 220px;
     height: 220px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, color-mix(in srgb, var(--tertiary) 15%, transparent) 0%, transparent 70%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,7 +102,7 @@
 
 .wave-bar {
     width: 4px;
-    background: var(--primary-color);
+    background: var(--primary);
     border-radius: 2px;
     height: 10px;
     transition: height 0.2s ease;
@@ -125,7 +125,7 @@
 .surah-arabic {
     font-family: var(--arabic-font-family);
     font-size: 36px;
-    color: var(--primary-color);
+    color: var(--primary);
     margin-bottom: 8px;
     line-height: 1;
 }
@@ -146,7 +146,7 @@
 /* Progress & Controls */
 .radio-controls {
     padding: 20px 30px 40px 30px;
-    background: rgba(0, 0, 0, 0.1);
+    background: color-mix(in srgb, var(--surface-dim) 10%, transparent);
     backdrop-filter: blur(10px);
 }
 
@@ -161,13 +161,13 @@
     width: 76px;
     height: 76px;
     border-radius: 28px;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    background: linear-gradient(135deg, var(--primary), var(--primary));
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+    color: var(--on-primary);
+    box-shadow: 0 10px 20px color-mix(in srgb, var(--tertiary) 30%, transparent);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -204,15 +204,15 @@
     padding: 16px;
     border-radius: 16px;
     margin-bottom: 8px;
-    background: rgba(255, 255, 255, 0.03);
+    background: color-mix(in srgb, var(--on-primary) 3%, transparent);
     border: 1px solid transparent;
     transition: all 0.2s ease;
     cursor: pointer;
 }
 
 .surah-list-item.active {
-    background: rgba(212, 175, 55, 0.15);
-    border-color: rgba(212, 175, 55, 0.3);
+    background: color-mix(in srgb, var(--tertiary) 15%, transparent);
+    border-color: color-mix(in srgb, var(--tertiary) 30%, transparent);
 }
 
 .surah-number {
@@ -240,7 +240,7 @@
 .surah-name-ar {
     font-family: var(--arabic-font-family);
     font-size: 20px;
-    color: var(--primary-color);
+    color: var(--primary);
 }
 
 /* Reciter Selector */
@@ -258,7 +258,7 @@
     flex: 0 0 auto;
     padding: 8px 16px;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
+    background: color-mix(in srgb, var(--on-primary) 5%, transparent);
     border: 1px solid var(--glass-border);
     font-size: 13px;
     color: var(--text-color);
@@ -267,9 +267,9 @@
 }
 
 .reciter-chip.active {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
+    background: var(--primary);
+    color: var(--on-primary);
+    border-color: var(--primary);
 }
 
 .loading-indicator {

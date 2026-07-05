@@ -1,9 +1,5 @@
 import { ChevronLeft } from 'lucide-react';
 
-/**
- * Islamic-styled Back Button Component
- * Golden star design with Islamic geometric patterns
- */
 const IslamicBackButton = ({ onClick, size = 'medium', showLabel = false, label = 'Geri' }) => {
     const sizes = {
         small: { button: 36, icon: 18, font: 12 },
@@ -19,63 +15,50 @@ const IslamicBackButton = ({ onClick, size = 'medium', showLabel = false, label 
             style={{
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: '8px',
-                background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(218, 165, 32, 0.25) 100%)',
-                border: '1.5px solid rgba(212, 175, 55, 0.4)',
+                background: 'var(--glass-bg, rgba(255, 255, 255, 0.4))',
+                border: '1px solid var(--glass-border, rgba(22, 59, 43, 0.08))',
                 borderRadius: showLabel ? '24px' : '50%',
                 width: showLabel ? 'auto' : `${s.button}px`,
                 height: `${s.button}px`,
                 padding: showLabel ? '0 16px 0 8px' : '0',
                 cursor: 'pointer',
-                transition: 'all 0.2s ease',
+                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                 position: 'relative',
                 overflow: 'hidden',
-                boxShadow: '0 2px 8px rgba(212, 175, 55, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                color: 'var(--primary)',
+                boxShadow: 'var(--shadow-card, 0 4px 12px rgba(0, 0, 0, 0.05))',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)'
             }}
             onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(212, 175, 55, 0.35)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+                e.currentTarget.style.background = 'var(--primary)';
+                e.currentTarget.style.borderColor = 'var(--primary)';
+                e.currentTarget.style.color = 'var(--on-primary)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-float, 0 8px 24px rgba(0, 0, 0, 0.15))';
             }}
             onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(212, 175, 55, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+                e.currentTarget.style.background = 'var(--glass-bg, rgba(255, 255, 255, 0.4))';
+                e.currentTarget.style.borderColor = 'var(--glass-border, rgba(22, 59, 43, 0.08))';
+                e.currentTarget.style.color = 'var(--primary)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-card, 0 4px 12px rgba(0, 0, 0, 0.05))';
             }}
+            onMouseDown={(e) => {
+                e.currentTarget.style.transform = 'scale(0.95)';
+            }}
+            onMouseUp={(e) => {
+                e.currentTarget.style.transform = 'scale(1.1)';
+            }}
+            aria-label={showLabel ? label : 'Geri'}
         >
-            {/* Islamic geometric pattern overlay */}
-            <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                opacity: 0.15,
-                background: `
-                    radial-gradient(circle at 20% 20%, #d4af37 1px, transparent 1px),
-                    radial-gradient(circle at 80% 80%, #d4af37 1px, transparent 1px),
-                    radial-gradient(circle at 50% 50%, #d4af37 0.5px, transparent 0.5px)
-                `,
-                backgroundSize: '12px 12px, 12px 12px, 8px 8px',
-                pointerEvents: 'none'
-            }} />
-            
-            {/* Star accent */}
-            <div style={{
-                position: 'absolute',
-                top: '3px',
-                right: showLabel ? '8px' : '3px',
-                fontSize: '8px',
-                opacity: 0.6,
-                pointerEvents: 'none'
-            }}>
-                ✦
-            </div>
-            
             {/* Icon */}
             <ChevronLeft 
                 size={s.icon} 
-                color="#d4af37"
+                color="currentColor"
                 style={{ 
-                    filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))',
                     position: 'relative',
                     zIndex: 1
                 }} 
@@ -84,12 +67,11 @@ const IslamicBackButton = ({ onClick, size = 'medium', showLabel = false, label 
             {/* Label */}
             {showLabel && (
                 <span style={{
-                    color: '#d4af37',
+                    color: 'currentColor',
                     fontSize: `${s.font}px`,
-                    fontWeight: '600',
+                    fontWeight: '700',
                     position: 'relative',
-                    zIndex: 1,
-                    textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
+                    zIndex: 1
                 }}>
                     {label}
                 </span>

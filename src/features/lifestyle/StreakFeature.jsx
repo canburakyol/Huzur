@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import StreakCalendar from '../../domains/gamification/components/StreakCalendar';
 import { getStreakData } from '../../services/streakService';
-import { ChevronLeft } from 'lucide-react';
 import WeeklyGoalSelector from '../../domains/gamification/components/WeeklyGoalSelector';
+import IslamicBackButton from '../../components/shared/IslamicBackButton';
 
 const StreakFeature = ({ onClose }) => {
   const { t } = useTranslation();
@@ -21,9 +21,7 @@ const StreakFeature = ({ onClose }) => {
   return (
     <div className="feature-container">
       <div className="feature-header flex items-center p-4">
-        <button onClick={onClose} className="p-2 mr-2">
-          <ChevronLeft size={24} />
-        </button>
+        <IslamicBackButton onClick={onClose} size="medium" />
         <h2 className="text-xl font-bold">{t('streakFeature.title', 'Streak Calendar')}</h2>
       </div>
       

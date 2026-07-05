@@ -1,0 +1,853 @@
+- generic [ref=f16e2]:
+  - generic [ref=f16e5]:
+    - generic [ref=f16e150]:
+      - generic [ref=f16e152]:
+        - button [ref=f16e153] [cursor=pointer]:
+          - img [ref=f16e154]
+        - generic [ref=f16e156]:
+          - generic [ref=f16e157]: الفاتحة
+          - generic [ref=f16e158]: Fatiha
+          - generic [ref=f16e159]:
+            - text: Mekki
+            - generic [ref=f16e160]: 7 Ayet
+        - generic [ref=f16e161]:
+          - button "Basit Mod" [ref=f16e162] [cursor=pointer]:
+            - img [ref=f16e163]
+          - button [ref=f16e166] [cursor=pointer]:
+            - img [ref=f16e167]
+          - button [ref=f16e170] [cursor=pointer]:
+            - img [ref=f16e171]
+      - generic [ref=f16e172]:
+        - generic [ref=f16e173]:
+          - heading "Menü" [level=3] [ref=f16e174]
+          - button [ref=f16e175] [cursor=pointer]:
+            - img [ref=f16e176]
+        - generic [ref=f16e179]:
+          - button "Sureler" [ref=f16e180] [cursor=pointer]
+          - button "Yer İmleri" [ref=f16e181] [cursor=pointer]
+          - button "Mealler" [ref=f16e182] [cursor=pointer]
+          - button "Hafızlar" [ref=f16e183] [cursor=pointer]
+          - button "Fihrist" [ref=f16e184] [cursor=pointer]
+        - generic [ref=f16e186]:
+          - generic [ref=f16e187] [cursor=pointer]:
+            - generic [ref=f16e188]: "1"
+            - generic [ref=f16e189]:
+              - generic [ref=f16e190]: Fatiha
+              - generic [ref=f16e191]: 7 Ayet
+            - generic [ref=f16e192]: الفاتحة
+          - generic [ref=f16e193] [cursor=pointer]:
+            - generic [ref=f16e194]: "2"
+            - generic [ref=f16e195]:
+              - generic [ref=f16e196]: Bakara
+              - generic [ref=f16e197]: 286 Ayet
+            - generic [ref=f16e198]: البقرة
+          - generic [ref=f16e199] [cursor=pointer]:
+            - generic [ref=f16e200]: "3"
+            - generic [ref=f16e201]:
+              - generic [ref=f16e202]: Âl-i İmrân
+              - generic [ref=f16e203]: 200 Ayet
+            - generic [ref=f16e204]: آل عمران
+          - generic [ref=f16e205] [cursor=pointer]:
+            - generic [ref=f16e206]: "4"
+            - generic [ref=f16e207]:
+              - generic [ref=f16e208]: Nisâ
+              - generic [ref=f16e209]: 176 Ayet
+            - generic [ref=f16e210]: النساء
+          - generic [ref=f16e211] [cursor=pointer]:
+            - generic [ref=f16e212]: "5"
+            - generic [ref=f16e213]:
+              - generic [ref=f16e214]: Mâide
+              - generic [ref=f16e215]: 120 Ayet
+            - generic [ref=f16e216]: المائدة
+          - generic [ref=f16e217] [cursor=pointer]:
+            - generic [ref=f16e218]: "6"
+            - generic [ref=f16e219]:
+              - generic [ref=f16e220]: En'âm
+              - generic [ref=f16e221]: 165 Ayet
+            - generic [ref=f16e222]: الأنعام
+          - generic [ref=f16e223] [cursor=pointer]:
+            - generic [ref=f16e224]: "7"
+            - generic [ref=f16e225]:
+              - generic [ref=f16e226]: A'râf
+              - generic [ref=f16e227]: 206 Ayet
+            - generic [ref=f16e228]: الأعراف
+          - generic [ref=f16e229] [cursor=pointer]:
+            - generic [ref=f16e230]: "8"
+            - generic [ref=f16e231]:
+              - generic [ref=f16e232]: Enfâl
+              - generic [ref=f16e233]: 75 Ayet
+            - generic [ref=f16e234]: الأنفال
+          - generic [ref=f16e235] [cursor=pointer]:
+            - generic [ref=f16e236]: "9"
+            - generic [ref=f16e237]:
+              - generic [ref=f16e238]: Tevbe
+              - generic [ref=f16e239]: 129 Ayet
+            - generic [ref=f16e240]: التوبة
+          - generic [ref=f16e241] [cursor=pointer]:
+            - generic [ref=f16e242]: "10"
+            - generic [ref=f16e243]:
+              - generic [ref=f16e244]: Yûnus
+              - generic [ref=f16e245]: 109 Ayet
+            - generic [ref=f16e246]: يونس
+          - generic [ref=f16e247] [cursor=pointer]:
+            - generic [ref=f16e248]: "11"
+            - generic [ref=f16e249]:
+              - generic [ref=f16e250]: Hûd
+              - generic [ref=f16e251]: 123 Ayet
+            - generic [ref=f16e252]: هود
+          - generic [ref=f16e253] [cursor=pointer]:
+            - generic [ref=f16e254]: "12"
+            - generic [ref=f16e255]:
+              - generic [ref=f16e256]: Yûsuf
+              - generic [ref=f16e257]: 111 Ayet
+            - generic [ref=f16e258]: يوسف
+          - generic [ref=f16e259] [cursor=pointer]:
+            - generic [ref=f16e260]: "13"
+            - generic [ref=f16e261]:
+              - generic [ref=f16e262]: Ra'd
+              - generic [ref=f16e263]: 43 Ayet
+            - generic [ref=f16e264]: الرعد
+          - generic [ref=f16e265] [cursor=pointer]:
+            - generic [ref=f16e266]: "14"
+            - generic [ref=f16e267]:
+              - generic [ref=f16e268]: İbrâhîm
+              - generic [ref=f16e269]: 52 Ayet
+            - generic [ref=f16e270]: إبراهيم
+          - generic [ref=f16e271] [cursor=pointer]:
+            - generic [ref=f16e272]: "15"
+            - generic [ref=f16e273]:
+              - generic [ref=f16e274]: Hicr
+              - generic [ref=f16e275]: 99 Ayet
+            - generic [ref=f16e276]: الحجر
+          - generic [ref=f16e277] [cursor=pointer]:
+            - generic [ref=f16e278]: "16"
+            - generic [ref=f16e279]:
+              - generic [ref=f16e280]: Nahl
+              - generic [ref=f16e281]: 128 Ayet
+            - generic [ref=f16e282]: النحل
+          - generic [ref=f16e283] [cursor=pointer]:
+            - generic [ref=f16e284]: "17"
+            - generic [ref=f16e285]:
+              - generic [ref=f16e286]: İsrâ
+              - generic [ref=f16e287]: 111 Ayet
+            - generic [ref=f16e288]: الإسراء
+          - generic [ref=f16e289] [cursor=pointer]:
+            - generic [ref=f16e290]: "18"
+            - generic [ref=f16e291]:
+              - generic [ref=f16e292]: Kehf
+              - generic [ref=f16e293]: 110 Ayet
+            - generic [ref=f16e294]: الكهف
+          - generic [ref=f16e295] [cursor=pointer]:
+            - generic [ref=f16e296]: "19"
+            - generic [ref=f16e297]:
+              - generic [ref=f16e298]: Meryem
+              - generic [ref=f16e299]: 98 Ayet
+            - generic [ref=f16e300]: مريم
+          - generic [ref=f16e301] [cursor=pointer]:
+            - generic [ref=f16e302]: "20"
+            - generic [ref=f16e303]:
+              - generic [ref=f16e304]: Tâhâ
+              - generic [ref=f16e305]: 135 Ayet
+            - generic [ref=f16e306]: طه
+          - generic [ref=f16e307] [cursor=pointer]:
+            - generic [ref=f16e308]: "21"
+            - generic [ref=f16e309]:
+              - generic [ref=f16e310]: Enbiyâ
+              - generic [ref=f16e311]: 112 Ayet
+            - generic [ref=f16e312]: الأنبياء
+          - generic [ref=f16e313] [cursor=pointer]:
+            - generic [ref=f16e314]: "22"
+            - generic [ref=f16e315]:
+              - generic [ref=f16e316]: Hac
+              - generic [ref=f16e317]: 78 Ayet
+            - generic [ref=f16e318]: الحج
+          - generic [ref=f16e319] [cursor=pointer]:
+            - generic [ref=f16e320]: "23"
+            - generic [ref=f16e321]:
+              - generic [ref=f16e322]: Mü'minûn
+              - generic [ref=f16e323]: 118 Ayet
+            - generic [ref=f16e324]: المؤمنون
+          - generic [ref=f16e325] [cursor=pointer]:
+            - generic [ref=f16e326]: "24"
+            - generic [ref=f16e327]:
+              - generic [ref=f16e328]: Nûr
+              - generic [ref=f16e329]: 64 Ayet
+            - generic [ref=f16e330]: النور
+          - generic [ref=f16e331] [cursor=pointer]:
+            - generic [ref=f16e332]: "25"
+            - generic [ref=f16e333]:
+              - generic [ref=f16e334]: Furkân
+              - generic [ref=f16e335]: 77 Ayet
+            - generic [ref=f16e336]: الفرقان
+          - generic [ref=f16e337] [cursor=pointer]:
+            - generic [ref=f16e338]: "26"
+            - generic [ref=f16e339]:
+              - generic [ref=f16e340]: Şuarâ
+              - generic [ref=f16e341]: 227 Ayet
+            - generic [ref=f16e342]: الشعراء
+          - generic [ref=f16e343] [cursor=pointer]:
+            - generic [ref=f16e344]: "27"
+            - generic [ref=f16e345]:
+              - generic [ref=f16e346]: Neml
+              - generic [ref=f16e347]: 93 Ayet
+            - generic [ref=f16e348]: النمل
+          - generic [ref=f16e349] [cursor=pointer]:
+            - generic [ref=f16e350]: "28"
+            - generic [ref=f16e351]:
+              - generic [ref=f16e352]: Kasas
+              - generic [ref=f16e353]: 88 Ayet
+            - generic [ref=f16e354]: القصص
+          - generic [ref=f16e355] [cursor=pointer]:
+            - generic [ref=f16e356]: "29"
+            - generic [ref=f16e357]:
+              - generic [ref=f16e358]: Ankebût
+              - generic [ref=f16e359]: 69 Ayet
+            - generic [ref=f16e360]: العنكبوت
+          - generic [ref=f16e361] [cursor=pointer]:
+            - generic [ref=f16e362]: "30"
+            - generic [ref=f16e363]:
+              - generic [ref=f16e364]: Rûm
+              - generic [ref=f16e365]: 60 Ayet
+            - generic [ref=f16e366]: الروم
+          - generic [ref=f16e367] [cursor=pointer]:
+            - generic [ref=f16e368]: "31"
+            - generic [ref=f16e369]:
+              - generic [ref=f16e370]: Lokmân
+              - generic [ref=f16e371]: 34 Ayet
+            - generic [ref=f16e372]: لقمان
+          - generic [ref=f16e373] [cursor=pointer]:
+            - generic [ref=f16e374]: "32"
+            - generic [ref=f16e375]:
+              - generic [ref=f16e376]: Secde
+              - generic [ref=f16e377]: 30 Ayet
+            - generic [ref=f16e378]: السجدة
+          - generic [ref=f16e379] [cursor=pointer]:
+            - generic [ref=f16e380]: "33"
+            - generic [ref=f16e381]:
+              - generic [ref=f16e382]: Ahzâb
+              - generic [ref=f16e383]: 73 Ayet
+            - generic [ref=f16e384]: الأحزاب
+          - generic [ref=f16e385] [cursor=pointer]:
+            - generic [ref=f16e386]: "34"
+            - generic [ref=f16e387]:
+              - generic [ref=f16e388]: Sebe'
+              - generic [ref=f16e389]: 54 Ayet
+            - generic [ref=f16e390]: سبأ
+          - generic [ref=f16e391] [cursor=pointer]:
+            - generic [ref=f16e392]: "35"
+            - generic [ref=f16e393]:
+              - generic [ref=f16e394]: Fâtır
+              - generic [ref=f16e395]: 45 Ayet
+            - generic [ref=f16e396]: فاطر
+          - generic [ref=f16e397] [cursor=pointer]:
+            - generic [ref=f16e398]: "36"
+            - generic [ref=f16e399]:
+              - generic [ref=f16e400]: Yâsîn
+              - generic [ref=f16e401]: 83 Ayet
+            - generic [ref=f16e402]: يس
+          - generic [ref=f16e403] [cursor=pointer]:
+            - generic [ref=f16e404]: "37"
+            - generic [ref=f16e405]:
+              - generic [ref=f16e406]: Sâffât
+              - generic [ref=f16e407]: 182 Ayet
+            - generic [ref=f16e408]: الصافات
+          - generic [ref=f16e409] [cursor=pointer]:
+            - generic [ref=f16e410]: "38"
+            - generic [ref=f16e411]:
+              - generic [ref=f16e412]: Sâd
+              - generic [ref=f16e413]: 88 Ayet
+            - generic [ref=f16e414]: ص
+          - generic [ref=f16e415] [cursor=pointer]:
+            - generic [ref=f16e416]: "39"
+            - generic [ref=f16e417]:
+              - generic [ref=f16e418]: Zümer
+              - generic [ref=f16e419]: 75 Ayet
+            - generic [ref=f16e420]: الزمر
+          - generic [ref=f16e421] [cursor=pointer]:
+            - generic [ref=f16e422]: "40"
+            - generic [ref=f16e423]:
+              - generic [ref=f16e424]: Mü'min
+              - generic [ref=f16e425]: 85 Ayet
+            - generic [ref=f16e426]: غافر
+          - generic [ref=f16e427] [cursor=pointer]:
+            - generic [ref=f16e428]: "41"
+            - generic [ref=f16e429]:
+              - generic [ref=f16e430]: Fussilet
+              - generic [ref=f16e431]: 54 Ayet
+            - generic [ref=f16e432]: فصلت
+          - generic [ref=f16e433] [cursor=pointer]:
+            - generic [ref=f16e434]: "42"
+            - generic [ref=f16e435]:
+              - generic [ref=f16e436]: Şûrâ
+              - generic [ref=f16e437]: 53 Ayet
+            - generic [ref=f16e438]: الشورى
+          - generic [ref=f16e439] [cursor=pointer]:
+            - generic [ref=f16e440]: "43"
+            - generic [ref=f16e441]:
+              - generic [ref=f16e442]: Zuhruf
+              - generic [ref=f16e443]: 89 Ayet
+            - generic [ref=f16e444]: الزخرف
+          - generic [ref=f16e445] [cursor=pointer]:
+            - generic [ref=f16e446]: "44"
+            - generic [ref=f16e447]:
+              - generic [ref=f16e448]: Duhân
+              - generic [ref=f16e449]: 59 Ayet
+            - generic [ref=f16e450]: الدخان
+          - generic [ref=f16e451] [cursor=pointer]:
+            - generic [ref=f16e452]: "45"
+            - generic [ref=f16e453]:
+              - generic [ref=f16e454]: Câsiye
+              - generic [ref=f16e455]: 37 Ayet
+            - generic [ref=f16e456]: الجاثية
+          - generic [ref=f16e457] [cursor=pointer]:
+            - generic [ref=f16e458]: "46"
+            - generic [ref=f16e459]:
+              - generic [ref=f16e460]: Ahkâf
+              - generic [ref=f16e461]: 35 Ayet
+            - generic [ref=f16e462]: الأحقاف
+          - generic [ref=f16e463] [cursor=pointer]:
+            - generic [ref=f16e464]: "47"
+            - generic [ref=f16e465]:
+              - generic [ref=f16e466]: Muhammed
+              - generic [ref=f16e467]: 38 Ayet
+            - generic [ref=f16e468]: محمد
+          - generic [ref=f16e469] [cursor=pointer]:
+            - generic [ref=f16e470]: "48"
+            - generic [ref=f16e471]:
+              - generic [ref=f16e472]: Fetih
+              - generic [ref=f16e473]: 29 Ayet
+            - generic [ref=f16e474]: الفتح
+          - generic [ref=f16e475] [cursor=pointer]:
+            - generic [ref=f16e476]: "49"
+            - generic [ref=f16e477]:
+              - generic [ref=f16e478]: Hucurât
+              - generic [ref=f16e479]: 18 Ayet
+            - generic [ref=f16e480]: الحجرات
+          - generic [ref=f16e481] [cursor=pointer]:
+            - generic [ref=f16e482]: "50"
+            - generic [ref=f16e483]:
+              - generic [ref=f16e484]: Kâf
+              - generic [ref=f16e485]: 45 Ayet
+            - generic [ref=f16e486]: ق
+          - generic [ref=f16e487] [cursor=pointer]:
+            - generic [ref=f16e488]: "51"
+            - generic [ref=f16e489]:
+              - generic [ref=f16e490]: Zâriyât
+              - generic [ref=f16e491]: 60 Ayet
+            - generic [ref=f16e492]: الذاريات
+          - generic [ref=f16e493] [cursor=pointer]:
+            - generic [ref=f16e494]: "52"
+            - generic [ref=f16e495]:
+              - generic [ref=f16e496]: Tûr
+              - generic [ref=f16e497]: 49 Ayet
+            - generic [ref=f16e498]: الطور
+          - generic [ref=f16e499] [cursor=pointer]:
+            - generic [ref=f16e500]: "53"
+            - generic [ref=f16e501]:
+              - generic [ref=f16e502]: Necm
+              - generic [ref=f16e503]: 62 Ayet
+            - generic [ref=f16e504]: النجم
+          - generic [ref=f16e505] [cursor=pointer]:
+            - generic [ref=f16e506]: "54"
+            - generic [ref=f16e507]:
+              - generic [ref=f16e508]: Kamer
+              - generic [ref=f16e509]: 55 Ayet
+            - generic [ref=f16e510]: القمر
+          - generic [ref=f16e511] [cursor=pointer]:
+            - generic [ref=f16e512]: "55"
+            - generic [ref=f16e513]:
+              - generic [ref=f16e514]: Rahmân
+              - generic [ref=f16e515]: 78 Ayet
+            - generic [ref=f16e516]: الرحمن
+          - generic [ref=f16e517] [cursor=pointer]:
+            - generic [ref=f16e518]: "56"
+            - generic [ref=f16e519]:
+              - generic [ref=f16e520]: Vâkıa
+              - generic [ref=f16e521]: 96 Ayet
+            - generic [ref=f16e522]: الواقعة
+          - generic [ref=f16e523] [cursor=pointer]:
+            - generic [ref=f16e524]: "57"
+            - generic [ref=f16e525]:
+              - generic [ref=f16e526]: Hadîd
+              - generic [ref=f16e527]: 29 Ayet
+            - generic [ref=f16e528]: الحديد
+          - generic [ref=f16e529] [cursor=pointer]:
+            - generic [ref=f16e530]: "58"
+            - generic [ref=f16e531]:
+              - generic [ref=f16e532]: Mücâdele
+              - generic [ref=f16e533]: 22 Ayet
+            - generic [ref=f16e534]: المجادلة
+          - generic [ref=f16e535] [cursor=pointer]:
+            - generic [ref=f16e536]: "59"
+            - generic [ref=f16e537]:
+              - generic [ref=f16e538]: Haşr
+              - generic [ref=f16e539]: 24 Ayet
+            - generic [ref=f16e540]: الحشر
+          - generic [ref=f16e541] [cursor=pointer]:
+            - generic [ref=f16e542]: "60"
+            - generic [ref=f16e543]:
+              - generic [ref=f16e544]: Mümtehine
+              - generic [ref=f16e545]: 13 Ayet
+            - generic [ref=f16e546]: الممتحنة
+          - generic [ref=f16e547] [cursor=pointer]:
+            - generic [ref=f16e548]: "61"
+            - generic [ref=f16e549]:
+              - generic [ref=f16e550]: Saff
+              - generic [ref=f16e551]: 14 Ayet
+            - generic [ref=f16e552]: الصف
+          - generic [ref=f16e553] [cursor=pointer]:
+            - generic [ref=f16e554]: "62"
+            - generic [ref=f16e555]:
+              - generic [ref=f16e556]: Cum'a
+              - generic [ref=f16e557]: 11 Ayet
+            - generic [ref=f16e558]: الجمعة
+          - generic [ref=f16e559] [cursor=pointer]:
+            - generic [ref=f16e560]: "63"
+            - generic [ref=f16e561]:
+              - generic [ref=f16e562]: Münâfikûn
+              - generic [ref=f16e563]: 11 Ayet
+            - generic [ref=f16e564]: المنافقون
+          - generic [ref=f16e565] [cursor=pointer]:
+            - generic [ref=f16e566]: "64"
+            - generic [ref=f16e567]:
+              - generic [ref=f16e568]: Teğâbün
+              - generic [ref=f16e569]: 18 Ayet
+            - generic [ref=f16e570]: التغابن
+          - generic [ref=f16e571] [cursor=pointer]:
+            - generic [ref=f16e572]: "65"
+            - generic [ref=f16e573]:
+              - generic [ref=f16e574]: Talâk
+              - generic [ref=f16e575]: 12 Ayet
+            - generic [ref=f16e576]: الطلاق
+          - generic [ref=f16e577] [cursor=pointer]:
+            - generic [ref=f16e578]: "66"
+            - generic [ref=f16e579]:
+              - generic [ref=f16e580]: Tahrîm
+              - generic [ref=f16e581]: 12 Ayet
+            - generic [ref=f16e582]: التحريم
+          - generic [ref=f16e583] [cursor=pointer]:
+            - generic [ref=f16e584]: "67"
+            - generic [ref=f16e585]:
+              - generic [ref=f16e586]: Mülk
+              - generic [ref=f16e587]: 30 Ayet
+            - generic [ref=f16e588]: الملك
+          - generic [ref=f16e589] [cursor=pointer]:
+            - generic [ref=f16e590]: "68"
+            - generic [ref=f16e591]:
+              - generic [ref=f16e592]: Kalem
+              - generic [ref=f16e593]: 52 Ayet
+            - generic [ref=f16e594]: القلم
+          - generic [ref=f16e595] [cursor=pointer]:
+            - generic [ref=f16e596]: "69"
+            - generic [ref=f16e597]:
+              - generic [ref=f16e598]: Hâkka
+              - generic [ref=f16e599]: 52 Ayet
+            - generic [ref=f16e600]: الحاقة
+          - generic [ref=f16e601] [cursor=pointer]:
+            - generic [ref=f16e602]: "70"
+            - generic [ref=f16e603]:
+              - generic [ref=f16e604]: Meâric
+              - generic [ref=f16e605]: 44 Ayet
+            - generic [ref=f16e606]: المعارج
+          - generic [ref=f16e607] [cursor=pointer]:
+            - generic [ref=f16e608]: "71"
+            - generic [ref=f16e609]:
+              - generic [ref=f16e610]: Nûh
+              - generic [ref=f16e611]: 28 Ayet
+            - generic [ref=f16e612]: نوح
+          - generic [ref=f16e613] [cursor=pointer]:
+            - generic [ref=f16e614]: "72"
+            - generic [ref=f16e615]:
+              - generic [ref=f16e616]: Cin
+              - generic [ref=f16e617]: 28 Ayet
+            - generic [ref=f16e618]: الجن
+          - generic [ref=f16e619] [cursor=pointer]:
+            - generic [ref=f16e620]: "73"
+            - generic [ref=f16e621]:
+              - generic [ref=f16e622]: Müzzemmil
+              - generic [ref=f16e623]: 20 Ayet
+            - generic [ref=f16e624]: المزمل
+          - generic [ref=f16e625] [cursor=pointer]:
+            - generic [ref=f16e626]: "74"
+            - generic [ref=f16e627]:
+              - generic [ref=f16e628]: Müddessir
+              - generic [ref=f16e629]: 56 Ayet
+            - generic [ref=f16e630]: المدثر
+          - generic [ref=f16e631] [cursor=pointer]:
+            - generic [ref=f16e632]: "75"
+            - generic [ref=f16e633]:
+              - generic [ref=f16e634]: Kıyâme
+              - generic [ref=f16e635]: 40 Ayet
+            - generic [ref=f16e636]: القيامة
+          - generic [ref=f16e637] [cursor=pointer]:
+            - generic [ref=f16e638]: "76"
+            - generic [ref=f16e639]:
+              - generic [ref=f16e640]: İnsân
+              - generic [ref=f16e641]: 31 Ayet
+            - generic [ref=f16e642]: الإنسان
+          - generic [ref=f16e643] [cursor=pointer]:
+            - generic [ref=f16e644]: "77"
+            - generic [ref=f16e645]:
+              - generic [ref=f16e646]: Mürselât
+              - generic [ref=f16e647]: 50 Ayet
+            - generic [ref=f16e648]: المرسلات
+          - generic [ref=f16e649] [cursor=pointer]:
+            - generic [ref=f16e650]: "78"
+            - generic [ref=f16e651]:
+              - generic [ref=f16e652]: Nebe'
+              - generic [ref=f16e653]: 40 Ayet
+            - generic [ref=f16e654]: النبأ
+          - generic [ref=f16e655] [cursor=pointer]:
+            - generic [ref=f16e656]: "79"
+            - generic [ref=f16e657]:
+              - generic [ref=f16e658]: Nâziât
+              - generic [ref=f16e659]: 46 Ayet
+            - generic [ref=f16e660]: النازعات
+          - generic [ref=f16e661] [cursor=pointer]:
+            - generic [ref=f16e662]: "80"
+            - generic [ref=f16e663]:
+              - generic [ref=f16e664]: Abese
+              - generic [ref=f16e665]: 42 Ayet
+            - generic [ref=f16e666]: عبس
+          - generic [ref=f16e667] [cursor=pointer]:
+            - generic [ref=f16e668]: "81"
+            - generic [ref=f16e669]:
+              - generic [ref=f16e670]: Tekvîr
+              - generic [ref=f16e671]: 29 Ayet
+            - generic [ref=f16e672]: التكوير
+          - generic [ref=f16e673] [cursor=pointer]:
+            - generic [ref=f16e674]: "82"
+            - generic [ref=f16e675]:
+              - generic [ref=f16e676]: İnfitâr
+              - generic [ref=f16e677]: 19 Ayet
+            - generic [ref=f16e678]: الانفطار
+          - generic [ref=f16e679] [cursor=pointer]:
+            - generic [ref=f16e680]: "83"
+            - generic [ref=f16e681]:
+              - generic [ref=f16e682]: Mutaffifîn
+              - generic [ref=f16e683]: 36 Ayet
+            - generic [ref=f16e684]: المطففين
+          - generic [ref=f16e685] [cursor=pointer]:
+            - generic [ref=f16e686]: "84"
+            - generic [ref=f16e687]:
+              - generic [ref=f16e688]: İnşikâk
+              - generic [ref=f16e689]: 25 Ayet
+            - generic [ref=f16e690]: الانشقاق
+          - generic [ref=f16e691] [cursor=pointer]:
+            - generic [ref=f16e692]: "85"
+            - generic [ref=f16e693]:
+              - generic [ref=f16e694]: Burûc
+              - generic [ref=f16e695]: 22 Ayet
+            - generic [ref=f16e696]: البروج
+          - generic [ref=f16e697] [cursor=pointer]:
+            - generic [ref=f16e698]: "86"
+            - generic [ref=f16e699]:
+              - generic [ref=f16e700]: Târık
+              - generic [ref=f16e701]: 17 Ayet
+            - generic [ref=f16e702]: الطارق
+          - generic [ref=f16e703] [cursor=pointer]:
+            - generic [ref=f16e704]: "87"
+            - generic [ref=f16e705]:
+              - generic [ref=f16e706]: A'lâ
+              - generic [ref=f16e707]: 19 Ayet
+            - generic [ref=f16e708]: الأعلى
+          - generic [ref=f16e709] [cursor=pointer]:
+            - generic [ref=f16e710]: "88"
+            - generic [ref=f16e711]:
+              - generic [ref=f16e712]: Gâşiye
+              - generic [ref=f16e713]: 26 Ayet
+            - generic [ref=f16e714]: الغاشية
+          - generic [ref=f16e715] [cursor=pointer]:
+            - generic [ref=f16e716]: "89"
+            - generic [ref=f16e717]:
+              - generic [ref=f16e718]: Fecr
+              - generic [ref=f16e719]: 30 Ayet
+            - generic [ref=f16e720]: الفجر
+          - generic [ref=f16e721] [cursor=pointer]:
+            - generic [ref=f16e722]: "90"
+            - generic [ref=f16e723]:
+              - generic [ref=f16e724]: Beled
+              - generic [ref=f16e725]: 20 Ayet
+            - generic [ref=f16e726]: البلد
+          - generic [ref=f16e727] [cursor=pointer]:
+            - generic [ref=f16e728]: "91"
+            - generic [ref=f16e729]:
+              - generic [ref=f16e730]: Şems
+              - generic [ref=f16e731]: 15 Ayet
+            - generic [ref=f16e732]: الشمس
+          - generic [ref=f16e733] [cursor=pointer]:
+            - generic [ref=f16e734]: "92"
+            - generic [ref=f16e735]:
+              - generic [ref=f16e736]: Leyl
+              - generic [ref=f16e737]: 21 Ayet
+            - generic [ref=f16e738]: الليل
+          - generic [ref=f16e739] [cursor=pointer]:
+            - generic [ref=f16e740]: "93"
+            - generic [ref=f16e741]:
+              - generic [ref=f16e742]: Duhâ
+              - generic [ref=f16e743]: 11 Ayet
+            - generic [ref=f16e744]: الضحى
+          - generic [ref=f16e745] [cursor=pointer]:
+            - generic [ref=f16e746]: "94"
+            - generic [ref=f16e747]:
+              - generic [ref=f16e748]: İnşirâh
+              - generic [ref=f16e749]: 8 Ayet
+            - generic [ref=f16e750]: الشرح
+          - generic [ref=f16e751] [cursor=pointer]:
+            - generic [ref=f16e752]: "95"
+            - generic [ref=f16e753]:
+              - generic [ref=f16e754]: Tîn
+              - generic [ref=f16e755]: 8 Ayet
+            - generic [ref=f16e756]: التين
+          - generic [ref=f16e757] [cursor=pointer]:
+            - generic [ref=f16e758]: "96"
+            - generic [ref=f16e759]:
+              - generic [ref=f16e760]: Alak
+              - generic [ref=f16e761]: 19 Ayet
+            - generic [ref=f16e762]: العلق
+          - generic [ref=f16e763] [cursor=pointer]:
+            - generic [ref=f16e764]: "97"
+            - generic [ref=f16e765]:
+              - generic [ref=f16e766]: Kadir
+              - generic [ref=f16e767]: 5 Ayet
+            - generic [ref=f16e768]: القدر
+          - generic [ref=f16e769] [cursor=pointer]:
+            - generic [ref=f16e770]: "98"
+            - generic [ref=f16e771]:
+              - generic [ref=f16e772]: Beyyine
+              - generic [ref=f16e773]: 8 Ayet
+            - generic [ref=f16e774]: البينة
+          - generic [ref=f16e775] [cursor=pointer]:
+            - generic [ref=f16e776]: "99"
+            - generic [ref=f16e777]:
+              - generic [ref=f16e778]: Zilzâl
+              - generic [ref=f16e779]: 8 Ayet
+            - generic [ref=f16e780]: الزلزلة
+          - generic [ref=f16e781] [cursor=pointer]:
+            - generic [ref=f16e782]: "100"
+            - generic [ref=f16e783]:
+              - generic [ref=f16e784]: Âdiyât
+              - generic [ref=f16e785]: 11 Ayet
+            - generic [ref=f16e786]: العاديات
+          - generic [ref=f16e787] [cursor=pointer]:
+            - generic [ref=f16e788]: "101"
+            - generic [ref=f16e789]:
+              - generic [ref=f16e790]: Kâria
+              - generic [ref=f16e791]: 11 Ayet
+            - generic [ref=f16e792]: القارعة
+          - generic [ref=f16e793] [cursor=pointer]:
+            - generic [ref=f16e794]: "102"
+            - generic [ref=f16e795]:
+              - generic [ref=f16e796]: Tekâsür
+              - generic [ref=f16e797]: 8 Ayet
+            - generic [ref=f16e798]: التكاثر
+          - generic [ref=f16e799] [cursor=pointer]:
+            - generic [ref=f16e800]: "103"
+            - generic [ref=f16e801]:
+              - generic [ref=f16e802]: Asr
+              - generic [ref=f16e803]: 3 Ayet
+            - generic [ref=f16e804]: العصر
+          - generic [ref=f16e805] [cursor=pointer]:
+            - generic [ref=f16e806]: "104"
+            - generic [ref=f16e807]:
+              - generic [ref=f16e808]: Hümeze
+              - generic [ref=f16e809]: 9 Ayet
+            - generic [ref=f16e810]: الهمزة
+          - generic [ref=f16e811] [cursor=pointer]:
+            - generic [ref=f16e812]: "105"
+            - generic [ref=f16e813]:
+              - generic [ref=f16e814]: Fîl
+              - generic [ref=f16e815]: 5 Ayet
+            - generic [ref=f16e816]: الفيل
+          - generic [ref=f16e817] [cursor=pointer]:
+            - generic [ref=f16e818]: "106"
+            - generic [ref=f16e819]:
+              - generic [ref=f16e820]: Kureyş
+              - generic [ref=f16e821]: 4 Ayet
+            - generic [ref=f16e822]: قريش
+          - generic [ref=f16e823] [cursor=pointer]:
+            - generic [ref=f16e824]: "107"
+            - generic [ref=f16e825]:
+              - generic [ref=f16e826]: Mâûn
+              - generic [ref=f16e827]: 7 Ayet
+            - generic [ref=f16e828]: الماعون
+          - generic [ref=f16e829] [cursor=pointer]:
+            - generic [ref=f16e830]: "108"
+            - generic [ref=f16e831]:
+              - generic [ref=f16e832]: Kevser
+              - generic [ref=f16e833]: 3 Ayet
+            - generic [ref=f16e834]: الكوثر
+          - generic [ref=f16e835] [cursor=pointer]:
+            - generic [ref=f16e836]: "109"
+            - generic [ref=f16e837]:
+              - generic [ref=f16e838]: Kâfirûn
+              - generic [ref=f16e839]: 6 Ayet
+            - generic [ref=f16e840]: الكافرون
+          - generic [ref=f16e841] [cursor=pointer]:
+            - generic [ref=f16e842]: "110"
+            - generic [ref=f16e843]:
+              - generic [ref=f16e844]: Nasr
+              - generic [ref=f16e845]: 3 Ayet
+            - generic [ref=f16e846]: النصر
+          - generic [ref=f16e847] [cursor=pointer]:
+            - generic [ref=f16e848]: "111"
+            - generic [ref=f16e849]:
+              - generic [ref=f16e850]: Tebbet
+              - generic [ref=f16e851]: 5 Ayet
+            - generic [ref=f16e852]: المسد
+          - generic [ref=f16e853] [cursor=pointer]:
+            - generic [ref=f16e854]: "112"
+            - generic [ref=f16e855]:
+              - generic [ref=f16e856]: İhlâs
+              - generic [ref=f16e857]: 4 Ayet
+            - generic [ref=f16e858]: الإخلاص
+          - generic [ref=f16e859] [cursor=pointer]:
+            - generic [ref=f16e860]: "113"
+            - generic [ref=f16e861]:
+              - generic [ref=f16e862]: Felak
+              - generic [ref=f16e863]: 5 Ayet
+            - generic [ref=f16e864]: الفلق
+          - generic [ref=f16e865] [cursor=pointer]:
+            - generic [ref=f16e866]: "114"
+            - generic [ref=f16e867]:
+              - generic [ref=f16e868]: Nâs
+              - generic [ref=f16e869]: 6 Ayet
+            - generic [ref=f16e870]: الناس
+      - generic [ref=f16e871]:
+        - generic [ref=f16e872]:
+          - generic [ref=f16e873]: Fatiha
+          - generic [ref=f16e874]: ·
+          - generic [ref=f16e875]: 1. Ayet
+        - generic [ref=f16e877]:
+          - generic [ref=f16e878]:
+            - generic [ref=f16e879]: الفاتحة
+            - generic [ref=f16e880]: Fatiha
+            - generic [ref=f16e881]:
+              - text: Mekki
+              - generic [ref=f16e882]: 7 Ayet
+          - generic [ref=f16e883]:
+            - generic [ref=f16e884]:
+              - generic [ref=f16e885]: "1"
+              - generic [ref=f16e886]:
+                - button [ref=f16e887] [cursor=pointer]:
+                  - img [ref=f16e888]
+                - button [ref=f16e890] [cursor=pointer]:
+                  - img [ref=f16e891]
+            - generic [ref=f16e893]: بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ
+            - generic [ref=f16e894]: Türkçe okunuş
+            - generic [ref=f16e895]: Bismillahir rahmanir rahim.
+            - generic [ref=f16e896]: Diyanet Vakfi (Turkce)
+            - generic [ref=f16e897]: Rahman (ve) rahim (olan) Allah'ın adıyla.
+          - generic [ref=f16e898]:
+            - generic [ref=f16e899]:
+              - generic [ref=f16e900]: "2"
+              - generic [ref=f16e901]:
+                - button [ref=f16e902] [cursor=pointer]:
+                  - img [ref=f16e903]
+                - button [ref=f16e905] [cursor=pointer]:
+                  - img [ref=f16e906]
+            - generic [ref=f16e908]: ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَـٰلَمِینَ
+            - generic [ref=f16e909]: Türkçe okunuş
+            - generic [ref=f16e910]: El hamdu lillahi rabbil alemin .
+            - generic [ref=f16e911]: Diyanet Vakfi (Turkce)
+            - generic [ref=f16e912]: Hamd (övme ve övülme), alemlerin Rabbi Allah'a mahsustur.
+          - generic [ref=f16e913]:
+            - generic [ref=f16e914]:
+              - generic [ref=f16e915]: "3"
+              - generic [ref=f16e916]:
+                - button [ref=f16e917] [cursor=pointer]:
+                  - img [ref=f16e918]
+                - button [ref=f16e920] [cursor=pointer]:
+                  - img [ref=f16e921]
+            - generic [ref=f16e923]: ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ
+            - generic [ref=f16e924]: Türkçe okunuş
+            - generic [ref=f16e925]: Er rahmanir rahim.
+            - generic [ref=f16e926]: Diyanet Vakfi (Turkce)
+            - generic [ref=f16e927]: O, rahmandır ve rahimdir.
+          - generic [ref=f16e928]:
+            - generic [ref=f16e929]:
+              - generic [ref=f16e930]: "4"
+              - generic [ref=f16e931]:
+                - button [ref=f16e932] [cursor=pointer]:
+                  - img [ref=f16e933]
+                - button [ref=f16e935] [cursor=pointer]:
+                  - img [ref=f16e936]
+            - generic [ref=f16e938]: مَـٰلِكِ یَوۡمِ ٱلدِّینِ
+            - generic [ref=f16e939]: Türkçe okunuş
+            - generic [ref=f16e940]: Maliki yevmid din.
+            - generic [ref=f16e941]: Diyanet Vakfi (Turkce)
+            - generic [ref=f16e942]: Ceza gününün malikidir.
+          - generic [ref=f16e943]:
+            - generic [ref=f16e944]:
+              - generic [ref=f16e945]: "5"
+              - generic [ref=f16e946]:
+                - button [ref=f16e947] [cursor=pointer]:
+                  - img [ref=f16e948]
+                - button [ref=f16e950] [cursor=pointer]:
+                  - img [ref=f16e951]
+            - generic [ref=f16e953]: إِیَّاكَ نَعۡبُدُ وَإِیَّاكَ نَسۡتَعِینُ
+            - generic [ref=f16e954]: Türkçe okunuş
+            - generic [ref=f16e955]: İyyake na'budu ve iyyake nestain.
+            - generic [ref=f16e956]: Diyanet Vakfi (Turkce)
+            - generic [ref=f16e957]: (Rabbimiz!) Ancak sana kulluk ederiz ve yalnız senden medet umarız.
+          - generic [ref=f16e958]:
+            - generic [ref=f16e959]:
+              - generic [ref=f16e960]: "6"
+              - generic [ref=f16e961]:
+                - button [ref=f16e962] [cursor=pointer]:
+                  - img [ref=f16e963]
+                - button [ref=f16e965] [cursor=pointer]:
+                  - img [ref=f16e966]
+            - generic [ref=f16e968]: ٱهۡدِنَا ٱلصِّرَ ٰ⁠طَ ٱلۡمُسۡتَقِیمَ
+            - generic [ref=f16e969]: Türkçe okunuş
+            - generic [ref=f16e970]: İhdinas sıratel mustakim.
+            - generic [ref=f16e971]: Diyanet Vakfi (Turkce)
+            - generic [ref=f16e972]: Bize doğru yolu göster.
+          - generic [ref=f16e973]:
+            - generic [ref=f16e974]:
+              - generic [ref=f16e975]: "7"
+              - generic [ref=f16e976]:
+                - button [ref=f16e977] [cursor=pointer]:
+                  - img [ref=f16e978]
+                - button [ref=f16e980] [cursor=pointer]:
+                  - img [ref=f16e981]
+            - generic [ref=f16e983]: صِرَ ٰ⁠طَ ٱلَّذِینَ أَنۡعَمۡتَ عَلَیۡهِمۡ غَیۡرِ ٱلۡمَغۡضُوبِ عَلَیۡهِمۡ وَلَا ٱلضَّاۤلِّینَ
+            - generic [ref=f16e984]: Türkçe okunuş
+            - generic [ref=f16e985]: Sıratallezine en'amte aleyhim gayril magdubi aleyhim ve lad dallin.
+            - generic [ref=f16e986]: Diyanet Vakfi (Turkce)
+            - generic [ref=f16e987]: Kendilerine lütuf ve ikramda bulunduğun kimselerin yolunu; gazaba uğramışların ve sapmışların yolunu değil!
+      - generic [ref=f16e988]:
+        - generic [ref=f16e989]:
+          - generic [ref=f16e990]:
+            - generic [ref=f16e992]: Ayet Seç
+            - generic [ref=f16e993]:
+              - generic [ref=f16e994]: Seçili Ayet
+              - strong [ref=f16e995]: 1. Ayet
+          - slider "Ayet Seç" [ref=f16e997]: "1"
+          - generic [ref=f16e998]:
+            - generic [ref=f16e999]: 1. Ayet
+            - generic [ref=f16e1000]: "Toplam: 7 Ayet"
+        - generic [ref=f16e1001]:
+          - button [disabled] [ref=f16e1002]:
+            - img [ref=f16e1003]
+          - button [ref=f16e1005] [cursor=pointer]:
+            - img [ref=f16e1006]
+          - button [disabled] [ref=f16e1008]:
+            - img [ref=f16e1009]
+    - navigation "Ana gezinme" [ref=f16e124]:
+      - button "Anasayfa" [ref=f16e125] [cursor=pointer]:
+        - img [ref=f16e126]
+        - generic [ref=f16e129]: Anasayfa
+      - button "Kuran" [active] [ref=f16e130] [cursor=pointer]:
+        - img [ref=f16e131]
+        - generic [ref=f16e133]: Kuran
+      - button "Asistan" [ref=f16e134] [cursor=pointer]:
+        - img [ref=f16e136]
+        - generic [ref=f16e139]: Asistan
+      - button "Cemaat" [ref=f16e140] [cursor=pointer]:
+        - img [ref=f16e141]
+        - generic [ref=f16e146]: Cemaat
+      - button "Menü" [ref=f16e147] [cursor=pointer]:
+        - img [ref=f16e148]
+        - generic [ref=f16e149]: Menü
+  - generic "Notifications"

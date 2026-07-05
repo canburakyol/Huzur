@@ -32,7 +32,7 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
         description: t('churn.offer.discountDesc', 'Gitmeyin diye önümüzdeki 3 ay boyunca %30 indirim kazandınız. Huzur’la kalmaya devam edin.'),
         actionType: 'apply_discount',
         actionLabel: t('churn.offer.acceptDiscount', 'İndirimi Kabul Et'),
-        icon: <ShieldCheck size={40} color="#10B981" />
+        icon: <ShieldCheck size={40} color="var(--secondary)" />
       };
     } else if (selectedReason === 'not_using') {
       return {
@@ -40,7 +40,7 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
         description: t('churn.offer.pauseDesc', 'Tamamen iptal etmek yerine 1 ay boyunca ücretsiz dondurun. Hazır olduğunuzda kaldığınız yerden devam edin.'),
         actionType: 'pause',
         actionLabel: t('churn.offer.acceptPause', 'Aboneliği Dondur'),
-        icon: <Heart size={40} color="#8B5CF6" />
+        icon: <Heart size={40} color="var(--tertiary)" />
       };
     } else {
       // Default fallback offer / Feature showcase
@@ -49,7 +49,7 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
         description: t('churn.offer.helpDesc', 'Daha iyi bir deneyim için özel destek ekibimizle görüşmek ister misiniz? Müşteri memnuniyeti bizim için her şeydir.'),
         actionType: 'support',
         actionLabel: t('churn.offer.contactSupport', 'Destekle Görüş'),
-        icon: <Heart size={40} color="#3B82F6" />
+        icon: <Heart size={40} color="var(--primary)" />
       };
     }
   };
@@ -86,7 +86,7 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
         
         {/* Close Button top right */}
         <button onClick={onClose} style={closeBtnStyle} disabled={isProcessing}>
-          <X size={20} color="#9ca3af" />
+          <X size={20} color="var(--on-surface-variant)" />
         </button>
 
         {step === 1 && (
@@ -141,9 +141,9 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
         {step === 3 && (
           <div className="step-confirm" style={contentStyle}>
              <div style={{ marginBottom: 20, display: 'flex', justifyContent: 'center' }}>
-              <AlertTriangle size={40} color="#EF4444" />
+              <AlertTriangle size={40} color="var(--error)" />
             </div>
-            <h2 style={{...titleStyle, color: '#EF4444'}}>{t('churn.confirm.title', 'Emin Misiniz?')}</h2>
+            <h2 style={{...titleStyle, color: 'var(--error)'}}>{t('churn.confirm.title', 'Emin Misiniz?')}</h2>
             <p style={descStyle}>
               {t('churn.confirm.desc', 'Aboneliğinizi iptal etmeniz durumunda, mevcut döneminizin sonunda Pro özelliklerine erişiminizi kaybedeceksiniz. Tüm reklamsız deneyim ve premium içerikler sonlanacaktır.')}
             </p>
@@ -178,7 +178,7 @@ const overlayStyle = {
 };
 
 const modalStyle = {
-  backgroundColor: '#1E293B', // Tailwind slate-800
+  backgroundColor: 'var(--surface-container-lowest)',
   borderRadius: 24,
   width: '100%',
   maxWidth: 400,
@@ -204,7 +204,7 @@ const contentStyle = {
 };
 
 const titleStyle = {
-  color: '#fff',
+  color: 'var(--on-primary)',
   fontSize: 22,
   fontWeight: '700',
   marginBottom: 12,
@@ -212,7 +212,7 @@ const titleStyle = {
 };
 
 const descStyle = {
-  color: '#9CA3AF',
+  color: 'var(--on-surface-variant)',
   fontSize: 15,
   lineHeight: 1.5,
   marginBottom: 24
@@ -233,7 +233,7 @@ const reasonBtnStyle = {
   backgroundColor: 'rgba(255,255,255,0.05)',
   border: '1px solid rgba(255,255,255,0.1)',
   borderRadius: 12,
-  color: '#fff',
+  color: 'var(--on-primary)',
   fontSize: 15,
   cursor: 'pointer',
   transition: 'all 0.2s',
@@ -247,8 +247,8 @@ const footerStyle = {
 const primaryBtnStyle = {
   width: '100%',
   padding: '16px',
-  backgroundColor: '#d4af37',
-  color: '#14352a',
+  backgroundColor: 'var(--tertiary)',
+  color: 'var(--on-tertiary)',
   border: 'none',
   borderRadius: 12,
   fontSize: 16,
@@ -260,7 +260,7 @@ const ghostBtnStyle = {
   width: '100%',
   padding: '14px',
   backgroundColor: 'transparent',
-  color: '#9CA3AF',
+  color: 'var(--on-surface-variant)',
   border: 'none',
   fontSize: 15,
   fontWeight: '500',
@@ -271,7 +271,7 @@ const destructiveBtnStyle = {
   width: '100%',
   padding: '14px',
   backgroundColor: 'rgba(239, 68, 68, 0.1)',
-  color: '#EF4444',
+  color: 'var(--error)',
   border: '1px solid rgba(239, 68, 68, 0.2)',
   borderRadius: 12,
   fontSize: 15,

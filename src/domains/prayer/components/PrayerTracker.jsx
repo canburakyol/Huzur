@@ -47,7 +47,7 @@ const PrayerTracker = ({ onClose }) => {
     };
 
     const items = [
-        { key: 'sabah', label: t('prayers.fajr', 'Sabah Namazı'), icon: '🌅', rekat: 2, color: '#f59e0b' },
+        { key: 'sabah', label: t('prayers.fajr', 'Sabah Namazı'), icon: '🌅', rekat: 2, color: 'var(--secondary)' },
         { key: 'ogle', label: t('prayers.dhuhr', 'Öğle Namazı'), icon: '☀️', rekat: 4, color: '#10b981' },
         { key: 'ikindi', label: t('prayers.asr', 'İkindi Namazı'), icon: '🌤️', rekat: 4, color: '#3b82f6' },
         { key: 'aksam', label: t('prayers.maghrib', 'Akşam Namazı'), icon: '🌆', rekat: 3, color: '#ec4899' },

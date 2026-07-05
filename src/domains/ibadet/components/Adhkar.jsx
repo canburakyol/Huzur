@@ -173,7 +173,7 @@ const Adhkar = ({ onClose }) => {
                         transition: 'all 0.2s'
                     }}
                 >
-                    <Sunrise size={18} color={activeTab === 'morning' ? 'var(--primary-color)' : 'currentColor'} /> 
+                    <Sunrise size={18} color={activeTab === 'morning' ? 'var(--primary)' : 'currentColor'} />
                     {t('adhkar.morning', 'Sabah')}
                 </button>
                 <button
@@ -187,13 +187,13 @@ const Adhkar = ({ onClose }) => {
                         transition: 'all 0.2s'
                     }}
                 >
-                    <Moon size={18} color={activeTab === 'evening' ? 'var(--bg-emerald-light)' : 'currentColor'} /> 
+                    <Moon size={18} color={activeTab === 'evening' ? 'var(--surface-container)' : 'currentColor'} />
                     {t('adhkar.evening', 'Akşam')}
                 </button>
             </div>
 
             {/* Overall Progress Card */}
-            <div className="settings-card" style={{ background: activeTab === 'morning' ? 'linear-gradient(135deg, var(--primary-color), var(--primary-dark))' : 'linear-gradient(135deg, var(--bg-emerald-light), var(--bg-emerald-deep))', color: 'white', border: 'none', padding: '24px', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
+            <div className="settings-card" style={{ background: activeTab === 'morning' ? 'linear-gradient(135deg, var(--primary), var(--primary))' : 'linear-gradient(135deg, var(--surface-container), var(--primary-container))', color: 'var(--on-primary)', border: 'none', padding: '24px', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                     <div>
                         <div style={{ fontSize: '0.85rem', fontWeight: '700', opacity: 0.9 }}>{t('adhkar.dailyProgress', 'Günlük İlerleme')}</div>
@@ -202,7 +202,7 @@ const Adhkar = ({ onClose }) => {
                     <Zap size={32} />
                 </div>
                 <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.2)', borderRadius: '10px', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${overallProgress}%`, background: 'white', transition: 'width 0.4s ease' }} />
+                    <div style={{ height: '100%', width: `${overallProgress}%`, background: 'var(--surface-card)', transition: 'width 0.4s ease' }} />
                 </div>
             </div>
 
@@ -228,13 +228,13 @@ const Adhkar = ({ onClose }) => {
                                 >
                                     <div className="settings-card-left">
                                         <div className="settings-icon-box" style={{ 
-                                            background: isComplete ? 'var(--bg-emerald-light)' : 'var(--nav-hover)', 
-                                            color: isComplete ? 'white' : 'var(--nav-text)' 
+                                            background: isComplete ? 'var(--surface-container)' : 'var(--nav-hover)',
+                                            color: isComplete ? 'var(--on-primary)' : 'var(--nav-text)'
                                         }}>
                                             {isComplete ? <Check size={18} /> : <span>{current}</span>}
                                         </div>
                                         <div>
-                                            <div className="settings-label" style={{ color: isComplete ? 'var(--bg-emerald-med)' : 'var(--nav-text)' }}>
+                                            <div className="settings-label" style={{ color: isComplete ? 'var(--secondary-container)' : 'var(--nav-text)' }}>
                                                 {t(`adhkar.items.${adhkar.key}.title`)}
                                             </div>
                                             <div className="settings-desc">{current} / {adhkar.count} {t('adhkar.times', 'kere')}</div>
@@ -270,8 +270,8 @@ const Adhkar = ({ onClose }) => {
                                         </div>
 
                                         <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', background: 'rgba(15, 118, 110, 0.08)', padding: '12px', borderRadius: '12px' }}>
-                                            <CheckCircle2 size={16} color="var(--bg-emerald-light)" style={{ marginTop: '2px' }} />
-                                            <div style={{ fontSize: '0.85rem', color: 'var(--bg-emerald-med)', fontWeight: '600' }}>{t(adhkar.benefitKey)}</div>
+                                            <CheckCircle2 size={16} color="var(--surface-container)" style={{ marginTop: '2px' }} />
+                                            <div style={{ fontSize: '0.85rem', color: 'var(--secondary-container)', fontWeight: '600' }}>{t(adhkar.benefitKey)}</div>
                                         </div>
 
                                         <button
@@ -279,8 +279,8 @@ const Adhkar = ({ onClose }) => {
                                             disabled={isComplete}
                                             style={{
                                                 width: '100%', padding: '18px', borderRadius: '16px', border: 'none',
-                                                background: isComplete ? 'var(--bg-emerald-light)' : (activeTab === 'morning' ? 'var(--primary-color)' : 'var(--bg-emerald-light)'),
-                                                color: 'white', fontWeight: '800', fontSize: '1.1rem', cursor: isComplete ? 'default' : 'pointer',
+                                                background: isComplete ? 'var(--surface-container)' : (activeTab === 'morning' ? 'var(--primary)' : 'var(--surface-container)'),
+                                                color: 'var(--on-primary)', fontWeight: '800', fontSize: '1.1rem', cursor: isComplete ? 'default' : 'pointer',
                                                 boxShadow: isComplete ? 'none' : '0 4px 12px rgba(0,0,0,0.1)',
                                                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px'
                                             }}

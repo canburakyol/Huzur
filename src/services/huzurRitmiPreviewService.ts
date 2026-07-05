@@ -11,8 +11,8 @@ type PreviewPlan = {
 
 const PREVIEW_PLANS: Record<string, PreviewPlan> = {
   prayer_rhythm: {
-    title: 'Bugunku namaz ritmin hazir',
-    subtitle: 'Tek sakin adimla bugunu bos gecirmemeye odaklan.',
+    title: 'Bugunku ibadet rutinin hazir',
+    subtitle: 'Namaz, zikir ve kisa gunluk adimi tek sade akista tut.',
     steps: [
       {
         label: 'Vakit odagi',
@@ -29,8 +29,8 @@ const PREVIEW_PLANS: Record<string, PreviewPlan> = {
     ],
   },
   quran_learning: {
-    title: 'Bugunku Kuran ve dua adimin hazir',
-    subtitle: 'Uzun bir ders degil; kisa, anlasilir ve surdurulebilir bir bag.',
+    title: 'Bugunku Kuran ve dua rutinin hazir',
+    subtitle: 'Kisa okuma ve duayi gunluk ibadet ritmine bagla.',
     steps: [
       {
         label: 'Kisa okuma',
@@ -47,20 +47,20 @@ const PREVIEW_PLANS: Record<string, PreviewPlan> = {
     ],
   },
   family_consistency: {
-    title: 'Aile ritmin icin ilk halka hazir',
-    subtitle: 'Buyuk hedefler yerine bugun birlikte atilacak tek sakin adim.',
+    title: 'Ailece ibadet rutinin hazir',
+    subtitle: 'Sosyal akisa dagilmadan bugun birlikte atilacak tek sakin adim.',
     steps: [
       {
-        label: 'Aile daveti',
-        text: 'Bir kisiyi bugunku kisa dua ritmine nazikce davet et.',
+        label: 'Ortak niyet',
+        text: 'Ailece bugun icin tek namaz, dua veya zikir niyeti belirle.',
       },
       {
         label: 'Ortak dua',
-        text: 'Ailece veya bir dostunla ayni niyet icin kisa bir dua belirle.',
+        text: 'Ayni niyet icin kisa bir dua okuyup gunluk rutini baslat.',
       },
       {
         label: 'Kucuk hedef',
-        text: 'Bugun sadece bir ortak hatirlatma veya dua mesaji yeterli.',
+        text: 'Bugun sadece bir ortak hatirlatma ve tamamlanan tek adim yeterli.',
       },
     ],
   },
@@ -73,7 +73,7 @@ export const getHuzurRitmiPreview = (goal = 'prayer_rhythm'): PreviewPlan => (
 export const buildHuzurRitmiAnalyticsPayload = (goal = 'prayer_rhythm', extra: Record<string, unknown> = {}): Record<string, unknown> => ({
   source: 'huzur_ritmi_preview',
   primary_goal: PREVIEW_PLANS[goal] ? goal : 'prayer_rhythm',
-  preview_version: 'v1',
+  preview_version: 'daily_ibadah_v2',
   ...extra,
 });
 

@@ -8,7 +8,7 @@ describe('huzurRitmiPreviewService', () => {
   it('builds the prayer rhythm preview', () => {
     const preview = getHuzurRitmiPreview('prayer_rhythm');
 
-    expect(preview.title).toContain('namaz');
+    expect(preview.title).toContain('ibadet');
     expect(preview.steps).toHaveLength(3);
     expect(preview.steps.map((step) => step.label)).toEqual([
       'Vakit odagi',
@@ -33,7 +33,7 @@ describe('huzurRitmiPreviewService', () => {
 
     expect(preview.title).toContain('Aile');
     expect(preview.steps.map((step) => step.label)).toEqual([
-      'Aile daveti',
+      'Ortak niyet',
       'Ortak dua',
       'Kucuk hedef',
     ]);
@@ -43,7 +43,7 @@ describe('huzurRitmiPreviewService', () => {
     expect(buildHuzurRitmiAnalyticsPayload('unknown')).toMatchObject({
       source: 'huzur_ritmi_preview',
       primary_goal: 'prayer_rhythm',
-      preview_version: 'v1',
+      preview_version: 'daily_ibadah_v2',
     });
   });
 });

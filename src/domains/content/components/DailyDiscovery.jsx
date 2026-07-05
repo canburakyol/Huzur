@@ -131,7 +131,7 @@ const DailyDiscovery = ({ onNavigate }) => {
                   borderRadius: '50%', padding: '4px',
                   display: 'flex', alignItems: 'center', justifyContent: 'center'
                 }}>
-                  <Check size={12} color="#fff" />
+                  <Check size={12} color='var(--on-primary)' />
                 </div>
               )}
 
@@ -153,7 +153,7 @@ const DailyDiscovery = ({ onNavigate }) => {
               {/* Card content */}
               <div style={{
                 fontSize: '0.85rem', fontWeight: '700',
-                color: '#fff', lineHeight: '1.5',
+                color: 'var(--on-primary)', lineHeight: '1.5',
                 marginBottom: '12px',
                 display: '-webkit-box',
                 WebkitLineClamp: 4,

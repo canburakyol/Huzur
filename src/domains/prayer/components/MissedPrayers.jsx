@@ -79,7 +79,7 @@ const MissedPrayers = ({ onClose }) => {
   };
 
   const prayers = [
-    { id: 'fajr', label: t('prayer.fajr'), color: '#f59e0b', icon: <Sunrise size={20} /> },
+    { id: 'fajr', label: t('prayer.fajr'), color: 'var(--secondary)', icon: <Sunrise size={20} /> },
     { id: 'dhuhr', label: t('prayer.dhuhr'), color: '#3b82f6', icon: <Sun size={20} /> },
     { id: 'asr', label: t('prayer.asr'), color: '#f97316', icon: <CloudSun size={20} /> },
     { id: 'maghrib', label: t('prayer.maghrib'), color: '#8b5cf6', icon: <Sunset size={20} /> },
@@ -138,10 +138,10 @@ const MissedPrayers = ({ onClose }) => {
                 <button 
                   onClick={calculateMissed}
                   style={{ 
-                    width: '100%', padding: '16px', background: 'var(--nav-accent)', color: 'white', 
+                    width: '100%', padding: '16px', background: 'var(--nav-accent)', color: 'var(--on-primary)',
                     border: 'none', borderRadius: '16px', fontWeight: '800', fontSize: '1rem', 
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
-                    boxShadow: '0 4px 12px rgba(249, 115, 22, 0.2)'
+                    boxShadow: '0 4px 12px color-mix(in srgb, var(--tertiary) 20%, transparent)'
                   }}
                   disabled={!birthDate}
                 >
@@ -157,7 +157,7 @@ const MissedPrayers = ({ onClose }) => {
         ) : (
           <div className="tracker-view animate-slideUp">
              {/* Stats Card */}
-             <div className="settings-card" style={{ background: 'var(--nav-accent)', color: 'white', border: 'none', padding: '24px' }}>
+             <div className="settings-card" style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)', border: 'none', padding: '24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                     <div>
                         <div style={{ fontSize: '0.85rem', fontWeight: '700', opacity: 0.9 }}>{t('missedPrayers.totalMissed', 'Toplam Kaza Borcu')}</div>

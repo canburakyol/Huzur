@@ -61,7 +61,7 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
           {/* Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '24px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div className="settings-icon-box" style={{ background: 'rgba(245, 158, 11, 0.15)', color: 'var(--primary-color)' }}>
+                <div className="settings-icon-box" style={{ background: 'rgba(245, 158, 11, 0.15)', color: 'var(--primary)' }}>
                     <Flame size={20} />
                 </div>
                 <div>
@@ -80,8 +80,8 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
                     <span className="stat-value">{categoryData?.count || 0}</span>
                 </div>
                 <div className="stat-badge" style={{ borderColor: 'rgba(59, 130, 246, 0.3)' }}>
-                    < Snowflake size={12} color="var(--accent-color)" />
-                    <span className="stat-value" style={{ color: 'var(--accent-color)' }}>{categoryData?.freezeTokens || 0}</span>
+                    < Snowflake size={12} color="var(--accent)" />
+                    <span className="stat-value" style={{ color: 'var(--accent)' }}>{categoryData?.freezeTokens || 0}</span>
                 </div>
             </div>
           </div>
@@ -118,11 +118,11 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
               paddingTop: '16px', borderTop: '1px solid var(--nav-border)', width: '100%' 
           }}>
             <div className="legend-item">
-              <div className="legend-dot" style={{ background: 'var(--bg-emerald-light)' }} />
+              <div className="legend-dot" style={{ background: 'var(--surface-container)' }} />
               <span>{t('streakCalendar.legend.completed', 'Tamamlandı')}</span>
             </div>
             <div className="legend-item">
-              <div className="legend-dot" style={{ background: 'var(--accent-color)' }} />
+              <div className="legend-dot" style={{ background: 'var(--accent)' }} />
               <span>{t('streakCalendar.legend.frozen', 'Donduruldu')}</span>
             </div>
             <div className="legend-item">
@@ -217,15 +217,15 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
         }
 
         .calendar-day.activity {
-            background: rgba(15, 118, 110, 0.15);
-            border: 1px solid rgba(15, 118, 110, 0.3);
-            color: var(--bg-emerald-light);
+            background: color-mix(in srgb, var(--secondary) 15%, transparent);
+            border: 1px solid color-mix(in srgb, var(--secondary) 30%, transparent);
+            color: var(--surface-container);
         }
 
         .calendar-day.frozen {
             background: rgba(59, 130, 246, 0.15);
             border: 1px solid rgba(59, 130, 246, 0.3);
-            color: var(--accent-color);
+            color: var(--accent);
         }
 
         .calendar-day.missed {
@@ -244,9 +244,9 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
             bottom: 6px;
             width: 4px;
             height: 4px;
-            background: var(--bg-emerald-light);
+            background: var(--surface-container);
             border-radius: 50%;
-            box-shadow: 0 0 8px rgba(15, 118, 110, 0.5);
+            box-shadow: 0 0 8px color-mix(in srgb, var(--secondary) 50%, transparent);
         }
 
         .status-icon.frozen {

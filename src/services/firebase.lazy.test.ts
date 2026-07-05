@@ -9,6 +9,26 @@ const loggerMock = vi.hoisted(() => ({
   warn: vi.fn(),
 }));
 
+const nativePrivacySdkMock = vi.hoisted(() => ({
+  initializePrivacySdks: vi.fn(async () => ({ success: true, telemetryEnabled: true })),
+}));
+
+vi.mock('@capacitor/core', () => ({
+  Capacitor: {
+    getPlatform: vi.fn(() => 'android'),
+  },
+}));
+
+vi.mock('../plugins/AppCheckPlugin', () => ({
+  AppCheck: nativePrivacySdkMock,
+}));
+
+vi.mock('@capacitor-firebase/app-check', () => ({
+  FirebaseAppCheck: {
+    getToken: vi.fn(async () => ({ token: 'test-token', expireTimeMillis: Date.now() + 60_000 })),
+  },
+}));
+
 vi.mock('./privacyModeService', () => telemetryMock);
 
 vi.mock('../utils/logger', () => ({
@@ -59,7 +79,19 @@ describe('firebase lazy getters', () => {
 
     expect(first).toBe(second);
     expect(firebaseApp.initializeApp).toHaveBeenCalledTimes(1);
+    expect(nativePrivacySdkMock.initializePrivacySdks).toHaveBeenCalledTimes(1);
     expect(firestore.initializeFirestore).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not request native App Check initialization without telemetry consent', async () => {
+    telemetryMock.isTelemetryEnabledSync.mockReturnValue(false);
+    const appCheck = await import('firebase/app-check');
+    const { getDb } = await importFirebaseService();
+
+    await getDb();
+
+    expect(nativePrivacySdkMock.initializePrivacySdks).not.toHaveBeenCalled();
+    expect(appCheck.initializeAppCheck).not.toHaveBeenCalled();
   });
 
   it('initializes Auth only when getAuthInstance is called and reuses the cached instance', async () => {

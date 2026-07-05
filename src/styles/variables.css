@@ -1,98 +1,305 @@
+/* Serene Equilibrium Unified Design System - Huzur Visual Constitution */
+
 :root {
-  /* Premium Deep Islamic Palette */
-  --bg-emerald-deep: #064e3b;
-  --bg-emerald-med: #065f46;
-  --bg-emerald-light: #0f766e;
-  --bg-gradient-start: var(--bg-emerald-deep);
-  --bg-gradient-end: #042f2e;
-  --accent-gold: #b45309;
-  --accent-gold-light: #f59e0b;
-  --accent-gold-shimmer: #fbbf24;
-  --primary-color: var(--accent-gold);
-  --primary-dark: #78350f;
-  --accent-color: var(--accent-gold-light);
-  --text-primary: #f8fafc;
-  --text-secondary: #d1d5db;
-  --text-gold: #fde68a;
-  --text-muted: rgba(209, 213, 219, 0.6);
-  --text-on-light-primary: #1f2937;
-  --text-on-light-muted: #4b5563;
+  /* Dynamic Layout Heights */
+  --bottom-nav-height: 64px;
+  --ad-height: 60px;
 
-  /* Compatibility aliases */
-  --text-color: var(--text-primary);
-  --text-color-light: var(--text-secondary);
-  --text-color-muted: var(--text-muted);
-  --card-bg: var(--glass-bg);
-  --secondary-color: var(--accent-gold-shimmer);
-  --arabic-font-family: var(--font-arabic);
-  --nav-accent-rgb: 245, 158, 11;
-  --nav-bg-rgb: 4, 47, 46;
-  --nav-surface: rgba(4, 47, 46, 0.9);
-  --nav-surface-strong: rgba(3, 31, 28, 0.96);
-  --text-contrast-boost: 1;
-  --bg-color: var(--bg-gradient-start);
+  /* Stacked heights for bottom overlays (BottomNav + optional Ad banner + safe area) */
+  --bottom-stack-height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
 
-  /* Glassmorphism */
-  --glass-bg: rgba(6, 78, 59, 0.65);
-  --glass-border: rgba(180, 83, 9, 0.25);
-  --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
-  --glass-highlight: rgba(255, 255, 255, 0.05);
-  --surface-opacity: 0.12;
-  --surface-opacity-strong: 0.18;
-  --surface-border-opacity: 0.12;
-  --elevation-soft: 0 10px 30px rgba(0, 0, 0, 0.18);
-  --elevation-medium: 0 18px 38px rgba(0, 0, 0, 0.24);
+  /* --- Light Theme (Matte Mushaf Paper / Warm Linen) --- */
+  --surface-page: #f4efdf;
+  --surface-dim: #dcd7c9;
+  --surface-bright: #fffefb;
+
+  --surface-container-lowest: #faf6ea;
+  --surface-container-low: #f1ebd8;
+  --surface-container: #ebe4cf;
+  --surface-container-high: #e3dcc7;
+  --surface-container-highest: #d9d2bb;
+
+  --on-surface: #17231c;
+  --on-surface-variant: #536158;
+
+  --inverse-surface: #262c28;
+  --inverse-on-surface: #f4efdf;
+
+  --outline: #77847a;
+  --outline-variant: #e3dec9;
+
+  --ambient-teal: rgba(22, 90, 70, 0.16);
+  --ambient-gold: rgba(181, 138, 71, 0.14);
+  --glass-bg: rgba(250, 246, 234, 0.65);
+  --glass-border: rgba(22, 59, 43, 0.08);
+
+  --surface-tint: #173c2a;              /* Tint overlays */
+
+  /* Primary Brand - Majestic Emerald Forest */
+  --primary: #163b2b;
+  --on-primary: #fffdf7;
+  --primary-container: #dce8de;
+  --on-primary-container: #0d291d;
+  --inverse-primary: #94bba2;
+
+  /* Secondary - Soft Muted Sage */
+  --secondary: #8fa997;
+  --on-secondary: #1b3022;
+  --secondary-container: #dfe9e0;
+  --on-secondary-container: #334d38;
+
+  /* Tertiary - Tezhip Gold (Reminiscent of Islamic Illumination) */
+  --tertiary: #b58a47;
+  --on-tertiary: #faf9f6;
+  --tertiary-container: #f3e8d2;
+  --on-tertiary-container: #473516;
+
+  /* Error */
+  --error: #b3261e;
+  --on-error: #faf9f6;
+  --error-container: #f9dedc;
+  --on-error-container: #410e0b;
+
+  --primary-fixed: #e2ebd9;
+  --primary-fixed-dim: #b8ccbf;
+  --on-primary-fixed: #122a1d;
+  --on-primary-fixed-variant: #284435;
+
+  --secondary-fixed: #e5ebe7;
+  --secondary-fixed-dim: #c5d2c9;
+  --on-secondary-fixed: #2b3d33;
+  --on-secondary-fixed-variant: #4f6356;
+
+  --tertiary-fixed: #f2ebdd;
+  --tertiary-fixed-dim: #d8c4a5;
+  --on-tertiary-fixed: #473516;
+  --on-tertiary-fixed-variant: #785a2b;
+
+  --background: var(--surface-page);
+  --on-background: var(--on-surface);
+  --surface-variant: var(--surface-container-lowest);
+
+  /* Legacy & Semantic Aliases */
+  --text-heading: var(--primary);
+  --text-body: var(--on-surface);
+  --text-subtle: var(--on-surface-variant);
+  --text-primary: var(--on-surface);
+  --text-secondary: var(--on-surface-variant);
+  --surface-card: var(--surface-container-lowest);
+  --surface-card-strong: #fcfaf2;
+  --accent: var(--tertiary);
+  --border-soft: var(--outline-variant);
+  --border-strong: #aeb8ae;
+
+  /* Menu & Drawer Specifics (Light) */
+  --menu-surface: var(--surface-container-lowest);
+  --menu-header-surface: var(--surface-container-low);
+  --menu-text: var(--on-surface);
+  --menu-muted: var(--on-surface-variant);
+  --menu-border: var(--outline-variant);
+  --menu-item-surface: var(--surface-container-lowest);
+  --menu-item-active: var(--primary-container);
+
+  /* Brand Semantic & Action Colors (Light) */
+  --brand-primary: var(--primary);
+  --brand-primary-rgb: 22, 59, 43;
+  --brand-warm: var(--tertiary);
+  --brand-warm-rgb: 181, 138, 71;
+  --surface-action-soft: rgba(22, 59, 43, 0.06);
+  --surface-action-hover: rgba(22, 59, 43, 0.12);
+
+  /* Quran Reading Mode Specifics (Light) */
+  --reading-background: var(--surface-page);
+  --reading-arabic: var(--primary);
+  --reading-translation: var(--on-surface);
+  --reading-muted-opacity: 0.55;
 
   /* Typography */
-  --font-display: 'Outfit', 'Inter', 'Segoe UI', system-ui, sans-serif;
-  --font-main: 'Inter', 'Outfit', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Literata', Georgia, serif;
+  --font-serif: 'Literata', Georgia, serif;
+  --font-main: 'Manrope', 'Segoe UI', system-ui, sans-serif;
   --font-arabic: 'Amiri', 'Noto Naskh Arabic', serif;
-  --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-quick: all 0.2s ease;
 
-  /* Glassmorphism Tokens */
-  --surface-blur: 16px;
-  --surface-blur-strong: 24px;
-  --surface-saturate: 180%;
-  --elevation-premium: 0 20px 50px rgba(0, 0, 0, 0.3);
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-default: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+  --radius-card: 22px;
+  --radius-control: 14px;
 
-  /* Semantic Tokens */
-  --accent-vibrant: var(--accent-gold-light);
-  --error-color: #ef4444;
-  --notification-dot: #e74c3c;
-  --icon-stroke-width: 2px;
+  /* Type scale */
+  --type-headline-xl: 600 40px/48px var(--font-display);
+  --type-headline-lg: 600 30px/38px var(--font-display);
+  --type-headline-lg-mobile: 600 26px/32px var(--font-display);
+  --type-headline-md: 500 22px/28px var(--font-display);
+  --type-body-lg: 400 18px/28px var(--font-main);
+  --type-body-md: 400 16px/24px var(--font-main);
+  --type-label-md: 600 14px/20px var(--font-main);
+  --type-label-sm: 500 12px/16px var(--font-main);
 
-  /* Nav extras */
-  --nav-hover: rgba(255, 255, 255, 0.08);
-  --nav-text: var(--text-primary);
-  --nav-text-muted: var(--text-muted);
+  /* Component states */
+  --control-primary-bg: #163b2b;
+  --control-primary-fg: #fffdf7;
+  --control-disabled-bg: var(--surface-container-high);
+  --control-disabled-fg: var(--on-surface-variant);
+  --control-focus: var(--secondary);
+  --control-pressed-overlay: rgba(27, 48, 34, 0.12);
+  --card-border: rgba(22, 59, 43, 0.11);
+  --accent-amber: #8daa91;
+  --accent-amber-dark: #4a654f;
+  --accent-antique: #aa8343;
+  --accent-antique-dark: #785a2b;
+  --accent-emerald: #4a654f;
+  --accent-emerald-dark: #1b3022;
+  --accent-deep-emerald: #1b3022;
+  --accent-deep-emerald-dark: #061b0e;
+  --accent-olive: #8daa91;
+  --accent-olive-dark: #4a654f;
+
+  /* Spacing */
+  --nav-height: 56px;
+  --safe-area-bottom: calc(var(--bottom-stack-height) + 16px);
+  --margin-main: 24px;
+  --gutter-card: 16px;
+  --section-gap: 40px;
+  --content-gutter: 24px;
+  --card-padding: 20px;
+
+  /* Shadows */
+  --elevation-soft: 0 8px 28px rgba(35, 55, 43, 0.07);
+  --elevation-medium: 0 14px 38px rgba(35, 55, 43, 0.11);
+  --shadow-card: var(--elevation-soft);
+  --shadow-float: var(--elevation-medium);
+  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Dark Mode */
+/* Redefine stack height when bottom ad banner is active */
+.app-container.has-bottom-banner {
+  --bottom-stack-height: calc(var(--bottom-nav-height) + var(--ad-height) + env(safe-area-inset-bottom, 0px));
+}
+
 [data-theme='dark'] {
-  --bg-gradient-start: #042f2e;
-  --bg-gradient-end: #022c22;
-  --text-color: #e5e7eb;
-  --text-color-light: #fde68a;
-  --text-color-muted: rgba(209, 213, 219, 0.72);
-  --card-bg: rgba(2, 44, 34, 0.88);
-  --bg-color: var(--bg-gradient-start);
-  --glass-bg: rgba(2, 44, 34, 0.82);
-  --nav-bg-rgb: 2, 44, 34;
-  --nav-surface: rgba(2, 44, 34, 0.9);
-  --nav-surface-strong: rgba(2, 31, 28, 0.96);
+  /* --- Dark Theme (Matte Charcoal-Green / Night Rest) --- */
+  --surface-page: #0d1a12;
+  --surface-dim: #0b0e0c;              /* Deepest shade */
+  --surface-bright: #1b231f;           /* Lighter charcoal for subtle elevations */
+
+  --surface-container-lowest: #161d1a;  /* Card backgrounds */
+  --surface-container-low: #1c2521;     /* Container background */
+  --surface-container: #212c27;
+  --surface-container-high: #27342e;
+  --surface-container-highest: #2d3b35;
+
+  --on-surface: #d9e2db;
+
+  --ambient-teal: rgba(20, 110, 85, 0.22);
+  --ambient-gold: rgba(212, 180, 124, 0.12);
+  --glass-bg: rgba(22, 29, 26, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.08);                /* Soft green-cream text to prevent glare */
+  --on-surface-variant: #a6b2a8;        /* Muted sage-cream for secondary info */
+
+  --inverse-surface: #f7f4eb;
+  --inverse-on-surface: #111613;
+
+  --outline: #3f4942;                   /* Darker borders */
+  --outline-variant: #2d3530;           /* Soft dark dividers */
+
+  --surface-tint: #1c2521;
+
+  /* Primary Brand (Soft sage-cream in dark mode) */
+  --primary: #e2ebda;
+  --on-primary: #111613;
+  --primary-container: #24362c;
+  --on-primary-container: #d1e1cc;
+  --inverse-primary: #173c2a;
+
+  /* Secondary */
+  --secondary: #9cb5a5;
+  --on-secondary: #111613;
+  --secondary-container: #212c25;
+  --on-secondary-container: #c4d7cb;
+
+  /* Tertiary (Soft illuminated gold) */
+  --tertiary: #d4b47c;
+  --on-tertiary: #111613;
+  --tertiary-container: #362b1a;
+  --on-tertiary-container: #eacf9b;
+
+  /* Error */
+  --error: #f2b8b5;
+  --on-error: #601410;
+  --error-container: #8c1d18;
+  --on-error-container: #f9dedc;
+
+  --primary-fixed: #e2ebd9;
+  --primary-fixed-dim: #b8ccbf;
+  --on-primary-fixed: #122a1d;
+  --on-primary-fixed-variant: #284435;
+
+  --secondary-fixed: #e5ebe7;
+  --secondary-fixed-dim: #c5d2c9;
+  --on-secondary-fixed: #2b3d33;
+  --on-secondary-fixed-variant: #4f6356;
+
+  --tertiary-fixed: #f2ebdd;
+  --tertiary-fixed-dim: #d8c4a5;
+  --on-tertiary-fixed: #473516;
+  --on-tertiary-fixed-variant: #785a2b;
+
+  --background: var(--surface-page);
+  --on-background: var(--on-surface);
+  --surface-variant: var(--surface-container-lowest);
+
+  /* Legacy & Semantic Aliases */
+  --text-heading: var(--primary);
+  --text-body: var(--on-surface);
+  --text-subtle: var(--on-surface-variant);
+  --text-primary: var(--on-surface);
+  --text-secondary: var(--on-surface-variant);
+  --surface-card: var(--surface-container-lowest);
+  --surface-card-strong: var(--surface-container-lowest);
+  --accent: var(--tertiary);
+  --border-soft: var(--outline-variant);
+  --border-strong: var(--outline);
+
+  /* Menu & Drawer Specifics (Dark) */
+  --menu-surface: var(--surface-container-lowest);
+  --menu-header-surface: var(--surface-container-low);
+  --menu-text: var(--on-surface);
+  --menu-muted: var(--on-surface-variant);
+  --menu-border: var(--outline-variant);
+  --menu-item-surface: var(--surface-container-low);
+  --menu-item-active: var(--primary-container);
+
+  /* Brand Semantic & Action Colors (Dark) */
+  --brand-primary: var(--primary);
+  --brand-primary-rgb: 226, 235, 218;
+  --brand-warm: var(--tertiary);
+  --brand-warm-rgb: 212, 180, 124;
+  --surface-action-soft: rgba(226, 235, 218, 0.08);
+  --surface-action-hover: rgba(226, 235, 218, 0.16);
+
+  /* Quran Reading Mode Specifics (Dark) */
+  --reading-background: var(--surface-page);
+  --reading-arabic: var(--primary);
+  --reading-translation: var(--on-surface-variant);
+  --reading-muted-opacity: 0.55;
+
+  /* Shadows */
+  --card-border: rgba(226, 235, 218, 0.15);
+  --control-pressed-overlay: rgba(226, 235, 218, 0.12);
+  --elevation-soft: none;
+  --elevation-medium: none;
+  --shadow-card: var(--elevation-soft);
+  --shadow-float: none;
 }
 
-/* Android WebView overrides */
-html.android-webview,
-body.android-webview {
-  --surface-blur: 1.5px;
-  --surface-blur-strong: 2px;
-  --surface-saturate: 112%;
-  --surface-opacity: 0.9;
-  --surface-opacity-strong: 0.96;
-  --surface-border-opacity: 0.5;
-  --icon-stroke-width: 2.25px;
-  --elevation-soft: 0 3px 10px rgba(0, 0, 0, 0.12);
-  --elevation-medium: 0 5px 14px rgba(0, 0, 0, 0.14);
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-smooth: none;
+  }
 }

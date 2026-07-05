@@ -5,14 +5,18 @@ import {
 } from './analyticsService';
 import { markFirstIbadahCompletedForReferral } from './referralService';
 import { storageService } from './storageService';
+import { getStoredPrimaryGoal } from '../utils/primaryGoal';
+
+export const FIRST_IBADAH_ACTION_COMPLETED_EVENT = 'huzur:first-ibadah-action-completed';
 
 const ACTIVATION_FEATURES = new Set([
   'dailyTasks',
-  'dailyQuiz',
-  'family',
-  'huzurMode',
+  'routineBuilder',
   'quran',
   'zikirmatik',
+  'duaTracker',
+  'adhkar',
+  'tespihat',
 ]);
 
 type ActivationResult = {
@@ -32,6 +36,19 @@ const normalizeSource = (source: string | undefined | null): string => {
 const buildActionSource = ({ source, feature }: { source?: string; feature?: string | null } = {}): string => {
   const normalizedSource = normalizeSource(source);
   return feature ? `${normalizedSource}:${feature}` : normalizedSource;
+};
+
+const buildActivationAnalyticsContext = (stage: string): Record<string, unknown> => ({
+  activation_stage: stage,
+  primary_goal: getStoredPrimaryGoal(),
+});
+
+const notifyFirstIbadahActionCompleted = (detail: ActivationResult): void => {
+  if (typeof window === 'undefined' || typeof window.dispatchEvent !== 'function') {
+    return;
+  }
+
+  window.dispatchEvent(new CustomEvent(FIRST_IBADAH_ACTION_COMPLETED_EVENT, { detail }));
 };
 
 export const isActivationFeature = (feature: string): boolean => ACTIVATION_FEATURES.has(feature);
@@ -64,7 +81,7 @@ export const markFirstActivationAction = ({ feature, source = 'feature_open' }: 
 
   const actionSource = buildActionSource({ source, feature });
   storageService.setBoolean(STORAGE_KEYS.FIRST_ACTIVATION_FEATURE_OPENED, true);
-  logFirstActivationFeatureOpened(feature, actionSource);
+  logFirstActivationFeatureOpened(feature, actionSource, buildActivationAnalyticsContext('feature_opened'));
 
   return {
     marked: true,
@@ -84,17 +101,22 @@ export const markFirstIbadahActionCompleted = ({ feature = null, source = 'spiri
   const actionSource = buildActionSource({ source, feature });
   storageService.setBoolean(STORAGE_KEYS.FIRST_IBADAH_ACTION_DONE, true);
   storageService.setBoolean(STORAGE_KEYS.FIRST_ACTIVATION_FEATURE_OPENED, true);
-  logFirstPrayerActionCompleted(actionSource);
+  logFirstPrayerActionCompleted(actionSource, buildActivationAnalyticsContext('ibadah_completed'));
   markFirstIbadahCompletedForReferral();
 
-  return {
+  const result = {
     marked: true,
     reason: null,
     source: actionSource,
   };
+
+  notifyFirstIbadahActionCompleted(result);
+
+  return result;
 };
 
 export default {
+  FIRST_IBADAH_ACTION_COMPLETED_EVENT,
   hasCompletedFirstActivationAction,
   hasCompletedFirstIbadahAction,
   isActivationFeature,

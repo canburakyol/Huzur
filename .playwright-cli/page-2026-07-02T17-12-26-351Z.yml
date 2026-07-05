@@ -1,0 +1,77 @@
+- generic [ref=f20e2]:
+  - generic [ref=f20e152]:
+    - generic [ref=f20e153]:
+      - generic [ref=f20e154]:
+        - button "Geri" [ref=f20e155] [cursor=pointer]:
+          - generic: ✦
+          - img [ref=f20e156]
+        - heading "Zikirmatik" [level=2] [ref=f20e158]
+      - button [ref=f20e160] [cursor=pointer]:
+        - img [ref=f20e161]
+    - generic [ref=f20e163]:
+      - generic [ref=f20e164]: Popüler Zikirler
+      - generic [ref=f20e165]:
+        - generic [ref=f20e168]:
+          - generic [ref=f20e169]:
+            - generic [ref=f20e170]: Serbest Zikir
+            - generic [ref=f20e171]: ∞
+          - generic [ref=f20e173]:
+            - text: "0"
+            - generic [ref=f20e174]: / 9999
+        - generic [ref=f20e178]:
+          - generic [ref=f20e179]:
+            - generic [ref=f20e180]: Subhanallah
+            - generic [ref=f20e181]: سُبْحَانَ اللهِ
+          - generic [ref=f20e183]:
+            - text: "0"
+            - generic [ref=f20e184]: / 33
+        - generic [ref=f20e188]:
+          - generic [ref=f20e189]:
+            - generic [ref=f20e190]: Elhamdulillah
+            - generic [ref=f20e191]: الحَمْدُ لِلَّهِ
+          - generic [ref=f20e193]:
+            - text: "0"
+            - generic [ref=f20e194]: / 33
+        - generic [ref=f20e198]:
+          - generic [ref=f20e199]:
+            - generic [ref=f20e200]: Allahu Ekber
+            - generic [ref=f20e201]: اللهُ أَكْبَرُ
+          - generic [ref=f20e203]:
+            - text: "0"
+            - generic [ref=f20e204]: / 33
+        - generic [ref=f20e208]:
+          - generic [ref=f20e209]:
+            - generic [ref=f20e210]: La ilahe illallah
+            - generic [ref=f20e211]: لَا إِلَٰهَ إِلَّا اللهُ
+          - generic [ref=f20e213]:
+            - text: "0"
+            - generic [ref=f20e214]: / 100
+        - generic [ref=f20e218]:
+          - generic [ref=f20e219]:
+            - generic [ref=f20e220]: Estagfirullah
+            - generic [ref=f20e221]: أَسْتَغْفِرُ اللهَ
+          - generic [ref=f20e223]:
+            - text: "0"
+            - generic [ref=f20e224]: / 100
+        - generic [ref=f20e228]:
+          - generic [ref=f20e229]:
+            - generic [ref=f20e230]: La havle
+            - generic [ref=f20e231]: لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ
+          - generic [ref=f20e233]:
+            - text: "0"
+            - generic [ref=f20e234]: / 33
+        - generic [ref=f20e238]:
+          - generic [ref=f20e239]:
+            - generic [ref=f20e240]: Salavat
+            - generic [ref=f20e241]: اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ
+          - generic [ref=f20e243]:
+            - text: "0"
+            - generic [ref=f20e244]: / 100
+        - generic [ref=f20e248]:
+          - generic [ref=f20e249]:
+            - generic [ref=f20e250]: Hasbunallah
+            - generic [ref=f20e251]: حَسْبُنَا اللهُ وَنِعْمَ الوَكِILÜ
+          - generic [ref=f20e253]:
+            - text: "0"
+            - generic [ref=f20e254]: / 33
+  - generic "Notifications"

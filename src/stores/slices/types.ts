@@ -64,6 +64,8 @@ export interface SettingsSlice {
 
 export interface FocusSlice {
   isFocusMode: boolean;
+  activeFocusSession: import("../../services/focusSessionService").FocusSession | null;
+  setActiveFocusSession: (session: import("../../services/focusSessionService").FocusSession | null) => void;
   toggleFocusMode: () => void;
   enableFocusMode: () => void;
   disableFocusMode: () => void;

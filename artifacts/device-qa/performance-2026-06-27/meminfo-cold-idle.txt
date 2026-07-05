@@ -1,0 +1,61 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 112207259 Realtime: 646281716
+
+** MEMINFO in pid 29919 [com.huzurapp.android] **
+                   Pss  Private  Private  SwapPss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------
+  Native Heap    38908    38704        0       20    61440    48279    13160
+  Dalvik Heap    22370    22336        0       23    16297     8149     8148
+ Dalvik Other     6916     6908        0        2                           
+        Stack       68       68        0        0                           
+       Ashmem      814      124        0        0                           
+    Other dev       53        0       48        0                           
+     .so mmap     6696      172     1340       23                           
+    .jar mmap     1415        8      184        0                           
+    .apk mmap    18090      728     7592        0                           
+    .ttf mmap      125        0        0        0                           
+    .dex mmap    32204    30600        8        0                           
+    .oat mmap       19        0        0        0                           
+    .art mmap     8478     8240        0       24                           
+   Other mmap     1887      444      824        0                           
+    GL mtrack   113732   113732        0        0                           
+      Unknown    17778    17692        0        2                           
+        TOTAL   269647   239756     9996       94    77737    56428    21308
+ 
+ App Summary
+                       Pss(KB)
+                        ------
+           Java Heap:    30576
+         Native Heap:    38704
+                Code:    40632
+               Stack:       68
+            Graphics:   113732
+       Private Other:    26040
+              System:    19895
+ 
+               TOTAL:   269647       TOTAL SWAP PSS:       94
+ 
+ Objects
+               Views:       21         ViewRootImpl:        1
+         AppContexts:       12           Activities:        1
+              Assets:       23        AssetManagers:        0
+       Local Binders:      109        Proxy Binders:      146
+       Parcel memory:       37         Parcel count:      128
+    Death Recipients:       13      OpenSSL Sockets:        3
+            WebViews:        4
+ 
+ SQL
+         MEMORY_USED:      673
+  PAGECACHE_OVERFLOW:      129          MALLOC_SIZE:      117
+ 
+ DATABASES
+      pgsz     dbsz   Lookaside(b)          cache  Dbname
+         4       56             33         1/22/2  /data/user/0/com.huzurapp.android/databases/com.google.android.datatransport.events
+         4      104            109       12/51/13  /data/user/0/com.huzurapp.android/no_backup/androidx.work.workdb
+         4        8                         0/0/0    (attached) temp
+         4      104             30         1/13/2  /data/user/0/com.huzurapp.android/no_backup/androidx.work.workdb (3)
+ 
+ Asset Allocations
+    : 14K
+    : 21K

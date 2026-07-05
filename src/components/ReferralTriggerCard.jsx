@@ -6,12 +6,6 @@ const ICON_BY_EMPHASIS = {
   share: Sparkles,
 };
 
-const BACKGROUND_BY_EMPHASIS = {
-  reward: 'linear-gradient(145deg, rgba(212, 175, 55, 0.14), rgba(15, 118, 110, 0.12))',
-  progress: 'linear-gradient(145deg, rgba(15, 118, 110, 0.14), rgba(180, 83, 9, 0.10))',
-  share: 'linear-gradient(145deg, rgba(15, 118, 110, 0.12), rgba(255, 255, 255, 0.04))',
-};
-
 function ReferralTriggerCard({ plan, onOpenInvite }) {
   if (!plan) {
     return null;
@@ -21,46 +15,44 @@ function ReferralTriggerCard({ plan, onOpenInvite }) {
 
   return (
     <div
-      className="settings-card reveal-stagger"
+      className="settings-card reveal-stagger bg-white rounded-3xl border-huzur-sage-100 shadow-huzur-soft"
       style={{
         margin: '0 5px 16px',
-        padding: '18px 18px',
+        padding: '22px 20px',
+        display: 'flex',
         flexDirection: 'column',
-        alignItems: 'stretch',
-        borderRadius: '22px',
-        background: BACKGROUND_BY_EMPHASIS[plan.emphasis] || BACKGROUND_BY_EMPHASIS.share,
-        border: '1px solid rgba(212, 175, 55, 0.18)',
+        alignItems: 'stretch'
       }}
     >
-      <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', marginBottom: 12 }}>
+      <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', marginBottom: 12 }}>
         <div
           style={{
-            width: 44,
-            height: 44,
-            borderRadius: 16,
-            background: 'rgba(255,255,255,0.08)',
+            width: 46,
+            height: 46,
+            borderRadius: 14,
+            background: 'rgba(141, 170, 157, 0.12)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
           }}
         >
-          <AccentIcon size={18} color="var(--nav-accent)" />
+          <AccentIcon size={18} color="var(--accent-gold)" />
         </div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 6 }}>
+          <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 8 }}>
             {plan.badge}
           </div>
-          <div style={{ fontSize: '0.96rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: 6 }}>
+          <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-primary)', marginBottom: 6 }}>
             {plan.headline}
           </div>
-          <div style={{ fontSize: '0.79rem', color: 'var(--nav-text-muted)', lineHeight: '1.55', fontWeight: '600' }}>
+          <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.55', fontWeight: '600' }}>
             {plan.description}
           </div>
         </div>
       </div>
 
-      <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', lineHeight: '1.5', fontWeight: '700', marginBottom: 14 }}>
+      <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.5', fontWeight: '600', marginBottom: 14 }}>
         {plan.supportLabel}
       </div>
 
@@ -69,12 +61,13 @@ function ReferralTriggerCard({ plan, onOpenInvite }) {
         onClick={onOpenInvite}
         className="hover-lift"
         style={{
-          border: 'none',
-          borderRadius: '14px',
-          background: 'linear-gradient(135deg, var(--nav-accent), var(--accent-gold))',
-          color: '#fff',
-          padding: '12px 14px',
-          fontWeight: '900',
+          border: '1px solid rgba(224, 169, 150, 0.2)',
+          borderRadius: '16px',
+          background: 'rgba(224, 169, 150, 0.12)',
+          color: 'var(--text-primary)',
+          padding: '14px 16px',
+          fontFamily: 'var(--font-main)',
+          fontWeight: '700',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',

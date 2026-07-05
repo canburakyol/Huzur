@@ -1,18 +1,312 @@
-/* ===========================
-   Assistant — Scoped Styles
-   Extracted from inline <style> in the monolithic Assistant.jsx
-   =========================== */
+/* ==========================================================================
+   Huzur Rehberi — Premium Pro Assistant Styles (Theme-Aware & Glassmorphic)
+   ========================================================================== */
+
+/* Main Shell Container */
+.assistant-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--surface-page);
+  background-image: radial-gradient(circle at 10% 20%, var(--surface-page) 0%, var(--surface-page-alt) 90%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-body);
+  font-family: var(--font-main);
+  animation: assistant-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Unified Huzur design-system overrides */
+.assistant-container {
+  background: var(--surface-page);
+  background-image: none;
+}
+
+.assistant-header,
+.assistant-chat-input-container {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+
+.assistant-icon-box {
+  background: var(--primary);
+  color: var(--control-text-on-active);
+  box-shadow: none;
+}
+
+.assistant-bubble-user .assistant-bubble {
+  background: var(--primary);
+  color: var(--control-text-on-active);
+  border-radius: 18px 18px 6px 18px;
+  box-shadow: none;
+}
+
+[data-theme='dark'] .assistant-bubble-user .assistant-bubble,
+[data-theme='dark'] .assistant-send-btn {
+  color: #16231E;
+}
+
+.assistant-bubble-bot .assistant-bubble,
+.assistant-typing-container,
+.assistant-faq-btn {
+  background: var(--surface-card-strong);
+  border-color: var(--border-soft);
+  box-shadow: none;
+}
+
+.assistant-faq-btn:hover {
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+
+.assistant-input-field {
+  border-width: 1px;
+  border-radius: var(--radius-control);
+  background: var(--surface-card-strong);
+}
+
+.assistant-send-btn {
+  background: var(--primary);
+  color: var(--control-text-on-active);
+  box-shadow: none;
+}
+
+@keyframes assistant-slide-up {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Header Design */
+.assistant-header {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 0 0 28px 28px;
+  background: var(--surface-card-strong);
+  backdrop-filter: blur(var(--surface-blur));
+  -webkit-backdrop-filter: blur(var(--surface-blur));
+  border-bottom: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+  z-index: 10;
+}
+
+.assistant-back-btn {
+  background: var(--surface-action-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-heading);
+  transition: var(--transition-quick);
+}
+
+.assistant-back-btn:hover {
+  background: var(--surface-action-hover);
+  transform: scale(0.95);
+}
+
+.assistant-back-btn:active {
+  transform: scale(0.9);
+}
+
+.assistant-icon-box {
+  width: 46px;
+  height: 46px;
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+  color: var(--on-primary)fff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(var(--brand-primary-rgb), 0.25);
+  position: relative;
+}
+
+/* Header Text elements */
+.assistant-title {
+  margin: 0;
+  color: var(--text-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.assistant-subtitle {
+  font-size: 0.75rem;
+  color: var(--brand-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* Glowing Indicator Pulse */
+.pulse-indicator {
+  width: 8px;
+  height: 8px;
+  background: var(--brand-primary);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.pulse-indicator::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  animation: pulse-ring 2s cubic-bezier(0.25, 0, 0, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+/* Chat Messages Scroll Area */
+.assistant-messages-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+}
+
+.assistant-messages-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.assistant-messages-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.assistant-messages-list::-webkit-scrollbar-thumb {
+  background: var(--border-soft);
+  border-radius: 10px;
+}
+
+/* Chat Message Bubbles */
+.assistant-bubble-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 85%;
+  animation: bubble-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes bubble-appear {
+  from {
+    transform: translateY(15px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.assistant-bubble {
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  font-weight: 500;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* User Message specific */
+.assistant-bubble-user {
+  align-self: flex-end;
+}
+
+.assistant-bubble-user .assistant-bubble {
+  background: var(--brand-primary);
+  color: var(--on-primary)fff;
+  /* Dark mode text adaptation */
+  border-radius: 20px 20px 4px 20px;
+  box-shadow: 0 4px 15px rgba(var(--brand-primary-rgb), 0.15);
+}
+
+[data-theme='dark'] .assistant-bubble-user .assistant-bubble {
+  color: #16231E;
+  font-weight: 600;
+}
+
+/* Bot Message specific */
+.assistant-bubble-bot {
+  align-self: flex-start;
+}
+
+.assistant-bubble-bot .assistant-bubble {
+  background: var(--surface-card-strong);
+  color: var(--text-heading);
+  border: 1px solid var(--border-soft);
+  border-radius: 20px 20px 20px 4px;
+  box-shadow: var(--shadow-card);
+}
+
+/* Source references */
+.assistant-source-ref {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--brand-primary);
+  opacity: 0.95;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Typing Indicator Container */
+.assistant-typing-container {
+  align-self: flex-start;
+  background: var(--surface-card-strong);
+  padding: 14px 20px;
+  border-radius: 20px 20px 20px 4px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+  animation: bubble-appear 0.3s ease-out;
+}
 
 .typing-indicator {
   display: flex;
   gap: 5px;
+  align-items: center;
+  height: 16px;
 }
 
 .typing-indicator span {
-  width: 7px;
-  height: 7px;
-  background: var(--nav-accent);
-  opacity: 0.6;
+  width: 6px;
+  height: 6px;
+  background: var(--brand-primary);
+  opacity: 0.7;
   border-radius: 50%;
   animation: assistant-typing 1.4s infinite ease-in-out both;
 }
@@ -36,19 +330,267 @@
   }
 }
 
-.pulse {
-  display: inline-block;
-  animation: assistant-pulse 2s infinite;
+/* Horizontal FAQ quick action bar */
+.assistant-faq-scroll {
+  padding: 4px 20px 16px 20px;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  background: transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-@keyframes assistant-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
-  }
+.assistant-faq-scroll::-webkit-scrollbar {
+  display: none;
 }
+
+.assistant-faq-btn {
+  padding: 11px 18px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  font-size: 0.82rem;
+  color: var(--text-heading);
+  font-family: var(--font-main);
+  white-space: nowrap;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  transition: var(--transition-quick);
+  box-shadow: 0 4px 12px rgba(var(--brand-primary-rgb), 0.04);
+}
+
+.assistant-faq-btn:hover {
+  background: var(--surface-action-soft);
+  border-color: var(--brand-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(var(--brand-primary-rgb), 0.08);
+}
+
+.assistant-faq-btn:active {
+  transform: translateY(0);
+}
+
+/* Chat Input Bar wrapper */
+.assistant-chat-input-container {
+  padding: 16px 20px;
+  background: var(--surface-card-strong);
+  backdrop-filter: blur(var(--surface-blur));
+  -webkit-backdrop-filter: blur(var(--surface-blur));
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.assistant-input-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.assistant-input-field {
+  width: 100%;
+  padding: 14px 60px 14px 20px;
+  border-radius: 22px;
+  border: 1.5px solid var(--border-soft);
+  font-size: 0.95rem;
+  outline: none;
+  background: var(--surface-page);
+  color: var(--text-heading);
+  font-family: var(--font-main);
+  font-weight: 600;
+  transition: var(--transition-quick);
+}
+
+.assistant-input-field::placeholder {
+  color: var(--text-subtle);
+  opacity: 0.65;
+}
+
+.assistant-input-field:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(var(--brand-primary-rgb), 0.12);
+  background: var(--surface-card-strong);
+}
+
+.assistant-send-btn {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  background: var(--brand-primary);
+  border: none;
+  color: var(--on-primary)fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-quick);
+  box-shadow: 0 4px 10px rgba(var(--brand-primary-rgb), 0.2);
+}
+
+[data-theme='dark'] .assistant-send-btn {
+  color: #16231E;
+}
+
+.assistant-send-btn:disabled {
+  background: var(--border-soft);
+  color: var(--text-subtle);
+  cursor: default;
+  box-shadow: none;
+  opacity: 0.5;
+}
+
+.assistant-send-btn:not(:disabled):hover {
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 6px 14px rgba(var(--brand-primary-rgb), 0.3);
+}
+
+.assistant-send-btn:not(:disabled):active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Suggested Action Tags below Bot Bubbles */
+.assistant-tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.assistant-tag-btn {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--surface-action-soft);
+  color: var(--text-heading);
+  border: 1px solid var(--border-soft);
+  font-size: 0.78rem;
+  font-family: var(--font-main);
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-quick);
+}
+
+.assistant-tag-btn:hover {
+  background: var(--surface-action-hover);
+  border-color: var(--brand-primary);
+  transform: translateY(-1px);
+}
+
+.assistant-tag-btn:active {
+  transform: translateY(0);
+}
+
+/* Premium Moment Card Upgrades */
+.premium-moment-card-container {
+  padding: 0 20px 16px;
+  background: transparent;
+}
+
+.premium-moment-glass-card {
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(var(--brand-primary-rgb), 0.22);
+  background: linear-gradient(135deg, var(--surface-card-strong) 0%, var(--surface-warm-soft) 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glossy highlight inside card */
+.premium-moment-glass-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.1) 50%, transparent 55%);
+  animation: shine 4s infinite linear;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% { transform: translate(-30%, -30%) rotate(0deg); }
+  100% { transform: translate(30%, 30%) rotate(0deg); }
+}
+
+.premium-moment-badge {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: var(--brand-primary);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.premium-moment-title {
+  font-size: 1.05rem;
+  font-weight: 850;
+  color: var(--text-heading);
+  letter-spacing: -0.2px;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.premium-moment-desc {
+  font-size: 0.82rem;
+  color: var(--text-body);
+  line-height: 1.5;
+  font-weight: 600;
+  margin: 0;
+}
+
+.premium-moment-action-btn {
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-warm));
+  color: var(--on-primary)fff;
+  padding: 14px 20px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: var(--transition-quick);
+  box-shadow: 0 6px 18px rgba(var(--brand-primary-rgb), 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+[data-theme='dark'] .premium-moment-action-btn {
+  color: #16231E;
+  font-weight: 900;
+}
+
+.premium-moment-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(var(--brand-primary-rgb), 0.35);
+}
+
+.premium-moment-action-btn:active {
+  transform: translateY(0);
+}
+
+/* Final palette lock */
+.assistant-container { background: var(--surface-page); background-image: none; }
+.assistant-header, .assistant-chat-input-container { backdrop-filter: none; box-shadow: none; }
+.assistant-icon-box { background: var(--primary); color: var(--control-text-on-active); box-shadow: none; }
+.assistant-bubble-user .assistant-bubble { background: var(--primary); color: var(--control-text-on-active); box-shadow: none; }
+.assistant-bubble-bot .assistant-bubble, .assistant-typing-container, .assistant-faq-btn { background: var(--surface-card-strong); border-color: var(--border-soft); box-shadow: none; }
+.assistant-input-field { background: var(--surface-card-strong); border-width: 1px; border-radius: var(--radius-control); }
+.assistant-send-btn { background: var(--primary); color: var(--control-text-on-active); box-shadow: none; }
+[data-theme='dark'] .assistant-bubble-user .assistant-bubble,
+[data-theme='dark'] .assistant-send-btn { color: #16231E; }

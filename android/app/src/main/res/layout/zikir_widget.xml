@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:text="Günlük Zikir"
-        android:textColor="#CCFFFFFF"
+        android:textColor="@color/widget_text_secondary"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/widget_text_primary"
             android:textSize="36sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="/ 100"
-            android:textColor="#CCFFFFFF"
+            android:textColor="@color/widget_text_secondary"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -49,6 +49,6 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="Zikir Çek"
         android:src="@android:drawable/ic_input_add"
-        app:tint="#FFFFFF" />
+        app:tint="@color/widget_accent" />
 
 </RelativeLayout>

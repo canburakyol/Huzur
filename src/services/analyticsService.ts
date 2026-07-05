@@ -57,11 +57,15 @@ export const logOnboardingStarted = (step: string, metadata: Record<string, unkn
 export const logOnboardingCompleted = (lang: string, metadata: Record<string, unknown> = {}): void =>
   logEvent(ANALYTICS_EVENTS.ONBOARDING_COMPLETED, { language: lang, ...metadata });
 
-export const logFirstActivationFeatureOpened = (feature: string, source: string): void =>
-  logEvent(ANALYTICS_EVENTS.FIRST_ACTIVATION_FEATURE_OPENED, { feature, source });
+export const logFirstActivationFeatureOpened = (
+  feature: string,
+  source: string,
+  metadata: Record<string, unknown> = {}
+): void =>
+  logEvent(ANALYTICS_EVENTS.FIRST_ACTIVATION_FEATURE_OPENED, { feature, source, ...metadata });
 
-export const logFirstPrayerActionCompleted = (source: string): void =>
-  logEvent(ANALYTICS_EVENTS.FIRST_PRAYER_ACTION_COMPLETED, { source });
+export const logFirstPrayerActionCompleted = (source: string, metadata: Record<string, unknown> = {}): void =>
+  logEvent(ANALYTICS_EVENTS.FIRST_PRAYER_ACTION_COMPLETED, { source, ...metadata });
 
 export const logStreakIncremented = (category: string, count: number, weeklyGoal: number | null): void =>
   logEvent(ANALYTICS_EVENTS.STREAK_INCREMENTED, { category, count, weekly_goal: weeklyGoal });

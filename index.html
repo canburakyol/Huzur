@@ -11,6 +11,43 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Huzur" />
     <title>Huzur - Namaz ve Dua</title>
+    <!-- Tailwind CSS CDN and Google Material Symbols for Stitch design integration -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#496459",
+                        "primary-container": "#8daa9d",
+                        "secondary": "#6b5c4c",
+                        "secondary-container": "#f4dfcb",
+                        "tertiary": "#7f5444",
+                        "background": "#f2fcf5",
+                        "surface": "#f2fcf5",
+                        "bg-linen": "#F9F6F0",
+                        "bg-sage-light": "#C8DAD2",
+                        "sage-deep": "#536E62",
+                        "on-surface": "#151d1a",
+                        "outline": "#727975",
+                        "warm-amber": "#D9A05B"
+                    },
+                    borderRadius: {
+                        "premium": "28px"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
   </head>
   <body>
     <div id="root"></div>

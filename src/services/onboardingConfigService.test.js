@@ -17,7 +17,7 @@ describe('onboardingConfigService', () => {
     });
 
     expect(config.enabled).toBe(true);
-    expect(config.steps).toEqual(['goal', 'language', 'preview', 'permissions']);
+    expect(config.steps).toEqual(['goal', 'language', 'preview']);
     expect(config.headlineVariant).toBe('direct');
     expect(config.permissionEmphasis).toBe('notifications_first');
   });

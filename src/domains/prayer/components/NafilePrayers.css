@@ -21,7 +21,7 @@
 .nafile-header .back-btn {
   background: none;
   border: none;
-  color: var(--primary-color, #d4af37);
+  color: var(--primary);
   cursor: pointer;
   padding: 8px;
   border-radius: 12px;
@@ -35,7 +35,7 @@
 .header-content h1 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--primary-color, #d4af37);
+  color: var(--primary);
   margin: 0;
 }
 
@@ -80,7 +80,7 @@
 .stat-value {
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--primary-color, #d4af37);
+  color: var(--primary);
 }
 
 .stat-label {
@@ -106,7 +106,7 @@
 
 .date-input:focus {
   outline: none;
-  border-color: var(--primary-color, #d4af37);
+  border-color: var(--primary);
 }
 
 /* Prayer List */
@@ -189,14 +189,14 @@
 }
 
 .completion-btn:hover {
-  border-color: var(--primary-color, #d4af37);
-  color: var(--primary-color, #d4af37);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .completion-btn.completed {
   background: #22c55e;
   border-color: #22c55e;
-  color: white;
+  color: var(--on-primary);
 }
 
 /* Progress Section */
@@ -219,7 +219,7 @@
 .progress-percentage {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--primary-color, #d4af37);
+  color: var(--primary);
 }
 
 .progress-bar-container {
@@ -260,7 +260,7 @@
 
 .rekat-btn:hover:not(:disabled) {
   background: rgba(212, 175, 55, 0.2);
-  border-color: var(--primary-color, #d4af37);
+  border-color: var(--primary);
 }
 
 .rekat-btn:disabled {
@@ -271,7 +271,7 @@
 .rekat-count {
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--primary-color, #d4af37);
+  color: var(--primary);
   min-width: 40px;
   text-align: center;
 }
@@ -288,7 +288,7 @@
 .nafile-info-section h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--primary-color, #d4af37);
+  color: var(--primary);
   margin: 0 0 15px 0;
 }
 

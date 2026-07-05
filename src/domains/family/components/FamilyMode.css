@@ -2,21 +2,21 @@
 
 /* ── Yerel Sabitler ─────────────────────────────────────────── */
 :root {
-    --fam-blue-replaced:    var(--bg-emerald-med, #065f46);
-    --fam-blue-dark:        var(--bg-emerald-deep, #064e3b);
-    --fam-green-accent:     var(--accent-gold-light, #f59e0b);
-    --fam-pink-replaced:    var(--accent-gold, #b45309);
-    --fam-card-bg:          var(--glass-bg, rgba(6, 78, 59, 0.65));
-    --fam-card-border:      var(--glass-border, rgba(180, 83, 9, 0.25));
-    --fam-text-dark:        var(--text-primary, #f8fafc);
-    --fam-text-muted:       var(--text-muted, rgba(209, 213, 219, 0.6));
-    --fam-surface:          rgba(6, 78, 59, 0.45);
-    --fam-surface-light:    rgba(15, 118, 110, 0.2);
+    --fam-blue-replaced:    var(--secondary-container);
+    --fam-blue-dark:        var(--primary-container);
+    --fam-green-accent:     var(--tertiary);
+    --fam-pink-replaced:    var(--tertiary);
+    --fam-card-bg:          var(--surface-card);
+    --fam-card-border:      var(--outline-variant);
+    --fam-text-dark:        var(--text-body);
+    --fam-text-muted:       var(--text-subtle);
+    --fam-surface:          var(--surface-container);
+    --fam-surface-light:    var(--surface-container-high);
 }
 
 .family-mode-container {
     min-height: 100vh;
-    background: linear-gradient(180deg, var(--bg-gradient-start, #064e3b) 0%, var(--bg-gradient-end, #042f2e) 100%);
+    background: linear-gradient(180deg, var(--surface-page) 0%, var(--surface-dim) 100%);
     padding-bottom: 100px;
 }
 
@@ -27,7 +27,7 @@
     gap: 12px;
     padding: 20px;
     background: linear-gradient(135deg, var(--fam-blue-replaced) 0%, var(--fam-blue-dark) 100%);
-    color: white;
+    color: var(--on-primary);
     border-radius: 0 0 24px 24px;
     box-shadow: 0 4px 20px rgba(6, 78, 59, 0.4);
 }
@@ -94,7 +94,7 @@
 
 .family-tab.active {
     background: linear-gradient(135deg, var(--fam-blue-replaced) 0%, var(--fam-blue-dark) 100%);
-    color: white;
+    color: var(--on-primary);
     border-color: var(--fam-card-border);
     box-shadow: 0 4px 12px rgba(6, 78, 59, 0.4);
 }
@@ -129,7 +129,7 @@
     border-radius: 20px;
     padding: 24px;
     margin-bottom: 24px;
-    color: white;
+    color: var(--on-primary);
     box-shadow: 0 10px 30px rgba(6, 78, 59, 0.35);
     border: 1px solid var(--fam-card-border);
 }
@@ -197,11 +197,11 @@
 }
 
 .member-card.parent {
-    border: 2px solid var(--accent-gold, #b45309);
+    border: 2px solid var(--tertiary);
 }
 
 .member-card.child {
-    border: 2px solid var(--accent-gold-light, #f59e0b);
+    border: 2px solid var(--secondary);
 }
 
 .member-avatar-large {
@@ -232,8 +232,8 @@
     position: absolute;
     top: -4px;
     right: -4px;
-    background: linear-gradient(135deg, var(--accent-gold-light, #f59e0b) 0%, var(--accent-gold, #b45309) 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+    color: var(--on-primary);
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 11px;
@@ -263,8 +263,8 @@
 }
 
 .add-member-card:hover {
-    border-color: var(--accent-gold, #b45309);
-    color: var(--accent-gold-light, #f59e0b);
+    border-color: var(--tertiary);
+    color: var(--secondary);
     background: var(--fam-surface-light);
 }
 
@@ -322,7 +322,7 @@
 
 .activity-detail {
     font-size: 12px;
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
     font-weight: 500;
 }
 
@@ -453,7 +453,7 @@
 }
 
 .child-profile-card.selected {
-    border-color: var(--accent-gold, #b45309);
+    border-color: var(--tertiary);
     background: var(--fam-surface-light);
 }
 
@@ -478,8 +478,8 @@
     position: absolute;
     bottom: -4px;
     right: -4px;
-    background: linear-gradient(135deg, var(--accent-gold-light, #f59e0b) 0%, var(--accent-gold, #b45309) 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+    color: var(--on-primary);
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 11px;
@@ -518,7 +518,7 @@
 }
 
 .stat-icon {
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
 }
 
 .selected-indicator {
@@ -527,8 +527,8 @@
     right: 8px;
     width: 20px;
     height: 20px;
-    background: var(--accent-gold, #b45309);
-    color: white;
+    background: var(--tertiary);
+    color: var(--on-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -568,7 +568,7 @@
 
 .dashboard-tab.active {
     background: linear-gradient(135deg, var(--fam-blue-replaced) 0%, var(--fam-blue-dark) 100%);
-    color: white;
+    color: var(--on-primary);
     border-color: transparent;
 }
 
@@ -604,22 +604,22 @@
 
 .stat-card.prayer .stat-icon-wrapper {
     background: rgba(6, 78, 59, 0.4);
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
 }
 
 .stat-card.quran .stat-icon-wrapper {
     background: rgba(15, 118, 110, 0.3);
-    color: var(--accent-gold-shimmer, #fbbf24);
+    color: var(--tertiary-fixed-dim);
 }
 
 .stat-card.zikir .stat-icon-wrapper {
     background: rgba(180, 83, 9, 0.2);
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
 }
 
 .stat-card.tasks .stat-icon-wrapper {
     background: rgba(251, 191, 36, 0.15);
-    color: var(--accent-gold-shimmer, #fbbf24);
+    color: var(--tertiary-fixed-dim);
 }
 
 .stat-value {
@@ -657,7 +657,7 @@
 }
 
 .streak-icon {
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
 }
 
 .streak-value {
@@ -805,7 +805,7 @@
 }
 
 .template-btn:hover {
-    border-color: var(--accent-gold, #b45309);
+    border-color: var(--tertiary);
     background: var(--fam-surface-light);
     color: var(--text-primary, #f8fafc);
 }
@@ -824,7 +824,7 @@
 
 .appreciation-input:focus {
     outline: none;
-    border-color: var(--accent-gold, #b45309);
+    border-color: var(--tertiary);
 }
 
 .send-appreciation-btn {
@@ -833,7 +833,7 @@
     border: none;
     border-radius: 12px;
     background: linear-gradient(135deg, var(--fam-blue-replaced) 0%, var(--fam-blue-dark) 100%);
-    color: white;
+    color: var(--on-primary);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -904,7 +904,7 @@
 }
 
 .message-icon {
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
     flex-shrink: 0;
 }
 
@@ -926,7 +926,7 @@
 
 .appreciation-react:hover {
     background: var(--fam-surface-light);
-    border-color: var(--accent-gold, #b45309);
+    border-color: var(--tertiary);
 }
 
 /* Family Challenges */
@@ -949,7 +949,7 @@
     border: none;
     border-radius: 12px;
     background: linear-gradient(135deg, var(--fam-blue-replaced) 0%, var(--fam-blue-dark) 100%);
-    color: white;
+    color: var(--on-primary);
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -1034,7 +1034,7 @@
     border: none;
     border-radius: 12px;
     background: linear-gradient(135deg, var(--fam-blue-replaced) 0%, var(--fam-blue-dark) 100%);
-    color: white;
+    color: var(--on-primary);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
@@ -1082,7 +1082,7 @@
 
 .period-btn.active {
     background: var(--fam-surface-light);
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
@@ -1136,7 +1136,7 @@
     padding: 8px;
     border-radius: 8px 8px 0 0;
     font-weight: 700;
-    color: white;
+    color: var(--on-primary);
     font-size: 18px;
 }
 
@@ -1161,7 +1161,7 @@
 }
 
 .leaderboard-item.active {
-    border: 2px solid var(--accent-gold, #b45309);
+    border: 2px solid var(--tertiary);
     background: var(--fam-surface-light);
 }
 
@@ -1214,7 +1214,7 @@
     gap: 4px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
 }
 
 /* Groups */
@@ -1246,7 +1246,7 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 16px;
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
 }
 
 .group-header h2 {
@@ -1266,7 +1266,7 @@
 }
 
 .group-code strong {
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
     letter-spacing: 2px;
 }
 
@@ -1327,12 +1327,12 @@
 
 .approve-btn {
     background: var(--fam-blue-replaced);
-    color: white;
+    color: var(--on-primary);
 }
 
 .reject-btn {
-    background: var(--error-color, #ef4444);
-    color: white;
+    background: var(--error);
+    color: var(--on-primary);
 }
 
 /* No Group State */
@@ -1350,7 +1350,7 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 24px;
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
 }
 
 .no-group h3 {
@@ -1404,7 +1404,7 @@
 
 .action-card input:focus {
     outline: none;
-    border-color: var(--accent-gold, #b45309);
+    border-color: var(--tertiary);
 }
 
 .btn-primary {
@@ -1413,7 +1413,7 @@
     border: none;
     border-radius: 10px;
     background: linear-gradient(135deg, var(--fam-blue-replaced) 0%, var(--fam-blue-dark) 100%);
-    color: white;
+    color: var(--on-primary);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -1441,7 +1441,7 @@
 
 .success-message {
     background: rgba(6, 95, 70, 0.3);
-    color: var(--accent-gold-light, #f59e0b);
+    color: var(--secondary);
     border: 1px solid rgba(6, 95, 70, 0.4);
 }
 
@@ -1458,7 +1458,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: color-mix(in srgb, var(--surface-dim) 70%, transparent);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     display: flex;
@@ -1469,7 +1469,7 @@
 }
 
 .modal-content {
-    background: linear-gradient(135deg, var(--bg-emerald-deep, #064e3b) 0%, var(--bg-gradient-end, #042f2e) 100%);
+    background: linear-gradient(135deg, var(--primary-container) 0%, var(--surface-dim) 100%);
     border: 1px solid var(--fam-card-border);
     border-radius: 24px;
     padding: 32px;
@@ -1503,7 +1503,7 @@
 
 .name-input:focus {
     outline: none;
-    border-color: var(--accent-gold, #b45309);
+    border-color: var(--tertiary);
 }
 
 .role-selection {
@@ -1527,7 +1527,7 @@
 }
 
 .role-btn.selected {
-    border-color: var(--accent-gold, #b45309);
+    border-color: var(--tertiary);
     background: var(--fam-surface-light);
 }
 
