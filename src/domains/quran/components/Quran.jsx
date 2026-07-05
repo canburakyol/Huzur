@@ -90,6 +90,7 @@ function Quran({ onClose }) {
     const hasInitializedRef = useRef(false);
     const scrollIdleTimerRef = useRef(null);
     const scrollFrameRef = useRef(null);
+    const lastLangRef = useRef(i18n.language);
 
     const surahList = useMemo(() => staticSurahList || EMPTY_ARRAY, []);
     const reciters = useMemo(() => staticReciters || EMPTY_ARRAY, []);
@@ -314,18 +315,16 @@ function Quran({ onClose }) {
     }, [loadSurah, surahList.length]);
 
     useEffect(() => {
-        const nextTranslation = normalizeTranslationId(getInitialTranslation());
+        if (lastLangRef.current !== i18n.language) {
+            lastLangRef.current = i18n.language;
+            const nextTranslation = normalizeTranslationId(getInitialTranslation());
+            setSelectedTranslation(nextTranslation);
 
-        if (nextTranslation === selectedTranslation) {
-            return;
+            if (activeSurah) {
+                void loadSurah(activeSurah.number, null, nextTranslation);
+            }
         }
-
-        setSelectedTranslation(nextTranslation);
-
-        if (activeSurah) {
-            loadSurah(activeSurah.number, null, nextTranslation);
-        }
-    }, [activeSurah, getInitialTranslation, loadSurah, selectedTranslation]);
+    }, [activeSurah, getInitialTranslation, loadSurah, i18n.language]);
 
     useEffect(() => {
         if (activeMenuTab === 'fihrist' && detailedFihrist.length === 0) {

@@ -177,7 +177,7 @@ describe('quranService', () => {
     expect(loggerMock.error).toHaveBeenCalled();
   });
 
-  it('returns only a single Turkish translation option', async () => {
+  it('returns Turkish translations excluding tr.diyanet', async () => {
     fetchMock.mockResolvedValue(
       jsonResponse({
         code: 200,
@@ -194,7 +194,7 @@ describe('quranService', () => {
 
     expect(identifiers).toContain('tr.vakfi');
     expect(identifiers).not.toContain('tr.diyanet');
-    expect(identifiers.filter((identifier) => identifier.startsWith('tr.'))).toEqual(['tr.vakfi']);
+    expect(identifiers).toContain('tr.foo');
     expect(identifiers.slice(0, 3)).toEqual(['tr.vakfi', 'en.sahih', 'ar.jalalayn']);
   });
 
@@ -219,7 +219,8 @@ describe('quranService', () => {
     expect(translations.map((translation) => translation.identifier)).toEqual([
       'tr.vakfi',
       'en.sahih',
-      'ar.jalalayn'
+      'ar.jalalayn',
+      'tr.foo'
     ]);
   });
 

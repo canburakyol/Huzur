@@ -451,21 +451,22 @@ export const getAvailableTranslations = async (): Promise<TranslationEdition[]> 
             type: 'translation'
         };
 
-        let translations: TranslationEdition[] = [fallbackTurkishTranslation];
+        let translations: TranslationEdition[] = [];
 
-        if (data.code === 200) {
-            const vakfiTranslation = data.data.find(
-                (edition) => edition.type === 'translation' && edition.identifier === DEFAULT_TURKISH_TRANSLATION_ID
-            );
-
-            if (vakfiTranslation) {
-                translations = [
-                    {
-                        ...vakfiTranslation,
-                        name: 'Diyanet Vakfı (Türkçe)'
+        if (data.code === 200 && Array.isArray(data.data)) {
+            translations = data.data
+                .filter((edition) => edition.type === 'translation' && edition.identifier !== 'tr.diyanet')
+                .map((edition) => {
+                    if (edition.identifier === DEFAULT_TURKISH_TRANSLATION_ID) {
+                        return { ...edition, name: 'Diyanet Vakfı (Türkçe)' };
                     }
-                ];
-            }
+                    return edition;
+                });
+        }
+
+        const hasVakfi = translations.some((t) => t.identifier === DEFAULT_TURKISH_TRANSLATION_ID);
+        if (!hasVakfi) {
+            translations.unshift(fallbackTurkishTranslation);
         }
 
         const extraTranslations: TranslationEdition[] = [
@@ -484,8 +485,12 @@ export const getAvailableTranslations = async (): Promise<TranslationEdition[]> 
         ];
 
         const priorityIds = [DEFAULT_TURKISH_TRANSLATION_ID, 'en.sahih', 'ar.jalalayn'];
+        const merged = [...translations, ...extraTranslations];
+        const unique = merged.filter((item, index, self) =>
+            self.findIndex((t) => t.identifier === item.identifier) === index
+        );
 
-        return [...translations, ...extraTranslations].sort((a, b) => {
+        return unique.sort((a, b) => {
             const aIndex = priorityIds.indexOf(a.identifier);
             const bIndex = priorityIds.indexOf(b.identifier);
 
