@@ -76,7 +76,7 @@ const FETCH_TIMEOUT_MS = 10000;
 const TRANSLITERATION_FETCH_TIMEOUT_MS = 4000;
 const TRANSLITERATION_SOFT_TIMEOUT_MS = 750;
 
-const SURAH_CACHE_PREFIX = 'quran_surah_v5_';
+const SURAH_CACHE_PREFIX = 'quran_surah_v6_';
 const SURAH_CACHE_MAX_AGE_DAYS = 7;
 const DEFAULT_TURKISH_TRANSLATION_ID = 'tr.vakfi';
 
@@ -86,6 +86,17 @@ const normalizeTranslationId = (translationId = DEFAULT_TURKISH_TRANSLATION_ID):
 
 const hasMatchingSurahNumber = (data: { number?: number } | null | undefined, surahNumber: number): boolean => {
     return Number(data?.number) === Number(surahNumber);
+};
+
+const hasUsableAyahContent = (data: SurahData | null | undefined): boolean => {
+    if (!Array.isArray(data?.ayahs) || data.ayahs.length === 0) {
+        return false;
+    }
+
+    return data.ayahs.every((ayah) =>
+        typeof ayah.arabic === 'string' && ayah.arabic.trim().length > 0 &&
+        typeof ayah.translation === 'string' && ayah.translation.trim().length > 0
+    );
 };
 
 const getCachedSurah = (cacheKey: string, expectedSurahNumber: number | null = null): SurahData | null => {
@@ -98,6 +109,12 @@ const getCachedSurah = (cacheKey: string, expectedSurahNumber: number | null = n
         }
 
         const { data, timestamp } = cached;
+
+        if (!hasUsableAyahContent(data)) {
+            storageService.removeItem(storageKey);
+            logger.warn(`[Quran] Discarded incomplete cache for surah ${cacheKey}`);
+            return null;
+        }
 
         if (expectedSurahNumber !== null && !hasMatchingSurahNumber(data, expectedSurahNumber)) {
             storageService.removeItem(storageKey);
@@ -149,14 +166,29 @@ const buildSurahData = (surahNumber: number, arabicPayload: ApiResponse, transla
 
     const ayahs = (arabicPayload.data?.ayahs || []).map((ayah) => {
         const ayahNumber = Number(ayah.numberInSurah);
+        let arabic = ayah.text || '';
+
+        if (surahNumber !== 1 && surahNumber !== 9 && ayahNumber === 1) {
+            const cleaned = arabic.trim();
+            if (cleaned.startsWith('بِسْمِ') || cleaned.startsWith('بِسۡمِ')) {
+                const words = cleaned.split(/\s+/);
+                if (words.length >= 4) {
+                    arabic = words.slice(4).join(' ');
+                }
+            }
+        }
 
         return {
             number: ayahNumber,
-            arabic: ayah.text || '',
+            arabic,
             transliteration: transliterationByAyah?.get(ayahNumber) || '',
             translation: translations.get(ayahNumber) || ''
         };
     });
+
+    if (ayahs.length === 0 || ayahs.some((ayah) => !ayah.arabic.trim() || !ayah.translation.trim())) {
+        throw new Error(`Sure ${surahNumber} icin ayet veya meal verisi eksik`);
+    }
 
     return {
         number: arabicPayload.data.number!,

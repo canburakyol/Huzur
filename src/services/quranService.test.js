@@ -124,7 +124,7 @@ describe('quranService', () => {
     });
     expect(result.ayahs[1].translation).toBe('Resmi Vakif 2');
     expect(storageMock.setItem).toHaveBeenCalledWith(
-      'quran_surah_v5_1_tr.vakfi',
+      'quran_surah_v6_1_tr.vakfi',
       expect.objectContaining({
         data: expect.objectContaining({ number: 1 }),
         timestamp: expect.any(Number)
@@ -224,7 +224,7 @@ describe('quranService', () => {
   });
 
   it('discards mismatched cached surahs before refetching', async () => {
-    storageMock.seed('quran_surah_v5_1_tr.vakfi', {
+    storageMock.seed('quran_surah_v6_1_tr.vakfi', {
       data: { number: 99, ayahs: [] },
       timestamp: Date.now()
     });
@@ -245,7 +245,7 @@ describe('quranService', () => {
 
     const result = await getSurahComplete(1, 'tr.vakfi');
 
-    expect(storageMock.removeItem).toHaveBeenCalledWith('quran_surah_v5_1_tr.vakfi');
+    expect(storageMock.removeItem).toHaveBeenCalledWith('quran_surah_v6_1_tr.vakfi');
     expect(fetchMock).toHaveBeenCalledTimes(3);
     expect(result.number).toBe(1);
   });

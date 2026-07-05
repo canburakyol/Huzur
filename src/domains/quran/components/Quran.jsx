@@ -899,6 +899,7 @@ function Quran({ onClose }) {
                                             onClick={(event) => {
                                                 event.stopPropagation();
                                                 setSimpleMode(false);
+                                                storageService.setItem(QURAN_STORAGE_KEYS.SIMPLE_MODE, false);
                                             }}
                                             style={{
                                                 marginTop: '12px', padding: '8px 16px', borderRadius: '20px',
