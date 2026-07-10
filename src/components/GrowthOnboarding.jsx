@@ -106,6 +106,7 @@ function GrowthOnboarding({
   const [notificationPreference, setNotificationPreference] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const overlayRef = useRef(null);
   const lastViewedStepRef = useRef('');
   const lastGoalRef = useRef('');
 
@@ -196,6 +197,10 @@ function GrowthOnboarding({
   useEffect(() => {
     setSelectedLanguage(initialLanguage);
   }, [initialLanguage]);
+
+  useEffect(() => {
+    overlayRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+  }, [normalizedStep]);
 
   useEffect(() => {
     const storedGoal = storageService.getString(
@@ -440,6 +445,11 @@ function GrowthOnboarding({
 
   return (
     <div
+      ref={overlayRef}
+      className="growth-onboarding-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="growth-onboarding-title"
       style={{
         position: 'fixed',
         inset: 0,
@@ -447,19 +457,26 @@ function GrowthOnboarding({
         background: 'color-mix(in srgb, var(--surface-page) 92%, transparent)',
         backdropFilter: 'blur(6px)',
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'center',
-        padding: 20
+        padding: 'max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px))',
+        overflowY: 'auto',
+        overscrollBehavior: 'contain',
+        WebkitOverflowScrolling: 'touch'
       }}
     >
       <div
+        className="growth-onboarding-card"
         style={{
           width: '100%',
           maxWidth: 420,
+          minWidth: 0,
+          boxSizing: 'border-box',
+          margin: 'auto 0',
           borderRadius: 20,
           background: 'linear-gradient(135deg, var(--primary-container) 0%, var(--surface-container-high) 100%)',
           border: '1px solid color-mix(in srgb, var(--tertiary) 25%, transparent)',
-          padding: 20,
+          padding: 'clamp(14px, 4vw, 20px)',
           color: 'var(--on-primary)',
           boxShadow: 'var(--shadow-card)'
         }}
@@ -468,7 +485,7 @@ function GrowthOnboarding({
           {t('growth.onboarding.stepCounter', 'Adim {{current}} / {{total}}', { current: normalizedStep + 1, total: totalSteps })}
         </div>
 
-        <h2 style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--tertiary)' }}>{currentStep.title}</h2>
+        <h2 id="growth-onboarding-title" style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--tertiary)' }}>{currentStep.title}</h2>
         <p style={{ margin: '0 0 20px', lineHeight: 1.6, color: 'var(--on-primary-container)' }}>{currentStep.description}</p>
 
         {referralPlan && (

@@ -106,6 +106,11 @@ public class MainActivity extends BridgeActivity {
     }
 
     private static synchronized boolean initializeAppCheck(Context context) {
+        if (BuildConfig.DEBUG && BuildConfig.FIREBASE_APPCHECK_DISABLE) {
+            Log.w(TAG, "[Firebase] App Check disabled via VITE_FIREBASE_APPCHECK_DISABLE, platform=android");
+            return false;
+        }
+
         if (appCheckInitialized) {
             return true;
         }
@@ -171,14 +176,15 @@ public class MainActivity extends BridgeActivity {
         @com.getcapacitor.PluginMethod
         public void initializePrivacySdks(PluginCall call) {
             boolean telemetryEnabled = Boolean.TRUE.equals(call.getBoolean("telemetryEnabled", false));
+            boolean firebaseInitialized = MainActivity.initializeAppCheck(getContext());
             JSObject ret = new JSObject();
             ret.put("success", true);
             ret.put("platform", "android");
             ret.put("telemetryEnabled", telemetryEnabled);
+            ret.put("firebaseInitialized", firebaseInitialized);
 
             if (!telemetryEnabled) {
                 ret.put("skipped", true);
-                ret.put("firebaseInitialized", MainActivity.isFirebaseInitialized(getContext()));
                 ret.put("analyticsConfigured", false);
                 ret.put("crashlyticsEnabled", false);
                 ret.put("adMobInitialized", false);
@@ -186,7 +192,6 @@ public class MainActivity extends BridgeActivity {
                 return;
             }
 
-            boolean firebaseInitialized = MainActivity.initializeAppCheck(getContext());
             boolean analyticsConfigured = MainActivity.configureFirebaseAnalyticsCollection(getContext(), true);
             boolean crashlyticsEnabled = MainActivity.setCrashlyticsCollection(getContext(), true);
             boolean adMobInitialized = MainActivity.initializeAdMob(getContext());

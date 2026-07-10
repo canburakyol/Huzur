@@ -8,11 +8,13 @@ const MoodSelector = lazy(() => import('../../domains/lifestyle/components/MoodS
 const StreakProtectionModal = lazy(() => import('../../domains/gamification/components/StreakProtectionModal'));
 const LevelUpConfetti = lazy(() => import('../LevelUpConfetti'));
 const AdConsentPrompt = lazy(() => import('../AdConsentPrompt'));
+const LocationConsentPrompt = lazy(() => import('../LocationConsentPrompt'));
 
 function AppOverlays({
   showSplash,
   onHideSplash,
   showGrowthOnboarding,
+  showLocationPrompt,
   showAdConsentPrompt,
   onboardingStep,
   onboardingConfig,
@@ -25,6 +27,7 @@ function AppOverlays({
   onRequestGrowthNotifications,
   onChangeGrowthStep,
   onCompleteGrowth,
+  onLocationConsent,
   streak24hRecovery,
   onConfirm24hRecovery,
   onWatchRewarded24hRecovery,
@@ -92,7 +95,13 @@ function AppOverlays({
         </Suspense>
       )}
 
-      {showAdConsentPrompt && !showSplash && !showGrowthOnboarding && (
+      {showLocationPrompt && !showSplash && !showGrowthOnboarding && (
+        <Suspense fallback={null}>
+          <LocationConsentPrompt onDecision={onLocationConsent} />
+        </Suspense>
+      )}
+
+      {showAdConsentPrompt && !showSplash && !showGrowthOnboarding && !showLocationPrompt && (
         <Suspense fallback={null}>
           <AdConsentPrompt />
         </Suspense>

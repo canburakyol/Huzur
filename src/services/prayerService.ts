@@ -3,6 +3,8 @@ import { storageService } from './storageService';
 import { logger } from '../utils/logger';
 import { offlineCalculatorService } from './offlineCalculatorService';
 import { sanitizePrayerTimings, PRAYER_KEYS_ALL } from '../constants/prayerTimes';
+import { getTodayDiyanetTimes, fetchMonthlyDiyanetTimes, mapDiyanetToInternalTimings } from './diyanetApiService';
+import { findDistrictByName, getSelectedDistrictId } from './diyanetLocationService';
 
 interface PrayerTimings {
   [key: string]: string;
@@ -64,36 +66,74 @@ const normalizePrayerPayload = (payload: unknown): PrayerPayload | null => {
   if ((payload as PrayerPayload).timings) {
     return {
       ...payload as PrayerPayload,
-      timings: sanitizedTimings
+      timings: sanitizedTimings as PrayerTimings
     };
   }
 
   return {
-    timings: sanitizedTimings
+    timings: sanitizedTimings as PrayerTimings
   };
 };
 
-export const fetchMonthlyPrayerTimes = (
+/**
+ * Fetches monthly prayer times. Tries Diyanet API first, falls back to offline adhan calculation.
+ */
+export const fetchMonthlyPrayerTimes = async (
   latitude: number | null = null,
   longitude: number | null = null,
-  // eslint-disable-next-line no-unused-vars
-  _city = 'Istanbul',
+  city = 'Istanbul',
   // eslint-disable-next-line no-unused-vars
   _country = 'Turkey',
   targetDate = new Date()
-): MonthlyPrayerData | null => {
+): Promise<MonthlyPrayerData | null> => {
   try {
     const month = targetDate.getMonth() + 1;
     const year = targetDate.getFullYear();
     const lat = latitude || DEFAULT_LAT;
     const lon = longitude || DEFAULT_LON;
-    const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${year}_${month}`;
+    const districtId = findDistrictByName(city)?.districtId || getSelectedDistrictId();
+    const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${districtId}_${lat.toFixed(4)}_${lon.toFixed(4)}_${year}_${month}`;
 
     const existing = storageService.getItem<MonthlyPrayerData>(monthlyKey);
     if (existing && Array.isArray(existing.timings) && existing.timings.length > 0) {
-      return existing;
+      const isRealDiyanet = existing.timings.every(t => t.meta?.method?.name === 'Diyanet');
+      if (isRealDiyanet) {
+        return existing;
+      }
     }
 
+    // Try Diyanet API first
+    try {
+      const diyanetDays = await fetchMonthlyDiyanetTimes(districtId);
+
+      if (Array.isArray(diyanetDays) && diyanetDays.length > 0) {
+        const timingsArray: PrayerPayload[] = diyanetDays.map((day) => {
+          const mapped = mapDiyanetToInternalTimings(day);
+          return {
+            timings: mapped as unknown as PrayerTimings,
+            date: { readable: day.MiladiTarihUzun || day.MiladiTarihKisa },
+            meta: { method: { name: 'Diyanet' } },
+          };
+        });
+
+        const dataToCache: MonthlyPrayerData = {
+          timings: timingsArray,
+          timestamp: Date.now(),
+          month,
+          year,
+          latitude: lat,
+          longitude: lon,
+        };
+
+        storageService.setItem(monthlyKey, dataToCache);
+        logger.log('[PrayerService] Monthly Diyanet API data cached');
+        return dataToCache;
+      }
+    } catch (diyanetError) {
+      logger.warn('[PrayerService] Diyanet monthly fetch failed, falling back to offline:', diyanetError);
+    }
+
+    // Fallback: offline adhan calculation
     const daysInMonth = new Date(year, month, 0).getDate();
     const timingsArray: PrayerPayload[] = [];
 
@@ -102,7 +142,7 @@ export const fetchMonthlyPrayerTimes = (
       const calculatedTimings = offlineCalculatorService.calculatePrayerTimes(lat, lon, date);
 
       timingsArray.push({
-        timings: calculatedTimings,
+        timings: calculatedTimings as unknown as PrayerTimings,
         date: { readable: format(date, 'dd MMM yyyy') },
         meta: { method: { name: 'Diyanet (Offline)' } }
       });
@@ -121,33 +161,64 @@ export const fetchMonthlyPrayerTimes = (
     logger.log('[PrayerService] Monthly offline calculation cached');
     return dataToCache;
   } catch (error) {
-    logger.error('[PrayerService] Monthly offline calculation failed:', error);
+    logger.error('[PrayerService] Monthly prayer times fetch failed:', error);
   }
   return null;
 };
 
-export const getPrayerTimes = (latitude: number | null = null, longitude: number | null = null): PrayerPayload => {
+/**
+ * Gets today's prayer times. Tries Diyanet API first, falls back to offline adhan calculation.
+ */
+export const getPrayerTimes = async (latitude: number | null = null, longitude: number | null = null): Promise<PrayerPayload> => {
   const today = format(new Date(), 'dd-MM-yyyy');
   const lat = latitude || DEFAULT_LAT;
   const lon = longitude || DEFAULT_LON;
-  const cacheKey = `${CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${today}`;
+  const districtId = getSelectedDistrictId();
+  const cacheKey = `${CACHE_KEY_PREFIX}${districtId}_${lat.toFixed(4)}_${lon.toFixed(4)}_${today}`;
 
   try {
+    // Check daily cache first (Only accept real Diyanet API cache on success path)
     const cachedData = storageService.getItem<PrayerPayload>(cacheKey);
     const normalizedCachedData = normalizePrayerPayload(cachedData);
-    if (normalizedCachedData) {
+    if (normalizedCachedData && normalizedCachedData.meta?.method?.name === 'Diyanet') {
       return normalizedCachedData;
     }
 
-    if (cachedData) {
-      storageService.removeItem(cacheKey);
+    // Try Diyanet API
+    try {
+      const diyanetTimings = await getTodayDiyanetTimes(districtId);
+
+      if (diyanetTimings) {
+        const now = new Date();
+        const result = normalizePrayerPayload({
+          timings: diyanetTimings as unknown as PrayerTimings,
+          date: { readable: format(now, 'dd MMM yyyy') },
+          meta: { method: { name: 'Diyanet' } },
+        });
+
+        if (result) {
+          logger.log('[PrayerService] Prayer times fetched from Diyanet API');
+          storageService.setItem(cacheKey, result);
+          cleanupOldDailyCache(cacheKey);
+          return result;
+        }
+      }
+    } catch (diyanetError) {
+      logger.warn('[PrayerService] Diyanet daily fetch failed, falling back to offline:', diyanetError);
     }
 
+    // Fallback 1: If daily cache exists (even if it is offline calculator 'Diyanet (Offline)'), use it before doing a new calculation
+    if (normalizedCachedData) {
+      logger.log('[PrayerService] Using cached offline/older times as fallback');
+      return normalizedCachedData;
+    }
+
+    // Fallback 2: offline adhan calculation
     const now = new Date();
     const calculatedTimes = offlineCalculatorService.calculatePrayerTimes(lat, lon, now);
 
     if (calculatedTimes) {
-      logger.log('[PrayerService] Prayer times calculated OFFLINE via adhan');
+      logger.log('[PrayerService] Prayer times calculated OFFLINE via adhan (fallback)');
 
       const result = normalizePrayerPayload({
         timings: calculatedTimes,
@@ -160,23 +231,15 @@ export const getPrayerTimes = (latitude: number | null = null, longitude: number
       }
 
       storageService.setItem(cacheKey, result);
-
-      try {
-        const allKeys = Object.keys(localStorage).filter(
-          key => key.startsWith(CACHE_KEY_PREFIX) && key !== cacheKey
-        );
-        allKeys.forEach(key => storageService.removeItem(key));
-      } catch (error) {
-        logger.error('[PrayerService] Cache cleanup failed', error);
-      }
-
+      cleanupOldDailyCache(cacheKey);
       return result;
     }
 
     throw new Error('Offline prayer time calculation returned null');
   } catch (error) {
-    logger.error('[PrayerService] Offline calculation failed:', error);
+    logger.error('[PrayerService] Prayer times fetch failed:', error);
 
+    // Last resort: try monthly cache
     const now = new Date();
     const dayOfMonth = now.getDate();
     const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${lat.toFixed(4)}_${lon.toFixed(4)}_${now.getFullYear()}_${now.getMonth() + 1}`;
@@ -192,6 +255,17 @@ export const getPrayerTimes = (latitude: number | null = null, longitude: number
     }
 
     throw new Error('Namaz vakitleri hesaplanamadı. Lütfen uygulamayı yeniden başlatın.');
+  }
+};
+
+const cleanupOldDailyCache = (currentCacheKey: string): void => {
+  try {
+    const allKeys = Object.keys(localStorage).filter(
+      key => key.startsWith(CACHE_KEY_PREFIX) && key !== currentCacheKey
+    );
+    allKeys.forEach(key => storageService.removeItem(key));
+  } catch (error) {
+    logger.error('[PrayerService] Cache cleanup failed', error);
   }
 };
 
@@ -213,10 +287,10 @@ export const getNextPrayer = (timings: PrayerTimings | null | undefined, current
   };
 
   for (const prayer of prayers) {
-    if (normalizedTimings[prayer] > timeStr) {
+    if (normalizedTimings![prayer] > timeStr) {
       return {
         name: prayerNames[prayer],
-        time: normalizedTimings[prayer],
+        time: normalizedTimings![prayer],
         key: prayer,
         isTomorrow: false
       };
@@ -225,7 +299,7 @@ export const getNextPrayer = (timings: PrayerTimings | null | undefined, current
 
   return {
     name: 'İmsak',
-    time: normalizedTimings.Fajr,
+    time: normalizedTimings!.Fajr,
     key: 'Fajr',
     isTomorrow: true
   };

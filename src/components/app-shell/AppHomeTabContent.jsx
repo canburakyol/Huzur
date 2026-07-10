@@ -20,6 +20,7 @@ import { STORAGE_KEYS } from '../../constants';
 import { storageService } from '../../services/storageService';
 
 const PremiumHomeHero = lazy(() => import('../PremiumHomeHero'));
+const NativeAdCard = lazy(() => import('../NativeAdCard'));
 
 function AppHomeTabContent({
   timings,
@@ -160,6 +161,10 @@ function AppHomeTabContent({
         </Suspense>
 
         <QuickAccessGrid onSelectFeature={handleSelectFeature} />
+
+        <Suspense fallback={null}>
+          <NativeAdCard isProUser={isProUser} />
+        </Suspense>
 
         <VerseOfTheDay dailyContent={dailyContent} />
 

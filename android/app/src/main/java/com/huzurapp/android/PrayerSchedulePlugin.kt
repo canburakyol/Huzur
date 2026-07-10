@@ -65,8 +65,12 @@ class PrayerSchedulePlugin : Plugin() {
             val longitude = call.getDouble("longitude") ?: existingContext?.longitude
             val locationName = call.getString("locationName") ?: existingContext?.locationName
             val adhanSound = call.getString("adhanSound") ?: existingContext?.adhanSound
+            val prayerNotificationsEnabled = call.getBoolean("prayerNotificationsEnabled")
             val monthlySnapshots = call.getArray("monthlySnapshots")
 
+            prayerNotificationsEnabled?.let {
+                applyPrayerNotificationPreference(it, "js_schedule_sync")
+            }
             saveMonthlySnapshots(monthlySnapshots)
 
             val success = PrayerScheduleCoordinator.syncSchedule(
@@ -86,6 +90,37 @@ class PrayerSchedulePlugin : Plugin() {
         } catch (error: Exception) {
             Log.e(TAG, "Failed to sync prayer schedule", error)
             call.reject("Failed to sync prayer schedule: ${error.message}")
+        }
+    }
+
+    @PluginMethod
+    fun setPrayerNotificationsEnabled(call: PluginCall) {
+        val enabled = call.getBoolean("enabled")
+        if (enabled == null) {
+            call.reject("enabled is required")
+            return
+        }
+
+        try {
+            applyPrayerNotificationPreference(enabled, "js_preference")
+            call.resolve(JSObject().apply {
+                put("success", true)
+                put("platform", "android")
+                put("enabled", enabled)
+            })
+        } catch (error: Exception) {
+            Log.e(TAG, "Failed to update prayer notification preference", error)
+            call.reject("Failed to update prayer notification preference: ${error.message}")
+        }
+    }
+
+    private fun applyPrayerNotificationPreference(enabled: Boolean, source: String) {
+        PrayerScheduleStore.setPrayerNotificationsEnabled(context, enabled)
+        if (enabled) {
+            PrayerScheduleCoordinator.rescheduleFromStore(context, source)
+        } else {
+            AdhanAlarmReceiver.cancelAllAdhanAlarms(context)
+            AdhanForegroundService.stopPlayback(context)
         }
     }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGroupHatim } from '../../../hooks/useGroupHatim';
 import CreateHatimModal from './CreateHatimModal';
@@ -6,7 +6,10 @@ import HatimCard from './HatimCard';
 import { BookOpen, RefreshCw, Users } from 'lucide-react';
 import { useToast } from '../../../hooks/useToast';
 import { logger } from '../../../utils/logger';
+import { useAppStore } from '../../../stores/useAppStore';
 import './Social.css';
+
+const NativeAdCard = lazy(() => import('../../../components/NativeAdCard'));
 
 const HatimList = ({ onSelectHatim }) => {
   const { t } = useTranslation();
@@ -16,6 +19,7 @@ const HatimList = ({ onSelectHatim }) => {
   const [showJoinInput, setShowJoinInput] = useState(false);
   const [joinCode, setJoinCode] = useState('');
   const [targetHatimId, setTargetHatimId] = useState(null);
+  const isProUser = useAppStore((state) => state.isProUser);
 
   const featuredHatims = activeHatims.filter((hatim) => hatim.isSeed === true);
   const communityHatims = activeHatims.filter((hatim) => hatim.isSeed !== true);
@@ -137,6 +141,10 @@ const HatimList = ({ onSelectHatim }) => {
             {renderHatimCards(featuredHatims)}
           </div>
         )}
+
+        <Suspense fallback={null}>
+          <NativeAdCard isProUser={isProUser} />
+        </Suspense>
 
         {communityHatims.length > 0 && (
           <div className="sanctuary-section-block">

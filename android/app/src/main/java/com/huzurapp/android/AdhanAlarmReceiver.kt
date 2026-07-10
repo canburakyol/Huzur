@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 
 class AdhanAlarmReceiver : BroadcastReceiver() {
@@ -117,6 +118,19 @@ class AdhanAlarmReceiver : BroadcastReceiver() {
         val prayerKey = intent.getStringExtra(EXTRA_PRAYER_NAME) ?: "Dhuhr"
         val localizedName = intent.getStringExtra(EXTRA_PRAYER_NAME_LOCALIZED) ?: prayerKey
         val adhanSound = intent.getStringExtra(EXTRA_ADHAN_SOUND)
+
+        val notificationsAllowed = NotificationManagerCompat.from(context).areNotificationsEnabled()
+        val preferenceEnabled = PrayerScheduleStore.arePrayerNotificationsEnabled(context)
+        val playableSound = AdhanForegroundService.hasPlayableAdhan(context, adhanSound)
+        if (!notificationsAllowed || !preferenceEnabled || !playableSound) {
+            Log.i(
+                TAG,
+                "Skipping adhan playback: notificationsAllowed=$notificationsAllowed " +
+                    "preferenceEnabled=$preferenceEnabled playableSound=$playableSound"
+            )
+            PrayerScheduleCoordinator.rescheduleFromStore(context, "adhan_alarm_blocked")
+            return
+        }
 
         val serviceIntent = Intent(context, AdhanForegroundService::class.java).apply {
             putExtra(AdhanForegroundService.EXTRA_PRAYER_NAME, prayerKey)

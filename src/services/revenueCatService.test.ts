@@ -7,6 +7,7 @@ const purchasesMock = vi.hoisted(() => ({
   getCustomerInfo: vi.fn(),
   purchasePackage: vi.fn(),
   restorePurchases: vi.fn(),
+  getOfferings: vi.fn(),
   getAppUserID: vi.fn(),
   logIn: vi.fn(),
 }));
@@ -80,6 +81,15 @@ describe('revenueCatService', () => {
     purchasesMock.getCustomerInfo.mockResolvedValue({ customerInfo: customerInfoWithoutPro });
     purchasesMock.purchasePackage.mockResolvedValue({ customerInfo: customerInfoWithPro });
     purchasesMock.restorePurchases.mockResolvedValue({ customerInfo: customerInfoWithPro });
+    purchasesMock.getOfferings.mockResolvedValue({
+      current: undefined,
+      all: {
+        default: {
+          identifier: 'default',
+          availablePackages: [{ identifier: 'monthly', product: { title: 'Aylik' } }],
+        },
+      },
+    });
     purchasesMock.getAppUserID.mockResolvedValue({ appUserID: 'firebase-user-1' });
     purchasesMock.logIn.mockResolvedValue({ customerInfo: customerInfoWithoutPro, created: false });
     subscriptionSyncMock.syncProStatusWithRevenueCat.mockResolvedValue({
@@ -149,6 +159,15 @@ describe('revenueCatService', () => {
     await vi.waitFor(() => {
       expect(subscriptionSyncMock.syncProStatusWithRevenueCat).toHaveBeenCalled();
     });
+  });
+
+  it('falls back to all offerings when the current offering is missing', async () => {
+    const { getOfferings } = await importService();
+
+    const packages = await getOfferings();
+
+    expect(packages).toHaveLength(1);
+    expect(packages[0].identifier).toBe('monthly');
   });
 
   it('fails restore when RevenueCat does not return the Pro entitlement', async () => {

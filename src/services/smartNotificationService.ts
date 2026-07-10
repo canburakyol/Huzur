@@ -9,6 +9,7 @@ import { getOptimalReminderHour } from './userActivityTracker';
 import { getPersonalizedPushHintsV1 } from './aiService';
 import { buildAiContext } from './aiContextService';
 import { getRecoveryLoopPlan } from './recoveryLoopService';
+import PrayerSchedule from '../plugins/PrayerSchedulePlugin';
 import {
   NOTIFICATION_CHANNELS,
   checkNotificationPermission,
@@ -343,6 +344,14 @@ export const updateNotificationPreferences = async (newPrefs: Partial<Notificati
   const current = getNotificationPreferences();
   const updated = { ...current, ...newPrefs };
   storageService.setItem(NOTIFICATION_PREFS_KEY, updated);
+
+  if (typeof newPrefs.prayer === 'boolean' && Capacitor.getPlatform() !== 'web') {
+    try {
+      await PrayerSchedule.setPrayerNotificationsEnabled({ enabled: updated.prayer });
+    } catch (error) {
+      logger.warn('[Notifications] Native prayer preference sync failed', error);
+    }
+  }
 
   if (!updated.prayer) await cancelNotificationsByType('prayer');
   if (!updated.streak) await cancelNotificationsByType('streak');

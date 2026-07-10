@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Geolocation } from "@capacitor/geolocation";
+import { Capacitor } from "@capacitor/core";
 import { storageService } from "../services/storageService";
 import { STORAGE_KEYS } from "../constants";
 import { logger } from "../utils/logger";
+import { findDistrictByName, setDistrictById } from "../services/diyanetLocationService";
 
 interface WeatherData {
   temperature: number;
@@ -38,6 +40,24 @@ const LOCATION_WEATHER_CACHE_PREFIX = "location_weather_cache_";
 const LOCATION_LAST_COORDS_KEY = "location_last_coords";
 const LOCATION_WEATHER_CACHE_TTL_MS = 30 * 60 * 1000;
 const LOCATION_REQUEST_TIMEOUT_MS = 5000;
+
+const hasGrantedLocationPermission = (status: { location?: string; coarseLocation?: string }): boolean => (
+  status.location === "granted" || status.coarseLocation === "granted"
+);
+
+const ensureLocationPermission = async (): Promise<boolean> => {
+  if (!Capacitor.isNativePlatform()) {
+    return true;
+  }
+
+  const current = await Geolocation.checkPermissions();
+  if (hasGrantedLocationPermission(current)) {
+    return true;
+  }
+
+  const requested = await Geolocation.requestPermissions({ permissions: ["location"] });
+  return hasGrantedLocationPermission(requested);
+};
 
 declare global {
   interface Window {
@@ -134,14 +154,14 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
   const lastForwardedLocationRef = useRef("");
 
   const forwardLocationUpdate = useCallback(
-    (latitude: number, longitude: number) => {
+    (latitude: number, longitude: number, resolvedLocationName?: string) => {
       if (!onLocationUpdate) return;
 
-      const signature = `${Number(latitude).toFixed(4)}:${Number(longitude).toFixed(4)}`;
+      const signature = `${Number(latitude).toFixed(4)}:${Number(longitude).toFixed(4)}:${resolvedLocationName || ""}`;
       if (lastForwardedLocationRef.current === signature) return;
 
       lastForwardedLocationRef.current = signature;
-      onLocationUpdate({ latitude, longitude });
+      onLocationUpdate({ latitude, longitude, locationName: resolvedLocationName });
     },
     [onLocationUpdate]
   );
@@ -200,46 +220,65 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
     }
   }, []);
 
-  const handleLocationConsent = useCallback(
-    (accepted: boolean): Promise<LocationCoords> => {
-      return new Promise((resolve) => {
-        setShowLocationPrompt(false);
+  const resolveLocationAndForward = useCallback(async (latitude: number, longitude: number, isDefault = false) => {
+    const snapshot = await fetchWeatherData(latitude, longitude, isDefault);
+    const resolvedLocationName = snapshot?.locationName || (isDefault ? DEFAULT_LOCATION_NAME : undefined);
+    const district = resolvedLocationName ? findDistrictByName(resolvedLocationName) : null;
 
-        if (accepted) {
+    if (district) {
+      setDistrictById(district.districtId, district.districtName, district.cityName);
+    } else if (resolvedLocationName) {
+      logger.warn("[useLocationConsent] No Diyanet district mapping for:", resolvedLocationName);
+    }
+
+    forwardLocationUpdate(latitude, longitude, resolvedLocationName);
+    return snapshot;
+  }, [fetchWeatherData, forwardLocationUpdate]);
+
+  const handleLocationConsent = useCallback(
+    async (accepted: boolean): Promise<LocationCoords> => {
+      setShowLocationPrompt(false);
+
+      if (accepted) {
+        try {
+          const permissionGranted = await ensureLocationPermission();
+          if (!permissionGranted) {
+            throw new Error("Location permission was not granted");
+          }
+
+          const position = await Geolocation.getCurrentPosition({
+            enableHighAccuracy: false,
+            timeout: 3000,
+            maximumAge: 60000,
+          });
+          const { latitude, longitude } = position.coords;
+
           storageService.setString(STORAGE_KEYS.LOCATION_CONSENT, "true");
           setLocationConsentGiven(true);
+          logger.log("[useLocationConsent] Location obtained:", latitude, longitude);
+          setDebugLocation(latitude, longitude);
+          setStoredLastCoords(latitude, longitude);
+          forwardLocationUpdate(latitude, longitude);
 
-          Geolocation.getCurrentPosition({
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 30000,
-          })
-            .then((position) => {
-              const { latitude, longitude } = position.coords;
-              logger.log("[useLocationConsent] Location obtained:", latitude, longitude);
-              setDebugLocation(latitude, longitude);
-              setStoredLastCoords(latitude, longitude);
-
-              void fetchWeatherData(latitude, longitude);
-              forwardLocationUpdate(latitude, longitude);
-              resolve({ latitude, longitude });
-            })
-            .catch((error) => {
-              logger.warn("[useLocationConsent] Location permission denied/error after consent:", error);
-              void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-              setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
-              forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
-              resolve({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
-            });
-        } else {
+          await resolveLocationAndForward(latitude, longitude);
+          return { latitude, longitude };
+        } catch (error) {
+          logger.warn("[useLocationConsent] Location permission denied/error after consent:", error);
           storageService.setString(STORAGE_KEYS.LOCATION_CONSENT, "declined");
-          void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
-          forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
-          resolve({ latitude: DEFAULT_LAT, longitude: DEFAULT_LON });
+          setLocationConsentGiven(false);
+          void resolveLocationAndForward(DEFAULT_LAT, DEFAULT_LON, true);
+          setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
+          return { latitude: DEFAULT_LAT, longitude: DEFAULT_LON };
         }
-      });
+      }
+
+      storageService.setString(STORAGE_KEYS.LOCATION_CONSENT, "declined");
+      setLocationConsentGiven(false);
+      void resolveLocationAndForward(DEFAULT_LAT, DEFAULT_LON, true);
+      setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
+      return { latitude: DEFAULT_LAT, longitude: DEFAULT_LON };
     },
-    [fetchWeatherData, forwardLocationUpdate]
+    [resolveLocationAndForward]
   );
 
   useEffect(() => {
@@ -247,11 +286,7 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
 
     const loadDefaultLocation = async () => {
       setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
-      forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
-      await Promise.resolve();
-      if (cancelled) return;
-
-      await fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
+      await resolveLocationAndForward(DEFAULT_LAT, DEFAULT_LON, true);
     };
 
     const storedConsent = storageService.getString(STORAGE_KEYS.LOCATION_CONSENT);
@@ -267,32 +302,45 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
       const lastCoords = getStoredLastCoords();
       if (lastCoords) {
         setDebugLocation(lastCoords.latitude, lastCoords.longitude);
-        forwardLocationUpdate(lastCoords.latitude, lastCoords.longitude);
-        void fetchWeatherData(lastCoords.latitude, lastCoords.longitude);
+        void resolveLocationAndForward(lastCoords.latitude, lastCoords.longitude);
       } else {
         setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
-        forwardLocationUpdate(DEFAULT_LAT, DEFAULT_LON);
-        void fetchWeatherData(DEFAULT_LAT, DEFAULT_LON, true);
+        void resolveLocationAndForward(DEFAULT_LAT, DEFAULT_LON, true);
       }
 
-      Geolocation.getCurrentPosition({
-        enableHighAccuracy: false,
-        timeout: 6000,
-        maximumAge: 30000,
-      })
-        .then((position) => {
+      const refreshGrantedLocation = async () => {
+        try {
+          if (Capacitor.isNativePlatform()) {
+            const permissionStatus = await Geolocation.checkPermissions();
+            if (!hasGrantedLocationPermission(permissionStatus)) {
+              storageService.removeItem(STORAGE_KEYS.LOCATION_CONSENT);
+              if (!cancelled) {
+                setLocationConsentGiven(false);
+                setShowLocationPrompt(true);
+              }
+              return;
+            }
+          }
+
+          const position = await Geolocation.getCurrentPosition({
+            enableHighAccuracy: false,
+            timeout: 3000,
+            maximumAge: 60000,
+          });
           const { latitude, longitude } = position.coords;
           logger.log("[useLocationConsent] Initial location obtained:", latitude, longitude);
           if (cancelled) return;
 
           setDebugLocation(latitude, longitude);
           setStoredLastCoords(latitude, longitude);
-          void fetchWeatherData(latitude, longitude);
           forwardLocationUpdate(latitude, longitude);
-        })
-        .catch((error) => {
+          await resolveLocationAndForward(latitude, longitude);
+        } catch (error) {
           logger.warn("[useLocationConsent] Initial location error:", error);
-        });
+        }
+      };
+
+      void refreshGrantedLocation();
 
       return () => {
         cancelled = true;
@@ -303,7 +351,7 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
     return () => {
       cancelled = true;
     };
-  }, [fetchWeatherData, forwardLocationUpdate]);
+  }, [resolveLocationAndForward]);
 
   return {
     weather,

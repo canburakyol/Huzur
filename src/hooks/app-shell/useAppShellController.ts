@@ -18,6 +18,7 @@ import { useStreakGuards } from "./useStreakGuards";
 interface LocationCoords {
   latitude: number;
   longitude: number;
+  locationName?: string;
 }
 
 export function useAppShellController() {

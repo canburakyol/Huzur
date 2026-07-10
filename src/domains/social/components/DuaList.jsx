@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDua } from '../../../hooks/useDua';
 import CreateDuaModal from './CreateDuaModal';
@@ -6,13 +6,17 @@ import DuaCard from './DuaCard';
 import { logger } from '../../../utils/logger';
 import { Heart, RefreshCw, Plus } from 'lucide-react';
 import { useToast } from '../../../hooks/useToast';
+import { useAppStore } from '../../../stores/useAppStore';
 import './Social.css';
+
+const NativeAdCard = lazy(() => import('../../../components/NativeAdCard'));
 
 const DuaList = () => {
   const { t } = useTranslation();
   const { showToast } = useToast();
   const { duas, loading, error, prayForDua, prayedDuaIds, submittingDuaIds, refreshDuas } = useDua();
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const isProUser = useAppStore((state) => state.isProUser);
 
   const featuredDuas = duas.filter((dua) => dua.isSeed === true || dua.featured === true);
   const communityDuas = duas.filter((dua) => dua.isSeed !== true && dua.featured !== true);
@@ -80,6 +84,10 @@ const DuaList = () => {
             {renderDuaCards(featuredDuas)}
           </div>
         )}
+
+        <Suspense fallback={null}>
+          <NativeAdCard isProUser={isProUser} />
+        </Suspense>
 
         {communityDuas.length > 0 && (
           <div className="sanctuary-section-block">

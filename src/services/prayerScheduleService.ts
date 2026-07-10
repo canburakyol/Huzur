@@ -20,6 +20,7 @@ type SyncPrayerScheduleParams = {
   longitude?: number | null;
   locationName?: string;
   adhanSound?: string | null;
+  prayerNotificationsEnabled?: boolean;
 };
 
 type SyncResult = {
@@ -92,7 +93,8 @@ export const syncPrayerSchedule = async ({
   latitude = null,
   longitude = null,
   locationName = 'Huzur',
-  adhanSound = null
+  adhanSound = null,
+  prayerNotificationsEnabled
 }: SyncPrayerScheduleParams): Promise<SyncResult> => {
   if (!timings || typeof timings !== 'object') {
     return { success: false, error: 'Prayer timings are required' };
@@ -100,9 +102,22 @@ export const syncPrayerSchedule = async ({
 
   const nextPrayer = getNextPrayer(timings);
   if (nextPrayer?.key) {
+    const prayerTime = timings[nextPrayer.key];
+    const now = new Date();
+    const [h, m] = prayerTime.split(':').map(Number);
+    const prayerDate = new Date();
+    prayerDate.setHours(h, m, 0);
+    if (prayerDate < now) {
+      prayerDate.setDate(prayerDate.getDate() + 1);
+    }
+    const diff = prayerDate.getTime() - now.getTime();
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const timeLeft = `${hours}sa ${minutes}dk`;
+
     await updateWidget({
-      name: nextPrayer.name,
-      time: timings[nextPrayer.key],
+      nextPrayer: nextPrayer.name,
+      timeRemaining: timeLeft,
       location: locationName || 'Huzur'
     });
   }
@@ -131,6 +146,7 @@ export const syncPrayerSchedule = async ({
       longitude: roundCoordinate(longitude),
       locationName,
       adhanSound,
+      prayerNotificationsEnabled,
       monthlySnapshots
     });
 

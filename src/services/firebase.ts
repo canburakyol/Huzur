@@ -125,6 +125,14 @@ let _nativePrivacySdkInit: Promise<NativePrivacySdkInitResult> | null = null;
 let _nativePrivacySdkInitialized = false;
 
 const ensureAppCheck = async (app: FirebaseApp): Promise<AppCheck | null> => {
+  // Development-only bypass for local debug builds. Never enable this in production.
+  if (import.meta.env.VITE_FIREBASE_APPCHECK_DISABLE === "true") {
+    logger.warn("[Firebase] App Check disabled via VITE_FIREBASE_APPCHECK_DISABLE", {
+      platform: Capacitor.getPlatform(),
+    });
+    return null;
+  }
+
   if (_appCheck) {
     return _appCheck;
   }
@@ -148,12 +156,8 @@ const ensureAppCheck = async (app: FirebaseApp): Promise<AppCheck | null> => {
     return _appCheck;
   }
 
-  // Native App Check shares the privacy-gated SDK bootstrap. Waiting here
-  // prevents Firestore/Auth from requesting a token before its provider exists.
-  if (!isTelemetryEnabledSync()) {
-    return null;
-  }
-
+  // App Check is a security control, not analytics telemetry. It must be
+  // initialized before Auth/Firestore even when optional telemetry is disabled.
   const nativeInitialization = await initializeTelemetryNativeSdks();
   if (nativeInitialization.success !== true) {
     logger.warn("[Firebase] Native App Check skipped: privacy SDK initialization failed", nativeInitialization);
@@ -223,18 +227,14 @@ const getNativePrivacySdkPlugin = async (): Promise<NativePrivacySdkPlugin | nul
 };
 
 export const initializeTelemetryNativeSdks = async (): Promise<NativePrivacySdkInitResult> => {
-  if (!isTelemetryEnabledSync()) {
-    _nativePrivacySdkInit = null;
-    _nativePrivacySdkInitialized = false;
-    return { success: true, skipped: true, platform: Capacitor.getPlatform(), telemetryEnabled: false };
-  }
+  const telemetryEnabled = isTelemetryEnabledSync();
 
   if (!isNativeRuntime()) {
-    return { success: true, skipped: true, platform: Capacitor.getPlatform(), telemetryEnabled: true };
+    return { success: true, skipped: true, platform: Capacitor.getPlatform(), telemetryEnabled };
   }
 
   if (_nativePrivacySdkInitialized) {
-    return { success: true, platform: Capacitor.getPlatform(), telemetryEnabled: true };
+    return { success: true, platform: Capacitor.getPlatform(), telemetryEnabled };
   }
 
   const plugin = await getNativePrivacySdkPlugin();
@@ -243,7 +243,7 @@ export const initializeTelemetryNativeSdks = async (): Promise<NativePrivacySdkI
   }
 
   if (!_nativePrivacySdkInit) {
-    _nativePrivacySdkInit = plugin.initializePrivacySdks({ telemetryEnabled: true })
+    _nativePrivacySdkInit = plugin.initializePrivacySdks({ telemetryEnabled })
       .then((result) => {
         _nativePrivacySdkInitialized = result?.success === true;
         return result;
@@ -253,7 +253,7 @@ export const initializeTelemetryNativeSdks = async (): Promise<NativePrivacySdkI
         return {
           success: false,
           platform: Capacitor.getPlatform(),
-          telemetryEnabled: true,
+          telemetryEnabled,
           error: error instanceof Error ? error.message : String(error),
         };
       })

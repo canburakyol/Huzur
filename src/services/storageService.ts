@@ -144,6 +144,7 @@ const buildPrayerSyncSignature = (payload: PendingPrayerSync): string => JSON.st
   longitude: payload.longitude ?? null,
   locationName: payload.locationName ?? "",
   adhanSound: payload.adhanSound ?? null,
+  prayerNotificationsEnabled: payload.prayerNotificationsEnabled ?? null,
   monthlySnapshots: payload.monthlySnapshots ?? [],
 });
 
@@ -156,6 +157,7 @@ const mergePrayerSyncPayload = (base: PendingPrayerSync | null, next: PendingPra
   longitude: next.longitude ?? base?.longitude ?? null,
   locationName: next.locationName || base?.locationName || "Huzur",
   adhanSound: next.adhanSound ?? base?.adhanSound ?? null,
+  prayerNotificationsEnabled: next.prayerNotificationsEnabled ?? base?.prayerNotificationsEnabled,
   monthlySnapshots: mergeMonthlySnapshots(base?.monthlySnapshots, next.monthlySnapshots),
 });
 

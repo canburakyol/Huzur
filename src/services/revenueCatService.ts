@@ -7,6 +7,7 @@ import crashlyticsReporter, { buildCrashContext } from "../utils/crashlyticsRepo
 interface ApiKeys {
   android: string | undefined;
   ios: string | undefined;
+  test: string | undefined;
 }
 
 interface SyncResult {
@@ -14,12 +15,17 @@ interface SyncResult {
   source?: string;
 }
 
-const isDev = import.meta.env.DEV;
+const isDev = import.meta.env.DEV || import.meta.env.MODE === "android-debug";
 
 const API_KEYS: ApiKeys = {
   android: import.meta.env.VITE_REVENUECAT_ANDROID_KEY,
   ios: import.meta.env.VITE_REVENUECAT_IOS_KEY,
+  test: import.meta.env.VITE_REVENUECAT_TEST_KEY,
 };
+
+const useTestStore =
+  import.meta.env.MODE === "android-debug" &&
+  import.meta.env.VITE_REVENUECAT_USE_TEST_STORE === "true";
 
 const ENTITLEMENT_ID = "pro_access";
 let isRevenueCatConfigured = false;
@@ -79,7 +85,34 @@ const syncVerifiedProStatus = async (context: string): Promise<boolean> => {
 };
 
 const ensureRevenueCatAppUserId = async (): Promise<string | null> => {
-  const appUserID = await getCurrentUserIdEnsured();
+  // Try to ensure we have an authenticated Firebase user. Sometimes auth
+  // initialization can lag behind app init on slow devices; retry briefly
+  // before giving up so RevenueCat has a chance to configure.
+  const maxAttempts = 5;
+  let attempt = 0;
+  let appUserID: string | null = null;
+
+  while (attempt < maxAttempts) {
+    attempt += 1;
+    try {
+      // getCurrentUserIdEnsured will attempt anonymous sign-in if needed
+      // but may return null if it hasn't completed yet.
+      // Await it and if null, wait a bit and retry.
+      // Use small backoff between attempts.
+      // eslint-disable-next-line no-await-in-loop
+      appUserID = await getCurrentUserIdEnsured();
+    } catch (err) {
+      logger.warn(`[RevenueCat] getCurrentUserIdEnsured attempt ${attempt} failed`, err);
+      appUserID = null;
+    }
+
+    if (appUserID) break;
+
+    logger.log(`[RevenueCat] Waiting for Firebase auth (attempt ${attempt}/${maxAttempts})`);
+    // eslint-disable-next-line no-await-in-loop
+    await new Promise((resolve) => setTimeout(resolve, attempt * 300));
+  }
+
   if (!appUserID) {
     logger.error("[RevenueCat] Cannot configure without authenticated Firebase user");
     return null;
@@ -131,7 +164,11 @@ export const initializeRevenueCat = async (): Promise<void> => {
     }
 
     const platform = (window as typeof window & { Capacitor?: { getPlatform?: () => string } }).Capacitor?.getPlatform?.() || "web";
-    const apiKey = platform === "ios" ? API_KEYS.ios : API_KEYS.android;
+    const apiKey = useTestStore
+      ? API_KEYS.test
+      : platform === "ios"
+        ? API_KEYS.ios
+        : API_KEYS.android;
 
     logger.log("[RevenueCat] Configuring with platform:", platform, "API Key exists:", !!apiKey);
 
@@ -205,28 +242,45 @@ export const purchasePackage = async (packageToPurchase: { identifier: string })
 
 export const getOfferings = async (): Promise<Offering["availablePackages"]> => {
   try {
+    if (!isRevenueCatConfigured) {
+      await initializeRevenueCat();
+    }
+    if (!isRevenueCatConfigured) {
+      throw new Error("RevenueCat could not be initialized");
+    }
+
     logger.log("[RevenueCat] Fetching offerings...");
     const offerings = await Purchases.getOfferings();
     logger.log("[RevenueCat] Offerings response:", offerings);
 
-    if (offerings.current !== null && offerings.current.availablePackages.length !== 0) {
+    const getAvailablePackages = (offering: Offering | null | undefined): Offering["availablePackages"] | null => {
+      const packages = offering?.availablePackages;
+      if (Array.isArray(packages) && packages.length > 0) {
+        return packages;
+      }
+      return null;
+    };
+
+    const currentPackages = getAvailablePackages(offerings?.current as Offering | null | undefined);
+    if (currentPackages) {
       logger.log("[RevenueCat] Found packages in current offering");
-      return offerings.current.availablePackages;
+      return currentPackages;
     }
 
     logger.warn("[RevenueCat] No current offering, checking all offerings...");
-    const allOfferings = Object.values(offerings.all);
+    const allOfferings = Object.values(offerings?.all ?? {}) as Array<Offering | null | undefined>;
     for (const offering of allOfferings) {
-      if (offering.availablePackages.length > 0) {
-        logger.log("[RevenueCat] Found packages in offering:", offering.identifier);
-        return offering.availablePackages;
+      const packages = getAvailablePackages(offering);
+      if (packages) {
+        logger.log("[RevenueCat] Found packages in offering:", offering?.identifier);
+        return packages;
       }
     }
 
     logger.error("[RevenueCat] No packages found in any offering");
     return [];
   } catch (error) {
-    logger.error("[RevenueCat] Error getting offerings");
+    logger.error("[RevenueCat] Error getting offerings", error);
     crashlyticsReporter.logExceptionWithContext(error as Error, buildCrashContext("revenuecat_offerings"));
     return [];
   }

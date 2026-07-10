@@ -238,7 +238,7 @@ export const adMobService: AdMobServiceType = {
             const bannerId = await getBannerAdUnitId();
             await AdMob.showBanner({
                 adId: bannerId,
-                adSize: BannerAdSize.BANNER,
+                adSize: BannerAdSize.ADAPTIVE_BANNER,
                 position: BannerAdPosition.BOTTOM_CENTER,
                 margin: BOTTOM_BANNER_MARGIN,
                 isTesting: runtime.useTestAds

@@ -4,7 +4,10 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  const isAndroidBuild = mode === 'android' || mode === 'android-debug'
+
+  return {
   base: './',
   build: {
     minify: 'terser',
@@ -77,6 +80,7 @@ export default defineConfig({
       filename: 'bundle-stats.html'
     }),
     VitePWA({
+      selfDestroying: isAndroidBuild,
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'icons/*.webp'],
       manifest: {
@@ -137,4 +141,5 @@ export default defineConfig({
       ]
     }
   },
+  }
 })

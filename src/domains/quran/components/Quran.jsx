@@ -49,17 +49,6 @@ const smoothScrollTo = (container, targetY, duration = 350) => {
 };
 
 function Quran({ onClose }) {
-    useEffect(() => {
-        let isMounted = true;
-
-        void import('../../../services/admobService')
-            .then(({ adMobService }) => isMounted && adMobService.hideBanner())
-            .catch(() => undefined);
-
-        return () => {
-            isMounted = false;
-        };
-    }, []);
     const { t, i18n } = useTranslation();
 
     const [currentSurahNumber, setCurrentSurahNumber] = useState(null);
@@ -91,6 +80,7 @@ function Quran({ onClose }) {
     const scrollIdleTimerRef = useRef(null);
     const scrollFrameRef = useRef(null);
     const lastLangRef = useRef(i18n.language);
+    const isProgrammaticScrollRef = useRef(false);
 
     const surahList = useMemo(() => staticSurahList || EMPTY_ARRAY, []);
     const reciters = useMemo(() => staticReciters || EMPTY_ARRAY, []);
@@ -181,6 +171,7 @@ function Quran({ onClose }) {
     }, []);
 
     const scrollToAyah = useCallback((ayahId) => {
+        isProgrammaticScrollRef.current = true;
         window.setTimeout(() => {
             const container = contentRef.current;
             const ayahElement = document.getElementById(`ayah-${ayahId}`);
@@ -192,6 +183,10 @@ function Quran({ onClose }) {
                 const targetY = elementOffsetTop - (containerHeight / 2) + (elementHeight / 2);
                 smoothScrollTo(container, targetY, 350);
             }
+
+            window.setTimeout(() => {
+                isProgrammaticScrollRef.current = false;
+            }, 450);
         }, 100);
     }, []);
 
@@ -199,6 +194,14 @@ function Quran({ onClose }) {
         setIsReaderScrolling(true);
         setShowBars(false);
         window.clearTimeout(scrollIdleTimerRef.current);
+
+        if (isProgrammaticScrollRef.current) {
+            scrollIdleTimerRef.current = window.setTimeout(() => {
+                setIsReaderScrolling(false);
+                setShowBars(true);
+            }, 700);
+            return;
+        }
 
         if (!scrollFrameRef.current) {
             scrollFrameRef.current = window.requestAnimationFrame(() => {
@@ -446,9 +449,11 @@ function Quran({ onClose }) {
     }, [activeSurah, selectedReciter]);
 
     const playAyah = useCallback(async (ayahNumber) => {
-        const audio = prepareAudioForAyah(ayahNumber);
+        const cleanAyahNumber = Number(ayahNumber);
+        const audio = prepareAudioForAyah(cleanAyahNumber);
 
-        setPlayingAyah(ayahNumber);
+        setPlayingAyah(cleanAyahNumber);
+        setActiveReadingAyah(cleanAyahNumber);
         setIsPlaying(true);
 
         if (!audio) {
@@ -465,7 +470,7 @@ function Quran({ onClose }) {
 
     const handlePlayPause = () => {
         if (!playingAyah) {
-            void playAyah(1);
+            void playAyah(activeReadingAyah || 1);
             return;
         }
 
@@ -479,8 +484,20 @@ function Quran({ onClose }) {
     };
 
     const handleAyahEnd = () => {
-        if (activeSurah && playingAyah < ayahCount) {
-            setPlayingAyah((prev) => prev + 1);
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        // Prevent fake ended events fired by the browser on source changes
+        const isNaturalEnd = audio.duration > 0 && Math.abs(audio.currentTime - audio.duration) < 1.0;
+        if (!isNaturalEnd) {
+            logger.info('Bypassing non-natural audio ended event');
+            return;
+        }
+
+        if (activeSurah && playingAyah && playingAyah < ayahCount) {
+            const nextAyah = Number(playingAyah) + 1;
+            setPlayingAyah(nextAyah);
+            setActiveReadingAyah(nextAyah);
             setIsPlaying(true);
             return;
         }
@@ -500,19 +517,21 @@ function Quran({ onClose }) {
         }
     }, [activeSurah, playingAyah]);
 
+
+
     const handleSeek = (event) => {
         const ayahNumber = Number(event.target.value);
         void playAyah(ayahNumber);
     };
 
     const handleNextAyah = () => {
-        if (activeSurah && playingAyah < ayahCount) {
+        if (activeSurah && playingAyah && playingAyah < ayahCount) {
             void playAyah(playingAyah + 1);
         }
     };
 
     const handlePrevAyah = () => {
-        if (playingAyah > 1) {
+        if (playingAyah && playingAyah > 1) {
             void playAyah(playingAyah - 1);
         }
     };
@@ -574,7 +593,7 @@ function Quran({ onClose }) {
         );
     }
 
-    const sliderAyah = playingAyah || 1;
+    const sliderAyah = playingAyah || activeReadingAyah || 1;
     const sliderProgress = ayahCount > 1 ? ((sliderAyah - 1) / (ayahCount - 1)) * 100 : 0;
     const ayahSelectorTitle = t('quran.ayahSelectorTitle', 'Ayet sec');
     const ayahSelectorHint = t('quran.ayahSelectorHint', 'Kaydirinca secilen ayet hemen calmaya baslar');
@@ -584,7 +603,7 @@ function Quran({ onClose }) {
     const totalAyahsLabel = t('quran.totalAyahsLabel', 'Toplam');
 
     return (
-        <div className="quran-container">
+        <div className={`quran-container ${showBars ? '' : 'bars-hidden'}`}>
             <div className={`quran-royal-header ${showBars ? 'visible' : 'hidden'}`}>
                 <div className="header-top-row">
                     <button onClick={onClose} className="player-action-btn">
@@ -794,11 +813,6 @@ function Quran({ onClose }) {
                 onClick={() => setShowBars(true)}
                 ref={contentRef}
             >
-                <div className="quran-reading-strip">
-                    <span>{activeSurah.nameTranslation}</span>
-                    <span aria-hidden="true">·</span>
-                    <span>{activeReadingAyah}. {t('quran.ayah')}</span>
-                </div>
                 <div className="mushaf-frame">
                     <div className="mushaf-paper">
                         <div className="mushaf-surah-heading">
@@ -837,6 +851,12 @@ function Quran({ onClose }) {
                                     data-ayah-number={ayah.number}
                                     className={`mushaf-ayah-block reveal-stagger ${playingAyah === ayah.number ? 'active' : ''} ${activeReadingAyah === ayah.number ? 'is-reading-focus' : 'is-reading-muted'}`}
                                     style={{ '--delay': `${index * 0.02}s` }}
+                                    onClick={() => {
+                                        setActiveReadingAyah(ayah.number);
+                                        if (isPlaying) {
+                                            void playAyah(ayah.number);
+                                        }
+                                    }}
                                 >
                                     <div className="ayah-meta-row">
                                         <div className="ayah-id-badge">{ayah.number}</div>
@@ -920,48 +940,34 @@ function Quran({ onClose }) {
             <div className={`quran-player-bar-premium ${showBars ? 'visible' : 'hidden'}`}>
                 <audio ref={audioRef} onEnded={handleAyahEnd} />
 
-                <div className="premium-selector-panel">
-                    <div className="premium-selector-header">
-                        <div className="premium-selector-copy">
-                            <div className="premium-selector-eyebrow">{ayahSelectorTitle}</div>
-                            <div className="premium-selector-hint">{ayahSelectorHint}</div>
-                        </div>
-                        <div className="premium-selected-ayah-chip">
-                            <span className="premium-selected-ayah-label">{activeAyahLabel}</span>
-                            <strong>{sliderAyah}. {t('quran.ayah')}</strong>
-                        </div>
-                    </div>
-
-                    <div className="premium-slider-container" style={{ '--slider-progress': `${sliderProgress}%` }}>
-                        <input
-                            type="range"
-                            min="1"
-                            max={ayahCount}
-                            value={sliderAyah}
-                            onChange={handleSeek}
-                            className="premium-slider"
-                            aria-label={ayahSelectorTitle}
-                        />
-                    </div>
-
-                    <div className="premium-slider-meta">
-                        <span>{sliderAyah}. {t('quran.ayah')}</span>
-                        <span>{totalAyahsLabel}: {ayahCount} {t('quran.ayah')}</span>
-                    </div>
-                </div>
-
                 <div className="player-main-controls">
                     <button className="player-action-btn" onClick={handlePrevAyah} disabled={!playingAyah || playingAyah <= 1}>
-                        <SkipBack size={32} />
+                        <SkipBack size={18} />
                     </button>
 
                     <button className="play-pause-btn-premium" onClick={handlePlayPause}>
-                        {isPlaying ? <Pause size={32} /> : <Play size={32} fill="currentColor" style={{ marginLeft: '4px' }} />}
+                        {isPlaying ? <Pause size={18} /> : <Play size={18} fill="currentColor" style={{ marginLeft: '1px' }} />}
                     </button>
 
                     <button className="player-action-btn" onClick={handleNextAyah} disabled={!playingAyah || playingAyah >= ayahCount}>
-                        <SkipForward size={32} />
+                        <SkipForward size={18} />
                     </button>
+                </div>
+
+                <div className="premium-slider-container" style={{ '--slider-progress': `${sliderProgress}%` }}>
+                    <input
+                        type="range"
+                        min="1"
+                        max={ayahCount}
+                        value={sliderAyah}
+                        onChange={handleSeek}
+                        className="premium-slider"
+                        aria-label={ayahSelectorTitle}
+                    />
+                </div>
+
+                <div className="player-ayah-indicator">
+                    <strong>{sliderAyah}/{ayahCount}</strong>
                 </div>
             </div>
         </div>

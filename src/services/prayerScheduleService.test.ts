@@ -88,7 +88,8 @@ describe('prayerScheduleService exact alarm integration', () => {
       latitude: 41.0082,
       longitude: 28.9784,
       locationName: 'Istanbul',
-      adhanSound: 'makkah'
+      adhanSound: 'makkah',
+      prayerNotificationsEnabled: false
     });
 
     expect(result).toEqual({ success: true, platform: 'android' });
@@ -99,7 +100,8 @@ describe('prayerScheduleService exact alarm integration', () => {
         latitude: 41.0082,
         longitude: 28.9784,
         locationName: 'Istanbul',
-        adhanSound: 'makkah'
+        adhanSound: 'makkah',
+        prayerNotificationsEnabled: false
       })
     );
   });

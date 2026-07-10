@@ -1,8 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { getPrayerTimes, getNextPrayer } from "../services/prayerService";
-import { updateWidget as updateAndroidWidget } from "../services/widgetService";
 import { storageService } from "../services/storageService";
+import { sanitizePrayerTimings, PRAYER_KEYS_ALL } from "../constants/prayerTimes";
+import { format } from "date-fns";
+import { updateWidget as updateAndroidWidget } from "../services/widgetService";
+
 import smartNotificationService, {
   cancelStickyNotification,
   requestNotificationPermission,
@@ -27,9 +30,9 @@ interface NextPrayer {
 }
 
 interface FcmService {
-  initialize: (options: { requestPermission: boolean }) => Promise<void>;
-  getFirebaseStatus: () => Promise<{ initialized: boolean }>;
-  removeListeners?: () => void;
+  initialize: (options?: { requestPermission?: boolean }) => Promise<string | null>;
+  getFirebaseStatus: () => Promise<{ initialized: boolean; configured: boolean; messagingAvailable: boolean }>;
+  removeListeners?: () => Promise<void>;
 }
 
 interface UsePrayerTimesResult {
@@ -39,7 +42,7 @@ interface UsePrayerTimesResult {
   error: string | null;
   permissionGranted: boolean;
   showWelcome: boolean;
-  fetchPrayerTimes: (coords?: { latitude: number | null; longitude: number | null }, isInitialLoad?: boolean) => Promise<void>;
+  fetchPrayerTimes: (coords?: LocationCoords | null, isInitialLoad?: boolean) => Promise<void>;
   handleEnableNotifications: () => Promise<void>;
   handleCloseWelcome: () => void;
 }
@@ -52,15 +55,37 @@ interface LocationCoords {
   name?: string;
 }
 
+const CACHE_KEY_PREFIX = 'prayerTimes_';
+
+/**
+ * Synchronous initial snapshot from localStorage cache (for instant first render).
+ * Actual API fetch happens asynchronously in the hook.
+ */
 const getInitialPrayerSnapshot = (): { timings: PrayerTimings | null; nextPrayer: NextPrayer | null; loading: boolean } => {
   try {
-    const initialData = getPrayerTimes();
-    const initialTimings = initialData?.timings || null;
+    const today = format(new Date(), 'dd-MM-yyyy');
+    // Try to find any cached prayer times for today
+    const allKeys = Object.keys(localStorage).filter(key => key.startsWith(CACHE_KEY_PREFIX) && key.includes(today));
+
+    for (const key of allKeys) {
+      const cached = storageService.getItem<{ timings?: PrayerTimings }>(key);
+      if (cached?.timings) {
+        const timings = sanitizePrayerTimings(cached.timings);
+        const isValid = timings && PRAYER_KEYS_ALL.every(k => typeof timings[k] === 'string' && /^\d{2}:\d{2}$/.test(timings[k]));
+        if (isValid) {
+          return {
+            timings: timings as PrayerTimings,
+            nextPrayer: getNextPrayer(timings as PrayerTimings),
+            loading: false,
+          };
+        }
+      }
+    }
 
     return {
-      timings: initialTimings,
-      nextPrayer: initialTimings ? getNextPrayer(initialTimings) : null,
-      loading: !initialTimings,
+      timings: null,
+      nextPrayer: null,
+      loading: true,
     };
   } catch (error) {
     logger.error("[usePrayerTimes] Failed to create initial prayer snapshot", error);
@@ -75,7 +100,7 @@ const getInitialPrayerSnapshot = (): { timings: PrayerTimings | null; nextPrayer
 const loadFcmRuntime = async (): Promise<{ fcmService: FcmService; createNotificationChannels: () => Promise<void> }> => {
   const fcmModule = await import("../services/fcmService");
   return {
-    fcmService: fcmModule.default as FcmService,
+    fcmService: fcmModule.default as unknown as FcmService,
     createNotificationChannels: fcmModule.createNotificationChannels,
   };
 };
@@ -94,6 +119,7 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const lastScheduledTimingsRef = useRef("");
+  const latestPrayerRequestRef = useRef(0);
   const fcmModuleRef = useRef<FcmService | null>(null);
 
   const schedulePrayerSideEffects = useCallback(async (prayerTimings: PrayerTimings, coords: LocationCoords | null = null): Promise<void> => {
@@ -105,6 +131,7 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
           latitude: coords?.latitude ?? null,
           longitude: coords?.longitude ?? null,
           locationName: coords?.locationName || coords?.city || coords?.name || "Huzur",
+          prayerNotificationsEnabled: smartNotificationService.getNotificationPreferences().prayer,
         }),
       ]);
 
@@ -116,6 +143,7 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
 
   const fetchPrayerTimes = useCallback(
     async (coords: LocationCoords | null = null, isInitialLoad = false): Promise<void> => {
+      const requestId = ++latestPrayerRequestRef.current;
       try {
         if (isInitialLoad) {
           setLoading(true);
@@ -126,6 +154,8 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
         const lon = coords?.longitude || null;
 
         const data = await getPrayerTimes(lat, lon);
+        if (requestId !== latestPrayerRequestRef.current) return;
+
         if (data && data.timings) {
           setTimings(data.timings);
           setNextPrayer(getNextPrayer(data.timings));
@@ -144,10 +174,13 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
           setError(t("prayers.errors.loadFailed"));
         }
       } catch (err) {
+        if (requestId !== latestPrayerRequestRef.current) return;
         logger.error("Prayer times fetch error:", err);
         setError(t("prayers.errors.fetchError"));
       } finally {
-        setLoading(false);
+        if (requestId === latestPrayerRequestRef.current) {
+          setLoading(false);
+        }
       }
     },
     [schedulePrayerSideEffects]
@@ -225,6 +258,7 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
 
     updateNextPrayerRef.current = () => {
       const next = getNextPrayer(timings);
+      if (!next) return;
       setNextPrayer((prev) => {
         if (!prev || prev.key !== next.key || prev.time !== next.time || prev.isTomorrow !== next.isTomorrow) {
           return next;
@@ -353,9 +387,21 @@ export const useAndroidWidget = (timings: PrayerTimings | null, nextPrayer: Next
         const prayerTime = timings[nextPrayer.key];
         if (!prayerTime) return;
 
+        const now = new Date();
+        const [h, m] = prayerTime.split(':').map(Number);
+        const prayerDate = new Date();
+        prayerDate.setHours(h, m, 0);
+        if (prayerDate < now) {
+          prayerDate.setDate(prayerDate.getDate() + 1);
+        }
+        const diff = prayerDate.getTime() - now.getTime();
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const timeLeft = `${hours}sa ${minutes}dk`;
+
         await updateAndroidWidget({
-          name: nextPrayer.name,
-          time: prayerTime,
+          nextPrayer: nextPrayer.name,
+          timeRemaining: timeLeft,
           location: locationName || "Huzur",
         });
       } catch (e) {

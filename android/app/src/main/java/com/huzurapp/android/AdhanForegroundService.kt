@@ -38,6 +38,17 @@ class AdhanForegroundService : Service() {
         const val EXTRA_ADHAN_SOUND = "adhan_sound"
         const val ACTION_STOP = "com.huzurapp.android.STOP_ADHAN"
 
+        @JvmStatic
+        fun hasPlayableAdhan(context: Context, soundName: String?): Boolean {
+            if (soundName.isNullOrBlank()) return false
+            return context.resources.getIdentifier(soundName, "raw", context.packageName) != 0
+        }
+
+        @JvmStatic
+        fun stopPlayback(context: Context) {
+            context.stopService(Intent(context, AdhanForegroundService::class.java))
+        }
+
         private val PRAYER_NAME_MAP = mapOf(
             "Fajr" to "İmsak",
             "Sunrise" to "Güneş",
@@ -96,6 +107,13 @@ class AdhanForegroundService : Service() {
 
     private fun playAdhan(soundName: String?, prayerKey: String) {
         try {
+            val soundUri = resolveAdhanUri(soundName)
+            if (soundUri == null) {
+                Log.w(TAG, "Skipping adhan playback because no valid bundled sound is configured")
+                stopPlaybackAndService()
+                return
+            }
+
             // Request audio focus
             val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -118,15 +136,7 @@ class AdhanForegroundService : Service() {
                     .build()
                 setAudioAttributes(audioAttrs)
 
-                // Resolve the sound file: check user preference, fallback to default
-                val soundUri = resolveAdhanUri(soundName)
-                if (soundUri != null) {
-                    setDataSource(this@AdhanForegroundService, soundUri)
-                } else {
-                    // Use the default notification sound as ultimate fallback
-                    val defaultUri = android.provider.Settings.System.DEFAULT_ALARM_ALERT_URI
-                    setDataSource(this@AdhanForegroundService, defaultUri)
-                }
+                setDataSource(this@AdhanForegroundService, soundUri)
 
                 setOnCompletionListener {
                     Log.d(TAG, "Adhan playback completed for $prayerKey")
@@ -201,7 +211,6 @@ class AdhanForegroundService : Service() {
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
                 description = "Namaz vakitlerinde ezan sesi çalar"
-                setBypassDnd(true)
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             }
             val manager = getSystemService(NotificationManager::class.java)

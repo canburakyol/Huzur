@@ -28,6 +28,7 @@ function AppChrome({ controller }) {
         showSplash={navigation.showSplash}
         onHideSplash={navigation.hideSplash}
         showGrowthOnboarding={growthOnboarding.showGrowthOnboarding}
+        showLocationPrompt={location.showLocationPrompt}
         showAdConsentPrompt={!growthOnboarding.showGrowthOnboarding && !appInit.isProUser}
         onboardingStep={growthOnboarding.onboardingStep}
         onboardingConfig={growthOnboarding.onboardingConfig}
@@ -40,6 +41,7 @@ function AppChrome({ controller }) {
         onRequestGrowthNotifications={growthOnboarding.handleGrowthNotificationRequest}
         onChangeGrowthStep={growthOnboarding.setOnboardingStep}
         onCompleteGrowth={growthOnboarding.handleGrowthComplete}
+        onLocationConsent={location.handleLocationConsent}
         streak24hRecovery={streak.streak24hRecovery}
         onConfirm24hRecovery={streak.handleConfirm24hRecovery}
         onWatchRewarded24hRecovery={streak.handleRewarded24hRecovery}

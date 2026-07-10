@@ -24,6 +24,10 @@ const aiContextMock = vi.hoisted(() => ({
   buildAiContext: vi.fn((input = {}) => input),
 }));
 
+const prayerSchedulePluginMock = vi.hoisted(() => ({
+  setPrayerNotificationsEnabled: vi.fn().mockResolvedValue({ success: true, platform: 'android' }),
+}));
+
 const analyticsMock = vi.hoisted(() => ({
   analyticsService: {
     logCampaignResolved: vi.fn(),
@@ -51,6 +55,10 @@ vi.mock('@capacitor/core', () => ({
 
 vi.mock('./storageService', () => ({
   storageService: storageMock,
+}));
+
+vi.mock('../plugins/PrayerSchedulePlugin', () => ({
+  default: prayerSchedulePluginMock,
 }));
 
 vi.mock('./notificationPlatformService', () => ({
@@ -118,6 +126,18 @@ describe('smartNotificationService (Unified)', () => {
     expect(prefs).toBeDefined();
     expect(typeof prefs.prayer).toBe('boolean');
     expect(prefs.winback).toBe(true);
+  });
+
+  it('propagates a disabled prayer preference to the native alarm scheduler', async () => {
+    const { updateNotificationPreferences } = await importService();
+
+    await updateNotificationPreferences({ prayer: false });
+
+    expect(prayerSchedulePluginMock.setPrayerNotificationsEnabled).toHaveBeenCalledWith({ enabled: false });
+    expect(storageMock.setItem).toHaveBeenCalledWith(
+      'huzur_notification_prefs',
+      expect.objectContaining({ prayer: false })
+    );
   });
 
   it('builds a three-step winback sequence from the current open', async () => {

@@ -50,7 +50,23 @@ export const nativeAdService: NativeAdServiceType = {
   },
 
   load: async () => {
-    if (Capacitor.getPlatform() === 'web' || isPro() || !canInitializeAdMob()) {
+    if (Capacitor.getPlatform() === 'web') {
+      if (import.meta.env.DEV && !isPro()) {
+        return {
+          adId: 'mock-web-ad',
+          headline: 'Huzur Premium - Reklamsız Deneyim',
+          body: 'Premium pakete geçerek reklamları tamamen kaldırın ve tüm premium özelliklerin kilidini açın.',
+          store: 'Huzur App Store',
+          callToAction: 'Detayları Gör',
+          images: [{ url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBB2Vnwfe5Ik83esNAEHbGmy-lvEk2-aDGYcg4y3hDD6tnpLhr3gRq9QsJQCpV7XNL-RDsi19N93-Kid8wlhB8OTR1QVr8-t76vEWo548cr0muD5b2uJycoW87sqMExVd-fgI_VtqQgoLdmsB3brqhcElcg9NnJaK_KGLAySIahDt0zp21GXw8c3YaqQoSXURD1_0cJxEjUeWOCiTKVV0vm390KWEHucW4JgRghi1ahpsMpUZ5VZkcdilQGXrrsZB3USwWli0pV6HWx' }],
+          icon: { url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBB2Vnwfe5Ik83esNAEHbGmy-lvEk2-aDGYcg4y3hDD6tnpLhr3gRq9QsJQCpV7XNL-RDsi19N93-Kid8wlhB8OTR1QVr8-t76vEWo548cr0muD5b2uJycoW87sqMExVd-fgI_VtqQgoLdmsB3brqhcElcg9NnJaK_KGLAySIahDt0zp21GXw8c3YaqQoSXURD1_0cJxEjUeWOCiTKVV0vm390KWEHucW4JgRghi1ahpsMpUZ5VZkcdilQGXrrsZB3USwWli0pV6HWx' },
+          starRating: 5.0
+        };
+      }
+      return null;
+    }
+
+    if (isPro() || !canInitializeAdMob()) {
       return null;
     }
 

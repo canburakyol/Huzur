@@ -33,7 +33,7 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      const isDev = import.meta.env.DEV
+      const isDev = import.meta.env.DEV || import.meta.env.MODE === 'android-debug'
       const detail = isDev
         ? [
             this.state.errorMessage ? `Message: ${this.state.errorMessage}` : null,

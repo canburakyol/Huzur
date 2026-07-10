@@ -7,7 +7,7 @@
  * Security: Prevents sensitive data leakage via logcat in production
  */
 
-const isDev = import.meta.env.DEV;
+const isDev = import.meta.env.DEV || import.meta.env.MODE === 'android-debug';
 
 export const logger = {
   /**

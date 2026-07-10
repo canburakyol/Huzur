@@ -2,6 +2,7 @@ package com.huzurapp.android
 
 import android.content.Context
 import android.util.Log
+import androidx.core.app.NotificationManagerCompat
 import org.json.JSONObject
 import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
@@ -91,17 +92,23 @@ object PrayerScheduleCoordinator {
         AdhanAlarmReceiver.cancelAllAdhanAlarms(context)
         WidgetAlarmReceiver.cancelAllAlarms(context)
 
+        val shouldScheduleAdhan = PrayerScheduleStore.arePrayerNotificationsEnabled(context) &&
+            NotificationManagerCompat.from(context).areNotificationsEnabled() &&
+            AdhanForegroundService.hasPlayableAdhan(context, scheduleContext.adhanSound)
+
         slots.forEach { slot ->
             val localizedName = prayerNamesTr[slot.prayerKey] ?: slot.prayerKey
 
-            AdhanAlarmReceiver.scheduleAdhanAlarm(
-                context = context,
-                prayerKey = slot.prayerKey,
-                dayOffset = slot.dayOffset,
-                triggerAtMillis = slot.triggerAtMillis,
-                localizedName = localizedName,
-                adhanSound = scheduleContext.adhanSound
-            )
+            if (shouldScheduleAdhan) {
+                AdhanAlarmReceiver.scheduleAdhanAlarm(
+                    context = context,
+                    prayerKey = slot.prayerKey,
+                    dayOffset = slot.dayOffset,
+                    triggerAtMillis = slot.triggerAtMillis,
+                    localizedName = localizedName,
+                    adhanSound = scheduleContext.adhanSound
+                )
+            }
 
             WidgetAlarmReceiver.schedulePrayerAlarm(
                 context,
@@ -111,8 +118,9 @@ object PrayerScheduleCoordinator {
             )
         }
 
-        logSchedule("rescheduled:$source:${slots.size}")
-        Log.d(TAG, "Prayer schedule refreshed from $source with ${slots.size} alarms")
+        val adhanAlarmCount = if (shouldScheduleAdhan) slots.size else 0
+        logSchedule("rescheduled:$source:widget=${slots.size}:adhan=$adhanAlarmCount")
+        Log.d(TAG, "Prayer schedule refreshed from $source with ${slots.size} widget alarms and $adhanAlarmCount adhan alarms")
         return true
     }
 

@@ -39,7 +39,9 @@ const getPrayerTargetMs = (timings, nextPrayer, nowMs) => {
   const target = new Date(nowMs);
   target.setHours(parsed.hours, parsed.minutes, 0, 0);
 
-  if (nextPrayer?.isTomorrow) {
+  // If target time has already passed today, it must be for tomorrow.
+  // This avoids freezing at 00:00:00 if isTomorrow is missing or delayed.
+  if (target.getTime() < nowMs) {
     target.setDate(target.getDate() + 1);
   }
 
@@ -271,14 +273,19 @@ const PremiumHomeHero = memo(({
   };
 
   useEffect(() => {
+    const syncNow = () => setNowMs(Date.now());
+    syncNow();
+
     const interval = window.setInterval(() => {
-      setNowMs((previousNowMs) => {
-        const nextNowMs = Date.now();
-        return nextNowMs > previousNowMs ? nextNowMs : previousNowMs + 1000;
-      });
+      syncNow();
     }, 1000);
 
-    return () => window.clearInterval(interval);
+    document.addEventListener('visibilitychange', syncNow);
+
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener('visibilitychange', syncNow);
+    };
   }, []);
 
   const getPrayerName = (key) => t(`prayer.${String(key || '').toLowerCase()}`, PRAYER_NAME_FALLBACKS[key] || key);
@@ -344,20 +351,23 @@ const PremiumHomeHero = memo(({
           </h2>
 
           {nextPrayer && (
-            <div className="hero-countdown-container">
+            <div
+              className="hero-countdown-container"
+              data-testid="prayer-countdown"
+            >
               <div className="countdown-display">
                 <div className="countdown-unit">
-                  <span className="unit-value">{hasTime ? formatNum(hours) : '--'}</span>
+                  <span key={`hours-${hours}`} className="unit-value">{hasTime ? formatNum(hours) : '--'}</span>
                   <span className="unit-label">{t('countdown.hours', 'SAAT')}</span>
                 </div>
                 <span className="countdown-separator">:</span>
                 <div className="countdown-unit">
-                  <span className="unit-value">{hasTime ? formatNum(minutes) : '--'}</span>
+                  <span key={`minutes-${minutes}`} className="unit-value">{hasTime ? formatNum(minutes) : '--'}</span>
                   <span className="unit-label">{t('countdown.min', 'DK')}</span>
                 </div>
                 <span className="countdown-separator">:</span>
                 <div className="countdown-unit">
-                  <span className="unit-value">{hasTime ? formatNum(seconds) : '--'}</span>
+                  <span key={`seconds-${seconds}`} className="unit-value">{hasTime ? formatNum(seconds) : '--'}</span>
                   <span className="unit-label">{t('countdown.sec', 'SN')}</span>
                 </div>
               </div>

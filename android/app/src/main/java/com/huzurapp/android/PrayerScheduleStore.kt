@@ -8,6 +8,7 @@ object PrayerScheduleStore {
     private const val LEGACY_PREFS_NAME = "PrayerScheduleStore"
     private const val KEY_CONTEXT = "huzur_prayer_schedule_context"
     private const val LEGACY_KEY_CONTEXT = "schedule_context"
+    private const val KEY_PRAYER_NOTIFICATIONS_ENABLED = "huzur_prayer_notifications_enabled"
 
     data class ScheduleContext(
         val timingsJson: String,
@@ -62,6 +63,20 @@ object PrayerScheduleStore {
         } catch (_: Exception) {
             null
         }
+    }
+
+    @JvmStatic
+    fun setPrayerNotificationsEnabled(context: Context, enabled: Boolean) {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .putBoolean(KEY_PRAYER_NOTIFICATIONS_ENABLED, enabled)
+            .apply()
+    }
+
+    @JvmStatic
+    fun arePrayerNotificationsEnabled(context: Context): Boolean {
+        return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .getBoolean(KEY_PRAYER_NOTIFICATIONS_ENABLED, true)
     }
 
     @JvmStatic

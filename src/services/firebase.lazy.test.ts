@@ -83,15 +83,15 @@ describe('firebase lazy getters', () => {
     expect(firestore.initializeFirestore).toHaveBeenCalledTimes(1);
   });
 
-  it('does not request native App Check initialization without telemetry consent', async () => {
+  it('initializes native App Check without enabling optional telemetry', async () => {
     telemetryMock.isTelemetryEnabledSync.mockReturnValue(false);
     const appCheck = await import('firebase/app-check');
     const { getDb } = await importFirebaseService();
 
     await getDb();
 
-    expect(nativePrivacySdkMock.initializePrivacySdks).not.toHaveBeenCalled();
-    expect(appCheck.initializeAppCheck).not.toHaveBeenCalled();
+    expect(nativePrivacySdkMock.initializePrivacySdks).toHaveBeenCalledWith({ telemetryEnabled: false });
+    expect(appCheck.initializeAppCheck).toHaveBeenCalledTimes(1);
   });
 
   it('initializes Auth only when getAuthInstance is called and reuses the cached instance', async () => {

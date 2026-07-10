@@ -22,17 +22,26 @@ export interface SyncPrayerScheduleOptions {
   longitude?: number | null;
   locationName?: string;
   adhanSound?: string | null;
+  prayerNotificationsEnabled?: boolean;
   monthlySnapshots?: unknown[];
+}
+
+export interface PrayerNotificationsEnabledOptions {
+  enabled: boolean;
 }
 
 export interface PrayerSchedulePlugin {
   syncPrayerSchedule(options: SyncPrayerScheduleOptions): Promise<PrayerScheduleResult>;
+  setPrayerNotificationsEnabled(options: PrayerNotificationsEnabledOptions): Promise<PrayerScheduleResult>;
   getExactAlarmPermissionStatus(): Promise<ExactAlarmPermissionStatus>;
   openExactAlarmSettings(): Promise<ExactAlarmPermissionStatus>;
 }
 
 const noopPlugin: PrayerSchedulePlugin = {
   async syncPrayerSchedule(): Promise<PrayerScheduleResult> {
+    return { success: false, platform: Capacitor.getPlatform(), error: 'Plugin not available' };
+  },
+  async setPrayerNotificationsEnabled(): Promise<PrayerScheduleResult> {
     return { success: false, platform: Capacitor.getPlatform(), error: 'Plugin not available' };
   },
   async getExactAlarmPermissionStatus(): Promise<ExactAlarmPermissionStatus> {
