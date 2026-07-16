@@ -1,9 +1,24 @@
 package com.huzurapp.android;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
@@ -17,6 +32,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.nativead.NativeAd;
+import com.google.android.gms.ads.nativead.NativeAdView;
 import com.google.android.gms.ads.nativead.NativeAdOptions;
 
 import java.util.Map;
@@ -31,6 +47,15 @@ public class NativeAdBridgePlugin extends Plugin {
     private final Map<String, NativeAd> adCache = new ConcurrentHashMap<>();
     private final Set<String> impressionSent = ConcurrentHashMap.newKeySet();
     private final Set<String> clickSent = ConcurrentHashMap.newKeySet();
+    private FrameLayout nativeAdHost;
+    private NativeAdView visibleNativeAdView;
+    private String visibleAdId;
+    private WebView trackedWebView;
+    private ViewTreeObserver.OnScrollChangedListener nativeScrollListener;
+    private int anchorTopPx;
+    private int anchorScrollYPx;
+    private int safeTopPx;
+    private int safeBottomPx;
 
     @PluginMethod
     public void initialize(PluginCall call) {
@@ -144,6 +169,82 @@ public class NativeAdBridgePlugin extends Plugin {
     }
 
     @PluginMethod
+    public void showAd(PluginCall call) {
+        String adId = call.getString("adId");
+        if (TextUtils.isEmpty(adId)) {
+            call.reject("adId is required");
+            return;
+        }
+
+        NativeAd nativeAd = adCache.get(adId);
+        if (nativeAd == null) {
+            call.reject("Ad not found");
+            return;
+        }
+
+        Activity activity = getActivity();
+        if (activity == null) {
+            call.reject("Activity is not available");
+            return;
+        }
+
+        double dpr = call.getDouble("dpr", 1.0);
+        int left = cssPxToAndroidPx(call.getDouble("x", 0.0), dpr);
+        int top = cssPxToAndroidPx(call.getDouble("y", 0.0), dpr);
+        int width = Math.max(cssPxToAndroidPx(call.getDouble("width", 0.0), dpr), dp(activity, 180));
+        int height = Math.max(cssPxToAndroidPx(call.getDouble("height", 0.0), dpr), dp(activity, 120));
+        int safeTop = cssPxToAndroidPx(call.getDouble("safeTop", 0.0), dpr);
+        int safeBottom = cssPxToAndroidPx(call.getDouble("safeBottom", 0.0), dpr);
+
+        activity.runOnUiThread(() -> {
+            try {
+                ensureNativeAdHost(activity);
+                if (visibleNativeAdView == null || !adId.equals(visibleAdId)) {
+                    removeVisibleNativeAdView();
+                    visibleNativeAdView = buildNativeAdView(activity, nativeAd);
+                    visibleAdId = adId;
+                    nativeAdHost.addView(visibleNativeAdView);
+                }
+
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, height);
+                params.leftMargin = left;
+                params.topMargin = top;
+                visibleNativeAdView.setLayoutParams(params);
+                startNativeScrollTracking(top, safeTop, safeBottom);
+                updateNativeAdForScroll();
+
+                JSObject ret = new JSObject();
+                ret.put("success", true);
+                ret.put("adId", adId);
+                call.resolve(ret);
+            } catch (Exception e) {
+                call.reject("Native ad view show failed: " + e.getMessage(), e);
+            }
+        });
+    }
+
+    @PluginMethod
+    public void hideAd(PluginCall call) {
+        Activity activity = getActivity();
+        if (activity == null) {
+            JSObject ret = new JSObject();
+            ret.put("success", true);
+            call.resolve(ret);
+            return;
+        }
+
+        activity.runOnUiThread(() -> {
+            stopNativeScrollTracking();
+            if (visibleNativeAdView != null) {
+                visibleNativeAdView.setVisibility(View.GONE);
+            }
+            JSObject ret = new JSObject();
+            ret.put("success", true);
+            call.resolve(ret);
+        });
+    }
+
+    @PluginMethod
     public void destroy(PluginCall call) {
         destroyCachedAds();
         JSObject ret = new JSObject();
@@ -189,6 +290,202 @@ public class NativeAdBridgePlugin extends Plugin {
         return value != null ? value : "";
     }
 
+    private int cssPxToAndroidPx(double cssPx, double dpr) {
+        return (int) Math.round(cssPx * Math.max(dpr, 1.0));
+    }
+
+    private int dp(Activity activity, int value) {
+        return (int) TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            value,
+            activity.getResources().getDisplayMetrics()
+        );
+    }
+
+    private void ensureNativeAdHost(Activity activity) {
+        if (nativeAdHost != null) {
+            return;
+        }
+
+        nativeAdHost = new FrameLayout(activity);
+        nativeAdHost.setClipChildren(false);
+        nativeAdHost.setClipToPadding(false);
+        nativeAdHost.setClickable(false);
+        nativeAdHost.setFocusable(false);
+
+        ViewGroup decor = (ViewGroup) activity.getWindow().getDecorView();
+        decor.addView(nativeAdHost, new ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+        nativeAdHost.bringToFront();
+    }
+
+    private void startNativeScrollTracking(int top, int safeTop, int safeBottom) {
+        WebView webView = getBridge() != null ? getBridge().getWebView() : null;
+        if (webView == null) {
+            trackedWebView = null;
+            anchorTopPx = top;
+            anchorScrollYPx = 0;
+            safeTopPx = safeTop;
+            safeBottomPx = safeBottom;
+            return;
+        }
+
+        if (trackedWebView != webView) {
+            stopNativeScrollTracking();
+            trackedWebView = webView;
+        }
+
+        anchorTopPx = top;
+        anchorScrollYPx = webView.getScrollY();
+        safeTopPx = safeTop;
+        safeBottomPx = safeBottom;
+
+        if (nativeScrollListener == null) {
+            nativeScrollListener = this::updateNativeAdForScroll;
+            ViewTreeObserver observer = webView.getViewTreeObserver();
+            if (observer.isAlive()) {
+                observer.addOnScrollChangedListener(nativeScrollListener);
+            }
+        }
+    }
+
+    private void updateNativeAdForScroll() {
+        if (visibleNativeAdView == null) {
+            return;
+        }
+
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) visibleNativeAdView.getLayoutParams();
+        int scrollDelta = trackedWebView != null ? trackedWebView.getScrollY() - anchorScrollYPx : 0;
+        int trackedTop = anchorTopPx - scrollDelta;
+        params.topMargin = trackedTop;
+        visibleNativeAdView.setLayoutParams(params);
+
+        int resolvedSafeBottom = safeBottomPx > safeTopPx
+            ? safeBottomPx
+            : (nativeAdHost != null ? nativeAdHost.getHeight() : 0);
+        boolean fullyInsideSafeViewport = trackedTop >= safeTopPx
+            && trackedTop + params.height <= resolvedSafeBottom;
+        visibleNativeAdView.setVisibility(fullyInsideSafeViewport ? View.VISIBLE : View.GONE);
+    }
+
+    private void stopNativeScrollTracking() {
+        if (trackedWebView != null && nativeScrollListener != null) {
+            ViewTreeObserver observer = trackedWebView.getViewTreeObserver();
+            if (observer.isAlive()) {
+                observer.removeOnScrollChangedListener(nativeScrollListener);
+            }
+        }
+        nativeScrollListener = null;
+        trackedWebView = null;
+    }
+
+    private NativeAdView buildNativeAdView(Activity activity, NativeAd nativeAd) {
+        NativeAdView adView = new NativeAdView(activity);
+        adView.setClipChildren(false);
+        adView.setClipToPadding(false);
+
+        GradientDrawable background = new GradientDrawable();
+        background.setColor(Color.rgb(250, 246, 234));
+        background.setStroke(dp(activity, 1), Color.rgb(227, 222, 201));
+        background.setCornerRadius(dp(activity, 18));
+        adView.setBackground(background);
+        adView.setPadding(dp(activity, 12), dp(activity, 12), dp(activity, 12), dp(activity, 12));
+
+        LinearLayout root = new LinearLayout(activity);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setGravity(Gravity.CENTER_VERTICAL);
+        root.setClipChildren(false);
+        root.setClipToPadding(false);
+        adView.addView(root, new NativeAdView.LayoutParams(
+            NativeAdView.LayoutParams.MATCH_PARENT,
+            NativeAdView.LayoutParams.MATCH_PARENT
+        ));
+
+        TextView adBadge = new TextView(activity);
+        adBadge.setText("Reklam");
+        adBadge.setTextColor(Color.rgb(83, 97, 88));
+        adBadge.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        adBadge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        root.addView(adBadge);
+
+        LinearLayout row = new LinearLayout(activity);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setPadding(0, dp(activity, 8), 0, dp(activity, 8));
+        root.addView(row, new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            0,
+            1
+        ));
+
+        ImageView iconView = new ImageView(activity);
+        iconView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        Drawable iconDrawable = nativeAd.getIcon() != null ? nativeAd.getIcon().getDrawable() : null;
+        if (iconDrawable != null) {
+            iconView.setImageDrawable(iconDrawable);
+            row.addView(iconView, new LinearLayout.LayoutParams(dp(activity, 54), dp(activity, 54)));
+            adView.setIconView(iconView);
+        }
+
+        LinearLayout textColumn = new LinearLayout(activity);
+        textColumn.setOrientation(LinearLayout.VERTICAL);
+        textColumn.setPadding(dp(activity, iconDrawable != null ? 10 : 0), 0, 0, 0);
+        row.addView(textColumn, new LinearLayout.LayoutParams(
+            0,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            1
+        ));
+
+        TextView headlineView = new TextView(activity);
+        headlineView.setText(safeString(nativeAd.getHeadline()));
+        headlineView.setTextColor(Color.rgb(22, 59, 43));
+        headlineView.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        headlineView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        headlineView.setMaxLines(1);
+        headlineView.setEllipsize(TextUtils.TruncateAt.END);
+        textColumn.addView(headlineView);
+        adView.setHeadlineView(headlineView);
+
+        TextView bodyView = new TextView(activity);
+        bodyView.setText(safeString(nativeAd.getBody()));
+        bodyView.setTextColor(Color.rgb(83, 97, 88));
+        bodyView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        bodyView.setMaxLines(2);
+        bodyView.setEllipsize(TextUtils.TruncateAt.END);
+        textColumn.addView(bodyView);
+        adView.setBodyView(bodyView);
+
+        Button ctaView = new Button(activity);
+        ctaView.setAllCaps(false);
+        ctaView.setText(safeString(nativeAd.getCallToAction()).isEmpty() ? "Aç" : safeString(nativeAd.getCallToAction()));
+        ctaView.setTextColor(Color.WHITE);
+        ctaView.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        ctaView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        GradientDrawable ctaBackground = new GradientDrawable();
+        ctaBackground.setColor(Color.rgb(22, 59, 43));
+        ctaBackground.setCornerRadius(dp(activity, 12));
+        ctaView.setBackground(ctaBackground);
+        root.addView(ctaView, new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            dp(activity, 42)
+        ));
+        adView.setCallToActionView(ctaView);
+
+        adView.setNativeAd(nativeAd);
+        return adView;
+    }
+
+    private void removeVisibleNativeAdView() {
+        stopNativeScrollTracking();
+        if (visibleNativeAdView != null && visibleNativeAdView.getParent() instanceof ViewGroup) {
+            ((ViewGroup) visibleNativeAdView.getParent()).removeView(visibleNativeAdView);
+        }
+        visibleNativeAdView = null;
+        visibleAdId = null;
+    }
+
     @Override
     protected void handleOnDestroy() {
         super.handleOnDestroy();
@@ -197,6 +494,11 @@ public class NativeAdBridgePlugin extends Plugin {
 
     private void destroyCachedAds() {
         try {
+            removeVisibleNativeAdView();
+            if (nativeAdHost != null && nativeAdHost.getParent() instanceof ViewGroup) {
+                ((ViewGroup) nativeAdHost.getParent()).removeView(nativeAdHost);
+            }
+            nativeAdHost = null;
             for (NativeAd ad : adCache.values()) {
                 try {
                     ad.destroy();

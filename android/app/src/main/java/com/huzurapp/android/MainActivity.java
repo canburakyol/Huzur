@@ -10,6 +10,7 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.appcheck.FirebaseAppCheck;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
@@ -61,7 +62,7 @@ public class MainActivity extends BridgeActivity {
 
         try {
             Context appContext = context.getApplicationContext() != null ? context.getApplicationContext() : context;
-            MobileAds.initialize(appContext, initializationStatus -> Log.i(TAG, "AdMob SDK initialized after telemetry consent"));
+            MobileAds.initialize(appContext, initializationStatus -> Log.i(TAG, "AdMob SDK initialized"));
             adMobInitialized = true;
             return true;
         } catch (Exception e) {
@@ -77,13 +78,8 @@ public class MainActivity extends BridgeActivity {
         }
 
         try {
-            Class<?> analyticsClass = Class.forName("com.google.firebase.analytics.FirebaseAnalytics");
-            Object analytics = analyticsClass.getMethod("getInstance", Context.class).invoke(null, context);
-            analyticsClass.getMethod("setAnalyticsCollectionEnabled", Boolean.TYPE).invoke(analytics, enabled);
+            FirebaseAnalytics.getInstance(context).setAnalyticsCollectionEnabled(enabled);
             return true;
-        } catch (ClassNotFoundException e) {
-            Log.i(TAG, "Firebase Analytics SDK is not bundled in this build; native analytics skipped.");
-            return false;
         } catch (Exception e) {
             Log.w(TAG, "Firebase Analytics collection config failed", e);
             return false;
@@ -183,18 +179,9 @@ public class MainActivity extends BridgeActivity {
             ret.put("telemetryEnabled", telemetryEnabled);
             ret.put("firebaseInitialized", firebaseInitialized);
 
-            if (!telemetryEnabled) {
-                ret.put("skipped", true);
-                ret.put("analyticsConfigured", false);
-                ret.put("crashlyticsEnabled", false);
-                ret.put("adMobInitialized", false);
-                call.resolve(ret);
-                return;
-            }
-
-            boolean analyticsConfigured = MainActivity.configureFirebaseAnalyticsCollection(getContext(), true);
-            boolean crashlyticsEnabled = MainActivity.setCrashlyticsCollection(getContext(), true);
-            boolean adMobInitialized = MainActivity.initializeAdMob(getContext());
+            boolean analyticsConfigured = MainActivity.configureFirebaseAnalyticsCollection(getContext(), telemetryEnabled);
+            boolean crashlyticsEnabled = MainActivity.setCrashlyticsCollection(getContext(), telemetryEnabled);
+            boolean adMobInitialized = telemetryEnabled && MainActivity.initializeAdMob(getContext());
 
             ret.put("firebaseInitialized", firebaseInitialized);
             ret.put("analyticsConfigured", analyticsConfigured);

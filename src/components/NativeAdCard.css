@@ -13,6 +13,20 @@
   box-shadow: 0 16px 34px rgba(53, 43, 26, 0.1);
 }
 
+.native-ad-container--android {
+  min-height: 156px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.native-ad-native-slot {
+  min-height: 156px;
+  border-radius: 18px;
+  background: var(--surface-container-low);
+}
+
 .native-ad-label {
   position: absolute;
   top: 10px;

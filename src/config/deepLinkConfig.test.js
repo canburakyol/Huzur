@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildInviteUrl } from './deepLinkConfig';
+import { buildInviteUrl, buildPlayStoreReferralUrl } from './deepLinkConfig';
 
 describe('deepLinkConfig', () => {
   it('builds an Android intent link with Play Store fallback', () => {
@@ -23,5 +23,19 @@ describe('deepLinkConfig', () => {
     expect(fallbackUrl.pathname).toBe('/store/apps/details');
     expect(fallbackUrl.searchParams.get('id')).toBe('com.huzurapp.android');
     expect(fallbackUrl.searchParams.get('referrer')).toBe('ref=HZR123&src=home_referral_trigger&cmp=evergreen&lang=tr');
+  });
+
+  it('builds a directly clickable Play Store referral URL for social sharing', () => {
+    const playStoreUrl = new URL(buildPlayStoreReferralUrl({
+      code: 'HZR123',
+      source: 'daily_verse_share',
+      campaign: 'daily_verse',
+      lang: 'tr'
+    }));
+
+    expect(playStoreUrl.protocol).toBe('https:');
+    expect(playStoreUrl.hostname).toBe('play.google.com');
+    expect(playStoreUrl.searchParams.get('id')).toBe('com.huzurapp.android');
+    expect(playStoreUrl.searchParams.get('referrer')).toBe('ref=HZR123&src=daily_verse_share&cmp=daily_verse&lang=tr');
   });
 });

@@ -40,6 +40,8 @@ const LOCATION_WEATHER_CACHE_PREFIX = "location_weather_cache_";
 const LOCATION_LAST_COORDS_KEY = "location_last_coords";
 const LOCATION_WEATHER_CACHE_TTL_MS = 30 * 60 * 1000;
 const LOCATION_REQUEST_TIMEOUT_MS = 5000;
+const DEVICE_LOCATION_TIMEOUT_MS = 10000;
+const DEVICE_LOCATION_MAX_AGE_MS = 10 * 60 * 1000;
 
 const hasGrantedLocationPermission = (status: { location?: string; coarseLocation?: string }): boolean => (
   status.location === "granted" || status.coarseLocation === "granted"
@@ -79,10 +81,11 @@ const getStoredLastCoords = (): LocationCoords | null => {
   return coords;
 };
 
-const setStoredLastCoords = (latitude: number, longitude: number): void => {
+const setStoredLastCoords = (latitude: number, longitude: number, locationName?: string): void => {
   storageService.setItem(LOCATION_LAST_COORDS_KEY, {
     latitude,
     longitude,
+    locationName,
   });
 };
 
@@ -140,6 +143,14 @@ const fetchJsonWithTimeout = async (url: string, timeoutMs = LOCATION_REQUEST_TI
   } finally {
     window.clearTimeout(timeoutId);
   }
+};
+
+const getCurrentDevicePosition = async () => {
+  return Geolocation.getCurrentPosition({
+    enableHighAccuracy: false,
+    timeout: DEVICE_LOCATION_TIMEOUT_MS,
+    maximumAge: DEVICE_LOCATION_MAX_AGE_MS,
+  });
 };
 
 export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) => void): UseLocationConsentResult => {
@@ -231,6 +242,10 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
       logger.warn("[useLocationConsent] No Diyanet district mapping for:", resolvedLocationName);
     }
 
+    if (!isDefault) {
+      setStoredLastCoords(latitude, longitude, resolvedLocationName);
+    }
+
     forwardLocationUpdate(latitude, longitude, resolvedLocationName);
     return snapshot;
   }, [fetchWeatherData, forwardLocationUpdate]);
@@ -246,28 +261,37 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
             throw new Error("Location permission was not granted");
           }
 
-          const position = await Geolocation.getCurrentPosition({
-            enableHighAccuracy: false,
-            timeout: 3000,
-            maximumAge: 60000,
-          });
+          const position = await getCurrentDevicePosition();
           const { latitude, longitude } = position.coords;
 
           storageService.setString(STORAGE_KEYS.LOCATION_CONSENT, "true");
           setLocationConsentGiven(true);
           logger.log("[useLocationConsent] Location obtained:", latitude, longitude);
           setDebugLocation(latitude, longitude);
-          setStoredLastCoords(latitude, longitude);
-          forwardLocationUpdate(latitude, longitude);
 
-          await resolveLocationAndForward(latitude, longitude);
-          return { latitude, longitude };
+          const snapshot = await resolveLocationAndForward(latitude, longitude);
+          return { latitude, longitude, locationName: snapshot?.locationName };
         } catch (error) {
           logger.warn("[useLocationConsent] Location permission denied/error after consent:", error);
-          storageService.setString(STORAGE_KEYS.LOCATION_CONSENT, "declined");
+          const permissionStatus = await Geolocation.checkPermissions().catch(() => null);
+          const permissionStillGranted = permissionStatus ? hasGrantedLocationPermission(permissionStatus) : false;
+
+          if (permissionStillGranted) {
+            storageService.setString(STORAGE_KEYS.LOCATION_CONSENT, "true");
+            setLocationConsentGiven(true);
+            const lastCoords = getStoredLastCoords();
+            if (lastCoords) {
+              setDebugLocation(lastCoords.latitude, lastCoords.longitude);
+              void resolveLocationAndForward(lastCoords.latitude, lastCoords.longitude);
+              return lastCoords;
+            }
+            setLocationName("Konum alınıyor...");
+            return { latitude: DEFAULT_LAT, longitude: DEFAULT_LON };
+          }
+
+          storageService.removeItem(STORAGE_KEYS.LOCATION_CONSENT);
           setLocationConsentGiven(false);
-          void resolveLocationAndForward(DEFAULT_LAT, DEFAULT_LON, true);
-          setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
+          setShowLocationPrompt(true);
           return { latitude: DEFAULT_LAT, longitude: DEFAULT_LON };
         }
       }
@@ -292,7 +316,6 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
     const storedConsent = storageService.getString(STORAGE_KEYS.LOCATION_CONSENT);
 
     if (!storedConsent) {
-      void loadDefaultLocation();
       return () => {
         cancelled = true;
       };
@@ -303,9 +326,6 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
       if (lastCoords) {
         setDebugLocation(lastCoords.latitude, lastCoords.longitude);
         void resolveLocationAndForward(lastCoords.latitude, lastCoords.longitude);
-      } else {
-        setDebugLocation(DEFAULT_LAT, DEFAULT_LON);
-        void resolveLocationAndForward(DEFAULT_LAT, DEFAULT_LON, true);
       }
 
       const refreshGrantedLocation = async () => {
@@ -322,18 +342,12 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
             }
           }
 
-          const position = await Geolocation.getCurrentPosition({
-            enableHighAccuracy: false,
-            timeout: 3000,
-            maximumAge: 60000,
-          });
+          const position = await getCurrentDevicePosition();
           const { latitude, longitude } = position.coords;
           logger.log("[useLocationConsent] Initial location obtained:", latitude, longitude);
           if (cancelled) return;
 
           setDebugLocation(latitude, longitude);
-          setStoredLastCoords(latitude, longitude);
-          forwardLocationUpdate(latitude, longitude);
           await resolveLocationAndForward(latitude, longitude);
         } catch (error) {
           logger.warn("[useLocationConsent] Initial location error:", error);

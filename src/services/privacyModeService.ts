@@ -4,6 +4,7 @@ import { logger } from '../utils/logger';
 export const PRIVACY_SETTINGS_KEY = 'huzur_settings';
 
 type PrivacySettings = {
+  privacySchemaVersion: number;
   analytics: boolean;
   telemetryEnabled: boolean;
   crashReporting: boolean;
@@ -14,28 +15,33 @@ type PrivacySettings = {
 };
 
 const DEFAULT_PRIVACY_SETTINGS: PrivacySettings = Object.freeze({
-  analytics: false,
-  telemetryEnabled: false,
+  privacySchemaVersion: 2,
+  analytics: true,
+  telemetryEnabled: true,
   crashReporting: false,
   adsEnabled: false,
   personalizedAdsEnabled: false,
-  zeroTelemetryByDefault: true,
+  zeroTelemetryByDefault: false,
 });
 
 const normalizePrivacySettings = (value: unknown = {}): PrivacySettings => {
   const source = value && typeof value === 'object' ? value as Record<string, unknown> : {};
-  const telemetryEnabled = source.telemetryEnabled === true || source.analytics === true;
+  const usesCurrentAnalyticsDefault = source.privacySchemaVersion === DEFAULT_PRIVACY_SETTINGS.privacySchemaVersion;
+  const telemetryEnabled = usesCurrentAnalyticsDefault
+    ? source.telemetryEnabled === true || source.analytics === true
+    : true;
   const crashReporting = telemetryEnabled && source.crashReporting === true;
   const adsEnabled = source.adsEnabled === true;
 
   return {
     ...source,
+    privacySchemaVersion: DEFAULT_PRIVACY_SETTINGS.privacySchemaVersion,
     analytics: telemetryEnabled,
     telemetryEnabled,
     crashReporting,
     adsEnabled,
     personalizedAdsEnabled: adsEnabled && source.personalizedAdsEnabled === true,
-    zeroTelemetryByDefault: true,
+    zeroTelemetryByDefault: false,
   } as PrivacySettings;
 };
 

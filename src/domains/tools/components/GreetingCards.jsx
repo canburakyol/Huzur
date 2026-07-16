@@ -4,8 +4,7 @@ import { Share2, Heart, ChevronRight, X, Edit3, Check, Download, Image } from 'l
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { GREETING_CATEGORIES, getCardsByCategory } from '../../../data/greetingCardsData';
 import { storageService } from '../../../services/storageService';
-import { Capacitor } from '@capacitor/core';
-import { Share } from '@capacitor/share';
+import { shareCanvasWithTextOnNative } from '../../../services/nativeImageShareService';
 import { useToast } from '../../../hooks/useToast';
 import { logger } from '../../../utils/logger';
 // html2canvas is dynamically imported when needed to reduce initial bundle size
@@ -53,28 +52,26 @@ function GreetingCards({ onClose }) {
                 logging: false
             });
             
-            // Convert canvas to blob
-            const blob = await new Promise(resolve => 
-                canvas.toBlob(resolve, 'image/png', 1.0)
-            );
-            
-            if (!blob) {
-                throw new Error(t('greetingCards.ui.imageError'));
-            }
-            
             const message = `${t(selectedCard.titleKey)}\n\n${customMessage || t(selectedCard.messageKey)}\n\n- ${t('greetingCards.ui.sentWith')}`;
 
-            // Handle Native Share
-            if (Capacitor.isNativePlatform()) {
-                // For native, we can share the text at least. 
-                // Sharing file from blob requires Filesystem plugin to save first.
-                // For now, let's ensure the native share dialog opens with text.
-                await Share.share({
-                    title: t(selectedCard.titleKey),
-                    text: message,
-                    dialogTitle: t('greetingCards.ui.shareTitle', 'Tebrik Kartını Paylaş')
-                });
+            const sharedNatively = await shareCanvasWithTextOnNative(canvas, {
+                fileName: `huzur-tebrik-karti-${Date.now()}.png`,
+                title: t(selectedCard.titleKey),
+                text: message,
+                dialogTitle: t('greetingCards.ui.shareTitle', 'Tebrik Kartını Paylaş')
+            });
+
+            if (sharedNatively) {
                 return;
+            }
+
+            // Convert canvas to blob for browser sharing and download fallback.
+            const blob = await new Promise(resolve =>
+                canvas.toBlob(resolve, 'image/png', 1.0)
+            );
+
+            if (!blob) {
+                throw new Error(t('greetingCards.ui.imageError'));
             }
 
             // Create file from blob for Web Share API

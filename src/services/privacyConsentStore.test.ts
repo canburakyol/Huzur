@@ -41,7 +41,7 @@ describe("privacyConsentStore", () => {
     };
   });
 
-  it("blocks analytics and ads initialization by default", async () => {
+  it("blocks analytics and ads initialization when both are disabled", async () => {
     const { canInitializeFirebaseAnalytics, canInitializeAdMob, getPrivacyConsentSnapshot } = await importStore();
 
     expect(canInitializeFirebaseAnalytics()).toBe(false);
@@ -50,7 +50,7 @@ describe("privacyConsentStore", () => {
       analyticsEnabled: false,
       adsEnabled: false,
       personalizedAdsEnabled: false,
-      zeroTelemetryByDefault: true,
+      zeroTelemetryByDefault: false,
     });
   });
 

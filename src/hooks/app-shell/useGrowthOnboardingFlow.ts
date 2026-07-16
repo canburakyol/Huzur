@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { storageService } from "../../services/storageService";
-import { STORAGE_KEYS } from "../../constants";
+import { ONBOARDING_COMPLETED_EVENT, STORAGE_KEYS } from "../../constants";
 import { changeLanguage } from "../../services/languageService";
 import { logger } from "../../utils/logger";
 import { ANALYTICS_EVENTS, logEvent, logOnboardingStarted, logOnboardingCompleted } from "../../services/analyticsService";
@@ -212,6 +212,7 @@ export function useGrowthOnboardingFlow({
     selectedGoal = getStoredPrimaryGoal(),
   } = {}): Promise<void> => {
     storageService.setBoolean(STORAGE_KEYS.ONBOARDING_COMPLETED, true);
+    window.dispatchEvent(new CustomEvent(ONBOARDING_COMPLETED_EVENT));
     storageService.removeItem(STORAGE_KEYS.ONBOARDING_STEP);
     setShowGrowthOnboarding(false);
     setOnboardingStep(0);

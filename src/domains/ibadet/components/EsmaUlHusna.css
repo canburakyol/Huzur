@@ -1,99 +1,510 @@
-/* Esmaul Husna - Lifestyle & Velocity Modern Styles */
-
-.esma-search-row-modern {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-bottom: 12px;
+.esma-page {
+  min-height: 100%;
+  padding: 20px 18px 36px;
+  background:
+    radial-gradient(circle at 88% 4%, var(--ambient-gold), transparent 25%),
+    var(--surface-page);
+  color: var(--on-surface);
+  font-family: var(--font-main);
 }
 
-.esma-search-input-wrapper {
-    flex: 1;
-    position: relative;
+.esma-page--loading {
+  min-height: 65vh;
+  display: grid;
+  place-items: center;
 }
 
-.esma-input-icon {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--nav-text-muted);
+.esma-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 760px;
+  margin: 0 auto 18px;
 }
 
-.esma-modern-input {
-    width: 100%;
-    padding: 16px 16px 16px 52px;
-    background: var(--nav-bg);
-    border: 1px solid var(--nav-border);
-    border-radius: 16px;
-    color: var(--nav-text);
-    font-size: 1rem;
-    font-weight: 500;
-    outline: none;
-    transition: all 0.2s;
+.esma-header__copy {
+  min-width: 0;
 }
 
-.esma-modern-input:focus {
-    border-color: var(--nav-accent);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--tertiary) 10%, transparent);
+.esma-eyebrow {
+  display: block;
+  color: var(--tertiary);
+  font-size: 0.65rem;
+  font-weight: 850;
+  letter-spacing: 0.13em;
 }
 
-.esma-fav-btn {
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-    background: var(--nav-bg);
-    border: 1px solid var(--nav-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--nav-text-muted);
-    cursor: pointer;
-    transition: all 0.2s;
+.esma-header h1,
+.esma-section-heading h2 {
+  margin: 2px 0 0;
+  color: var(--primary);
+  font-family: var(--font-display);
+  font-weight: 650;
 }
 
-.esma-fav-btn.active {
-    background: color-mix(in srgb, var(--error) 10%, transparent);
-    border-color: color-mix(in srgb, var(--error) 20%, transparent);
-    color: var(--error);
+.esma-header h1 {
+  font-size: clamp(1.55rem, 6vw, 2rem);
+  line-height: 1.08;
 }
 
-.esma-id-badge-modern {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: var(--nav-hover);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--nav-accent);
-    font-weight: 900;
-    font-size: 1rem;
-    flex-shrink: 0;
+.esma-header p {
+  margin: 3px 0 0;
+  color: var(--on-surface-variant);
+  font-size: 0.78rem;
 }
 
-.expanded-esma {
-    border-color: var(--nav-accent) !important;
-    background: var(--nav-hover) !important;
+.esma-daily {
+  position: relative;
+  isolation: isolate;
+  max-width: 760px;
+  overflow: hidden;
+  margin: 0 auto 28px;
+  padding: 20px 22px 24px;
+  border: 1px solid color-mix(in srgb, var(--tertiary) 32%, transparent);
+  border-radius: var(--radius-xl);
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: var(--shadow-card);
 }
 
-.esma-detail-expand {
-    width: 100%;
-    animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.esma-daily::before,
+.esma-daily::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  border: 1px solid color-mix(in srgb, var(--tertiary) 34%, transparent);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
-.active-fav {
-    background: color-mix(in srgb, var(--error) 10%, transparent) !important;
-    color: var(--error) !important;
-    border-color: color-mix(in srgb, var(--error) 20%, transparent) !important;
+.esma-daily::before {
+  width: 190px;
+  height: 190px;
+  top: -105px;
+  right: -54px;
 }
 
-/* Animations */
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+.esma-daily::after {
+  width: 125px;
+  height: 125px;
+  right: -70px;
+  bottom: -68px;
 }
 
-.reveal-stagger {
-    animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.esma-daily__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: color-mix(in srgb, var(--on-primary) 78%, var(--tertiary));
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.esma-daily__topline > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.esma-daily__number {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+.esma-daily__arabic {
+  margin: 15px 0 6px;
+  color: var(--on-primary);
+  font-family: var(--font-arabic);
+  font-size: clamp(2.8rem, 14vw, 4.5rem);
+  line-height: 1.18;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.esma-daily h2 {
+  margin: 0;
+  color: color-mix(in srgb, var(--tertiary) 82%, white);
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 650;
+  text-align: center;
+}
+
+.esma-daily__meaning,
+.esma-daily__detail {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.esma-daily__meaning {
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.esma-daily__detail {
+  margin-top: 13px;
+  margin-bottom: 0;
+  padding-top: 13px;
+  border-top: 1px solid color-mix(in srgb, var(--on-primary) 14%, transparent);
+  color: color-mix(in srgb, var(--on-primary) 72%, transparent);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+.esma-directory {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.esma-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+
+.esma-section-heading h2 {
+  font-size: 1.2rem;
+  line-height: 1.25;
+}
+
+.esma-result-count {
+  color: var(--on-surface-variant);
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.esma-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.esma-search {
+  min-width: 0;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-control);
+  background: var(--surface-card-strong);
+  color: var(--on-surface-variant);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.esma-search:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.esma-search input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--on-surface);
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.esma-search input::placeholder {
+  color: var(--on-surface-variant);
+}
+
+.esma-search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.esma-search button {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-container-low);
+  color: var(--on-surface-variant);
+}
+
+.esma-favorites-filter {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 13px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-control);
+  background: var(--surface-card-strong);
+  color: var(--on-surface-variant);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.esma-favorites-filter.is-active {
+  border-color: color-mix(in srgb, var(--tertiary) 55%, var(--border-soft));
+  background: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+}
+
+.esma-favorites-filter small {
+  min-width: 19px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: var(--surface-container-low);
+  font-size: 0.62rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.esma-list {
+  overflow: hidden;
+  border-top: 1px solid var(--border-soft);
+}
+
+.esma-row {
+  border-bottom: 1px solid var(--border-soft);
+  transition: background-color 180ms ease;
+}
+
+.esma-row.is-expanded {
+  background: var(--surface-action-soft);
+}
+
+.esma-row__trigger {
+  width: 100%;
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto 20px;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 5px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+.esma-row__number {
+  color: var(--tertiary);
+  font-size: 0.7rem;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+}
+
+.esma-row__copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.esma-row__copy strong {
+  overflow: hidden;
+  color: var(--on-surface);
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 650;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.esma-row__copy small {
+  overflow: hidden;
+  color: var(--on-surface-variant);
+  font-size: 0.7rem;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.esma-row__arabic {
+  max-width: 116px;
+  color: var(--primary);
+  font-family: var(--font-arabic);
+  font-size: 1.45rem;
+  line-height: 1.2;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.esma-row__chevron {
+  color: var(--on-surface-variant);
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.esma-row.is-expanded .esma-row__chevron {
+  transform: rotate(180deg);
+}
+
+.esma-row__detail {
+  padding: 0 5px 15px 45px;
+  animation: esma-detail-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.esma-row__detail p {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.esma-row__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.esma-row__actions button {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 11px;
+  background: var(--surface-card-strong);
+  color: var(--on-surface);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.esma-row__actions button.is-favorite {
+  border-color: color-mix(in srgb, var(--tertiary) 52%, var(--border-soft));
+  color: var(--on-tertiary-container);
+  background: var(--tertiary-container);
+}
+
+.esma-empty {
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--on-surface-variant);
+  text-align: center;
+}
+
+.esma-empty svg {
+  color: var(--tertiary);
+}
+
+.esma-empty strong {
+  color: var(--on-surface);
+  font-size: 0.9rem;
+}
+
+.esma-empty span {
+  max-width: 270px;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.esma-note {
+  max-width: 760px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: start;
+  margin: 24px auto 0;
+  padding: 14px 0;
+  border-top: 1px solid var(--border-soft);
+  color: var(--on-surface-variant);
+}
+
+.esma-note > svg:first-child {
+  color: var(--tertiary);
+}
+
+.esma-note > svg:last-child {
+  opacity: 0.5;
+}
+
+.esma-note strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--on-surface);
+  font-size: 0.76rem;
+}
+
+.esma-note p {
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.esma-enter {
+  animation: esma-enter 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.esma-enter--delay {
+  animation-delay: 70ms;
+}
+
+.esma-enter--later {
+  animation-delay: 130ms;
+}
+
+@keyframes esma-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes esma-detail-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 420px) {
+  .esma-page {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .esma-daily {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .esma-favorites-filter span {
+    display: none;
+  }
+
+  .esma-favorites-filter {
+    width: 48px;
+    padding: 0;
+  }
+
+  .esma-row__arabic {
+    max-width: 92px;
+    font-size: 1.28rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .esma-enter,
+  .esma-row__detail {
+    animation: none;
+  }
+
+  .esma-row__chevron {
+    transition: none;
+  }
 }

@@ -75,3 +75,19 @@ body.android-webview {
   position: relative;
   z-index: 1;
 }
+
+#root:has(> .app-container) {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* AppProviders wrap AppChrome, so the app shell is not a direct child of #root.
+   Remove the browser fallback gutter when an app shell exists at any depth. */
+#root:has(.app-container) {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}

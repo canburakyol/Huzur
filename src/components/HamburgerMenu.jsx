@@ -21,7 +21,6 @@ import {
   Type,
   User,
   X,
-  Clock
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useGamification } from '../hooks/useGamification';
@@ -31,7 +30,7 @@ import './app-shell/Navigation.css';
 
 const CORE_MENU_ITEMS = [
   { id: 'prayers', icon: <Heart size={20} />, labelKey: 'menu.prayers', component: 'prayers' },
-  { id: 'tracker', icon: <CheckCircle2 size={20} />, labelKey: 'features.tracker', component: 'tracker' },
+  { id: 'tracker', icon: <CheckCircle2 size={20} />, labelKey: 'menu.kazaTakibi', label: 'Kaza Takibi', component: 'tracker' },
   { id: 'dailyTasks', icon: <Target size={20} />, labelKey: 'menu.dailyTasks', component: 'dailyTasks' },
   { id: 'routineBuilder', icon: <ClipboardList size={20} />, labelKey: 'routine.title', component: 'routineBuilder' },
   { id: 'zikirmatik', icon: <Hash size={20} />, labelKey: 'menu.zikirmatik', component: 'zikirmatik' },
@@ -40,7 +39,6 @@ const CORE_MENU_ITEMS = [
 
 const GOAL_MENU_ITEMS = {
   prayer_rhythm: [
-    { id: 'missedPrayers', icon: <Clock size={20} />, labelKey: 'menu.missedPrayers', component: 'missedPrayers' },
     { id: 'imsakiye', icon: <Moon size={20} />, labelKey: 'menu.imsakiye', component: 'imsakiye' },
     { id: 'qibla', icon: <Compass size={20} />, labelKey: 'features.qibla', component: 'qibla' }
   ],

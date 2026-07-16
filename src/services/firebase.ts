@@ -123,6 +123,7 @@ let _analyticsLogEvent: FirebaseLogEvent | null = null;
 let _remoteConfig: RemoteConfig | null = null;
 let _nativePrivacySdkInit: Promise<NativePrivacySdkInitResult> | null = null;
 let _nativePrivacySdkInitialized = false;
+let _nativeTelemetryEnabled: boolean | null = null;
 
 const ensureAppCheck = async (app: FirebaseApp): Promise<AppCheck | null> => {
   // Development-only bypass for local debug builds. Never enable this in production.
@@ -233,7 +234,7 @@ export const initializeTelemetryNativeSdks = async (): Promise<NativePrivacySdkI
     return { success: true, skipped: true, platform: Capacitor.getPlatform(), telemetryEnabled };
   }
 
-  if (_nativePrivacySdkInitialized) {
+  if (_nativePrivacySdkInitialized && _nativeTelemetryEnabled === telemetryEnabled) {
     return { success: true, platform: Capacitor.getPlatform(), telemetryEnabled };
   }
 
@@ -246,6 +247,9 @@ export const initializeTelemetryNativeSdks = async (): Promise<NativePrivacySdkI
     _nativePrivacySdkInit = plugin.initializePrivacySdks({ telemetryEnabled })
       .then((result) => {
         _nativePrivacySdkInitialized = result?.success === true;
+        if (_nativePrivacySdkInitialized) {
+          _nativeTelemetryEnabled = telemetryEnabled;
+        }
         return result;
       })
       .catch((error) => {

@@ -23,9 +23,6 @@ export const TIMING = {
   /** Daily content refresh interval (24 hours) */
   DAILY_REFRESH_INTERVAL_MS: 86400000,
   
-  /** AdMob initialization delay for better cold start (2 seconds) */
-  ADMOB_DELAY_MS: 2000,
-  
   /** FCM initialization delay (2.5 seconds) */
   FCM_DELAY_MS: 2500,
   
@@ -232,6 +229,8 @@ export const STORAGE_KEYS = {
   THEME: 'app_theme',
   
 };
+
+export const ONBOARDING_COMPLETED_EVENT = 'huzur:onboarding-completed';
 
 export default {
   TIMING,

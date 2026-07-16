@@ -28,44 +28,44 @@ function LocationConsentPrompt({ onDecision }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 'max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px))',
-        background: 'color-mix(in srgb, var(--surface-page) 88%, transparent)',
-        backdropFilter: 'blur(8px)',
+        padding: 'max(14px, env(safe-area-inset-top, 0px)) max(14px, env(safe-area-inset-right, 0px)) max(14px, env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px))',
+        background:
+          'linear-gradient(180deg, color-mix(in srgb, var(--surface-page) 96%, var(--primary) 4%), var(--surface-page))',
       }}
     >
       <div
         style={{
           width: '100%',
-          maxWidth: 420,
+          maxWidth: 380,
           boxSizing: 'border-box',
-          padding: 24,
-          borderRadius: 22,
+          padding: 18,
+          borderRadius: 18,
           background: 'var(--surface-container-lowest)',
           border: '1px solid var(--outline-variant)',
-          boxShadow: 'var(--shadow-card)',
+          boxShadow: 'var(--elevation-medium)',
           color: 'var(--on-surface)',
         }}
       >
         <div
           style={{
-            width: 52,
-            height: 52,
+            width: 42,
+            height: 42,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            marginBottom: 18,
-            borderRadius: 16,
+            marginBottom: 14,
+            borderRadius: 14,
             background: 'var(--primary-container)',
             color: 'var(--on-primary-container)',
           }}
         >
-          <MapPin size={26} />
+          <MapPin size={22} />
         </div>
 
-        <h2 id="location-consent-title" style={{ margin: '0 0 10px', fontSize: 23, color: 'var(--primary)' }}>
+        <h2 id="location-consent-title" style={{ margin: '0 0 8px', fontSize: 20, color: 'var(--primary)' }}>
           {t('locationConsent.title', 'Konumunu kullanabilir miyiz?')}
         </h2>
-        <p style={{ margin: '0 0 20px', lineHeight: 1.6, color: 'var(--on-surface-variant)' }}>
+        <p style={{ margin: '0 0 16px', lineHeight: 1.5, fontSize: 14, color: 'var(--on-surface-variant)' }}>
           {t(
             'locationConsent.description',
             'Bulunduğun şehre göre doğru namaz vakitlerini ve hava durumunu göstermek için konum izni gerekir. İzin vermezsen İstanbul varsayılan olarak kullanılır.'
@@ -78,9 +78,9 @@ function LocationConsentPrompt({ onDecision }) {
             disabled={loading}
             onClick={() => void decide(true)}
             style={{
-              minHeight: 48,
+              minHeight: 44,
               border: 'none',
-              borderRadius: 14,
+              borderRadius: 12,
               background: 'var(--primary)',
               color: 'var(--on-primary)',
               fontWeight: 800,
@@ -94,11 +94,11 @@ function LocationConsentPrompt({ onDecision }) {
             disabled={loading}
             onClick={() => void decide(false)}
             style={{
-              minHeight: 44,
-              borderRadius: 14,
+              minHeight: 42,
+              borderRadius: 12,
               border: '1px solid var(--outline-variant)',
-              background: 'transparent',
-              color: 'var(--on-surface-variant)',
+              background: 'var(--surface-container-low)',
+              color: 'var(--on-surface)',
               fontWeight: 700,
             }}
           >

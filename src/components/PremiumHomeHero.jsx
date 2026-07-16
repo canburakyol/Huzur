@@ -48,6 +48,30 @@ const getPrayerTargetMs = (timings, nextPrayer, nowMs) => {
   return target.getTime();
 };
 
+const getStoredLocationName = () => {
+  try {
+    const raw = localStorage.getItem('location_last_coords');
+    if (!raw) return '';
+
+    const parsed = JSON.parse(raw);
+    const storedName = typeof parsed?.locationName === 'string' ? parsed.locationName.trim() : '';
+    if (!storedName || storedName === 'Konum' || storedName === 'Konum...') return '';
+
+    return storedName;
+  } catch {
+    return '';
+  }
+};
+
+const getDisplayLocationName = (locationName, fallback) => {
+  const candidate = typeof locationName === 'string' ? locationName.trim() : '';
+  if (candidate && candidate !== 'Konum' && candidate !== 'Konum...') {
+    return candidate;
+  }
+
+  return getStoredLocationName() || candidate || fallback;
+};
+
 const GET_TURKISH_SUFFIX = (timeStr) => {
   const parsed = parsePrayerTime(timeStr);
   if (!parsed) return '';
@@ -297,6 +321,10 @@ const PremiumHomeHero = memo(({
   const minutes = hasTime ? Math.floor((remainingMs % 3600000) / 60000) : 0;
   const seconds = hasTime ? Math.floor((remainingMs % 60000) / 1000) : 0;
   const formatNum = (value) => String(value).padStart(2, '0');
+  const displayLocationName = getDisplayLocationName(
+    locationName,
+    t('prayer.detectingLocation', 'Konum aranıyor...')
+  );
 
   const ambientStyle = GET_AMBIENT_VARIABLES(nextPrayer?.key);
 
@@ -329,7 +357,9 @@ const PremiumHomeHero = memo(({
         <div className="hero-header-row">
           <div className="hero-location">
             <MapPin size={13} style={{ opacity: 0.85 }} />
-            <span className="hero-location-text">{locationName || t('prayer.detectingLocation', 'Konum aranıyor...')}</span>
+            <span className="hero-location-text" data-i18n-autolocalize="false">
+              {displayLocationName}
+            </span>
             {weather && (
               <span className="hero-weather-text">
                 • {Math.round(weather.temp || weather.temperature || 0)}°C

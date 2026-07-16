@@ -51,6 +51,10 @@ const DEFAULT_LON = 28.9784;
 
 const isValidPrayerTimeValue = (value: unknown): boolean => typeof value === 'string' && /^\d{2}:\d{2}$/.test(value);
 
+export const resolvePrayerDistrictId = (locationName?: string | null): string => (
+  (locationName ? findDistrictByName(locationName)?.districtId : null) || getSelectedDistrictId()
+);
+
 const normalizePrayerPayload = (payload: unknown): PrayerPayload | null => {
   if (!payload || typeof payload !== 'object') {
     return null;
@@ -169,11 +173,15 @@ export const fetchMonthlyPrayerTimes = async (
 /**
  * Gets today's prayer times. Tries Diyanet API first, falls back to offline adhan calculation.
  */
-export const getPrayerTimes = async (latitude: number | null = null, longitude: number | null = null): Promise<PrayerPayload> => {
+export const getPrayerTimes = async (
+  latitude: number | null = null,
+  longitude: number | null = null,
+  locationName: string | null = null
+): Promise<PrayerPayload> => {
   const today = format(new Date(), 'dd-MM-yyyy');
   const lat = latitude || DEFAULT_LAT;
   const lon = longitude || DEFAULT_LON;
-  const districtId = getSelectedDistrictId();
+  const districtId = resolvePrayerDistrictId(locationName);
   const cacheKey = `${CACHE_KEY_PREFIX}${districtId}_${lat.toFixed(4)}_${lon.toFixed(4)}_${today}`;
 
   try {

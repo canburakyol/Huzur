@@ -31,6 +31,7 @@ function AppHomeTabContent({
   dailyContent,
   onOpenInvite,
   onSelectFeature,
+  onShowMenu,
   isProUser
 }) {
 
@@ -160,13 +161,13 @@ function AppHomeTabContent({
           />
         </Suspense>
 
-        <QuickAccessGrid onSelectFeature={handleSelectFeature} />
+        <VerseOfTheDay dailyContent={dailyContent} />
 
         <Suspense fallback={null}>
           <NativeAdCard isProUser={isProUser} />
         </Suspense>
 
-        <VerseOfTheDay dailyContent={dailyContent} />
+        <QuickAccessGrid onSelectFeature={handleSelectFeature} onShowMenu={onShowMenu} />
 
         {shouldShowFirstActivation ? (
           <FirstActivationCard onSelectFeature={handleSelectFeature} />

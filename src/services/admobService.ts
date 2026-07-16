@@ -14,7 +14,6 @@ import {
     getRewardedAdUnitId,
     isRewardedConfigured
 } from './adEnvironmentService';
-import { canInitializeAdMob } from './privacyConsentStore';
 import { ANALYTICS_EVENTS, logEvent } from './analyticsService';
 
 type AdRuntime = {
@@ -59,12 +58,26 @@ type PluginListenerHandle = {
 let isInitialized = false;
 let initializePromise: Promise<boolean> | null = null;
 let listenersRegistered = false;
+let privacyOptionsRequired = false;
 const adListenerHandles: PluginListenerHandle[] = [];
-// The native banner owns the physical bottom edge. Web navigation reserves
-// its own space above it so neither surface can intercept the other.
+export const AD_PRIVACY_OPTIONS_STATUS_EVENT = 'huzur:ad-privacy-options-status';
+// Keep the bottom banner height predictable. Adaptive banners can render taller
+// on some devices and overlap the web bottom navigation reservation.
 const BOTTOM_BANNER_MARGIN = 0;
 
 const isNativePlatform = (): boolean => Capacitor.getPlatform() !== 'web';
+
+const canRequestAdsFromConsent = (consentInfo: { canRequestAds?: boolean } | undefined): boolean =>
+    consentInfo?.canRequestAds === true;
+
+const updatePrivacyOptionsStatus = (consentInfo: { privacyOptionsRequirementStatus?: string } | undefined): void => {
+    privacyOptionsRequired = consentInfo?.privacyOptionsRequirementStatus === 'REQUIRED';
+    if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent(AD_PRIVACY_OPTIONS_STATUS_EVENT, {
+            detail: { required: privacyOptionsRequired }
+        }));
+    }
+};
 
 const adLog = async (...args: unknown[]): Promise<void> => {
     const runtime = await getAdRuntime();
@@ -138,13 +151,8 @@ const removeAdListeners = async (): Promise<void> => {
     listenersRegistered = false;
 };
 
-const ensureInitialized = async (): Promise<boolean> => {
+export const ensureAdMobReady = async (): Promise<boolean> => {
     if (!isNativePlatform()) {
-        return false;
-    }
-
-    if (!canInitializeAdMob()) {
-        await adLog('[AdMob] initialization blocked until ad consent is granted');
         return false;
     }
 
@@ -173,9 +181,16 @@ const ensureInitialized = async (): Promise<boolean> => {
                     initializeForTesting: runtime.useTestAds,
                 });
 
-                const consentInfo = await AdMob.requestConsentInfo();
+                let consentInfo = await AdMob.requestConsentInfo();
+                updatePrivacyOptionsStatus(consentInfo);
                 if (consentInfo.isConsentFormAvailable && consentInfo.status === 'REQUIRED') {
-                    await AdMob.showConsentForm();
+                    consentInfo = await AdMob.showConsentForm();
+                    updatePrivacyOptionsStatus(consentInfo);
+                }
+
+                if (!canRequestAdsFromConsent(consentInfo)) {
+                    await adWarn('[AdMob] UMP does not currently allow ad requests');
+                    return false;
                 }
 
                 await registerAdListeners();
@@ -183,26 +198,12 @@ const ensureInitialized = async (): Promise<boolean> => {
                 await adLog(`[AdMob] initialized useTestAds=${runtime.useTestAds}`);
                 void crashlyticsReporter.logCrash(`[AdMob] initialized useTestAds=${runtime.useTestAds}`);
                 return true;
-            } catch (e) {
-                await adWarn('[AdMob] init failed, trying fallback', e);
-
-                try {
-                    const runtime = await getAdRuntime();
-                    await AdMob.initialize({
-                        requestTrackingAuthorization: true,
-                        initializeForTesting: runtime.useTestAds,
-                    });
-                    await registerAdListeners();
-                    isInitialized = true;
-                    void crashlyticsReporter.logCrash(`[AdMob] initialized via fallback useTestAds=${runtime.useTestAds}`);
-                    return true;
-                } catch (fallbackError) {
-                    await adWarn('[AdMob] fallback init failed', fallbackError);
-                    void crashlyticsReporter.logExceptionWithContext(fallbackError as Error, {
-                        surface: 'admob_init'
-                    });
-                    return false;
-                }
+            } catch (error) {
+                await adWarn('[AdMob] UMP or SDK initialization failed', error);
+                void crashlyticsReporter.logExceptionWithContext(error as Error, {
+                    surface: 'admob_init'
+                });
+                return false;
             } finally {
                 initializePromise = null;
             }
@@ -219,26 +220,25 @@ export const adMobService: AdMobServiceType = {
             return false;
         }
 
-        return await ensureInitialized();
+        return await ensureAdMobReady();
     },
 
     showRectangleBanner: async () => {
         if (!isNativePlatform()) return;
-        if (!canInitializeAdMob()) return;
 
         try {
             if (!AdMob) {
                 await adWarn('[AdMob] plugin not available for banner');
                 return;
             }
-            if (!(await ensureInitialized())) {
+            if (!(await ensureAdMobReady())) {
                 return;
             }
             const runtime = await getAdRuntime();
             const bannerId = await getBannerAdUnitId();
             await AdMob.showBanner({
                 adId: bannerId,
-                adSize: BannerAdSize.ADAPTIVE_BANNER,
+                adSize: BannerAdSize.BANNER,
                 position: BannerAdPosition.BOTTOM_CENTER,
                 margin: BOTTOM_BANNER_MARGIN,
                 isTesting: runtime.useTestAds
@@ -251,14 +251,13 @@ export const adMobService: AdMobServiceType = {
 
     showMediumRectangle: async () => {
         if (!isNativePlatform()) return;
-        if (!canInitializeAdMob()) return;
 
         try {
             if (!AdMob) {
                 await adWarn('[AdMob] plugin not available for medium rectangle');
                 return;
             }
-            if (!(await ensureInitialized())) {
+            if (!(await ensureAdMobReady())) {
                 return;
             }
             const runtime = await getAdRuntime();
@@ -317,14 +316,9 @@ export const adMobService: AdMobServiceType = {
 };
 
 export const showRewardedAd = async (): Promise<RewardedAdResult> => {
-    if (!canInitializeAdMob()) {
-        return { success: false, error: 'Ad consent required' };
-    }
-
     if (!isNativePlatform()) {
-        logger.log('AdMob: Web platform - rewarded ad simulated');
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        return { success: true, reward: { amount: 1, type: 'streak_recovery' } };
+        logger.log('AdMob: Rewarded ads require a native platform');
+        return { success: false, error: 'Rewarded ads require native platform' };
     }
 
     try {
@@ -336,7 +330,7 @@ export const showRewardedAd = async (): Promise<RewardedAdResult> => {
             await adWarn('[AdMob] rewarded unit is not configured');
             return { success: false, error: 'Rewarded ad unit is not configured' };
         }
-        if (!(await ensureInitialized())) {
+        if (!(await ensureAdMobReady())) {
             return { success: false, error: 'AdMob could not initialize' };
         }
 
@@ -399,6 +393,31 @@ export const showRewardedAd = async (): Promise<RewardedAdResult> => {
             surface: 'rewarded_ad'
         });
         return { success: false, error: (error as Error)?.message || 'Rewarded ad failed' };
+    }
+};
+
+export const isAdPrivacyOptionsRequired = (): boolean => privacyOptionsRequired;
+
+export const showAdPrivacyOptions = async (): Promise<boolean> => {
+    if (!isNativePlatform() || !privacyOptionsRequired) {
+        return false;
+    }
+
+    try {
+        await AdMob.showPrivacyOptionsForm();
+        const consentInfo = await AdMob.requestConsentInfo();
+        updatePrivacyOptionsStatus(consentInfo);
+
+        if (!canRequestAdsFromConsent(consentInfo)) {
+            await adMobService.stopAds();
+            return false;
+        }
+
+        await ensureAdMobReady();
+        return true;
+    } catch (error) {
+        await adWarn('[AdMob] privacy options form failed', error);
+        return false;
     }
 };
 

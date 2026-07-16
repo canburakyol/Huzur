@@ -1,67 +1,125 @@
-# PROJECT CONTEXT — Huzur V1 (huzur-app)
+# PROJECT CONTEXT - Huzur V1 (`huzur-app`)
 
-## 1. Sistem Mimarisi ve Teknoloji Yığını (Tech Stack & Architecture)
-* **Core:** React 19.2.0, React DOM 19.2.0, React Router DOM 7.18.0, Vite 7.3.1, TypeScript 5.9.3.
-* **Runtime:** Node.js `>=22 <23`, web tabanlı SPA ve Capacitor 8.3.4 ile Android native WebView runtime.
-* **Architecture:** 
-  * Hibrit Mobil/Web SPA.
-  * Modüler klasör yapısı: `@src/domains` (özellik bazlı dikey bölümler) ve `@src/features` (yatay yetenekler).
-* **State & Data:**
-  * **State:** Zustand 5.0.13, dilimlere (`@src/stores/slices/*`) bölünmüş tek bir store (`useAppStore.ts`).
-  * **Local Database:** `@capacitor-community/sqlite` 8.1.0 (`@src/services/sqliteAdapter.ts`) çevrimdışı kullanım için.
-  * **Cloud Backend:** Firebase SDK 12.6.0 (Authentication, Firestore, Cloud Functions).
-  * **Offline-First Cache:** Firestore persistent local cache (`persistentLocalCache` + `persistentMultipleTabManager`) devrede.
+Bu dosya Codex/AI icin hizli baglam dosyasidir. Amac, her iste tum projeyi bastan okumadan once mevcut mimariyi hatirlatmak ve sadece ilgili dosyalara yonlendirmektir.
+
+Kural: Bu dosya karar vermek icin ilk baglamdir, tek dogruluk kaynagi degildir. Kod degistirmeden once ilgili canli dosya mutlaka kontrol edilmelidir.
 
 ---
 
-## 2. Kritik Giriş Noktaları ve Bağımlılık Haritası (Entry Points & Dependency Map)
-* **Initialization (Ayağa Kalkış):**
-  1. [`src/main.jsx`](file:///E:/D_Backup/Projem/src/main.jsx): Giriş noktası. Android WebView CSS sınıfını uygular. Yerel saklama alanından (`storageService`) temayı (`app_theme`) okur ve HTML `data-theme` attribute'ünü set eder. Noto Naskh ve Scheherazade fontlarını gecikmeli yükler (`startupScheduler`). Hata overlay'i tanımlar.
-  2. [`src/AppProviders.jsx`](file:///E:/D_Backup/Projem/src/AppProviders.jsx): Global sağlayıcıları (`ErrorBoundary`, `ToastProvider`, `TimeProvider`, `FocusProvider`, `GamificationProvider`, `FamilyProvider`) sarar. Native güncellemeleri kontrol eder (`@capawesome/capacitor-app-update`).
-  3. [`src/App.jsx`](file:///E:/D_Backup/Projem/src/App.jsx): `AppChrome` (navigasyon ve ana arayüz kabuğu) veya aktif overlay'leri yönetir.
-* **En Kritik 5 Dosya:**
-  * [`src/services/firebase.ts`](file:///E:/D_Backup/Projem/src/services/firebase.ts): Firebase ve App Check entegrasyonu. **Kritik:** Firebase `db` ve `auth` nesnelerine senkron erişim yasaktır; asenkron getter fonksiyonları (`getDb()`, `getAuthInstance()`) kullanılmalıdır.
-  * [`src/stores/useAppStore.ts`](file:///E:/D_Backup/Projem/src/stores/useAppStore.ts): Tüm Zustand state dilimlerinin birleştiği merkezi yerel depo.
-  * [`src/services/prayerScheduleService.ts`](file:///E:/D_Backup/Projem/src/services/prayerScheduleService.ts): Namaz vakti hesaplamaları, Diyanet API senkronizasyonu ve çevrimdışı hesaplama yedekleri.
-  * [`src/services/revenueCatService.ts`](file:///E:/D_Backup/Projem/src/services/revenueCatService.ts): RevenueCat Capacitor SDK (`@revenuecat/purchases-capacitor`) üzerinden premium abonelik (Pro) yönetimi.
-  * [`src/services/sqliteAdapter.ts`](file:///E:/D_Backup/Projem/src/services/sqliteAdapter.ts): Yerel SQLite veritabanı bağlantısı ve şema yönetimi.
+## 1. Teknoloji ve Runtime
+
+- Core: React 19.2.x, React DOM 19.2.x, React Router DOM 7.18.x, TypeScript 5.9.x, Vite 7.3.x.
+- Runtime: Node.js `>=22 <23`.
+- Mobil: Capacitor 8.x ile Android native WebView.
+- State: Zustand 5.x, merkezi store `src/stores/useAppStore.ts` ve slice yapisi.
+- Local DB: `@capacitor-community/sqlite`, ana adapter `src/services/sqliteAdapter.ts`.
+- Backend: Firebase SDK 12.x, Auth, Firestore, Cloud Functions, App Check.
+- Monetization: RevenueCat (`src/services/revenueCatService.ts`) ve AdMob (`src/services/admobService.ts`).
+
+Guncel kesin surumler icin `package.json` kontrol edilmelidir.
 
 ---
 
-## 3. Veri Modelleri ve API / Kontrat Yapısı (Data Models & Contracts)
-* **Zustand & Veritabanı Modelleri (`types.ts`):**
-  * `Settings`: `{ language: string, theme: string, accentColor: string, notifications: boolean, stickyNotification: boolean }`
-  * `Quest`: `{ id: string, type: string, subType?: string, progress: number, target: number, completed: boolean, xp: number }`
-  * `Family`: `{ id: string, name: string, members: string[] }`
-  * `Toast`: `{ id: number, message: string, type: string, duration: number }`
-* **Dış Servis Entegrasyonları:**
-  * **Firebase SDK:** Auth, Firestore (offline persistent cache), Functions (region: `europe-west1`), App Check (Web: reCAPTCHA v3/Enterprise; Native: Play Integrity).
-  * **RevenueCat Purchases:** Premium durum kontrolü (`isProUser` flag).
-  * **AdMob:** Google AdMob reklamları (`@capacitor-community/admob`). Test ve Real Banner ID'leri `constants.ts` içindedir.
-  * **Diyanet API:** Namaz vakitlerini ve konum bazlı koordinatları almak için kullanılır.
+## 2. Ana Giris Noktalari
+
+- `src/main.jsx`: Uygulama girisi, Android WebView CSS sinifi, tema baslatma, font yukleme ve hata overlay baslangici.
+- `src/AppProviders.jsx`: Global provider zinciri, ErrorBoundary, toast, time, focus, gamification, family ve native update kontrolu.
+- `src/App.jsx`: App shell veya aktif feature overlay secimi.
+- `src/components/app-shell/AppChrome.jsx`: Ana chrome, tab router, overlayler, hamburger menu ve bottom nav.
+- `src/components/BottomNav.jsx`: Alt navigasyon bileseni.
+- `src/components/app-shell/AppTabRouter.jsx`: Aktif tab icerik yonlendirmesi.
 
 ---
 
-## 4. İş Akışları ve Senaryolar (Core Workflows)
-* **Namaz Vakti Güncelleme & Alarm Akışı:**
-  `main.jsx` -> `prayerScheduleService.ts` (Diyanet API veya Offline `adhan` kütüphanesi) -> `prayerSlice.ts` -> SQLite / storage -> Local Notifications.
-* **Pro/Premium Abonelik Kontrol Akışı:**
-  `AppProviders.jsx` -> `proService.ts` / `revenueCatService.ts` -> Purchases SDK -> `proSlice.ts` (`isProUser` set edilir) -> Arayüzde `FREE_LIMITS` (kısıt kontrolü) uygulaması.
-* **Görev ve Gamification Akışı:**
-  Kullanıcı ibadet veya Kur'an okuma aksiyonu gerçekleştirir -> `gamificationService.ts` -> `updateQuestProgress` / `updatePoints` -> `gamificationSlice.ts` -> Firestore sync.
+## 3. Kritik Servisler
+
+- `src/services/firebase.ts`: Firebase/App Check entegrasyonu. `db` veya `auth` senkron kullanilmaz; her zaman `await getDb()` ve `await getAuthInstance()` kullan.
+- `src/services/prayerService.ts`: Gunluk/aylik namaz vakti cekme, cache ve Diyanet ilce esleme kullanan ana servis.
+- `src/services/diyanetLocationService.ts`: Diyanet il/ilce ID eslemeleri ve secili ilce kaliciligi.
+- `src/services/prayerScheduleService.ts`: Native/local namaz bildirimi ve aylik schedule senkronizasyonu.
+- `src/services/admobService.ts`: AdMob initialize, banner, rewarded ve reklam cleanup.
+- `src/services/revenueCatService.ts`: Pro/premium satin alma ve restore akisi.
+- `src/services/storageService.ts`: SQLite destekli kalici storage yardimcilari.
+- `src/services/sqliteAdapter.ts`: SQLite sema ve entity adapter katmani.
+- `src/services/focusSessionService.ts`: Deadline tabanli focus session runtime ve reklam cleanup etkileri.
 
 ---
 
-## 5. Yapay Zeka İçin Geliştirme ve Stil Kılavuzu (AI Rules & Constraints)
-* **Dosya Adlandırma & Klasörleme:**
-  * **React Bileşenleri:** `src/components/` veya `src/domains/*/components/` altında **PascalCase** (`Quran.jsx`, `PremiumHomeHero.jsx`).
-  * **Servis ve Mağazalar (Store):** `src/services/` veya `src/stores/` altında **camelCase** (`prayerScheduleService.ts`, `familySlice.ts`).
-  * **Stylesheets:** Centralize CSS değişkenleri `src/styles/variables.css` içindedir. Bileşene özgü stiller `.css` uzantısıyla yanına eklenir.
-* **Kodlama Standartları:**
-  * **TypeScript Katı Kuralları:** `any` kullanımı tamamen yasaktır. Bilinmeyen tipler için `unknown` kullanıp tip daraltma (type narrowing) yapın.
-  * **Asenkron Firebase:** Firestore veya Auth erişiminde doğrudan `db` veya `auth` çağırmayın. Her zaman `await getDb()` veya `await getAuthInstance()` kullanın.
-  * **Döngüler:** `for` yerine fonksiyonel dizi metotlarını (`map`, `filter`, `reduce`) tercih edin.
-* **Yasaklar (Anti-Patterns):**
-  * Firebase nesnelerine senkron erişim yapma (hata fırlatır).
-  * Global state'i Zustand slice'ları dışından doğrudan mutasyona uğratma.
-  * `.env` dosyasındaki API anahtarlarını koda doğrudan gömme (`import.meta.env` kullanın).
+## 4. Sik Dokunulan UI Alanlari
+
+- Tema tokenlari: `src/styles/variables.css`.
+- Genel component CSS: `src/styles/components.css`.
+- App shell/navigation CSS: `src/components/app-shell/Navigation.css`.
+- Home: `src/components/app-shell/AppHomeTabContent.jsx` ve `src/components/app-shell/home/*`.
+- Quran: `src/domains/quran/components/Quran.jsx` ve `Quran.css`.
+- Prayer: `src/domains/prayer/components/*`.
+- Onboarding ve Pro: `src/domains/onboarding/components/*`.
+
+Tema isi yaparken davranis ve mimariyi degistirme; once `src/styles/variables.css` ve ilgili component CSS dosyasini oku.
+
+---
+
+## 5. Namaz Vakti ve Bildirim Akisi
+
+- Konum izni ve ters geocode: `src/hooks/useLocationConsent.ts`.
+- Namaz vakti hook'u: `src/hooks/usePrayerTimes.ts`.
+- Diyanet ilce secimi: `src/services/diyanetLocationService.ts`.
+- Vakit cekme/cache: `src/services/prayerService.ts`.
+- Native bildirim schedule: `src/services/prayerScheduleService.ts` ve Android native plugin taraflari.
+
+Onemli invariantlar:
+
+- Koordinat geldiyse once konum adi/ilce eslemesi cozulmeli, sonra namaz vakti cekilmeli.
+- Cache anahtarlarinda ilce/Diyanet ID ayrimi korunmali.
+- Kullanici bildirimleri kapattiysa ezan/namaz bildirimleri native tarafta da iptal edilmeli.
+- Diyanet uyumsuzlugu iddiasi repo kodu ve resmi kaynakla dogrulanmadan kabul edilmemeli.
+
+---
+
+## 6. Reklam ve Premium Akisi
+
+- AdMob init ve banner: `src/hooks/useAppInit.ts` -> `src/services/admobService.ts`.
+- Pro kullanicida reklamlar kapatilmali: `adMobService.stopAds()`.
+- Alt banner, bottom nav'i kapatmamali. Native banner DOM disinda cizildigi icin CSS rezervi ve AdMob banner boyutu birlikte kontrol edilmeli.
+- Rewarded akista odul sadece gercek reward eventiyle verilmeli.
+- Consent yoksa AdMob initialize edilmemeli.
+
+---
+
+## 7. Kodlama Kurallari
+
+- Var olan mimariyi koru; genis rewrite yapma.
+- Kirli worktree varsa kullanici degisikliklerini koru.
+- Firebase icin senkron `db`/`auth` kullanma.
+- `.env` degerlerini koda gommek yasak; `import.meta.env` veya mevcut runtime/env servislerini kullan.
+- TypeScript'te `any` ekleme; gerekirse `unknown` ve type narrowing kullan.
+- Kullanici bir teshis yaptiginda once kod yolunu kontrol et, sonra karar ver.
+- Android etkili degisikliklerde en az `npm run build`, gerekirse `npx cap sync android` ve `./gradlew.bat :app:assembleDebug` calistir.
+
+---
+
+## 8. Huzli Komutlar
+
+```powershell
+npm test -- --run
+npm run build
+npx cap sync android
+cd android
+.\gradlew.bat :app:assembleDebug
+```
+
+Dar kapsamli arama icin once `rg` kullan:
+
+```powershell
+rg -n "aranacakMetin" E:\D_Backup\Projem\src -S
+```
+
+---
+
+## 9. Bilinen Riskler
+
+- Samsung/kucuk ekranlarda onboarding veya fixed yuzeyler tasabilir; responsive yukseklik ve scroll kontrolu yap.
+- Native ses/ezan/muzik uygulama kapansa bile calisabilir; Android lifecycle ve foreground/background cleanup kontrol edilmeli.
+- Native local notification tercihleri web preference'dan bagimsiz kalabilir; kapatma akisi native schedule iptaliyle dogrulanmali.
+- AdMob adaptive banner bazi cihazlarda beklenenden yuksek cizilebilir; bottom nav ve reklam cakismasi cihazda smoke test edilmeli.
+- Pro/consent/reklam akislari gelir ve policy riski tasir; sadece UI olarak ele alinmamali.

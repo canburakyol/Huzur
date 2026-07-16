@@ -30,7 +30,7 @@ export const getPrivacyConsentSnapshot = (): PrivacyConsentSnapshot => {
     adsEnabled,
     personalizedAdsEnabled: adsEnabled && settings.personalizedAdsEnabled === true,
     crashReportingEnabled: analyticsEnabled && settings.crashReporting === true,
-    zeroTelemetryByDefault: true,
+    zeroTelemetryByDefault: false,
   };
 };
 

@@ -106,6 +106,7 @@
     "proMembership": "Pro Üyelik",
     "version": "Sürüm",
     "missedPrayers": "Kaza Takipçisi",
+    "kazaTakibi": "Kaza Takibi",
     "islamicMeditation": "Tefekkür",
     "seerahMap": "Siyer Haritası",
     "spiritualCoach": "Manevi Rehber",
@@ -4460,22 +4461,22 @@
   },
   "dua": {
     "categories": {
-      "health": "Sa?l?k",
-      "exam": "S?nav",
-      "work": "??",
+      "health": "Sağlık",
+      "exam": "Sınav",
+      "work": "İş",
       "family": "Aile",
       "marriage": "Evlilik",
-      "children": "?ocuk",
+      "children": "Çocuk",
       "travel": "Seyahat",
       "forgiveness": "Af",
       "general": "Genel"
     },
     "suggestions": {
-      "marriage_0": "Rabbim bana hay?rl? bir e? nasip et",
-      "exam_1": "S?nav?m? ba?ar?yla ge?meyi nasip et",
-      "health_2": "Hastal???mdan ?ifa ver",
-      "work_3": "??imde ba?ar?l? olmay? nasip et",
-      "family_4": "Ailemi koru ve ba???la"
+      "marriage_0": "Rabbim bana hayırlı bir eş nasip et",
+      "exam_1": "Sınavımı başarıyla geçmeyi nasip et",
+      "health_2": "Hastalığımdan şifa ver",
+      "work_3": "İşimde başarılı olmayı nasip et",
+      "family_4": "Ailemi koru ve bağışla"
     },
     "stats": {
       "accepted": "KABUL",
@@ -4487,13 +4488,13 @@
       "accepted": "Kabul"
     },
     "addNew": "Yeni Dua Ekle",
-    "placeholder": "Duan?z? yaz?n...",
-    "suggestionsTitle": "?NER?LENLER",
+    "placeholder": "Duanızı yazın...",
+    "suggestionsTitle": "ÖNERİLENLER",
     "listTitle": "Dua Listesi",
-    "empty": "Hen?z dua bulunmuyor",
+    "empty": "Henüz dua bulunmuyor",
     "etiquette": {
-      "title": "Dua Adab?",
-      "desc": "Dualar?n?z? ihlasla, d?zenli olarak tekrarlay?n ve her t?rl? hay?rl? iste?iniz i?in Rabbimize s???n?n."
+      "title": "Dua Adabı",
+      "desc": "Dualarınızı ihlasla, düzenli olarak tekrarlayın ve her türlü hayırlı isteğiniz için Rabbimize sığının."
     }
   },
   "levelUp": {
@@ -4501,9 +4502,9 @@
     "subtitle": "Yeni Seviyeye Ula?t?n?z!"
   },
   "prayerTracker": {
-    "infoTitle": "Kaza Namaz? Nedir?",
-    "infoDesc": "Vaktinde k?l?namayan farz namazlar i?in kaza namaz? k?l?n?r. Kaza namazlar?, farz namazlar?n yerine ge?er ve bor? ?denir gibi eda edilir.",
-    "timeUnit": "VAK?T",
+    "infoTitle": "Kaza Namazı Nedir?",
+    "infoDesc": "Vaktinde kılınamayan farz namazlar için kaza namazı kılınır. Kaza namazları, farz namazların yerine geçer ve borç ödenir gibi eda edilir.",
+    "timeUnit": "VAKİT",
     "rakatUnit": "REKAT",
     "rakatCount": "{{count}} Rekat"
   },

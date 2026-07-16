@@ -150,10 +150,11 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
         }
         setError(null);
 
-        const lat = coords?.latitude || null;
-        const lon = coords?.longitude || null;
+        const lat = coords?.latitude ?? null;
+        const lon = coords?.longitude ?? null;
+        const locationName = coords?.locationName || coords?.city || coords?.name || null;
 
-        const data = await getPrayerTimes(lat, lon);
+        const data = await getPrayerTimes(lat, lon, locationName);
         if (requestId !== latestPrayerRequestRef.current) return;
 
         if (data && data.timings) {

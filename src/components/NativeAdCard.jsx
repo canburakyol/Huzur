@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef, memo } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { nativeAdService } from '../services/nativeAdService';
 import { LazyImage } from './LazyImage';
 import './NativeAdCard.css';
 
-const IMPRESSION_THRESHOLD = 0.5;
+const NATIVE_AD_VIEWPORT_GUTTER_PX = 8;
 
 const getAssetSource = (asset) => {
   if (!asset) return null;
@@ -14,7 +15,7 @@ const getAssetSource = (asset) => {
 const NativeAdCard = memo(({ isProUser = false }) => {
   const [ad, setAd] = useState(null);
   const cardRef = useRef(null);
-  const impressionRecorded = useRef(false);
+  const isAndroid = Capacitor.getPlatform() === 'android';
 
   useEffect(() => {
     if (isProUser) {
@@ -38,25 +39,43 @@ const NativeAdCard = memo(({ isProUser = false }) => {
   }, [isProUser]);
 
   useEffect(() => {
-    if (!ad || !cardRef.current || impressionRecorded.current) return;
+    if (!isAndroid || !ad?.adId || !cardRef.current || isProUser) return undefined;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !impressionRecorded.current) {
-          nativeAdService.recordImpression();
-          impressionRecorded.current = true;
+    let animationFrame = 0;
+
+    const syncNativeView = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const bottomNavigation = document.querySelector('.bottom-nav');
+        const safeViewportBottom = bottomNavigation
+          ? bottomNavigation.getBoundingClientRect().top
+          : window.innerHeight;
+
+        if (rect.width <= 0 || rect.height <= 0) {
+          void nativeAdService.hide();
+          return;
         }
-      },
-      { threshold: IMPRESSION_THRESHOLD }
-    );
+        void nativeAdService.show(ad.adId, rect, {
+          top: NATIVE_AD_VIEWPORT_GUTTER_PX,
+          bottom: safeViewportBottom - NATIVE_AD_VIEWPORT_GUTTER_PX,
+        });
+      });
+    };
 
-    const currentRef = cardRef.current;
-    observer.observe(currentRef);
+    syncNativeView();
+    window.addEventListener('resize', syncNativeView);
+    const resizeObserver = new ResizeObserver(syncNativeView);
+    resizeObserver.observe(cardRef.current);
 
     return () => {
-      observer.unobserve(currentRef);
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener('resize', syncNativeView);
+      resizeObserver.disconnect();
+      void nativeAdService.hide();
     };
-  }, [ad]);
+  }, [ad, isAndroid, isProUser]);
 
   if (!ad || isProUser) return null;
 
@@ -64,6 +83,14 @@ const NativeAdCard = memo(({ isProUser = false }) => {
   const iconSource = getAssetSource(ad.icon);
   const rating = Number(ad.starRating || 0);
   const hasRating = Number.isFinite(rating) && rating > 0;
+
+  if (isAndroid) {
+    return (
+      <article className="native-ad-container native-ad-container--android" ref={cardRef} aria-label="Reklam">
+        <div className="native-ad-native-slot" aria-hidden="true" />
+      </article>
+    );
+  }
 
   return (
     <article className="native-ad-container" ref={cardRef} aria-label="Reklam">

@@ -7,18 +7,25 @@ const capacitorMock = vi.hoisted(() => ({
 const adMobMock = vi.hoisted(() => ({
   initialize: vi.fn(async () => undefined),
   setRequestConfiguration: vi.fn(async () => undefined),
-  requestConsentInfo: vi.fn(async () => ({ isConsentFormAvailable: false, status: "NOT_REQUIRED" })),
-  showConsentForm: vi.fn(async () => undefined),
+  requestConsentInfo: vi.fn(async () => ({
+    isConsentFormAvailable: false,
+    status: "NOT_REQUIRED",
+    canRequestAds: true,
+    privacyOptionsRequirementStatus: "NOT_REQUIRED",
+  })),
+  showConsentForm: vi.fn(async () => ({
+    isConsentFormAvailable: true,
+    status: "OBTAINED",
+    canRequestAds: true,
+    privacyOptionsRequirementStatus: "REQUIRED",
+  })),
+  showPrivacyOptionsForm: vi.fn(async () => undefined),
   addListener: vi.fn(async () => ({ remove: vi.fn(async () => undefined) })),
   hideBanner: vi.fn(async () => undefined),
   removeBanner: vi.fn(async () => undefined),
   showBanner: vi.fn(async () => undefined),
   prepareRewardVideoAd: vi.fn(async () => undefined),
   showRewardVideoAd: vi.fn(async () => ({ amount: 1, type: "streak_recovery" })),
-}));
-
-const privacyMock = vi.hoisted(() => ({
-  canInitializeAdMob: vi.fn(() => true),
 }));
 
 const nativeAdServiceMock = vi.hoisted(() => ({
@@ -61,8 +68,6 @@ vi.mock("@capacitor-community/admob", () => ({
   },
 }));
 
-vi.mock("./privacyConsentStore", () => privacyMock);
-
 vi.mock("./adEnvironmentService", () => ({
   getAdRuntime: vi.fn(async () => ({ isDebugBuild: false, useTestAds: true })),
   getBannerAdUnitId: vi.fn(async () => "banner-test-id"),
@@ -95,19 +100,28 @@ describe("admobService consent and cleanup", () => {
     vi.resetModules();
     vi.clearAllMocks();
     capacitorMock.getPlatform.mockReturnValue("android");
-    privacyMock.canInitializeAdMob.mockReturnValue(true);
-    adMobMock.requestConsentInfo.mockResolvedValue({ isConsentFormAvailable: false, status: "NOT_REQUIRED" });
+    adMobMock.requestConsentInfo.mockResolvedValue({
+      isConsentFormAvailable: false,
+      status: "NOT_REQUIRED",
+      canRequestAds: true,
+      privacyOptionsRequirementStatus: "NOT_REQUIRED",
+    });
+    adMobMock.showConsentForm.mockResolvedValue({
+      isConsentFormAvailable: true,
+      status: "OBTAINED",
+      canRequestAds: true,
+      privacyOptionsRequirementStatus: "REQUIRED",
+    });
     adMobMock.addListener.mockImplementation(async () => ({ remove: vi.fn(async () => undefined) }));
   });
 
-  it("does not simulate rewarded ad on web without ad consent", async () => {
+  it("does not simulate rewarded revenue on web", async () => {
     capacitorMock.getPlatform.mockReturnValue("web");
-    privacyMock.canInitializeAdMob.mockReturnValue(false);
     const { showRewardedAd } = await importAdMobService();
 
     await expect(showRewardedAd()).resolves.toEqual({
       success: false,
-      error: "Ad consent required",
+      error: "Rewarded ads require native platform",
     });
 
     expect(adMobMock.showRewardVideoAd).not.toHaveBeenCalled();
@@ -130,14 +144,55 @@ describe("admobService consent and cleanup", () => {
     expect(allHandles.every((handle) => handle.remove.mock.calls.length === 1)).toBe(true);
   });
 
-  it("does not initialize native AdMob before app-level ad consent", async () => {
-    privacyMock.canInitializeAdMob.mockReturnValue(false);
+  it("does not request ads when UMP disallows ad requests", async () => {
+    adMobMock.requestConsentInfo.mockResolvedValue({
+      isConsentFormAvailable: true,
+      status: "REQUIRED",
+      canRequestAds: false,
+      privacyOptionsRequirementStatus: "REQUIRED",
+    });
+    adMobMock.showConsentForm.mockResolvedValue({
+      isConsentFormAvailable: true,
+      status: "OBTAINED",
+      canRequestAds: false,
+      privacyOptionsRequirementStatus: "REQUIRED",
+    });
     const { adMobService } = await importAdMobService();
 
     await expect(adMobService.initialize()).resolves.toBe(false);
 
-    expect(adMobMock.initialize).not.toHaveBeenCalled();
+    expect(adMobMock.initialize).toHaveBeenCalledTimes(1);
+    expect(adMobMock.showConsentForm).toHaveBeenCalledTimes(1);
     expect(adMobMock.addListener).not.toHaveBeenCalled();
+  });
+
+  it("uses the Google UMP result instead of a custom ad opt-out gate", async () => {
+    adMobMock.requestConsentInfo.mockResolvedValue({
+      isConsentFormAvailable: true,
+      status: "REQUIRED",
+      canRequestAds: false,
+      privacyOptionsRequirementStatus: "REQUIRED",
+    });
+    const { adMobService } = await importAdMobService();
+
+    await expect(adMobService.initialize()).resolves.toBe(true);
+
+    expect(adMobMock.showConsentForm).toHaveBeenCalledTimes(1);
+    expect(adMobMock.addListener).toHaveBeenCalledTimes(5);
+  });
+
+  it("uses fixed bottom banner size so it does not overlap bottom navigation", async () => {
+    const { adMobService } = await importAdMobService();
+
+    await adMobService.showRectangleBanner();
+
+    expect(adMobMock.showBanner).toHaveBeenCalledWith(expect.objectContaining({
+      adId: "banner-test-id",
+      adSize: "BANNER",
+      position: "BOTTOM_CENTER",
+      margin: 0,
+      isTesting: true,
+    }));
   });
 
   it("tracks rewarded requests and granted rewards", async () => {

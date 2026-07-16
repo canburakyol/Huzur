@@ -9,9 +9,20 @@ export interface NativeAdResult {
 
 export interface NativeAdBridgePlugin {
   initialize(): Promise<NativeAdResult>;
-  loadAd(): Promise<NativeAdResult>;
-  reportImpression(): Promise<NativeAdResult>;
-  reportClick(): Promise<NativeAdResult>;
+  loadAd(options?: { adUnitId?: string }): Promise<NativeAdResult>;
+  showAd(options: {
+    adId: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    dpr: number;
+    safeTop: number;
+    safeBottom: number;
+  }): Promise<NativeAdResult>;
+  hideAd(options?: { adId?: string }): Promise<NativeAdResult>;
+  reportImpression(options?: { adId?: string }): Promise<NativeAdResult>;
+  reportClick(options?: { adId?: string }): Promise<NativeAdResult>;
   destroy(): Promise<NativeAdResult>;
 }
 
@@ -23,6 +34,12 @@ const noopPlugin: NativeAdBridgePlugin = {
   },
   async loadAd(): Promise<NativeAdResult> {
     return { success: false, platform, error: 'Plugin not available' };
+  },
+  async showAd(): Promise<NativeAdResult> {
+    return { success: false, platform, error: 'Plugin not available' };
+  },
+  async hideAd(): Promise<NativeAdResult> {
+    return { success: true, platform };
   },
   async reportImpression(): Promise<NativeAdResult> {
     return { success: false, platform, error: 'Plugin not available' };

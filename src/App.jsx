@@ -13,7 +13,11 @@ function App() {
       <AppFeatureOverlay
         activeFeature={navigation.activeFeature}
         setActiveFeature={navigation.setActiveFeature}
+        activeTab={navigation.activeTab}
+        setActiveTab={navigation.setActiveTab}
+        onShowMenu={() => navigation.setShowHamburgerMenu(true)}
         locationName={location.locationName}
+        isProUser={controller.appInit.isProUser}
       />
     );
   }

@@ -7,6 +7,7 @@ import { STORAGE_KEYS } from '../constants';
 import { ACCENT_COLORS } from '../data/themes';
 import { useAppStore } from '../stores/useAppStore';
 import './app-shell/Navigation.css';
+import { normalizeThemeMode, resolveThemeMode } from '../services/themeModeService';
 
 const LEGACY_ACCENT_MAP = {
     orange: 'amber',
@@ -27,7 +28,7 @@ function ThemeSelector({ onClose }) {
     const setAccentColor = useAppStore((s) => s.setAccentColor);
     
     const [themeMode, setThemeMode] = useState(() => {
-        return storageService.getString(STORAGE_KEYS.THEME) || 'light';
+        return normalizeThemeMode(storageService.getString(STORAGE_KEYS.THEME));
     });
 
     const [accentColor, setAccentColorLocal] = useState(() => {
@@ -39,10 +40,10 @@ function ThemeSelector({ onClose }) {
         setThemeMode(mode);
         setTheme(mode);
         
-        let targetTheme = mode;
-        if (mode === 'system') {
-            targetTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
+        const targetTheme = resolveThemeMode(
+            normalizeThemeMode(mode),
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+        );
         
         document.documentElement.setAttribute('data-theme', targetTheme);
     };

@@ -1,12 +1,18 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const QuickAccessGrid = memo(({ onSelectFeature }) => {
+const QuickAccessGrid = memo(({ onSelectFeature, onShowMenu }) => {
   const { t } = useTranslation();
 
   const handleSelect = (featureId) => {
     if (onSelectFeature) {
       onSelectFeature(featureId, 'quick_access');
+    }
+  };
+
+  const handleShowMenu = () => {
+    if (onShowMenu) {
+      onShowMenu();
     }
   };
 
@@ -16,9 +22,9 @@ const QuickAccessGrid = memo(({ onSelectFeature }) => {
     { id: 'imsakiye', icon: 'calendar_month', label: t('menu.imsakiye', "İmsakiye") },
     { id: 'esmaUlHusna', icon: 'diamond', label: t('menu.esma', "Esmalar") },
     { id: 'mosque', icon: 'mosque', label: t('menu.mosque', "Camiim") },
-    { id: 'community', icon: 'group', label: t('menu.community', "Topluluk") },
+    { id: 'social', icon: 'group', label: t('menu.community', "Topluluk") },
     { id: 'assistant', icon: 'forum', label: t('menu.assistant', "Asistan AI") },
-    { id: 'more', icon: 'grid_view', label: t('menu.more', "Daha Fazla") }
+    { id: 'more', icon: 'grid_view', label: t('menu.more', "Daha Fazla"), action: handleShowMenu }
   ];
 
   return (
@@ -27,7 +33,7 @@ const QuickAccessGrid = memo(({ onSelectFeature }) => {
         <h3 className="quick-access-title">{t('home.quickAccess', 'Hızlı Erişim')}</h3>
         <div className="quick-access-actions">
           <button onClick={() => handleSelect('settings')}>{t('common.edit', 'Düzenle')}</button>
-          <button onClick={() => handleSelect('all_features')}>{t('common.all', 'Tümü')}</button>
+          <button onClick={handleShowMenu}>{t('common.all', 'Tümü')}</button>
         </div>
       </div>
       
@@ -66,7 +72,7 @@ const QuickAccessGrid = memo(({ onSelectFeature }) => {
           <div 
             key={tile.id} 
             className="quick-access-square-card"
-            onClick={() => handleSelect(tile.id)}
+            onClick={() => tile.action ? tile.action() : handleSelect(tile.id)}
           >
             <div className="quick-access-square-icon-container">
               <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>

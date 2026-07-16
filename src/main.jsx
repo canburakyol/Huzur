@@ -3,8 +3,7 @@ import { createRoot } from 'react-dom/client'
 import '@fontsource/noto-naskh-arabic/400.css'
 import './index.css'
 import './i18n'
-import { storageService } from './services/storageService'
-import { STORAGE_KEYS } from './constants'
+import { initializeThemeMode } from './services/themeModeService'
 import { scheduleDeferredTask } from './utils/startupScheduler'
 import { logger } from './utils/logger'
 
@@ -88,10 +87,7 @@ window.addEventListener('unhandledrejection', (event) => {
   }
 })
 
-const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-document.documentElement.setAttribute('data-theme', theme);
+initializeThemeMode();
 
 try {
   createRoot(document.getElementById('root')).render(

@@ -6,6 +6,7 @@ import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { buildWeeklyEngagementSnapshot } from '../../../services/engagementSummaryService';
 import { logShareSent } from '../../../services/analyticsService';
 import { openShareCard } from '../../../services/shareCardService';
+import { shareCanvasWithTextOnNative } from '../../../services/nativeImageShareService';
 import { useToast } from '../../../hooks/useToast';
 import { logger } from '../../../utils/logger';
 
@@ -53,6 +54,20 @@ const ShareableStatCard = ({ onClose }) => {
         backgroundColor: 'var(--primary)'
       });
 
+      const shareText = 'Huzur ile manevi ritmimi takip ediyorum.';
+      const sharedNatively = await shareCanvasWithTextOnNative(canvas, {
+        fileName: `huzur-journey-card-${Date.now()}.png`,
+        title: 'Huzur Istatistik Kartim',
+        text: shareText,
+        dialogTitle: 'Istatistik kartini paylas'
+      });
+
+      if (sharedNatively) {
+        awardBadge('first_share');
+        logShareSent('journey_progress', 'native_share');
+        return;
+      }
+
       const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png', 1));
       if (!blob) {
         throw new Error('capture_failed');
@@ -65,7 +80,7 @@ const ShareableStatCard = ({ onClose }) => {
       if (navigator.share && canShareFiles) {
         await navigator.share({
           title: 'Huzur Istatistik Kartim',
-          text: 'Huzur ile manevi ritmimi takip ediyorum.',
+          text: shareText,
           files: [file]
         });
         channel = 'native_share';

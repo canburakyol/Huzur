@@ -4,13 +4,13 @@ import { getProStateSnapshot, isPro as checkIsPro, verifyProStatus } from "../se
 import { detectAndSetLanguage } from "../services/languageService";
 import { VAKIT_THEMES } from "../data/vakitThemes";
 import { THEMES, ACCENT_COLORS } from "../data/themes";
-import { TIMING, STORAGE_KEYS } from "../constants";
+import { ONBOARDING_COMPLETED_EVENT, TIMING, STORAGE_KEYS } from "../constants";
 import { storageService } from "../services/storageService";
 import { logger } from "../utils/logger";
 import { scheduleDeferredTask } from "../utils/startupScheduler";
-import { getPrivacyConsentSnapshot, runPrivacyGatedInitialization } from "../services/privacyConsentStore";
 import crashlyticsReporter from "../utils/crashlyticsReporter";
 import { useAppStore } from "../stores/useAppStore";
+import { initializeThemeMode } from "../services/themeModeService";
 
 interface StreakDisplay {
   current: number;
@@ -132,7 +132,11 @@ const getVakitTheme = (timings: PrayerTimings | undefined): Theme => {
   return VAKIT_THEMES.NIGHT;
 };
 
-export const useAppInit = (timings?: PrayerTimings | null, activeTab = "home"): UseAppInitResult => {
+export const useAppInit = (
+  timings?: PrayerTimings | null,
+  activeTab = "home",
+  activeFeature: string | null = null
+): UseAppInitResult => {
   const [{ streakData, newBadge: initialBadge }] = useState(() => {
     const result = checkAndUpdateStreak();
     return {
@@ -143,7 +147,16 @@ export const useAppInit = (timings?: PrayerTimings | null, activeTab = "home"): 
 
   const [newBadge, setNewBadge] = useState<Badge | null>(initialBadge);
   const [isProUserLocal, setIsProUserLocal] = useState(() => checkIsPro());
+  const [onboardingCompleted, setOnboardingCompleted] = useState(() =>
+    storageService.getBoolean(STORAGE_KEYS.ONBOARDING_COMPLETED, false)
+  );
   const setIsProUser = useAppStore((s) => s.setIsProUser);
+
+  useEffect(() => {
+    const handleOnboardingCompleted = (): void => setOnboardingCompleted(true);
+    window.addEventListener(ONBOARDING_COMPLETED_EVENT, handleOnboardingCompleted);
+    return () => window.removeEventListener(ONBOARDING_COMPLETED_EVENT, handleOnboardingCompleted);
+  }, []);
 
   useEffect(() => {
     setIsProUser(isProUserLocal);
@@ -209,17 +222,9 @@ export const useAppInit = (timings?: PrayerTimings | null, activeTab = "home"): 
       }
     });
 
-    const savedTheme = storageService.getString(STORAGE_KEYS.THEME);
     const savedAccent = storageService.getString("app_accent_color") || "amber";
     applyAccent(resolveAccent(savedAccent));
-
-    if (savedTheme) {
-      let targetTheme = savedTheme;
-      if (savedTheme === "system") {
-        targetTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      }
-      document.documentElement.setAttribute("data-theme", targetTheme);
-    }
+    initializeThemeMode();
 
     if (!storageService.hasKey("APP_INSTALL_DATE")) {
       storageService.setItem("APP_INSTALL_DATE", Date.now());
@@ -303,7 +308,13 @@ export const useAppInit = (timings?: PrayerTimings | null, activeTab = "home"): 
       };
     }
 
-    if (activeTab === "quran") {
+    if (!onboardingCompleted) {
+      return () => {
+        isCancelled = true;
+      };
+    }
+
+    if (activeTab === "quran" || activeFeature === "quran") {
       void import("../services/admobService")
         .then(({ adMobService }) => adMobService.hideBanner())
         .catch((error) => {
@@ -317,51 +328,26 @@ export const useAppInit = (timings?: PrayerTimings | null, activeTab = "home"): 
       };
     }
 
-    const cancelAdMobInitialization = runPrivacyGatedInitialization({
-      kind: "ads",
-      label: "AdMob",
-      task: () => scheduleDeferredTask(
-        async () => {
-          try {
-            const { adMobService } = await import("../services/admobService");
-            if (isCancelled) return;
+    void (async () => {
+      try {
+        const { adMobService } = await import("../services/admobService");
+        if (isCancelled) return;
 
-            await adMobService.initialize();
-            if (isCancelled) return;
+        await adMobService.initialize();
+        if (isCancelled) return;
 
-            await adMobService.showRectangleBanner();
-          } catch (error) {
-            if (!isCancelled) {
-              logger.warn("[useAppInit] AdMob deferred init failed:", error);
-            }
-          }
-        },
-        TIMING.ADMOB_DELAY_MS
-      ),
-    });
-
-    const handlePrivacyUpdate = (): void => {
-      if (getPrivacyConsentSnapshot().adsEnabled) {
-        return;
+        await adMobService.showRectangleBanner();
+      } catch (error) {
+        if (!isCancelled) {
+          logger.warn("[useAppInit] AdMob immediate init failed:", error);
+        }
       }
-
-      void import("../services/admobService")
-        .then(({ adMobService }) => adMobService.stopAds())
-        .catch((error) => {
-          if (!isCancelled) {
-            logger.warn("[useAppInit] AdMob consent revocation stop failed:", error);
-          }
-        });
-    };
-
-    window.addEventListener("huzur:privacy-settings-updated", handlePrivacyUpdate);
+    })();
 
     return () => {
       isCancelled = true;
-      cancelAdMobInitialization();
-      window.removeEventListener("huzur:privacy-settings-updated", handlePrivacyUpdate);
     };
-  }, [activeTab, isProUserLocal]);
+  }, [activeFeature, activeTab, isProUserLocal, onboardingCompleted]);
 
   const clearBadge = () => setNewBadge(null);
 

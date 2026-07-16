@@ -13,6 +13,18 @@ interface DistrictMapping {
 
 const STORAGE_KEY_DISTRICT = 'diyanet_selected_district';
 
+const normalizeLocationName = (value: string): string => value
+  .toLocaleLowerCase('tr-TR')
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .replace(/ı/g, 'i')
+  .replace(/ö/g, 'o')
+  .replace(/ü/g, 'u')
+  .replace(/ş/g, 's')
+  .replace(/ç/g, 'c')
+  .replace(/ğ/g, 'g')
+  .replace(/[^a-z0-9]/g, '');
+
 /**
  * Hardcoded map of major Turkish cities/districts to Diyanet district IDs.
  * These IDs correspond to the `/vakitler/{ilce_id}` endpoint on emushaf.net.
@@ -167,14 +179,7 @@ export const getSelectedDistrict = (): DistrictMapping => {
  * Sets the selected district by key from the hardcoded map.
  */
 export const setDistrictByKey = (key: string): DistrictMapping | null => {
-  const normalized = key.toLowerCase()
-    .replace(/ı/g, 'i')
-    .replace(/ö/g, 'o')
-    .replace(/ü/g, 'u')
-    .replace(/ş/g, 's')
-    .replace(/ç/g, 'c')
-    .replace(/ğ/g, 'g')
-    .replace(/\s+/g, '');
+  const normalized = normalizeLocationName(key);
 
   const mapping = TURKEY_DISTRICT_MAP[normalized];
   if (!mapping) {
@@ -203,14 +208,7 @@ export const setDistrictById = (districtId: string, districtName = 'Bilinmeyen',
 export const findDistrictByName = (name: string): DistrictMapping | null => {
   if (!name) return null;
 
-  const normalized = name.toLowerCase()
-    .replace(/ı/g, 'i')
-    .replace(/ö/g, 'o')
-    .replace(/ü/g, 'u')
-    .replace(/ş/g, 's')
-    .replace(/ç/g, 'c')
-    .replace(/ğ/g, 'g')
-    .replace(/\s+/g, '');
+  const normalized = normalizeLocationName(name);
 
   // Direct key match
   if (TURKEY_DISTRICT_MAP[normalized]) {
@@ -220,22 +218,8 @@ export const findDistrictByName = (name: string): DistrictMapping | null => {
   // Search in values by districtName or cityName
   const entries = Object.values(TURKEY_DISTRICT_MAP);
   const match = entries.find((entry) => {
-    const entryDistrictNorm = entry.districtName.toLowerCase()
-      .replace(/ı/g, 'i')
-      .replace(/ö/g, 'o')
-      .replace(/ü/g, 'u')
-      .replace(/ş/g, 's')
-      .replace(/ç/g, 'c')
-      .replace(/ğ/g, 'g')
-      .replace(/\s+/g, '');
-    const entryCityNorm = entry.cityName.toLowerCase()
-      .replace(/ı/g, 'i')
-      .replace(/ö/g, 'o')
-      .replace(/ü/g, 'u')
-      .replace(/ş/g, 's')
-      .replace(/ç/g, 'c')
-      .replace(/ğ/g, 'g')
-      .replace(/\s+/g, '');
+    const entryDistrictNorm = normalizeLocationName(entry.districtName);
+    const entryCityNorm = normalizeLocationName(entry.cityName);
     return entryDistrictNorm === normalized || entryCityNorm === normalized;
   });
 

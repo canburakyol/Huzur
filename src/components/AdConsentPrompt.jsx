@@ -34,7 +34,7 @@ function AdConsentPrompt() {
         <p className="ad-consent-eyebrow">Gizlilik tercihi</p>
         <h2 id="ad-consent-title">Ücretsiz deneyimi nasıl sürdürmek istersin?</h2>
         <p className="ad-consent-copy">
-          Reklamlara izin verirsen Huzur'un ücretsiz özelliklerini desteklersin. İlk tercih olarak
+          Reklamlara izin verirsen Huzur&apos;un ücretsiz özelliklerini desteklersin. İlk tercih olarak
           kişiselleştirilmemiş reklamlar kullanılır; analiz izni bundan ayrıdır.
         </p>
         <div className="ad-consent-actions">

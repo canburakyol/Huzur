@@ -1,19 +1,26 @@
 import { Capacitor } from '@capacitor/core';
 import NativeAdBridge from '../plugins/NativeAdBridgePlugin';
 import { getNativeAdUnitId } from './adEnvironmentService';
-import { canInitializeAdMob } from './privacyConsentStore';
 import { isPro } from './proService';
 import { logger } from '../utils/logger';
+import { ensureAdMobReady } from './admobService';
 
 type AdData = {
   adId: string;
   [key: string]: unknown;
 };
 
+type NativeViewportBounds = {
+  top: number;
+  bottom: number;
+};
+
 type NativeAdServiceType = {
   adData: AdData | null;
   initialize: () => Promise<boolean>;
   load: () => Promise<AdData | null>;
+  show: (adId: string, rect: DOMRect, viewportBounds: NativeViewportBounds) => Promise<void>;
+  hide: () => Promise<void>;
   recordImpression: () => Promise<void>;
   handleClick: () => Promise<void>;
   destroy: () => Promise<void>;
@@ -21,6 +28,14 @@ type NativeAdServiceType = {
 
 let isInitialized = false;
 let currentAdId: string | null = null;
+let loadPromise: Promise<AdData | null> | null = null;
+let loadGeneration = 0;
+
+const LOAD_RETRY_DELAYS_MS = [0, 1200, 3200];
+
+const wait = (delayMs: number) => new Promise<void>((resolve) => {
+  window.setTimeout(resolve, delayMs);
+});
 
 export const nativeAdService: NativeAdServiceType = {
   adData: null,
@@ -30,8 +45,8 @@ export const nativeAdService: NativeAdServiceType = {
       return false;
     }
 
-    if (!canInitializeAdMob()) {
-      logger.log('[NativeAd] Initialize blocked until ad consent is granted');
+    if (!(await ensureAdMobReady())) {
+      logger.log('[NativeAd] Initialize blocked by the current UMP consent state');
       return false;
     }
 
@@ -66,29 +81,56 @@ export const nativeAdService: NativeAdServiceType = {
       return null;
     }
 
-    if (isPro() || !canInitializeAdMob()) {
+    if (isPro()) {
       return null;
     }
 
-    if (!isInitialized) {
-      const initSuccess = await nativeAdService.initialize();
-      if (!initSuccess) return null;
+    if (nativeAdService.adData) {
+      return nativeAdService.adData;
     }
 
-    try {
-      const adUnitId = await getNativeAdUnitId();
-      const result = await NativeAdBridge.loadAd({ adUnitId });
+    if (loadPromise) {
+      return loadPromise;
+    }
 
-      if (result && (result as AdData).adId) {
-        nativeAdService.adData = result as AdData;
-        currentAdId = (result as AdData).adId;
-        return result as AdData;
+    const generation = loadGeneration;
+    loadPromise = (async () => {
+      if (!isInitialized) {
+        const initSuccess = await nativeAdService.initialize();
+        if (!initSuccess) return null;
       }
+
+      const adUnitId = await getNativeAdUnitId();
+      for (let attempt = 0; attempt < LOAD_RETRY_DELAYS_MS.length; attempt += 1) {
+        const delayMs = LOAD_RETRY_DELAYS_MS[attempt];
+        if (delayMs > 0) {
+          await wait(delayMs);
+        }
+
+        if (generation !== loadGeneration || isPro()) {
+          return null;
+        }
+
+        try {
+          const result = await NativeAdBridge.loadAd({ adUnitId });
+
+          if (result && (result as AdData).adId) {
+            nativeAdService.adData = result as AdData;
+            currentAdId = (result as AdData).adId;
+            return result as AdData;
+          }
+        } catch (error) {
+          logger.warn(`[NativeAd] Load attempt ${attempt + 1} failed`, error);
+        }
+      }
+
+      logger.error('[NativeAd] Load failed after retries');
       return null;
-    } catch (error) {
-      logger.error('[NativeAd] Load failed', error);
-      return null;
-    }
+    })().finally(() => {
+      loadPromise = null;
+    });
+
+    return loadPromise;
   },
 
   recordImpression: async () => {
@@ -98,6 +140,35 @@ export const nativeAdService: NativeAdServiceType = {
       await NativeAdBridge.reportImpression({ adId: currentAdId });
     } catch (error) {
       logger.error('[NativeAd] reportImpression failed', error);
+    }
+  },
+
+  show: async (adId: string, rect: DOMRect, viewportBounds: NativeViewportBounds) => {
+    if (Capacitor.getPlatform() !== 'android' || !adId) return;
+
+    try {
+      await NativeAdBridge.showAd({
+        adId,
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+        height: rect.height,
+        dpr: window.devicePixelRatio || 1,
+        safeTop: viewportBounds.top,
+        safeBottom: viewportBounds.bottom,
+      });
+    } catch (error) {
+      logger.error('[NativeAd] show failed', error);
+    }
+  },
+
+  hide: async () => {
+    if (Capacitor.getPlatform() !== 'android') return;
+
+    try {
+      await NativeAdBridge.hideAd();
+    } catch (error) {
+      logger.error('[NativeAd] hide failed', error);
     }
   },
 
@@ -112,6 +183,8 @@ export const nativeAdService: NativeAdServiceType = {
   },
 
   destroy: async () => {
+    loadGeneration += 1;
+    loadPromise = null;
     nativeAdService.adData = null;
     currentAdId = null;
     isInitialized = false;

@@ -1,43 +1,29 @@
 import { useState } from 'react';
-import {
-  Plus, 
-  CheckCircle2,
-  Circle,
-  Trash2,
-  Edit2,
-  Calendar,
-  Heart,
-  Sparkles,
-  ChevronRight,
-  Info
-} from 'lucide-react';
+import { Calendar, Check, Circle, Edit2, Heart, Info, Plus, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useGamification } from '../../../hooks/useGamification';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { storageService } from '../../../services/storageService';
-import './DuaTracker.css';
-import '../../../components/app-shell/Navigation.css';
+import '../../../styles/PracticePages.css';
 
-// Dua kategorileri
 const DUA_CATEGORIES = [
-  { id: 'health', name: 'Sağlık', icon: '💚', color: '#10b981' },
-  { id: 'exam', name: 'Sınav', icon: '📚', color: '#3b82f6' },
-  { id: 'work', name: 'İş', icon: '💼', color: 'var(--secondary)' },
-  { id: 'family', name: 'Aile', icon: '👨‍👩‍👧', color: '#ec4899' },
-  { id: 'marriage', name: 'Evlilik', icon: '💍', color: '#8b5cf6' },
-  { id: 'children', name: 'Çocuk', icon: '👶', color: '#14b8a6' },
-  { id: 'travel', name: 'Seyahat', icon: '✈️', color: '#f97316' },
-  { id: 'forgiveness', name: 'Af', icon: '🙏', color: '#ef4444' },
-  { id: 'general', name: 'Genel', icon: '🤲', color: 'var(--nav-text-muted)' }
+  { id: 'health', name: 'Sağlık', icon: '💚' },
+  { id: 'exam', name: 'Sınav', icon: '📚' },
+  { id: 'work', name: 'İş', icon: '💼' },
+  { id: 'family', name: 'Aile', icon: '👨‍👩‍👧' },
+  { id: 'marriage', name: 'Evlilik', icon: '💍' },
+  { id: 'children', name: 'Çocuk', icon: '👶' },
+  { id: 'travel', name: 'Seyahat', icon: '✈️' },
+  { id: 'forgiveness', name: 'Af', icon: '🙏' },
+  { id: 'general', name: 'Genel', icon: '🤲' },
 ];
 
-// Önerilen dualar
 const SUGGESTED_DUAS = [
   { text: 'Rabbim bana hayırlı bir eş nasip et', category: 'marriage' },
   { text: 'Sınavımı başarıyla geçmeyi nasip et', category: 'exam' },
   { text: 'Hastalığımdan şifa ver', category: 'health' },
   { text: 'İşimde başarılı olmayı nasip et', category: 'work' },
-  { text: 'Ailemi koru ve bağışla', category: 'family' }
+  { text: 'Ailemi koru ve bağışla', category: 'family' },
 ];
 
 const STORAGE_KEY = 'huzur_dua_tracker';
@@ -45,277 +31,171 @@ const STORAGE_KEY = 'huzur_dua_tracker';
 export function DuaTracker({ onClose }) {
   const { t, i18n } = useTranslation();
   const { addXP } = useGamification();
-  const initialData = storageService.getItem(STORAGE_KEY, null);
   const [newDua, setNewDua] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('general');
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingDua, setEditingDua] = useState(null);
+  const [editText, setEditText] = useState('');
   const [filter, setFilter] = useState('all');
-  
   const [data] = useState(() => {
-    if (initialData) {
-      return {
-        duas: initialData.duas || [],
-        stats: initialData.stats || { total: 0, completed: 0, streak: 0 }
-      };
-    }
-    return { duas: [], stats: { total: 0, completed: 0, streak: 0 } };
+    const initial = storageService.getItem(STORAGE_KEY, null);
+    return {
+      duas: Array.isArray(initial?.duas) ? initial.duas : [],
+      stats: initial?.stats || { total: 0, completed: 0, streak: 0 },
+    };
   });
-  
   const [duas, setDuas] = useState(data.duas);
   const [stats, setStats] = useState(data.stats);
 
-  const saveDuas = (newDuas, newStats) => {
-    storageService.setItem(STORAGE_KEY, {
-      duas: newDuas,
-      stats: newStats,
-      lastUpdated: new Date().toISOString()
-    });
-  };
+  const saveDuas = (nextDuas, nextStats) => storageService.setItem(STORAGE_KEY, {
+    duas: nextDuas,
+    stats: nextStats,
+    lastUpdated: new Date().toISOString(),
+  });
 
   const addDua = () => {
     if (!newDua.trim()) return;
-    const dua = {
-      id: Date.now().toString(),
-      text: newDua.trim(),
-      category: selectedCategory,
-      completed: false,
-      completedAt: null,
-      createdAt: new Date().toISOString()
-    };
-    const newDuas = [dua, ...duas];
-    const newStats = { ...stats, total: newDuas.length };
-    setDuas(newDuas);
-    setStats(newStats);
-    saveDuas(newDuas, newStats);
+    const nextDuas = [{ id: Date.now().toString(), text: newDua.trim(), category: selectedCategory, completed: false, completedAt: null, createdAt: new Date().toISOString() }, ...duas];
+    const nextStats = { ...stats, total: nextDuas.length };
+    setDuas(nextDuas);
+    setStats(nextStats);
+    saveDuas(nextDuas, nextStats);
     setNewDua('');
     setShowAddForm(false);
     addXP(5);
   };
 
   const toggleDua = (id) => {
-    const newDuas = duas.map(dua => {
-      if (dua.id === id) {
-        const completed = !dua.completed;
-        return { ...dua, completed, completedAt: completed ? new Date().toISOString() : null };
-      }
-      return dua;
-    });
-    const completedCount = newDuas.filter(d => d.completed).length;
-    const newStats = { ...stats, completed: completedCount };
-    setDuas(newDuas);
-    setStats(newStats);
-    saveDuas(newDuas, newStats);
-    if (completedCount > stats.completed) addXP(10);
+    const nextDuas = duas.map((dua) => dua.id === id
+      ? { ...dua, completed: !dua.completed, completedAt: !dua.completed ? new Date().toISOString() : null }
+      : dua);
+    const completed = nextDuas.filter((dua) => dua.completed).length;
+    const nextStats = { ...stats, completed };
+    setDuas(nextDuas);
+    setStats(nextStats);
+    saveDuas(nextDuas, nextStats);
+    if (completed > stats.completed) addXP(10);
   };
 
   const deleteDua = (id) => {
-    const newDuas = duas.filter(d => d.id !== id);
-    const newStats = { ...stats, total: newDuas.length, completed: newDuas.filter(d => d.completed).length };
-    setDuas(newDuas);
-    setStats(newStats);
-    saveDuas(newDuas, newStats);
+    const nextDuas = duas.filter((dua) => dua.id !== id);
+    const nextStats = { ...stats, total: nextDuas.length, completed: nextDuas.filter((dua) => dua.completed).length };
+    setDuas(nextDuas);
+    setStats(nextStats);
+    saveDuas(nextDuas, nextStats);
   };
 
-  const updateDua = (id, newText, newCategory) => {
-    const newDuas = duas.map(dua => dua.id === id ? { ...dua, text: newText, category: newCategory } : dua);
-    setDuas(newDuas);
-    saveDuas(newDuas, stats);
+  const updateDua = (id) => {
+    if (!editText.trim()) return;
+    const nextDuas = duas.map((dua) => dua.id === id ? { ...dua, text: editText.trim() } : dua);
+    setDuas(nextDuas);
+    saveDuas(nextDuas, stats);
     setEditingDua(null);
+    setEditText('');
   };
 
-  const filteredDuas = duas.filter(dua => {
-    if (filter === 'all') return true;
-    if (filter === 'completed') return dua.completed;
-    if (filter === 'pending') return !dua.completed;
-    return dua.category === filter;
-  });
-
-  const getCategoryInfo = (categoryId) => DUA_CATEGORIES.find(c => c.id === categoryId) || DUA_CATEGORIES[8];
-  const getCategoryName = (categoryId, fallback) => t(`dua.categories.${categoryId}`, fallback);
+  const filteredDuas = duas.filter((dua) => filter === 'all' || (filter === 'completed' ? dua.completed : !dua.completed));
+  const getCategoryInfo = (id) => DUA_CATEGORIES.find((category) => category.id === id) || DUA_CATEGORIES.at(-1);
+  const categoryName = (category) => t(`dua.categories.${category.id}`, category.name);
   const dateLocale = i18n.language === 'tr' ? 'tr-TR' : i18n.language === 'id' ? 'id-ID' : 'en-US';
+  const completionRate = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
 
   return (
-    <div className="settings-container reveal-stagger ad-safe-screen" style={{ minHeight: '100vh' }}>
-      {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+    <main className="practice-page">
+      <header className="practice-header">
         <IslamicBackButton onClick={onClose} size="medium" />
-        <div>
-            <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
-                {t('dua.tracker_title', 'Dua Takipçisi')}
-            </h2>
-            <p className="settings-desc">{t('dua.tracker_subtitle', 'Dualarınızı kaydedin ve takip edin')}</p>
+        <div className="practice-header__copy">
+          <h1 className="practice-title">{t('dua.tracker_title', 'Dua Takipçisi')}</h1>
+          <p className="practice-subtitle">{t('dua.tracker_subtitle', 'Dualarınızı kaydedin ve takip edin')}</p>
         </div>
+      </header>
+
+      <section className="practice-summary" aria-label="Dua özeti">
+        <div className="practice-summary__top">
+          <div><div className="practice-summary__value">{stats.completed}</div><div className="practice-summary__label">Tamamlanan dua</div></div>
+          <Heart size={22} color="var(--primary)" />
+        </div>
+        <div className="practice-progress"><span style={{ width: `${completionRate}%` }} /></div>
+        <div className="practice-metrics">
+          <div className="practice-metric"><strong>{stats.completed}</strong><span>Tamamlandı</span></div>
+          <div className="practice-metric"><strong>{stats.total}</strong><span>Toplam</span></div>
+          <div className="practice-metric"><strong>{completionRate}%</strong><span>Oran</span></div>
+        </div>
+      </section>
+
+      <div className="practice-segments" role="tablist" aria-label="Dua filtresi">
+        {[['all', t('common.all', 'Tümü')], ['pending', t('dua.filters.pending', 'Bekleyen')], ['completed', t('dua.filters.accepted', 'Tamamlanan')]].map(([id, label]) => (
+          <button type="button" role="tab" aria-selected={filter === id} className={`practice-segment ${filter === id ? 'practice-segment--active' : ''}`} key={id} onClick={() => setFilter(id)}>{label}</button>
+        ))}
       </div>
 
-      {/* Stats Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '32px' }}>
-        <div className="settings-card" style={{ flexDirection: 'column', padding: '16px', textAlign: 'center', gap: '8px', background: 'rgba(16, 185, 129, 0.05)', border: '1px solid rgba(16, 185, 129, 0.1)' }}>
-            <CheckCircle2 size={24} color="#10b981" />
-            <div style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.completed}</div>
-            <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('dua.stats.accepted', 'KABUL')}</div>
-        </div>
-        <div className="settings-card" style={{ flexDirection: 'column', padding: '16px', textAlign: 'center', gap: '8px', background: 'rgba(245, 158, 11, 0.05)', border: '1px solid rgba(245, 158, 11, 0.1)' }}>
-            <Sparkles size={24} color="var(--secondary)" />
-            <div style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.total}</div>
-            <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('dua.stats.total', 'TOPLAM')}</div>
-        </div>
-        <div className="settings-card" style={{ flexDirection: 'column', padding: '16px', textAlign: 'center', gap: '8px', background: 'rgba(236, 72, 153, 0.05)', border: '1px solid rgba(236, 72, 153, 0.1)' }}>
-            <Heart size={24} color="#ec4899" />
-            <div style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0}%</div>
-            <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('dua.stats.rate', 'ORAN')}</div>
-        </div>
-      </div>
+      <button type="button" className="practice-primary-button practice-wide" onClick={() => setShowAddForm((value) => !value)}>
+        <Plus size={18} /> {t('dua.addNew', 'Yeni Dua Ekle')}
+      </button>
 
-      {/* Filter Tabs */}
-      <div className="velocity-target-grid" style={{ marginBottom: '24px' }}>
-        <button className={`velocity-target-btn ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>{t('common.all', 'Tümü')}</button>
-        <button className={`velocity-target-btn ${filter === 'pending' ? 'active' : ''}`} onClick={() => setFilter('pending')}>{t('dua.filters.pending', 'Bekleyen')}</button>
-        <button className={`velocity-target-btn ${filter === 'completed' ? 'active' : ''}`} onClick={() => setFilter('completed')}>{t('dua.filters.accepted', 'Kabul')}</button>
-      </div>
+      {showAddForm && (
+        <section className="practice-panel" aria-label="Yeni dua formu">
+          <textarea className="practice-field" value={newDua} onChange={(event) => setNewDua(event.target.value)} placeholder={t('dua.placeholder', 'Duanızı yazın...')} />
+          <div className="practice-chip-list" style={{ marginTop: 10 }}>
+            {DUA_CATEGORIES.map((category) => (
+              <button type="button" className={`practice-chip ${selectedCategory === category.id ? 'practice-chip--active' : ''}`} key={category.id} onClick={() => setSelectedCategory(category.id)}>
+                {category.icon} {categoryName(category)}
+              </button>
+            ))}
+          </div>
+          <p className="practice-section-title" style={{ marginTop: 10 }}>ÖNERİLENLER</p>
+          <div className="practice-chip-list">
+            {SUGGESTED_DUAS.map((suggestion, index) => (
+              <button type="button" className="practice-chip" key={suggestion.text} onClick={() => { setNewDua(t(`dua.suggestions.${suggestion.category}_${index}`, suggestion.text)); setSelectedCategory(suggestion.category); }}>{t(`dua.suggestions.${suggestion.category}_${index}`, suggestion.text)}</button>
+            ))}
+          </div>
+          <div className="practice-actions">
+            <button type="button" className="practice-secondary-button" onClick={() => setShowAddForm(false)}>{t('common.cancel', 'İptal')}</button>
+            <button type="button" className="practice-primary-button" disabled={!newDua.trim()} onClick={addDua}>{t('common.save', 'Kaydet')}</button>
+          </div>
+        </section>
+      )}
 
-      {/* Add Dua Section */}
-      <div className="settings-group">
-        <button 
-            className="settings-card" 
-            style={{ width: '100%', justifyContent: 'center', gap: '12px', border: '2px dashed var(--nav-border)', background: 'transparent', padding: '20px' }}
-            onClick={() => setShowAddForm(!showAddForm)}
-        >
-            <Plus size={20} color="var(--nav-accent)" />
-            <span style={{ fontWeight: '800', color: 'var(--nav-text)' }}>{t('dua.addNew', 'Yeni Dua Ekle')}</span>
-        </button>
-
-        {showAddForm && (
-            <div className="settings-card reveal-stagger" style={{ flexDirection: 'column', gap: '20px', padding: '24px', marginTop: '16px', background: 'var(--nav-hover)' }}>
-                <textarea
-                    value={newDua}
-                    onChange={(e) => setNewDua(e.target.value)}
-                    placeholder={t('dua.placeholder', 'Duanızı yazın...')}
-                    className="dua-modern-textarea"
-                />
-                
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                    {DUA_CATEGORIES.map(cat => (
-                        <button
-                            key={cat.id}
-                            className={`category-pill ${selectedCategory === cat.id ? 'active' : ''}`}
-                            onClick={() => setSelectedCategory(cat.id)}
-                            style={{ '--cat-color': cat.color }}
-                        >
-                            {cat.icon} {getCategoryName(cat.id, cat.name)}
-                        </button>
-                    ))}
-                </div>
-
-                <div className="suggested-container">
-                    <p style={{ margin: '0 0 12px', fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)' }}>{t('dua.suggestionsTitle', 'ÖNERİLENLER')}</p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        {SUGGESTED_DUAS.map((suggested, index) => (
-                            <button
-                                key={index}
-                                className="suggested-pill"
-                                onClick={() => { setNewDua(t(`dua.suggestions.${suggested.category}_${index}`, suggested.text)); setSelectedCategory(suggested.category); }}
-                            >
-                                {t(`dua.suggestions.${suggested.category}_${index}`, suggested.text)}
-                            </button>
-                        ))}
+      <section className="practice-section">
+        <h2 className="practice-section-title">{t('dua.listTitle', 'DUA LİSTESİ')}</h2>
+        {filteredDuas.length === 0 ? (
+          <div className="practice-empty"><Heart size={30} /><p>{t('dua.empty', 'Henüz dua bulunmuyor')}</p></div>
+        ) : (
+          <div className="practice-list">
+            {filteredDuas.map((dua) => {
+              const category = getCategoryInfo(dua.category);
+              return (
+                <div className={`practice-row ${dua.completed ? 'practice-row--done' : ''}`} key={dua.id}>
+                  {editingDua === dua.id ? (
+                    <div className="practice-row__body">
+                      <textarea className="practice-field" value={editText} onChange={(event) => setEditText(event.target.value)} />
+                      <div className="practice-actions"><button type="button" className="practice-secondary-button" onClick={() => setEditingDua(null)}>İptal</button><button type="button" className="practice-primary-button" onClick={() => updateDua(dua.id)}>Kaydet</button></div>
                     </div>
-                </div>
-
-                <button 
-                    className="velocity-action-btn"
-                    onClick={addDua}
-                    disabled={!newDua.trim()}
-                    style={{ width: '100%' }}
-                >
-                    {t('common.save', 'Kaydet')}
-                </button>
-            </div>
-        )}
-      </div>
-
-      {/* Dua List */}
-      <div className="settings-group" style={{ marginTop: '32px' }}>
-        <div className="settings-group-title">{t('dua.listTitle', 'Dua Listesi')}</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {filteredDuas.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '48px 24px', opacity: 0.5 }}>
-                    <Heart size={48} style={{ marginBottom: '16px' }} />
-                    <p style={{ fontWeight: '700', margin: 0 }}>{t('dua.empty', 'Henüz dua bulunmuyor')}</p>
-                </div>
-            ) : (
-                filteredDuas.map((dua) => {
-                    const category = getCategoryInfo(dua.category);
-                    const isEditing = editingDua === dua.id;
-
-                    return (
-                        <div key={dua.id} className={`settings-card ${dua.completed ? 'completed-dua' : ''}`} style={{ flexDirection: 'column', padding: '20px', gap: '16px' }}>
-                            {isEditing ? (
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
-                                    <textarea 
-                                        defaultValue={dua.text} 
-                                        id={`edit-text-${dua.id}`}
-                                        className="dua-modern-textarea"
-                                    />
-                                    <div style={{ display: 'flex', gap: '8px' }}>
-                                        <button className="velocity-action-btn" style={{ flex: 1 }} onClick={() => {
-                                            const text = document.getElementById(`edit-text-${dua.id}`).value;
-                                            updateDua(dua.id, text, dua.category);
-                                        }}>{t('common.save', 'Kaydet')}</button>
-                                        <button className="velocity-target-btn" style={{ flex: 1 }} onClick={() => setEditingDua(null)}>{t('common.cancel', 'İptal')}</button>
-                                    </div>
-                                </div>
-                            ) : (
-                                <>
-                                    <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', width: '100%' }}>
-                                        <button 
-                                            className={`dua-check-btn ${dua.completed ? 'active' : ''}`}
-                                            onClick={() => toggleDua(dua.id)}
-                                        >
-                                            {dua.completed ? <CheckCircle2 size={24} /> : <Circle size={24} />}
-                                        </button>
-                                        <div style={{ flex: 1 }}>
-                                            <p style={{ margin: 0, fontWeight: '700', color: 'var(--nav-text)', fontSize: '1rem', textDecoration: dua.completed ? 'line-through' : 'none', opacity: dua.completed ? 0.6 : 1 }}>
-                                                {dua.text}
-                                            </p>
-                                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginTop: '8px' }}>
-                                                <span style={{ fontSize: '0.7rem', fontWeight: '800', color: category.color, background: `${category.color}15`, padding: '4px 8px', borderRadius: '6px' }}>
-                                                    {category.icon} {getCategoryName(category.id, category.name)}
-                                                </span>
-                                                {dua.completed && dua.completedAt && (
-                                                    <span style={{ fontSize: '0.7rem', fontWeight: '600', color: 'var(--nav-text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                                        <Calendar size={10} /> {new Date(dua.completedAt).toLocaleDateString(dateLocale)}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div style={{ display: 'flex', gap: '8px' }}>
-                                            <button className="icon-btn-small" onClick={() => setEditingDua(dua.id)}><Edit2 size={14} /></button>
-                                            <button className="icon-btn-small delete" onClick={() => deleteDua(dua.id)}><Trash2 size={14} /></button>
-                                        </div>
-                                    </div>
-                                </>
-                            )}
+                  ) : (
+                    <>
+                      <button type="button" className={`practice-check ${dua.completed ? 'practice-check--done' : ''}`} aria-label={dua.completed ? 'Duayı bekleyenlere taşı' : 'Duayı tamamlandı olarak işaretle'} onClick={() => toggleDua(dua.id)}>{dua.completed ? <Check size={19} /> : <Circle size={18} />}</button>
+                      <div className="practice-row__body">
+                        <p className="practice-row__title" style={{ textDecoration: dua.completed ? 'line-through' : 'none' }}>{dua.text}</p>
+                        <div className="practice-row__meta">
+                          <span className="practice-pill">{category.icon} {categoryName(category)}</span>
+                          {dua.completedAt && <span className="practice-pill"><Calendar size={11} /> {new Date(dua.completedAt).toLocaleDateString(dateLocale)}</span>}
                         </div>
-                    );
-                })
-            )}
-        </div>
-      </div>
+                      </div>
+                      <button type="button" className="practice-row-action" aria-label="Duayı düzenle" onClick={() => { setEditingDua(dua.id); setEditText(dua.text); }}><Edit2 size={16} /></button>
+                      <button type="button" className="practice-row-action" aria-label="Duayı sil" onClick={() => deleteDua(dua.id)}><Trash2 size={16} /></button>
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
 
-      {/* Tips */}
-      <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-            <Info size={18} color="var(--nav-accent)" />
-            <div style={{ flex: 1 }}>
-                <p style={{ margin: '0 0 8px', fontSize: '0.85rem', fontWeight: '800', color: 'var(--nav-text)' }}>{t('dua.etiquette.title', 'Dua Adabı')}</p>
-                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
-                    {t('dua.etiquette.desc', 'Dualarınızı ihlasla, düzenli olarak tekrarlayın ve her türlü hayırlı isteğiniz için Rabbimize sığının.')}
-                </p>
-            </div>
-        </div>
+      <div className="practice-info" style={{ marginTop: 18 }}>
+        <Info size={18} /><div><strong>{t('dua.etiquette.title', 'Dua Adabı')}</strong>{t('dua.etiquette.desc', 'Dualarınızı ihlasla ve düzenli olarak tekrarlayın.')}</div>
       </div>
-    </div>
+    </main>
   );
 }
 

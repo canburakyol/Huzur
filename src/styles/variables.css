@@ -3,7 +3,7 @@
 :root {
   /* Dynamic Layout Heights */
   --bottom-nav-height: 64px;
-  --ad-height: 60px;
+  --ad-height: 52px;
 
   /* Stacked heights for bottom overlays (BottomNav + optional Ad banner + safe area) */
   --bottom-stack-height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));

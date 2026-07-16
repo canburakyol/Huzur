@@ -226,6 +226,13 @@ body.android-webview .glass-card {
 .feature-label { font-size: 0.75rem; font-weight: 600; color: var(--text-color); margin-top: 8px; }
 
 /* Bottom Navigation */
+.app-container {
+  width: 100%;
+  min-height: 100dvh;
+  background: var(--surface-page);
+  overflow-x: hidden;
+}
+
 .bottom-nav {
   position: fixed;
   bottom: env(safe-area-inset-bottom, 0px);
@@ -252,6 +259,10 @@ body.android-webview .glass-card {
   bottom: calc(var(--ad-height) + env(safe-area-inset-bottom, 0px));
 }
 
+.feature-route-shell > .bottom-nav {
+  z-index: 1500;
+}
+
 /* Native AdMob renders outside the DOM at the physical bottom edge. Full-screen
    feature routes must reserve their own scroll space because router padding
    does not affect fixed/overlay children. */
@@ -264,12 +275,12 @@ body.android-webview .glass-card {
 .ad-safe-feature-shell > .settings-container,
 .ad-safe-feature-shell > .app-container {
   box-sizing: border-box;
-  padding-bottom: calc(var(--ad-height) + 16px + env(safe-area-inset-bottom, 0px)) !important;
-  scroll-padding-bottom: calc(var(--ad-height) + 16px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(var(--bottom-stack-height) + 16px) !important;
+  scroll-padding-bottom: calc(var(--bottom-stack-height) + 16px);
 }
 
 .ad-safe-feature-shell > [style*="position: fixed"][style*="bottom: 0"] {
-  bottom: calc(var(--ad-height) + env(safe-area-inset-bottom, 0px)) !important;
+  bottom: var(--bottom-stack-height) !important;
 }
 
 @media (min-width: 601px) {

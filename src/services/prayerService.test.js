@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getNextPrayer } from './prayerService';
+import { getNextPrayer, resolvePrayerDistrictId } from './prayerService';
 
 describe('prayerService - getNextPrayer', () => {
   const mockTimings = {
@@ -25,5 +25,15 @@ describe('prayerService - getNextPrayer', () => {
     const result = getNextPrayer(mockTimings, nightTime);
     expect(result.key).toBe('Fajr');
     expect(result.isTomorrow).toBe(true);
+  });
+});
+
+describe('prayerService - district resolution', () => {
+  it('uses Marmaris Diyanet district instead of the stored Istanbul fallback', () => {
+    expect(resolvePrayerDistrictId('Marmaris')).toBe('17883');
+  });
+
+  it('normalizes Turkish location labels before resolving the district', () => {
+    expect(resolvePrayerDistrictId('MARMARİS')).toBe('17883');
   });
 });

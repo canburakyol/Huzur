@@ -29,7 +29,6 @@ function AppChrome({ controller }) {
         onHideSplash={navigation.hideSplash}
         showGrowthOnboarding={growthOnboarding.showGrowthOnboarding}
         showLocationPrompt={location.showLocationPrompt}
-        showAdConsentPrompt={!growthOnboarding.showGrowthOnboarding && !appInit.isProUser}
         onboardingStep={growthOnboarding.onboardingStep}
         onboardingConfig={growthOnboarding.onboardingConfig}
         onboardingLanguage={growthOnboarding.onboardingLanguage}
@@ -86,6 +85,7 @@ function AppChrome({ controller }) {
               onOpenInvite={(source = 'home_hero') => navigation.openInviteModal({ source })}
               dailyContent={dailyContent}
               onSelectFeature={navigation.setActiveFeature}
+              onShowMenu={() => navigation.setShowHamburgerMenu(true)}
               isProUser={appInit.isProUser}
             />
           )}
@@ -115,7 +115,7 @@ function AppChrome({ controller }) {
             />
           </Suspense>
 
-          {!isFocusMode && (
+          {!isFocusMode && navigation.activeTab !== 'quran' && (
             <Suspense fallback={null}>
               <BottomNav
                 activeTab={navigation.activeTab}

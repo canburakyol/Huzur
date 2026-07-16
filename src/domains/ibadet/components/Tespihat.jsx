@@ -1,266 +1,138 @@
-import { useState, useEffect } from 'react';
-import { RotateCcw, Check, ChevronRight, ChevronDown, BookOpen, Sparkles, CheckCircle2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { BookOpen, Check, CheckCircle2, ChevronDown, ChevronRight, RotateCcw, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { TESPIHAT_SECTIONS, TESBIHLER, TEVHID, NAMAZSONRASI_DUALAR } from '../../../data/tespihatData';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { storageService } from '../../../services/storageService';
-import '../../../components/app-shell/Navigation.css';
+import '../../../styles/PracticePages.css';
 
 const TESPIHAT_PROGRESS_KEY = 'tespihat_progress';
-const DEFAULT_TESBIH_COUNTS = {
-    subhanallah: 0,
-    elhamdulillah: 0,
-    allahuekber: 0
-};
+const DEFAULT_TESBIH_COUNTS = Object.freeze({ subhanallah: 0, elhamdulillah: 0, allahuekber: 0 });
+const normalizeCounts = (value) => Object.fromEntries(Object.keys(DEFAULT_TESBIH_COUNTS).map((key) => {
+  const parsed = Number(value?.[key]);
+  return [key, Number.isFinite(parsed) ? Math.min(33, Math.max(0, Math.trunc(parsed))) : 0];
+}));
 
 function Tespihat({ onClose }) {
-    const { t } = useTranslation();
-    const [activeSection, setActiveSection] = useState(null);
-    const [expandedItem, setExpandedItem] = useState(null);
-    const [tesbihCounts, setTesbihCounts] = useState(() => {
-        const saved = storageService.getItem(TESPIHAT_PROGRESS_KEY, null);
-        return saved?.counts || DEFAULT_TESBIH_COUNTS;
-    });
-    const [completedSections, setCompletedSections] = useState(() => {
-        const saved = storageService.getItem(TESPIHAT_PROGRESS_KEY, null);
-        return saved?.completed || [];
-    });
+  const { t } = useTranslation();
+  const [activeSection, setActiveSection] = useState(null);
+  const [expandedItem, setExpandedItem] = useState(null);
+  const [tesbihCounts, setTesbihCounts] = useState(() => normalizeCounts(storageService.getItem(TESPIHAT_PROGRESS_KEY, null)?.counts));
+  const [completedSections, setCompletedSections] = useState(() => {
+    const completed = storageService.getItem(TESPIHAT_PROGRESS_KEY, null)?.completed;
+    return Array.isArray(completed) ? completed : [];
+  });
 
-    useEffect(() => {
-        storageService.setItem(TESPIHAT_PROGRESS_KEY, {
-            counts: tesbihCounts,
-            completed: completedSections
-        });
-    }, [tesbihCounts, completedSections]);
+  useEffect(() => {
+    storageService.setItem(TESPIHAT_PROGRESS_KEY, { counts: tesbihCounts, completed: completedSections });
+  }, [tesbihCounts, completedSections]);
 
-    const incrementTesbih = (id) => {
-        setTesbihCounts(prev => ({
-            ...prev,
-            [id]: Math.min(prev[id] + 1, 33)
-        }));
+  const incrementTesbih = (id) => {
+    setTesbihCounts((previous) => ({ ...previous, [id]: Math.min((Number(previous[id]) || 0) + 1, 33) }));
+    navigator.vibrate?.(20);
+  };
+  const toggleComplete = (id) => setCompletedSections((previous) => previous.includes(id) ? previous.filter((item) => item !== id) : [...previous, id]);
+  const totalProgress = Math.round(((completedSections.length + Object.values(tesbihCounts).filter((count) => count >= 33).length) / (TESPIHAT_SECTIONS.length + 4)) * 100);
 
-        if (navigator.vibrate) {
-            navigator.vibrate(20);
-        }
-    };
+  const renderExpandedContent = (item) => (
+    <div className="practice-panel" style={{ marginTop: 8 }}>
+      <div style={{ fontSize: '1.3rem', fontFamily: 'var(--arabic-font)', color: 'var(--on-surface)', marginBottom: 10, textAlign: 'right', direction: 'rtl', lineHeight: 1.7 }}>{item.arabic}</div>
+      <div className="practice-row__text" style={{ color: 'var(--on-surface)' }}>{item.latin}</div>
+      <div className="practice-row__text" style={{ marginTop: 7, fontStyle: 'italic' }}>{item.meaning}</div>
+    </div>
+  );
 
-    const resetAll = () => {
-        setTesbihCounts(DEFAULT_TESBIH_COUNTS);
-        setCompletedSections([]);
-    };
-
-    const toggleComplete = (id) => {
-        setCompletedSections(prev =>
-            prev.includes(id)
-                ? prev.filter(s => s !== id)
-                : [...prev, id]
-        );
-    };
-
-    const totalProgress = () => {
-        const tesbihComplete = Object.values(tesbihCounts).filter(c => c >= 33).length;
-        const sectionsComplete = completedSections.length;
-        const total = TESPIHAT_SECTIONS.length + 3 + 1; 
-        return Math.round(((sectionsComplete + tesbihComplete) / total) * 100);
-    };
-
-    const renderMenu = () => (
-        <div className="reveal-stagger">
-            {/* Progress Card */}
-            <div className="settings-card p-24 flex-col gap-16 mb-32" style={{ background: 'linear-gradient(135deg, var(--secondary), var(--primary))', border: 'none', color: 'var(--on-primary)' }}>
-                <div className="flex-between-center">
-                    <div>
-                        <div style={{ fontSize: '1.5rem', fontWeight: '900' }}>{totalProgress()}%</div>
-                        <div className="uppercase" style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, letterSpacing: '1px' }}>{t('tespihat.ui.progressToday', 'Bugünkü İlerleme')}</div>
-                    </div>
-                    <button onClick={resetAll} className="rounded-12 p-10 cursor-pointer" style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'var(--on-primary)' }}>
-                        <RotateCcw size={18} />
-                    </button>
-                </div>
-                <div className="h-10 rounded-8 overflow-hidden" style={{ background: 'rgba(255,255,255,0.2)' }}>
-                    <div style={{ width: `${totalProgress()}%`, height: '100%', background: 'var(--surface-card)', borderRadius: '4px', transition: 'width 0.5s cubic-bezier(0.16, 1, 0.3, 1)' }} />
-                </div>
-            </div>
-
-            {/* Sections */}
-            <div className="settings-group">
-                <div className="settings-group-title">{t('tespihat.ui.postPrayerDhikr', 'Namaz Sonrası Zikirler')}</div>
-                <div className="flex flex-col gap-12">
-                    {TESPIHAT_SECTIONS.map(section => (
-                        <div
-                            key={section.id}
-                            className="settings-card p-16 cursor-pointer"
-                            style={{ 
-                                borderLeft: completedSections.includes(section.id) ? '4px solid #10b981' : '1px solid var(--nav-border)',
-                                transition: 'all 0.2s'
-                            }}
-                            onClick={() => setActiveSection(section)}
-                        >
-                            <div className="flex items-center gap-16 w-full">
-                                <div className="settings-icon-box" style={{ background: 'var(--nav-hover)', fontSize: '1.5rem' }}>
-                                    {section.icon}
-                                </div>
-                                <div className="flex-1">
-                                    <div style={{ fontWeight: '800', color: 'var(--nav-text)' }}>{section.title}</div>
-                                    <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)' }}>{section.subtitle}</div>
-                                </div>
-                                {completedSections.includes(section.id) ? (
-                                    <CheckCircle2 size={22} color="#10b981" />
-                                ) : (
-                                    <ChevronRight size={20} color="var(--nav-text-muted)" />
-                                )}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* 33'lük Tesbihler */}
-            <div className="settings-group mt-32">
-                <div className="settings-group-title">{t('tespihat.ui.tasbih33', "33'lük Tesbihler")}</div>
-                <div className="grid-3 gap-12">
-                    {TESBIHLER.map(tesbih => {
-                        const count = tesbihCounts[tesbih.id];
-                        const isComplete = count >= 33;
-                        return (
-                            <div 
-                                key={tesbih.id}
-                                onClick={() => incrementTesbih(tesbih.id)}
-                                className="settings-card flex-col text-center gap-12 cursor-pointer p-16"
-                                style={{
-                                    background: isComplete ? 'rgba(16, 185, 129, 0.05)' : 'var(--nav-bg)',
-                                    border: isComplete ? '1px solid rgba(16, 185, 129, 0.2)' : '1px solid var(--nav-border)'
-                                }}
-                            >
-                                <div style={{ fontSize: '1.2rem', fontFamily: 'var(--arabic-font)', color: isComplete ? '#10b981' : 'var(--nav-text)' }}>{tesbih.arabic}</div>
-                                <div className="relative mx-auto" style={{ width: '60px', height: '60px' }}>
-                                    <svg className="absolute inset-0" style={{ transform: 'rotate(-90deg)' }}>
-                                        <circle cx="30" cy="30" r="28" fill="none" stroke="var(--nav-hover)" strokeWidth="4" />
-                                        <circle cx="30" cy="30" r="28" fill="none" stroke={isComplete ? '#10b981' : 'var(--nav-accent)'} strokeWidth="4" strokeDasharray="175.9" strokeDashoffset={175.9 - (count / 33 * 175.9)} style={{ transition: 'stroke-dashoffset 0.3s' }} />
-                                    </svg>
-                                    <div className="absolute inset-0 flex-center font-black" style={{ fontSize: '1.1rem', color: isComplete ? '#10b981' : 'var(--nav-text)' }}>
-                                        {count}
-                                    </div>
-                                </div>
-                                <div className="text-xs uppercase font-extrabold" style={{ color: 'var(--nav-text-muted)' }}>{tesbih.latin}</div>
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-
-            {/* Tawhid & Duas */}
-            <div className="settings-group mt-32">
-                <div className="settings-group-title">{t('tespihat.ui.postPrayerDuas', 'Tevhid ve Dualar')}</div>
-                <div className="flex flex-col gap-12">
-                    <div className="settings-card p-16 flex-col gap-12" onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}>
-                        <div className="flex-between-center w-full">
-                            <div className="flex items-center gap-12 font-bold" style={{ color: 'var(--nav-text)' }}>
-                                <Sparkles size={18} color="var(--tertiary)" />
-                                {TEVHID.title}
-                            </div>
-                            <div className="flex items-center gap-12">
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); toggleComplete('tevhid'); }}
-                                    className="rounded-8 p-6 cursor-pointer font-extrabold"
-                                    style={{
-                                        background: completedSections.includes('tevhid') ? '#10b981' : 'var(--nav-hover)',
-                                        border: 'none',
-                                        color: completedSections.includes('tevhid') ? 'var(--on-primary)' : 'var(--nav-text-muted)',
-                                        fontSize: '0.75rem'
-                                    }}
-                                >
-                                    {completedSections.includes('tevhid') ? 'TAMAM' : 'BİTTİ'}
-                                </button>
-                                {expandedItem === 'tevhid' ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-                            </div>
-                        </div>
-                        {expandedItem === 'tevhid' && (
-                            <div className="pt-16" style={{ borderTop: '1px solid var(--nav-border)', animation: 'slideDown 0.3s ease-out' }}>
-                                <div style={{ fontSize: '1.5rem', fontFamily: 'var(--arabic-font)', color: 'var(--nav-text)', marginBottom: '16px', textAlign: 'right', direction: 'rtl', lineHeight: '1.8' }}>{TEVHID.arabic}</div>
-                                <div style={{ fontSize: '0.9rem', color: 'var(--nav-text)', marginBottom: '8px', lineHeight: '1.5' }}>{TEVHID.latin}</div>
-                                <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontStyle: 'italic' }}>{TEVHID.meaning}</div>
-                            </div>
-                        )}
-                    </div>
-
-                    {NAMAZSONRASI_DUALAR.map(dua => (
-                        <div key={dua.id} className="settings-card p-16 flex-col gap-12" onClick={() => setExpandedItem(expandedItem === dua.id ? null : dua.id)}>
-                            <div className="flex-between-center w-full">
-                                <div className="flex items-center gap-12 font-bold" style={{ color: 'var(--nav-text)' }}>
-                                    <BookOpen size={18} color="var(--nav-accent)" />
-                                    {dua.title}
-                                </div>
-                                {expandedItem === dua.id ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-                            </div>
-                            {expandedItem === dua.id && (
-                                <div className="pt-16" style={{ borderTop: '1px solid var(--nav-border)', animation: 'slideDown 0.3s ease-out' }}>
-                                    <div style={{ fontSize: '1.3rem', fontFamily: 'var(--arabic-font)', color: 'var(--nav-text)', marginBottom: '16px', textAlign: 'right', direction: 'rtl', lineHeight: '1.8' }}>{dua.arabic}</div>
-                                    <div style={{ fontSize: '0.9rem', color: 'var(--nav-text)', marginBottom: '8px', lineHeight: '1.5' }}>{dua.latin}</div>
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontStyle: 'italic' }}>{dua.meaning}</div>
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-
-    const renderSectionDetail = () => (
-        <div className="reveal-stagger">
-            <div className="settings-card flex-col p-24 text-center gap-24 border-none" style={{ background: 'var(--nav-hover)' }}>
-                <div style={{ fontSize: '3rem' }}>{activeSection.icon}</div>
-                <div>
-                    <h2 className="m-0 mb-8" style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{activeSection.title}</h2>
-                    <p className="m-0" style={{ fontSize: '0.9rem', color: 'var(--nav-text-muted)' }}>{activeSection.subtitle}</p>
-                </div>
-
-                <div className="rounded-16 p-24" style={{ fontSize: '1.8rem', fontFamily: 'var(--arabic-font)', color: 'var(--nav-text)', lineHeight: '1.8', direction: 'rtl', background: 'var(--nav-bg)', border: '1px solid var(--nav-border)' }}>
-                    {activeSection.arabic}
-                </div>
-
-                <div className="text-left flex flex-col gap-12">
-                    <div style={{ fontSize: '0.95rem', color: 'var(--nav-text)', fontWeight: '500', lineHeight: '1.5' }}>{activeSection.latin}</div>
-                    <div style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontStyle: 'italic', lineHeight: '1.5' }}>{activeSection.meaning}</div>
-                </div>
-
-                <button
-                    onClick={() => {
-                        toggleComplete(activeSection.id);
-                        setActiveSection(null);
-                    }}
-                    className="w-full rounded-16 p-18 font-bold cursor-pointer flex-center gap-12"
-                    style={{
-                        background: completedSections.includes(activeSection.id) ? 'var(--nav-hover)' : 'var(--nav-accent)',
-                        border: 'none',
-                        color: 'var(--on-primary)',
-                        fontSize: '1rem',
-                        transition: 'all 0.2s',
-                        marginTop: '12px',
-                        boxShadow: completedSections.includes(activeSection.id) ? 'none' : '0 8px 24px color-mix(in srgb, var(--tertiary) 30%, transparent)'
-                    }}
-                >
-                    <Check size={20} />
-                    {completedSections.includes(activeSection.id) ? 'TAMAMLANDI' : 'TAMAMLA'}
-                </button>
-            </div>
-        </div>
-    );
-
+  if (activeSection) {
+    const isComplete = completedSections.includes(activeSection.id);
     return (
-        <div className="settings-container reveal-stagger min-h-screen pb-40">
-            {/* Header */}
-            <div className="flex items-center gap-16 mb-32">
-                <IslamicBackButton onClick={() => activeSection ? setActiveSection(null) : onClose()} size="medium" />
-                <h2 className="m-0" style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
-                    {activeSection ? activeSection.title : t('tespihat.ui.title', 'Tespihat')}
-                </h2>
-            </div>
-
-            {activeSection ? renderSectionDetail() : renderMenu()}
-        </div>
+      <main className="practice-page">
+        <header className="practice-header">
+          <IslamicBackButton onClick={() => setActiveSection(null)} size="medium" />
+          <div className="practice-header__copy"><h1 className="practice-title">{activeSection.title}</h1><p className="practice-subtitle">{activeSection.subtitle}</p></div>
+        </header>
+        <section className="practice-panel" style={{ marginTop: 0 }}>
+          <div style={{ fontSize: '1.45rem', fontFamily: 'var(--arabic-font)', color: 'var(--on-surface)', textAlign: 'right', direction: 'rtl', lineHeight: 1.75 }}>{activeSection.arabic}</div>
+          <p className="practice-row__text" style={{ marginTop: 14, color: 'var(--on-surface)' }}>{activeSection.latin}</p>
+          <p className="practice-row__text" style={{ marginTop: 8, fontStyle: 'italic' }}>{activeSection.meaning}</p>
+          <button type="button" className={`practice-wide ${isComplete ? 'practice-secondary-button' : 'practice-primary-button'}`} style={{ marginTop: 14 }} onClick={() => { toggleComplete(activeSection.id); setActiveSection(null); }}><Check size={18} /> {isComplete ? 'Tamamlandı' : 'Tamamla'}</button>
+        </section>
+      </main>
     );
+  }
+
+  return (
+    <main className="practice-page">
+      <header className="practice-header">
+        <IslamicBackButton onClick={onClose} size="medium" />
+        <div className="practice-header__copy"><h1 className="practice-title">{t('tespihat.ui.title', 'Tespihat')}</h1><p className="practice-subtitle">Namaz sonrası zikir ve dualarınızı takip edin.</p></div>
+      </header>
+
+      <section className="practice-summary">
+        <div className="practice-summary__top">
+          <div><div className="practice-summary__value">{totalProgress}%</div><div className="practice-summary__label">{t('tespihat.ui.progressToday', 'Bugünkü ilerleme')}</div></div>
+          <button type="button" className="practice-icon-button" aria-label="Tespihat ilerlemesini sıfırla" onClick={() => { setTesbihCounts({ ...DEFAULT_TESBIH_COUNTS }); setCompletedSections([]); }}><RotateCcw size={18} /></button>
+        </div>
+        <div className="practice-progress"><span style={{ width: `${totalProgress}%` }} /></div>
+      </section>
+
+      <section className="practice-section">
+        <h2 className="practice-section-title">{t('tespihat.ui.postPrayerDhikr', 'NAMAZ SONRASI ZİKİRLER')}</h2>
+        <div className="practice-list">
+          {TESPIHAT_SECTIONS.map((section) => {
+            const done = completedSections.includes(section.id);
+            return (
+              <button type="button" className={`practice-row ${done ? 'practice-row--done' : ''}`} key={section.id} onClick={() => setActiveSection(section)}>
+                <span className="practice-row__icon">{section.icon}</span>
+                <span className="practice-row__body"><span className="practice-row__title">{section.title}</span><span className="practice-row__text">{section.subtitle}</span></span>
+                {done ? <CheckCircle2 size={20} color="var(--primary)" /> : <ChevronRight size={19} />}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="practice-section">
+        <h2 className="practice-section-title">{t('tespihat.ui.tasbih33', "33'LÜK TESBİHLER")}</h2>
+        <div className="tesbih-counter-grid">
+          {TESBIHLER.map((tesbih) => {
+            const count = tesbihCounts[tesbih.id];
+            const done = count >= 33;
+            return (
+              <button type="button" className={`tesbih-counter ${done ? 'tesbih-counter--done' : ''}`} key={tesbih.id} onClick={() => incrementTesbih(tesbih.id)} aria-label={`${tesbih.latin} sayacını artır, ${count}/33`}>
+                <span className="tesbih-counter__arabic">{tesbih.arabic}</span>
+                <strong>{count}<small>/33</small></strong>
+                <span>{tesbih.latin}</span>
+                <i><b style={{ width: `${(count / 33) * 100}%` }} /></i>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="practice-section">
+        <h2 className="practice-section-title">{t('tespihat.ui.postPrayerDuas', 'TEVHİD VE DUALAR')}</h2>
+        <div className="practice-list">
+          <div>
+            <div className="practice-row">
+              <span className="practice-row__icon"><Sparkles size={17} /></span>
+              <button type="button" className="tesbih-accordion-trigger" onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}><span className="practice-row__title">{TEVHID.title}</span></button>
+              <button type="button" className={`practice-pill ${completedSections.includes('tevhid') ? 'practice-chip--active' : ''}`} onClick={() => toggleComplete('tevhid')}>{completedSections.includes('tevhid') ? 'Tamam' : 'Bitti'}</button>
+              <button type="button" className="tesbih-chevron-button" aria-label="Tevhid metnini aç veya kapat" onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}>{expandedItem === 'tevhid' ? <ChevronDown size={18} /> : <ChevronRight size={18} />}</button>
+            </div>
+            {expandedItem === 'tevhid' && renderExpandedContent(TEVHID)}
+          </div>
+          {NAMAZSONRASI_DUALAR.map((dua) => (
+            <div key={dua.id}>
+              <button type="button" className="practice-row" onClick={() => setExpandedItem(expandedItem === dua.id ? null : dua.id)}>
+                <span className="practice-row__icon"><BookOpen size={17} /></span><span className="practice-row__body"><span className="practice-row__title">{dua.title}</span></span>{expandedItem === dua.id ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+              </button>
+              {expandedItem === dua.id && renderExpandedContent(dua)}
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
 }
 
 export default Tespihat;

@@ -1,9 +1,23 @@
-import { FileText, Info, Shield } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { FileText, Info, Shield, SlidersHorizontal } from 'lucide-react';
 
 import { APP_VERSION } from '../../../constants';
+import {
+  AD_PRIVACY_OPTIONS_STATUS_EVENT,
+  isAdPrivacyOptionsRequired,
+  showAdPrivacyOptions
+} from '../../../services/admobService';
 import SettingsActionRow from './SettingsActionRow';
 
 function SettingsLegalSection({ onShowLicenses, onShowPrivacy, onShowTerms, t }) {
+  const [showAdPrivacy, setShowAdPrivacy] = useState(() => isAdPrivacyOptionsRequired());
+
+  useEffect(() => {
+    const handleStatusChange = (event) => setShowAdPrivacy(event.detail?.required === true);
+    window.addEventListener(AD_PRIVACY_OPTIONS_STATUS_EVENT, handleStatusChange);
+    return () => window.removeEventListener(AD_PRIVACY_OPTIONS_STATUS_EVENT, handleStatusChange);
+  }, []);
+
   return (
     <>
       <div className="settings-group">
@@ -14,6 +28,14 @@ function SettingsLegalSection({ onShowLicenses, onShowPrivacy, onShowTerms, t })
           onClick={onShowPrivacy}
           title={t('settings.privacyPolicy')}
         />
+
+        {showAdPrivacy && (
+          <SettingsActionRow
+            icon={<SlidersHorizontal size={20} />}
+            onClick={() => void showAdPrivacyOptions()}
+            title={t('settings.adPrivacyOptions', 'Reklam gizlilik tercihleri')}
+          />
+        )}
 
         <SettingsActionRow
           icon={<FileText size={20} />}

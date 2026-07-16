@@ -1,7 +1,9 @@
 /* HomeRedesign.css for Mobile App Design System (Huzur) */
 .home-redesign-container {
   background-color: var(--surface-page);
-  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  overflow-x: hidden;
   padding-bottom: 120px;
   font-family: 'Outfit', sans-serif;
   color: var(--text-primary);
@@ -70,7 +72,9 @@
 }
 
 .home-main-content {
-  padding: 16px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px max(14px, env(safe-area-inset-right)) 16px max(14px, env(safe-area-inset-left));
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -386,6 +390,7 @@
 
 .verse-actions {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
@@ -406,6 +411,147 @@
 .verse-actions button:hover {
   background-color: var(--surface-container-low);
   transform: scale(1.05);
+}
+
+.verse-actions .verse-share-button {
+  flex: 1;
+  width: auto;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: var(--radius-control);
+  gap: 8px;
+  color: var(--on-primary);
+  background: var(--primary);
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.verse-actions .verse-share-button:hover {
+  background: var(--primary);
+  transform: translateY(-1px);
+}
+
+.verse-actions .verse-share-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.verse-actions .verse-save-button {
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+}
+
+.verse-share-render {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 540px;
+  height: 675px;
+  pointer-events: none;
+}
+
+.verse-share-card {
+  position: relative;
+  width: 540px;
+  height: 675px;
+  overflow: hidden;
+  background-color: #173d2c;
+  background-position: center;
+  background-size: cover;
+  color: #fffdf7;
+  font-family: var(--font-main);
+}
+
+.verse-share-card__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12, 35, 25, 0.32), rgba(12, 35, 25, 0.84)),
+    radial-gradient(circle at 50% 28%, rgba(223, 188, 117, 0.16), transparent 42%);
+}
+
+.verse-share-card__content {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 58px 54px 44px;
+  text-align: center;
+}
+
+.verse-share-card__brand {
+  position: absolute;
+  top: 44px;
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.verse-share-card__label {
+  margin-bottom: 28px;
+  color: #ecd39b;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.2em;
+}
+
+.verse-share-card__arabic {
+  direction: rtl;
+  margin: 0;
+  font-family: var(--font-arabic);
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.65;
+}
+
+.verse-share-card__divider {
+  width: 58px;
+  height: 2px;
+  margin: 28px 0;
+  background: #dfbc75;
+}
+
+.verse-share-card__translation {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 650;
+  line-height: 1.42;
+}
+
+.verse-share-card__reference {
+  margin: 22px 0 0;
+  color: #f1dcae;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.verse-share-card__footer {
+  position: absolute;
+  bottom: 34px;
+  color: rgba(255, 253, 247, 0.78);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+}
+
+.verse-share-card__footer strong,
+.verse-share-card__footer span {
+  display: block;
+}
+
+.verse-share-card__footer strong {
+  margin-bottom: 5px;
+  color: #fffdf7;
+  font-size: 14px;
 }
 
 /* Quick Access Redesign */
@@ -450,19 +596,25 @@
 
 .quick-access-large-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
   margin-bottom: 14px;
+  min-width: 0;
+  width: 100%;
 }
 
 .quick-access-large-card {
   background: var(--surface-card);
   border: 1px solid rgba(73, 100, 89, 0.08);
-  border-radius: 22px;
-  padding: 14px 16px;
+  border-radius: 18px;
+  padding: 12px 10px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
   cursor: pointer;
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 8px 24px rgba(73, 100, 89, 0.03);
@@ -479,9 +631,9 @@
 }
 
 .quick-access-large-icon-wrapper {
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -502,17 +654,22 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
 }
 
 .quick-access-large-title {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
   color: var(--text-heading);
   margin: 0 0 1px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .quick-access-large-desc {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--text-secondary);
   margin: 0;
   font-weight: 600;
@@ -521,17 +678,31 @@
   text-overflow: ellipsis;
 }
 
+@media (max-width: 370px) {
+  .quick-access-large-row {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-access-large-card {
+    min-height: 58px;
+  }
+}
+
 .quick-access-square-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 8px;
+  min-width: 0;
 }
 
 .quick-access-square-card {
   background: var(--surface-card);
   border: 1px solid rgba(73, 100, 89, 0.05);
   border-radius: 18px;
-  padding: 12px 4px;
+  padding: 10px 3px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
