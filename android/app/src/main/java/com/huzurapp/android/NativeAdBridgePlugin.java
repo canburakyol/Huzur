@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.webkit.WebView;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -51,11 +52,11 @@ public class NativeAdBridgePlugin extends Plugin {
     private NativeAdView visibleNativeAdView;
     private String visibleAdId;
     private WebView trackedWebView;
-    private ViewTreeObserver.OnScrollChangedListener nativeScrollListener;
-    private int anchorTopPx;
-    private int anchorScrollYPx;
-    private int safeTopPx;
-    private int safeBottomPx;
+    private ViewTreeObserver.OnScrollChangedListener visibilityScrollListener;
+    private int nativeAdContentTopPx;
+    private int nativeAdHeightPx;
+    private int nativeAdSafeTopPx;
+    private int nativeAdSafeBottomPx;
 
     @PluginMethod
     public void initialize(PluginCall call) {
@@ -198,20 +199,35 @@ public class NativeAdBridgePlugin extends Plugin {
 
         activity.runOnUiThread(() -> {
             try {
-                ensureNativeAdHost(activity);
+                WebView webView = getBridge() != null ? getBridge().getWebView() : null;
+                if (webView == null) {
+                    call.reject("WebView is not available");
+                    return;
+                }
+
+                ensureNativeAdHost(activity, webView);
                 if (visibleNativeAdView == null || !adId.equals(visibleAdId)) {
                     removeVisibleNativeAdView();
                     visibleNativeAdView = buildNativeAdView(activity, nativeAd);
                     visibleAdId = adId;
-                    nativeAdHost.addView(visibleNativeAdView);
+                    nativeAdHost.addView(visibleNativeAdView, new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT
+                    ));
                 }
 
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, height);
-                params.leftMargin = left;
-                params.topMargin = top;
-                visibleNativeAdView.setLayoutParams(params);
-                startNativeScrollTracking(top, safeTop, safeBottom);
-                updateNativeAdForScroll();
+                int contentLeft = left + webView.getScrollX();
+                int contentTop = top + webView.getScrollY();
+                nativeAdHost.setLayoutParams(new AbsoluteLayout.LayoutParams(
+                    width,
+                    height,
+                    contentLeft,
+                    contentTop
+                ));
+                nativeAdHost.bringToFront();
+
+                int resolvedSafeBottom = safeBottom > safeTop ? safeBottom : webView.getHeight();
+                startNativeVisibilityTracking(webView, contentTop, height, safeTop, resolvedSafeBottom);
 
                 JSObject ret = new JSObject();
                 ret.put("success", true);
@@ -234,7 +250,7 @@ public class NativeAdBridgePlugin extends Plugin {
         }
 
         activity.runOnUiThread(() -> {
-            stopNativeScrollTracking();
+            stopNativeVisibilityTracking();
             if (visibleNativeAdView != null) {
                 visibleNativeAdView.setVisibility(View.GONE);
             }
@@ -302,83 +318,64 @@ public class NativeAdBridgePlugin extends Plugin {
         );
     }
 
-    private void ensureNativeAdHost(Activity activity) {
-        if (nativeAdHost != null) {
-            return;
+    @SuppressWarnings("deprecation")
+    private void ensureNativeAdHost(Activity activity, WebView webView) {
+        if (nativeAdHost == null) {
+            nativeAdHost = new FrameLayout(activity);
+            nativeAdHost.setClipChildren(false);
+            nativeAdHost.setClipToPadding(false);
+            nativeAdHost.setClickable(false);
+            nativeAdHost.setFocusable(false);
         }
 
-        nativeAdHost = new FrameLayout(activity);
-        nativeAdHost.setClipChildren(false);
-        nativeAdHost.setClipToPadding(false);
-        nativeAdHost.setClickable(false);
-        nativeAdHost.setFocusable(false);
-
-        ViewGroup decor = (ViewGroup) activity.getWindow().getDecorView();
-        decor.addView(nativeAdHost, new ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        ));
+        if (nativeAdHost.getParent() != webView) {
+            if (nativeAdHost.getParent() instanceof ViewGroup) {
+                ((ViewGroup) nativeAdHost.getParent()).removeView(nativeAdHost);
+            }
+            webView.addView(nativeAdHost, new AbsoluteLayout.LayoutParams(1, 1, 0, 0));
+        }
         nativeAdHost.bringToFront();
     }
 
-    private void startNativeScrollTracking(int top, int safeTop, int safeBottom) {
-        WebView webView = getBridge() != null ? getBridge().getWebView() : null;
-        if (webView == null) {
-            trackedWebView = null;
-            anchorTopPx = top;
-            anchorScrollYPx = 0;
-            safeTopPx = safeTop;
-            safeBottomPx = safeBottom;
-            return;
-        }
-
-        if (trackedWebView != webView) {
-            stopNativeScrollTracking();
-            trackedWebView = webView;
-        }
-
-        anchorTopPx = top;
-        anchorScrollYPx = webView.getScrollY();
-        safeTopPx = safeTop;
-        safeBottomPx = safeBottom;
-
-        if (nativeScrollListener == null) {
-            nativeScrollListener = this::updateNativeAdForScroll;
-            ViewTreeObserver observer = webView.getViewTreeObserver();
-            if (observer.isAlive()) {
-                observer.addOnScrollChangedListener(nativeScrollListener);
-            }
-        }
+    private void startNativeVisibilityTracking(
+        WebView webView,
+        int contentTop,
+        int height,
+        int safeTop,
+        int safeBottom
+    ) {
+        stopNativeVisibilityTracking();
+        trackedWebView = webView;
+        nativeAdContentTopPx = contentTop;
+        nativeAdHeightPx = height;
+        nativeAdSafeTopPx = safeTop;
+        nativeAdSafeBottomPx = safeBottom;
+        visibilityScrollListener = this::updateNativeAdVisibility;
+        webView.getViewTreeObserver().addOnScrollChangedListener(visibilityScrollListener);
+        updateNativeAdVisibility();
     }
 
-    private void updateNativeAdForScroll() {
-        if (visibleNativeAdView == null) {
+    private void updateNativeAdVisibility() {
+        if (trackedWebView == null || visibleNativeAdView == null) {
             return;
         }
 
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) visibleNativeAdView.getLayoutParams();
-        int scrollDelta = trackedWebView != null ? trackedWebView.getScrollY() - anchorScrollYPx : 0;
-        int trackedTop = anchorTopPx - scrollDelta;
-        params.topMargin = trackedTop;
-        visibleNativeAdView.setLayoutParams(params);
-
-        int resolvedSafeBottom = safeBottomPx > safeTopPx
-            ? safeBottomPx
-            : (nativeAdHost != null ? nativeAdHost.getHeight() : 0);
-        boolean fullyInsideSafeViewport = trackedTop >= safeTopPx
-            && trackedTop + params.height <= resolvedSafeBottom;
+        int viewportTop = nativeAdContentTopPx - trackedWebView.getScrollY();
+        int viewportBottom = viewportTop + nativeAdHeightPx;
+        boolean fullyInsideSafeViewport = viewportTop >= nativeAdSafeTopPx
+            && viewportBottom <= nativeAdSafeBottomPx;
         visibleNativeAdView.setVisibility(fullyInsideSafeViewport ? View.VISIBLE : View.GONE);
     }
 
-    private void stopNativeScrollTracking() {
-        if (trackedWebView != null && nativeScrollListener != null) {
+    private void stopNativeVisibilityTracking() {
+        if (trackedWebView != null && visibilityScrollListener != null) {
             ViewTreeObserver observer = trackedWebView.getViewTreeObserver();
             if (observer.isAlive()) {
-                observer.removeOnScrollChangedListener(nativeScrollListener);
+                observer.removeOnScrollChangedListener(visibilityScrollListener);
             }
         }
-        nativeScrollListener = null;
         trackedWebView = null;
+        visibilityScrollListener = null;
     }
 
     private NativeAdView buildNativeAdView(Activity activity, NativeAd nativeAd) {
@@ -478,7 +475,7 @@ public class NativeAdBridgePlugin extends Plugin {
     }
 
     private void removeVisibleNativeAdView() {
-        stopNativeScrollTracking();
+        stopNativeVisibilityTracking();
         if (visibleNativeAdView != null && visibleNativeAdView.getParent() instanceof ViewGroup) {
             ((ViewGroup) visibleNativeAdView.getParent()).removeView(visibleNativeAdView);
         }
@@ -494,6 +491,7 @@ public class NativeAdBridgePlugin extends Plugin {
 
     private void destroyCachedAds() {
         try {
+            stopNativeVisibilityTracking();
             removeVisibleNativeAdView();
             if (nativeAdHost != null && nativeAdHost.getParent() instanceof ViewGroup) {
                 ((ViewGroup) nativeAdHost.getParent()).removeView(nativeAdHost);

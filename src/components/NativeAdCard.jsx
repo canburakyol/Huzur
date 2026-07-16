@@ -43,20 +43,25 @@ const NativeAdCard = memo(({ isProUser = false }) => {
 
     let animationFrame = 0;
 
+    const getSafeViewportBottom = () => {
+      const bottomNavigation = document.querySelector('.bottom-nav');
+      return bottomNavigation
+        ? bottomNavigation.getBoundingClientRect().top
+        : window.innerHeight;
+    };
+
     const syncNativeView = () => {
       cancelAnimationFrame(animationFrame);
       animationFrame = requestAnimationFrame(() => {
         if (!cardRef.current) return;
         const rect = cardRef.current.getBoundingClientRect();
-        const bottomNavigation = document.querySelector('.bottom-nav');
-        const safeViewportBottom = bottomNavigation
-          ? bottomNavigation.getBoundingClientRect().top
-          : window.innerHeight;
+        const safeViewportBottom = getSafeViewportBottom();
 
         if (rect.width <= 0 || rect.height <= 0) {
           void nativeAdService.hide();
           return;
         }
+
         void nativeAdService.show(ad.adId, rect, {
           top: NATIVE_AD_VIEWPORT_GUTTER_PX,
           bottom: safeViewportBottom - NATIVE_AD_VIEWPORT_GUTTER_PX,
