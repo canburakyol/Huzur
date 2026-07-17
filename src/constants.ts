@@ -113,7 +113,7 @@ export const DEFAULT_LOCATION = {
 /**
  * Application Version
  */
-export const APP_VERSION = '1.0.0';
+export const APP_VERSION = '18.2.13';
 
 // ============================================================
 // PRO/PREMIUM CONSTANTS

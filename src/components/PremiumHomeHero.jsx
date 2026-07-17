@@ -260,8 +260,7 @@ const PremiumHomeHero = memo(({
   locationName, 
   weather, 
   streakData, 
-  onSelectFeature,
-  recoveryPlan 
+  onSelectFeature
 }) => {
   const { t } = useTranslation();
   const [nowMs, setNowMs] = useState(() => Date.now());

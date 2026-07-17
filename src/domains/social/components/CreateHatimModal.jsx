@@ -31,8 +31,8 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
 
     setLoading(true);
     try {
-      await createHatim(name, desc, 30);
-      onSuccess();
+      const createdHatim = await createHatim(name, desc, 30);
+      onSuccess(createdHatim);
     } catch (err) {
       logger.error(err);
       showToast(t('hatim.create.error', 'Hatim oluşturulamadı'), 'error');

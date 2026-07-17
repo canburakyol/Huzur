@@ -163,9 +163,12 @@ const HatimList = ({ onSelectHatim }) => {
       {showCreateModal && (
         <CreateHatimModal
           onClose={() => setShowCreateModal(false)}
-          onSuccess={() => {
+          onSuccess={(createdHatim) => {
             setShowCreateModal(false);
-            fetchAllPublicHatims();
+            void fetchAllPublicHatims();
+            if (createdHatim?.id) {
+              onSelectHatim(createdHatim.id);
+            }
           }}
         />
       )}

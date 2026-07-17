@@ -596,11 +596,6 @@ function Quran({ onClose }) {
     const sliderAyah = playingAyah || activeReadingAyah || 1;
     const sliderProgress = ayahCount > 1 ? ((sliderAyah - 1) / (ayahCount - 1)) * 100 : 0;
     const ayahSelectorTitle = t('quran.ayahSelectorTitle', 'Ayet sec');
-    const ayahSelectorHint = t('quran.ayahSelectorHint', 'Kaydirinca secilen ayet hemen calmaya baslar');
-    const activeAyahLabel = isPlaying && playingAyah
-        ? t('quran.playingAyahLabel', 'Calan ayet')
-        : t('quran.selectedAyahLabel', 'Secili ayet');
-    const totalAyahsLabel = t('quran.totalAyahsLabel', 'Toplam');
 
     return (
         <div className={`quran-container ${showBars ? '' : 'bars-hidden'}`}>
