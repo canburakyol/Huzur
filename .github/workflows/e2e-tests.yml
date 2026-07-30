@@ -1,4 +1,4 @@
-name: E2E Tests
+name: Quality Gates
 
 on:
   push:
@@ -8,48 +8,80 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    timeout-minutes: 60
+  web-quality-gate:
+    name: Web and mobile navigation gate
+    timeout-minutes: 35
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    
-    - name: Install dependencies
-      run: npm ci
+      - uses: actions/checkout@v4
 
-    - name: Build + bundle budget gate
-      run: npm run build:ci
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
 
-    - name: Android assembleDebug gate
-      run: |
-        npx cap sync android
-        cd android
-        ./gradlew assembleDebug
-    
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    
-    - name: Run Playwright tests
-      run: npx playwright test
-    
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: playwright-report
-        path: |
-          playwright-report/
-          e2e/results/
-        retention-days: 30
-    
-    - name: Upload test screenshots
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: test-screenshots
-        path: e2e/results/*.png
-        retention-days: 7
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Build and bundle budget gate
+        run: npm run build:ci
+
+      - name: Install Chromium for P0 QA
+        run: npx playwright install --with-deps chromium
+
+      - name: Run critical navigation smoke tests
+        run: npm run test:qa
+
+      - name: Upload web QA evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: web-qa-evidence
+          path: |
+            playwright-report/
+            e2e/results/
+            test-results/
+          retention-days: 30
+
+  android-native-smoke:
+    name: Android emulator launch gate
+    timeout-minutes: 40
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build debug APK
+        run: |
+          npm run build:android:debug
+          npx cap sync android
+          cd android
+          ./gradlew assembleDebug
+
+      - name: Install, launch, and inspect the APK on Android 35
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          script: bash scripts/android-native-smoke.sh
+
+      - name: Upload Android smoke evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-native-smoke-evidence
+          path: e2e/results/android-native/
+          retention-days: 30

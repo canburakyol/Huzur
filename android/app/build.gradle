@@ -46,8 +46,8 @@ android {
         applicationId "com.huzurapp.android"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 35
-        versionName "18.2.13"
+        versionCode 37
+        versionName "18.2.15"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "boolean", "FIREBASE_APPCHECK_DISABLE", "${readRootEnvValue('.env.android-debug.local', 'VITE_FIREBASE_APPCHECK_DISABLE') == 'true'}"
         resourceConfigurations += ['en', 'tr', 'id', 'de']

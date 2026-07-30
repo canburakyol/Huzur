@@ -128,3 +128,10 @@ bundle-stats.html
 current-screen.png
 window_dump.xml
 marketing/generated/
+
+# Generated browser/device QA artifacts
+.playwright-cli/
+playwright-report/
+test-results/
+output/
+tmp-huzur-*

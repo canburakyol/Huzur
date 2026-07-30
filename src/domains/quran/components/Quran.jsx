@@ -598,10 +598,10 @@ function Quran({ onClose }) {
     const ayahSelectorTitle = t('quran.ayahSelectorTitle', 'Ayet sec');
 
     return (
-        <div className={`quran-container ${showBars ? '' : 'bars-hidden'}`}>
+        <div className={`quran-container ${showBars ? '' : 'bars-hidden'}`} data-testid="quran-screen">
             <div className={`quran-royal-header ${showBars ? 'visible' : 'hidden'}`}>
                 <div className="header-top-row">
-                    <button onClick={onClose} className="player-action-btn">
+                    <button onClick={onClose} className="player-action-btn" data-testid="quran-close" aria-label={t('common.close', 'Kapat')}>
                         <ChevronLeft size={28} />
                     </button>
 
@@ -637,6 +637,8 @@ function Quran({ onClose }) {
                                 setShowSideMenu(true);
                             }}
                             className="player-action-btn"
+                            data-testid="quran-drawer-toggle"
+                            aria-label={t('quran.menu', 'Kuran menusu')}
                         >
                             <Menu size={24} />
                         </button>
@@ -646,10 +648,10 @@ function Quran({ onClose }) {
 
             {showSideMenu && <div className="side-menu-overlay" onClick={() => setShowSideMenu(false)} />}
 
-            <div className={`quran-side-menu-premium ${showSideMenu ? 'open' : ''}`}>
+            <div className={`quran-side-menu-premium ${showSideMenu ? 'open' : ''}`} data-testid="quran-drawer">
                 <div className="side-menu-header">
                     <h3>{t('quran.menu')}</h3>
-                    <button onClick={() => setShowSideMenu(false)} className="player-action-btn">
+                    <button onClick={() => setShowSideMenu(false)} className="player-action-btn" data-testid="quran-drawer-close" aria-label={t('common.close', 'Kapat')}>
                         <X size={24} />
                     </button>
                 </div>
@@ -670,6 +672,7 @@ function Quran({ onClose }) {
                                     key={surah.number}
                                     className={`premium-list-item ${activeSurah?.number === surah.number ? 'active' : ''}`}
                                     onClick={() => loadSurah(surah.number)}
+                                    data-testid={`quran-surah-${surah.number}`}
                                 >
                                     <div className="item-number-ring">{surah.number}</div>
                                     <div className="item-main-info">

@@ -15,6 +15,7 @@ import {
     isRewardedConfigured
 } from './adEnvironmentService';
 import { ANALYTICS_EVENTS, logEvent } from './analyticsService';
+import { syncBottomBannerReservation } from './bannerLayout';
 
 type AdRuntime = {
     isDebugBuild: boolean;
@@ -103,6 +104,10 @@ const registerAdListeners = async (): Promise<void> => {
     }
 
     listenersRegistered = true;
+
+    adListenerHandles.push(await AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info: { height?: number } | undefined) => {
+        syncBottomBannerReservation(Number(info?.height ?? 0));
+    }));
 
     adListenerHandles.push(await AdMob.addListener(BannerAdPluginEvents.Loaded, () => {
         void adLog('[AdMob] banner loaded');

@@ -20,7 +20,7 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
   ];
 
   return (
-    <div className="bottom-nav" role="navigation" aria-label={t('nav.mainNavigation', 'Main navigation')}>
+    <div className="bottom-nav" role="navigation" aria-label={t('nav.mainNavigation', 'Main navigation')} data-testid="bottom-navigation">
       {tabs.map(({ id, icon, label, notification }) => (
         <div
           key={id}
@@ -31,6 +31,7 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
           tabIndex={0}
           aria-current={activeTab === id ? 'page' : undefined}
           aria-label={label}
+          data-testid={`bottom-tab-${id}`}
         >
           {notification ? (
             <div className="assistant-icon-wrapper">
@@ -51,6 +52,7 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
         role="button"
         tabIndex={0}
         aria-label={t('nav.menu')}
+        data-testid="bottom-tab-menu"
       >
         <Menu size={24} />
         <span>{t('nav.menu')}</span>

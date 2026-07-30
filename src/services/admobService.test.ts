@@ -57,6 +57,7 @@ vi.mock("@capacitor-community/admob", () => ({
     CENTER: "CENTER",
   },
   BannerAdPluginEvents: {
+    SizeChanged: "bannerSizeChanged",
     Loaded: "bannerLoaded",
     FailedToLoad: "bannerFailedToLoad",
     AdImpression: "bannerImpression",
@@ -136,7 +137,7 @@ describe("admobService consent and cleanup", () => {
     await adMobService.initialize();
     await adMobService.stopAds();
 
-    expect(adMobMock.addListener).toHaveBeenCalledTimes(5);
+    expect(adMobMock.addListener).toHaveBeenCalledTimes(6);
     expect(adMobMock.hideBanner).toHaveBeenCalledTimes(1);
     expect(adMobMock.removeBanner).toHaveBeenCalledTimes(1);
     expect(nativeAdServiceMock.nativeAdService.destroy).toHaveBeenCalledTimes(1);
@@ -178,7 +179,7 @@ describe("admobService consent and cleanup", () => {
     await expect(adMobService.initialize()).resolves.toBe(true);
 
     expect(adMobMock.showConsentForm).toHaveBeenCalledTimes(1);
-    expect(adMobMock.addListener).toHaveBeenCalledTimes(5);
+    expect(adMobMock.addListener).toHaveBeenCalledTimes(6);
   });
 
   it("uses fixed bottom banner size so it does not overlap bottom navigation", async () => {
@@ -193,6 +194,24 @@ describe("admobService consent and cleanup", () => {
       margin: 0,
       isTesting: true,
     }));
+  });
+
+  it("syncs bottom navigation reservation to the rendered native banner height", async () => {
+    let onBannerSizeChanged: ((info: { height?: number }) => void) | undefined;
+    adMobMock.addListener.mockImplementation(async (eventName, callback) => {
+      if (eventName === "bannerSizeChanged") {
+        onBannerSizeChanged = callback;
+      }
+      return { remove: vi.fn(async () => undefined) };
+    });
+    const { adMobService } = await importAdMobService();
+
+    await adMobService.initialize();
+    expect(onBannerSizeChanged).toBeTypeOf("function");
+
+    onBannerSizeChanged?.({ height: 50 });
+
+    expect(document.documentElement.style.getPropertyValue("--ad-height")).toBe("58px");
   });
 
   it("tracks rewarded requests and granted rewards", async () => {

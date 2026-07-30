@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" role="img" aria-label="Huzur app icon">
+  <rect width="108" height="108" rx="24" fill="#083D2F"/>
+  <path d="M31 75V51C31 39 40 29 54 20C68 29 77 39 77 51V75Z" fill="#F6F0E3"/>
+  <path d="M40 75A14 14 0 0 1 68 75Z" fill="#FFF9E8"/>
+  <path d="M27 78C41 72 67 72 81 78" fill="none" stroke="#C7A45D" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

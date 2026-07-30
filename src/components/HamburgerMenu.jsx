@@ -136,6 +136,7 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
               className={`nav-item reveal-stagger ${isActive ? 'active' : ''}`}
               onClick={() => handleItemClick(item)}
               style={{ '--delay': `${(offset + index) * 0.03}s` }}
+              data-testid={`menu-feature-${item.id}`}
             >
               <div className="nav-icon-box">
                 {icon}
@@ -152,7 +153,7 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
     <>
       {isOpen && (
         <div className="hamburger-overlay" onClick={handleClose}>
-          <div className="hamburger-menu" onClick={(event) => event.stopPropagation()}>
+          <div className="hamburger-menu" data-testid="hamburger-menu" onClick={(event) => event.stopPropagation()}>
             <div className="hamburger-header">
               <button
                 onClick={handleClose}
