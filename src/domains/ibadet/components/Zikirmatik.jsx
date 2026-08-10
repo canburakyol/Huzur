@@ -17,15 +17,15 @@ const ZIKIRMATIK_KEYS = {
 };
 
 const DHIKR_LIST = [
-    { id: 'free', name: 'Serbest Zikir', arabic: '∞', meaning: 'İstediğiniz zikri çekin', defaultTarget: 9999 },
-    { id: 'subhanallah', name: 'Sübhanallah', arabic: 'سُبْحَانَ اللهِ', meaning: 'Allah\'ı tüm eksikliklerden tenzih ederim', defaultTarget: 33 },
-    { id: 'elhamdulillah', name: 'Elhamdülillah', arabic: 'الحَمْدُ لِلَّهِ', meaning: 'Hamd Allah\'a mahsustur', defaultTarget: 33 },
-    { id: 'allahuekber', name: 'Allahu Ekber', arabic: 'اللهُ أَكْبَرُ', meaning: 'Allah en büyüktür', defaultTarget: 33 },
-    { id: 'lailaheillallah', name: 'La ilahe illallah', arabic: 'لَا إِلَٰهَ إِلَّا اللهُ', meaning: 'Allah\'tan başka ilah yoktur', defaultTarget: 100 },
-    { id: 'estagfirullah', name: 'Estağfirullah', arabic: 'أَسْتَغْفِرُ اللهَ', meaning: 'Allah\'tan bağışlanma dilerim', defaultTarget: 100 },
-    { id: 'lahavle', name: 'La havle', arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ', meaning: 'Güç ve kuvvet ancak Allah\'tandır', defaultTarget: 33 },
-    { id: 'salavat', name: 'Salavat', arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ', meaning: 'Allah\'ım Muhammed\'e salat eyle', defaultTarget: 100 },
-    { id: 'hasbunallah', name: 'Hasbünallah', arabic: 'حَسْبُنَا اللهُ وَنِعْمَ الوَكِILÜ', meaning: 'Allah bize yeter, O ne güzel vekildir', defaultTarget: 33 },
+    { id: 'free', name: 'Serbest Zikir', arabic: '∞', meaning: 'İstediğiniz zikri çekin.', defaultTarget: 9999 },
+    { id: 'subhanallah', name: 'Sübhanallah', arabic: 'سُبْحَانَ اللهِ', meaning: "Allah'ı tüm eksikliklerden tenzih ederim.", defaultTarget: 33 },
+    { id: 'elhamdulillah', name: 'Elhamdülillah', arabic: 'الحَمْدُ لِلَّهِ', meaning: "Hamd Allah'a mahsustur.", defaultTarget: 33 },
+    { id: 'allahuekber', name: 'Allahu ekber', arabic: 'اللهُ أَكْبَرُ', meaning: 'Allah en büyüktür.', defaultTarget: 33 },
+    { id: 'lailaheillallah', name: 'Lâ ilâhe illallah', arabic: 'لَا إِلَٰهَ إِلَّا اللهُ', meaning: "Allah'tan başka ilah yoktur.", defaultTarget: 100 },
+    { id: 'estagfirullah', name: 'Estağfirullah', arabic: 'أَسْتَغْفِرُ اللهَ', meaning: "Allah'tan bağışlanma dilerim.", defaultTarget: 100 },
+    { id: 'lahavle', name: 'Lâ havle ve lâ kuvvete illâ billâh', arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ', meaning: "Güç ve kuvvet ancak Allah'tandır.", defaultTarget: 33 },
+    { id: 'salavat', name: 'Salavat', arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ', meaning: "Allah'ım, Muhammed'e salât eyle.", defaultTarget: 100 },
+    { id: 'hasbunallah', name: 'Hasbünallâh', arabic: 'حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ', meaning: 'Allah bize yeter; O ne güzel vekildir.', defaultTarget: 33 },
 ];
 
 const DHIKR_TRANSLATIONS = {
@@ -33,55 +33,75 @@ const DHIKR_TRANSLATIONS = {
         nameKey: 'zikirmatikDhikrs.free.name',
         fallbackName: 'Serbest Zikir',
         meaningKey: 'zikirmatikDhikrs.free.meaning',
-        fallbackMeaning: 'Istediginiz zikri cekin'
+        fallbackMeaning: 'İstediğiniz zikri çekin.',
+        sourceKey: 'zikirmatikDhikrs.free.source',
+        fallbackSource: 'Kullanıcı tarafından yazılır; doğrulanmamıştır.'
     },
     subhanallah: {
         nameKey: 'zikirmatikDhikrs.subhanallah.name',
-        fallbackName: 'Subhanallah',
+        fallbackName: 'Sübhanallah',
         meaningKey: 'zikirmatikDhikrs.subhanallah.meaning',
-        fallbackMeaning: "Allah'i tum eksikliklerden tenzih ederim"
+        fallbackMeaning: "Allah'ı tüm eksikliklerden tenzih ederim.",
+        sourceKey: 'zikirmatikDhikrs.subhanallah.source',
+        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
     },
     elhamdulillah: {
         nameKey: 'zikirmatikDhikrs.elhamdulillah.name',
-        fallbackName: 'Elhamdulillah',
+        fallbackName: 'Elhamdülillah',
         meaningKey: 'zikirmatikDhikrs.elhamdulillah.meaning',
-        fallbackMeaning: "Hamd Allah'a mahsustur"
+        fallbackMeaning: "Hamd Allah'a mahsustur.",
+        sourceKey: 'zikirmatikDhikrs.elhamdulillah.source',
+        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
     },
     allahuekber: {
         nameKey: 'zikirmatikDhikrs.allahuekber.name',
-        fallbackName: 'Allahu Ekber',
+        fallbackName: 'Allahu ekber',
         meaningKey: 'zikirmatikDhikrs.allahuekber.meaning',
-        fallbackMeaning: 'Allah en buyuktur'
+        fallbackMeaning: 'Allah en büyüktür.',
+        sourceKey: 'zikirmatikDhikrs.allahuekber.source',
+        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
     },
     lailaheillallah: {
         nameKey: 'zikirmatikDhikrs.lailaheillallah.name',
-        fallbackName: 'La ilahe illallah',
+        fallbackName: 'Lâ ilâhe illallah',
         meaningKey: 'zikirmatikDhikrs.lailaheillallah.meaning',
-        fallbackMeaning: "Allah'tan baska ilah yoktur"
+        fallbackMeaning: "Allah'tan başka ilah yoktur.",
+        sourceKey: 'zikirmatikDhikrs.lailaheillallah.source',
+        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
     },
     estagfirullah: {
         nameKey: 'zikirmatikDhikrs.estagfirullah.name',
-        fallbackName: 'Estagfirullah',
+        fallbackName: 'Estağfirullah',
         meaningKey: 'zikirmatikDhikrs.estagfirullah.meaning',
-        fallbackMeaning: "Allah'tan bagislanma dilerim"
+        fallbackMeaning: "Allah'tan bağışlanma dilerim.",
+        sourceKey: 'zikirmatikDhikrs.estagfirullah.source',
+        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
     },
     lahavle: {
         nameKey: 'zikirmatikDhikrs.lahavle.name',
-        fallbackName: 'La havle',
+        fallbackName: 'Lâ havle ve lâ kuvvete illâ billâh',
         meaningKey: 'zikirmatikDhikrs.lahavle.meaning',
-        fallbackMeaning: "Guc ve kuvvet ancak Allah'tandir"
+        fallbackMeaning: "Güç ve kuvvet ancak Allah'tandır.",
+        sourceKey: 'zikirmatikDhikrs.lahavle.source',
+        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
     },
     salavat: {
         nameKey: 'zikirmatikDhikrs.salavat.name',
         fallbackName: 'Salavat',
         meaningKey: 'zikirmatikDhikrs.salavat.meaning',
-        fallbackMeaning: "Allah'im Muhammed'e salat eyle"
+        fallbackMeaning: "Allah'ım, Muhammed'e salât eyle.",
+        sourceKey: 'zikirmatikDhikrs.salavat.source',
+        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
     },
     hasbunallah: {
         nameKey: 'zikirmatikDhikrs.hasbunallah.name',
-        fallbackName: 'Hasbunallah',
+        fallbackName: 'Hasbünallâh',
         meaningKey: 'zikirmatikDhikrs.hasbunallah.meaning',
-        fallbackMeaning: 'Allah bize yeter, O ne guzel vekildir'
+        fallbackMeaning: 'Allah bize yeter; O ne güzel vekildir.',
+        readingKey: 'zikirmatikDhikrs.hasbunallah.reading',
+        fallbackReading: "Hasbünallâhü ve ni'mel vekîl.",
+        sourceKey: 'zikirmatikDhikrs.hasbunallah.source',
+        fallbackSource: 'Kur’an-ı Kerim, Âl-i İmrân 3:173'
     }
 };
 
@@ -136,6 +156,16 @@ const Zikirmatik = ({ onClose }) => {
 
         const translation = DHIKR_TRANSLATIONS[dhikr.id];
         return translation ? t(translation.meaningKey, translation.fallbackMeaning) : dhikr.meaning;
+    };
+
+    const getDhikrReading = (dhikr) => {
+        const translation = DHIKR_TRANSLATIONS[dhikr?.id];
+        return translation?.readingKey ? t(translation.readingKey, translation.fallbackReading) : '';
+    };
+
+    const getDhikrSource = (dhikr) => {
+        const translation = DHIKR_TRANSLATIONS[dhikr?.id];
+        return translation?.sourceKey ? t(translation.sourceKey, translation.fallbackSource) : 'Kaynak bilgisi doğrulanmamıştır.';
     };
 
     const handleFreeNameChange = (e) => {
@@ -257,12 +287,12 @@ const Zikirmatik = ({ onClose }) => {
                     <div className="settings-card reveal-stagger" style={{ background: 'var(--primary)', border: 'none', padding: '24px', marginBottom: '24px', color: 'var(--on-primary)', boxShadow: 'var(--shadow-card)' }}>
                         <div style={{ flex: 1, textAlign: 'center' }}>
                             <div style={{ fontSize: '2.5rem', fontWeight: '900' }}>{stats.today}</div>
-                            <div style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, textTransform: 'uppercase', letterSpacing: '1px' }}>Bugünkü Zikir</div>
+                            <div style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, textTransform: 'uppercase', letterSpacing: '1px' }}>Bugünkü zikir</div>
                         </div>
                         <div style={{ width: '1px', background: 'rgba(255,255,255,0.2)', height: '40px' }}></div>
                         <div style={{ flex: 1, textAlign: 'center' }}>
                             <div style={{ fontSize: '2.5rem', fontWeight: '900' }}>{stats.total}</div>
-                            <div style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, textTransform: 'uppercase', letterSpacing: '1px' }}>Toplam Zikir</div>
+                            <div style={{ fontSize: '0.75rem', fontWeight: '700', opacity: 0.8, textTransform: 'uppercase', letterSpacing: '1px' }}>Toplam zikir</div>
                         </div>
                     </div>
                 )}
@@ -368,13 +398,15 @@ const Zikirmatik = ({ onClose }) => {
                         style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--nav-accent)', color: 'var(--nav-text)', fontSize: '1.5rem', fontWeight: '800', textAlign: 'center', width: '100%', outline: 'none', padding: '8px' }}
                         value={freeDhikrName}
                         onChange={handleFreeNameChange}
-                        placeholder="Zikir Adı"
+                        placeholder="Zikir adı"
                     />
                 ) : (
                     <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '900', color: 'var(--nav-accent)' }}>{getDhikrName(selectedDhikr)}</h3>
                 )}
                 <div style={{ fontSize: '2rem', fontFamily: 'var(--font-arabic)', color: 'var(--nav-text)', margin: '16px 0' }}>{selectedDhikr?.arabic}</div>
+                {getDhikrReading(selectedDhikr) && <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text)', lineHeight: '1.4' }}>{getDhikrReading(selectedDhikr)}</p>}
                 <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontStyle: 'italic', lineHeight: '1.4' }}>{getDhikrMeaning(selectedDhikr)}</p>
+                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.4' }}><strong>Kaynak:</strong> {getDhikrSource(selectedDhikr)}</p>
             </div>
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '40px 0' }}>
@@ -382,7 +414,7 @@ const Zikirmatik = ({ onClose }) => {
                     type="button"
                     className="velocity-dial-wrapper"
                     onClick={handleIncrement}
-                    aria-label={`${getDhikrName(selectedDhikr)} sayacini artir`}
+                    aria-label={`${getDhikrName(selectedDhikr)} sayacını artır`}
                 >
                     <svg className="velocity-dial-svg">
                         <circle className="velocity-dial-bg" cx="140" cy="140" r="132" />

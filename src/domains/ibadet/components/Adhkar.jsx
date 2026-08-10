@@ -9,96 +9,33 @@ import { storageService } from '../../../services/storageService';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import '../../../components/app-shell/Navigation.css';
 
-// Sabah Tesbihatı
+// Quran passages are complete and carry their exact verse references. Other entries remain general/uncited.
+const QURAN_SOURCES = {
+    ayetel_kursi: { sourceType: 'quran', citation: 'Kur’an 2:255' },
+    ihlas: { sourceType: 'quran', citation: 'Kur’an 112' },
+    felak: { sourceType: 'quran', citation: 'Kur’an 113' },
+    nas: { sourceType: 'quran', citation: 'Kur’an 114' },
+    tevekkul_duasi: { sourceType: 'quran', citation: 'Kur’an 9:129' }
+};
+
+// Sabah Tesbihatı — incomplete morning formula intentionally omitted.
 const MORNING_ADHKAR = [
-    {
-        id: 1,
-        key: 'ayetel_kursi',
-        count: 1,
-        benefitKey: 'adhkar.benefit1'
-    },
-    {
-        id: 2,
-        key: 'ihlas',
-        count: 3,
-        benefitKey: 'adhkar.benefit2'
-    },
-    {
-        id: 3,
-        key: 'felak',
-        count: 3,
-        benefitKey: 'adhkar.benefit3'
-    },
-    {
-        id: 4,
-        key: 'nas',
-        count: 3,
-        benefitKey: 'adhkar.benefit4'
-    },
-    {
-        id: 5,
-        key: 'sabah_duasi',
-        count: 1,
-        benefitKey: 'adhkar.benefit5'
-    },
-    {
-        id: 6,
-        key: 'tevekkul_duasi',
-        count: 7,
-        benefitKey: 'adhkar.benefit6'
-    },
-    {
-        id: 7,
-        key: 'subhanallah',
-        count: 100,
-        benefitKey: 'adhkar.benefit7'
-    }
+    { id: 1, key: 'ayetel_kursi', count: 1, benefitKey: 'adhkar.benefit1', ...QURAN_SOURCES.ayetel_kursi },
+    { id: 2, key: 'ihlas', count: 3, benefitKey: 'adhkar.benefit2', ...QURAN_SOURCES.ihlas },
+    { id: 3, key: 'felak', count: 3, benefitKey: 'adhkar.benefit3', ...QURAN_SOURCES.felak },
+    { id: 4, key: 'nas', count: 3, benefitKey: 'adhkar.benefit4', ...QURAN_SOURCES.nas },
+    { id: 6, key: 'tevekkul_duasi', count: 7, benefitKey: 'adhkar.benefit6', ...QURAN_SOURCES.tevekkul_duasi },
+    { id: 7, key: 'subhanallah', count: 100, benefitKey: 'adhkar.benefit7' }
 ];
 
-// Akşam Tesbihatı
+// Akşam Tesbihatı — incomplete evening formula intentionally omitted.
 const EVENING_ADHKAR = [
-    {
-        id: 1,
-        key: 'ayetel_kursi',
-        count: 1,
-        benefitKey: 'adhkar.benefitEvening1'
-    },
-    {
-        id: 2,
-        key: 'ihlas',
-        count: 3,
-        benefitKey: 'adhkar.benefit2'
-    },
-    {
-        id: 3,
-        key: 'felak',
-        count: 3,
-        benefitKey: 'adhkar.benefitEvening3'
-    },
-    {
-        id: 4,
-        key: 'nas',
-        count: 3,
-        benefitKey: 'adhkar.benefitEvening4'
-    },
-    {
-        id: 5,
-        key: 'aksam_duasi',
-        count: 1,
-        benefitKey: 'adhkar.benefitEvening5'
-    },
-    {
-        id: 6,
-        key: 'uyku_oncesi',
-        count: 1,
-        benefitKey: 'adhkar.benefitEvening6'
-    },
-    {
-        id: 7,
-        key: 'estagfirullah',
-        count: 3,
-        benefitKey: 'adhkar.benefitEvening7'
-    }
+    { id: 1, key: 'ayetel_kursi', count: 1, benefitKey: 'adhkar.benefitEvening1', ...QURAN_SOURCES.ayetel_kursi },
+    { id: 2, key: 'ihlas', count: 3, benefitKey: 'adhkar.benefit2', ...QURAN_SOURCES.ihlas },
+    { id: 3, key: 'felak', count: 3, benefitKey: 'adhkar.benefitEvening3', ...QURAN_SOURCES.felak },
+    { id: 4, key: 'nas', count: 3, benefitKey: 'adhkar.benefitEvening4', ...QURAN_SOURCES.nas },
+    { id: 6, key: 'uyku_oncesi', count: 1, benefitKey: 'adhkar.benefitEvening6' },
+    { id: 7, key: 'estagfirullah', count: 3, benefitKey: 'adhkar.benefitEvening7' }
 ];
 
 const Adhkar = ({ onClose }) => {
@@ -267,6 +204,11 @@ const Adhkar = ({ onClose }) => {
                                             <div style={{ fontSize: '0.95rem', color: 'var(--nav-text)', lineHeight: '1.5' }}>
                                                 {t(`adhkar.items.${adhkar.key}.meaning`)}
                                             </div>
+                                            {adhkar.sourceType && (
+                                                <div data-testid={`source-${adhkar.key}`} style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                                                    {adhkar.sourceType === 'quran' ? 'Kur’an' : 'Genel / kaynak belirtilmemiş'} · {adhkar.citation}
+                                                </div>
+                                            )}
                                         </div>
 
                                         <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', background: 'rgba(15, 118, 110, 0.08)', padding: '12px', borderRadius: '12px' }}>
@@ -300,7 +242,7 @@ const Adhkar = ({ onClose }) => {
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                     <Info size={18} color="var(--nav-text-muted)" />
                     <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
-                        {t('adhkar.infoNote', 'Peygamber Efendimiz (sav)\'in sünneti olan bu zikirleri sabah ve akşam vakitlerinde yaparak gününüzü bereketlendirebilirsiniz.')}
+                        {t('adhkar.infoNoteReviewed', 'Bu listede Kur’an ayetleri ve genel zikirler birlikte yer alır. Her metnin kaynak bilgisini açarak kontrol edin; kişisel takip, dinî hüküm veya kabul ölçüsü değildir.')}
                     </p>
                 </div>
             </div>

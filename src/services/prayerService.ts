@@ -93,10 +93,13 @@ export const fetchMonthlyPrayerTimes = async (
   try {
     const month = targetDate.getMonth() + 1;
     const year = targetDate.getFullYear();
-    const lat = latitude || DEFAULT_LAT;
-    const lon = longitude || DEFAULT_LON;
-    const districtId = findDistrictByName(city)?.districtId || getSelectedDistrictId();
-    const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${districtId}_${lat.toFixed(4)}_${lon.toFixed(4)}_${year}_${month}`;
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+      throw new Error('Monthly prayer times require trustworthy coordinates');
+    }
+    const lat = latitude;
+    const lon = longitude;
+    const districtId = findDistrictByName(city)?.districtId || null;
+    const monthlyKey = `${MONTHLY_CACHE_KEY_PREFIX}${districtId || 'calculated'}_${lat.toFixed(4)}_${lon.toFixed(4)}_${year}_${month}`;
 
     const existing = storageService.getItem<MonthlyPrayerData>(monthlyKey);
     if (existing && Array.isArray(existing.timings) && existing.timings.length > 0) {
@@ -108,6 +111,7 @@ export const fetchMonthlyPrayerTimes = async (
 
     // Try Diyanet API first
     try {
+      if (!districtId) throw new Error('No Diyanet district for current location');
       const diyanetDays = await fetchMonthlyDiyanetTimes(districtId);
 
       if (Array.isArray(diyanetDays) && diyanetDays.length > 0) {

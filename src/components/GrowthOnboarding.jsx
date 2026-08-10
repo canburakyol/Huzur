@@ -899,19 +899,27 @@ function GrowthOnboarding({
           </div>
         )}
 
-        <button
-          onClick={handleContinue}
-          disabled={isBusy}
-          style={{
-            ...baseButton,
-            width: '100%',
-            background: 'var(--tertiary)',
-            color: 'var(--on-tertiary)',
-            opacity: isBusy ? 0.7 : 1
-          }}
-        >
-          {isBusy ? t('common.loading', 'Yukleniyor...') : currentStep.actionLabel}
-        </button>
+        <div style={{
+          position: 'sticky',
+          bottom: 0,
+          paddingTop: 12,
+          paddingBottom: 2,
+          background: 'var(--surface-container-lowest)'
+        }}>
+          <button
+            onClick={handleContinue}
+            disabled={isBusy}
+            style={{
+              ...baseButton,
+              width: '100%',
+              background: 'var(--tertiary)',
+              color: 'var(--on-tertiary)',
+              opacity: isBusy ? 0.7 : 1
+            }}
+          >
+            {isBusy ? t('common.loading', 'Yukleniyor...') : currentStep.actionLabel}
+          </button>
+        </div>
       </div>
     </div>
   );

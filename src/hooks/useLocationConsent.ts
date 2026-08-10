@@ -5,6 +5,7 @@ import { storageService } from "../services/storageService";
 import { STORAGE_KEYS } from "../constants";
 import { logger } from "../utils/logger";
 import { findDistrictByName, setDistrictById } from "../services/diyanetLocationService";
+import { forwardCoordinatesBeforeEnrichment } from "./locationResolution";
 
 interface WeatherData {
   temperature: number;
@@ -28,6 +29,7 @@ interface LocationSnapshot {
 interface UseLocationConsentResult {
   weather: WeatherData | null;
   locationName: string;
+  location: LocationCoords | null;
   showLocationPrompt: boolean;
   locationConsentGiven: boolean;
   handleLocationConsent: (accepted: boolean) => Promise<LocationCoords>;
@@ -156,6 +158,7 @@ const getCurrentDevicePosition = async () => {
 export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) => void): UseLocationConsentResult => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [locationName, setLocationName] = useState("Konum...");
+  const [location, setLocation] = useState<LocationCoords | null>(null);
   const [showLocationPrompt, setShowLocationPrompt] = useState(() => {
     return !storageService.getString(STORAGE_KEYS.LOCATION_CONSENT);
   });
@@ -166,12 +169,12 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
 
   const forwardLocationUpdate = useCallback(
     (latitude: number, longitude: number, resolvedLocationName?: string) => {
-      if (!onLocationUpdate) return;
-
       const signature = `${Number(latitude).toFixed(4)}:${Number(longitude).toFixed(4)}:${resolvedLocationName || ""}`;
       if (lastForwardedLocationRef.current === signature) return;
 
       lastForwardedLocationRef.current = signature;
+      setLocation({ latitude, longitude, locationName: resolvedLocationName });
+      if (!onLocationUpdate) return;
       onLocationUpdate({ latitude, longitude, locationName: resolvedLocationName });
     },
     [onLocationUpdate]
@@ -231,7 +234,12 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
     }
   }, []);
 
-  const resolveLocationAndForward = useCallback(async (latitude: number, longitude: number, isDefault = false) => {
+  const resolveLocationAndForward = useCallback(async (
+    latitude: number,
+    longitude: number,
+    isDefault = false,
+    shouldForwardPrayerTimes = true,
+  ) => {
     const snapshot = await fetchWeatherData(latitude, longitude, isDefault);
     const resolvedLocationName = snapshot?.locationName || (isDefault ? DEFAULT_LOCATION_NAME : undefined);
     const district = resolvedLocationName ? findDistrictByName(resolvedLocationName) : null;
@@ -246,7 +254,9 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
       setStoredLastCoords(latitude, longitude, resolvedLocationName);
     }
 
-    forwardLocationUpdate(latitude, longitude, resolvedLocationName);
+    if (!isDefault && shouldForwardPrayerTimes) {
+      forwardLocationUpdate(latitude, longitude, resolvedLocationName);
+    }
     return snapshot;
   }, [fetchWeatherData, forwardLocationUpdate]);
 
@@ -269,8 +279,12 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
           logger.log("[useLocationConsent] Location obtained:", latitude, longitude);
           setDebugLocation(latitude, longitude);
 
-          const snapshot = await resolveLocationAndForward(latitude, longitude);
-          return { latitude, longitude, locationName: snapshot?.locationName };
+          void forwardCoordinatesBeforeEnrichment(
+            { latitude, longitude },
+            (coords) => forwardLocationUpdate(coords.latitude, coords.longitude),
+            () => resolveLocationAndForward(latitude, longitude, false, false),
+          );
+          return { latitude, longitude };
         } catch (error) {
           logger.warn("[useLocationConsent] Location permission denied/error after consent:", error);
           const permissionStatus = await Geolocation.checkPermissions().catch(() => null);
@@ -325,7 +339,11 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
       const lastCoords = getStoredLastCoords();
       if (lastCoords) {
         setDebugLocation(lastCoords.latitude, lastCoords.longitude);
-        void resolveLocationAndForward(lastCoords.latitude, lastCoords.longitude);
+        void forwardCoordinatesBeforeEnrichment(
+          lastCoords,
+          (coords) => forwardLocationUpdate(coords.latitude, coords.longitude),
+          () => resolveLocationAndForward(lastCoords.latitude, lastCoords.longitude, false, false),
+        );
       }
 
       const refreshGrantedLocation = async () => {
@@ -348,7 +366,11 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
           if (cancelled) return;
 
           setDebugLocation(latitude, longitude);
-          await resolveLocationAndForward(latitude, longitude);
+          void forwardCoordinatesBeforeEnrichment(
+            { latitude, longitude },
+            (coords) => forwardLocationUpdate(coords.latitude, coords.longitude),
+            () => resolveLocationAndForward(latitude, longitude, false, false),
+          );
         } catch (error) {
           logger.warn("[useLocationConsent] Initial location error:", error);
         }
@@ -370,6 +392,7 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
   return {
     weather,
     locationName,
+    location,
     showLocationPrompt,
     locationConsentGiven,
     handleLocationConsent,

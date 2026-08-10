@@ -3,7 +3,7 @@ import { getBottomBannerReservationPx } from "./bannerLayout";
 
 describe("getBottomBannerReservationPx", () => {
   it("adds a safety gutter above the native banner so bottom navigation stays above it", () => {
-    expect(getBottomBannerReservationPx(50)).toBe(58);
+    expect(getBottomBannerReservationPx(50)).toBe(64);
   });
 
   it("does not reserve space after the banner is hidden or fails to load", () => {

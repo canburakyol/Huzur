@@ -11,7 +11,7 @@ export const DailyTasks = lazy(() => import(/* webpackChunkName: "feature-lifest
 export const IslamicMeditation = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../domains/lifestyle/components/IslamicMeditation'));
 export const ThemeSelector = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/ThemeSelector'));
 export const FontSettings = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../components/FontSettings'));
-export const MuezzinSelector = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../domains/lifestyle/components/MuezzinSelector'));
+
 export const StreakFeature = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ './StreakFeature'));
 export const SpiritualJourney = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../domains/gamification/components/SpiritualJourney'));
 export const RoutineBuilder = lazy(() => import(/* webpackChunkName: "feature-lifestyle" */ '../../domains/lifestyle/components/RoutineBuilder'));
@@ -59,13 +59,7 @@ export const lifestyleFeatures: Record<string, FeatureConfig> = {
     nameKey: 'features.fontSettings',
     icon: 'font'
   },
-  muezzinSelector: {
-    component: MuezzinSelector,
-    category: 'LIFESTYLE',
-    module: 'lifestyle',
-    nameKey: 'features.muezzinSelector',
-    icon: 'volume'
-  },
+
   spiritualJourney: {
     component: SpiritualJourney,
     category: 'GAMIFICATION',

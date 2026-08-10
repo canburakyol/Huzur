@@ -211,7 +211,7 @@ describe("admobService consent and cleanup", () => {
 
     onBannerSizeChanged?.({ height: 50 });
 
-    expect(document.documentElement.style.getPropertyValue("--ad-height")).toBe("58px");
+    expect(document.documentElement.style.getPropertyValue("--ad-height")).toBe("64px");
   });
 
   it("tracks rewarded requests and granted rewards", async () => {

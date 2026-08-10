@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Calendar, Check, Circle, Edit2, Heart, Info, Plus, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useGamification } from '../../../hooks/useGamification';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { storageService } from '../../../services/storageService';
 import '../../../styles/PracticePages.css';
@@ -19,18 +18,17 @@ const DUA_CATEGORIES = [
 ];
 
 const SUGGESTED_DUAS = [
-  { text: 'Rabbim bana hayırlı bir eş nasip et', category: 'marriage' },
-  { text: 'Sınavımı başarıyla geçmeyi nasip et', category: 'exam' },
-  { text: 'Hastalığımdan şifa ver', category: 'health' },
-  { text: 'İşimde başarılı olmayı nasip et', category: 'work' },
-  { text: 'Ailemi koru ve bağışla', category: 'family' },
+  { text: 'Allah’ım, bana hayırlı bir eş nasip et.', category: 'marriage' },
+  { text: 'Allah’ım, sınavımda hayırlı sonuçlar ve başarı nasip et.', category: 'exam' },
+  { text: 'Allah’ım, bana şifa ver ve sıkıntımı hafiflet.', category: 'health' },
+  { text: 'Allah’ım, işime hayır, bereket ve kolaylık ver.', category: 'work' },
+  { text: 'Allah’ım, ailemi koru, bağışla ve aramıza huzur ver.', category: 'family' },
 ];
 
 const STORAGE_KEY = 'huzur_dua_tracker';
 
 export function DuaTracker({ onClose }) {
   const { t, i18n } = useTranslation();
-  const { addXP } = useGamification();
   const [newDua, setNewDua] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('general');
   const [showAddForm, setShowAddForm] = useState(false);
@@ -62,7 +60,6 @@ export function DuaTracker({ onClose }) {
     saveDuas(nextDuas, nextStats);
     setNewDua('');
     setShowAddForm(false);
-    addXP(5);
   };
 
   const toggleDua = (id) => {
@@ -74,7 +71,6 @@ export function DuaTracker({ onClose }) {
     setDuas(nextDuas);
     setStats(nextStats);
     saveDuas(nextDuas, nextStats);
-    if (completed > stats.completed) addXP(10);
   };
 
   const deleteDua = (id) => {
@@ -98,7 +94,6 @@ export function DuaTracker({ onClose }) {
   const getCategoryInfo = (id) => DUA_CATEGORIES.find((category) => category.id === id) || DUA_CATEGORIES.at(-1);
   const categoryName = (category) => t(`dua.categories.${category.id}`, category.name);
   const dateLocale = i18n.language === 'tr' ? 'tr-TR' : i18n.language === 'id' ? 'id-ID' : 'en-US';
-  const completionRate = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
 
   return (
     <main className="practice-page">
@@ -112,19 +107,21 @@ export function DuaTracker({ onClose }) {
 
       <section className="practice-summary" aria-label="Dua özeti">
         <div className="practice-summary__top">
-          <div><div className="practice-summary__value">{stats.completed}</div><div className="practice-summary__label">Tamamlanan dua</div></div>
+          <div><div className="practice-summary__value">{stats.completed}</div><div className="practice-summary__label">Dua edildi</div></div>
           <Heart size={22} color="var(--primary)" />
         </div>
-        <div className="practice-progress"><span style={{ width: `${completionRate}%` }} /></div>
         <div className="practice-metrics">
-          <div className="practice-metric"><strong>{stats.completed}</strong><span>Tamamlandı</span></div>
-          <div className="practice-metric"><strong>{stats.total}</strong><span>Toplam</span></div>
-          <div className="practice-metric"><strong>{completionRate}%</strong><span>Oran</span></div>
+          <div className="practice-metric"><strong>{stats.completed}</strong><span>Kişisel kayıtta dua edildi</span></div>
+          <div className="practice-metric"><strong>{stats.total}</strong><span>Toplam kayıt</span></div>
         </div>
       </section>
 
+      <div className="practice-info" style={{ marginTop: 14 }}>
+        <Info size={18} /><div>“Dua edildi” işareti yalnızca kişisel kayıttır; kabul edildiği anlamına gelmez.</div>
+      </div>
+
       <div className="practice-segments" role="tablist" aria-label="Dua filtresi">
-        {[['all', t('common.all', 'Tümü')], ['pending', t('dua.filters.pending', 'Bekleyen')], ['completed', t('dua.filters.accepted', 'Tamamlanan')]].map(([id, label]) => (
+        {[['all', t('common.all', 'Tümü')], ['pending', t('dua.filters.pending', 'Henüz dua edilmedi')], ['completed', t('dua.filters.accepted', 'Dua edildi')]].map(([id, label]) => (
           <button type="button" role="tab" aria-selected={filter === id} className={`practice-segment ${filter === id ? 'practice-segment--active' : ''}`} key={id} onClick={() => setFilter(id)}>{label}</button>
         ))}
       </div>
@@ -144,6 +141,7 @@ export function DuaTracker({ onClose }) {
             ))}
           </div>
           <p className="practice-section-title" style={{ marginTop: 10 }}>ÖNERİLENLER</p>
+          <p className="practice-row__text">Genel dua örneği — Kur’an/hadis alıntısı değildir</p>
           <div className="practice-chip-list">
             {SUGGESTED_DUAS.map((suggestion, index) => (
               <button type="button" className="practice-chip" key={suggestion.text} onClick={() => { setNewDua(t(`dua.suggestions.${suggestion.category}_${index}`, suggestion.text)); setSelectedCategory(suggestion.category); }}>{t(`dua.suggestions.${suggestion.category}_${index}`, suggestion.text)}</button>
@@ -173,7 +171,7 @@ export function DuaTracker({ onClose }) {
                     </div>
                   ) : (
                     <>
-                      <button type="button" className={`practice-check ${dua.completed ? 'practice-check--done' : ''}`} aria-label={dua.completed ? 'Duayı bekleyenlere taşı' : 'Duayı tamamlandı olarak işaretle'} onClick={() => toggleDua(dua.id)}>{dua.completed ? <Check size={19} /> : <Circle size={18} />}</button>
+                      <button type="button" className={`practice-check ${dua.completed ? 'practice-check--done' : ''}`} aria-label={dua.completed ? 'Duayı henüz dua edilmedi olarak işaretle' : 'Dua edildi olarak işaretle'} onClick={() => toggleDua(dua.id)}>{dua.completed ? <Check size={19} /> : <Circle size={18} />}</button>
                       <div className="practice-row__body">
                         <p className="practice-row__title" style={{ textDecoration: dua.completed ? 'line-through' : 'none' }}>{dua.text}</p>
                         <div className="practice-row__meta">

@@ -63,13 +63,17 @@ const getStoredLocationName = () => {
   }
 };
 
-const getDisplayLocationName = (locationName, fallback) => {
-  const candidate = typeof locationName === 'string' ? locationName.trim() : '';
-  if (candidate && candidate !== 'Konum' && candidate !== 'Konum...') {
-    return candidate;
-  }
+const isTrustworthyLocationName = (value) => {
+  const candidate = typeof value === 'string' ? value.trim() : '';
+  return Boolean(candidate && candidate !== 'Konum' && candidate !== 'Konum...');
+};
 
-  return getStoredLocationName() || candidate || fallback;
+const getDisplayLocationName = (locationName) => {
+  const candidate = typeof locationName === 'string' ? locationName.trim() : '';
+  if (isTrustworthyLocationName(candidate)) return candidate;
+
+  const storedName = getStoredLocationName();
+  return isTrustworthyLocationName(storedName) ? storedName : '';
 };
 
 const GET_TURKISH_SUFFIX = (timeStr) => {
@@ -320,10 +324,8 @@ const PremiumHomeHero = memo(({
   const minutes = hasTime ? Math.floor((remainingMs % 3600000) / 60000) : 0;
   const seconds = hasTime ? Math.floor((remainingMs % 60000) / 1000) : 0;
   const formatNum = (value) => String(value).padStart(2, '0');
-  const displayLocationName = getDisplayLocationName(
-    locationName,
-    t('prayer.detectingLocation', 'Konum aranıyor...')
-  );
+  const displayLocationName = getDisplayLocationName(locationName);
+  const hasTrustedLocation = Boolean(displayLocationName);
 
   const ambientStyle = GET_AMBIENT_VARIABLES(nextPrayer?.key);
 
@@ -357,7 +359,9 @@ const PremiumHomeHero = memo(({
           <div className="hero-location">
             <MapPin size={13} style={{ opacity: 0.85 }} />
             <span className="hero-location-text" data-i18n-autolocalize="false">
-              {displayLocationName}
+              {hasTrustedLocation
+                ? displayLocationName
+                : t('prayer.locationRequired', 'Konum doğrulanıyor')}
             </span>
             {weather && (
               <span className="hero-weather-text">
@@ -376,10 +380,12 @@ const PremiumHomeHero = memo(({
         {/* Main Content: Greeting + Countdown */}
         <div className="hero-main-display">
           <h2 className="hero-greeting-text">
-            {nextPrayer ? t(`prayer.nextLabel`, { prayer: getPrayerName(nextPrayer.key), defaultValue: `${getPrayerName(nextPrayer.key)} Vakti` }) : t('prayer.loading')}
+            {hasTrustedLocation && nextPrayer
+              ? t(`prayer.nextLabel`, { prayer: getPrayerName(nextPrayer.key), defaultValue: `${getPrayerName(nextPrayer.key)} Vakti` })
+              : t('prayer.locationRequiredDetail', 'Vakitleri göstermek için konumunuzu doğrulayın')}
           </h2>
 
-          {nextPrayer && (
+          {hasTrustedLocation && nextPrayer && (
             <div
               className="hero-countdown-container"
               data-testid="prayer-countdown"
@@ -414,7 +420,7 @@ const PremiumHomeHero = memo(({
 
         {/* Bottom Strip: Prayer Times */}
         <div className="prayer-strip-container">
-          {PRAYERS.map((prayer) => {
+          {hasTrustedLocation ? PRAYERS.map((prayer) => {
             const isActive = nextPrayer?.key === prayer.key;
             const isCompleted = completedPrayers[prayer.key];
             const timeStr = timings?.[prayer.key]?.substring(0, 5) || '--:--';
@@ -435,7 +441,11 @@ const PremiumHomeHero = memo(({
                 {isCompleted && !isActive && <Check size={10} className="completed-check" />}
               </div>
             );
-          })}
+          }) : (
+            <span className="prayer-strip-name" style={{ padding: '8px 0' }}>
+              {t('prayer.locationRequiredDetail', 'Vakitleri göstermek için konumunuzu doğrulayın')}
+            </span>
+          )}
         </div>
       </div>
     </section>

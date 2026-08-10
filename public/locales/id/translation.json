@@ -251,6 +251,7 @@
     "wordByWord": "Word by Word",
     "tajweedTutor": "Tajweed Tutor",
     "prayers": "Prayers",
+    "kazaTakibi": "Pelacak Salat Tertunda",
     "prayerTeacher": "Prayer Teacher",
     "settings": "Pengaturan",
     "fontSettings": "Pengaturan Font",
@@ -469,7 +470,26 @@
       "q3": "Who is eligible for Zakat?",
       "q4": "How to perform Wudu?",
       "q5": "Virtues of reading Quran",
-      "q6": "Life of the Prophet"
+      "q6": "Life of the Prophet",
+      "q7": "Bagaimana cara mandi wajib?",
+      "q8": "Bagaimana salat tahajud dilakukan?",
+      "q9": "Bagaimana cara melaksanakan salat qada?",
+      "q10": "Apa itu sujud sahwi?",
+      "q11": "Apa saja keutamaan bersedekah?",
+      "q12": "Apa itu zakat fitrah dan kepada siapa diberikan?",
+      "q13": "Apa saja ketentuan bagi musafir?",
+      "q14": "Apa saja salat sunnah?",
+      "q15": "Bagaimana cara bertobat?",
+      "q16": "Apa saja ibadah pada Malam Lailatulqadar?",
+      "q17": "Siapa yang wajib menunaikan ibadah haji?",
+      "q18": "Apa saja syarat ibadah kurban?",
+      "q19": "Apa saja adab berdoa?",
+      "q20": "Apa perbedaan hadis dan sunah?",
+      "q21": "Apa saja keutamaan Asmaul Husna?",
+      "q22": "Bagaimana cara menunaikan hak sesama manusia?",
+      "q23": "Apa keutamaan salat berjamaah?",
+      "q24": "Apa yang dimaksud dengan berselawat?",
+      "q25": "Apa saja ibadah pada malam-malam kandil?"
     },
     "betaWelcomeHint": "Beta mode: You can click on ready-made questions or type a similar question.",
     "betaUnknownQuestion": "This question is not currently in the Beta ready-answer list. You can click one of the sample questions below.",
@@ -1114,12 +1134,7 @@
         "transliteration": "Kul euzu birabbin nas...",
         "meaning": "Say, \"I seek refuge in the Lord of mankind...\""
       },
-      "sabah_duasi": {
-        "title": "Morning Dua",
-        "arabic": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ",
-        "transliteration": "Esbahna wa esbahal mulku lillah",
-        "meaning": "We have reached the morning and at this very time all sovereignty belongs to Allah"
-      },
+
       "tevekkul_duasi": {
         "title": "Reliance Dua",
         "arabic": "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ",
@@ -1132,12 +1147,7 @@
         "transliteration": "Subhanallahi wa bihamdihi",
         "meaning": "Glory be to Allah and His is the praise"
       },
-      "aksam_duasi": {
-        "title": "Evening Dua",
-        "arabic": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ",
-        "transliteration": "Emseyna wa emsel mulku lillah",
-        "meaning": "We have reached the evening and at this very time all sovereignty belongs to Allah"
-      },
+
       "uyku_oncesi": {
         "title": "Before Sleep",
         "arabic": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
@@ -3484,9 +3494,8 @@
     "messagePlaceholder": "Tuliskan masalah atau saran Anda secara rinci...",
     "send": "Kirim",
     "sending": "Mengirim...",
-    "successTitle": "Permintaan Anda telah dikirim.",
-    "successBodyLine1": "Terima kasih atas masukan Anda.",
-    "successBodyLine2": "Akan ditinjau secepatnya.",
+    "emailAppOpenedTitle": "Aplikasi email dibuka",
+    "emailAppOpenedBody": "Periksa email tersebut lalu kirimkan ke dukungan.",
     "directContact": "Untuk kontak langsung",
     "errors": {
       "messageRequired": "Silakan tulis pesan.",
@@ -4344,39 +4353,49 @@
   "zikirmatikDhikrs": {
     "free": {
       "name": "Serbest Zikir",
-      "meaning": "Istediginiz zikri cekin"
+      "meaning": "Istediginiz zikri cekin",
+      "source": "Ditulis oleh pengguna; belum diverifikasi."
     },
     "subhanallah": {
       "name": "Subhanallah",
-      "meaning": "Allah'i tum eksikliklerden tenzih ederim"
+      "meaning": "Allah'i tum eksikliklerden tenzih ederim",
+      "source": "Informasi sumber belum diverifikasi."
     },
     "elhamdulillah": {
       "name": "Elhamdulillah",
-      "meaning": "Hamd Allah'a mahsustur"
+      "meaning": "Hamd Allah'a mahsustur",
+      "source": "Informasi sumber belum diverifikasi."
     },
     "allahuekber": {
       "name": "Allahu Ekber",
-      "meaning": "Allah en buyuktur"
+      "meaning": "Allah en buyuktur",
+      "source": "Informasi sumber belum diverifikasi."
     },
     "lailaheillallah": {
       "name": "La ilahe illallah",
-      "meaning": "Allah'tan baska ilah yoktur"
+      "meaning": "Allah'tan baska ilah yoktur",
+      "source": "Informasi sumber belum diverifikasi."
     },
     "estagfirullah": {
       "name": "Estagfirullah",
-      "meaning": "Allah'tan bagislanma dilerim"
+      "meaning": "Allah'tan bagislanma dilerim",
+      "source": "Informasi sumber belum diverifikasi."
     },
     "lahavle": {
       "name": "La havle",
-      "meaning": "Kekuasaan dan kekuatan hanya datangnya dari Allah"
+      "meaning": "Kekuasaan dan kekuatan hanya datangnya dari Allah",
+      "source": "Informasi sumber belum diverifikasi."
     },
     "salavat": {
       "name": "Salavat",
-      "meaning": "Allah'im Muhammed'e salat eyle"
+      "meaning": "Allah'im Muhammed'e salat eyle",
+      "source": "Informasi sumber belum diverifikasi."
     },
     "hasbunallah": {
       "name": "Hasbunallah",
-      "meaning": "Allah bize yeter, O ne guzel vekildir"
+      "reading": "Hasbunallahu wa ni'mal wakil.",
+      "meaning": "Allah bize yeter, O ne guzel vekildir",
+      "source": "Al-Qur'an, Ali Imran 3:173"
     }
   },
   "homeFeed": {

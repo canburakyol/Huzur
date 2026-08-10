@@ -12,7 +12,7 @@ function Support({ onClose }) {
         email: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
+    const [emailAppOpened, setEmailAppOpened] = useState(false);
     const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
@@ -68,8 +68,8 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
             // Try to open email client
             window.location.href = mailtoLink;
 
-            // Show success anyway (email client will handle)
-            setSubmitted(true);
+            // mailto hands the draft to the user's email app; it does not submit anything.
+            setEmailAppOpened(true);
 
         } catch (error) {
             logger.error('[Support] Failed to launch support mail client', error);
@@ -79,8 +79,8 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
         }
     };
 
-    // Success Screen
-    if (submitted) {
+    // mailto handoff confirmation; no backend submission has occurred.
+    if (emailAppOpened) {
         return (
             <div className="app-container" style={{
                 minHeight: '100vh',
@@ -108,7 +108,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     marginBottom: '12px',
                     fontSize: '22px'
                 }}>
-                    {t('support.successTitle', 'Your request has been submitted!')}
+                    {t('support.emailAppOpenedTitle', 'Email app opened')}
                 </h2>
                 <p style={{
                     color: 'var(--text-color-muted)',
@@ -116,8 +116,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     lineHeight: '1.6',
                     marginBottom: '32px'
                 }}>
-                    {t('support.successBodyLine1', 'Thank you for your feedback.')}<br />
-                    {t('support.successBodyLine2', 'It will be reviewed as soon as possible.')}
+                    {t('support.emailAppOpenedBody', 'Review the email and send it to contact support.')}
                 </p>
                 <button
                     onClick={onClose}

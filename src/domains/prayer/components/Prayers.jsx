@@ -14,6 +14,15 @@ function Prayers({ onClose }) {
     const { t } = useTranslation();
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedPrayer, setSelectedPrayer] = useState(null);
+    // Aliases preserve legacy IDs in the catalog but are not separate visible prayers.
+    // Archived records are incomplete texts for which the audit supplied no verified completion.
+    const visiblePrayers = prayers.filter((prayer) => !prayer.canonicalId && !prayer.archived);
+    const sourceTypeLabels = {
+        quran: 'Kur’an',
+        hadith: 'Hadis',
+        liturgical: 'İbadet / fıkıh formu',
+        general: 'Genel dua (kanonik kaynak doğrulanmadı)'
+    };
 
     // İslami renk paleti
     const primaryGreen = 'var(--primary)';
@@ -51,7 +60,7 @@ function Prayers({ onClose }) {
                             ☪️ {t('prayers.title')}
                         </h2>
                         <p style={{ margin: '6px 0 0 0', opacity: 0.8, fontSize: '14px', color: 'var(--text-primary)' }}>
-                            {prayerCategories.length} {t('prayers.categories')}, {prayers.length} {t('prayers.prayer')}
+                            {prayerCategories.length} {t('prayers.categories')}, {visiblePrayers.length} {t('prayers.prayer')}
                         </p>
                     </div>
                 </div>
@@ -104,7 +113,7 @@ function Prayers({ onClose }) {
                     gridTemplateColumns: 'repeat(2, 1fr)'
                 }}>
                     {prayerCategories.map((category) => {
-                        const categoryPrayers = prayers.filter(p => p.category === category.id);
+                        const categoryPrayers = visiblePrayers.filter((prayer) => prayer.category === category.id);
                         return (
                             <div
                                 key={category.id}
@@ -166,7 +175,7 @@ function Prayers({ onClose }) {
     // Prayer list view
     if (selectedCategory && !selectedPrayer) {
         const category = prayerCategories.find(c => c.id === selectedCategory);
-        const categoryPrayers = prayers.filter(p => p.category === selectedCategory);
+        const categoryPrayers = visiblePrayers.filter((prayer) => prayer.category === selectedCategory);
 
         return (
             <div style={{
@@ -397,33 +406,50 @@ function Prayers({ onClose }) {
                         </p>
                     </div>
 
-                    {/* Transliteration */}
+                    {/* Transliteration: only reviewed, full text is shown. */}
+                    {selectedPrayer.transliteration && (
+                        <div style={{
+                            background: `${goldAccent}10`,
+                            borderRadius: '14px',
+                            padding: '16px 20px',
+                            marginBottom: '16px',
+                            borderLeft: `4px solid ${goldAccent}`
+                        }}>
+                            <h3 style={{
+                                margin: '0 0 8px 0',
+                                fontSize: '11px',
+                                color: goldAccent,
+                                fontWeight: '700',
+                                textTransform: 'uppercase',
+                                letterSpacing: '1px'
+                            }}>
+                                ☪ {t('prayers.pronunciation')}
+                            </h3>
+                            <p style={{
+                                margin: 0,
+                                fontSize: '15px',
+                                color: textOnLightMuted,
+                                lineHeight: '1.6',
+                                fontStyle: 'italic'
+                            }}>
+                                {selectedPrayer.transliteration}
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Source status: never imply that a general wording is a canonical report. */}
                     <div style={{
-                        background: `${goldAccent}10`,
-                        borderRadius: '14px',
-                        padding: '16px 20px',
                         marginBottom: '16px',
-                        borderLeft: `4px solid ${goldAccent}`
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        background: 'var(--surface-container-high)',
+                        color: textOnLightMuted,
+                        fontSize: '13px',
+                        lineHeight: '1.5'
                     }}>
-                        <h3 style={{
-                            margin: '0 0 8px 0',
-                            fontSize: '11px',
-                            color: goldAccent,
-                            fontWeight: '700',
-                            textTransform: 'uppercase',
-                            letterSpacing: '1px'
-                        }}>
-                            ☪ {t('prayers.pronunciation')}
-                        </h3>
-                        <p style={{
-                            margin: 0,
-                            fontSize: '15px',
-                            color: textOnLightMuted,
-                            lineHeight: '1.6',
-                            fontStyle: 'italic'
-                        }}>
-                            {selectedPrayer.transliteration}
-                        </p>
+                        <strong style={{ color: textOnLight }}>Kaynak durumu: </strong>
+                        {sourceTypeLabels[selectedPrayer.sourceType]}
+                        {selectedPrayer.citation ? ` — ${selectedPrayer.citation}` : ''}
                     </div>
 
                     {/* Meaning */}

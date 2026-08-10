@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Award,
-  Bell,
+
   BookOpen,
   Brain,
   Compass,
@@ -29,8 +29,7 @@ const GOAL_FEATURE_MAP = {
   prayer_rhythm: [
     { id: 'prayers', icon: <HeartHandshake size={22} />, labelKey: 'features.prayers' },
     { id: 'routineBuilder', icon: <PenTool size={22} />, labelKey: 'routine.title' },
-    { id: 'adhkar', icon: <Sun size={22} />, labelKey: 'features.adhkar' },
-    { id: 'muezzinSelector', icon: <Bell size={22} />, labelKey: 'features.muezzinSelector' }
+    { id: 'adhkar', icon: <Sun size={22} />, labelKey: 'features.adhkar' }
   ],
   quran_learning: [
     { id: 'dailyQuiz', icon: <Brain size={22} />, labelKey: 'quiz.title' },

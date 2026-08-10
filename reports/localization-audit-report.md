@@ -1,6 +1,6 @@
 # Localization Audit Report
 
-Generated: 2026-07-05T02:37:51.479Z
+Generated: 2026-08-02T12:34:26.366Z
 
 ## Scope
 - Namespace integrity: `src/config/i18nConfig.js` vs `public/locales/*/*.json`
@@ -27,9 +27,9 @@ Generated: 2026-07-05T02:37:51.479Z
 ## Key Diff Summary
 | Namespace | Locale | Missing Keys | Extra Keys | Missing Sample | Extra Sample |
 |---|---|---:|---:|---|---|
-| translation | de | 19 | 0 | `assistant.questions.q7`, `assistant.questions.q8`, `assistant.questions.q9`, `assistant.questions.q10`, `assistant.questions.q11`, `assistant.questions.q12`, `assistant.questions.q13`, `assistant.questions.q14`, `assistant.questions.q15`, `assistant.questions.q16` | — |
+| translation | de | 0 | 0 | — | — |
 | translation | en | 0 | 0 | — | — |
-| translation | id | 19 | 0 | `assistant.questions.q7`, `assistant.questions.q8`, `assistant.questions.q9`, `assistant.questions.q10`, `assistant.questions.q11`, `assistant.questions.q12`, `assistant.questions.q13`, `assistant.questions.q14`, `assistant.questions.q15`, `assistant.questions.q16` | — |
+| translation | id | 0 | 0 | — | — |
 | translation | tr | 0 | 0 | — | — |
 | tajweed | de | 0 | 0 | — | — |
 | tajweed | en | 0 | 0 | — | — |
@@ -38,4 +38,4 @@ Generated: 2026-07-05T02:37:51.479Z
 
 ## Result
 - Namespace mismatch: PASS
-- Key diff mismatch: FAIL
+- Key diff mismatch: PASS

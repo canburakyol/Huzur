@@ -251,6 +251,7 @@
     "wordByWord": "Word by Word",
     "tajweedTutor": "Tajweed Tutor",
     "prayers": "Prayers",
+    "kazaTakibi": "Verpasste Gebete",
     "prayerTeacher": "Prayer Teacher",
     "settings": "Einstellungen",
     "fontSettings": "Schrift-Einstellungen",
@@ -469,7 +470,26 @@
       "q3": "Who is eligible for Zakat?",
       "q4": "How to perform Wudu?",
       "q5": "Virtues of reading Quran",
-      "q6": "Life of the Prophet"
+      "q6": "Life of the Prophet",
+      "q7": "Wie führt man die rituelle Ganzkörperwaschung (Ghusl) durch?",
+      "q8": "Wie verrichtet man das Tahadschjud-Gebet?",
+      "q9": "Wie verrichtet man ein nachzuholendes Gebet?",
+      "q10": "Was ist die Vergesslichkeitsniederwerfung?",
+      "q11": "Welche Vorzüge hat das Almosengeben?",
+      "q12": "Was ist die Zakat al-Fitr und wer kann sie erhalten?",
+      "q13": "Welche Regeln gelten für Reisende?",
+      "q14": "Welche freiwilligen Gebete gibt es?",
+      "q15": "Wie bereut man aufrichtig?",
+      "q16": "Welche Gottesdienste werden in der Nacht der Bestimmung verrichtet?",
+      "q17": "Für wen ist die Pilgerfahrt verpflichtend?",
+      "q18": "Welche Voraussetzungen gelten für das Opfern eines Tieres?",
+      "q19": "Welche Umgangsformen gelten beim Bittgebet?",
+      "q20": "Was ist der Unterschied zwischen Hadith und Sunna?",
+      "q21": "Welche Vorzüge haben die schönsten Namen Allahs?",
+      "q22": "Wie kann man die Rechte anderer begleichen?",
+      "q23": "Welche Vorzüge hat das gemeinsame Gebet?",
+      "q24": "Was bedeutet es, Salawat zu sprechen?",
+      "q25": "Welche Gottesdienste werden in den Kandil-Nächten verrichtet?"
     },
     "betaWelcomeHint": "Beta mode: You can click on ready-made questions or type a similar question.",
     "betaUnknownQuestion": "This question is not currently in the Beta ready-answer list. You can click one of the sample questions below.",
@@ -1114,12 +1134,7 @@
         "transliteration": "Kul euzu birabbin nas...",
         "meaning": "Say, \"I seek refuge in the Lord of mankind...\""
       },
-      "sabah_duasi": {
-        "title": "Morning Dua",
-        "arabic": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ",
-        "transliteration": "Esbahna ve esbahal mülkü lillah",
-        "meaning": "We have reached the morning and at this very time all sovereignty belongs to Allah"
-      },
+
       "tevekkul_duasi": {
         "title": "Reliance Dua",
         "arabic": "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ",
@@ -1132,12 +1147,7 @@
         "transliteration": "Sübhanallahi ve bihamdihi",
         "meaning": "Glory be to Allah and His is the praise"
       },
-      "aksam_duasi": {
-        "title": "Evening Dua",
-        "arabic": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ",
-        "transliteration": "Emseyna ve emsel mülkü lillah",
-        "meaning": "We have reached the evening and at this very time all sovereignty belongs to Allah"
-      },
+
       "uyku_oncesi": {
         "title": "Before Sleep",
         "arabic": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
@@ -3484,9 +3494,8 @@
     "messagePlaceholder": "Beschreiben Sie Ihr Problem oder Ihren Vorschlag im Detail...",
     "send": "Senden",
     "sending": "Wird gesendet...",
-    "successTitle": "Ihre Anfrage wurde gesendet.",
-    "successBodyLine1": "Vielen Dank für Ihr Feedback.",
-    "successBodyLine2": "Es wird so schnell wie möglich geprüft.",
+    "emailAppOpenedTitle": "E-Mail-App geöffnet",
+    "emailAppOpenedBody": "Prüfen Sie die E-Mail und senden Sie sie an den Support.",
     "directContact": "Für direkten Kontakt",
     "errors": {
       "messageRequired": "Bitte schreiben Sie eine Nachricht.",
@@ -4344,39 +4353,49 @@
   "zikirmatikDhikrs": {
     "free": {
       "name": "Serbest Zikir",
-      "meaning": "Istediginiz zikri cekin"
+      "meaning": "Istediginiz zikri cekin",
+      "source": "Vom Nutzer verfasst; nicht verifiziert."
     },
     "subhanallah": {
       "name": "Subhanallah",
-      "meaning": "Allah'i tum eksikliklerden tenzih ederim"
+      "meaning": "Allah'i tum eksikliklerden tenzih ederim",
+      "source": "Quellenangabe nicht verifiziert."
     },
     "elhamdulillah": {
       "name": "Elhamdulillah",
-      "meaning": "Hamd Allah'a mahsustur"
+      "meaning": "Hamd Allah'a mahsustur",
+      "source": "Quellenangabe nicht verifiziert."
     },
     "allahuekber": {
       "name": "Allahu Ekber",
-      "meaning": "Allah en buyuktur"
+      "meaning": "Allah en buyuktur",
+      "source": "Quellenangabe nicht verifiziert."
     },
     "lailaheillallah": {
       "name": "La ilahe illallah",
-      "meaning": "Allah'tan baska ilah yoktur"
+      "meaning": "Allah'tan baska ilah yoktur",
+      "source": "Quellenangabe nicht verifiziert."
     },
     "estagfirullah": {
       "name": "Estagfirullah",
-      "meaning": "Allah'tan bagislanma dilerim"
+      "meaning": "Allah'tan bagislanma dilerim",
+      "source": "Quellenangabe nicht verifiziert."
     },
     "lahavle": {
       "name": "La havle",
-      "meaning": "Guc ve kuvvet ancak Allah'tandir"
+      "meaning": "Guc ve kuvvet ancak Allah'tandir",
+      "source": "Quellenangabe nicht verifiziert."
     },
     "salavat": {
       "name": "Salavat",
-      "meaning": "Allah'im Muhammed'e salat eyle"
+      "meaning": "Allah'im Muhammed'e salat eyle",
+      "source": "Quellenangabe nicht verifiziert."
     },
     "hasbunallah": {
       "name": "Hasbunallah",
-      "meaning": "Allah bize yeter, O ne guzel vekildir"
+      "reading": "Hasbunallahu wa ni'mal wakil.",
+      "meaning": "Allah bize yeter, O ne guzel vekildir",
+      "source": "Koran, Al-i Imran 3:173"
     }
   },
   "homeFeed": {

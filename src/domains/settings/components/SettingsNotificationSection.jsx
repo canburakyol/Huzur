@@ -1,11 +1,10 @@
-import { Bell, Clock, History } from 'lucide-react';
+import { Clock, History } from 'lucide-react';
 
 import NotificationSettings from '../../system/components/NotificationSettings';
 import SettingsActionRow from './SettingsActionRow';
 import SettingsToggle from './SettingsToggle';
 
 function SettingsNotificationSection({
-  onOpenFeature,
   onShowHistory,
   onToggleStickyNotification,
   stickyNotification,
@@ -25,12 +24,6 @@ function SettingsNotificationSection({
           title={t('settings.historyTitle', 'Bildirim Gecmisi')}
         />
 
-        <SettingsActionRow
-          description={t('settings.muezzinDesc')}
-          icon={<Bell size={20} />}
-          onClick={() => onOpenFeature('muezzinSelector')}
-          title={t('settings.muezzinTitle')}
-        />
 
         <SettingsActionRow
           description={t('settings.stickyCounterDesc')}

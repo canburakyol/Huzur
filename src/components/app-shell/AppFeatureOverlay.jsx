@@ -11,6 +11,7 @@ function AppFeatureOverlay({
   setActiveTab,
   onShowMenu,
   locationName,
+  location,
   isProUser,
 }) {
   const isQuranScreen = activeFeature === 'quran';
@@ -35,6 +36,7 @@ function AppFeatureOverlay({
           activeFeature={activeFeature}
           setActiveFeature={setActiveFeature}
           locationName={locationName}
+          location={location}
           reserveBottomStack={!isQuranScreen}
         />
 

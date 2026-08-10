@@ -13,7 +13,6 @@ export const Tespihat = lazy(() => import(/* webpackChunkName: "feature-ibadet" 
 export const EsmaUlHusna = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../domains/ibadet/components/EsmaUlHusna'));
 export const FastingTracker = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../domains/ibadet/components/FastingTracker'));
 export const HatimCoach = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../domains/tools/components/HatimCoach'));
-export const MissedPrayers = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../domains/prayer/components/MissedPrayers'));
 export const DeedJournal = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../domains/gamification/components/DeedJournal'));
 export const NafilePrayers = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../domains/prayer/components/NafilePrayers'));
 export const DuaTracker = lazy(() => import(/* webpackChunkName: "feature-ibadet" */ '../../domains/ibadet/components/DuaTracker'));
@@ -60,13 +59,6 @@ export const ibadatFeatures: Record<string, FeatureConfig> = {
     module: 'ibadet',
     nameKey: 'features.hatimCoach',
     icon: '🎯'
-  },
-  missedPrayers: {
-    component: MissedPrayers,
-    category: 'IBADET',
-    module: 'ibadet',
-    nameKey: 'features.missedPrayers',
-    icon: '⏰'
   },
   deedJournal: {
     component: DeedJournal,

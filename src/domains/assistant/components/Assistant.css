@@ -19,6 +19,13 @@
   animation: assistant-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* The native AdMob banner sits outside the WebView at the physical screen
+   edge. Keep the composer in the usable viewport rather than under that ad. */
+.assistant-container.assistant-with-bottom-banner {
+  box-sizing: border-box;
+  padding-bottom: calc(var(--ad-height) + env(safe-area-inset-bottom, 0px));
+}
+
 /* Unified Huzur design-system overrides */
 .assistant-container {
   background: var(--surface-page);

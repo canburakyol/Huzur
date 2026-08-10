@@ -14,6 +14,7 @@ test('location consent is shown after onboarding and precedes other consent over
 
   const dialog = page.getByRole('dialog', { name: /Konumunu kullanabilir miyiz|location/i });
   await expect(dialog).toBeVisible({ timeout: 15000 });
+  await expect(page.locator('.app-container')).toHaveCount(0);
   await expect(dialog.getByRole('button', { name: /Konumumu kullan/i })).toBeVisible();
   await expect(dialog.getByRole('button', { name: /İstanbul ile devam et/i })).toBeVisible();
 

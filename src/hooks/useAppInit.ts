@@ -135,7 +135,8 @@ const getVakitTheme = (timings: PrayerTimings | undefined): Theme => {
 export const useAppInit = (
   timings?: PrayerTimings | null,
   activeTab = "home",
-  activeFeature: string | null = null
+  activeFeature: string | null = null,
+  isLocationConsentVisible = false,
 ): UseAppInitResult => {
   const [{ streakData, newBadge: initialBadge }] = useState(() => {
     const result = checkAndUpdateStreak();
@@ -314,7 +315,7 @@ export const useAppInit = (
       };
     }
 
-    if (activeTab === "quran" || activeFeature === "quran") {
+    if (isLocationConsentVisible || activeTab === "quran" || activeFeature === "quran") {
       void import("../services/admobService")
         .then(({ adMobService }) => adMobService.hideBanner())
         .catch((error) => {
@@ -347,7 +348,7 @@ export const useAppInit = (
     return () => {
       isCancelled = true;
     };
-  }, [activeFeature, activeTab, isProUserLocal, onboardingCompleted]);
+  }, [activeFeature, activeTab, isLocationConsentVisible, isProUserLocal, onboardingCompleted]);
 
   const clearBadge = () => setNewBadge(null);
 

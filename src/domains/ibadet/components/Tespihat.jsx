@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BookOpen, Check, CheckCircle2, ChevronDown, ChevronRight, RotateCcw, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { TESPIHAT_SECTIONS, TESBIHLER, TEVHID, NAMAZSONRASI_DUALAR } from '../../../data/tespihatData';
+import { OPTIONAL_QURAN_DUALAR, TESPIHAT_SECTIONS, TESBIHLER, TEVHID } from '../../../data/tespihatData';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { storageService } from '../../../services/storageService';
 import '../../../styles/PracticePages.css';
@@ -39,6 +39,9 @@ function Tespihat({ onClose }) {
       <div style={{ fontSize: '1.3rem', fontFamily: 'var(--arabic-font)', color: 'var(--on-surface)', marginBottom: 10, textAlign: 'right', direction: 'rtl', lineHeight: 1.7 }}>{item.arabic}</div>
       <div className="practice-row__text" style={{ color: 'var(--on-surface)' }}>{item.latin}</div>
       <div className="practice-row__text" style={{ marginTop: 7, fontStyle: 'italic' }}>{item.meaning}</div>
+      <div className="practice-row__text" data-testid={`source-${item.id}`} style={{ marginTop: 10, fontWeight: 600 }}>
+        {item.sourceType === 'hadith' ? 'Hadis' : item.sourceType === 'quran' ? 'Kur’an' : 'Genel / kaynak belirtilmemiş'}{item.citation ? ` · ${item.citation}` : ''}
+      </div>
     </div>
   );
 
@@ -54,6 +57,7 @@ function Tespihat({ onClose }) {
           <div style={{ fontSize: '1.45rem', fontFamily: 'var(--arabic-font)', color: 'var(--on-surface)', textAlign: 'right', direction: 'rtl', lineHeight: 1.75 }}>{activeSection.arabic}</div>
           <p className="practice-row__text" style={{ marginTop: 14, color: 'var(--on-surface)' }}>{activeSection.latin}</p>
           <p className="practice-row__text" style={{ marginTop: 8, fontStyle: 'italic' }}>{activeSection.meaning}</p>
+          <p className="practice-row__text" data-testid={`source-${activeSection.id}`} style={{ marginTop: 10, fontWeight: 600 }}>{activeSection.sourceType === 'hadith' ? 'Hadis' : activeSection.sourceType === 'quran' ? 'Kur’an' : 'Genel / kaynak belirtilmemiş'}{activeSection.citation ? ` · ${activeSection.citation}` : ''}</p>
           <button type="button" className={`practice-wide ${isComplete ? 'practice-secondary-button' : 'practice-primary-button'}`} style={{ marginTop: 14 }} onClick={() => { toggleComplete(activeSection.id); setActiveSection(null); }}><Check size={18} /> {isComplete ? 'Tamamlandı' : 'Tamamla'}</button>
         </section>
       </main>
@@ -110,7 +114,7 @@ function Tespihat({ onClose }) {
       </section>
 
       <section className="practice-section">
-        <h2 className="practice-section-title">{t('tespihat.ui.postPrayerDuas', 'TEVHİD VE DUALAR')}</h2>
+        <h2 className="practice-section-title">{t('tespihat.ui.optionalQuranDuas', 'TEVHİD VE İSTEĞE BAĞLI KUR’AN DUALARI')}</h2>
         <div className="practice-list">
           <div>
             <div className="practice-row">
@@ -121,10 +125,10 @@ function Tespihat({ onClose }) {
             </div>
             {expandedItem === 'tevhid' && renderExpandedContent(TEVHID)}
           </div>
-          {NAMAZSONRASI_DUALAR.map((dua) => (
+          {OPTIONAL_QURAN_DUALAR.map((dua) => (
             <div key={dua.id}>
               <button type="button" className="practice-row" onClick={() => setExpandedItem(expandedItem === dua.id ? null : dua.id)}>
-                <span className="practice-row__icon"><BookOpen size={17} /></span><span className="practice-row__body"><span className="practice-row__title">{dua.title}</span></span>{expandedItem === dua.id ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+                <span className="practice-row__icon"><BookOpen size={17} /></span><span className="practice-row__body"><span className="practice-row__title">{dua.title}</span><span className="practice-row__text">İsteğe bağlı Kur’an duası · {dua.citation}</span></span>{expandedItem === dua.id ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
               </button>
               {expandedItem === dua.id && renderExpandedContent(dua)}
             </div>

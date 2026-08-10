@@ -11,7 +11,7 @@ import {
   Heart,
   Home,
   MessageCircle,
-  Mic,
+
   Moon,
   Palette,
   Settings,
@@ -68,7 +68,7 @@ const SUPPORT_MENU_ITEMS = [
 const SYSTEM_MENU_ITEMS = [
   { id: 'theme', icon: <Palette size={20} />, labelKey: 'menu.theme', component: 'theme' },
   { id: 'fontSettings', icon: <Type size={20} />, labelKey: 'menu.fontSettings', component: 'fontSettings' },
-  { id: 'muezzinSelector', icon: <Mic size={20} />, labelKey: 'menu.muezzinSelector', component: 'muezzinSelector' },
+
   { id: 'settings', icon: <Settings size={20} />, labelKey: 'menu.settings', component: 'settings' },
   { id: 'support', icon: <MessageCircle size={20} />, labelKey: 'menu.support', component: 'support' },
   { id: 'pro', icon: <Crown size={20} />, labelKey: 'menu.goPro', component: 'pro' }

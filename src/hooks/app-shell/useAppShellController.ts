@@ -38,7 +38,12 @@ export function useAppShellController() {
   );
 
   const location = useLocationConsent(handleLocationUpdate);
-  const appInit = useAppInit(timings, navigation.activeTab, navigation.activeFeature);
+  const appInit = useAppInit(
+    timings,
+    navigation.activeTab,
+    navigation.activeFeature,
+    location.showLocationPrompt,
+  );
   const { dailyContent } = useDailyContent();
 
   useDirection();
@@ -70,7 +75,8 @@ export function useAppShellController() {
   return {
     t,
     isFocusMode,
-    hasBlockingOverlay: navigation.showSplash || growthOnboarding.showGrowthOnboarding,
+    hasBlockingOverlay:
+      navigation.showSplash || growthOnboarding.showGrowthOnboarding || location.showLocationPrompt,
     navigation,
     streak,
     prayer,

@@ -8,7 +8,7 @@ import { logger } from '../utils/logger';
  * FeatureManager Component
  * Handles rendering of active features as an overlay
  */
-const FeatureManager = ({ activeFeature, setActiveFeature, locationName, reserveBottomStack = false }) => {
+const FeatureManager = ({ activeFeature, setActiveFeature, locationName, location, reserveBottomStack = false }) => {
   if (!activeFeature) return null;
 
   const closeFeature = () => setActiveFeature(null);
@@ -29,7 +29,7 @@ const FeatureManager = ({ activeFeature, setActiveFeature, locationName, reserve
   return (
     <div className={`app-container feature-overlay-shell ${reserveBottomStack ? 'ad-safe-feature-shell' : ''}`}>
       <Suspense fallback={<LoadingSpinner height="100vh" />}>
-        <FeatureComponent onClose={closeFeature} locationName={locationName} {...extraProps} />
+        <FeatureComponent onClose={closeFeature} locationName={locationName} location={location} {...extraProps} />
       </Suspense>
     </div>
   );

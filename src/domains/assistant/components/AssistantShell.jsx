@@ -68,7 +68,7 @@ const AssistantShell = ({
   }, [t, setMessages]);
 
   return (
-    <div className="assistant-container reveal-stagger">
+    <div className={`assistant-container reveal-stagger${isProUser ? '' : ' assistant-with-bottom-banner'}`}>
       {/* Header */}
       <div className="assistant-header">
         <button onClick={onClose} className="assistant-back-btn" aria-label="Geri">

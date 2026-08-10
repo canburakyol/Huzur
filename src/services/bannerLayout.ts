@@ -1,4 +1,7 @@
-export const BOTTOM_BANNER_SAFETY_GUTTER_PX = 8;
+// Keep a small touch-safe separation only. The native banner is already
+// physically anchored above the system navigation area; an oversized CSS
+// reserve leaves a conspicuous empty band on Pixel-class devices.
+export const BOTTOM_BANNER_SAFETY_GUTTER_PX = 14;
 
 /**
  * Native AdMob reports the rendered banner height after it loads. Reserve that

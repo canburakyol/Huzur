@@ -7,7 +7,6 @@ export const DEFAULT_PRAYER_COUNTS = Object.freeze({
   aksam: 0,
   yatsi: 0,
   vitir: 0,
-  oruc: 0,
 });
 
 export const normalizePrayerTrackerCounts = (value) => Object.fromEntries(

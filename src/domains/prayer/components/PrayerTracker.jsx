@@ -1,21 +1,16 @@
 import { useState } from 'react';
-import { AlertCircle, CheckCircle2, Info, Minus, Plus, TrendingDown } from 'lucide-react';
+import { Info, Minus, Plus, TrendingDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { storageService } from '../../../services/storageService';
 import { DEFAULT_PRAYER_COUNTS, normalizePrayerTrackerCounts, PRAYER_TRACKER_KEY } from './prayerTrackerState';
 import '../../../styles/PracticePages.css';
 
-const PRAYER_TRACKER_HISTORY_KEY = 'prayerTrackerHistory';
-
 const PrayerTracker = ({ onClose }) => {
   const { t } = useTranslation();
   const [counts, setCounts] = useState(() => normalizePrayerTrackerCounts(
     storageService.getItem(PRAYER_TRACKER_KEY, DEFAULT_PRAYER_COUNTS),
   ));
-  const [, setHistory] = useState(() => storageService.getItem(PRAYER_TRACKER_HISTORY_KEY, []));
-  const [showInfo, setShowInfo] = useState(false);
-
   const updateCount = (key, delta) => {
     const current = Number(counts[key]);
     const next = {
@@ -24,102 +19,72 @@ const PrayerTracker = ({ onClose }) => {
     };
     setCounts(next);
     storageService.setItem(PRAYER_TRACKER_KEY, next);
-
-    if (delta < 0) {
-      setHistory((previous) => {
-        const safeHistory = Array.isArray(previous) ? previous : [];
-        const next = [...safeHistory, { type: key, date: new Date().toISOString(), count: 1 }].slice(-50);
-        storageService.setItem(PRAYER_TRACKER_HISTORY_KEY, next);
-        return next;
-      });
-    }
   };
 
   const items = [
-    { key: 'sabah', label: t('prayers.fajr', 'Sabah Namazı'), icon: '🌅', rekat: 2 },
-    { key: 'ogle', label: t('prayers.dhuhr', 'Öğle Namazı'), icon: '☀️', rekat: 4 },
-    { key: 'ikindi', label: t('prayers.asr', 'İkindi Namazı'), icon: '🌤️', rekat: 4 },
-    { key: 'aksam', label: t('prayers.maghrib', 'Akşam Namazı'), icon: '🌆', rekat: 3 },
-    { key: 'yatsi', label: t('prayers.isha', 'Yatsı Namazı'), icon: '🌙', rekat: 4 },
-    { key: 'vitir', label: t('prayers.witr', 'Vitir Namazı'), icon: '⭐', rekat: 3 },
-    { key: 'oruc', label: t('fasting.simple', 'Oruç'), icon: '◐', rekat: null },
+    { key: 'sabah', label: t('prayers.fajr', 'Sabah Namazı'), icon: '🌅' },
+    { key: 'ogle', label: t('prayers.dhuhr', 'Öğle Namazı'), icon: '☀️' },
+    { key: 'ikindi', label: t('prayers.asr', 'İkindi Namazı'), icon: '🌤️' },
+    { key: 'aksam', label: t('prayers.maghrib', 'Akşam Namazı'), icon: '🌆' },
+    { key: 'yatsi', label: t('prayers.isha', 'Yatsı Namazı'), icon: '🌙' },
+    { key: 'vitir', label: t('prayers.witr', 'Vitir Namazı'), icon: '⭐' },
   ];
 
   const totalPrayers = ['sabah', 'ogle', 'ikindi', 'aksam', 'yatsi', 'vitir']
     .reduce((sum, key) => sum + counts[key], 0);
-  const totalRekat = (counts.sabah * 2) + (counts.ogle * 4) + (counts.ikindi * 4)
-    + (counts.aksam * 3) + (counts.yatsi * 4) + (counts.vitir * 3);
-  const estimatedDays = Math.ceil(totalPrayers / 5);
-
   return (
     <main className="practice-page" data-i18n-autolocalize="false">
       <header className="practice-header">
         <IslamicBackButton onClick={onClose} size="medium" />
         <div className="practice-header__copy">
-          <h1 className="practice-title">{t('menu.kazaTakibi', 'Kaza Takibi')}</h1>
-          <p className="practice-subtitle">Her sayı, o vakitten kalan kaza borcunuzu gösterir.</p>
+          <h1 className="practice-title">Kişisel kaza kaydı</h1>
+          <p className="practice-subtitle">Yalnızca sizin eklediğiniz namaz kayıtlarını düzenleyin.</p>
         </div>
-        <button
-          type="button"
-          className="practice-icon-button"
-          aria-label={showInfo ? 'Bilgiyi kapat' : 'Kaza namazı bilgisini aç'}
-          aria-expanded={showInfo}
-          onClick={() => setShowInfo((value) => !value)}
-        >
-          <AlertCircle size={19} />
-        </button>
       </header>
 
-      {showInfo && (
-        <div className="practice-info">
-          <Info size={18} />
-          <div>
-            <strong>{t('prayerTracker.infoTitle', 'Kaza Namazı Nedir?')}</strong>
-            {t('prayerTracker.infoDesc', 'Vaktinde kılınamayan farz namazlar için kaza namazı kılınır. Kıldığınız her vakit için eksi düğmesini kullanın.')}
-          </div>
-        </div>
-      )}
+      <div className="practice-info" style={{ marginTop: 0 }}>
+        <Info size={18} />
+        <div><strong>Kişisel kayıt</strong>Bu ekran kişisel kayıt içindir; dinî yükümlülük ve takip yöntemi mezhep ve kişisel duruma göre değişebilir. Dinî bir görevliye danışın.</div>
+      </div>
 
-      <section className="practice-summary" aria-label="Kaza özeti">
+      <section className="practice-summary" aria-label="Kişisel kaza kaydı özeti">
         <div className="practice-summary__top">
           <div>
             <div className="practice-summary__value">{totalPrayers}</div>
-            <div className="practice-summary__label">Toplam kalan kaza</div>
+            <div className="practice-summary__label">Toplam kayıtlı vakit</div>
           </div>
           <TrendingDown size={23} color="var(--primary)" />
         </div>
         <div className="practice-metrics">
-          <div className="practice-metric"><strong>{totalPrayers}</strong><span>Vakit</span></div>
-          <div className="practice-metric"><strong>{totalRekat}</strong><span>Rekat</span></div>
-          <div className="practice-metric"><strong>{estimatedDays}</strong><span>Tahmini gün</span></div>
+          <div className="practice-metric"><strong>{totalPrayers}</strong><span>Vakit kaydı</span></div>
         </div>
       </section>
 
       <section className="practice-section">
-        <h2 className="practice-section-title">VAKİT BAZINDA KALAN BORÇ</h2>
+        <h2 className="practice-section-title">VAKİT BAZINDA KAYIT</h2>
         <div className="practice-list">
           {items.map((item) => {
             const count = counts[item.key];
             return (
-              <div className={`practice-row ${count === 0 ? 'practice-row--done' : ''}`} key={item.key}>
+              <div className="practice-row" key={item.key}>
                 <div className="practice-row__icon" aria-hidden="true">{item.icon}</div>
                 <div className="practice-row__body">
                   <h3 className="practice-row__title">{item.label}</h3>
-                  <p className="practice-row__text">{count} kaza kalan</p>
+                  <p className="practice-row__text">{count} kayıtlı</p>
                 </div>
                 <div className="practice-counter" aria-label={`${item.label} sayacı`}>
                   <button
                     type="button"
                     className="practice-counter__button"
                     disabled={count === 0}
-                    aria-label={`${item.label} kıldım, borcu azalt`}
+                    aria-label={`${item.label} kaydını azalt`}
                     onClick={() => updateCount(item.key, -1)}
                   ><Minus size={18} /></button>
                   <span className="practice-counter__value" aria-live="polite">{count}</span>
                   <button
                     type="button"
                     className="practice-counter__button practice-counter__button--primary"
-                    aria-label={`${item.label} borç ekle, sayıyı artır`}
+                    aria-label={`${item.label} kayda ekle, sayıyı artır`}
                     onClick={() => updateCount(item.key, 1)}
                   ><Plus size={18} /></button>
                 </div>
@@ -129,12 +94,6 @@ const PrayerTracker = ({ onClose }) => {
         </div>
       </section>
 
-      {totalPrayers === 0 && counts.oruc === 0 && (
-        <div className="practice-info" style={{ marginTop: 14, marginBottom: 0 }}>
-          <CheckCircle2 size={18} />
-          <div><strong>Maşallah</strong>Kayıtlı kaza borcunuz bulunmuyor.</div>
-        </div>
-      )}
     </main>
   );
 };
