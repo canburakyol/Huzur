@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
 const mosqueIcon = new L.DivIcon({
-    html: '<div style="font-size: 28px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">ğŸ•Œ</div>',
+    html: '<div style="font-size: 28px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🕌</div>',
     className: 'mosque-marker',
     iconSize: [40, 40],
     iconAnchor: [20, 40],
@@ -43,7 +43,7 @@ const MosqueFinderMap = ({ location, mosques, onSelectMosque, onOpenInMaps }) =>
         <FlyToLocation position={location} />
 
         <Marker position={location} icon={userIcon}>
-            <Popup>ğŸ“ Konumunuz</Popup>
+            <Popup>📍 Konumunuz</Popup>
         </Marker>
 
         {mosques.map((mosque) => (
@@ -59,7 +59,7 @@ const MosqueFinderMap = ({ location, mosques, onSelectMosque, onOpenInMaps }) =>
                     <div style={{ minWidth: '150px' }}>
                         <strong>{mosque.name}</strong>
                         <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
-                            {mosque.distance.toFixed(1)} km uzaklÄ±kta
+                            {mosque.distance.toFixed(1)} km uzaklıkta
                         </div>
                         <button
                             onClick={() => onOpenInMaps(mosque.lat, mosque.lng, mosque.name)}

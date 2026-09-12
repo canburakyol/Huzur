@@ -1,0 +1,3 @@
+• Faster prayer-times flow; timings load without waiting for city/weather.
+• Qibla and imsakiye location accuracy improvements.
+• Dua/dhikr content fixes, performance and stability improvements.

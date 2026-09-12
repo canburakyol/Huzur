@@ -152,8 +152,22 @@ describe('Firestore security rules', () => {
     );
   });
 
-  it('denies direct client amin increments on existing duas', async () => {
+  it('denies direct client reads of raw dua docs (authorId leak guard)', async () => {
     await seedDocs(testEnv, {
+      'duas/dua-1': {
+        text: 'Saglik icin dua bekliyorum.',
+        authorId: 'dua-author',
+        authorName: 'Bir Mumin',
+        isAnonymous: true,
+        aminCount: 0,
+      },
+    });
+
+    const firestore = testEnv.authenticatedContext('dua-reader').firestore();
+    await assertFails(getDoc(doc(firestore, 'duas', 'dua-1')));
+  });
+
+  it('denies direct client amin increments on existing duas', async () => {    await seedDocs(testEnv, {
       'duas/dua-1': {
         text: 'Saglik icin dua bekliyorum.',
         authorId: 'dua-author',
@@ -255,6 +269,28 @@ describe('Firestore security rules', () => {
     await assertFails(
       updateDoc(doc(firestore, 'familyGroups', 'group-1'), {
         name: 'Yeni Ad',
+      })
+    );
+  });
+
+  it('validates users/data docId and blocks server-managed keys', async () => {
+    const firestore = testEnv.authenticatedContext('user-alpha').firestore();
+
+    await assertSucceeds(
+      setDoc(doc(firestore, 'users', 'user-alpha', 'data', 'prefs_v1'), {
+        theme: 'dark',
+      })
+    );
+
+    await assertFails(
+      setDoc(doc(firestore, 'users', 'user-alpha', 'data', 'prefs_v1'), {
+        xp: 999,
+      })
+    );
+
+    await assertFails(
+      setDoc(doc(firestore, 'users', 'user-alpha', 'data', 'evil id!'), {
+        theme: 'dark',
       })
     );
   });

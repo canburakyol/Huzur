@@ -229,7 +229,10 @@
     "maghrib": "Maghrib",
     "isha": "Isha",
     "loading": "Loading prayer times...",
-    "time": "Time"
+    "time": "Time",
+    "locationRequired": "Verifying location",
+    "locationRequiredDetail": "Verify your location to see prayer times",
+    "nextLabel": "{{prayer}} Prayer"
   },
   "splash": {
     "translation": "My Lord. Expand my chest and ease my task.",
@@ -1134,7 +1137,6 @@
         "transliteration": "Kul euzu birabbin nas...",
         "meaning": "Say, \"I seek refuge in the Lord of mankind...\""
       },
-
       "tevekkul_duasi": {
         "title": "Reliance Dua",
         "arabic": "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ",
@@ -1147,7 +1149,6 @@
         "transliteration": "Subhanallahi wa bihamdihi",
         "meaning": "Glory be to Allah and His is the praise"
       },
-
       "uyku_oncesi": {
         "title": "Before Sleep",
         "arabic": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
@@ -1190,7 +1191,9 @@
     "dailyTasksSubtitle": "Small steps every day for great rewards",
     "dailyName": "Name of the Day",
     "dailyPrayer": "Prayer of the Day",
-    "dailyVerse": "Verse of the Day"
+    "dailyVerse": "Verse of the Day",
+    "heroProgressDone": "{{done}}/{{total}} prayers",
+    "heroStartStreak": "Start your streak today"
   },
   "hikmet": {
     "title": "Wisdom Book",
@@ -3980,7 +3983,8 @@
   "streak": {
     "fajr": "Fajr",
     "quran": "Quran",
-    "dhikr": "Dhikr"
+    "dhikr": "Dhikr",
+    "days": "Days"
   },
   "badges": {
     "early_bird": "Early Bird",
@@ -4528,5 +4532,12 @@
     },
     "cardFallbackTitle": "Open today?s discovery",
     "cardFallbackSource": "Huzur"
+  },
+  "rate": {
+    "title": "Enjoying Huzur?",
+    "subtitle": "A minute of your time for a Play Store rating means a lot. Your support helps us grow.",
+    "cta": "Rate Now",
+    "later": "Later",
+    "never": "Don't Ask Again"
   }
 }

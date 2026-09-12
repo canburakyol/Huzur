@@ -1,12 +1,37 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import * as LucideIcons from 'lucide-react';
+import {
+  Sunrise,
+  Coins,
+  Home,
+  Shield,
+  Hand,
+  MoonStar,
+  Moon,
+  Bird,
+  Heart,
+  Book,
+  BookOpen,
+  ChevronLeft,
+} from 'lucide-react';
 import { prayerCategories, prayers } from '../../../data/prayers';
-import { ChevronLeft, BookOpen } from 'lucide-react';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 
+const CATEGORY_ICONS = {
+  Sunrise,
+  Coins,
+  Home,
+  Shield,
+  Hand,
+  MoonStar,
+  Moon,
+  Dove: Bird,
+  Mosque: Book,
+  Heart,
+};
+
 const IconMapper = ({ iconName, size = 24, strokeWidth = 2, color }) => {
-    const IconComponent = LucideIcons[iconName] || LucideIcons.Book;
+    const IconComponent = CATEGORY_ICONS[iconName] || Book;
     return <IconComponent size={size} strokeWidth={strokeWidth} color={color} />;
 };
 

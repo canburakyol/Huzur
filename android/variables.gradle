@@ -9,6 +9,9 @@ ext {
     androidxFragmentVersion = '1.8.4'
     coreSplashScreenVersion = '1.2.0'
     androidxWebkitVersion = '1.12.1'
+    // Capacitor browser plugin defaults to 1.9.0 which needs AGP 8.9.1+;
+    // pin to 1.8.0 to stay compatible with project AGP 8.6.1.
+    androidxBrowserVersion = '1.8.0'
     junitVersion = '4.13.2'
     androidxJunitVersion = '1.2.1'
     androidxEspressoCoreVersion = '3.6.1'

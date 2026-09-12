@@ -88,6 +88,12 @@ function createJoinFamilyByInviteCodeHandler(deps = {}) {
       return { success: true, familyId: familyDoc.id, alreadyMember: true };
     }
 
+    const MAX_FAMILY_MEMBERS = 20;
+    if (members.length >= MAX_FAMILY_MEMBERS) {
+      logSecurityEvent('join_family_full', { userId, familyId: familyDoc.id }, 'WARNING');
+      throw new HttpsError('resource-exhausted', 'Bu aile dolu (en fazla 20 üye).');
+    }
+
     const batch = dbRef.batch();
     batch.update(familyDoc.ref, {
       members: adminSdk.firestore.FieldValue.arrayUnion(userId),

@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -6,11 +6,21 @@ import { VitePWA } from 'vite-plugin-pwa'
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const isAndroidBuild = mode === 'android' || mode === 'android-debug'
+  const isProductionBuild = mode === 'production' || mode === 'android'
+  const env = loadEnv(mode, process.cwd(), '')
+
+  if (isProductionBuild && env.VITE_FIREBASE_APPCHECK_DISABLE === 'true') {
+    throw new Error(
+      '[guard] VITE_FIREBASE_APPCHECK_DISABLE=true ile production build alınamaz. ' +
+      'Bu flag yalnızca local debug içindir.'
+    );
+  }
 
   return {
   base: './',
   build: {
     minify: 'terser',
+    chunkSizeWarningLimit: 600,
     terserOptions: {
       compress: {
         drop_console: true,
@@ -47,6 +57,7 @@ export default defineConfig(({ mode }) => {
           }
           if (id.includes('/@revenuecat/')) return 'vendor-revenuecat';
           if (id.includes('/@capacitor/')) return 'vendor-capacitor';
+          if (id.includes('/lucide-react/')) return 'vendor-lucide';
 
           if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) {
             return 'vendor-react';

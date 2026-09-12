@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const telemetryMock = vi.hoisted(() => ({
   isTelemetryEnabledSync: vi.fn(() => true),
+  isCrashReportingEnabledSync: vi.fn(() => false),
 }));
 
 const loggerMock = vi.hoisted(() => ({
@@ -55,6 +56,7 @@ describe('firebase lazy getters', () => {
     vi.resetModules();
     vi.clearAllMocks();
     telemetryMock.isTelemetryEnabledSync.mockReturnValue(true);
+    telemetryMock.isCrashReportingEnabledSync.mockReturnValue(false);
   });
 
   it('does not initialize Firebase app, auth, or firestore just by importing the module', async () => {
@@ -90,8 +92,32 @@ describe('firebase lazy getters', () => {
 
     await getDb();
 
-    expect(nativePrivacySdkMock.initializePrivacySdks).toHaveBeenCalledWith({ telemetryEnabled: false });
+    expect(nativePrivacySdkMock.initializePrivacySdks).toHaveBeenCalledWith({ telemetryEnabled: false, crashReportingEnabled: false });
     expect(appCheck.initializeAppCheck).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps crash collection disabled with analytics enabled and resyncs crash consent changes', async () => {
+    const { initializeTelemetryNativeSdks } = await importFirebaseService();
+
+    await initializeTelemetryNativeSdks();
+    expect(nativePrivacySdkMock.initializePrivacySdks).toHaveBeenLastCalledWith({ telemetryEnabled: true, crashReportingEnabled: false });
+
+    telemetryMock.isCrashReportingEnabledSync.mockReturnValue(true);
+    await initializeTelemetryNativeSdks();
+    expect(nativePrivacySdkMock.initializePrivacySdks).toHaveBeenLastCalledWith({ telemetryEnabled: true, crashReportingEnabled: true });
+
+    telemetryMock.isCrashReportingEnabledSync.mockReturnValue(false);
+    await initializeTelemetryNativeSdks();
+    expect(nativePrivacySdkMock.initializePrivacySdks).toHaveBeenLastCalledWith({ telemetryEnabled: true, crashReportingEnabled: false });
+    expect(nativePrivacySdkMock.initializePrivacySdks).toHaveBeenCalledTimes(3);
+  });
+
+  it('never enables native crash collection when telemetry is disabled', async () => {
+    telemetryMock.isTelemetryEnabledSync.mockReturnValue(false);
+    telemetryMock.isCrashReportingEnabledSync.mockReturnValue(true);
+    const { initializeTelemetryNativeSdks } = await importFirebaseService();
+    await initializeTelemetryNativeSdks();
+    expect(nativePrivacySdkMock.initializePrivacySdks).toHaveBeenCalledWith({ telemetryEnabled: false, crashReportingEnabled: false });
   });
 
   it('initializes Auth only when getAuthInstance is called and reuses the cached instance', async () => {

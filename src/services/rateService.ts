@@ -1,11 +1,11 @@
 import { logger } from '../utils/logger';
 import { Preferences } from '@capacitor/preferences';
-import { Browser } from '@capacitor/browser';
 import { Device } from '@capacitor/device';
 
 const RATE_CONFIG = {
   MIN_DAYS_BEFORE_PROMPT: 7,
   MIN_LAUNCHES_BEFORE_PROMPT: 5,
+  MIN_HAPPY_EVENTS_BEFORE_PROMPT: 3,
   DAYS_BETWEEN_PROMPTS: 60,
   ANDROID_PACKAGE_ID: 'com.huzurapp.android'
 };
@@ -63,9 +63,10 @@ class RateService {
 
     const isMatureEnough = daysSinceFirst >= RATE_CONFIG.MIN_DAYS_BEFORE_PROMPT;
     const isFrequentUser = data.launchCount >= RATE_CONFIG.MIN_LAUNCHES_BEFORE_PROMPT;
+    const hasHappyMoments = data.eventCount >= RATE_CONFIG.MIN_HAPPY_EVENTS_BEFORE_PROMPT;
     const isNotAnnoying = daysSinceLastPrompt >= RATE_CONFIG.DAYS_BETWEEN_PROMPTS;
 
-    return isMatureEnough && isFrequentUser && isNotAnnoying;
+    return isMatureEnough && isFrequentUser && hasHappyMoments && isNotAnnoying;
   }
 
   async checkAndPrompt(force = false): Promise<boolean> {
@@ -89,10 +90,24 @@ class RateService {
       data.lastPromptDate = Date.now();
       await this.saveData(data);
 
-      const info = await Device.getInfo();
-      if (info.platform === 'android') {
-        await Browser.open({ url: `market://details?id=${RATE_CONFIG.ANDROID_PACKAGE_ID}` });
+      const storeUrl = `https://play.google.com/store/apps/details?id=${RATE_CONFIG.ANDROID_PACKAGE_ID}`;
+      try {
+        const info = await Device.getInfo();
+        if (info.platform === 'android') {
+          // @capacitor/browser opsiyonel: yoksa window.open fallback.
+          try {
+            const { Browser } = await import('@capacitor/browser');
+            await Browser.open({ url: `market://details?id=${RATE_CONFIG.ANDROID_PACKAGE_ID}` });
+            return;
+          } catch {
+            window.open(storeUrl, '_blank', 'noopener,noreferrer');
+            return;
+          }
+        }
+      } catch {
+        // Device bilgisi alınamazsa web fallback.
       }
+      window.open(storeUrl, '_blank', 'noopener,noreferrer');
     } catch (e) {
       logger.error('Failed to open store:', e);
     }

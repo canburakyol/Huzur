@@ -119,6 +119,10 @@ export const ANALYTICS_EVENTS = {
   AD_REWARDED_NOT_GRANTED: "ad_rewarded_not_granted",
   SUBSCRIPTION_SYNC_COMPLETED: "subscription_sync_completed",
   SUBSCRIPTION_SYNC_FAILED: "subscription_sync_failed",
+  RATE_PROMPT_SHOWN: "rate_prompt_shown",
+  RATE_PROMPT_ACCEPTED: "rate_prompt_accepted",
+  RATE_PROMPT_DEFERRED: "rate_prompt_deferred",
+  RATE_PROMPT_DECLINED: "rate_prompt_declined",
 } as const;
 
 export const SCREENS = {

@@ -70,5 +70,4 @@ const QiblaCompass = ({ onClose }) => {
     </>}
   </div>;
 };
-export { calculateQiblaDirection, normalizeHeading };
 export default QiblaCompass;

@@ -33,14 +33,20 @@ export const logPrayerCompleted = (prayer: string, time: string, onTime: boolean
 export const logStreakMilestone = (days: number): void =>
   logEvent(ANALYTICS_EVENTS.STREAK_MILESTONE, { days, milestone: analyticsService.getMilestoneLabel(days) });
 
-export const logChallengeCompleted = (id: string, category: string, xp: number): void =>
+export const logChallengeCompleted = (id: string, category: string, xp: number): void => {
   logEvent(ANALYTICS_EVENTS.CHALLENGE_COMPLETED, { challenge_id: id, category, xp });
+  void import('./rateService').then(({ rateService }) => rateService.trackHappyEvent()).catch(() => undefined);
+};
 
-export const logLevelUp = (level: number, xp: number): void =>
+export const logLevelUp = (level: number, xp: number): void => {
   logEvent(ANALYTICS_EVENTS.LEVEL_UP, { level, xp });
+  void import('./rateService').then(({ rateService }) => rateService.trackHappyEvent()).catch(() => undefined);
+};
 
-export const logBadgeEarned = (id: string, name: string): void =>
+export const logBadgeEarned = (id: string, name: string): void => {
   logEvent(ANALYTICS_EVENTS.BADGE_EARNED, { badge_id: id, badge_name: name });
+  void import('./rateService').then(({ rateService }) => rateService.trackHappyEvent()).catch(() => undefined);
+};
 
 export const logNotificationReceived = (type: string, prayer: string | null = null): void =>
   logEvent(ANALYTICS_EVENTS.NOTIFICATION_RECEIVED, { notification_type: type, prayer });
@@ -178,8 +184,10 @@ export const logFamilyGoalContributed = (
     progress_percent: progressPercent,
   });
 
-export const logFamilyGoalCompleted = (familyId: string, weekKey: string, goalType: string): void =>
+export const logFamilyGoalCompleted = (familyId: string, weekKey: string, goalType: string): void => {
   logEvent(ANALYTICS_EVENTS.FAMILY_GOAL_COMPLETED, { family_id: familyId, week_key: weekKey, goal_type: goalType });
+  void import('./rateService').then(({ rateService }) => rateService.trackHappyEvent()).catch(() => undefined);
+};
 
 export const logHatimWeeklySummaryViewed = (hatimId: string, weekKey: string, completedThisWeek: number): void =>
   logEvent(ANALYTICS_EVENTS.HATIM_WEEKLY_SUMMARY_VIEWED, {

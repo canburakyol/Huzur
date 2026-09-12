@@ -1,0 +1,12 @@
+Huzur is an all-in-one Islamic companion: prayer times, adhan reminders, qibla finder, Quran reading and audio, duas, dhikr counter, Esmaul Husna, khatm tracking, Ramadan imsakiye and family worship modes.
+
+• Accurate prayer times with location-based calculation and adhan notifications
+• Qibla finder for travel, work or new cities
+• Quran with translation, tajweed and memorization tools
+• Daily duas, dhikr, tasbihat and counter
+• Khatm plans, qada tracking and habit streaks
+• Ramadan, fasting and holy days tools
+• Family mode, group khatm and dua sharing
+• Offline-first: core tools work without internet
+
+Keywords: prayer times, adhan, qibla finder, Quran, dua, dhikr counter, khatm.

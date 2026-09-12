@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
   <img src="https://img.shields.io/badge/React-19-61dafb.svg" alt="React">
   <img src="https://img.shields.io/badge/Vite-7-646cff.svg" alt="Vite">
-  <img src="https://img.shields.io/badge/Capacitor-7-119eff.svg" alt="Capacitor">
+  <img src="https://img.shields.io/badge/Capacitor-8-119eff.svg" alt="Capacitor">
   <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="PRs Welcome">
 </p>
 
@@ -40,10 +40,11 @@ React, Vite ve Capacitor kullanılarak geliştirilen bu uygulama, hem web hem de
 Huzur, en güncel ve performanslı teknolojiler üzerine inşa edilmiştir:
 
 - **Frontend**: [React 19](https://reactjs.org/) + [Vite 7](https://vitejs.dev/)
-- **Mobil Köprü**: [Capacitor 7](https://capacitorjs.com/)
+- **Mobil Köprü**: [Capacitor 8](https://capacitorjs.com/)
 - **İkon Seti**: [Lucide React](https://lucide.dev/)
-- **Veri Yönetimi**: Hooks ve Context API (Strict Mode uyumlu)
-- **Servisler**: Firebase (Opsiyonel), RevenueCat (Abonelik)
+- **Veri Yönetimi**: Zustand 5 + Hooks ve Context API (Strict Mode uyumlu)
+- **Local DB**: SQLite (offline-first) + Firestore persistent cache
+- **Servisler**: Firebase (Auth/Firestore/Functions/App Check), RevenueCat (Abonelik), AdMob
 - **Stil**: Modern Vanilla CSS (Premium tasarımlar ve mikro animasyonlar)
 
 ## 🚀 Başlangıç
@@ -87,12 +88,17 @@ Huzur, en güncel ve performanslı teknolojiler üzerine inşa edilmiştir:
 
 ```text
 src/
-├── components/      # Modüler ve yeniden kullanılabilir UI bileşenleri
-├── services/       # API entegrasyonları ve iş mantığı
-├── data/          # Statik dini veriler ve yerelleştirme dosyaları
-├── hooks/         # Özel React hookları
-└── App.jsx        # Uygulama ana giriş noktası
+├── components/app-shell/  # AppChrome, TabRouter, BottomNav, home feed
+├── domains/               # prayer, quran, ibadet, social, family, tools... (16 domain)
+├── features/              # Domain facade (lazy exportlar)
+├── services/              # prayerService, quranService, admobService... (140+ servis)
+├── stores/                # Zustand useAppStore
+├── hooks/                 # usePrayerTimes, useMobileFeatures...
+├── data/                  # Statik dini veriler
+└── App.jsx / AppProviders.jsx  # Giriş noktaları
 ```
+
+Test: `npm run test:unit`, backend: `npm run test:backend`, E2E: `npm run test:e2e`, bundle: `npm run build:ci`.
 
 ## 🤝 Katkıda Bulunma
 

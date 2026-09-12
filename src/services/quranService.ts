@@ -564,17 +564,17 @@ export const getAyahAudioUrl = (surahNumber: number, ayahNumber: number, reciter
 
 export const getReciters = (): Reciter[] => {
     return [
-        { id: 'ar.alafasy', name: 'Mishary Rashid Alafasy', country: 'ğŸ‡°ğŸ‡¼ Kuveyt' },
-        { id: 'ar.abdulbasitmurattal', name: 'Abdul Basit (Murattal)', country: 'ğŸ‡ªğŸ‡¬ MÄ±sÄ±r' },
-        { id: 'ar.husary', name: 'Mahmoud Khalil Al-Husary', country: 'ğŸ‡ªğŸ‡¬ MÄ±sÄ±r' },
-        { id: 'ar.minshawi', name: 'Mohamed Siddiq Al-Minshawi', country: 'ğŸ‡ªğŸ‡¬ MÄ±sÄ±r' },
-        { id: 'ar.abdurrahmaansudais', name: 'Abdurrahman As-Sudais', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
-        { id: 'ar.shuraim', name: 'Saud Al-Shuraim', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
-        { id: 'ar.mahermuaiqly', name: 'Maher Al-Muaiqly', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
-        { id: 'ar.basfar', name: 'Abdullah Basfar', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
-        { id: 'ar.ahmedajamy', name: 'Ahmed Al-Ajmy', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
-        { id: 'ar.nasserqatami', name: 'Nasser Al-Qatami', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' },
-        { id: 'ar.yasseraldossari', name: 'Yasser Al-Dosari', country: 'ğŸ‡¸ğŸ‡¦ S. Arabistan' }
+        { id: 'ar.alafasy', name: 'Mishary Rashid Alafasy', country: 'Kuveyt' },
+        { id: 'ar.abdulbasitmurattal', name: 'Abdul Basit (Murattal)', country: 'Mısır' },
+        { id: 'ar.husary', name: 'Mahmoud Khalil Al-Husary', country: 'Mısır' },
+        { id: 'ar.minshawi', name: 'Mohamed Siddiq Al-Minshawi', country: 'Mısır' },
+        { id: 'ar.abdurrahmaansudais', name: 'Abdurrahman As-Sudais', country: 'S. Arabistan' },
+        { id: 'ar.shuraim', name: 'Saud Al-Shuraim', country: 'S. Arabistan' },
+        { id: 'ar.mahermuaiqly', name: 'Maher Al-Muaiqly', country: 'S. Arabistan' },
+        { id: 'ar.basfar', name: 'Abdullah Basfar', country: 'S. Arabistan' },
+        { id: 'ar.ahmedajamy', name: 'Ahmed Al-Ajmy', country: 'S. Arabistan' },
+        { id: 'ar.nasserqatami', name: 'Nasser Al-Qatami', country: 'S. Arabistan' },
+        { id: 'ar.yasseraldossari', name: 'Yasser Al-Dosari', country: 'S. Arabistan' }
     ];
 };
 

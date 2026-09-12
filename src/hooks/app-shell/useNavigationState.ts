@@ -97,8 +97,13 @@ export function useNavigationState() {
   );
 
   const openInviteModal = useCallback(
-    (context: InviteModalContext = { source: "invite_modal" }): void => {
-      openInviteModalState(context);
+    (context: InviteModalContext | string = { source: "invite_modal" }): void => {
+      const normalized: InviteModalContext =
+        typeof context === "string" ? { source: context } : context;
+      logEvent(ANALYTICS_EVENTS.INVITE_MODAL_VIEWED, {
+        source: normalized.source,
+      });
+      openInviteModalState(normalized);
     },
     [openInviteModalState]
   );

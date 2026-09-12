@@ -1484,12 +1484,16 @@ function getAiDeploySecrets({ includeOpenAi = false, includeGemini = true } = {}
   return secrets;
 }
 
-// YardÄ±mcÄ± fonksiyon: GÃ¼venli kod Ã¼ret
+// Yardımcı fonksiyon: Güvenli kod üret (rejection sampling, modulo-bias yok)
 function generateSecureCode(length = 8) {
   const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const randomBytes = new Uint8Array(length);
-  crypto.getRandomValues(randomBytes);
-  return Array.from(randomBytes).map((byte) => charset[byte % charset.length]).join('');
+  const limit = 256 - (256 % charset.length);
+  let code = '';
+  while (code.length < length) {
+    const value = crypto.randomInt(0, 256);
+    if (value < limit) code += charset[value % charset.length];
+  }
+  return code;
 }
 
 /**

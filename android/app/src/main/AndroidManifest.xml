@@ -114,10 +114,10 @@
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- AdMob App ID (Required to prevent crash) -->
+        <!-- AdMob App ID (manifestPlaceholder admobAppId via build.gradle; .env destekli) -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3074026744164717~7167273995"
+            android:value="${admobAppId}"
         />
 
         <meta-data

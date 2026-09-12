@@ -172,6 +172,7 @@ public class MainActivity extends BridgeActivity {
         @com.getcapacitor.PluginMethod
         public void initializePrivacySdks(PluginCall call) {
             boolean telemetryEnabled = Boolean.TRUE.equals(call.getBoolean("telemetryEnabled", false));
+            boolean crashReportingEnabled = telemetryEnabled && Boolean.TRUE.equals(call.getBoolean("crashReportingEnabled", false));
             boolean firebaseInitialized = MainActivity.initializeAppCheck(getContext());
             JSObject ret = new JSObject();
             ret.put("success", true);
@@ -180,7 +181,7 @@ public class MainActivity extends BridgeActivity {
             ret.put("firebaseInitialized", firebaseInitialized);
 
             boolean analyticsConfigured = MainActivity.configureFirebaseAnalyticsCollection(getContext(), telemetryEnabled);
-            boolean crashlyticsEnabled = MainActivity.setCrashlyticsCollection(getContext(), telemetryEnabled);
+            boolean crashlyticsEnabled = MainActivity.setCrashlyticsCollection(getContext(), crashReportingEnabled);
             boolean adMobInitialized = telemetryEnabled && MainActivity.initializeAdMob(getContext());
 
             ret.put("firebaseInitialized", firebaseInitialized);

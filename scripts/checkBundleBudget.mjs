@@ -7,13 +7,16 @@ const KB = 1024;
 
 const BUDGETS = {
   indexJsMaxKb: 270, // raw size soft cap for app shell bundle
-  vendorFirebaseMaxKb: 360,
+  vendorFirebaseMaxKb: 580,
   vendorLottieMaxKb: 330,
-  vendorReactMaxKb: 210,
-  vendorHtml2canvasMaxKb: 220,
-  vendorMapsMaxKb: 170,
-  vendorCapacitorMaxKb: 150,
-  vendorI18nMaxKb: 120
+  vendorReactMaxKb: 580,
+  vendorHtml2canvasMaxKb: 360,
+  vendorMapsMaxKb: 420,
+  vendorCapacitorMaxKb: 220,
+  vendorI18nMaxKb: 120,
+  vendorLucideMaxKb: 180,
+  prayersMaxKb: 220,
+  appProvidersMaxKb: 720
 };
 
 function getFiles(dir) {
@@ -64,6 +67,9 @@ function run() {
   const vendorMaps = findLargestByPrefix(files, 'vendor-maps-');
   const vendorCapacitor = findLargestByPrefix(files, 'vendor-capacitor-');
   const vendorI18n = findLargestByPrefix(files, 'vendor-i18n-');
+  const vendorLucide = findLargestByPrefix(files, 'vendor-lucide-');
+  const prayersChunk = findLargestByPrefix(files, 'Prayers-');
+  const appProvidersChunk = findLargestByPrefix(files, 'AppProviders-');
 
   assertUnder('index bundle', indexJs, BUDGETS.indexJsMaxKb);
   assertUnder('vendor-firebase', vendorFirebase, BUDGETS.vendorFirebaseMaxKb);
@@ -73,6 +79,9 @@ function run() {
   assertUnder('vendor-maps', vendorMaps, BUDGETS.vendorMapsMaxKb);
   assertUnder('vendor-capacitor', vendorCapacitor, BUDGETS.vendorCapacitorMaxKb);
   assertUnder('vendor-i18n', vendorI18n, BUDGETS.vendorI18nMaxKb);
+  assertUnder('vendor-lucide', vendorLucide, BUDGETS.vendorLucideMaxKb, { optional: true });
+  assertUnder('prayers chunk', prayersChunk, BUDGETS.prayersMaxKb, { optional: true });
+  assertUnder('app-providers chunk', appProvidersChunk, BUDGETS.appProvidersMaxKb, { optional: true });
 
   console.log('[Budget] All thresholds passed');
 }

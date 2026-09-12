@@ -9,6 +9,7 @@ import { logger } from "../utils/logger";
 export const useMobileFeatures = () => {
   useEffect(() => {
     orientationService.lockPortrait();
+    void rateService.trackLaunch();
   }, []);
 
   const checkUpdates = useCallback(async () => {
@@ -58,7 +59,16 @@ export const useMobileFeatures = () => {
     }
   }, []);
 
+  const trackHappyMoment = useCallback(async (): Promise<void> => {
+    try {
+      await rateService.trackHappyEvent();
+    } catch (error) {
+      logger.warn("[useMobileFeatures] Happy moment track failed:", error);
+    }
+  }, []);
+
   return {
     triggerRatePrompt,
+    trackHappyMoment,
   };
 };

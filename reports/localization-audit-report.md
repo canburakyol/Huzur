@@ -1,6 +1,6 @@
 # Localization Audit Report
 
-Generated: 2026-08-02T12:34:26.366Z
+Generated: 2026-09-12T10:49:07.817Z
 
 ## Scope
 - Namespace integrity: `src/config/i18nConfig.js` vs `public/locales/*/*.json`

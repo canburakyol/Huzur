@@ -6,6 +6,7 @@ const BottomNav = lazy(() => import('../BottomNav'));
 const HamburgerMenu = lazy(() => import('../HamburgerMenu'));
 const WelcomeBackBonus = lazy(() => import('../../domains/system/components/WelcomeBackBonus'));
 const WeeklyReportModal = lazy(() => import('../../domains/gamification/components/WeeklyReportModal'));
+const RatePromptDialog = lazy(() => import('../RatePromptDialog'));
 const AppTabRouter = lazy(() => import('./AppTabRouter'));
 
 function AppChrome({ controller }) {
@@ -61,6 +62,7 @@ function AppChrome({ controller }) {
 
       <Suspense fallback={null}>
         <WelcomeBackBonus />
+        <RatePromptDialog />
         <WeeklyReportModal
           onOpenInvite={(source = 'weekly_report_referral') => navigation.openInviteModal({ source })}
         />

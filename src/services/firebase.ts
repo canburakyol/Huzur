@@ -1,5 +1,5 @@
 import { Capacitor } from "@capacitor/core";
-import { isTelemetryEnabledSync } from "./privacyModeService";
+import { isTelemetryEnabledSync, isCrashReportingEnabledSync } from "./privacyModeService";
 import { logger } from "../utils/logger";
 
 type FirebaseApp = import("firebase/app").FirebaseApp;
@@ -54,7 +54,7 @@ interface NativePrivacySdkInitResult {
 }
 
 interface NativePrivacySdkPlugin {
-  initializePrivacySdks?: (options: { telemetryEnabled: boolean }) => Promise<NativePrivacySdkInitResult>;
+  initializePrivacySdks?: (options: { telemetryEnabled: boolean; crashReportingEnabled: boolean }) => Promise<NativePrivacySdkInitResult>;
 }
 
 const firebaseConfig: FirebaseConfig = {
@@ -124,6 +124,7 @@ let _remoteConfig: RemoteConfig | null = null;
 let _nativePrivacySdkInit: Promise<NativePrivacySdkInitResult> | null = null;
 let _nativePrivacySdkInitialized = false;
 let _nativeTelemetryEnabled: boolean | null = null;
+let _nativeCrashReportingEnabled: boolean | null = null;
 
 const ensureAppCheck = async (app: FirebaseApp): Promise<AppCheck | null> => {
   // Development-only bypass for local debug builds. Never enable this in production.
@@ -229,26 +230,28 @@ const getNativePrivacySdkPlugin = async (): Promise<NativePrivacySdkPlugin | nul
 
 export const initializeTelemetryNativeSdks = async (): Promise<NativePrivacySdkInitResult> => {
   const telemetryEnabled = isTelemetryEnabledSync();
+  const crashReportingEnabled = telemetryEnabled && isCrashReportingEnabledSync();
 
   if (!isNativeRuntime()) {
     return { success: true, skipped: true, platform: Capacitor.getPlatform(), telemetryEnabled };
   }
 
-  if (_nativePrivacySdkInitialized && _nativeTelemetryEnabled === telemetryEnabled) {
+  if (_nativePrivacySdkInitialized && _nativeTelemetryEnabled === telemetryEnabled && _nativeCrashReportingEnabled === crashReportingEnabled) {
     return { success: true, platform: Capacitor.getPlatform(), telemetryEnabled };
   }
 
   const plugin = await getNativePrivacySdkPlugin();
   if (typeof plugin?.initializePrivacySdks !== "function") {
-    return { success: false, skipped: true, platform: Capacitor.getPlatform(), telemetryEnabled: true };
+    return { success: false, skipped: true, platform: Capacitor.getPlatform(), telemetryEnabled };
   }
 
   if (!_nativePrivacySdkInit) {
-    _nativePrivacySdkInit = plugin.initializePrivacySdks({ telemetryEnabled })
+    _nativePrivacySdkInit = plugin.initializePrivacySdks({ telemetryEnabled, crashReportingEnabled })
       .then((result) => {
         _nativePrivacySdkInitialized = result?.success === true;
         if (_nativePrivacySdkInitialized) {
           _nativeTelemetryEnabled = telemetryEnabled;
+          _nativeCrashReportingEnabled = crashReportingEnabled;
         }
         return result;
       })

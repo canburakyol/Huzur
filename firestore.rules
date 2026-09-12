@@ -37,6 +37,19 @@ service cloud.firestore {
         );
     }
 
+    function userDataDocIdIsSafe(docId) {
+      return docId.matches('^[A-Za-z0-9_-]{1,64}$');
+    }
+
+    function userDataWriteIsSafe() {
+      // Generic user bucket: keep it small, flat and free of server-managed keys.
+      return request.resource.data.keys().size() <= 100
+        && !request.resource.data.keys().hasAny([
+          'earnedBadges', 'familyId', 'fcmTokens', 'level', 'points',
+          'role', 'socialPreferences', 'stats', 'streaks', 'xp'
+        ]);
+    }
+
     function hasNoUserServerManagedFieldsOnCreate() {
       return !request.resource.data.keys().hasAny([
         'earnedBadges',
@@ -84,7 +97,9 @@ service cloud.firestore {
       }
 
       match /data/{docId} {
-        allow read, write: if isOwner(userId);
+        allow read: if isOwner(userId) && userDataDocIdIsSafe(docId);
+        allow create, update: if isOwner(userId) && userDataDocIdIsSafe(docId) && userDataWriteIsSafe();
+        allow delete: if isOwner(userId) && userDataDocIdIsSafe(docId);
       }
 
       match /growth_logs/{logId} {
@@ -125,7 +140,9 @@ service cloud.firestore {
     }
 
     match /duas/{duaId} {
-      allow read: if isAuthenticated();
+      // Ham dokümanlar authorId içerir; okuma yalnızca sanitize eden
+      // listRecentDuas callable'ı üzerinden yapılır.
+      allow read: if false;
       allow create, update, delete: if false;
     }
 

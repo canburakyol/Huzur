@@ -266,7 +266,7 @@ const PremiumHomeHero = memo(({
   streakData, 
   onSelectFeature
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [nowMs, setNowMs] = useState(() => Date.now());
 
   const [completedPrayers, setCompletedPrayers] = useState(() => {
@@ -326,6 +326,22 @@ const PremiumHomeHero = memo(({
   const formatNum = (value) => String(value).padStart(2, '0');
   const displayLocationName = getDisplayLocationName(locationName);
   const hasTrustedLocation = Boolean(displayLocationName);
+  const completedCount = PRAYERS.filter((p) => completedPrayers[p.key]).length;
+  const ringRadius = 14;
+  const ringCircumference = 2 * Math.PI * ringRadius;
+
+  const hijriLabel = (() => {
+    try {
+      const locale = String(i18n?.language || 'tr').split('-')[0];
+      return new Intl.DateTimeFormat(`${locale}-u-ca-islamic`, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }).format(new Date());
+    } catch {
+      return '';
+    }
+  })();
 
   const ambientStyle = GET_AMBIENT_VARIABLES(nextPrayer?.key);
 
@@ -369,12 +385,36 @@ const PremiumHomeHero = memo(({
               </span>
             )}
           </div>
-          {streakData?.current > 0 && (
+          <div className="hero-header-right">
+          {streakData?.current > 0 ? (
             <div className="hero-streak-badge">
               <Flame size={12} color="#FF9966" fill="#FF9966" />
               <span>{streakData.current} {t('streak.days', 'Gün')}</span>
             </div>
+          ) : (
+            <div className="hero-streak-empty">
+              <Flame size={12} />
+              <span>{t('home.heroStartStreak', 'Seriye bugün başla')}</span>
+            </div>
           )}
+          {hasTrustedLocation && (
+            <div
+              className="hero-progress-ring"
+              title={t('home.heroProgressDone', { done: completedCount, total: PRAYERS.length, defaultValue: `${completedCount}/${PRAYERS.length} vakit` })}
+            >
+              <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
+                <circle cx="18" cy="18" r={ringRadius} fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="3.5" />
+                <circle
+                  cx="18" cy="18" r={ringRadius} fill="none" stroke="#e8c37a" strokeWidth="3.5" strokeLinecap="round"
+                  strokeDasharray={ringCircumference}
+                  strokeDashoffset={ringCircumference * (1 - completedCount / PRAYERS.length)}
+                  transform="rotate(-90 18 18)"
+                />
+              </svg>
+              <span className="hero-progress-count">{completedCount}/{PRAYERS.length}</span>
+            </div>
+          )}
+          </div>
         </div>
 
         {/* Main Content: Greeting + Countdown */}
@@ -384,6 +424,9 @@ const PremiumHomeHero = memo(({
               ? t(`prayer.nextLabel`, { prayer: getPrayerName(nextPrayer.key), defaultValue: `${getPrayerName(nextPrayer.key)} Vakti` })
               : t('prayer.locationRequiredDetail', 'Vakitleri göstermek için konumunuzu doğrulayın')}
           </h2>
+          {hijriLabel && (
+            <div className="hero-hijri-text">{hijriLabel}</div>
+          )}
 
           {hasTrustedLocation && nextPrayer && (
             <div

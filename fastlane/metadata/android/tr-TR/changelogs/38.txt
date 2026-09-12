@@ -1,0 +1,4 @@
+• Konum ve namaz vakitleri akışı hızlandırıldı; vakitler artık şehir adı ve hava durumu yanıtını beklemeden yükleniyor.
+• İmsakiye ve kıble araçlarında konum doğruluğu ve izin yönlendirmeleri iyileştirildi.
+• Dua, zikir ve tesbihat içeriklerinde metin ve kaynak düzenlemeleri yapıldı.
+• Performans ve kararlılık iyileştirmeleri.
