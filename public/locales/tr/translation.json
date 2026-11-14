@@ -1288,7 +1288,16 @@
     "retryLocation": "Konumu tekrar dene",
     "approximate": "Yaklaşık yön",
     "locationRequired": "Kıble yönü için güncel konum gerekli.",
-    "calibrating": "Pusula kalibre ediliyor; yön bilgisi bekleniyor."
+    "calibrating": "Pusula kalibre ediliyor; yön bilgisi bekleniyor.",
+    "north": "K",
+    "east": "D",
+    "south": "G",
+    "west": "B",
+    "facing": "Kıbleye dönüksün",
+    "turnRight": "Sağa {{deg}}° dön",
+    "turnLeft": "Sola {{deg}}° dön",
+    "angle": "Kıble açısı",
+    "distance": "Kâbe'ye uzaklık"
   },
   "home": {
     "awesome": "Harika.",

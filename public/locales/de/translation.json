@@ -1198,7 +1198,16 @@
     "retryLocation": "Standort erneut versuchen",
     "approximate": "Ungefähre Richtung",
     "locationRequired": "Für die Qibla-Richtung wird dein aktueller Standort benötigt.",
-    "calibrating": "Kompass wird kalibriert; Richtungsdaten werden erwartet."
+    "calibrating": "Kompass wird kalibriert; Richtungsdaten werden erwartet.",
+    "north": "N",
+    "east": "O",
+    "south": "S",
+    "west": "W",
+    "facing": "Du schaust zur Qibla",
+    "turnRight": "{{deg}}° nach rechts drehen",
+    "turnLeft": "{{deg}}° nach links drehen",
+    "angle": "Qibla-Winkel",
+    "distance": "Entfernung zur Kaaba"
   },
   "home": {
     "awesome": "Großartig.",

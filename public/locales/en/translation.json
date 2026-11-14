@@ -1190,7 +1190,7 @@
   },
   "qibla": {
     "title": "Qibla Compass",
-    "instructions": "Hold your phone parallel to the ground and calibrate by drawing figure 8.",
+    "instructions": "Hold your phone flat; if needed, calibrate by drawing a figure 8 in the air.",
     "found": "QIBLA FOUND",
     "permissionDenied": "Compass permission denied. Please enable in settings.",
     "notSupported": "Compass feature is not supported on this device.",
@@ -1198,7 +1198,16 @@
     "retryLocation": "Try location again",
     "approximate": "Approximate direction",
     "locationRequired": "Your current location is needed for the qibla direction.",
-    "calibrating": "Calibrating compass; waiting for direction data."
+    "calibrating": "Calibrating compass; waiting for direction data.",
+    "north": "N",
+    "east": "E",
+    "south": "S",
+    "west": "W",
+    "facing": "You are facing the qibla",
+    "turnRight": "Turn {{deg}}° right",
+    "turnLeft": "Turn {{deg}}° left",
+    "angle": "Qibla angle",
+    "distance": "Distance to the Kaaba"
   },
   "home": {
     "awesome": "Awesome.",

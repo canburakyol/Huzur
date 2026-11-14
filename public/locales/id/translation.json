@@ -1198,7 +1198,16 @@
     "retryLocation": "Coba lokasi lagi",
     "approximate": "Arah perkiraan",
     "locationRequired": "Lokasi saat ini diperlukan untuk arah kiblat.",
-    "calibrating": "Mengkalibrasi kompas; menunggu data arah."
+    "calibrating": "Mengkalibrasi kompas; menunggu data arah.",
+    "north": "U",
+    "east": "T",
+    "south": "S",
+    "west": "B",
+    "facing": "Anda menghadap kiblat",
+    "turnRight": "Putar {{deg}}° ke kanan",
+    "turnLeft": "Putar {{deg}}° ke kiri",
+    "angle": "Sudut kiblat",
+    "distance": "Jarak ke Ka'bah"
   },
   "home": {
     "awesome": "Luar Biasa.",
