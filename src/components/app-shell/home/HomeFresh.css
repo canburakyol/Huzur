@@ -196,6 +196,7 @@
 }
 
 .home-main-content .hero-card .hero-greeting-text,
+.home-main-content .hero-card .hero-hijri-text,
 .home-main-content .hero-card .unit-label,
 .home-main-content .hero-card .countdown-separator {
   color: var(--text-muted, var(--on-surface-variant));
@@ -234,6 +235,7 @@
 }
 
 [data-theme='dark'] .home-main-content .hero-card .hero-greeting-text,
+[data-theme='dark'] .home-main-content .hero-card .hero-hijri-text,
 [data-theme='dark'] .home-main-content .hero-card .unit-label,
 [data-theme='dark'] .home-main-content .hero-card .countdown-separator {
   color: var(--on-surface-variant);

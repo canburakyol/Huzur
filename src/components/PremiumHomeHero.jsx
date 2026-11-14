@@ -475,7 +475,7 @@ const PremiumHomeHero = memo(({
                 className={`prayer-strip-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
               >
                 <span className="prayer-strip-name">
-                  {t(prayer.nameKey, PRAYER_NAME_FALLBACKS[prayer.key]).substring(0, 5)}
+                  {t(prayer.nameKey, PRAYER_NAME_FALLBACKS[prayer.key])}
                 </span>
                 <span className="prayer-strip-time">
                   {timeStr}

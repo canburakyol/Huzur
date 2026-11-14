@@ -29,10 +29,10 @@ const HomePriorityCard = memo(function HomePriorityCard({ onSelectFeature, strea
         </div>
         <div>
           <h2 className="home-priority-card__title">
-            {action.title}
+            {t(`primaryGoal.${goalConfig.id}.title`, action.title)}
           </h2>
           <p className="home-priority-card__description">
-            {action.description}
+            {t(`primaryGoal.${goalConfig.id}.description`, action.description)}
           </p>
           <p className="home-priority-card__support">
             {supportingCopy}

@@ -82,6 +82,7 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
   const currentTitle = typeof level === 'object' ? (level?.title || 'Huzur Yolcusu') : 'Huzur Yolcusu';
   const primaryGoal = getStoredPrimaryGoal();
   const primaryGoalConfig = getPrimaryGoalConfig(primaryGoal);
+  const goalLabel = t(`primaryGoal.${primaryGoalConfig.id}.label`, primaryGoalConfig.label);
 
   useEffect(() => {
     if (externalOpen) {
@@ -195,10 +196,10 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
 
               <div style={{ marginTop: '12px', padding: '12px 14px', background: 'var(--surface-card)', borderRadius: '16px', border: '1px solid var(--menu-border)' }}>
                 <div style={{ fontSize: '0.68rem', fontWeight: '900', color: 'var(--brand-primary)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
-                  Ana odak
+                  {t('menu.sections.focus', 'Ana odak')}
                 </div>
                 <div style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--menu-text)' }}>
-                  {primaryGoalConfig.label}
+                  {goalLabel}
                 </div>
               </div>
 
@@ -212,10 +213,10 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
             </div>
 
             <div className="hamburger-scroll-area">
-              {renderSection('Gunluk ibadet rutini', 'Huzur artik ana olarak bu akisa odaklanir.', CORE_MENU_ITEMS, 0)}
-              {renderSection('Sana ozel destek', primaryGoalConfig.label, goalItems, CORE_MENU_ITEMS.length)}
-              {renderSection('Temel araclar', 'Ritmi bozmadan lazim olan yardimci ekranlar.', supportItems, CORE_MENU_ITEMS.length + goalItems.length)}
-              {renderSection('Ayarlar ve destek', null, SYSTEM_MENU_ITEMS, CORE_MENU_ITEMS.length + goalItems.length + supportItems.length)}
+              {renderSection(t('menu.sections.core', 'Günlük ibadet'), t('menu.sections.coreDesc', 'Her gün kullandığın araçlar.'), CORE_MENU_ITEMS, 0)}
+              {renderSection(t('menu.sections.goal', 'Sana özel'), goalLabel, goalItems, CORE_MENU_ITEMS.length)}
+              {renderSection(t('menu.sections.tools', 'Diğer araçlar'), t('menu.sections.toolsDesc', 'İhtiyaç duyduğunda yardımcı ekranlar.'), supportItems, CORE_MENU_ITEMS.length + goalItems.length)}
+              {renderSection(t('menu.sections.system', 'Ayarlar ve destek'), null, SYSTEM_MENU_ITEMS, CORE_MENU_ITEMS.length + goalItems.length + supportItems.length)}
             </div>
 
             <div className="hamburger-footer">

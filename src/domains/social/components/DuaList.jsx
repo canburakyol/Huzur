@@ -29,7 +29,7 @@ const DuaList = () => {
       await prayForDua(duaId);
     } catch (error) {
       logger.error('Amin error:', error);
-      showToast(t('community.messages.aminFailed', 'Amin gonderilemedi. Lutfen tekrar deneyin.'), 'error');
+      showToast(t('community.messages.aminFailed', 'Amin gonderilemedi. Lütfen tekrar deneyin.'), 'error');
     }
   };
 
@@ -64,7 +64,7 @@ const DuaList = () => {
       <div className="reveal-stagger" style={{ marginBottom: '24px' }}>
         <button className="sanctuary-btn-primary" onClick={() => setShowCreateModal(true)} style={{ width: '100%' }}>
           <Plus size={20} />
-          {t('dua.create', 'Dua istegi ekle')}
+          {t('dua.create', 'Dua isteği ekle')}
         </button>
       </div>
 
@@ -73,7 +73,7 @@ const DuaList = () => {
           <div className="sanctuary-section-block">
             <div className="sanctuary-section-header">
               <div>
-                <h3 className="sanctuary-section-title">{t('community.featuredDuas', 'One cikan dualar')}</h3>
+                <h3 className="sanctuary-section-title">{t('community.featuredDuas', 'Öne çıkan dualar')}</h3>
                 <p className="sanctuary-section-subtitle">{t('community.featuredDuasDesc', 'Toplulugu bir araya getiren niyetler ve Huzur onerileri')}</p>
               </div>
             </div>
@@ -86,7 +86,7 @@ const DuaList = () => {
             <div className="sanctuary-section-header">
               <div>
                 <h3 className="sanctuary-section-title">{t('community.publicDuas', 'Topluluktan dualar')}</h3>
-                <p className="sanctuary-section-subtitle">{t('community.publicDuasDesc', 'Yeni dualari gor, amin de ve birlikte destek ol')}</p>
+                <p className="sanctuary-section-subtitle">{t('community.publicDuasDesc', 'Yeni duaları gor, amin de ve birlikte destek ol')}</p>
               </div>
               <button
                 type="button"

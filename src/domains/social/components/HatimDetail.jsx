@@ -63,7 +63,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
   if (error) {
     return (
       <div className="manuscript-card reveal-stagger" style={{ borderColor: '#ef4444' }}>
-        <p className="lesson-title">{t('common.error', 'Hata olustu')}</p>
+        <p className="lesson-title">{t('common.error', 'Hata oluştu')}</p>
         <p className="lesson-desc">{error}</p>
       </div>
     );
@@ -77,7 +77,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
       <div className="manuscript-card reveal-stagger" style={{ textAlign: 'center' }}>
         <Info size={48} color="var(--soc-teal-dark)" style={{ marginBottom: '15px' }} />
         <p className="lesson-desc">
-          {t('hatim.membershipRequired', 'Bu hatimin detaylarini gormek icin once katilmalisiniz.')}
+          {t('hatim.membershipRequired', 'Bu hatimin detaylarini gormek için önce katilmalisiniz.')}
         </p>
         <button onClick={onBack} className="sanctuary-btn-primary" style={{ marginTop: '20px', width: '100%' }}>
           {t('common.back', 'Geri don')}
@@ -104,7 +104,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
       } else if (partData.status === 'taken') {
         if (partData.takenBy?.uid === currentUserId) {
           const action = window.prompt(
-            t('hatim.messages.partActions', 'Bu cuz sizin tarafinizdan alindi.\n"okudum" yazarak tamamlayin\n"iptal" yazarak birakin')
+            t('hatim.messages.partActions', 'Bu cüz sizin tarafınızdan alındı.\n"okudum" yazarak tamamlayın\n"iptal" yazarak bırakın')
           );
 
           if (action?.toLowerCase() === 'okudum') {
@@ -132,7 +132,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
         await Share.share({
           title: hatimDetails.name,
           text: shareText,
-          dialogTitle: t('hatim.share', 'Davet Kodunu Paylas'),
+          dialogTitle: t('hatim.share', 'Davet Kodunu Paylaş'),
         });
         return;
       }
@@ -150,7 +150,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
       }
     }
 
-    await copyText(shareText, t('hatim.messages.inviteCopied', 'Davet mesaji kopyalandi.'));
+    await copyText(shareText, t('hatim.messages.inviteCopied', 'Davet mesaji kopyalandı.'));
   };
 
   return (
@@ -185,14 +185,14 @@ const HatimDetail = ({ hatimId, onBack }) => {
             <div className="hatim-code-actions">
               <button
                 className="hatim-code-action-btn"
-                onClick={() => copyText(hatimDetails.joinCode, t('hatim.messages.codeCopied', 'Kod kopyalandi.'))}
+                onClick={() => copyText(hatimDetails.joinCode, t('hatim.messages.codeCopied', 'Kod kopyalandı.'))}
               >
                 <Copy size={16} />
                 {t('common.copy', 'Kopyala')}
               </button>
               <button className="hatim-code-action-btn secondary" onClick={handleShareInvite}>
                 <Share2 size={16} />
-                {t('hatim.share', 'Paylas')}
+                {t('hatim.share', 'Paylaş')}
               </button>
             </div>
           </div>
@@ -228,14 +228,14 @@ const HatimDetail = ({ hatimId, onBack }) => {
 
         <div className="hatim-grid-header">
           <div>
-            <h4 className="hatim-grid-title">{t('hatim.statusGrid', 'Cuz Durumlari')}</h4>
+            <h4 className="hatim-grid-title">{t('hatim.statusGrid', 'Cüz Durumlari')}</h4>
             <p className="hatim-grid-subtitle">
-              {t('hatim.gridSubtitle', 'Uygun olan cuzu sec, okumayi tamamlayinca durumu guncelle.')}
+              {t('hatim.gridSubtitle', 'Uygun olan cüzü seç, okumayi tamamlayinca durumu guncelle.')}
             </p>
           </div>
           <div className="hatim-grid-badge">
             <Sparkles size={14} />
-            30 {t('hatim.parts', 'cuz')}
+            30 {t('hatim.parts', 'cüz')}
           </div>
         </div>
 
@@ -246,7 +246,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
             const isLoading = processingPart === num;
 
             let statusClass = 'free';
-            let statusText = t('hatim.free', 'Bos');
+            let statusText = t('hatim.free', 'Boş');
 
             if (part.status === 'completed') {
               statusClass = 'completed';
@@ -264,7 +264,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
                 className={`part-btn part-btn-premium ${statusClass}`}
               >
                 <div className="part-btn-top">
-                  <span className="part-number-label">{t('hatim.partShort', 'Cuz')}</span>
+                  <span className="part-number-label">{t('hatim.partShort', 'Cüz')}</span>
                   <span className="part-number">{isLoading ? <RefreshCw size={16} className="spin" /> : num}</span>
                 </div>
                 <div className="part-btn-bottom">
@@ -283,7 +283,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
         <div className="hatim-legend-premium">
           <div className="legend-item">
             <div className="legend-box legend-box-free"></div>
-            {t('hatim.free', 'Bos')}
+            {t('hatim.free', 'Boş')}
           </div>
           <div className="legend-item">
             <div className="legend-box legend-box-mine"></div>
@@ -306,7 +306,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
         onClick={handleShareInvite}
       >
         <Share2 size={20} />
-        {t('hatim.share', 'Davet Kodunu Paylas')}
+        {t('hatim.share', 'Davet Kodunu Paylaş')}
       </button>
     </div>
   );

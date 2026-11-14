@@ -18,35 +18,35 @@ type PrimaryGoal = {
 export const PRIMARY_GOALS: Record<string, PrimaryGoal> = {
   prayer_rhythm: {
     id: 'prayer_rhythm',
-    label: 'Namaz ve gunluk ibadet rutini',
+    label: 'Namaz ve günlük ibadet',
     icon: 'Prayer',
     homeAction: {
       feature: 'dailyTasks',
-      title: 'Bugunun ibadet rutinini baslat',
-      description: 'Namaz, zikir ve kisa gunluk adim tek, sakin bir akista dursun.',
-      cta: 'Bugunku rutini ac'
+      title: 'Bugünün ibadetine başla',
+      description: 'Namaz, zikir ve kısa bir dua ile güne düzen kat.',
+      cta: 'Başla'
     }
   },
   quran_learning: {
     id: 'quran_learning',
-    label: 'Kuran ve dua rutini',
+    label: "Kur'an ve dua",
     icon: 'BookOpen',
     homeAction: {
       feature: 'quran',
-      title: 'Bugun Kuran ve dua ile basla',
-      description: 'Uzun bir ders degil; kisa okuma ve dua adimini gunluk rutine bagla.',
-      cta: 'Kuran adimini ac'
+      title: "Bugün Kur'an ve dua ile başla",
+      description: 'Kısa bir okuma ve bir dua yeter.',
+      cta: "Kur'an'ı aç"
     }
   },
   family_consistency: {
     id: 'family_consistency',
-    label: 'Ailece ibadet rutini',
+    label: 'Ailece ibadet',
     icon: 'Users',
     homeAction: {
       feature: 'dailyTasks',
-      title: 'Ailece bugunun ibadet adimini sec',
-      description: 'Buyuk hedefler yerine bugun gorunur tek namaz, dua veya zikir adimi yeter.',
-      cta: 'Aile rutinini baslat'
+      title: 'Bugün ailece bir adım atın',
+      description: 'Birlikte bir namaz, dua ya da zikir hedefi belirleyin.',
+      cta: 'Başla'
     }
   }
 };

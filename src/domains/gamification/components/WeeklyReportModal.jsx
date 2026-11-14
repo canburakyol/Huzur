@@ -271,17 +271,17 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
 
   const statsCards = [
     {
-      label: t('weeklyReport.activeDays', 'Aktif Gun'),
+      label: t('weeklyReport.activeDays', 'Aktif Gün'),
       value: weeklyStats.activeDays,
       icon: <Target size={18} color="#10b981" />
     },
     {
-      label: t('weeklyReport.prayerDays', 'Namaz Gunu'),
+      label: t('weeklyReport.prayerDays', 'Namaz Günü'),
       value: weeklyStats.prayerDays,
       icon: <Sparkles size={18} color="var(--tertiary)" />
     },
     {
-      label: t('weeklyReport.quranDays', 'Kuran Gunu'),
+      label: t('weeklyReport.quranDays', 'Kuran Günü'),
       value: weeklyStats.quranDays,
       icon: <BookOpen size={18} color="#3b82f6" />
     },
@@ -420,7 +420,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
             fontWeight: '950',
             letterSpacing: '-0.4px'
           }}>
-            {t('weeklyReport.title', 'Haftalik Huzur Ozeti')}
+            {t('weeklyReport.title', 'Haftalık Huzur Özeti')}
           </h2>
           <p style={{
             margin: '8px 0 0 0',
@@ -483,7 +483,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
               textTransform: 'uppercase',
               marginBottom: '6px'
             }}>
-              {t('weeklyReport.xp', 'Haftalik XP')}
+              {t('weeklyReport.xp', 'Haftalık XP')}
             </div>
             <div style={{
               fontSize: '1.6rem',
@@ -515,7 +515,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
           }}>
             {aiInsight?.socialHint || t(
               'weeklyReport.motivation',
-              'Kucuk ama istikrarli adimlar en guclu degisimi olusturur. Bu haftaki ritmini sakin bir sekilde korumaya devam et.'
+              'Küçük ama istikrarlı adımlar en guclu degisimi olusturur. Bu haftaki ritmini sakin bir şekilde korumaya devam et.'
             )}
           </p>
 
@@ -582,7 +582,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
               boxShadow: '0 10px 24px rgba(79, 70, 229, 0.18)'
             }}
           >
-            {t('weeklyReport.continue', 'Yeni Haftaya Basla')}
+            {t('weeklyReport.continue', 'Yeni Haftaya Başla')}
             <ChevronRight size={18} />
           </button>
         </div>

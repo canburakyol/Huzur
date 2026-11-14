@@ -48,7 +48,7 @@ const GOAL_FEATURE_MAP = {
 const FeatureGrid = memo(({ onSelectFeature }) => {
   const { t } = useTranslation();
   const primaryGoal = getStoredPrimaryGoal();
-  const primaryGoalConfig = getPrimaryGoalConfig(primaryGoal);
+  const goalLabel = t(`primaryGoal.${primaryGoal}.label`, getPrimaryGoalConfig(primaryGoal).label);
 
   const features = useMemo(() => {
     const goalFeatures = GOAL_FEATURE_MAP[primaryGoal] || GOAL_FEATURE_MAP.prayer_rhythm;
@@ -66,10 +66,10 @@ const FeatureGrid = memo(({ onSelectFeature }) => {
     <div style={{ marginBottom: '20px' }}>
       <div style={{ padding: '0 8px', marginBottom: '12px' }}>
         <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
-          {t('features.quickAccess', 'Hedefe gore hizli erisim')}
+          {t('features.quickAccess', 'Hedefe göre hızlı erişim')}
         </div>
         <div style={{ fontSize: '0.82rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
-          {primaryGoalConfig.label}
+          {goalLabel}
         </div>
       </div>
 

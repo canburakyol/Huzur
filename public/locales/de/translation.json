@@ -290,7 +290,16 @@
     "spiritualCoach": "Spiritual Guide",
     "prayerCircle": "Prayer Circle",
     "dailyFiqh": "Daily Fiqh",
-    "muezzinSelector": "Müezzin Seçimi"
+    "muezzinSelector": "Müezzin Seçimi",
+    "sections": {
+      "core": "Tägliche Andacht",
+      "coreDesc": "Werkzeuge für jeden Tag.",
+      "goal": "Für dich",
+      "tools": "Weitere Werkzeuge",
+      "toolsDesc": "Hilfreiche Bildschirme bei Bedarf.",
+      "system": "Einstellungen und Hilfe",
+      "focus": "Hauptfokus"
+    }
   },
   "settings": {
     "title": "Einstellungen",
@@ -415,7 +424,7 @@
       "Was ist der Grund für die Offenbarung der Sure Al-Fatihah?",
       "Warum wurde Ayat al-Kursi (Al-Baqarah 255) offenbart?",
       "Über welches Ereignis wurde in der Sure Al-Kawthar berichtet?",
-      "Wann wurde Al-Ma?idah Vers 3 offenbart?",
+      "Wann wurde Al-Ma'idah Vers 3 offenbart?",
       "Die ersten offenbarten Verse (Sure Al-Alaq)",
       "Warum wurde Sure Al-Ikhlas offenbart?"
     ]
@@ -3399,7 +3408,8 @@
       "firstActionDescription": "Kein langer Plan; starte einen kurzen Rhythmus fuer Gebet, Koran oder Dua.",
       "startNow": "Ersten Schritt oeffnen",
       "stepCounter": "Schritt {{current}} / {{total}}",
-      "goalTitle": "Mit welchem ​​Rhythmus sollen wir heute beginnen?"
+      "goalTitle": "Mit welchem ​​Rhythmus sollen wir heute beginnen?",
+      "goalDescription": "Wir richten deinen Startbildschirm danach aus. Du kannst es später in den Einstellungen ändern."
     },
     "funnel": {
       "title": "Growth-Funnel-Übersicht",
@@ -3415,6 +3425,19 @@
         "inviteCreated": "invite_created",
         "inviteAccepted": "invite_accepted"
       }
+    },
+    "goal": {
+      "prayerRhythm": "Meine Gebete im Blick behalten",
+      "prayerRhythmDesc": "Gebetszeiten, Erinnerungen und tägliches Dhikr",
+      "quranLearning": "Mich dem Koran und Dua nähern",
+      "quranLearningDesc": "Jeden Tag eine kurze Lesung und ein Dua",
+      "familyConsistency": "Gemeinsam mit meiner Familie beten",
+      "familyConsistencyDesc": "Gemeinsame Ziele und Gruppen-Khatm"
+    },
+    "referralStep": {
+      "done": "Fertig",
+      "active": "Als Nächstes",
+      "pending": "Ausstehend"
     }
   },
   "invite": {
@@ -3658,7 +3681,7 @@
     "explanation": "Erklärung",
     "questions": {
       "1": {
-        "question": "Im folgenden Vers steht der Buchstabe „?“ kommt nach '?'. Welche Tajweed-Regel gilt?",
+        "question": "Im folgenden Vers folgt der Buchstabe 'ي' auf 'ن'. Welche Tajweed-Regel gilt?",
         "options": [
           "Izhar",
           "Idgham mit Ghunnah",
@@ -3680,10 +3703,10 @@
       "3": {
         "question": "Welche Buchstaben sind Qalqalah-Buchstaben?",
         "options": [
-          "? ? ? ? ?",
-          "? ? ? ?",
-          "? ?",
-          "? ?? ? ? ? ?"
+          "ق ط ب ج د",
+          "ي م ن و",
+          "ل ر",
+          "أ ه ع ح غ خ"
         ],
         "explanation": "Die Qalqalah-Buchstaben sind Qaf, Ta, Ba, Jim und Dal."
       },
@@ -4437,10 +4460,11 @@
       "eyebrow": "Erster Schritt",
       "time": "2 Minuten",
       "promise": {
-        "prayer_rhythm": "Lass den heutigen Tag nicht leer vergehen.",
+        "prayer_rhythm": "Mach heute einen kleinen Schritt.",
         "quran_learning": "Bauen Sie eine kurze Verbindung zum Koran oder Dua auf.",
-        "family_consistency": "Machen Sie den heutigen einen Schritt als Familie sichtbar."
-      }
+        "family_consistency": "Teilt den heutigen Schritt als Familie."
+      },
+      "ariaLabel": "Erster Andachtsschritt"
     }
   },
   "churn": {
@@ -4513,11 +4537,11 @@
   },
   "reminders": {
     "morning": {
-      "title": "?? Guten Morgen!",
+      "title": "☀️ Guten Morgen!",
       "body": "Haben Sie Fajr gebetet? Beginnen Sie den Tag mit Segen."
     },
     "evening": {
-      "title": "?? Abenderinnerung",
+      "title": "🌙 Abenderinnerung",
       "body": "Wie viele Gebete haben Sie heute verrichtet? Halten Sie Ihren Tracker auf dem neuesten Stand."
     }
   },
@@ -4539,5 +4563,25 @@
     "cta": "Jetzt bewerten",
     "later": "Später",
     "never": "Nicht mehr fragen"
+  },
+  "primaryGoal": {
+    "prayer_rhythm": {
+      "label": "Gebet und tägliche Andacht",
+      "title": "Beginne die heutige Andacht",
+      "description": "Bring mit Gebet, Dhikr und einem kurzen Dua Ordnung in deinen Tag.",
+      "cta": "Starten"
+    },
+    "quran_learning": {
+      "label": "Koran und Dua",
+      "title": "Beginne den Tag mit Koran und Dua",
+      "description": "Eine kurze Lesung und ein Dua genügen.",
+      "cta": "Koran öffnen"
+    },
+    "family_consistency": {
+      "label": "Gemeinsam als Familie",
+      "title": "Macht heute gemeinsam einen Schritt",
+      "description": "Legt ein gemeinsames Gebets-, Dua- oder Dhikr-Ziel fest.",
+      "cta": "Starten"
+    }
   }
 }

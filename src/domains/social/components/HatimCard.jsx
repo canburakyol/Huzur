@@ -26,14 +26,14 @@ const HatimCard = memo(({ hatim, onClick, isMember }) => {
     try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(hatim.joinCode);
-        showToast(t('hatim.messages.codeCopied', 'Kod kopyalandi.'), 'success');
+        showToast(t('hatim.messages.codeCopied', 'Kod kopyalandı.'), 'success');
         return;
       }
     } catch (error) {
       logger.error('[HatimCard] Failed to copy join code', error);
     }
 
-    showToast(t('hatim.messages.codeCopied', 'Kod kopyalandi.'), 'success');
+    showToast(t('hatim.messages.codeCopied', 'Kod kopyalandı.'), 'success');
   };
 
   return (
@@ -59,7 +59,7 @@ const HatimCard = memo(({ hatim, onClick, isMember }) => {
         </div>
         <div className="hatim-pill count">
           <Users size={16} />
-          {memberCount} {t('common.people', 'kisi')}
+          {memberCount} {t('common.people', 'kişi')}
         </div>
       </div>
 

@@ -64,7 +64,7 @@ const Hadiths = ({ onClose }) => {
         const text = `📖 ${title}\n\n"${hadith.text}"\n\n— ${hadith.narrator}\n(${hadith.source})\n\n- ${appName}`;
         try {
             if (Capacitor.isNativePlatform()) {
-                await Share.share({ title, text, dialogTitle: t('hadith.shareDialogTitle', 'Hadisi Paylas') });
+                await Share.share({ title, text, dialogTitle: t('hadith.shareDialogTitle', 'Hadisi Paylaş') });
                 return;
             }
             if (navigator.share) {

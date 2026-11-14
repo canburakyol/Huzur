@@ -182,6 +182,6 @@ export const getAssistantFaqAnswer = (query: string, t: TFn): string => {
 
   return t(
     'assistant.betaUnknownQuestion',
-    'Bu soru su an hazir cevap listesinde yok. Alttaki ornek sorulardan birini secebilirsiniz.'
+    'Bu soru şu an hazır cevap listesinde yok. Alttaki örnek sorulardan birini seçebilirsiniz.'
   );
 };

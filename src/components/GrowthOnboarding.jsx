@@ -4,11 +4,9 @@ import {
   Bell,
   BookOpen,
   Check,
-  Crown,
   Globe2,
   HeartHandshake,
   MapPinned,
-  Send,
   Sparkles,
   Target
 } from 'lucide-react';
@@ -18,19 +16,10 @@ import {
   buildReferralOnboardingAnalyticsPayload,
   buildReferralOnboardingPlan,
 } from '../services/referralOnboardingService';
-import { useAppStore } from '../stores/useAppStore';
 import { SUPPORTED_LANGUAGE_OPTIONS } from '../config/i18nConfig';
 import { STORAGE_KEYS } from '../constants';
 import { storageService } from '../services/storageService';
 import { DEFAULT_PRIMARY_GOAL, normalizePrimaryGoal, setStoredPrimaryGoal } from '../utils/primaryGoal';
-import {
-  buildHuzurRitmiAnalyticsPayload,
-  getHuzurRitmiPreview,
-} from '../services/huzurRitmiPreviewService';
-import {
-  buildPremiumMomentAnalyticsPayload,
-  openPremiumMoment,
-} from '../services/premiumMomentService';
 
 const baseButton = {
   border: 'none',
@@ -74,15 +63,14 @@ const GOAL_ICONS = {
 };
 
 // Permissions are requested contextually after a meaningful user action.
-const ALLOWED_STEPS = ['language', 'goal', 'preview'];
+const ALLOWED_STEPS = ['language', 'goal'];
 
 const sanitizeSteps = (steps = []) => {
   if (!Array.isArray(steps)) return DEFAULT_ONBOARDING_CONFIG.steps;
   const normalized = steps
     .map((item) => (typeof item === 'string' ? item.trim().toLowerCase() : null))
     .filter((item) => ALLOWED_STEPS.includes(item));
-  const deduped = normalized.length > 0 ? [...new Set(normalized)] : ['language', 'goal', 'preview'];
-  return deduped.includes('preview') ? deduped : [...deduped, 'preview'];
+  return normalized.length > 0 ? [...new Set(normalized)] : DEFAULT_ONBOARDING_CONFIG.steps;
 };
 
 function GrowthOnboarding({
@@ -124,18 +112,18 @@ function GrowthOnboarding({
   const goals = useMemo(() => ([
     {
       id: 'prayer_rhythm',
-      label: t('growth.goal.prayerRhythm', 'Namazimi ve gunluk ibadet rutinimi takip etmek'),
-      subtitle: t('growth.goal.prayerRhythmDesc', 'Vakit, takip ve kisa zikir adimi tek sade akis olsun.')
+      label: t('growth.goal.prayerRhythm', 'Namazlarımı takip etmek'),
+      subtitle: t('growth.goal.prayerRhythmDesc', 'Vakitler, hatırlatmalar ve günlük zikir')
     },
     {
       id: 'quran_learning',
-      label: t('growth.goal.quranLearning', 'Kuran ve duayi gunluk rutine baglamak'),
-      subtitle: t('growth.goal.quranLearningDesc', 'Uzun ders degil; kisa okuma ve dua adimi surdurulebilir olsun.')
+      label: t('growth.goal.quranLearning', "Kur'an ve dua ile bağımı güçlendirmek"),
+      subtitle: t('growth.goal.quranLearningDesc', 'Her gün kısa bir okuma ve dua')
     },
     {
       id: 'family_consistency',
-      label: t('growth.goal.familyConsistency', 'Ailece ibadet aliskanligi kurmak'),
-      subtitle: t('growth.goal.familyConsistencyDesc', 'Sosyal akisa dagilmadan bugunun tek namaz, dua veya zikir adimi gorunsun.')
+      label: t('growth.goal.familyConsistency', 'Ailemle birlikte ibadet etmek'),
+      subtitle: t('growth.goal.familyConsistencyDesc', 'Ortak hedefler ve birlikte hatim')
     }
   ]), [t]);
 
@@ -146,33 +134,26 @@ function GrowthOnboarding({
     return {
       language: {
         title: headlineVariant === 'direct'
-          ? t('growth.onboarding.languageTitleDirect', 'Huzur, kendi dilinde baslar')
-          : t('growth.onboarding.languageTitle', 'Dilini sec'),
+          ? t('growth.onboarding.languageTitleDirect', 'Huzur, kendi dilinde başlar')
+          : t('growth.onboarding.languageTitle', 'Dilini seç'),
         description: headlineVariant === 'direct'
-          ? t('growth.onboarding.languageDescriptionDirect', 'Zihinsel netlik, manevi huzur ve gunluk rutinler tek bir guvenli limanda.')
-          : t('growth.onboarding.languageDescription', 'Zihinsel netlik, manevi huzur ve gunluk rutinler tek bir guvenli limanda.'),
+          ? t('growth.onboarding.languageDescriptionDirect', "Huzur'u hangi dilde kullanmak istersin?")
+          : t('growth.onboarding.languageDescription', "Huzur'u hangi dilde kullanmak istersin?"),
         actionLabel: t('growth.onboarding.continue', 'Devam et'),
       },
       permissions: {
-        title: t('growth.onboarding.permissionsTitle', 'Ibadet rutinini kacirmamak icin iki ayar'),
+        title: t('growth.onboarding.permissionsTitle', 'İbadet rutinini kaçırmamak için iki ayar'),
         description: permissionEmphasis === 'notifications_first'
-          ? t('growth.onboarding.permissionsDescriptionNotifications', 'Bildirim ve konum, namaz vaktini ve gunluk kisa ibadet adimini dogru kurar.')
-          : t('growth.onboarding.permissionsDescription', 'Sadece namaz vakti ve gunluk ibadet hatirlatmasi icin gereken ayarlari hazirlayalim.'),
+          ? t('growth.onboarding.permissionsDescriptionNotifications', 'Bildirim ve konum, namaz vaktini ve günlük kısa ibadet adımını doğru kurar.')
+          : t('growth.onboarding.permissionsDescription', 'Sadece namaz vakti ve günlük ibadet hatırlatması için gereken ayarlari hazırlayalım.'),
         actionLabel: t('growth.onboarding.continue', 'Hazirim'),
       },
       goal: {
-        title: t('growth.onboarding.goalTitle', 'Bugun neye alan acalim?'),
-        description: t('growth.onboarding.goalDescription', 'Ana ekran sana yalnizca siradaki anlamli adimi gosterecek.'),
+        title: t('growth.onboarding.goalTitle', "Huzur'u en çok ne için kullanacaksın?"),
+        description: t('growth.onboarding.goalDescription', 'Ana sayfayı buna göre düzenleyelim. Daha sonra ayarlardan değiştirebilirsin.'),
         actionLabel: resolvedConfig.premiumTeaserEnabled && !isProUser
           ? t('growth.onboarding.startWithTeaser', 'Devam et')
-          : t('growth.onboarding.startNow', 'Ilk adimi ac'),
-      },
-      preview: {
-        title: t('growth.onboarding.previewTitle', 'Guvenli limanin hazir'),
-        description: t('growth.onboarding.previewDescription', 'Tek bir sakin adimla basla. Diger araclar ihtiyacin oldugunda Kesfet bolumunde.'),
-        actionLabel: isProUser
-          ? t('growth.onboarding.previewFinishPro', 'Huzura gir')
-          : t('growth.onboarding.previewFinishFree', 'Ucretsiz surumle devam et'),
+          : t('growth.onboarding.startNow', 'Başla'),
       },
     };
   }, [isProUser, resolvedConfig.headlineVariant, resolvedConfig.permissionEmphasis, resolvedConfig.premiumTeaserEnabled, t]);
@@ -195,7 +176,6 @@ function GrowthOnboarding({
     currentStep: currentStepKey,
     selectedGoal,
   }), [currentStepKey, referralProgress, referralServerSnapshot, selectedGoal]);
-  const huzurRitmiPreview = useMemo(() => getHuzurRitmiPreview(selectedGoal), [selectedGoal]);
 
   useEffect(() => {
     setSelectedLanguage(initialLanguage);
@@ -227,14 +207,6 @@ function GrowthOnboarding({
       onboarding_goal_step_variant: experimentContext.onboardingGoalStepVariant,
       ...buildReferralOnboardingAnalyticsPayload(referralPlan),
     });
-
-    if (currentStepKey === 'preview') {
-      logEvent(ANALYTICS_EVENTS.HUZUR_RITMI_PREVIEW_VIEWED, {
-        ...buildHuzurRitmiAnalyticsPayload(selectedGoal),
-        flow_version: resolvedConfig.flowVersion,
-        experiment_variant: experimentContext.signature,
-      });
-    }
   }, [
     currentStepKey,
     experimentContext.onboardingGoalStepVariant,
@@ -311,53 +283,6 @@ function GrowthOnboarding({
     });
   };
 
-  const openPreviewPaywall = () => {
-    logEvent(ANALYTICS_EVENTS.HUZUR_RITMI_CTA_CLICKED, {
-      ...buildHuzurRitmiAnalyticsPayload(selectedGoal, {
-        cta: 'pro',
-        entry_source: 'huzur_ritmi_preview',
-      }),
-      flow_version: resolvedConfig.flowVersion,
-      experiment_variant: experimentContext.signature,
-    });
-
-    const premiumMoment = {
-      isPro: false,
-      source: 'huzur_ritmi_preview',
-      momentType: 'onboarding_complete',
-      primaryGoal: selectedGoal,
-    };
-
-    completeOnboarding({ premiumTeaserOverride: false });
-
-    window.setTimeout(() => {
-      logEvent(ANALYTICS_EVENTS.PREMIUM_MOMENT_OPENED, buildPremiumMomentAnalyticsPayload(premiumMoment, {
-        onboarding_experiment_variant: experimentContext.signature,
-      }));
-      openPremiumMoment(premiumMoment);
-    }, 250);
-  };
-
-  const openPreviewInvite = () => {
-    logEvent(ANALYTICS_EVENTS.HUZUR_RITMI_CTA_CLICKED, {
-      ...buildHuzurRitmiAnalyticsPayload(selectedGoal, {
-        cta: 'invite',
-        entry_source: 'onboarding_huzur_ritmi_reward',
-      }),
-      flow_version: resolvedConfig.flowVersion,
-      experiment_variant: experimentContext.signature,
-    });
-
-    completeOnboarding({ premiumTeaserOverride: false });
-
-    window.setTimeout(() => {
-      useAppStore.getState().openInviteModal({
-        source: 'onboarding_huzur_ritmi_reward',
-        primaryGoal: selectedGoal,
-      });
-    }, 250);
-  };
-
   const handleContinue = async () => {
     setErrorMessage('');
 
@@ -371,7 +296,7 @@ function GrowthOnboarding({
         });
         if (result?.success === false) {
           setErrorMessage(
-            result.error || t('growth.onboarding.languageError', 'Dil secimi uygulanamadi. Varsayilan dil ile devam ediyoruz.')
+            result.error || t('growth.onboarding.languageError', 'Dil seçimi uygulanamadı. Varsayılan dille devam ediyoruz.')
           );
         }
         
@@ -385,7 +310,7 @@ function GrowthOnboarding({
 
       if (currentStepKey === 'permissions') {
         if (!permissionsReady) {
-          setErrorMessage(t('growth.onboarding.permissionsRequired', 'Devam etmeden once iki tercih yap.'));
+          setErrorMessage(t('growth.onboarding.permissionsRequired', 'Devam etmeden önce iki tercih yap.'));
           return;
         }
 
@@ -417,7 +342,7 @@ function GrowthOnboarding({
           setErrorMessage(
             locationResult?.error ||
             notificationResult?.error ||
-            t('growth.onboarding.permissionsError', 'Bazi izinler su an uygulanamadi. Yine de devam edebilirsin.')
+            t('growth.onboarding.permissionsError', 'Bazı izinler şu an uygulanamadi. Yine de devam edebilirsin.')
           );
         }
 
@@ -425,22 +350,11 @@ function GrowthOnboarding({
         return;
       }
 
-      if (currentStepKey === 'goal' && stepOrder.includes('preview') && normalizedStep + 1 < totalSteps) {
-        setStoredPrimaryGoal(selectedGoal);
-        logStepCompleted('goal', {
-          selected_goal: selectedGoal,
-          premium_teaser_enabled: resolvedConfig.premiumTeaserEnabled === true,
-        });
-        syncStep(normalizedStep + 1);
-        return;
-      }
-
       completeOnboarding({
         logGoalStep: currentStepKey === 'goal',
-        premiumTeaserOverride: currentStepKey === 'preview' ? false : undefined,
       });
     } catch (error) {
-      setErrorMessage(error?.message || t('growth.onboarding.genericError', 'Bu adim tamamlanirken bir sorun olustu.'));
+      setErrorMessage(error?.message || t('growth.onboarding.genericError', 'Bu adım tamamlanırken bir sorun oluştu.'));
     } finally {
       setLoading(false);
     }
@@ -484,7 +398,7 @@ function GrowthOnboarding({
         }}
       >
         <div style={{ marginBottom: 10, fontSize: 12, color: 'var(--on-surface-variant)' }}>
-          {t('growth.onboarding.stepCounter', 'Adim {{current}} / {{total}}', { current: normalizedStep + 1, total: totalSteps })}
+          {t('growth.onboarding.stepCounter', 'Adım {{current}} / {{total}}', { current: normalizedStep + 1, total: totalSteps })}
         </div>
 
         <h2 id="growth-onboarding-title" style={{ margin: '0 0 6px', fontSize: 20, color: 'var(--primary)' }}>{currentStep.title}</h2>
@@ -549,7 +463,7 @@ function GrowthOnboarding({
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginBottom: 4 }}>
                     <strong style={{ fontSize: 13, color: 'var(--on-surface)' }}>{step.label}</strong>
                     <span style={{ fontSize: 11, fontWeight: 900, color: step.status === 'done' ? 'var(--secondary)' : 'var(--on-tertiary-container)' }}>
-                      {step.status === 'done' ? 'Hazir' : step.status === 'active' ? 'Siradaki' : 'Bekliyor'}
+                      {step.status === 'done' ? t('growth.referralStep.done', 'Hazır') : step.status === 'active' ? t('growth.referralStep.active', 'Sıradaki') : t('growth.referralStep.pending', 'Bekliyor')}
                     </span>
                   </div>
                   <div style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--on-surface-variant)' }}>
@@ -629,7 +543,7 @@ function GrowthOnboarding({
                 <div>
                   <div style={{ fontWeight: 800, marginBottom: 4 }}>{t('growth.onboarding.locationTitleShort', 'Konum')}</div>
                   <div style={{ fontSize: 13, opacity: 0.82, lineHeight: 1.5 }}>
-                    {t('growth.onboarding.locationDescriptionShort', 'Namaz vakitlerini bulundugun yere gore dogru hesaplar.')}
+                    {t('growth.onboarding.locationDescriptionShort', 'Namaz vakitlerini bulundugun yere göre doğru hesaplar.')}
                   </div>
                 </div>
               </div>
@@ -639,14 +553,14 @@ function GrowthOnboarding({
                   disabled={isBusy}
                   style={permissionButtonStyle(locationPreference === 'allow', true)}
                 >
-                  {t('growth.onboarding.allow', 'Izin ver')}
+                  {t('growth.onboarding.allow', 'İzin ver')}
                 </button>
                 <button
                   onClick={() => setLocationPreference('skip')}
                   disabled={isBusy}
                   style={permissionButtonStyle(locationPreference === 'skip')}
                 >
-                  {t('growth.onboarding.skipForNow', 'Simdilik gec')}
+                  {t('growth.onboarding.skipForNow', 'Simdilik geç')}
                 </button>
               </div>
             </div>
@@ -674,7 +588,7 @@ function GrowthOnboarding({
                 <div>
                   <div style={{ fontWeight: 800, marginBottom: 4 }}>{t('growth.onboarding.notificationsTitleShort', 'Bildirimler')}</div>
                   <div style={{ fontSize: 13, opacity: 0.82, lineHeight: 1.5 }}>
-                    {t('growth.onboarding.notificationsDescriptionShort', 'Vakitleri ve 2 dakikalik gunluk adimi kacirmamana yardim eder.')}
+                    {t('growth.onboarding.notificationsDescriptionShort', 'Vakitleri ve 2 dakikalik günlük adimi kacirmamana yardım eder.')}
                   </div>
                 </div>
               </div>
@@ -684,14 +598,14 @@ function GrowthOnboarding({
                   disabled={isBusy}
                   style={permissionButtonStyle(notificationPreference === 'allow', true)}
                 >
-                  {t('growth.onboarding.turnOn', 'Ac')}
+                  {t('growth.onboarding.turnOn', 'Aç')}
                 </button>
                 <button
                   onClick={() => setNotificationPreference('skip')}
                   disabled={isBusy}
                   style={permissionButtonStyle(notificationPreference === 'skip')}
                 >
-                  {t('growth.onboarding.skipForNow', 'Simdilik gec')}
+                  {t('growth.onboarding.skipForNow', 'Simdilik geç')}
                 </button>
               </div>
             </div>
@@ -756,144 +670,12 @@ function GrowthOnboarding({
                 </div>
                 <div>
                   <div style={{ fontWeight: 900, color: 'var(--on-surface)', marginBottom: 4 }}>
-                    {t('growth.onboarding.premiumTeaserTitle', 'Ritim oturunca daha derin destek acilabilir')}
+                    {t('growth.onboarding.premiumTeaserTitle', 'Düzenin oturunca daha fazla destek açılabilir')}
                   </div>
                   <div style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--on-surface-variant)' }}>
-                    {t('growth.onboarding.premiumTeaserDesc', 'Once ilk adimi tamamla; sonra haftalik icgoru ve daha sakin rehberlik icin Pro onerisi gosterebiliriz.')}
+                    {t('growth.onboarding.premiumTeaserDesc', 'Önce ilk adımı tamamla; sonra haftalık içgörüler ve rehberlik için Pro önerisi gösterebiliriz.')}
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {currentStepKey === 'preview' && (
-          <div style={{ display: 'grid', gap: 9, marginBottom: 14 }}>
-            <div style={{
-              borderRadius: 16,
-              padding: 13,
-              border: '1px solid color-mix(in srgb, var(--tertiary) 24%, transparent)',
-              background: 'var(--surface-container-low)'
-            }}>
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                marginBottom: 8,
-                borderRadius: 999,
-                padding: '6px 10px',
-                background: 'color-mix(in srgb, var(--tertiary) 14%, transparent)',
-                color: 'var(--on-tertiary-container)',
-                fontSize: 12,
-                fontWeight: 900
-              }}>
-                <Sparkles size={14} />
-                {t('growth.onboarding.previewBadge', 'Bugunluk ritim')}
-              </div>
-              <h3 style={{ margin: '0 0 5px', color: 'var(--on-surface)', fontSize: 18 }}>
-                {huzurRitmiPreview.title}
-              </h3>
-              <p style={{ margin: 0, color: 'var(--on-surface-variant)', lineHeight: 1.45, fontSize: 13 }}>
-                {huzurRitmiPreview.subtitle}
-              </p>
-            </div>
-
-            {huzurRitmiPreview.steps.map((step, index) => (
-              <div
-                key={step.label}
-                style={{
-                  display: 'flex',
-                  gap: 10,
-                  padding: '10px 12px',
-                  borderRadius: 14,
-                  border: '1px solid var(--outline-variant)',
-                  background: 'var(--surface-container-lowest)'
-                }}
-              >
-                <div style={{
-                  width: 26,
-                  height: 26,
-                  borderRadius: 10,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  background: 'color-mix(in srgb, var(--secondary) 14%, transparent)',
-                  color: 'var(--secondary)',
-                  fontWeight: 900,
-                  flexShrink: 0
-                }}>
-                  {index + 1}
-                </div>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 900, color: 'var(--on-surface)', marginBottom: 3 }}>
-                    {step.label}
-                  </div>
-                  <div style={{ fontSize: 12, lineHeight: 1.45, color: 'var(--on-surface-variant)' }}>
-                    {step.text}
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {!isProUser && (
-              <div style={{
-                display: 'flex',
-                gap: 10,
-                padding: '11px 12px',
-                borderRadius: 14,
-                border: '1px solid color-mix(in srgb, var(--tertiary) 24%, transparent)',
-                background: 'color-mix(in srgb, var(--tertiary) 8%, var(--surface-container-lowest))',
-                color: 'var(--on-surface)'
-              }}>
-                <Crown size={18} style={{ flexShrink: 0, marginTop: 1, color: 'var(--tertiary)' }} />
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 900, marginBottom: 3 }}>
-                    {t('growth.onboarding.freePlanAdsTitle', 'Ucretsiz surum reklamlarla desteklenir')}
-                  </div>
-                  <div style={{ fontSize: 12, lineHeight: 1.45, color: 'var(--on-surface-variant)' }}>
-                    {t('growth.onboarding.freePlanAdsDescription', 'Banner ve ana ekran reklamlari Pro ile kaldirilir. Gerekli gizlilik tercihleri Google ekraninda yonetilir.')}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {!isProUser && (
-              <div style={{ display: 'grid', gap: 10 }}>
-                <button
-                  onClick={openPreviewPaywall}
-                  disabled={isBusy}
-                  style={{
-                    ...baseButton,
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 8,
-                    background: 'var(--on-tertiary-container)',
-                    color: 'var(--on-tertiary)'
-                  }}
-                >
-                  <Crown size={18} />
-                  {t('growth.onboarding.previewProCta', 'Pro ile reklamsiz devam et')}
-                </button>
-                <button
-                  onClick={openPreviewInvite}
-                  disabled={isBusy}
-                  style={{
-                    ...baseButton,
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 8,
-                    background: 'var(--surface-container-low)',
-                    color: 'var(--on-surface)',
-                    border: '1px solid var(--outline-variant)'
-                  }}
-                >
-                  <Send size={18} />
-                  {t('growth.onboarding.previewInviteCta', '1 kisiyi davet et, 24 saat Pro ac')}
-                </button>
               </div>
             )}
           </div>
@@ -917,7 +699,7 @@ function GrowthOnboarding({
               opacity: isBusy ? 0.7 : 1
             }}
           >
-            {isBusy ? t('common.loading', 'Yukleniyor...') : currentStep.actionLabel}
+            {isBusy ? t('common.loading', 'Yükleniyor...') : currentStep.actionLabel}
           </button>
         </div>
       </div>

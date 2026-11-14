@@ -5,7 +5,7 @@ import { getDb } from './firebase';
 import { storageService } from './storageService';
 
 const CACHE_TTL_MS = 5 * 60 * 1000;
-const ALLOWED_STEPS = ['language', 'goal', 'preview'];
+const ALLOWED_STEPS = ['language', 'goal'];
 
 type OnboardingConfig = {
   flowVersion: string;
@@ -20,7 +20,7 @@ type OnboardingConfig = {
 export const DEFAULT_ONBOARDING_CONFIG: OnboardingConfig = {
   flowVersion: 'v1',
   enabled: false,
-  steps: ['language', 'goal', 'preview'],
+  steps: ['language', 'goal'],
   headlineVariant: 'calm',
   permissionEmphasis: 'balanced',
   goalDefault: 'prayer_rhythm',
@@ -33,8 +33,7 @@ const sanitizeSteps = (steps: unknown): string[] => {
     .map((item) => (typeof item === 'string' ? item.trim().toLowerCase() : null))
     .filter((item): item is string => item !== null && ALLOWED_STEPS.includes(item));
 
-  const deduped = normalized.length > 0 ? [...new Set(normalized)] : DEFAULT_ONBOARDING_CONFIG.steps;
-  return deduped.includes('preview') ? deduped : [...deduped, 'preview'];
+  return normalized.length > 0 ? [...new Set(normalized)] : DEFAULT_ONBOARDING_CONFIG.steps;
 };
 
 export const normalizeOnboardingConfig = (value: unknown = {}): OnboardingConfig => {

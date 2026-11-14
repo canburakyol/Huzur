@@ -21,7 +21,7 @@ function SettingsNotificationSection({
           description={t('settings.historyDesc')}
           icon={<History size={20} />}
           onClick={onShowHistory}
-          title={t('settings.historyTitle', 'Bildirim Gecmisi')}
+          title={t('settings.historyTitle', 'Bildirim Geçmişi')}
         />
 
 

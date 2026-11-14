@@ -290,7 +290,16 @@
     "spiritualCoach": "Spiritual Guide",
     "prayerCircle": "Prayer Circle",
     "dailyFiqh": "Daily Fiqh",
-    "muezzinSelector": "Seleksi Muazin"
+    "muezzinSelector": "Seleksi Muazin",
+    "sections": {
+      "core": "Ibadah harian",
+      "coreDesc": "Alat yang kamu gunakan setiap hari.",
+      "goal": "Untukmu",
+      "tools": "Alat lainnya",
+      "toolsDesc": "Layar bantuan saat kamu membutuhkannya.",
+      "system": "Pengaturan dan bantuan",
+      "focus": "Fokus utama"
+    }
   },
   "settings": {
     "title": "Pengaturan",
@@ -415,7 +424,7 @@
       "Apa sebab turunnya Surah Al-Fatihah?",
       "Mengapa Ayat Kursi (Al-Baqarah 255) diturunkan?",
       "Surah Al-Kautsar turun terkait peristiwa apa?",
-      "Kapan Al-Ma?idah ayat 3 diturunkan?",
+      "Kapan Al-Ma'idah ayat 3 diturunkan?",
       "Ayat-ayat pertama yang turun (Surah Al-Alaq)",
       "Mengapa Surah Al-Ikhlas diturunkan?"
     ]
@@ -3399,7 +3408,8 @@
       "firstActionDescription": "Bukan rencana panjang; mulai ritme singkat untuk salat, Quran, atau doa.",
       "startNow": "Buka Langkah Pertama",
       "stepCounter": "Langkah {{current}} / {{total}}",
-      "goalTitle": "Ritme apa yang ingin kita mulai hari ini?"
+      "goalTitle": "Ritme apa yang ingin kita mulai hari ini?",
+      "goalDescription": "Kami akan menyesuaikan beranda untukmu. Kamu bisa mengubahnya nanti di pengaturan."
     },
     "funnel": {
       "title": "Ringkasan Growth Funnel",
@@ -3415,6 +3425,19 @@
         "inviteCreated": "invite_created",
         "inviteAccepted": "invite_accepted"
       }
+    },
+    "goal": {
+      "prayerRhythm": "Mencatat salat saya",
+      "prayerRhythmDesc": "Waktu salat, pengingat, dan zikir harian",
+      "quranLearning": "Lebih dekat dengan Al-Quran dan doa",
+      "quranLearningDesc": "Bacaan singkat dan doa setiap hari",
+      "familyConsistency": "Beribadah bersama keluarga",
+      "familyConsistencyDesc": "Tujuan bersama dan khatam berjamaah"
+    },
+    "referralStep": {
+      "done": "Selesai",
+      "active": "Berikutnya",
+      "pending": "Menunggu"
     }
   },
   "invite": {
@@ -3658,7 +3681,7 @@
     "explanation": "Penjelasan",
     "questions": {
       "1": {
-        "question": "Pada ayat di bawah ini, huruf '?' datang setelah '?'. Hukum tajwid apa yang berlaku?",
+        "question": "Pada ayat di bawah ini, huruf 'ي' datang setelah 'ن'. Hukum tajwid apa yang berlaku?",
         "options": [
           "Izhar",
           "Idgham bighunnah",
@@ -3680,10 +3703,10 @@
       "3": {
         "question": "Huruf qalqalah adalah huruf apa saja?",
         "options": [
-          "? ? ? ? ?",
-          "? ? ? ?",
-          "? ?",
-          "? ?? ? ? ? ?"
+          "ق ط ب ج د",
+          "ي م ن و",
+          "ل ر",
+          "أ ه ع ح غ خ"
         ],
         "explanation": "Huruf qalqalah adalah qaf, tha, ba, jim, dan dal."
       },
@@ -4437,10 +4460,11 @@
       "eyebrow": "Langkah pertama",
       "time": "2 menit",
       "promise": {
-        "prayer_rhythm": "Jangan biarkan hari ini berlalu kosong.",
+        "prayer_rhythm": "Ambil satu langkah kecil hari ini.",
         "quran_learning": "Bangun hubungan singkat dengan Quran atau doa.",
-        "family_consistency": "Jadikan satu langkah hari ini terlihat sebagai keluarga."
-      }
+        "family_consistency": "Jadikan langkah hari ini milik bersama keluarga."
+      },
+      "ariaLabel": "Langkah ibadah pertama"
     }
   },
   "churn": {
@@ -4513,11 +4537,11 @@
   },
   "reminders": {
     "morning": {
-      "title": "?? Selamat pagi!",
+      "title": "☀️ Selamat pagi!",
       "body": "Sudah shalat Subuh? Awali hari dengan berkah."
     },
     "evening": {
-      "title": "?? Pengingat Sore",
+      "title": "🌙 Pengingat Sore",
       "body": "Berapa waktu shalat yang sudah kamu kerjakan hari ini? Perbarui catatanmu."
     }
   },
@@ -4539,5 +4563,25 @@
     "cta": "Beri Rating",
     "later": "Nanti",
     "never": "Jangan Tanya Lagi"
+  },
+  "primaryGoal": {
+    "prayer_rhythm": {
+      "label": "Salat dan ibadah harian",
+      "title": "Mulai ibadah hari ini",
+      "description": "Atur harimu dengan salat, zikir, dan doa singkat.",
+      "cta": "Mulai"
+    },
+    "quran_learning": {
+      "label": "Al-Quran dan doa",
+      "title": "Mulai hari ini dengan Al-Quran dan doa",
+      "description": "Bacaan singkat dan satu doa sudah cukup.",
+      "cta": "Buka Al-Quran"
+    },
+    "family_consistency": {
+      "label": "Ibadah bersama keluarga",
+      "title": "Ambil satu langkah bersama hari ini",
+      "description": "Tetapkan satu target salat, doa, atau zikir bersama.",
+      "cta": "Mulai"
+    }
   }
 }

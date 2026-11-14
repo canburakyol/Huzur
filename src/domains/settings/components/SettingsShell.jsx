@@ -47,7 +47,7 @@ function SettingsShell({ onClose }) {
     return (
       <SettingsHistoryScreen
         onClose={settingsState.closeOverlay}
-        title={t('settings.historyTitle', 'Bildirim Gecmisi')}
+        title={t('settings.historyTitle', 'Bildirim Geçmişi')}
       />
     );
   }

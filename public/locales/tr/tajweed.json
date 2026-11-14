@@ -1,68 +1,68 @@
 {
   "tajweed": {
     "title": "Tecvid Akademisi",
-    "subtitle": "Kuran okuyusunuzu guzellestirin",
+    "subtitle": "Kur'an okuyuşunuzu güzelleştirin",
     "academy": "Huzur Akademi",
-    "mainSubtitle": "Tecvid kurallarini sade ve anlasilir adimlarla ogrenin.",
+    "mainSubtitle": "Tecvid kurallarını sade ve anlaşılır adımlarla öğrenin.",
     "module": "Modulu",
     "availableLessons": "Mevcut Dersler",
     "quiz": "Quiz",
     "quizTitle": "Tecvid Quiz",
-    "quizSubtitle": "Ogrendiklerinizi hizli bir testle pekistirin.",
-    "quizDesc": "Kisa bir tekrar ile tecvid bilginizi olcun.",
+    "quizSubtitle": "Öğrendiklerinizi hızlı bir testle pekiştirin.",
+    "quizDesc": "Kısa bir tekrarla tecvid bilginizi ölçün.",
     "rule": "Kural",
     "letters": "Harfler",
-    "examples": "Ornekler",
-    "understood": "Anladim, Bir Sonrakine Gec",
-    "audioNotReady": "Ses dosyasi hazir degil.",
-    "audioError": "Ses calinirken sorun olustu: {{error}}",
-    "makhraj": "Cikis Noktasi (Mahrec)",
+    "examples": "Örnekler",
+    "understood": "Anladım, Bir Sonrakine Geç",
+    "audioNotReady": "Ses dosyası hazır değil.",
+    "audioError": "Ses çalınırken sorun oluştu: {{error}}",
+    "makhraj": "Çıkış Noktası (Mahrec)",
     "levels": {
-      "beginner": "Baslangic",
-      "beginnerDesc": "Temel tecvid kurallarini adim adim ogrenin.",
+      "beginner": "Başlangıç",
+      "beginnerDesc": "Temel tecvid kurallarını adım adım öğrenin.",
       "intermediate": "Orta Seviye",
-      "intermediateDesc": "Okuyusunuzu guclendiren orta seviye kurallara gecin.",
-      "advanced": "Ileri Seviye",
-      "advancedDesc": "Ileri tecvid detaylariyla tilavetinizi inceltin."
+      "intermediateDesc": "Okuyuşunuzu güçlendiren orta seviye kurallara geçin.",
+      "advanced": "İleri Seviye",
+      "advancedDesc": "İleri tecvid detaylariyla tilavetinizi inceltin."
     },
     "aiCheck": {
-      "title": "AI ile Telaffuz Kontrolu",
-      "desc": "Yapay zeka ile okuyusunuzu analiz edin ve anlik geri bildirim alin.",
-      "comingSoon": "Yakinda"
+      "title": "AI ile Telaffuz Kontrolü",
+      "desc": "Yapay zekâ ile okuyuşunuzu analiz edin ve anlık geri bildirim alın.",
+      "comingSoon": "Yakında"
     },
     "faq": {
       "items": {
         "tenvin": {
           "question": "Tenvin nedir?",
-          "answer": "Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Uc cesidi vardir:\n• Fethatan (ً): Ustun tenvin\n• Kesretan (ٍ): Esre tenvin\n• Dammetan (ٌ): Otre tenvin\nTenvin, kelimenin sonundaki nunun yazilmadan okunmasidir."
+          "answer": "Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Üç cesidi vardır:\n• Fethatan (ً): Üstün tenvin\n• Kesretan (ٍ): Esre tenvin\n• Dammetan (ٌ): Ötre tenvin\nTenvin, kelimenin sonundaki nunun yazilmadan okunmasıdır."
         },
         "gunne": {
-          "question": "Gunneli okuyus nasil olur?",
-          "answer": "Gunne, nun ve mim harflerinin genizden okunmasidir. Iki hareke miktari tutulur.\n• Idgam (mealgunne): Nun sakineden sonra ي، ن، م، و gelirse\n• Ihfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• Iklab: Nun sakineden sonra ب gelirse, mime donusur ve gunneli okunur."
+          "question": "Gunneli okuyuş nasıl olur?",
+          "answer": "Gunne, nun ve mim harflerinin genizden okunmasıdır. İki hareke miktarı tutulur.\n• İdgam (mealgunne): Nun sakineden sonra ي، ن، م، و gelirse\n• İhfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• İklab: Nun sakineden sonra ب gelirse, mime dönüşür ve gunneli okunur."
         },
         "kalkale": {
           "question": "Kalkale harfleri hangileri?",
-          "answer": "Kalkale harfleri 5 tanedir ve \"قطب جد\" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) oldugunda, cikis noktasinda bir sicrama veya titresim yapilir."
+          "answer": "Kalkale harfleri 5 tanedir ve \"قطب جد\" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Tı), ب (Be), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) olduğunda, çıkış noktasında bir sıçrama veya titreşim yapılır."
         },
         "med": {
           "question": "Med harfleri nelerdir?",
-          "answer": "Uzatma (Med) harfleri uctur: Elif (ا), Vav (و) ve Ya (ي). Bu harfler kendinden onceki harfi bir elif miktari (yaklasik 1-1.5 saniye) uzatir."
+          "answer": "Uzatma (Med) harfleri üçtür: Elif (ا), Vav (و) ve Ye (ي). Bu harfler kendinden önceki harfi bir elif miktarı (yaklaşık 1-1,5 saniye) uzatır."
         },
         "makhraj": {
           "question": "Mahrec nedir?",
-          "answer": "Mahrec, harflerin agizdan cikis yeridir. Kuran okurken harflerin dogru mahreclerinden cikarilmasi anlamin bozulmamasi icin cok onemlidir."
+          "answer": "Mahrec, harflerin ağızdan çıkış yeridir. Kur'an okurken harflerin doğru mahreclerinden çıkarılması, anlamın bozulmaması için çok önemlidir."
         },
         "ihfa": {
-          "question": "Ihfa nasil yapilir?",
-          "answer": "Ihfa, sozlukte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiginde, nun sesini genizden getirerek hafifce gizleyerek okumaktir."
+          "question": "İhfa nasıl yapılır?",
+          "answer": "İhfa, sözlükte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiğinde, nun sesini genizden getirerek hafifçe gizleyerek okumaktır."
         },
         "sekte": {
           "question": "Sekte nedir?",
-          "answer": "Sekte, sesi bir an icin kesip nefes almadan beklemektir. Kuran-i Kerim'de 4 yerde sekte bulunur (Kehf, Yasin, Kiyame ve Mutaffifin surelerinde)."
+          "answer": "Sekte, sesi bir an için kesip nefes almadan beklemektir. Kur'an-ı Kerim'de 4 yerde sekte bulunur (Kehf, Yasin, Kıyame ve Mutaffifin surelerinde)."
         },
         "izhar": {
-          "question": "Izhar nedir?",
-          "answer": "Izhar, acikca okumaktir. Sakin nun veya tenvinden sonra bogaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hic tutulmadan ve gizlenmeden oldugu gibi okunur."
+          "question": "İzhar nedir?",
+          "answer": "İzhar, açıkça okumaktır. Sakin nun veya tenvinden sonra boğaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hiç tutulmadan ve gizlenmeden olduğu gibi okunur."
         }
       }
     },
@@ -70,111 +70,111 @@
       "med_tabii": {
         "title": "Med-i Tabii",
         "desc": "Asli ve temel uzatma",
-        "rule": "Harf-i medden sonra sebeb-i med gelmezse harf bir elif miktari uzatilir.",
+        "rule": "Harf-i medden sonra sebeb-i med gelmezse harf bir elif miktarı uzatılır.",
         "examples": {
           "0": {
-            "explanation": "Elif harfi uzatma gorevi gorur."
+            "explanation": "Elif harfi uzatma görevi görür."
           },
           "1": {
-            "explanation": "Vav harfi uzatma gorevi gorur."
+            "explanation": "Vav harfi uzatma görevi görür."
           }
         }
       },
       "idgam_meal_gunne": {
-        "title": "Idgam Mealgunne",
+        "title": "İdgam Mealgunne",
         "desc": "Gunne ile kaynastirma",
-        "rule": "Sakin Nun veya tenvin, Yemnu harflerinden birine gelirse harfler gunneli sekilde kaynastirilir.",
+        "rule": "Sakin Nun veya tenvin, Yemnu harflerinden birine gelirse harfler gunneli şekilde kaynaştırılır.",
         "examples": {
           "0": {
-            "explanation": "Nun harfi Ye harfine ugradigi icin idgam olur."
+            "explanation": "Nun harfi Ye harfine uğradığı için idgam olur."
           },
           "1": {
-            "explanation": "Nun harfi Mim harfine ugradigi icin idgam olur."
+            "explanation": "Nun harfi Mim harfine uğradığı için idgam olur."
           }
         }
       },
       "idgam-bila-gunne": {
-        "title": "Idgam Bilagunne",
+        "title": "İdgam Bilagunne",
         "desc": "Gunnesiz kaynastirma",
-        "rule": "Sakin Nun veya tenvin, Lam ya da Ra harfine gelirse gunnesiz sekilde kaynastirilir.",
+        "rule": "Sakin Nun veya tenvin, Lam ya da Ra harfine gelirse gunnesiz şekilde kaynaştırılır.",
         "examples": {
           "0": {
-            "explanation": "Nun harfi Ra harfine ugradigi icin gunnesiz idgam olur."
+            "explanation": "Nun harfi Ra harfine uğradığı için gunnesiz idgam olur."
           },
           "1": {
-            "explanation": "Tenvin Lam harfine ugradigi icin gunnesiz idgam olur."
+            "explanation": "Tenvin Lam harfine uğradığı için gunnesiz idgam olur."
           }
         }
       },
       "ihfa": {
-        "title": "Ihfa",
+        "title": "İhfa",
         "desc": "Gizlemek",
         "rule": "Sakin Nun veya tenvin, ihfa harflerinden birine gelirse Nun sesi genizden getirilerek gizlenir.",
         "examples": {
           "0": {
-            "explanation": "Sakin Nun, Ze harfine ugradigi icin ihfa olur."
+            "explanation": "Sakin Nun, Ze harfine uğradığı için ihfa olur."
           },
           "1": {
-            "explanation": "Sakin Nun, Sin harfine ugradigi icin ihfa olur."
+            "explanation": "Sakin Nun, Sin harfine uğradığı için ihfa olur."
           }
         }
       },
       "izhar": {
-        "title": "Izhar",
-        "desc": "Aciga cikarmak",
-        "rule": "Sakin Nun veya tenvin, bogaz harflerinden birine gelirse Nun sesi acikca okunur.",
+        "title": "İzhar",
+        "desc": "Açığa çıkarmak",
+        "rule": "Sakin Nun veya tenvin, boğaz harflerinden birine gelirse Nun sesi açıkça okunur.",
         "examples": {
           "0": {
-            "explanation": "Sakin Nun, Hi harfine ugradigi icin izhar olur."
+            "explanation": "Sakin Nun, Hı harfine uğradığı için izhar olur."
           },
           "1": {
-            "explanation": "Tenvin, Elif harfine ugradigi icin izhar olur."
+            "explanation": "Tenvin, Elif harfine uğradığı için izhar olur."
           }
         }
       },
       "iklab": {
-        "title": "Iklab",
+        "title": "İklab",
         "desc": "Donusturmek",
-        "rule": "Sakin Nun veya tenvin, Be harfine gelirse Nun sesi Mim sesine donusturulur ve gunne yapilir.",
+        "rule": "Sakin Nun veya tenvin, Be harfine gelirse Nun sesi Mim sesine dönüştürülür ve gunne yapılır.",
         "examples": {
           "0": {
-            "explanation": "Sakin Nun, Be harfine ugradigi icin Mim sesine donusur."
+            "explanation": "Sakin Nun, Be harfine uğradığı için Mim sesine dönüşür."
           },
           "1": {
-            "explanation": "Tenvin, Be harfine ugradigi icin Mim sesine donusur."
+            "explanation": "Tenvin, Be harfine uğradığı için Mim sesine dönüşür."
           }
         }
       },
       "kalkale": {
         "title": "Kalkale",
         "desc": "Sarsmak ve titretmek",
-        "rule": "Kutbu Ced harfleri sakin oldugunda mahrecleri sarsilarak kuvvetli bir sesle okunur.",
+        "rule": "Kutbu Ced harfleri sakin olduğunda mahrecleri sarsılarak kuvvetli bir sesle okunur.",
         "examples": {
           "0": {
-            "explanation": "Kaf harfi sakin oldugu icin kalkale yapilir."
+            "explanation": "Kaf harfi sakin olduğu için kalkale yapılır."
           },
           "1": {
-            "explanation": "Dal harfi sakin oldugu icin kalkale yapilir."
+            "explanation": "Dal harfi sakin olduğu için kalkale yapılır."
           }
         }
       },
       "ra_hukmu": {
-        "title": "Hukmu'r-Ra",
+        "title": "Hükmü'r-Ra",
         "desc": "Ra harfinin okunusu",
-        "rule": "Ra harfi ustun ve otrede kalin, esrede ince okunur. Cezimli durumda onceki harfin harekesine bakilir.",
+        "rule": "Ra harfi üstün ve ötrede kalın, esrede ince okunur. Cezimli durumda önceki harfin harekesine bakılır.",
         "examples": {
           "0": {
-            "explanation": "Ra harfi ustunlu oldugu icin kalin okunur."
+            "explanation": "Ra harfi üstünlü olduğu için kalın okunur."
           }
         }
       },
       "med_muttasil": {
-        "title": "Med-i Muttasil",
+        "title": "Med-i Muttasıl",
         "desc": "Bitisik uzatma",
-        "rule": "Harf-i medden sonra ayni kelime icinde hemze gelirse Med-i Muttasil olur ve daha uzun okunur.",
+        "rule": "Harf-i medden sonra aynı kelime içinde hemze gelirse Med-i Muttasıl olur ve daha uzun okunur.",
         "examples": {
           "0": {
-            "explanation": "Elif ve hemze ayni kelimede oldugu icin daha uzun uzatilir."
+            "explanation": "Elif ve hemze aynı kelimede olduğu için daha uzun uzatılır."
           }
         }
       }

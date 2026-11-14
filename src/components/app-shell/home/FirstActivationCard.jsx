@@ -6,21 +6,15 @@ import { getPrimaryGoalConfig, getStoredPrimaryGoal } from '../../../utils/prima
 
 const activationCopy = {
   prayer_rhythm: {
-    eyebrow: 'Ilk adim',
     icon: <Target size={22} />,
-    time: '2 dakika',
     promiseKey: 'homeFeed.activation.promise.prayer_rhythm',
   },
   quran_learning: {
-    eyebrow: 'Ilk adim',
     icon: <BookOpen size={22} />,
-    time: '2 dakika',
     promiseKey: 'homeFeed.activation.promise.quran_learning',
   },
   family_consistency: {
-    eyebrow: 'Ilk adim',
     icon: <Users size={22} />,
-    time: '2 dakika',
     promiseKey: 'homeFeed.activation.promise.family_consistency',
   },
 };
@@ -52,21 +46,21 @@ function FirstActivationCard({ onSelectFeature }) {
   };
 
   return (
-    <section className="first-activation-card" aria-label="Ilk ibadet adimi">
+    <section className="first-activation-card" aria-label={t('homeFeed.activation.ariaLabel', 'İlk ibadet adımı')}>
       <div className="first-activation-card__header">
         <span className="first-activation-card__icon">{copy.icon}</span>
-        <span className="first-activation-card__eyebrow">{copy.eyebrow}</span>
-        <span className="first-activation-card__time">{copy.time}</span>
+        <span className="first-activation-card__eyebrow">{t('homeFeed.activation.eyebrow', 'İlk adım')}</span>
+        <span className="first-activation-card__time">{t('homeFeed.activation.time', '2 dakika')}</span>
       </div>
 
       <div className="first-activation-card__body">
-        <h2>{action.title}</h2>
-        <p>{t(copy.promiseKey)} {action.description}</p>
+        <h2>{t(`primaryGoal.${goalConfig.id}.title`, action.title)}</h2>
+        <p>{t(copy.promiseKey)} {t(`primaryGoal.${goalConfig.id}.description`, action.description)}</p>
       </div>
 
       <button type="button" className="first-activation-card__button" onClick={handleStart}>
         <Sparkles size={17} />
-        <span>{action.cta}</span>
+        <span>{t(`primaryGoal.${goalConfig.id}.cta`, action.cta)}</span>
         <ArrowRight size={17} />
       </button>
     </section>

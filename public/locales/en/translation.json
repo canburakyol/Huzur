@@ -290,7 +290,16 @@
     "spiritualCoach": "Spiritual Guide",
     "prayerCircle": "Prayer Circle",
     "dailyFiqh": "Daily Fiqh",
-    "muezzinSelector": "Muezzin Selection"
+    "muezzinSelector": "Muezzin Selection",
+    "sections": {
+      "core": "Daily worship",
+      "coreDesc": "Tools you use every day.",
+      "goal": "For you",
+      "tools": "More tools",
+      "toolsDesc": "Helpful screens when you need them.",
+      "system": "Settings and support",
+      "focus": "Main focus"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -415,7 +424,7 @@
       "What is the reason for the revelation of Surah Al-Fatihah?",
       "Why was Ayat al-Kursi (Al-Baqarah 255) revealed?",
       "Which event was Surah Al-Kawthar revealed about?",
-      "When was Al-Ma?idah verse 3 revealed?",
+      "When was Al-Ma'idah verse 3 revealed?",
       "The first revealed verses (Surah Al-Alaq)",
       "Why was Surah Al-Ikhlas revealed?"
     ]
@@ -3605,7 +3614,7 @@
     "explanation": "Explanation",
     "questions": {
       "1": {
-        "question": "In the verse below, the letter '?' comes after '?'. Which tajweed rule applies?",
+        "question": "In the verse below, the letter 'ي' comes after 'ن'. Which tajweed rule applies?",
         "options": [
           "Izhar",
           "Idgham with ghunnah",
@@ -3627,10 +3636,10 @@
       "3": {
         "question": "Which letters are qalqalah letters?",
         "options": [
-          "? ? ? ? ?",
-          "? ? ? ?",
-          "? ?",
-          "? ?? ? ? ? ?"
+          "ق ط ب ج د",
+          "ي م ن و",
+          "ل ر",
+          "أ ه ع ح غ خ"
         ],
         "explanation": "The qalqalah letters are qaf, ta, ba, jim, and dal."
       },
@@ -4110,7 +4119,8 @@
       "firstActionDescription": "No long plan; start a short worship routine for prayer, dhikr, Quran, or dua.",
       "startNow": "Open First Step",
       "stepCounter": "Step {{current}} / {{total}}",
-      "goalTitle": "Which worship routine should we start today?"
+      "goalTitle": "Which worship routine should we start today?",
+      "goalDescription": "We'll arrange your home screen around it. You can change it later in settings."
     },
     "funnel": {
       "title": "Growth Funnel Summary",
@@ -4126,6 +4136,19 @@
         "inviteCreated": "invite_created",
         "inviteAccepted": "invite_accepted"
       }
+    },
+    "goal": {
+      "prayerRhythm": "Keep track of my prayers",
+      "prayerRhythmDesc": "Prayer times, reminders and daily dhikr",
+      "quranLearning": "Grow closer to the Quran and dua",
+      "quranLearningDesc": "A short reading and dua every day",
+      "familyConsistency": "Worship together with my family",
+      "familyConsistencyDesc": "Shared goals and group khatm"
+    },
+    "referralStep": {
+      "done": "Done",
+      "active": "Next",
+      "pending": "Waiting"
     }
   },
   "invite": {
@@ -4437,10 +4460,11 @@
       "eyebrow": "First step",
       "time": "2 minutes",
       "promise": {
-        "prayer_rhythm": "Do not let today pass empty.",
+        "prayer_rhythm": "Take one small step today.",
         "quran_learning": "Build a short connection with Quran or dua.",
-        "family_consistency": "Make today's one step visible as a family."
-      }
+        "family_consistency": "Make today's step a shared one as a family."
+      },
+      "ariaLabel": "First worship step"
     }
   },
   "churn": {
@@ -4513,11 +4537,11 @@
   },
   "reminders": {
     "morning": {
-      "title": "?? Good morning!",
+      "title": "☀️ Good morning!",
       "body": "Have you prayed Fajr? Start the day with blessing."
     },
     "evening": {
-      "title": "?? Evening Reminder",
+      "title": "🌙 Evening Reminder",
       "body": "How many prayers did you complete today? Keep your tracker updated."
     }
   },
@@ -4530,7 +4554,7 @@
       "hikmet": "Wisdom of the Day",
       "fact": "Did you know?"
     },
-    "cardFallbackTitle": "Open today?s discovery",
+    "cardFallbackTitle": "Open today's discovery",
     "cardFallbackSource": "Huzur"
   },
   "rate": {
@@ -4539,5 +4563,25 @@
     "cta": "Rate Now",
     "later": "Later",
     "never": "Don't Ask Again"
+  },
+  "primaryGoal": {
+    "prayer_rhythm": {
+      "label": "Prayer and daily worship",
+      "title": "Start today's worship",
+      "description": "Bring order to your day with prayer, dhikr and a short dua.",
+      "cta": "Start"
+    },
+    "quran_learning": {
+      "label": "Quran and dua",
+      "title": "Begin today with Quran and dua",
+      "description": "A short reading and one dua are enough.",
+      "cta": "Open Quran"
+    },
+    "family_consistency": {
+      "label": "Worship as a family",
+      "title": "Take one step together today",
+      "description": "Set one shared prayer, dua or dhikr goal.",
+      "cta": "Start"
+    }
   }
 }

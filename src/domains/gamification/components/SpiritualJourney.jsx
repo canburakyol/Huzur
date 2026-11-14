@@ -82,21 +82,21 @@ const SpiritualJourney = ({ onClose }) => {
     {
       id: 'daily-quiz',
       icon: <Brain size={18} color="var(--tertiary)" />,
-      title: t('quiz.title', 'Gunun Testi'),
+      title: t('quiz.title', 'Günün Testi'),
       description: 'Kisa bir bilgi turu ile serini besle.',
       onClick: () => navigateFromAction('/daily-quiz')
     },
     {
       id: 'routine-builder',
       icon: <CalendarDays size={18} color="#10b981" />,
-      title: t('routine.title', 'Gunluk Rutinlerim'),
+      title: t('routine.title', 'Günlük Rutinlerim'),
       description: 'Sabah ve aksam ritmini bugunden sekillendir.',
       onClick: () => navigateFromAction('/routine-builder')
     },
     {
       id: 'share-card',
       icon: <Share2 size={18} color="#3b82f6" />,
-      title: t('gamification.share', 'Istatistik Kartini Paylas'),
+      title: t('gamification.share', 'İstatistik Kartini Paylaş'),
       description: 'Ilerlemeni gorunur kilip motive edici bir kart olustur.',
       onClick: () => setShowShareCard(true)
     }
@@ -230,7 +230,7 @@ const SpiritualJourney = ({ onClose }) => {
         </div>
         <div className="flex-1">
           <h4 className="m-0 mb-4 text-lg font-extrabold text-nav">
-            {t('gamification.targetTitle', 'Hedefe Cok Yakinsin')}
+            {t('gamification.targetTitle', 'Hedefe Çok Yakinsin')}
           </h4>
           <p className="m-0 text-sm text-nav-muted leading-relaxed">
             {t('gamification.targetDesc', {
@@ -274,17 +274,17 @@ const SpiritualJourney = ({ onClose }) => {
       <div className="grid-3 gap-10">
         <div className="nav-card">
           <div className="text-xl font-black text-nav">{weeklySummary.current.activeDays}</div>
-          <div className="card-label">{t('socialRetention.activeDays', 'Aktif gun')}</div>
+          <div className="card-label">{t('socialRetention.activeDays', 'Aktif gün')}</div>
         </div>
         <div className="nav-card">
           <div className="text-xl font-black text-nav">{weeklySummary.ritualCount}</div>
-          <div className="card-label">{t('socialRetention.completedSteps', 'Tamamlanan adim')}</div>
+          <div className="card-label">{t('socialRetention.completedSteps', 'Tamamlanan adım')}</div>
         </div>
         <div className="nav-card">
           <div className="text-xl font-black text-nav">
             {weeklySummary.deltas.activeDays >= 0 ? '+' : ''}{weeklySummary.deltas.activeDays}
           </div>
-          <div className="card-label">{t('socialRetention.vsLastWeek', 'Gecen haftaya gore')}</div>
+          <div className="card-label">{t('socialRetention.vsLastWeek', 'Geçen haftaya göre')}</div>
         </div>
       </div>
     </div>
@@ -311,11 +311,11 @@ const SpiritualJourney = ({ onClose }) => {
         <div className="grid-3 gap-10 mb-16">
           <div className="nav-card">
             <div className="text-xl font-black text-nav">{familySummary.memberCount}</div>
-            <div className="card-label">{t('socialRetention.members', 'Uye')}</div>
+            <div className="card-label">{t('socialRetention.members', 'Üye')}</div>
           </div>
           <div className="nav-card">
             <div className="text-xl font-black text-nav">{familySummary.familyStrength}</div>
-            <div className="card-label">{t('socialRetention.streakStrength', 'Seri gucu')}</div>
+            <div className="card-label">{t('socialRetention.streakStrength', 'Seri gücü')}</div>
           </div>
           <div className="nav-card">
             <div className="text-xl font-black text-nav">{familySummary.totalBadgeCount}</div>
@@ -387,7 +387,7 @@ const SpiritualJourney = ({ onClose }) => {
             <div className="text-lg font-black text-nav">
               {t(`socialRetention.visibility_${miniLeagueSummary.visibilityMode}`, miniLeagueSummary.visibilityMode)}
             </div>
-            <div className="card-label">{t('socialRetention.visibility', 'Gorunurluk')}</div>
+            <div className="card-label">{t('socialRetention.visibility', 'Görünürlük')}</div>
           </div>
         </div>
       ) : null}
@@ -396,7 +396,7 @@ const SpiritualJourney = ({ onClose }) => {
         <div className="text-base font-bold text-nav">
           {miniLeagueSummary.enabled
             ? t(miniLeagueSummary.standingKey, 'Ritmin oturdukca yukari cikiyorsun')
-            : t('socialRetention.defaultStanding', 'Ayarlardan acarsan anonim ritim bandini gorebilirsin.')}
+            : t('socialRetention.defaultStanding', 'Ayarlardan açarsan anonim ritim bandını görebilirsin.')}
         </div>
         <button
           onClick={() => {
@@ -415,7 +415,7 @@ const SpiritualJourney = ({ onClose }) => {
   return (
     <div className="feature-overlay">
       <div className="feature-header blur-header">
-        <IslamicBackButton onClick={onClose} label={t('journey.title', 'Manevi Yolculugum')} />
+        <IslamicBackButton onClick={onClose} label={t('journey.title', 'Manevi Yolculuğum')} />
       </div>
 
       <div className="feature-content p-20">

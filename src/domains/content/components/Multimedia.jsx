@@ -43,7 +43,7 @@ function Multimedia({ onClose }) {
                     title: image.title,
                     text: shareText,
                     url: image.url || '',
-                    dialogTitle: t('common.share', 'Paylas')
+                    dialogTitle: t('common.share', 'Paylaş')
                 });
             } else if (navigator.share) {
                 // Web fallback with native Web Share API
@@ -100,7 +100,7 @@ function Multimedia({ onClose }) {
     const renderCategories = () => (
         <div className="reveal-stagger">
             <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600' }}>
-                {t('multimedia.description', 'Islami gorseller, ozel tasarim dua kartlari ve paylasabilir manevi icerikler.')}
+                {t('multimedia.description', 'İslami görseller, özel tasarım dua kartları ve paylasabilir manevi içerikler.')}
             </p>
 
             {/* Category Grid - Velocity Style */}
@@ -120,7 +120,7 @@ function Multimedia({ onClose }) {
                                 {category.title}
                             </div>
                             <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
-                                {category.count} {t('multimedia.contentLabel', 'ICERIK')}
+                                {category.count} {t('multimedia.contentLabel', 'İÇERİK')}
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@ function Multimedia({ onClose }) {
                 <div className="settings-group reveal-stagger mt-32" style={{ '--delay': '0.5s' }}>
                     <div className="settings-group-title flex-center-gap-8">
                         <Heart size={18} fill="var(--nav-accent)" color="var(--nav-accent)" />
-                        {t('multimedia.favorites', 'FAVORILERIM')} ({favorites.length})
+                        {t('multimedia.favorites', 'FAVORİLERİM')} ({favorites.length})
                     </div>
                 </div>
             )}
@@ -149,7 +149,7 @@ function Multimedia({ onClose }) {
             return (
                 <div className="reveal-stagger">
                     <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
-                        {t('multimedia.duaCardsDesc', 'Sevdiklerinizle paylasabileceginiz ozel tasarim dua kartlari.')}
+                        {t('multimedia.duaCardsDesc', 'Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları.')}
                     </p>
                     <div className="grid-2 gap-16">
                         {DUA_IMAGES.map((dua, index) => (
@@ -188,7 +188,7 @@ function Multimedia({ onClose }) {
                                 </div>
                                 <div className="flex justify-end mt-16">
                                     <div className="rounded-12 p-8 font-black flex-center-gap-6" style={{ background: 'rgba(255,255,255,0.2)', color: dua.textColor, fontSize: '0.75rem' }} onClick={(e) => { e.stopPropagation(); shareImage(dua); }}>
-                                        <Share2 size={14} /> {t('common.share', 'Paylas')}
+                                        <Share2 size={14} /> {t('common.share', 'Paylaş')}
                                     </div>
                                 </div>
                             </div>
@@ -361,7 +361,7 @@ function Multimedia({ onClose }) {
                         }}
                     >
                         <Share2 size={20} />
-                        {t('common.share', 'Paylas')}
+                        {t('common.share', 'Paylaş')}
                     </button>
                 </div>
             </div>

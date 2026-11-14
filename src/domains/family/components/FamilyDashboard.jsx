@@ -192,7 +192,7 @@ const FamilyDashboard = ({ onClose }) => {
 
             <DiscoveryList
               title={t('family.discoverTitle', 'Kesfedilen aileler')}
-              subtitle={t('family.discoverSubtitle', 'Topluluga katilan aileleri gor, ilham al ve kendi ailenizi olusturun')}
+              subtitle={t('family.discoverSubtitle', 'Topluluga katilan aileleri gor, ilham al ve kendi ailenizi oluşturun')}
               items={visibleDiscoveries}
               t={t}
             />
@@ -382,7 +382,7 @@ const FamilyDashboard = ({ onClose }) => {
       <div className="mt-24 reveal-stagger">
         <DiscoveryList
           title={t('family.discoverTitle', 'Kesfedilen aileler')}
-          subtitle={t('family.discoverSubtitle', 'Diger ailelerin adlarini gorerek kendi grubunu buyutmek icin ilham al.')}
+          subtitle={t('family.discoverSubtitle', 'Diğer ailelerin adlarini gorerek kendi grubunu buyutmek için ilham al.')}
           items={visibleDiscoveries}
           t={t}
         />

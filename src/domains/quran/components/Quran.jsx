@@ -595,7 +595,7 @@ function Quran({ onClose }) {
 
     const sliderAyah = playingAyah || activeReadingAyah || 1;
     const sliderProgress = ayahCount > 1 ? ((sliderAyah - 1) / (ayahCount - 1)) * 100 : 0;
-    const ayahSelectorTitle = t('quran.ayahSelectorTitle', 'Ayet sec');
+    const ayahSelectorTitle = t('quran.ayahSelectorTitle', 'Ayet seç');
 
     return (
         <div className={`quran-container ${showBars ? '' : 'bars-hidden'}`} data-testid="quran-screen">
@@ -738,7 +738,7 @@ function Quran({ onClose }) {
                     {activeMenuTab === 'fihrist' && (
                         <div className="list-content">
                             {isFihristLoading ? (
-                                <div className="empty-state">{t('common.loading', 'Yukleniyor...')}</div>
+                                <div className="empty-state">{t('common.loading', 'Yükleniyor...')}</div>
                             ) : selectedTopic ? (
                                 <div className="topic-detail">
                                     <button className="back-btn" onClick={() => setSelectedTopic(null)}>

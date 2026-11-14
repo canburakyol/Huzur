@@ -37,8 +37,8 @@
     "areYouSure": "Emin misiniz?",
     "user": "Kullanıcı",
     "clear": "Temizle",
-    "processing": "??leniyor...",
-    "home": "Ana Ekrana D?n",
+    "processing": "İşleniyor...",
+    "home": "Ana Ekrana Dön",
     "all": "Tümü",
     "source": "Kaynak"
   },
@@ -111,7 +111,16 @@
     "seerahMap": "Siyer Haritası",
     "spiritualCoach": "Manevi Rehber",
     "prayerCircle": "Dua Kardeşliği",
-    "dailyFiqh": "Günün Fıkhı"
+    "dailyFiqh": "Günün Fıkhı",
+    "sections": {
+      "core": "Günlük ibadet",
+      "coreDesc": "Her gün kullandığın araçlar.",
+      "goal": "Sana özel",
+      "tools": "Diğer araçlar",
+      "toolsDesc": "İhtiyaç duyduğunda yardımcı ekranlar.",
+      "system": "Ayarlar ve destek",
+      "focus": "Ana odak"
+    }
   },
   "prayerCircle": {
     "title": "Dua Kardeşliği",
@@ -123,10 +132,10 @@
     "pray": "Dua Et",
     "prayed": "Dua Edildi",
     "mock": {
-      "work": "Hay?rl? bir i? i?in dua bekliyorum.",
-      "health": "Hastam?z i?in ?ifa duas? eder misiniz?",
-      "exam": "S?navlar?mda ba?ar? i?in dua istiyorum.",
-      "family": "Aile huzuru i?in dualar?n?z? bekliyorum."
+      "work": "Hayırlı bir iş için dua bekliyorum.",
+      "health": "Hastamız için şifa duası eder misiniz?",
+      "exam": "Sınavlarımda başarı için dua istiyorum.",
+      "family": "Aile huzuru için dualarınızı bekliyorum."
     }
   },
   "dailyFiqh": {
@@ -150,40 +159,40 @@
     "weeklyYou": "Bu hafta sen",
     "weeklyGroup": "Bu hafta grubun",
     "rhythmScore": "Ritim skoru",
-    "activeDays": "Aktif gun",
-    "completedSteps": "Tamamlanan adim",
-    "vsLastWeek": "Gecen haftaya gore",
-    "members": "Uye",
-    "streakStrength": "Seri gucu",
+    "activeDays": "Aktif gün",
+    "completedSteps": "Tamamlanan adım",
+    "vsLastWeek": "Geçen haftaya göre",
+    "members": "Üye",
+    "streakStrength": "Seri gücü",
     "badges": "Toplam rozet",
     "gentleCompetition": "Hafif rekabet",
     "miniLeagueTitle": "Anonim mini lig",
-    "miniLeagueDesc": "Sadece ritim bandin gorunur; isim ve ham puan paylasilmaz.",
-    "visibilityTitle": "Gorunurluk seviyesi",
-    "visibilityOffDesc": "Mini lig kapaliyken gorunurluk kapali kalir.",
-    "visibilityCurrent": "Su an {{mode}} modundasin. {{detail}}",
-    "closedTitle": "Ritim halkasi kapali",
-    "closedDesc": "Istersen anonim mini lige katilip sadece istikrar bandini gorebilirsin.",
-    "closedCta": "Ayarlardan ac",
+    "miniLeagueDesc": "Sadece ritim bandın görünür; isim ve ham puan paylaşılmaz.",
+    "visibilityTitle": "Görünürlük seviyesi",
+    "visibilityOffDesc": "Mini lig kapalıyken görünürlük kapalı kalır.",
+    "visibilityCurrent": "Şu an {{mode}} modundasin. {{detail}}",
+    "closedTitle": "Ritim halkası kapalı",
+    "closedDesc": "İstersen anonim mini lige katılıp sadece istikrar bandını görebilirsin.",
+    "closedCta": "Ayarlardan aç",
     "band": "Band",
     "circleSize": "Kisilik halka",
-    "visibility": "Gorunurluk",
-    "visibility_private": "ozel",
+    "visibility": "Görünürlük",
+    "visibility_private": "özel",
     "visibility_group": "grup",
     "visibility_league": "lig",
-    "defaultStanding": "Ayarlardan acarsan anonim ritim bandini gorebilirsin.",
-    "manageCta": "Gorunurlugu duzenle",
+    "defaultStanding": "Ayarlardan açarsan anonim ritim bandını görebilirsin.",
+    "manageCta": "Görünürlüğü düzenle",
     "band_warmup": "Isinma turu",
-    "band_top": "Ust ritim bandi",
+    "band_top": "Üst ritim bandi",
     "band_balanced": "Dengeli ritim bandi",
     "band_rising": "Yukselen ritim bandi",
-    "encouragement_warmup": "Ritmini sakin sekilde kurarken kendi gecen haftan en iyi referans olsun.",
+    "encouragement_warmup": "Düzenini sakince kurarken en iyi ölçün kendi geçen haftan olsun.",
     "encouragement_top": "Bu hafta ligin sakin ama guclu temposunu tasiyan kisiler arasindasin.",
-    "encouragement_balanced": "Duzenli kalirsan ust banda gecmen icin guzel bir zemin var.",
-    "encouragement_rising": "Kucuk ama istikrarli adimlar seni lig ortalamasinin ustune tasiyabilir.",
-    "standing_top_quarter": "Ilk ceyrektesin",
-    "standing_upper_half": "Ligin ust yarisindasin",
-    "standing_rising": "Ritmin oturdukca yukari cikiyorsun"
+    "encouragement_balanced": "Düzenli kalırsan üst banda geçmen için güzel bir zemin var.",
+    "encouragement_rising": "Küçük ama istikrarlı adımlar seni lig ortalamasının üstüne taşıyabilir.",
+    "standing_top_quarter": "İlk ceyrektesin",
+    "standing_upper_half": "Ligin üst yarisindasin",
+    "standing_rising": "Düzenin oturdukça yukarı çıkıyorsun"
   },
   "seerah": {
     "title": "Siyer Haritası",
@@ -285,7 +294,7 @@
       },
       "dhikr_33": {
         "title": "33 tesbih çek",
-        "desc": "Subhanallah, Elhamdulillah, Allahu Ekber"
+        "desc": "Sübhanallah, Elhamdülillah, Allahu Ekber"
       },
       "dhikr_morning": {
         "title": "Sabah zikirlerini oku",
@@ -413,10 +422,10 @@
     "end": "Bitiş",
     "historyClearConfirm": "Tüm bildirim geçmişini silmek istediğinize emin misiniz?",
     "historyEmpty": "Henüz bildirim yok.",
-    "accentColorDesc": "Uygulama genelindeki buton ve simgelerin rengini de?i?tirir.",
+    "accentColorDesc": "Uygulama genelindeki buton ve simgelerin rengini değiştirir.",
     "preview": "?nizleme",
-    "previewTitle": "Harika De?il mi?",
-    "previewDesc": "Bu renk size ?ok yak??t?."
+    "previewTitle": "Harika Değil mi?",
+    "previewDesc": "Bu renk size çok yakıştı."
   },
   "pro": {
     "title": "Huzur Pro'ya Geçin",
@@ -495,15 +504,15 @@
   "nuzul": {
     "error": "Bir sorun oluştu.",
     "connectionError": "Bağlantı hatası. Lütfen tekrar deneyin.",
-    "title": "N?zul Sebebi",
-    "subtitle": "Ayetlerin ini? sebeplerini ??renin",
-    "explorerTitle": "N?zul Sebebi Gezgini",
-    "explorerDesc": "Ayetlerin hangi olay ?zerine indirildi?ini ??renmek i?in soru sorun.",
+    "title": "Nüzul Sebebi",
+    "subtitle": "Ayetlerin iniş sebeplerini öğrenin",
+    "explorerTitle": "Nüzul Sebebi Gezgini",
+    "explorerDesc": "Ayetlerin hangi olay üzerine indirildiğini öğrenmek için soru sorun.",
     "exampleQuestions": "?rnek Sorular:",
-    "noResult": "Bu ayet/sure hakk?nda veritaban?m?zda hen?z detayl? n?zul bilgisi bulunamad?. L?tfen \"Alaq Suresi\", \"Fatiha\" veya \"Ayetel K?rsi\" gibi daha genel ba?l?klar? denemeyi unutma.",
+    "noResult": "Bu ayet/sure hakkında veritabanımızda henüz detaylı nüzul bilgisi bulunamadı. Lütfen \"Alaq Suresi\", \"Fatiha\" veya \"Ayetel Kürsi\" gibi daha genel başlıkları denemeyi unutma.",
     "suggestedQuestions": [
-      "Fatiha suresinin n?zul sebebi nedir?",
-      "Ayetel K?rsi (Bakara 255) neden indi?",
+      "Fatiha suresinin nüzul sebebi nedir?",
+      "Ayetel Kürsi (Bakara 255) neden indi?",
       "Kevser suresi hangi olay ?zerine indi?",
       "Maide 3. ayet ne zaman indi?",
       "?lk inen ayetler (Alak Suresi)",
@@ -550,7 +559,7 @@
     "title": "Huzur Rehberi",
     "online": "Çevrimiçi",
     "remaining": "Kalan Hak",
-    "welcomeMessage": "Selamun aleykum. Bu bolumde hazir soru-cevaplar ve kisisel oneriler bulabilirsiniz.",
+    "welcomeMessage": "Selamün aleyküm. Bu bölümde hazır soru-cevaplar ve kişisel öneriler bulabilirsiniz.",
     "errorMessage": "Üzgünüm, bir sorun oluştu. Lütfen tekrar deneyin.",
     "found": "ayet bulundu",
     "placeholder": "Bir soru sorun...",
@@ -584,18 +593,18 @@
       "q24": "Salavat getirmek nedir?",
       "q25": "Kandil geceleri ibadetleri nelerdir?"
     },
-    "betaWelcomeHint": "Hazir sorulardan birine dokunabilir veya benzer bir soru yazabilirsiniz.",
-    "betaUnknownQuestion": "Bu soru su an hazir cevap listesinde yok. Alttaki ornek sorulardan birini secebilirsiniz.",
-    "betaLabel": "Hazir",
+    "betaWelcomeHint": "Hazır sorulardan birine dokunabilir veya benzer bir soru yazabilirsiniz.",
+    "betaUnknownQuestion": "Bu soru şu an hazır cevap listesinde yok. Alttaki örnek sorulardan birini seçebilirsiniz.",
+    "betaLabel": "Hazır",
     "readyQaMode": "Hazır soru-cevap modu",
-    "betaInputPlaceholder": "Hazir sorulardan birini yazin veya alttan secin",
+    "betaInputPlaceholder": "Hazır sorulardan birini yazın veya alttan seçin",
     "answers": {
       "q1": "Namazı düzenli kılmak için küçük başlayın: her gün aynı vakitte kısa bir hazırlık rutini yapın, hatırlatıcı açın ve bir vakti kaçırırsanız ertesi vakitte yeniden başlayın.",
       "q2": "Kur’an okuma alışkanlığı için günlük 5-10 dakika sabit zaman ayırın. Süreyi değil sürekliliği hedefleyin.",
       "q3": "Zikir hedefi için “az ama devamlı” yöntemi önerilir. Güne küçük bir sayı ile başlayıp haftalık olarak artırabilirsiniz.",
       "q4": "Odaklanmak zor olduğunda kısa bir mola verin, derin nefes alın ve tek bir hedefe dönün. Çoklu görev yerine tek görev daha verimli olur.",
       "q5": "Manevi motivasyon için günlük kısa bir dua, şükür notu ve gün sonu değerlendirmesi yapmanız etkili olur.",
-      "q6": "Bu bolum su an hazir soru-cevap ve yonlendirme alani olarak calisiyor. Daha gelismis canli destek ayri bir gelistirme olarak planlaniyor."
+      "q6": "Bu bölüm şu an hazır soru-cevap ve yönlendirme alanı olarak çalışıyor. Daha gelişmiş canlı destek ayrı bir geliştirme olarak planlanıyor."
     },
     "evening": "المساء",
     "progress": "التقدم",
@@ -619,7 +628,7 @@
       "ayetel_kursi": {
         "title": "آية الكرسي",
         "arabic": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...",
-        "transliteration": "Allahu la ilahe illa huvel hayyul kayyum...",
+        "transliteration": "Allahu la ilahe illa hüvel hayyül kayyum...",
         "meaning": "الله لا إله إلا هو الحي القيوم..."
       },
       "ihlas": {
@@ -1252,7 +1261,7 @@
         "meaning": "Kendisinden başka ilah olmayan Allah'tan bağışlanma dilerim"
       }
     },
-    "confirmReset": "?lerlemeyi s?f?rlamak istiyor musunuz?"
+    "confirmReset": "İlerlemeyi sıfırlamak istiyor musunuz?"
   },
   "qibla": {
     "title": "Kıble Pusulası",
@@ -1288,42 +1297,43 @@
   "homeFeed": {
     "priorityCard": {
       "eyebrow": "Bugünün 2 dakikalik adimi",
-      "supportingStreak": "{{count}} gunluk serin devam ediyor. Bugunku 2 dakikalik adim bu akisi korumana yardim eder.",
-      "supportingStart": "Baslamak icin tek bir net adim yeter. Ana ekran once bu gunluk ritmi korumana yardim edecek."
+      "supportingStreak": "{{count}} günlük serin devam ediyor. Bugünkü kısa adım serini korumana yardım eder.",
+      "supportingStart": "Başlamak için tek bir küçük adım yeter."
     },
     "recovery": {
       "eyebrow": "Derin rehberlik momenti",
-      "title": "Bugun kendine daha sakin bir destek acabilirsin",
-      "description": "Huzur Rehberi ile bugunluk tek bir adim belirle, haftalik ritmini tekrar yumusak bicimde kur.",
-      "assistantBtn": "Huzur Rehberi'ni ac",
+      "title": "Yeniden başlamak için güzel bir gün",
+      "description": "Bugün için tek bir küçük adım seç; haftalık düzenini yavaş yavaş yeniden kur.",
+      "assistantBtn": "Huzur Rehberi'ni aç",
       "proBtn": "Pro destegi gor"
     },
     "aiRecommendation": {
-      "eyebrow": "Gunluk ritim notu"
+      "eyebrow": "Günün notu"
     },
     "personalization": {
-      "title": "Bu ekran artik sana gore siralaniyor",
-      "description": "Ana odagini ayarlardan degistirdiginde home, menu ve hizli erisim kartlari yeni ritmine gore guncellenir."
+      "title": "Bu ekran artık sana göre sıralanıyor",
+      "description": "Ana odağını ayarlardan değiştirdiğinde ana sayfa, menü ve hızlı erişim kartları buna göre güncellenir."
     },
     "family": {
       "eyebrow": "Aile momentumu",
-      "noFamilyTitle": "Ailece ilerlemeyi ac",
-      "noFamilyDesc": "Ortak hedefler ve birlikte istikrar icin bir aile grubu kur ya da bir davet kodu ile katil.",
-      "noFamilyBtn": "Aile alanini ac",
+      "noFamilyTitle": "Ailece ilerlemeyi aç",
+      "noFamilyDesc": "Ortak hedefler için bir aile grubu kur ya da bir davet koduyla katıl.",
+      "noFamilyBtn": "Aile alanini aç",
       "progressLabel": "Tamam",
-      "detailBtn": "Detayi gor",
-      "defaultGoal": "Bu hafta birlikte kucuk ama istikrarli bir adim atin.",
+      "detailBtn": "Detayı gor",
+      "defaultGoal": "Bu hafta birlikte küçük ama istikrarlı bir adım atın.",
       "hasGoalDesc": "{{current}}/{{target}} katki kaydi var.",
-      "noGoalDesc": "Aile hedefini olusturup gunluk katkilari bir araya getirebilirsin."
+      "noGoalDesc": "Aile hedefi oluşturup günlük katkıları bir araya getirebilirsin."
     },
     "activation": {
-      "eyebrow": "Ilk adim",
+      "eyebrow": "İlk adım",
       "time": "2 dakika",
       "promise": {
-        "prayer_rhythm": "Bugunu bos gecirme.",
-        "quran_learning": "Kuran veya dua ile kisa bir bag kur.",
-        "family_consistency": "Ailece bugunun tek adimini gorunur kil."
-      }
+        "prayer_rhythm": "Bugün için küçük bir adım at.",
+        "quran_learning": "Kur'an veya dua ile kısa bir bağ kur.",
+        "family_consistency": "Bugünün adımını ailecek paylaşın."
+      },
+      "ariaLabel": "İlk ibadet adımı"
     }
   },
   "features": {
@@ -1898,7 +1908,7 @@
         },
         "dhikr_33": {
           "title": "33 tesbih çek",
-          "desc": "Subhanallah, Elhamdulillah, Allahu Ekber"
+          "desc": "Sübhanallah, Elhamdülillah, Allahu Ekber"
         },
         "dhikr_morning": {
           "title": "Sabah zikirlerini oku",
@@ -2711,7 +2721,7 @@
           "meaning": "Yüce Rabbimi tesbih ederim."
         },
         "104": {
-          "title": "Secdedua",
+          "title": "Secde Tesbihi",
           "meaning": "En yüce Rabbimi tesbih ederim."
         },
         "105": {
@@ -2719,11 +2729,11 @@
           "meaning": "Dil ile, beden ile, mal ile yapılan ibadetler Allah'adır."
         },
         "106": {
-          "title": "Allahumme Salli",
+          "title": "Allahümme Salli",
           "meaning": "Allah'ım. Muhammed'e salat eyle."
         },
         "107": {
-          "title": "Allahumme Barik",
+          "title": "Allahümme Barik",
           "meaning": "Allah'ım. Muhammed'e bereket ver."
         },
         "108": {
@@ -2824,7 +2834,7 @@
         "elmalili_sadece": "Elmalılı (Sadeleştirilmiş)",
         "ibnkathir_tr": "İbn Kesir",
         "ibnkathir_ar": "تفسير ابن كثير",
-        "ibnkathir_en": "Tafsir Ibn Kathir",
+        "ibnkathir_en": "Tafsir İbn Kathir",
         "tabari": "تفسير الطبري",
         "diyanet": "Diyanet İşleri",
         "okuyan": "Mehmet Okuyan"
@@ -2855,7 +2865,7 @@
       "elmalili_sadece": "Elmalılı (Sadeleştirilmiş)",
       "ibnkathir_tr": "İbn Kesir",
       "ibnkathir_ar": "تفسير ابن كثير",
-      "ibnkathir_en": "Tafsir Ibn Kathir",
+      "ibnkathir_en": "Tafsir İbn Kathir",
       "tabari": "تفسير الطبري",
       "diyanet": "Diyanet İşleri",
       "okuyan": "Mehmet Okuyan"
@@ -2910,14 +2920,14 @@
       "?ubat",
       "Mart",
       "Nisan",
-      "May?s",
+      "Mayıs",
       "Haziran",
       "Temmuz",
-      "A?ustos",
-      "Eyl?l",
+      "Ağustos",
+      "Eylül",
       "Ekim",
-      "Kas?m",
-      "Aral?k"
+      "Kasım",
+      "Aralık"
     ]
   },
   "prayerBook": {
@@ -3576,34 +3586,34 @@
     "streakTip": "Zincirini korumak için ibadetlerini her gün vaktinde yapmaya çalış.",
     "beginnerTitle": "Yeni Başlayan",
     "levels": {
-      "1": "Yeni Ba?layan",
-      "2": "Ad?m Atan",
+      "1": "Yeni Başlayan",
+      "2": "Adım Atan",
       "3": "Gayretli",
       "4": "Azimli",
       "5": "Kararl?",
-      "6": "Geli?en",
+      "6": "Gelişen",
       "7": "?stikrarl?",
-      "8": "D?zenli",
-      "9": "Bilin?li",
-      "10": "Fark?nda",
-      "11": "Adanm??",
-      "12": "Sab?rl?",
-      "13": "M?tevaz?",
-      "14": "??k?rl?",
-      "15": "Sad?k",
+      "8": "Düzenli",
+      "9": "Bilinçli",
+      "10": "Farkında",
+      "11": "Adanmış",
+      "12": "Sabırlı",
+      "13": "Mütevazı",
+      "14": "Şükürlü",
+      "15": "Sadık",
       "16": "?lim Talip",
       "17": "Hikmet Arayan",
       "18": "?rfan Ehli",
       "19": "Ferasetli",
       "20": "Basiretli",
       "21": "Rehber",
-      "22": "Yol G?sterici",
-      "23": "Nur Sa?an",
+      "22": "Yol Gösterici",
+      "23": "Nur Saçan",
       "24": "?lham Veren",
       "25": "?mmet Dostu",
       "26": "Huzur Yolcusu",
-      "27": "G?n?l Eri",
-      "28": "Huzur El?isi",
+      "27": "Gönül Eri",
+      "28": "Huzur Elçisi",
       "29": "Manevi ?nc?",
       "30": "Huzur Ustas?"
     }
@@ -3625,164 +3635,164 @@
     "xpEarned": "XP Kazanıldı",
     "info": "Bilgi",
     "questionProgress": "Soru {{current}}/{{total}}",
-    "nextQuestion": "Sonraki Soru ?",
-    "viewResults": "Sonu?lar? G?r",
+    "nextQuestion": "Sonraki Soru",
+    "viewResults": "Sonuçları Gör",
     "categories": {
       "Siyer": "Siyer",
-      "F?k?h": "F?k?h",
+      "F?k?h": "Fıkıh",
       "Kuran-? Kerim": "Kuran-? Kerim",
       "Hadis": "Hadis"
     },
     "questions": {
       "q1": {
-        "question": "Peygamber Efendimiz (s.a.v) hangi y?lda do?mu?tur?",
+        "question": "Peygamber Efendimiz (s.a.v) hangi yılda doğmuştur?",
         "options": [
           "570",
           "571",
           "610",
           "622"
         ],
-        "explanation": "Hz. Muhammed (s.a.v), Fil Vakas?'ndan yakla??k 50 g?n sonra, Miladi 571 y?l?nda Mekke'de d?nyaya gelmi?tir."
+        "explanation": "Hz. Muhammed (s.a.v), Fil Vakası'ndan yaklaşık 50 gün sonra, Miladi 571 yılında Mekke'de dünyaya gelmiştir."
       },
       "q2": {
         "question": "Kur'an-? Kerim'in en uzun suresi hangisidir?",
         "options": [
           "Yasin",
-          "M?lk",
+          "Mülk",
           "Bakara",
           "Al-i ?mran"
         ],
-        "explanation": "Bakara Suresi 286 ayetten olu?ur ve Kuran'?n en uzun suresidir. Medine'de inmi?tir."
+        "explanation": "Bakara Suresi 286 ayetten oluşur ve Kuran'ın en uzun suresidir. Medine'de inmiştir."
       },
       "q3": {
-        "question": "A?a??dakilerden hangisi abdestin farzlar?ndan biri de?ildir?",
+        "question": "Aşağıdakilerden hangisi abdestin farzlarından biri değildir?",
         "options": [
-          "Y?z? y?kamak",
-          "Kollar? y?kamak",
-          "A?za su vermek",
-          "Ayaklar? y?kamak"
+          "Yüzü yıkamak",
+          "Kolları yıkamak",
+          "Ağza su vermek",
+          "Ayakları yıkamak"
         ],
-        "explanation": "Abdestin 4 farz? vard?r: Y?z? y?kamak, kollar? y?kamak, ba??n d?rtte birini mesh etmek ve ayaklar? y?kamak. A?za su vermek s?nnettir."
+        "explanation": "Abdestin 4 farzı vardır: Yüzü yıkamak, kolları yıkamak, başın dörtte birini mesh etmek ve ayakları yıkamak. Ağza su vermek sünnettir."
       },
       "q4": {
-        "question": "\"Ameller niyetlere g?redir.\" hadisini kim rivayet etmi?tir?",
+        "question": "\"Ameller niyetlere göredir.\" hadisini kim rivayet etmiştir?",
         "options": [
           "Buhari",
           "Tirmizi",
           "Ebu Davud",
           "?bn Mace"
         ],
-        "explanation": "Bu hadis-i ?erif, Hz. ?mer (r.a.)'den rivayet edilmi? ve Sahih-i Buhari'nin ilk hadisidir. \"Ameller niyetlere g?redir\" anlam?na gelir."
+        "explanation": "Bu hadis-i şerif, Hz. Ömer (r.a.)'den rivayet edilmiş ve Sahih-i Buhari'nin ilk hadisidir. \"Ameller niyetlere göredir\" anlamına gelir."
       },
       "q5": {
-        "question": "?lk vahiy nerede inmi?tir?",
+        "question": "İlk vahiy nerede inmiştir?",
         "options": [
-          "Sevr Ma?aras?",
-          "Hira Ma?aras?",
+          "Sevr Mağarası",
+          "Hira Mağarası",
           "Kabe",
           "Mescid-i Nebevi"
         ],
-        "explanation": "?lk vahiy, 610 y?l?nda Hira Ma?aras?'nda Cebrail (a.s.) taraf?ndan getirilmi?tir. Alak Suresi'nin ilk 5 ayeti nazil olmu?tur."
+        "explanation": "İlk vahiy, 610 yılında Hira Mağarası'nda Cebrail (a.s.) tarafından getirilmiştir. Alak Suresi'nin ilk 5 ayeti nazil olmuştur."
       },
       "q6": {
-        "question": "Kur'an-? Kerim ka? c?zden olu?ur?",
+        "question": "Kur'an-ı Kerim kaç cüzden oluşur?",
         "options": [
           "20",
           "30",
           "40",
           "114"
         ],
-        "explanation": "Kuran-? Kerim 30 c?zden olu?ur. Her c?z yakla??k 20 sayfad?r ve Ramazan ay?nda her g?n bir c?z okunmas? gelenektir."
+        "explanation": "Kuran-ı Kerim 30 cüzden oluşur. Her cüz yaklaşık 20 sayfadır ve Ramazan ayında her gün bir cüz okunması gelenektir."
       },
       "q7": {
         "question": "Namazda Fatiha suresinden sonra okunan sureye ne ad verilir?",
         "options": [
           "Besmele",
           "Zamm-? Sure",
-          "S?bhaneke",
+          "Sübhaneke",
           "Tahiyyat"
         ],
-        "explanation": "Fatiha'dan sonra okunan k?sa sureye \"Zamm-? Sure\" denir. Namaz?n vaciplerinden biridir ve her rekatta okunur."
+        "explanation": "Fatiha'dan sonra okunan kısa sureye \"Zamm-ı Sure\" denir. Namazın vaciplerinden biridir ve her rekatta okunur."
       },
       "q8": {
-        "question": "Hz. Muhammed'in (s.a.v) s?t annesinin ad? nedir?",
+        "question": "Hz. Muhammed'in (s.a.v) süt annesinin adı nedir?",
         "options": [
           "Hz. Amine",
           "Hz. Hatice",
           "Halime",
-          "Hz. Fat?ma"
+          "Hz. Fatıma"
         ],
-        "explanation": "Hz. Muhammed (s.a.v), gelenek gere?i ??l havas?n?n sa?l?kl? olmas? i?in Halime es-Sa'diye'ye s?tanneli?e verilmi?tir ve 4-5 y?l yan?nda kalm??t?r."
+        "explanation": "Hz. Muhammed (s.a.v), gelenek gereği çöl havasının sağlıklı olması için Halime es-Sa'diye'ye sütanneliğe verilmiştir ve 4-5 yıl yanında kalmıştır."
       },
       "q9": {
-        "question": "\"Besmele\" ile ba?lamayan tek sure hangisidir?",
+        "question": "\"Besmele\" ile başlamayan tek sure hangisidir?",
         "options": [
           "Fatiha",
           "Tevbe",
           "Yasin",
-          "M?lk"
+          "Mülk"
         ],
-        "explanation": "Tevbe (Berat) Suresi, besmele ile ba?lamayan tek suredir. Bunun sebebi, bu surenin m??riklere kar?? sert uyar?lar i?ermesidir."
+        "explanation": "Tevbe (Berat) Suresi, besmele ile başlamayan tek suredir. Bunun sebebi, bu surenin müşriklere karşı sert uyarılar içermesidir."
       },
       "q10": {
-        "question": "\"Cennet annelerin ayaklar? alt?ndad?r.\" s?z? kime aittir?",
+        "question": "\"Cennet annelerin ayakları altındadır.\" sözü kime aittir?",
         "options": [
           "Hz. Ebubekir",
           "Hz. ?mer",
           "Hz. Muhammed (s.a.v)",
           "Hz. Ali"
         ],
-        "explanation": "Bu hadis-i ?erif Hz. Muhammed'e (s.a.v) aittir. Annelerin de?erini ve haklar?n? vurgulayan en ?nemli hadislerden biridir."
+        "explanation": "Bu hadis-i şerif Hz. Muhammed'e (s.a.v) aittir. Annelerin değerini ve haklarını vurgulayan en önemli hadislerden biridir."
       },
       "q11": {
-        "question": "Cuma namaz? kimlere farzd?r?",
+        "question": "Cuma namazı kimlere farzdır?",
         "options": [
           "Sadece erkeklere",
-          "Sadece kad?nlara",
+          "Sadece kadınlara",
           "Herkese",
-          "Sadece ya?l?lara"
+          "Sadece yaşlılara"
         ],
-        "explanation": "Cuma namaz?, h?r, ak?ll?, ergen, mukim ve sa?l?kl? erkeklere farzd?r. Kad?nlar, yolcular ve hastalar i?in farz de?ildir."
+        "explanation": "Cuma namazı, hür, akıllı, ergen, mukim ve sağlıklı erkeklere farzdır. Kadınlar, yolcular ve hastalar için farz değildir."
       },
       "q12": {
-        "question": "Kur'an-? Kerim'de ad? ge?en tek kad?n kimdir?",
+        "question": "Kur'an-ı Kerim'de adı geçen tek kadın kimdir?",
         "options": [
           "Hz. Hatice",
-          "Hz. Ay?e",
+          "Hz. Ayşe",
           "Hz. Meryem",
           "Hz. Asiye"
         ],
-        "explanation": "Hz. Meryem, Kuran'da ad? ge?en tek kad?nd?r. Kuran'da 34 kez ismi zikredilir ve Meryem Suresi onun ad?yla an?l?r."
+        "explanation": "Hz. Meryem, Kuran'da adı geçen tek kadındır. Kuran'da 34 kez ismi zikredilir ve Meryem Suresi onun adıyla anılır."
       },
       "q13": {
-        "question": "M?sl?manlar?n ilk k?blesi neresidir?",
+        "question": "Müslümanların ilk kıblesi neresidir?",
         "options": [
           "Kabe",
           "Mescid-i Aksa",
           "Kuba Mescidi",
           "Mescid-i Nebevi"
         ],
-        "explanation": "M?sl?manlar?n ilk k?blesi Mescid-i Aksa (Kud?s) idi. 17 ay sonra k?ble Kabe'ye (Mekke) ?evrilmi?tir."
+        "explanation": "Müslümanların ilk kıblesi Mescid-i Aksa (Kudüs) idi. 17 ay sonra kıble Kabe'ye (Mekke) çevrilmiştir."
       },
       "q14": {
-        "question": "Hangi durumda teyemm?m yap?l?r?",
+        "question": "Hangi durumda teyemmüm yapılır?",
         "options": [
-          "Su bulunmad???nda",
-          "Zaman darald???nda",
+          "Su bulunmadığında",
+          "Zaman daraldığında",
           "Yolculukta",
-          "K?? aylar?nda"
+          "Kış aylarında"
         ],
-        "explanation": "Teyemm?m, su bulunamad???nda veya hastal?k gibi sebeplerle su kullan?lamad???nda temiz toprak veya ta? ile yap?lan sembolik abdesttir."
+        "explanation": "Teyemmüm, su bulunamadığında veya hastalık gibi sebeplerle su kullanılamadığında temiz toprak veya taş ile yapılan sembolik abdesttir."
       },
       "q15": {
-        "question": "\"Kolayla?t?r?n?z, zorla?t?rmay?n?z...\" hadisinin devam? nedir?",
+        "question": "\"Kolaylaştırınız, zorlaştırmayınız...\" hadisinin devamı nedir?",
         "options": [
-          "Korkutmay?n?z, m?jdeleyiniz",
-          "G?l?mseyiniz, a?latmay?n?z",
-          "M?jdeleyiniz, nefret ettirmeyiniz",
-          "??retiniz, gizlemeyiniz"
+          "Korkutmayınız, müjdeleyiniz",
+          "Gülümseyiniz, ağlatmayınız",
+          "Müjdeleyiniz, nefret ettirmeyiniz",
+          "Öğretiniz, gizlemeyiniz"
         ],
-        "explanation": "Bu hadis-i ?erifin tam metni: \"Kolayla?t?r?n?z, zorla?t?rmay?n?z; m?jdeleyiniz, nefret ettirmeyiniz.\" ?nsanlar? dinden so?utacak davran??lardan ka??n?lmas?n? ???tler."
+        "explanation": "Bu hadis-i şerifin tam metni: \"Kolaylaştırınız, zorlaştırmayınız; müjdeleyiniz, nefret ettirmeyiniz.\" İnsanları dinden soğutacak davranışlardan kaçınılmasını öğütler."
       }
     }
   },
@@ -4012,11 +4022,11 @@
     "applyAndProtect": "Uygula ve Seriyi Koru",
     "cancelAndReset": "Vazgeç (Seri Sıfırlanır)",
     "appRiskTitle": "Uygulama seriniz tehlikede",
-    "appRiskBody": "Bug?n hen?z uygulamaya girmediniz. {{count}} g?nl?k serinizi korumak i?in son saatler.",
-    "categoryRiskTitle": "Seri hat?rlatmas?",
-    "categoryRiskBody": "Bug?n {{category}} kaydetmeyi unuttunuz mu?",
+    "appRiskBody": "Bugün henüz uygulamaya girmediniz. {{count}} günlük serinizi korumak için son saatler.",
+    "categoryRiskTitle": "Seri hatırlatması",
+    "categoryRiskBody": "Bugün {{category}} kaydetmeyi unuttunuz mu?",
     "categories": {
-      "prayer": "namazlar?n?z?"
+      "prayer": "namazlarınızı"
     }
   },
   "streak24h": {
@@ -4060,32 +4070,32 @@
     "explanation": "Açıklama",
     "questions": {
       "1": {
-        "question": "A?a??daki ayette '?' harfinden sonra '?' harfi gelmi?tir. Hangi tecvid kural? uygulan?r?",
+        "question": "Aşağıdaki ayette 'ن' harfinden sonra 'ي' harfi gelmiştir. Hangi tecvid kuralı uygulanır?",
         "options": [
           "?zhar",
           "?dgam Meal Gunne",
           "?hfa",
           "?klab"
         ],
-        "explanation": "Sakin Nun'dan sonra Yemnu harflerinden 'Ye' geldi?i i?in ?dgam Meal Gunne olur."
+        "explanation": "Sakin Nun'dan sonra Yemnu harflerinden 'Ye' geldiği için İdgam Meal Gunne olur."
       },
       "2": {
-        "question": "Harf-i medden sonra sebeb-i med gelmezse hangi kural olu?ur?",
+        "question": "Harf-i medden sonra sebeb-i med gelmezse hangi kural oluşur?",
         "options": [
-          "Med-i Muttas?l",
+          "Med-i Muttasıl",
           "Med-i Tabii",
-          "Med-i Laz?m",
+          "Med-i Lazım",
           "?hfa"
         ],
-        "explanation": "Harf-i medden sonra sebeb-i med gelmedi?i i?in asli uzatma olan Med-i Tabii olur."
+        "explanation": "Harf-i medden sonra sebeb-i med gelmediği için asli uzatma olan Med-i Tabii olur."
       },
       "3": {
         "question": "Kalkale harfleri hangileridir?",
         "options": [
-          "? ? ? ? ?",
-          "? ? ? ?",
-          "? ?",
-          "? ?? ? ? ? ?"
+          "ق ط ب ج د",
+          "ي م ن و",
+          "ل ر",
+          "أ ه ع ح غ خ"
         ],
         "explanation": "Kalkale harfleri Kaf, Ta, Be, Cim ve Dal harfleridir."
       },
@@ -4097,7 +4107,7 @@
           "?klab",
           "Kalkale"
         ],
-        "explanation": "Be harfi ?klab harfidir, Nun sesi Mim'e d?n???r."
+        "explanation": "Be harfi İklab harfidir, Nun sesi Mim'e dönüşür."
       },
       "5": {
         "question": "?hfa harfleri ka? tanedir?",
@@ -4112,12 +4122,12 @@
       "6": {
         "question": "Hangi durumda 'Ra' harfi ince okunur?",
         "options": [
-          "?st?n oldu?unda",
-          "?tre oldu?unda",
-          "Esre oldu?unda",
-          "?eddeli ?st?n oldu?unda"
+          "Üstün olduğunda",
+          "Ötre olduğunda",
+          "Esre olduğunda",
+          "Şeddeli üstün olduğunda"
         ],
-        "explanation": "Ra harfi esreli oldu?unda ince okunur."
+        "explanation": "Ra harfi esreli olduğunda ince okunur."
       }
     }
   },
@@ -4190,16 +4200,16 @@
       },
       "questions": {
         "1": {
-          "question": "Namaza ba?larken s?ylenen tekbirin ad? nedir?",
+          "question": "Namaza başlarken söylenen tekbirin adı nedir?",
           "options": [
             "Sena",
             "?ftitah Tekbiri",
-            "Selam?n Aleyk?m",
-            "Tekbir-i Te?rik"
+            "Selamün Aleyküm",
+            "Tekbir-i Teşrik"
           ]
         },
         "2": {
-          "question": "R?k?da ka? kere tesbih ?ekilir?",
+          "question": "Rükûda kaç kere tesbih çekilir?",
           "options": [
             "1",
             "3",
@@ -4217,43 +4227,43 @@
           ]
         },
         "4": {
-          "question": "Vitir namaz? hangi h?k?mdedir?",
+          "question": "Vitir namazı hangi hükümdedir?",
           "options": [
             "Farz",
             "Vacip",
-            "S?nnet",
-            "M?stehap"
+            "Sünnet",
+            "Müstehap"
           ]
         },
         "5": {
-          "question": "A?a??dakilerden hangisi namaz? bozmaz?",
+          "question": "Aşağıdakilerden hangisi namazı bozmaz?",
           "options": [
-            "Konu?mak",
-            "G?lmek",
-            "A?lamak (Allah korkusuyla)",
+            "Konuşmak",
+            "Gülmek",
+            "Ağlamak (Allah korkusuyla)",
             "Yemek"
           ]
         },
         "6": {
-          "question": "Namazda Fatiha suresi okumak hangi h?k?mdedir?",
+          "question": "Namazda Fatiha suresi okumak hangi hükümdedir?",
           "options": [
             "Farz",
             "Vacip",
-            "S?nnet",
-            "M?bah"
+            "Sünnet",
+            "Mübah"
           ]
         },
         "7": {
           "question": "Secde tesbihi hangisidir?",
           "options": [
-            "S?bhane Rabbiyel Azim",
-            "S?bhane Rabbiyel Ala",
+            "Sübhane Rabbiyel Azim",
+            "Sübhane Rabbiyel Ala",
             "Semiallahu limen hamideh",
             "Rabbena lekel hamd"
           ]
         },
         "8": {
-          "question": "Yats? namaz?n?n farz? ka? rekattir?",
+          "question": "Yatsı namazının farzı kaç rekattir?",
           "options": [
             "2",
             "3",
@@ -4262,20 +4272,20 @@
           ]
         },
         "9": {
-          "question": "?ki secde aras?ndaki oturu?un ad? nedir?",
+          "question": "İki secde arasındaki oturuşun adı nedir?",
           "options": [
             "Ka'de",
             "Celse",
             "Kavme",
-            "K?yam"
+            "Kıyam"
           ]
         },
         "10": {
           "question": "Namazda ettehiyyat? ne zaman okunur?",
           "options": [
             "?lk rekatta",
-            "R?k?da",
-            "Son oturu?ta",
+            "Rükûda",
+            "Son oturuşta",
             "Secdede"
           ]
         }
@@ -4316,20 +4326,21 @@
   },
   "growth": {
     "onboarding": {
-      "languageTitle": "Dilini Sec",
-      "languageDescription": "Once dili netlestirelim; sonra seni tek bir gunluk ibadet adimina goturecegiz.",
+      "languageTitle": "Dilini seç",
+      "languageDescription": "Huzur'u hangi dilde kullanmak istersin?",
       "continue": "Devam Et",
-      "locationTitle": "Namaz Vaktini Dogru Kuralim",
-      "locationDescription": "Bulundugun yere gore dogru vakitleri ve ilk gunluk hatirlatmayi hazirlayalim.",
+      "locationTitle": "Namaz vakitlerini doğru hesaplayalım",
+      "locationDescription": "Bulunduğun yere göre doğru vakitleri göstermek için konumunu kullanırız.",
       "enableLocation": "Konumu Etkinleştir",
-      "notificationTitle": "Ibadet Rutinini Kacirma",
-      "notificationDescription": "Namaz vakti ve kisa gunluk ibadet adimi icin sakin hatirlatmalari ac.",
+      "notificationTitle": "İbadet Rutinini Kacirma",
+      "notificationDescription": "Namaz vakitleri için hatırlatmaları aç.",
       "enableNotifications": "Bildirimleri Aç",
-      "firstActionTitle": "Bugunun Ilk Adimini Sec",
-      "firstActionDescription": "Uzun bir plan degil; namaz, zikir, Kuran veya dua icin kisa bir ibadet rutini baslat.",
-      "startNow": "Ilk Adimi Ac",
+      "firstActionTitle": "Bugünün ilk adımını seç",
+      "firstActionDescription": "Uzun bir plan değil; namaz, zikir, Kur'an veya dua için kısa bir adımla başla.",
+      "startNow": "Başla",
       "stepCounter": "Adım {{current}} / {{total}}",
-      "goalTitle": "Bugun hangi ibadet rutinini baslatalim?"
+      "goalTitle": "Huzur'u en çok ne için kullanacaksın?",
+      "goalDescription": "Ana sayfayı buna göre düzenleyelim. Daha sonra ayarlardan değiştirebilirsin."
     },
     "funnel": {
       "title": "Growth Funnel Özeti",
@@ -4345,6 +4356,19 @@
         "inviteCreated": "invite_created",
         "inviteAccepted": "invite_accepted"
       }
+    },
+    "goal": {
+      "prayerRhythm": "Namazlarımı takip etmek",
+      "prayerRhythmDesc": "Vakitler, hatırlatmalar ve günlük zikir",
+      "quranLearning": "Kur'an ve dua ile bağımı güçlendirmek",
+      "quranLearningDesc": "Her gün kısa bir okuma ve dua",
+      "familyConsistency": "Ailemle birlikte ibadet etmek",
+      "familyConsistencyDesc": "Ortak hedefler ve birlikte hatim"
+    },
+    "referralStep": {
+      "done": "Hazır",
+      "active": "Sıradaki",
+      "pending": "Bekliyor"
     }
   },
   "invite": {
@@ -4387,8 +4411,8 @@
     "contentLabel": "İÇERİK",
     "favorites": "FAVORİLERİM",
     "duaCardsDesc": "Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları.",
-    "shareCopied": "Payla??m metni kopyaland?!",
-    "downloadHint": "G?rsel yeni sekmede a??lacak. Sa? t?klay?p \"Resmi Kaydet\" se?ene?ini kullanabilirsiniz."
+    "shareCopied": "Paylaşım metni kopyalandı!",
+    "downloadHint": "Görsel yeni sekmede açılacak. Sağ tıklayıp \"Resmi Kaydet\" seçeneğini kullanabilirsiniz."
   },
   "stats": {
     "errors": {
@@ -4445,11 +4469,11 @@
   },
   "churn": {
     "offer": {
-      "helpDesc": "Daha iyi bir deneyim i?in ?zel destek ekibimizle g?r??mek ister misiniz? M??teri memnuniyeti bizim i?in her ?eydir."
+      "helpDesc": "Daha iyi bir deneyim için özel destek ekibimizle görüşmek ister misiniz? Müşteri memnuniyeti bizim için her şeydir."
     },
     "survey": {
-      "title": "Bizi Neden B?rak?yorsunuz?",
-      "desc": "Deneyiminizi geli?tirmek i?in ayr?lma sebebinizi ??renebilir miyiz?"
+      "title": "Bizi Neden Bırakıyorsunuz?",
+      "desc": "Deneyiminizi geliştirmek için ayrılma sebebinizi öğrenebilir miyiz?"
     },
     "confirm": {
       "title": "Emin Misiniz?",
@@ -4457,10 +4481,10 @@
     }
   },
   "mood": {
-    "ask": "Bug?n Nas?l Hissediyorsun?"
+    "ask": "Bugün Nasıl Hissediyorsun?"
   },
   "countries": {
-    "turkey": "T?rkiye"
+    "turkey": "Türkiye"
   },
   "dua": {
     "categories": {
@@ -4501,8 +4525,8 @@
     }
   },
   "levelUp": {
-    "congrats": "TEBR?KLER!",
-    "subtitle": "Yeni Seviyeye Ula?t?n?z!"
+    "congrats": "TEBRİKLER!",
+    "subtitle": "Yeni Seviyeye Ulaştınız!"
   },
   "prayerTracker": {
     "infoTitle": "Kaza Namazı Nedir?",
@@ -4513,24 +4537,24 @@
   },
   "reminders": {
     "morning": {
-      "title": "?? G?nayd?n!",
-      "body": "Sabah namaz?n? k?ld?n m?? G?ne bereketli ba?la."
+      "title": "☀️ Günaydın!",
+      "body": "Sabah namazını kıldın mı? Güne bereketli başla."
     },
     "evening": {
-      "title": "?? Ak?am Hat?rlatmas?",
-      "body": "Bug?n ka? vakit namaz k?ld?n? Takibini yap."
+      "title": "🌙 Akşam Hatırlatması",
+      "body": "Bugün kaç vakit namaz kıldın? Takibini yap."
     }
   },
   "discovery": {
     "typeLabels": {
-      "ayah": "G?n?n Ayeti",
-      "hadith": "G?n?n Hadisi",
-      "esma": "G?n?n Esmas?",
-      "dua": "G?n?n Duas?",
-      "hikmet": "G?n?n Hikmeti",
+      "ayah": "Günün Ayeti",
+      "hadith": "Günün Hadisi",
+      "esma": "Günün Esması",
+      "dua": "Günün Duası",
+      "hikmet": "Günün Hikmeti",
       "fact": "Biliyor muydun?"
     },
-    "cardFallbackTitle": "Bug?n?n ke?fini a?",
+    "cardFallbackTitle": "Bugünün keşfini aç",
     "cardFallbackSource": "Huzur"
   },
   "rate": {
@@ -4539,5 +4563,25 @@
     "cta": "Puan Ver",
     "later": "Sonra",
     "never": "Gösterme"
+  },
+  "primaryGoal": {
+    "prayer_rhythm": {
+      "label": "Namaz ve günlük ibadet",
+      "title": "Bugünün ibadetine başla",
+      "description": "Namaz, zikir ve kısa bir dua ile güne düzen kat.",
+      "cta": "Başla"
+    },
+    "quran_learning": {
+      "label": "Kur'an ve dua",
+      "title": "Bugün Kur'an ve dua ile başla",
+      "description": "Kısa bir okuma ve bir dua yeter.",
+      "cta": "Kur'an'ı aç"
+    },
+    "family_consistency": {
+      "label": "Ailece ibadet",
+      "title": "Bugün ailece bir adım atın",
+      "description": "Birlikte bir namaz, dua ya da zikir hedefi belirleyin.",
+      "cta": "Başla"
+    }
   }
 }

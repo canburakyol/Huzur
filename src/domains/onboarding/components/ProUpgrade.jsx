@@ -217,7 +217,7 @@ const ProUpgrade = ({
     if (!isNativePlatform()) {
       logger.log('[ProUpgrade] Browser detected, purchases disabled.');
       setPackages([]);
-      setError(t('pro.nativeOnly', 'Satin alma yalnizca mobil uygulamada destekleniyor.'));
+      setError(t('pro.nativeOnly', 'Satın alma yalnızca mobil uygulamada destekleniyor.'));
       setLoading(false);
       return;
     }
@@ -270,7 +270,7 @@ const ProUpgrade = ({
     });
 
     if (!isNativePlatform()) {
-      setError(t('pro.nativeOnly', 'Satin alma yalnizca mobil uygulamada destekleniyor.'));
+      setError(t('pro.nativeOnly', 'Satın alma yalnızca mobil uygulamada destekleniyor.'));
       setProcessing(false);
       return;
     }
@@ -342,7 +342,7 @@ const ProUpgrade = ({
     });
 
     if (!isNativePlatform()) {
-      setError(t('pro.nativeOnly', 'Satin alma yalnizca mobil uygulamada destekleniyor.'));
+      setError(t('pro.nativeOnly', 'Satın alma yalnızca mobil uygulamada destekleniyor.'));
       setProcessing(false);
       return;
     }
@@ -449,8 +449,8 @@ const ProUpgrade = ({
                   <div className="package-price">{pkg?.product?.priceString || '-'}</div>
                   <div className="package-desc">
                     {pkg?.identifier === 'yearly'
-                      ? t('pro.yearlyFocus', 'Daha derin rehberlik ve haftalik ritim icin en guclu secenek.')
-                      : t('pro.monthlyFocus', 'Premium destegi yavas ve esnek sekilde acmak icin uygun.')}
+                      ? t('pro.yearlyFocus', 'Daha derin rehberlik ve haftalık ritim için en guclu secenek.')
+                      : t('pro.monthlyFocus', 'Premium destegi yavaş ve esnek şekilde açmak için uygun.')}
                   </div>
                   <div className="package-cta">
                     {referralCopy.cta || (ctaVariant === 'B' ? 'Bu destegi ac' : uiCopy.cta)}

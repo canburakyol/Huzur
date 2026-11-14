@@ -215,10 +215,14 @@ export const useRuntimeAutoLocalization = (): void => {
         return;
       }
 
+      const currentValue = textNode.nodeValue ?? "";
       const existingOriginal = textNodeOriginalsRef.current.get(textNode);
-      const originalValue = existingOriginal ?? textNode.nodeValue ?? "";
+      // React updates text nodes in place; a value we did not write is the new source text.
+      const originalValue = existingOriginal !== undefined && localizeFromOriginal(existingOriginal) === currentValue
+        ? existingOriginal
+        : currentValue;
 
-      if (!existingOriginal) {
+      if (originalValue !== existingOriginal) {
         textNodeOriginalsRef.current.set(textNode, originalValue);
       }
 
@@ -249,7 +253,8 @@ export const useRuntimeAutoLocalization = (): void => {
           return;
         }
 
-        if (storedOriginals[attributeName] === undefined) {
+        const storedOriginal = storedOriginals[attributeName];
+        if (storedOriginal === undefined || localizeFromOriginal(storedOriginal) !== currentValue) {
           storedOriginals[attributeName] = currentValue;
         }
 

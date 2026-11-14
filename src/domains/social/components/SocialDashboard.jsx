@@ -56,7 +56,7 @@ const SocialDashboard = ({ onClose }) => {
 
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(shareMessage);
-        showToast(t('community.shareCopied', 'Paylasim linki kopyalandi.'), 'success');
+        showToast(t('community.shareCopied', 'Paylaşım linki kopyalandı.'), 'success');
       }
     } catch (error) {
       if (error?.message !== 'Share canceled' && error?.name !== 'AbortError') {

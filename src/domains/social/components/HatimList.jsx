@@ -33,7 +33,7 @@ const HatimList = ({ onSelectHatim }) => {
       setTargetHatimId(null);
     } catch (error) {
       logger.error('[HatimList] Failed to join hatim', error);
-      showToast(t('common.error', 'Hata olustu'), 'error');
+      showToast(t('common.error', 'Hata oluştu'), 'error');
     }
   };
 
@@ -107,7 +107,7 @@ const HatimList = ({ onSelectHatim }) => {
         <div className="sanctuary-join-input-card reveal-stagger">
           {targetHatimId && (
             <p style={{ margin: '0 0 12px 0', fontSize: '0.85rem', color: 'var(--hb-accent)', fontWeight: '800', textAlign: 'center' }}>
-              ℹ️ {t('hatim.lockedDescShort', 'Katilmak icin davet kodu giriniz:')}
+              ℹ️ {t('hatim.lockedDescShort', 'Katılmak için davet kodu giriniz:')}
             </p>
           )}
           <input
@@ -130,8 +130,8 @@ const HatimList = ({ onSelectHatim }) => {
           <div className="sanctuary-section-block">
             <div className="sanctuary-section-header">
               <div>
-                <h3 className="sanctuary-section-title">{t('community.featuredHatims', 'One cikan hatimler')}</h3>
-                <p className="sanctuary-section-subtitle">{t('community.featuredHatimsDesc', 'Huzur tarafindan onerilen acik topluluk halkalari')}</p>
+                <h3 className="sanctuary-section-title">{t('community.featuredHatims', 'Öne çıkan hatimler')}</h3>
+                <p className="sanctuary-section-subtitle">{t('community.featuredHatimsDesc', 'Huzur tarafından onerilen açık topluluk halkaları')}</p>
               </div>
             </div>
             {renderHatimCards(featuredHatims)}
@@ -142,8 +142,8 @@ const HatimList = ({ onSelectHatim }) => {
           <div className="sanctuary-section-block">
             <div className="sanctuary-section-header">
               <div>
-                <h3 className="sanctuary-section-title">{t('community.publicHatims', 'Topluluktan gercek hatimler')}</h3>
-                <p className="sanctuary-section-subtitle">{t('community.publicHatimsDesc', 'Katil, davet et ve birlikte tamamlanan hatimlere eslik et')}</p>
+                <h3 className="sanctuary-section-title">{t('community.publicHatims', 'Topluluktan gerçek hatimler')}</h3>
+                <p className="sanctuary-section-subtitle">{t('community.publicHatimsDesc', 'Katıl, davet et ve birlikte tamamlanan hatimlere eslik et')}</p>
               </div>
             </div>
             {renderHatimCards(communityHatims)}
@@ -154,7 +154,7 @@ const HatimList = ({ onSelectHatim }) => {
           <div className="settings-card reveal-stagger" style={{ flexDirection: 'column', alignItems: 'center', padding: '60px 20px', gap: '16px' }}>
             <Users size={48} color="rgba(79, 70, 229, 0.4)" />
             <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--nav-text-muted)', fontWeight: '700', textAlign: 'center' }}>
-              {t('hatim.noHatims', 'Henuz gorunen bir hatim yok. Ilk acik halkayi sen baslat.')}
+              {t('hatim.noHatims', 'Henüz gorunen bir hatim yok. İlk açık halkayi sen baslat.')}
             </p>
           </div>
         )}

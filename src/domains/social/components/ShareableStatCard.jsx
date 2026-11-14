@@ -96,7 +96,7 @@ const ShareableStatCard = ({ onClose }) => {
       }
 
       logger.error('Error sharing image:', error);
-      showToast(t('stats.errors.cardFailed', 'Kart hazirlanirken bir hata olustu.'), 'error');
+      showToast(t('stats.errors.cardFailed', 'Kart hazırlanırken bir hata oluştu.'), 'error');
     } finally {
       setIsCapturing(false);
     }
@@ -105,12 +105,12 @@ const ShareableStatCard = ({ onClose }) => {
   return (
     <div className="feature-overlay">
       <div className="feature-header blur-header">
-        <IslamicBackButton onClick={onClose} label={t('shareCard.title', 'Istatistik Karti')} />
+        <IslamicBackButton onClick={onClose} label={t('shareCard.title', 'İstatistik Kartı')} />
       </div>
 
       <div className="feature-content" style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <p style={{ textAlign: 'center', color: 'var(--nav-text-muted)', marginBottom: '24px', fontSize: '0.9rem' }}>
-          {t('shareCard.subtitle', 'Bu karti hikayede veya durumunda paylasip istikrarini gorunur hale getirebilirsin.')}
+          {t('shareCard.subtitle', 'Bu kartı hikayede veya durumunda paylasip istikrarini görünür hale getirebilirsin.')}
         </p>
 
         <div
@@ -170,12 +170,12 @@ const ShareableStatCard = ({ onClose }) => {
               <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px', padding: '14px 8px', textAlign: 'center' }}>
                 <CalendarDays size={18} color="var(--secondary)" style={{ marginBottom: '8px' }} />
                 <div style={{ fontSize: '1.05rem', fontWeight: '900' }}>{weeklyStats.activeDays}</div>
-                <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>{t('shareCard.activeDays', 'Aktif gun')}</div>
+                <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>{t('shareCard.activeDays', 'Aktif gün')}</div>
               </div>
               <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px', padding: '14px 8px', textAlign: 'center' }}>
                 <Sparkles size={18} color="var(--tertiary)" style={{ marginBottom: '8px' }} />
                 <div style={{ fontSize: '1.05rem', fontWeight: '900' }}>+{weeklyStats.xpEarned}</div>
-                <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>{t('shareCard.weeklyXP', 'Haftalik XP')}</div>
+                <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>{t('shareCard.weeklyXP', 'Haftalık XP')}</div>
               </div>
               <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px', padding: '14px 8px', textAlign: 'center' }}>
                 <Trophy size={18} color="var(--tertiary-fixed-dim)" style={{ marginBottom: '8px' }} />
@@ -186,7 +186,7 @@ const ShareableStatCard = ({ onClose }) => {
 
             <div style={{ width: '100%', padding: '20px', background: 'rgba(255,255,255,0.05)', borderRadius: '18px', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)' }}>
               <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'rgba(255,255,255,0.6)', marginBottom: '12px', textAlign: 'center', textTransform: 'uppercase' }}>
-                {t('shareCard.featuredBadges', 'One cikan rozetler')}
+                {t('shareCard.featuredBadges', 'Öne çıkan rozetler')}
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
                 {featuredBadges.map((badge) => (
@@ -199,7 +199,7 @@ const ShareableStatCard = ({ onClose }) => {
                 ))}
                 {featuredBadges.length === 0 && (
                   <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', fontStyle: 'italic' }}>
-                    {t('shareCard.noBadges', 'Henuz rozet kazanilmadi.')}
+                    {t('shareCard.noBadges', 'Henüz rozet kazanılmadı.')}
                   </div>
                 )}
               </div>
@@ -208,7 +208,7 @@ const ShareableStatCard = ({ onClose }) => {
 
           <div style={{ textAlign: 'center', zIndex: 1, marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px' }}>
             <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', fontWeight: '600' }}>
-              {t('shareCard.tagline', 'Huzur ile ibadet ritmini sakin ve istikrarli sekilde koru')}
+              {t('shareCard.tagline', 'Huzur ile ibadet ritmini sakin ve istikrarlı şekilde koru')}
             </p>
           </div>
         </div>
@@ -238,7 +238,7 @@ const ShareableStatCard = ({ onClose }) => {
           }}
         >
           {isCapturing ? <Activity size={20} className="spin" /> : <Share2 size={20} />}
-          {isCapturing ? t('shareCard.preparing', 'Kart hazirlaniyor...') : t('shareCard.shareButton', 'Karti Paylas')}
+          {isCapturing ? t('shareCard.preparing', 'Kart hazırlanıyor...') : t('shareCard.shareButton', 'Kartı Paylaş')}
         </button>
       </div>
 
