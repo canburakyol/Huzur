@@ -10,7 +10,7 @@ sonra **görünüm**, en son **iç kalite**. Yanlış dini bilgi, eski görünü
 |---|------|-----|------|-------|
 | 0 | 18.4.0'ı Play Store'a yükle | Sen | 15 dk | ✅ 14 Kas |
 | 1 | Faturalandırmayı aç, fonksiyonları deploy et | Sen + ben | 1 oturum | ⬜ |
-| 2 | Gizlilik URL'si ve yayın sonrası izleme | Sen + ben | 30 dk | ⬜ |
+| 2 | Gizlilik URL'si ve yayın sonrası izleme | Sen + ben | 30 dk | 🟨 URL ✅ 14 Kas · vitals: ~17 ve ~21 Kas |
 | 3 | Özel Günler takvimini düzelt | Ben | 1 oturum | ⬜ |
 | 4 | Satın alma / geri yükleme testi | Sen + ben | 1 oturum | ⬜ |
 | 5 | Dini içerik doğrulaması (5 parça) | Ben | 5 oturum | ⬜ |
