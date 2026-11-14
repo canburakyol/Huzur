@@ -406,7 +406,7 @@ export function NafilePrayers({ onClose }) {
 
       {/* Info Section */}
       <div className="nafile-info-section">
-        <h3>💡 {t('nafilePrayers.info.title', 'Nafile Namazlar Hakkında')}</h3>
+        <h3>{t('nafilePrayers.info.title', 'Nafile Namazlar Hakkında')}</h3>
         <ul>
           <li>{t('nafilePrayers.info.item1', 'Nafile namazlar farz namazların dışında kılınan sünnet ve müstehap namazlardır.')}</li>
           <li>{t('nafilePrayers.info.item2', 'Her nafile namaz için ayrı niyet etmek gerekir.')}</li>

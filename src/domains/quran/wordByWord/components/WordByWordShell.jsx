@@ -55,7 +55,7 @@ const WordByWordShell = ({ onClose, onUpgrade, initialSurah = null }) => {
         />
         <div style={{ flex: 1 }}>
           <h1 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--nav-text)', fontWeight: '950' }}>
-            📝 {t('wordByWord.title')}
+            {t('wordByWord.title')}
           </h1>
           <p style={{ margin: '2px 0 0 0', fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '800' }}>
             {showSurahList ? t('wordByWord.selectSurah') : surahData?.name}

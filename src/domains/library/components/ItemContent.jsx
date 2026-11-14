@@ -274,7 +274,7 @@ function ItemContent({
                     <div className="settings-label" style={{ fontSize: '0.9rem' }}>
                       {episode.number}. {episode.title}
                     </div>
-                    <div className="settings-desc">⏱️ {episode.duration}</div>
+                    <div className="settings-desc">{episode.duration}</div>
                   </div>
                 </div>
                 <ChevronRight size={18} color="var(--nav-text-muted)" />
@@ -294,7 +294,7 @@ function ItemContent({
           }}
         >
           <div style={{ textAlign: 'center', color: 'var(--nav-text-muted)', fontSize: '0.85rem', fontWeight: '700' }}>
-            🎬 Video içerikler yakında eklenecek
+            Video içerikler yakında eklenecek
           </div>
         </div>
       </div>
@@ -342,7 +342,7 @@ function ItemContent({
         </div>
 
         <div className="settings-group" style={{ marginBottom: '24px' }}>
-          <div className="settings-group-title">📚 {t('library.topics', 'İçerik Konuları')}</div>
+          <div className="settings-group-title">{t('library.topics', 'İçerik Konuları')}</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {item.topics?.map((topic, index) => (
               <div
@@ -415,7 +415,7 @@ function ItemContent({
         </div>
 
         <p style={{ textAlign: 'center', color: 'var(--nav-text-muted)', fontSize: '0.75rem', marginTop: '24px', padding: '0 20px', lineHeight: '1.5', fontWeight: '600' }}>
-          ℹ️ {t('library.external_notice', 'Video içerikler harici kaynaklardan sağlanmaktadır. YouTube uygulamasına yönlendirileceksiniz.')}
+          {t('library.external_notice', 'Video içerikler harici kaynaklardan sağlanmaktadır. YouTube uygulamasına yönlendirileceksiniz.')}
         </p>
       </div>
     );

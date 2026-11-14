@@ -45,7 +45,7 @@ const StreakFeature = ({ onClose }) => {
         <WeeklyGoalSelector />
 
         <div className="tips-card glass-card p-4">
-          <h4 className="font-bold mb-2">💡 {t('streakFeature.tipTitle', 'Tip')}</h4>
+          <h4 className="font-bold mb-2">{t('streakFeature.tipTitle', 'Tip')}</h4>
           <p className="text-sm">{t('streakFeature.tipText', 'You can earn 1 Freeze Token by tracking your worship daily for 7 days!')}</p>
         </div>
       </div>

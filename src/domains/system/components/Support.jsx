@@ -137,7 +137,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
     }
 
     return (
-        <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '100px' }}>
+        <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '100px', paddingInline: 'var(--space-4)', boxSizing: 'border-box' }}>
             {/* Header */}
             <div style={{
                 display: 'flex',
@@ -153,7 +153,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     color: 'var(--primary)',
                     fontWeight: '700'
                 }}>
-                    💬 {t('support.title', 'Support')}
+                    {t('support.title', 'Support')}
                 </h1>
             </div>
 
@@ -176,9 +176,9 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     </label>
                     <div style={{ display: 'flex', gap: '8px' }}>
                         {[
-                            { id: 'problem', label: `🐛 ${t('support.types.problem', 'Problem')}` },
-                            { id: 'feature', label: `💡 ${t('support.types.feature', 'Feature Request')}` },
-                            { id: 'other', label: `📝 ${t('support.types.other', 'Other')}` }
+                            { id: 'problem', label: t('support.types.problem', 'Problem') },
+                            { id: 'feature', label: t('support.types.feature', 'Feature Request') },
+                            { id: 'other', label: t('support.types.other', 'Other') }
                         ].map(type => (
                             <button
                                 key={type.id}
@@ -318,7 +318,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                 border: '1px solid var(--glass-border)',
                 textAlign: 'center'
             }}>
-                <MessageSquare size={20} color="var(--text-color-muted)" style={{ marginBottom: '8px' }} />
+                <MessageSquare size={20} color="var(--text-color-muted)" style={{ margin: '0 auto 8px' }} />
                 <div style={{
                     fontSize: '12px',
                     color: 'var(--text-color-muted)'

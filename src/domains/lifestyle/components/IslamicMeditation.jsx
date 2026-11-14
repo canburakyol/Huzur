@@ -117,7 +117,7 @@ const IslamicMeditation = ({ onClose }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '25px' }}>
           <IslamicBackButton onClick={onClose} />
           <h2 style={{ margin: 0, fontSize: '22px', color: 'var(--primary)' }}>
-            🧘 {t('meditation.title')}
+            {t('meditation.title')}
           </h2>
         </div>
 

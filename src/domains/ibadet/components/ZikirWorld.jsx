@@ -218,7 +218,7 @@ function ZikirWorld({ onClose }) {
                             color: 'var(--error-color)',
                             marginBottom: '4px'
                         }}>
-                            ⭐ {Math.floor(personalStats.total / 33)}
+                            {Math.floor(personalStats.total / 33)}
                         </div>
                         <div style={{ fontSize: '0.7rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
                             {t('times', 'Tur')}
@@ -262,7 +262,7 @@ function ZikirWorld({ onClose }) {
             {/* Dhikr Types List */}
             <div className="settings-group reveal-stagger" style={{ '--delay': '0.2s' }}>
                 <div className="settings-group-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    📿 {t('typesTitle')}
+                    {t('typesTitle')}
                 </div>
             </div>
 

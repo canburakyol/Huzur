@@ -148,7 +148,7 @@ function DeedJournal({ onClose }) {
                 background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.05)',
                 border: '1px dashed var(--nav-accent)'
             }}>
-                ✨ "{t(motivation)}"
+                "{t(motivation)}"
             </div>
 
             {/* Today's Score */}
@@ -170,7 +170,7 @@ function DeedJournal({ onClose }) {
                     {calculateTodayPoints()}
                 </div>
                 <div className="hamburger-level-badge" style={{ marginTop: '12px', background: 'var(--nav-accent)', color: 'var(--on-primary)' }}>
-                    🔥 {allTimeStats.currentStreak} {t('deedJournal.today.streak')}
+                    {allTimeStats.currentStreak} {t('deedJournal.today.streak')}
                 </div>
             </div>
 
@@ -178,7 +178,7 @@ function DeedJournal({ onClose }) {
             <div className="settings-group">
                 <div className="settings-group-title">
                     <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        🕌 {t('deedJournal.today.prayers')} ({countCompletedPrayers()}/5)
+                        {t('deedJournal.today.prayers')} ({countCompletedPrayers()}/5)
                     </span>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' }}>
@@ -212,7 +212,7 @@ function DeedJournal({ onClose }) {
 
             {/* Sunnah Deeds */}
             <div className="settings-group" style={{ marginTop: '24px' }}>
-                <div className="settings-group-title">✨ {t('deedJournal.today.sunnah')}</div>
+                <div className="settings-group-title">{t('deedJournal.today.sunnah')}</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {SUNNAH_DEEDS.map(deed => (
                         <div
@@ -248,7 +248,7 @@ function DeedJournal({ onClose }) {
 
             {/* Good Deeds */}
             <div className="settings-group" style={{ marginTop: '24px' }}>
-                <div className="settings-group-title">💚 {t('deedJournal.today.goodDeeds')}</div>
+                <div className="settings-group-title">{t('deedJournal.today.goodDeeds')}</div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
                     {GOOD_DEEDS.map(deed => (
                         <div
@@ -292,7 +292,7 @@ function DeedJournal({ onClose }) {
 
             {/* Things to Avoid */}
             <div className="settings-group" style={{ marginTop: '24px' }}>
-                <div className="settings-group-title" style={{ color: '#ef4444' }}>🚫 {t('deedJournal.today.avoid')}</div>
+                <div className="settings-group-title" style={{ color: '#ef4444' }}>{t('deedJournal.today.avoid')}</div>
                 <p style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', marginBottom: '16px', paddingLeft: '8px' }}>
                     {t('deedJournal.today.avoidDesc')}
                 </p>
@@ -341,7 +341,7 @@ function DeedJournal({ onClose }) {
         <div className="reveal-stagger">
             {/* Overall Stats */}
             <div className="settings-group">
-                <div className="settings-group-title">📊 {t('deedJournal.stats.title')}</div>
+                <div className="settings-group-title">{t('deedJournal.stats.title')}</div>
                 <div className="settings-card" style={{ padding: '24px' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', width: '100%' }}>
                         <div style={{ textAlign: 'center' }}>
@@ -362,7 +362,7 @@ function DeedJournal({ onClose }) {
                         </div>
                         <div style={{ textAlign: 'center' }}>
                             <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--secondary)' }}>
-                                🔥 {allTimeStats.currentStreak}
+                                {allTimeStats.currentStreak}
                             </div>
                             <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
                                 {t('deedJournal.stats.currentStreak')}
@@ -370,7 +370,7 @@ function DeedJournal({ onClose }) {
                         </div>
                         <div style={{ textAlign: 'center' }}>
                             <div style={{ fontSize: '2rem', fontWeight: '900', color: '#9d174d' }}>
-                                🏆 {allTimeStats.longestStreak}
+                                {allTimeStats.longestStreak}
                             </div>
                             <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
                                 {t('deedJournal.stats.longestStreak')}
@@ -382,7 +382,7 @@ function DeedJournal({ onClose }) {
 
             {/* Daily Progress */}
             <div className="settings-group" style={{ marginTop: '24px' }}>
-                <div className="settings-group-title">📅 {t('deedJournal.stats.todayProgress')}</div>
+                <div className="settings-group-title">{t('deedJournal.stats.todayProgress')}</div>
                 <div className="settings-card" style={{ flexDirection: 'column', gap: '20px', padding: '20px' }}>
                     {/* Prayer Progress */}
                     <div style={{ width: '100%' }}>

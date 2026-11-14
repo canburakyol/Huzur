@@ -87,7 +87,7 @@ function QuranMemorize({ onClose, onUpgrade }) {
                     <div className="glass-pill">{t('quranMemorize.title')}</div>
                 </div>
                 <div className="manuscript-header-content reveal-stagger">
-                    <h1 className="manuscript-title">🧠 {t('quranMemorize.title')}</h1>
+                    <h1 className="manuscript-title">{t('quranMemorize.title')}</h1>
                     <p className="manuscript-subtitle">{t('quranMemorize.subtitle')}</p>
                 </div>
                 {!userIsPro && (

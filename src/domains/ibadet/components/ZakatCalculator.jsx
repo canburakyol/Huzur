@@ -131,7 +131,7 @@ const ZakatCalculator = ({ onClose }) => {
                 {/* Gold Price Card */}
                 <div className="settings-card" style={{ padding: '20px', flexDirection: 'column', alignItems: 'stretch' }}>
                     <label style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', marginBottom: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                        🥇 {t('zakatCalculator.goldPriceLabel', 'Güncel Altın Fiyatı (TL/gr)')}
+                        {t('zakatCalculator.goldPriceLabel', 'Güncel Altın Fiyatı (TL/gr)')}
                     </label>
                     <input
                         type="number"
@@ -154,7 +154,7 @@ const ZakatCalculator = ({ onClose }) => {
                 {/* Assets Section */}
                 <div className="settings-group">
                     <div className="settings-group-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        💰 {t('zakatCalculator.assetsTitle', 'Varlıklar')}
+                        {t('zakatCalculator.assetsTitle', 'Varlıklar')}
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {[
@@ -194,7 +194,7 @@ const ZakatCalculator = ({ onClose }) => {
                 {/* Debts Section */}
                 <div className="settings-card" style={{ padding: '20px', flexDirection: 'column', alignItems: 'stretch', background: 'rgba(231, 76, 60, 0.05)', border: '1px solid rgba(231, 76, 60, 0.2)' }}>
                     <label style={{ fontSize: '0.85rem', color: 'var(--error-color)', marginBottom: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                        💳 {t('zakatCalculator.debtsTitle', 'Borçlar')}
+                        {t('zakatCalculator.debtsTitle', 'Borçlar')}
                     </label>
                     <input
                         type="number"
@@ -255,8 +255,8 @@ const ZakatCalculator = ({ onClose }) => {
                     fontWeight: '900'
                 }}>
                     {isNisabReached
-                        ? `✅ ${t('zakatCalculator.nisabReached', 'Nisap Miktarına Ulaşıldı')}`
-                        : `❌ ${t('zakatCalculator.nisabNotReached', 'Nisap Miktarına Ulaşılamadı')}`}
+                        ? `${t('zakatCalculator.nisabReached', 'Nisap Miktarına Ulaşıldı')}`
+                        : `${t('zakatCalculator.nisabNotReached', 'Nisap Miktarına Ulaşılamadı')}`}
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>

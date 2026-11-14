@@ -76,7 +76,7 @@ const NuzulExplorer = ({ onClose }) => {
       <div className="nuzul-header">
         <IslamicBackButton onClick={onClose} size="medium" />
         <div className="header-content">
-          <h1>📖 {t('nuzul.title', 'Nüzul Sebebi')}</h1>
+          <h1>{t('nuzul.title', 'Nüzul Sebebi')}</h1>
           <p className="subtitle">{t('nuzul.subtitle', 'Ayetlerin iniş sebeplerini öğrenin')}</p>
         </div>
       </div>

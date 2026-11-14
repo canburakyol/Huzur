@@ -105,7 +105,7 @@ const TajweedTutor = ({ onClose }) => {
              <div className="glass-pill">{tt('tajweed.quiz', 'Quiz')}</div>
           </div>
           <div className="manuscript-header-content reveal-stagger">
-            <h1 className="manuscript-title">🏆 {tt('tajweed.quizTitle', 'Tecvid Quiz')}</h1>
+            <h1 className="manuscript-title">{tt('tajweed.quizTitle', 'Tecvid Quiz')}</h1>
             <p className="manuscript-subtitle">{tt('tajweed.quizDesc', 'Kisa bir tekrar ile tecvid bilginizi olcun.')}</p>
           </div>
         </div>
@@ -184,7 +184,7 @@ const TajweedTutor = ({ onClose }) => {
         
         <div className="manuscript-header-content reveal-stagger">
           <div className="title-row">
-            <h1 className="manuscript-title">📖 {tt('tajweed.title', 'Tecvid Akademisi')}</h1>
+            <h1 className="manuscript-title">{tt('tajweed.title', 'Tecvid Akademisi')}</h1>
             <span className="manuscript-badge">{tt('tajweed.academy', 'Huzur Akademi')}</span>
           </div>
           <p className="manuscript-subtitle">

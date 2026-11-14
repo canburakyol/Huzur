@@ -62,7 +62,7 @@ const HatimList = ({ onSelectHatim }) => {
   if (error) {
     return (
       <div className="settings-card reveal-stagger" style={{ borderColor: '#ef4444', flexDirection: 'column', gap: '12px' }}>
-        <p style={{ margin: 0, fontSize: '1rem', fontWeight: '800', color: '#ef4444' }}>⚠️ {t('common.error')}</p>
+        <p style={{ margin: 0, fontSize: '1rem', fontWeight: '800', color: '#ef4444' }}>{t('common.error')}</p>
         <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{error}</p>
         <button className="velocity-btn-primary" onClick={fetchAllPublicHatims} style={{ width: '100%', padding: '12px', background: 'transparent', border: '1px solid #ef4444', color: '#ef4444', boxShadow: 'none' }}>
           {t('common.retry')}
@@ -107,7 +107,7 @@ const HatimList = ({ onSelectHatim }) => {
         <div className="sanctuary-join-input-card reveal-stagger">
           {targetHatimId && (
             <p style={{ margin: '0 0 12px 0', fontSize: '0.85rem', color: 'var(--hb-accent)', fontWeight: '800', textAlign: 'center' }}>
-              ℹ️ {t('hatim.lockedDescShort', 'Katılmak için davet kodu giriniz:')}
+              {t('hatim.lockedDescShort', 'Katılmak için davet kodu giriniz:')}
             </p>
           )}
           <input

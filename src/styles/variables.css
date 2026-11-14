@@ -186,6 +186,8 @@
   --line: #d9d0b8;
   --ink: #17231c;
   --ink-muted: #536158;
+  /* legacy alias: used by 4 screens but never defined, which left their icons unpainted */
+  --text-color-muted: var(--ink-muted);
   --brand: #163b2b;
   --brand-ink: #163b2b;
   --brand-soft: #dce8de;

@@ -324,7 +324,7 @@ const MosqueFinder = ({ onClose }) => {
                                     {mosque.name}
                                 </div>
                                 <div className="settings-desc">
-                                    📍 {mosque.distance.toFixed(1)} km mesafede
+                                    {mosque.distance.toFixed(1)} km mesafede
                                 </div>
                             </div>
                         </div>

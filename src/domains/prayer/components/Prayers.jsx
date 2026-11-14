@@ -438,7 +438,7 @@ function Prayers({ onClose }) {
                                 textTransform: 'uppercase',
                                 letterSpacing: '1px'
                             }}>
-                                ☪ {t('prayers.pronunciation')}
+                                {t('prayers.pronunciation')}
                             </h3>
                             <p style={{
                                 margin: 0,
@@ -482,7 +482,7 @@ function Prayers({ onClose }) {
                             textTransform: 'uppercase',
                             letterSpacing: '1px'
                         }}>
-                            ☪ {t('prayers.meaning')}
+                            {t('prayers.meaning')}
                         </h3>
                         <p style={{
                             margin: 0,

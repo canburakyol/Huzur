@@ -374,7 +374,7 @@ function GreetingCards({ onClose }) {
                         textTransform: 'uppercase',
                         position: 'relative'
                     }}>
-                        🕌 {t('greetingCards.ui.appName')}
+                        {t('greetingCards.ui.appName')}
                     </div>
                 </div>
 
@@ -504,7 +504,7 @@ function GreetingCards({ onClose }) {
                         }}
                     >
                         {isSharing ? (
-                            <>⏳ {t('greetingCards.ui.preparing')}</>
+                            <>{t('greetingCards.ui.preparing')}</>
                         ) : (
                             <>
                                 <Image size={20} />

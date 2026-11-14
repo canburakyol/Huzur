@@ -110,7 +110,7 @@ const SplashScreen = ({ onHide }) => {
             fontWeight: '600', boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
             transition: 'all 0.3s ease'
           }}>
-            👆 {t('splash.tapToContinue')}
+            {t('splash.tapToContinue')}
           </div>
         </div>
       </div>

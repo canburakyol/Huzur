@@ -45,7 +45,7 @@ const DuaList = () => {
   if (error) {
     return (
       <div className="settings-card reveal-stagger" style={{ borderColor: '#ef4444', flexDirection: 'column', gap: '8px' }}>
-        <p style={{ margin: 0, fontSize: '1rem', fontWeight: '800', color: '#ef4444' }}>⚠️ {t('common.error')}</p>
+        <p style={{ margin: 0, fontSize: '1rem', fontWeight: '800', color: '#ef4444' }}>{t('common.error')}</p>
         <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{error}</p>
       </div>
     );

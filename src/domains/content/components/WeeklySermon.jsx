@@ -149,7 +149,7 @@ function WeeklySermon({ onClose }) {
             {/* Sources Group */}
             <div className="settings-group reveal-stagger" style={{ '--delay': '0.2s', marginBottom: '32px' }}>
                 <div className="settings-group-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    🎙️ {t('weeklySermon.sourcesTitle', 'Yayın Kaynakları')}
+                    {t('weeklySermon.sourcesTitle', 'Yayın Kaynakları')}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {HUTBE_SOURCES.map((source, index) => (

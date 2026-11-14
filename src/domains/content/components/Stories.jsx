@@ -409,7 +409,7 @@ const Stories = memo(() => {
                             }}
                         >
                             {isSharing ? (
-                                <>⏳ {t('stories.preparing')}</>
+                                <>{t('stories.preparing')}</>
                             ) : (
                                 <>
                                     <Share2 size={20} />

@@ -306,11 +306,11 @@ export function SpecialDaysCalendar({ onClose }) {
               <div className="modal-info">
                 <h4>Önerilen İbadetler:</h4>
                 <ul>
-                  <li>🤲 Nafile namaz kılın</li>
-                  <li>📖 Kuran-ı Kerim okuyun</li>
-                  <li>📿 Zikir ve tesbihat yapın</li>
-                  <li>🙏 Dua edin</li>
-                  <li>💝 Sadaka verin</li>
+                  <li>Nafile namaz kılın</li>
+                  <li>Kuran-ı Kerim okuyun</li>
+                  <li>Zikir ve tesbihat yapın</li>
+                  <li>Dua edin</li>
+                  <li>Sadaka verin</li>
                 </ul>
               </div>
             </div>
