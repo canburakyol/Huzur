@@ -17,6 +17,7 @@ import {
   loadHomeExperienceConfig,
 } from '../../services/homeExperienceConfigService';
 import './home/HomeFresh.css';
+import './home/HomeMushaf.css';
 
 const PremiumHomeHero = lazy(() => import('../PremiumHomeHero'));
 const NativeAdCard = lazy(() => import('../NativeAdCard'));

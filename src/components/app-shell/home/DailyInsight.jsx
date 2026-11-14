@@ -8,16 +8,12 @@ const DailyInsight = memo(({ dailyContent }) => {
   const text = dailyContent?.insight?.text || `"Güzel söz sadakadır." (Buhari)`;
 
   return (
-    <section className="daily-insight-section">
-      <div className="daily-insight-card">
-        <div className="daily-insight-icon">
-          <Lightbulb size={22} color="#fff" aria-hidden="true" />
-        </div>
-        <div>
-          <h4 className="daily-insight-title">{t('home.dailyInsight', 'Günün İlhamı')}</h4>
-          <p className="daily-insight-text">{text}</p>
-        </div>
+    <section className="hz-card hz-home-card">
+      <div className="hz-home-card__head">
+        <span className="hz-overline">{t('home.dailyInsight', 'Günün İlhamı')}</span>
+        <Lightbulb size={18} strokeWidth={1.75} aria-hidden="true" style={{ color: 'var(--gold)' }} />
       </div>
+      <p className="hz-body" style={{ marginTop: 'var(--space-2)' }}>{text}</p>
     </section>
   );
 });

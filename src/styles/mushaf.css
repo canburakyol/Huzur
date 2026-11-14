@@ -48,3 +48,22 @@
 .hz-card--brand .hz-strip__cell--next { background: rgba(0, 0, 0, 0.22); }
 .hz-card--brand .hz-strip__cell--next .hz-strip__name, .hz-card--brand .hz-strip__cell--next .hz-strip__time { color: var(--gold-on-brand); opacity: 1; }
 .hz-countdown { font: 700 40px/44px var(--font-sans); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--gold-on-brand); }
+
+/* Home hero (brand card) */
+.hz-hero { display: grid; gap: var(--space-2); padding: var(--space-4); }
+.hz-hero__top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); font: 600 13px/18px var(--font-sans); }
+.hz-hero__place, .hz-hero__streak { display: inline-flex; align-items: center; gap: var(--space-1); min-width: 0; }
+.hz-hero__place { opacity: 0.9; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.hz-hero__streak { flex: none; padding: 4px 10px; border-radius: var(--radius-full); background: rgba(0, 0, 0, 0.2); color: var(--gold-on-brand); }
+.hz-hero__hijri { margin-top: var(--space-2); }
+.hz-hero__title { margin: 0; font: 600 24px/30px var(--font-display); color: var(--on-brand); }
+.hz-hero__count { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-2); }
+.hz-hero__mode { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 40px; padding: 0 var(--space-3); border-radius: var(--radius-full); border: 1px solid rgba(244, 239, 223, 0.35); background: transparent; color: var(--on-brand); font: 600 14px/20px var(--font-sans); cursor: pointer; }
+.hz-hero__progress { font: 500 12px/16px var(--font-sans); opacity: 0.85; text-align: center; }
+.hz-strip__cell { border: 0; background: transparent; font: inherit; color: inherit; cursor: pointer; }
+div.hz-strip__cell { cursor: default; }
+.hz-strip__mark { display: grid; place-items: center; height: 12px; color: var(--success); }
+.hz-card--brand .hz-strip__mark { color: var(--gold-on-brand); }
+.hz-strip__cell.is-done .hz-strip__time { opacity: 0.75; }
+.hz-strip__cell:focus-visible, .hz-hero__mode:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.hz-card--brand .hz-strip__cell:focus-visible, .hz-card--brand .hz-hero__mode:focus-visible { outline-color: var(--gold-on-brand); }

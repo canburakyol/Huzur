@@ -39,39 +39,28 @@ const VerseOfTheDay = memo(({ dailyContent }) => {
   };
 
   return (
-    <section className="verse-section">
-      <BookOpenText className="verse-bg-icon" size={100} aria-hidden="true" />
-      <div className="verse-content">
-        <span className="verse-badge">{t('home.verseOfTheDay', 'Günün Ayeti')}</span>
-        
-        {/* Arabic verse text */}
-        <h3 className="verse-title">{arabicText}</h3>
-        
-        {/* Golden elegant divider */}
-        <div className="verse-divider"></div>
-        
-        {/* Translation text */}
-        <p className="verse-text">{translationText}</p>
-        
-        {/* Reference tag */}
-        <span className="verse-ref-tag">{reference}</span>
-
-        <div className="verse-actions">
-          <button
-            type="button"
-            className="verse-share-button"
-            aria-label={t('common.share', 'Paylaş')}
-            onClick={handleShare}
-            disabled={isSharing}
-          >
-            <Share2 size={16} aria-hidden="true" />
-            <span>{isSharing ? t('home.preparingImage', 'Görsel hazırlanıyor…') : t('home.shareVerse', 'Bu ayeti sevdiklerinle paylaş')}</span>
-          </button>
-        </div>
-        {shareError ? (
-          <p className="verse-share-error" role="alert">{t('home.shareFailed', 'Paylaşım açılamadı. Lütfen tekrar deneyin.')}</p>
-        ) : null}
+    <section className="hz-card hz-home-card">
+      <div className="hz-home-card__head">
+        <span className="hz-overline">{t('home.verseOfTheDay', 'Günün Ayeti')}</span>
+        <BookOpenText size={18} strokeWidth={1.75} aria-hidden="true" style={{ color: 'var(--gold)' }} />
       </div>
+      <p className="hz-ayah" lang="ar">{arabicText}</p>
+      <hr className="hz-rule" />
+      <p className="hz-body">{translationText.replace(/^"|"$/g, '')}</p>
+      <div className="hz-ref" style={{ marginTop: 'var(--space-2)' }}>{reference}</div>
+      <button
+        type="button"
+        className="hz-btn hz-btn--secondary"
+        style={{ width: '100%', marginTop: 'var(--space-4)' }}
+        onClick={handleShare}
+        disabled={isSharing}
+      >
+        <Share2 size={18} strokeWidth={1.75} aria-hidden="true" />
+        {isSharing ? t('home.preparingImage', 'Görsel hazırlanıyor…') : t('home.shareVerse', 'Bu ayeti sevdiklerinle paylaş')}
+      </button>
+      {shareError ? (
+        <p className="hz-label" role="alert" style={{ color: 'var(--danger)', margin: 'var(--space-2) 0 0' }}>{t('home.shareFailed', 'Paylaşım açılamadı. Lütfen tekrar deneyin.')}</p>
+      ) : null}
 
       <div className="verse-share-render" aria-hidden="true">
         <article
