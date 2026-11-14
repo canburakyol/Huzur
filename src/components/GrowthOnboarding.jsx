@@ -266,9 +266,6 @@ function GrowthOnboarding({
 
   const completeOnboarding = ({ logGoalStep = false, premiumTeaserOverride = undefined } = {}) => {
     setStoredPrimaryGoal(selectedGoal);
-    // New users already learn the navigation in onboarding; the migration notice
-    // is reserved for existing users upgrading from the old navigation.
-    storageService.setBoolean(STORAGE_KEYS.NAVIGATION_UPDATE_V1_SEEN, true);
     if (logGoalStep) {
       logStepCompleted('goal', {
         selected_goal: selectedGoal,

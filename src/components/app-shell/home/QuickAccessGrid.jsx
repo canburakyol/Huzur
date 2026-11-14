@@ -22,8 +22,8 @@ const QuickAccessGrid = memo(({ onSelectFeature, onShowMenu }) => {
     { id: 'imsakiye', icon: 'calendar_month', label: t('menu.imsakiye', "İmsakiye") },
     { id: 'esmaUlHusna', icon: 'diamond', label: t('menu.esma', "Esmalar") },
     { id: 'mosque', icon: 'mosque', label: t('menu.mosque', "Camiim") },
-    { id: 'social', icon: 'group', label: t('menu.community', "Topluluk") },
-    { id: 'assistant', icon: 'forum', label: t('menu.assistant', "Asistan AI") },
+    { id: 'tespihat', icon: 'radio_button_checked', label: t('menu.tespihat', "Tespihat") },
+    { id: 'assistant', icon: 'forum', label: t('nav.assistant', "Soru-Cevap") },
     { id: 'more', icon: 'grid_view', label: t('menu.more', "Daha Fazla"), action: handleShowMenu }
   ];
 

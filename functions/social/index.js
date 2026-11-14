@@ -638,6 +638,76 @@ function createGetOrCreateFamilyWeeklyGoalHandler(deps = {}) {
   };
 }
 
+// Members cannot read each other's user docs (rules allow owner only), so the
+// family screen gets a minimal public projection through this callable instead.
+const FAMILY_MEMBER_LIMIT = 20;
+const toPublicFamilyMember = (uid, data = {}) => ({
+  uid,
+  displayName: typeof data.displayName === 'string' ? data.displayName.slice(0, 60) : '',
+  role: data.role === 'child' ? 'child' : 'member',
+  earnedBadges: Array.isArray(data.earnedBadges)
+    ? data.earnedBadges
+      .map((badge) => (typeof badge === 'string' ? badge : badge?.badgeId))
+      .filter((badgeId) => typeof badgeId === 'string')
+      .slice(0, 100)
+    : [],
+  streaks: {
+    fajr_count: Number(data.streaks?.fajr_count) || 0,
+    quran_count: Number(data.streaks?.quran_count) || 0,
+  },
+});
+
+function createGetFamilyMembersHandler(deps = {}) {
+  const dbRef = deps.db || db;
+  const rateLimitFn = deps.checkRateLimit || checkRateLimit;
+
+  return async (request) => {
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Bu islem icin giris yapmaniz gerekiyor.');
+    }
+
+    const userId = request.auth.uid;
+    if (!isValidUid(userId)) {
+      throw new HttpsError('invalid-argument', 'Gecersiz kullanici.');
+    }
+
+    const rateCheck = rateLimitFn(`getFamilyMembers:${userId}`, 30, 60000);
+    if (!rateCheck.allowed) {
+      throw new HttpsError('resource-exhausted', 'Cok fazla istek gonderdiniz.');
+    }
+
+    const userDoc = await dbRef.collection('users').doc(userId).get();
+    const familyId = userDoc.exists ? (userDoc.data() || {}).familyId : null;
+    if (!isValidDocumentId(familyId)) {
+      return { familyId: null, members: [] };
+    }
+
+    const familyDoc = await dbRef.collection('families').doc(familyId).get();
+    const memberIds = familyDoc.exists && Array.isArray((familyDoc.data() || {}).members)
+      ? familyDoc.data().members.filter(isValidUid)
+      : [];
+    if (!memberIds.includes(userId)) {
+      throw new HttpsError('permission-denied', 'Bu aileye erisim izniniz yok.');
+    }
+
+    const snapshots = await Promise.all(
+      memberIds.slice(0, FAMILY_MEMBER_LIMIT).map((memberId) => dbRef.collection('users').doc(memberId).get())
+    );
+
+    return {
+      familyId,
+      members: snapshots
+        .filter((snapshot) => snapshot.exists)
+        .map((snapshot) => toPublicFamilyMember(snapshot.id, snapshot.data() || {})),
+    };
+  };
+}
+
+exports.getFamilyMembers = onCall(
+  secureCallableOptions(),
+  createGetFamilyMembersHandler()
+);
+
 const getOrCreateFamilyWeeklyGoalHandler = createGetOrCreateFamilyWeeklyGoalHandler();
 exports.getOrCreateFamilyWeeklyGoal = onCall(
   secureCallableOptions(),
@@ -980,6 +1050,7 @@ exports.onDuaUpdate = functionsV1
   });
 
 exports.__test = {
+  createGetFamilyMembersHandler,
   createJoinFamilyByInviteCodeHandler,
   createCreateDuaHandler,
   createListRecentDuasHandler,

@@ -9,13 +9,13 @@ vi.mock('react-i18next', () => ({
 }));
 
 describe('QuickAccessGrid', () => {
-  it('opens the registered social feature for the community tile', () => {
+  it('opens the registered tespihat feature from its tile', () => {
     const onSelectFeature = vi.fn();
 
     render(<QuickAccessGrid onSelectFeature={onSelectFeature} onShowMenu={vi.fn()} />);
-    fireEvent.click(screen.getByText('Topluluk'));
+    fireEvent.click(screen.getByText('Tespihat'));
 
-    expect(onSelectFeature).toHaveBeenCalledWith('social', 'quick_access');
+    expect(onSelectFeature).toHaveBeenCalledWith('tespihat', 'quick_access');
   });
 
   it('opens the feature menu from both all-features controls', () => {

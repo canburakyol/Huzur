@@ -1,5 +1,5 @@
 import { createElement, memo } from 'react';
-import { Home, Book, MessageCircle, Users, Menu } from 'lucide-react';
+import { Home, Book, HandHeart, MessageCircle, Menu } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
@@ -15,13 +15,13 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
   const tabs = [
     { id: 'home', icon: Home, label: t('nav.home') },
     { id: 'quran', icon: Book, label: t('nav.quran') },
-    { id: 'assistant', icon: MessageCircle, label: t('nav.assistant'), notification: true },
-    { id: 'community', icon: Users, label: t('nav.community') },
+    { id: 'prayers', icon: HandHeart, label: t('menu.prayers', 'Dualar') },
+    { id: 'assistant', icon: MessageCircle, label: t('nav.assistant') },
   ];
 
   return (
     <div className="bottom-nav" role="navigation" aria-label={t('nav.mainNavigation', 'Main navigation')} data-testid="bottom-navigation">
-      {tabs.map(({ id, icon, label, notification }) => (
+      {tabs.map(({ id, icon, label }) => (
         <div
           key={id}
           className={`nav-item ${activeTab === id ? 'active' : ''}`}
@@ -33,14 +33,7 @@ const BottomNav = memo(({ activeTab, setActiveTab, onShowMenu }) => {
           aria-label={label}
           data-testid={`bottom-tab-${id}`}
         >
-          {notification ? (
-            <div className="assistant-icon-wrapper">
-              {createElement(icon, { size: 24 })}
-              <span className="notification-dot" />
-            </div>
-          ) : (
-            createElement(icon, { size: 24 })
-          )}
+          {createElement(icon, { size: 24 })}
           <span>{label}</span>
         </div>
       ))}

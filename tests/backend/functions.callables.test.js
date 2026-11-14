@@ -997,4 +997,36 @@ describe('Cloud Functions callable handlers', () => {
     });
     expect(dbMock.writes[0].options).toEqual({ merge: true });
   });
+
+  it('returns only a public projection of family members to fellow members', async () => {
+    const docs = {
+      'users/user-1': { familyId: 'family-1', displayName: 'Ali', fcmTokens: ['secret'], email: 'a@x.com', streaks: { fajr_count: 3 } },
+      'users/user-2': { familyId: 'family-1', displayName: 'Ayşe', role: 'child', earnedBadges: ['first_prayer', { badgeId: 'quran_7' }], fcmTokens: ['secret-2'] },
+      'users/outsider': { familyId: 'family-1' },
+      'families/family-1': { members: ['user-1', 'user-2'] },
+    };
+    const dbMock = {
+      collection: (name) => ({
+        doc: (id) => ({
+          async get() {
+            const data = docs[`${name}/${id}`];
+            return { id, exists: Boolean(data), data: () => data };
+          },
+        }),
+      }),
+    };
+    const handler = __test.createGetFamilyMembersHandler({ db: dbMock, checkRateLimit: allowRateLimit });
+
+    const result = await handler({ auth: { uid: 'user-1' } });
+    expect(result).toEqual({
+      familyId: 'family-1',
+      members: [
+        { uid: 'user-1', displayName: 'Ali', role: 'member', earnedBadges: [], streaks: { fajr_count: 3, quran_count: 0 } },
+        { uid: 'user-2', displayName: 'Ayşe', role: 'child', earnedBadges: ['first_prayer', 'quran_7'], streaks: { fajr_count: 0, quran_count: 0 } },
+      ],
+    });
+
+    await expect(handler({ auth: { uid: 'outsider' } })).rejects.toMatchObject({ code: 'permission-denied' });
+    await expect(handler({})).rejects.toMatchObject({ code: 'unauthenticated' });
+  });
 });

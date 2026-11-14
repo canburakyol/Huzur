@@ -22,6 +22,7 @@ module.exports = {
   ...referralExports,
   ...analytics,
   __test: {
+    createGetFamilyMembersHandler: socialTest.createGetFamilyMembersHandler,
     createCreateDuaHandler: socialTest.createCreateDuaHandler,
     createListRecentDuasHandler: socialTest.createListRecentDuasHandler,
     createCreateGroupHatimHandler: hatimTest.createCreateGroupHatimHandler,

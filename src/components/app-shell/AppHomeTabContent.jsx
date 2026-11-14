@@ -15,9 +15,6 @@ import {
   loadHomeExperienceConfig,
 } from '../../services/homeExperienceConfigService';
 import './home/HomeFresh.css';
-import NavigationUpdateNotice from './NavigationUpdateNotice';
-import { STORAGE_KEYS } from '../../constants';
-import { storageService } from '../../services/storageService';
 
 const PremiumHomeHero = lazy(() => import('../PremiumHomeHero'));
 const NativeAdCard = lazy(() => import('../NativeAdCard'));
@@ -36,10 +33,6 @@ function AppHomeTabContent({
 }) {
 
   const [homeExperience, setHomeExperience] = useState(null);
-  const [showNavigationUpdate, setShowNavigationUpdate] = useState(() => (
-    storageService.getBoolean(STORAGE_KEYS.ONBOARDING_COMPLETED, false)
-    && !storageService.getBoolean(STORAGE_KEYS.NAVIGATION_UPDATE_V1_SEEN, false)
-  ));
   const [firstActivationCompleted, setFirstActivationCompleted] = useState(() => hasCompletedFirstIbadahAction());
   const resolvedHomeExperience = homeExperience || DEFAULT_HOME_EXPERIENCE_CONFIG;
   const shouldShowFirstActivation = !firstActivationCompleted;
@@ -57,11 +50,6 @@ function AppHomeTabContent({
   const handleSelectFeature = useCallback((feature, source) => {
     onSelectFeature(feature, source);
   }, [onSelectFeature]);
-
-  const acknowledgeNavigationUpdate = useCallback(() => {
-    storageService.setBoolean(STORAGE_KEYS.NAVIGATION_UPDATE_V1_SEEN, true);
-    setShowNavigationUpdate(false);
-  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -121,15 +109,11 @@ function AppHomeTabContent({
 
   return (
     <div className="home-redesign-container animate-fadeIn">
-      {showNavigationUpdate ? (
-        <NavigationUpdateNotice onAcknowledge={acknowledgeNavigationUpdate} />
-      ) : null}
-
       <header className="home-header">
         <div className="home-header-title">
           <div className="home-header-logo-container">
             <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBB2Vnwfe5Ik83esNAEHbGmy-lvEk2-aDGYcg4y3hDD6tnpLhr3gRq9QsJQCpV7XNL-RDsi19N93-Kid8wlhB8OTR1QVr8-t76vEWo548cr0muD5b2uJycoW87sqMExVd-fgI_VtqQgoLdmsB3brqhcElcg9NnJaK_KGLAySIahDt0zp21GXw8c3YaqQoSXURD1_0cJxEjUeWOCiTKVV0vm390KWEHucW4JgRghi1ahpsMpUZ5VZkcdilQGXrrsZB3USwWli0pV6HWx"
+              src="/pwa-192x192.png"
               alt="Huzur Logo"
               className="home-header-logo"
             />

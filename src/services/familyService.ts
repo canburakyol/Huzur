@@ -129,14 +129,16 @@ export const familyService = {
       const familyDoc = await getDoc(doc(database, COLLECTION_FAMILIES, userData.familyId));
       if (!familyDoc.exists()) return null;
 
-      const memberIds = (familyDoc.data().members as string[]) || [];
-      const memberSnapshots = await Promise.all(
-        memberIds.map((memberId: string) => getDoc(doc(database, COLLECTION_USERS, memberId)))
-      );
-
-      const members = memberSnapshots
-        .map((snapshot) => (snapshot.exists() ? { uid: snapshot.id, ...snapshot.data() } : null))
-        .filter((m): m is NonNullable<typeof m> => Boolean(m));
+      // Rules only let users read their own doc; other members come from the server projection.
+      let members: FamilyMember[] = [{ uid: userId, ...userData }];
+      try {
+        const result = await callFamilyFunction('getFamilyMembers');
+        if (Array.isArray(result?.members)) {
+          members = result.members as FamilyMember[];
+        }
+      } catch (error) {
+        logger.warn('[FamilyService] Family members unavailable, showing current user only:', error);
+      }
 
       return {
         ...familyDoc.data(),
