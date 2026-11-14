@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { MapPin, ChevronLeft, ChevronRight, Loader } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import PageHeader from '../../../components/shared/PageHeader';
 import { fetchMonthlyPrayerTimes } from '../../../services/prayerService';
 import { logger } from '../../../utils/logger';
 
@@ -46,20 +46,38 @@ const Imsakiye = ({ onClose, locationName, location }) => {
   const changeMonth = (delta) => { const next = new Date(currentYear, currentMonth + delta, 1); setCurrentMonth(next.getMonth()); setCurrentYear(next.getFullYear()); };
   const cleanTime = (value) => value?.split(' ')[0] || '--:--';
 
-  return <div className="app-container" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-    <div style={{ padding: '20px', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <IslamicBackButton onClick={onClose} variant="light" />
-      <div style={{ textAlign: 'center', color: 'var(--on-primary)' }}>
-        <h2 style={{ margin: 0, fontSize: '22px' }}>📅 {t('menu.imsakiye')}</h2>
-        <div style={{ fontSize: '12px', marginTop: '4px' }}><MapPin size={12} /> {city}{available ? `, ${country}` : ''}</div>
-        {source && <div style={{ fontSize: '11px', marginTop: '4px' }}>Kaynak: {source === 'Diyanet' ? 'Diyanet' : `Aynı konum için hesaplandı (${source})`}</div>}
-      </div><div style={{ width: '40px' }} />
+  const today = new Date();
+  const todayIndex = today.getMonth() === currentMonth && today.getFullYear() === currentYear ? String(today.getDate()) : null;
+  const sourceLabel = source === 'Diyanet' ? 'Kaynak: Diyanet' : `${t('imsakiye.calculatedFor', 'Aynı konum için hesaplandı')} (${source})`;
+  const cell = { padding: '8px 4px', textAlign: 'center', fontVariantNumeric: 'tabular-nums' };
+
+  return <div className="app-container hz-root" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <PageHeader
+      title={t('menu.imsakiye')}
+      subtitle={<>{city}{available ? `, ${country}` : ''}{source ? <> · <span>{sourceLabel}</span></> : null}</>}
+      onBack={onClose}
+    />
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 var(--space-4) var(--space-3)' }}>
+      <button type="button" className="hz-iconbtn" aria-label={t('imsakiye.prevMonth', 'Önceki ay')} onClick={() => changeMonth(-1)}><ChevronLeft size={20} strokeWidth={1.75} aria-hidden="true" /></button>
+      <span style={{ font: '600 19px/26px var(--font-display)' }}>{monthNames[currentMonth]} {currentYear}</span>
+      <button type="button" className="hz-iconbtn" aria-label={t('imsakiye.nextMonth', 'Sonraki ay')} onClick={() => changeMonth(1)}><ChevronRight size={20} strokeWidth={1.75} aria-hidden="true" /></button>
     </div>
-    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '15px 20px' }}>
-      <button aria-label="Önceki ay" onClick={() => changeMonth(-1)}><ChevronLeft size={20} /></button><span>{monthNames[currentMonth]} {currentYear}</span><button aria-label="Sonraki ay" onClick={() => changeMonth(1)}><ChevronRight size={20} /></button>
-    </div>
-    <div style={{ flex: 1, overflow: 'auto', padding: '0 10px 20px' }}>
-      {loading ? <div><Loader className="spin" size={32} /> {t('common.loading')}</div> : error ? <div style={{ textAlign: 'center', color: '#e74c3c', padding: '40px' }}>{error}</div> : <table style={{ width: '100%' }}><thead><tr><th>Gün</th><th>{t('prayer.fajr')}</th><th>{t('prayer.sunrise')}</th><th>{t('prayer.dhuhr')}</th><th>{t('prayer.asr')}</th><th>{t('prayer.maghrib')}</th><th>{t('prayer.isha')}</th></tr></thead><tbody>{days.map((day) => <tr key={day.gregorian}><td>{day.gregorian}</td><td>{cleanTime(day.times.Fajr)}</td><td>{cleanTime(day.times.Sunrise)}</td><td>{cleanTime(day.times.Dhuhr)}</td><td>{cleanTime(day.times.Asr)}</td><td>{cleanTime(day.times.Maghrib)}</td><td>{cleanTime(day.times.Isha)}</td></tr>)}</tbody></table>}
+    <div style={{ flex: 1, overflow: 'auto', padding: '0 var(--space-4) var(--space-5)' }}>
+      {loading ? <div className="hz-label" style={{ display: 'flex', gap: 8, alignItems: 'center' }}><Loader className="spin" size={20} /> {t('common.loading')}</div>
+        : error ? <div className="hz-card" style={{ color: 'var(--danger)', textAlign: 'center' }}>{error}</div>
+        : <div className="hz-card" style={{ padding: 'var(--space-2)', overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', font: '500 14px/20px var(--font-sans)', color: 'var(--ink)' }}>
+            <thead><tr style={{ font: '600 11px/14px var(--font-sans)', letterSpacing: '0.02em', textTransform: 'uppercase', color: 'var(--ink-muted)' }}>
+              <th style={cell}>{t('imsakiye.day', 'Gün')}</th><th style={cell}>{t('prayer.fajr')}</th><th style={cell}>{t('prayer.sunrise')}</th><th style={cell}>{t('prayer.dhuhr')}</th><th style={cell}>{t('prayer.asr')}</th><th style={cell}>{t('prayer.maghrib')}</th><th style={cell}>{t('prayer.isha')}</th>
+            </tr></thead>
+            <tbody>{days.map((day) => {
+              const isToday = day.gregorian === todayIndex;
+              return <tr key={day.gregorian} aria-current={isToday ? 'date' : undefined} style={{ background: isToday ? 'var(--brand-soft)' : undefined, color: isToday ? 'var(--brand-ink)' : undefined, fontWeight: isToday ? 700 : undefined, borderTop: '1px solid var(--line)' }}>
+                <td style={cell}>{day.gregorian}</td><td style={cell}>{cleanTime(day.times.Fajr)}</td><td style={cell}>{cleanTime(day.times.Sunrise)}</td><td style={cell}>{cleanTime(day.times.Dhuhr)}</td><td style={cell}>{cleanTime(day.times.Asr)}</td><td style={cell}>{cleanTime(day.times.Maghrib)}</td><td style={cell}>{cleanTime(day.times.Isha)}</td>
+              </tr>;
+            })}</tbody>
+          </table>
+        </div>}
     </div>
   </div>;
 };

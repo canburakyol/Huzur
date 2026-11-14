@@ -15,7 +15,7 @@ import {
   ChevronLeft,
 } from 'lucide-react';
 import { prayerCategories, prayers } from '../../../data/prayers';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import PageHeader from '../../../components/shared/PageHeader';
 
 const CATEGORY_ICONS = {
   Sunrise,
@@ -72,22 +72,12 @@ function Prayers({ onClose }) {
                 padding: '20px',
                 paddingBottom: '100px'
             }}>
-                {/* Header */}
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    marginBottom: '24px'
-                }}>
-                    <IslamicBackButton onClick={onClose} size="medium" />
-                    <div>
-                        <h2 style={{ margin: 0, fontSize: '28px', fontWeight: '700', color: 'var(--text-primary)' }}>
-                            ☪️ {t('prayers.title')}
-                        </h2>
-                        <p style={{ margin: '6px 0 0 0', opacity: 0.8, fontSize: '14px', color: 'var(--text-primary)' }}>
-                            {prayerCategories.length} {t('prayers.categories')}, {visiblePrayers.length} {t('prayers.prayer')}
-                        </p>
-                    </div>
+                <div style={{ margin: '-20px -20px 16px' }}>
+                    <PageHeader
+                        title={t('prayers.title')}
+                        subtitle={`${prayerCategories.length} ${t('prayers.categories')}, ${visiblePrayers.length} ${t('prayers.prayer')}`}
+                        onBack={onClose}
+                    />
                 </div>
 
                 {/* İslami Motif Banner */}

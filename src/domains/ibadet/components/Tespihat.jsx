@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
-import { BookOpen, Check, CheckCircle2, ChevronDown, ChevronRight, RotateCcw, Sparkles } from 'lucide-react';
+import { BookOpen, Check, CheckCircle2, ChevronDown, ChevronRight, CircleDot, HandHeart, Moon, RotateCcw, Sparkles, Star } from 'lucide-react';
+
+// Mushaf uses one line-icon set; the data file's emoji are not rendered.
+const SECTION_ICONS = { istigfar: HandHeart, 'entes-selam': Sparkles, salavat: Moon, subhanallahi: CircleDot, 'ayetel-kursi': BookOpen, tevhid: Star };
 import { useTranslation } from 'react-i18next';
 import { OPTIONAL_QURAN_DUALAR, TESPIHAT_SECTIONS, TESBIHLER, TEVHID } from '../../../data/tespihatData';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
@@ -86,7 +89,7 @@ function Tespihat({ onClose }) {
             const done = completedSections.includes(section.id);
             return (
               <button type="button" className={`practice-row ${done ? 'practice-row--done' : ''}`} key={section.id} onClick={() => setActiveSection(section)}>
-                <span className="practice-row__icon">{section.icon}</span>
+                <span className="practice-row__icon">{(() => { const Icon = SECTION_ICONS[section.id] || CircleDot; return <Icon size={17} aria-hidden="true" />; })()}</span>
                 <span className="practice-row__body"><span className="practice-row__title">{section.title}</span><span className="practice-row__text">{section.subtitle}</span></span>
                 {done ? <CheckCircle2 size={20} color="var(--primary)" /> : <ChevronRight size={19} />}
               </button>

@@ -15,8 +15,8 @@
 }
 
 .practice-header__copy { min-width: 0; flex: 1; }
-.practice-title { margin: 0; font-size: 1.3rem; line-height: 1.2; font-weight: 850; color: var(--on-surface); }
-.practice-subtitle { margin: 3px 0 0; font-size: .78rem; line-height: 1.4; color: var(--on-surface-variant); }
+.practice-title { margin: 0; font: 600 24px/30px var(--font-display); color: var(--ink); text-align: left; }
+.practice-subtitle { margin: 2px 0 0; font: 500 14px/20px var(--font-sans); color: var(--ink-muted); text-align: left; }
 
 .practice-icon-button,
 .practice-counter__button,
@@ -62,7 +62,7 @@
 
 .practice-section { margin-top: 22px; }
 .practice-section:first-of-type { margin-top: 0; }
-.practice-section-title { margin: 0 0 9px; font-size: .78rem; font-weight: 850; letter-spacing: .025em; color: var(--on-surface-variant); }
+.practice-section-title { margin: 0 0 var(--space-2); font: 700 11px/14px var(--font-sans); letter-spacing: .12em; text-transform: uppercase; color: var(--gold-ink); }
 .practice-list { display: flex; flex-direction: column; gap: 8px; }
 
 .practice-row {
