@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { prayers } from './prayers';
+import tr from '../../public/locales/tr/translation.json';
+import en from '../../public/locales/en/translation.json';
 
 describe('prayer catalog integrity', () => {
   it('keeps stable IDs unique and routes duplicate records through canonical aliases', () => {
@@ -17,6 +19,18 @@ describe('prayer catalog integrity', () => {
       expect(prayer.source).not.toBe('Hadis-i Şerif');
       if (prayer.sourceType === 'general') expect(prayer.citation).toBeUndefined();
       else expect(prayer.citation).toMatch(/\S/);
+    }
+  });
+
+  it('shows a meaning that covers the whole Arabic text, not just its first sentence', () => {
+    const letters = (arabic: string) => arabic.replace(/[^ء-ي]/g, '').length;
+    for (const locale of [tr, en]) {
+      const items = (locale as { prayerBook: { items: Record<string, { meaning: string }> } }).prayerBook.items;
+      for (const prayer of prayers.filter((item) => !item.canonicalId && !item.archived)) {
+        const meaning = items[prayer.id]?.meaning ?? '';
+        // A full translation is longer than the unvocalised Arabic; truncated ones were under 0.4.
+        expect(meaning.replace(/\s/g, '').length / letters(prayer.arabic), `#${prayer.id}`).toBeGreaterThan(0.6);
+      }
     }
   });
 
