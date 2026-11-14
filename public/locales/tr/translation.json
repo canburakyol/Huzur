@@ -4620,5 +4620,19 @@
   },
   "imsakiye": {
     "locationRequired": "İmsakiye için doğrulanmış konum gerekli."
+  },
+  "zikirmatik": {
+    "popularChoices": "Zikirler",
+    "sourceLabel": "Kaynak",
+    "today": "Bugün",
+    "total": "Toplam",
+    "read": "Okunan",
+    "targetLabel": "Hedef",
+    "congrats": "Hedef tamamlandı",
+    "freeNamePlaceholder": "Zikir adı",
+    "vibration": "Titreşim",
+    "focus": "Odak modu",
+    "reset": "Sayacı sıfırla",
+    "stats": "İstatistikler"
   }
 }

@@ -1,123 +1,165 @@
-/* Zikirmatik - Huzur Serene Design System */
+/* Zikirmatik on Huzur Mushaf tokens. */
 
+.zikirmatik-list,
 .zikirmatik-screen {
-    position: relative;
-    isolation: isolate;
-    display: flex;
-    flex-direction: column;
     min-height: 100dvh;
     box-sizing: border-box;
-    padding-bottom: calc(var(--bottom-stack-height) + 24px) !important;
-    background: var(--surface-page);
-    color: var(--text-primary);
 }
+
+.zikirmatik-list { padding-bottom: calc(var(--bottom-stack-height) + 24px) !important; }
+
+.zikirmatik-screen {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: calc(var(--bottom-stack-height) + 24px) !important;
+}
+
+.zk-body {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-2) var(--space-4) var(--space-6);
+}
+
+.zk-actions { display: flex; gap: var(--space-2); }
+.hz-iconbtn.is-on { background: var(--brand-soft); color: var(--brand-ink); border-color: transparent; }
+
+/* Stats */
+.zk-stats { display: flex; align-items: center; justify-content: space-around; text-align: center; padding: var(--space-5); }
+.zk-stats__value { font: 600 36px/42px var(--font-display); font-variant-numeric: tabular-nums; color: var(--on-brand); }
+.zk-stats__divider { width: 1px; height: 40px; background: var(--on-brand); opacity: 0.25; }
+
+/* List */
+.zk-list { padding: 0; overflow: hidden; }
+.zk-item {
+    display: grid;
+    gap: var(--space-2);
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: none;
+    border: 0;
+    color: var(--ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+.zk-item + .zk-item { border-top: 1px solid var(--line); }
+.zk-item:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.zk-item__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.zk-item__text { display: grid; min-width: 0; }
+.zk-item__name { font: 600 16px/22px var(--font-sans); }
+.zk-item__arabic { font: 400 18px/30px var(--font-arabic); color: var(--ink-muted); direction: rtl; text-align: left; }
+.zk-item__count { flex: none; display: inline-flex; align-items: center; gap: 4px; font: 600 16px/22px var(--font-sans); font-variant-numeric: tabular-nums; color: var(--ink); }
+.zk-item__count svg { color: var(--success); }
+.zk-item__target { color: var(--ink-muted); font-weight: 500; font-size: 13px; }
+.zk-progress { display: block; height: 4px; border-radius: var(--radius-full); background: var(--paper-sunken); overflow: hidden; }
+.zk-progress__fill { display: block; height: 100%; background: var(--brand-ink); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.zk-progress__fill.is-done { background: var(--success); }
+
+/* Counter */
+.zk-dhikr { display: grid; gap: var(--space-2); text-align: center; padding: var(--space-5); }
+.zk-dhikr__name { margin: 0; font: 600 22px/28px var(--font-display); color: var(--brand-ink); }
+.zk-dhikr__arabic { margin: 0; font: 400 32px/56px var(--font-arabic); color: var(--ink); direction: rtl; }
+.zk-dhikr__meaning { margin: 0; font-style: italic; }
+.zk-dhikr .hz-body, .zk-dhikr .hz-ref { margin: 0; }
+.zk-dhikr__input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--space-2);
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid var(--brand);
+    color: var(--ink);
+    font: 600 22px/28px var(--font-display);
+    text-align: center;
+    outline: none;
+}
+.zk-dhikr__input::placeholder { color: var(--ink-muted); }
 
 .velocity-dial-wrapper {
     position: relative;
     width: 280px;
     height: 280px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    z-index: 2;
-    touch-action: manipulation;
-    user-select: none;
-    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    margin: var(--space-2) auto;
     padding: 0;
     border: 0;
     background: transparent;
     color: inherit;
     font: inherit;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
-
-.velocity-dial-svg {
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    transform: rotate(-90deg);
-}
-
-.velocity-dial-bg {
-    fill: none;
-    stroke: var(--border-soft);
-    stroke-width: 8;
-    opacity: 0.45;
-}
-
+.velocity-dial-wrapper:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: var(--radius-full); }
+.velocity-dial-svg { position: absolute; inset: 0; width: 280px; height: 280px; transform: rotate(-90deg); }
+.velocity-dial-bg { fill: none; stroke: var(--paper-sunken); stroke-width: 8; }
 .velocity-dial-progress {
     fill: none;
-    stroke: var(--nav-accent, var(--tertiary));
+    stroke: var(--brand-ink);
     stroke-width: 8;
     stroke-linecap: round;
     transition: stroke-dashoffset 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
+.velocity-dial-progress.is-done { stroke: var(--gold); }
 .velocity-dial-button {
     width: 228px;
     height: 228px;
-    background: var(--surface-container-lowest);
-    border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--elevation-soft), inset 0 2px 10px rgba(0, 0, 0, 0.01);
-    border: 1px solid var(--border-soft);
-    transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.15s ease;
+    gap: var(--space-1);
+    border-radius: var(--radius-full);
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    box-shadow: var(--elevation-2);
+    transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+.zk-dial__count { font: 600 64px/1 var(--font-display); font-variant-numeric: tabular-nums; color: var(--ink); }
 
-.velocity-dial-wrapper:active .velocity-dial-button {
-    transform: scale(0.96);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 4px 20px rgba(0, 0, 0, 0.02);
-}
-
-.dhikr-input-custom {
-    font-family: var(--font-main);
-    color: var(--text-heading) !important;
-}
-
-.dhikr-input-custom::placeholder {
-    color: var(--text-subtle);
-    opacity: 0.6;
-}
-
+.zk-targets { display: flex; align-items: center; gap: var(--space-2); }
 .velocity-target-btn {
-    background: var(--surface-container-low);
-    border: 1px solid var(--border-soft);
-    border-radius: var(--radius-default);
-    padding: 10px 18px;
-    color: var(--text-subtle);
-    font-weight: 800;
+    flex: 1;
+    min-height: 44px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+    background: var(--paper-raised);
+    color: var(--ink);
+    font: 600 15px/20px var(--font-sans);
+    font-variant-numeric: tabular-nums;
     cursor: pointer;
-    transition: var(--transition-smooth);
 }
+.velocity-target-btn.active { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.velocity-target-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.zk-reset { width: 44px; height: 44px; }
 
-.velocity-target-btn:hover {
-    background: var(--surface-container);
-    color: var(--text-primary);
+/* Focus mode: only the counter matters */
+.zikirmatik-screen.is-focus .zk-dhikr .hz-body,
+.zikirmatik-screen.is-focus .zk-dhikr__meaning,
+.zikirmatik-screen.is-focus .zk-dhikr .hz-ref { display: none; }
+
+/* Target reached */
+.zk-success { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; pointer-events: none; }
+.zk-success__card {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-6);
+    border-radius: var(--radius-xl);
+    background: var(--brand);
+    color: var(--gold-on-brand);
+    box-shadow: var(--elevation-2);
+    animation: zkScaleUp 0.4s ease-out;
 }
+.zk-success__text { margin: 0; font: 600 22px/28px var(--font-display); color: var(--on-brand); }
 
-.velocity-target-btn.active {
-    background: var(--nav-accent, var(--tertiary));
-    border-color: transparent;
-    color: var(--on-primary);
-    box-shadow: var(--elevation-soft);
-}
-
-.velocity-target-btn:active {
-    transform: scale(0.95);
-}
-
-/* Confetti Scale Up Anim */
-@keyframes scaleUp {
-    from { transform: scale(0.5); opacity: 0; }
+@keyframes zkScaleUp {
+    from { transform: scale(0.85); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
-/* Muted state for focus mode */
-[data-theme='dark'] .velocity-dial-button {
-    background: var(--surface-container-lowest);
-    border-color: var(--border-soft);
+@media (prefers-reduced-motion: reduce) {
+    .zk-success__card, .velocity-dial-progress, .zk-progress__fill { animation: none; transition: none; }
 }

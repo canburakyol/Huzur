@@ -4620,5 +4620,19 @@
   },
   "imsakiye": {
     "locationRequired": "Lokasi terverifikasi diperlukan untuk imsakiyah."
+  },
+  "zikirmatik": {
+    "popularChoices": "Zikir",
+    "sourceLabel": "Sumber",
+    "today": "Hari ini",
+    "total": "Total",
+    "read": "Dibaca",
+    "targetLabel": "Target",
+    "congrats": "Target tercapai",
+    "freeNamePlaceholder": "Nama zikir",
+    "vibration": "Getaran",
+    "focus": "Mode fokus",
+    "reset": "Atur ulang hitungan",
+    "stats": "Statistik"
   }
 }

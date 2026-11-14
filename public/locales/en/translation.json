@@ -4620,5 +4620,19 @@
   },
   "imsakiye": {
     "locationRequired": "A verified location is needed for the imsakiye."
+  },
+  "zikirmatik": {
+    "popularChoices": "Dhikr",
+    "sourceLabel": "Source",
+    "today": "Today",
+    "total": "Total",
+    "read": "Count",
+    "targetLabel": "Target",
+    "congrats": "Target reached",
+    "freeNamePlaceholder": "Dhikr name",
+    "vibration": "Vibration",
+    "focus": "Focus mode",
+    "reset": "Reset counter",
+    "stats": "Statistics"
   }
 }

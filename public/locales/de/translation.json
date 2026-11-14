@@ -4620,5 +4620,19 @@
   },
   "imsakiye": {
     "locationRequired": "Für den Imsakiye-Kalender wird ein bestätigter Standort benötigt."
+  },
+  "zikirmatik": {
+    "popularChoices": "Dhikr",
+    "sourceLabel": "Quelle",
+    "today": "Heute",
+    "total": "Gesamt",
+    "read": "Gezählt",
+    "targetLabel": "Ziel",
+    "congrats": "Ziel erreicht",
+    "freeNamePlaceholder": "Name des Dhikr",
+    "vibration": "Vibration",
+    "focus": "Fokusmodus",
+    "reset": "Zähler zurücksetzen",
+    "stats": "Statistik"
   }
 }
