@@ -478,6 +478,13 @@
       "loadFailed": "Waktu salat tidak dapat dimuat. Periksa koneksi internet Anda.",
       "fetchError": "Terjadi kesalahan saat memuat waktu salat. Coba lagi.",
       "timeout": "Koneksi habis waktu."
+    },
+    "sourceStatus": "Status sumber",
+    "sourceTypes": {
+      "quran": "Al-Qur’an",
+      "hadith": "Hadis",
+      "liturgical": "Bentuk ibadah / fikih",
+      "general": "Doa umum (sumber kanonik belum terverifikasi)"
     }
   },
   "assistant": {

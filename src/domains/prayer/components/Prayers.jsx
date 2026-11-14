@@ -11,11 +11,11 @@ import {
   Bird,
   Heart,
   Book,
-  BookOpen,
-  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { prayerCategories, prayers } from '../../../data/prayers';
 import PageHeader from '../../../components/shared/PageHeader';
+import './Prayers.css';
 
 const CATEGORY_ICONS = {
   Sunrise,
@@ -30,9 +30,9 @@ const CATEGORY_ICONS = {
   Heart,
 };
 
-const IconMapper = ({ iconName, size = 24, strokeWidth = 2, color }) => {
+const CategoryIcon = ({ iconName, size = 22 }) => {
     const IconComponent = CATEGORY_ICONS[iconName] || Book;
-    return <IconComponent size={size} strokeWidth={strokeWidth} color={color} />;
+    return <IconComponent size={size} strokeWidth={1.75} aria-hidden="true" />;
 };
 
 function Prayers({ onClose }) {
@@ -42,464 +42,99 @@ function Prayers({ onClose }) {
     // Aliases preserve legacy IDs in the catalog but are not separate visible prayers.
     // Archived records are incomplete texts for which the audit supplied no verified completion.
     const visiblePrayers = prayers.filter((prayer) => !prayer.canonicalId && !prayer.archived);
-    const sourceTypeLabels = {
-        quran: 'Kur’an',
-        hadith: 'Hadis',
-        liturgical: 'İbadet / fıkıh formu',
-        general: 'Genel dua (kanonik kaynak doğrulanmadı)'
-    };
+    const countLabel = (n) => `${n} ${t('prayers.prayer')}`;
 
-    // İslami renk paleti
-    const primaryGreen = 'var(--primary)';
-    const lightGreen = 'var(--surface-container)';
-    const goldAccent = 'var(--tertiary)';
-    const textOnLight = 'var(--text-primary)';
-    const textOnLightMuted = 'var(--text-secondary)';
-
-    // Category view
-    if (!selectedCategory) {
+    // Each view gets its own key so its scroll container remounts at the top.
+    if (selectedPrayer) {
         return (
-            <div style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'var(--bg-gradient-start, var(--surface-page))',
-                backgroundImage: 'radial-gradient(at 0% 0%, var(--ambient-teal, rgba(15, 118, 110, 0.15)) 0px, transparent 50%), radial-gradient(at 100% 0%, var(--ambient-gold, rgba(180, 83, 9, 0.1)) 0px, transparent 50%), linear-gradient(135deg, var(--bg-gradient-start, var(--surface-page)) 0%, var(--bg-gradient-end, var(--surface-page)) 100%)',
-                zIndex: 1000,
-                overflowY: 'auto',
-                padding: '20px',
-                paddingBottom: '100px'
-            }}>
-                <div style={{ margin: '-20px -20px 16px' }}>
-                    <PageHeader
-                        title={t('prayers.title')}
-                        subtitle={`${prayerCategories.length} ${t('prayers.categories')}, ${visiblePrayers.length} ${t('prayers.prayer')}`}
-                        onBack={onClose}
-                    />
-                </div>
+            <div key={`prayer-${selectedPrayer.id}`} className="hz-root dua-screen">
+                <PageHeader title={t('prayers.prayerDetail')} onBack={() => setSelectedPrayer(null)} />
+                <div className="dua-body">
+                    <article className="hz-card dua-detail">
+                        <h2 className="dua-detail__title">{t(selectedPrayer.title)}</h2>
+                        <p className="dua-detail__arabic" lang="ar">{selectedPrayer.arabic}</p>
 
-                {/* İslami Motif Banner */}
-                <div style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    backdropFilter: 'blur(10px)',
-                    borderRadius: '16px',
-                    padding: '20px',
-                    marginBottom: '24px',
-                    textAlign: 'center',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    position: 'relative',
-                    overflow: 'hidden'
-                }}>
-                    {/* Geometrik desen */}
-                    <div style={{
-                        position: 'absolute',
-                        top: 0, left: 0, right: 0, bottom: 0,
-                        opacity: 0.05,
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30z' fill='white' fill-opacity='1'/%3E%3C/svg%3E")`,
-                        backgroundSize: '30px 30px'
-                    }} />
-                    <p style={{ 
-                        margin: 0, 
-                        color: 'var(--text-primary)', 
-                        fontSize: '16px', 
-                        fontStyle: 'italic',
-                        position: 'relative',
-                        zIndex: 1
-                    }}>
-                        "{t('prayers.quote')}"
-                    </p>
-                    <p style={{ 
-                        margin: '8px 0 0', 
-                        color: 'var(--text-secondary)', 
-                        fontSize: '12px',
-                        position: 'relative',
-                        zIndex: 1
-                    }}>
-                        — {t('prayers.quoteAuthor')}
-                    </p>
-                </div>
+                        {/* Transliteration: only reviewed, full text is shown. */}
+                        {selectedPrayer.transliteration && (
+                            <section className="dua-detail__section">
+                                <h3 className="hz-overline">{t('prayers.pronunciation')}</h3>
+                                <p className="hz-body dua-detail__reading">{selectedPrayer.transliteration}</p>
+                            </section>
+                        )}
 
-                {/* Categories Grid - 2 columns */}
-                <div style={{
-                    display: 'grid',
-                    gap: '12px',
-                    gridTemplateColumns: 'repeat(2, 1fr)'
-                }}>
-                    {prayerCategories.map((category) => {
-                        const categoryPrayers = visiblePrayers.filter((prayer) => prayer.category === category.id);
-                        return (
-                            <div
-                                key={category.id}
-                                onClick={() => setSelectedCategory(category.id)}
-                                style={{
-                                    background: 'var(--glass-bg)',
-                                    backdropFilter: 'blur(20px)',
-                                    borderRadius: '16px',
-                                    padding: '16px',
-                                    cursor: 'pointer',
-                                    border: '1px solid var(--glass-border)',
-                                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-                                    transition: 'transform 0.2s',
-                                    position: 'relative',
-                                    overflow: 'hidden'
-                                }}
-                            >
-                                {/* Köşe süslemesi */}
-                                <div style={{
-                                    position: 'absolute',
-                                    top: '-10px',
-                                    right: '-10px',
-                                    width: '40px',
-                                    height: '40px',
-                                    background: `linear-gradient(135deg, ${lightGreen}20, ${goldAccent}20)`,
-                                    borderRadius: '50%'
-                                }} />
-                                
-                                <div style={{ marginBottom: '8px', color: primaryGreen }}>
-                                    <IconMapper iconName={category.icon} size={32} strokeWidth={1.5} />
-                                </div>
-                                <h3 style={{ 
-                                    margin: '0 0 4px 0', 
-                                    fontSize: '14px', 
-                                    fontWeight: '700', 
-                                    color: primaryGreen,
-                                    lineHeight: '1.3'
-                                }}>
-                                    {t(category.name)}
-                                </h3>
-                                <p style={{ 
-                                    margin: 0, 
-                                    fontSize: '11px', 
-                                    color: textOnLightMuted,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '4px'
-                                }}>
-                                    <BookOpen size={12} /> {categoryPrayers.length} {t('prayers.prayer')}
-                                </p>
-                            </div>
-                        );
-                    })}
+                        <section className="dua-detail__section">
+                            <h3 className="hz-overline">{t('prayers.meaning')}</h3>
+                            <p className="hz-body">{t(selectedPrayer.meaning)}</p>
+                        </section>
+
+                        {/* Source status: never imply that a general wording is a canonical report. */}
+                        <p className="hz-label dua-detail__source">
+                            <strong>{t('prayers.sourceStatus', 'Kaynak durumu')}: </strong>
+                            {t(`prayers.sourceTypes.${selectedPrayer.sourceType}`)}
+                            {selectedPrayer.citation ? ` — ${selectedPrayer.citation}` : ''}
+                        </p>
+                    </article>
                 </div>
             </div>
         );
     }
 
-    // Prayer list view
-    if (selectedCategory && !selectedPrayer) {
+    if (selectedCategory) {
         const category = prayerCategories.find(c => c.id === selectedCategory);
         const categoryPrayers = visiblePrayers.filter((prayer) => prayer.category === selectedCategory);
 
         return (
-            <div style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'var(--bg-gradient-start, var(--surface-page))',
-                backgroundImage: 'radial-gradient(at 0% 0%, var(--ambient-teal, rgba(15, 118, 110, 0.15)) 0px, transparent 50%), radial-gradient(at 100% 0%, var(--ambient-gold, rgba(180, 83, 9, 0.1)) 0px, transparent 50%), linear-gradient(135deg, var(--bg-gradient-start, var(--surface-page)) 0%, var(--bg-gradient-end, var(--surface-page)) 100%)',
-                zIndex: 1000,
-                overflowY: 'auto',
-                padding: '20px',
-                paddingBottom: '100px'
-            }}>
-                {/* Header */}
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginBottom: '20px',
-                    gap: '12px'
-                }}>
-                    <button
-                        onClick={() => setSelectedCategory(null)}
-                        style={{
-                            background: 'var(--surface-container-high)',
-                            backdropFilter: 'blur(10px)',
-                            border: 'none',
-                            borderRadius: '50%',
-                            width: '40px',
-                            height: '40px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            color: 'var(--text-primary)'
-                        }}
-                    >
-                        <ChevronLeft size={24} />
-                    </button>
-                    <div style={{ color: 'var(--text-primary)' }}>
-                        <IconMapper iconName={category.icon} size={32} strokeWidth={1.5} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <h2 style={{ margin: 0, fontSize: '20px', color: 'var(--text-primary)', fontWeight: '700' }}>
-                            {t(category.name)}
-                        </h2>
-                        <p style={{ margin: '4px 0 0', fontSize: '12px', color: 'var(--text-secondary)' }}>
-                            {categoryPrayers.length} {t('prayers.prayer')}
-                        </p>
-                    </div>
-                </div>
-
-                {/* Prayer List */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {categoryPrayers.map((prayer) => (
-                        <div
-                            key={prayer.id}
-                            onClick={() => setSelectedPrayer(prayer)}
-                            style={{
-                                background: 'var(--glass-bg)',
-                                backdropFilter: 'blur(20px)',
-                                borderRadius: '14px',
-                                padding: '14px 16px',
-                                cursor: 'pointer',
-                                border: '1px solid var(--glass-border)',
-                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '12px'
-                            }}
-                        >
-                            <div style={{
-                                width: '36px',
-                                height: '36px',
-                                background: `linear-gradient(135deg, ${lightGreen}, ${primaryGreen})`,
-                                borderRadius: '10px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                color: 'var(--text-primary)',
-                                fontWeight: '700',
-                                fontSize: '14px',
-                                flexShrink: 0
-                            }}>
-                                {prayer.id}
-                            </div>
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                                <h3 style={{
-                                    margin: 0,
-                                    fontSize: '15px',
-                                    color: textOnLight,
-                                    fontWeight: '600'
-                                }}>
-                                    {t(prayer.title)}
-                                </h3>
-                                <p style={{
-                                    margin: '4px 0 0',
-                                    fontSize: '12px',
-                                    color: textOnLightMuted,
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
-                                    whiteSpace: 'nowrap'
-                                }}>
-                                    {t(prayer.meaning)}
-                                </p>
-                            </div>
-                            <ChevronLeft
-                                size={18}
-                                color="var(--text-on-light-muted)"
-                                style={{ transform: 'rotate(180deg)', flexShrink: 0 }}
-                            />
-                        </div>
-                    ))}
-                </div>
-            </div>
-        );
-    }
-
-    // Prayer detail view
-    if (selectedPrayer) {
-        return (
-            <div style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'var(--bg-gradient-start, var(--surface-page))',
-                backgroundImage: 'radial-gradient(at 0% 0%, var(--ambient-teal, rgba(15, 118, 110, 0.15)) 0px, transparent 50%), radial-gradient(at 100% 0%, var(--ambient-gold, rgba(180, 83, 9, 0.1)) 0px, transparent 50%), linear-gradient(135deg, var(--bg-gradient-start, var(--surface-page)) 0%, var(--bg-gradient-end, var(--surface-page)) 100%)',
-                zIndex: 1000,
-                overflowY: 'auto',
-                padding: '20px',
-                paddingBottom: '100px'
-            }}>
-                {/* Header */}
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginBottom: '20px',
-                    gap: '12px'
-                }}>
-                    <button
-                        onClick={() => setSelectedPrayer(null)}
-                        style={{
-                            background: 'var(--surface-container-high)',
-                            backdropFilter: 'blur(10px)',
-                            border: 'none',
-                            borderRadius: '50%',
-                            width: '40px',
-                            height: '40px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer',
-                            color: 'var(--text-primary)'
-                        }}
-                    >
-                        <ChevronLeft size={24} />
-                    </button>
-                    <h2 style={{ margin: 0, fontSize: '18px', color: 'var(--text-primary)', flex: 1, fontWeight: '600' }}>
-                        {t('prayers.prayerDetail')}
-                    </h2>
-                </div>
-
-                {/* Prayer Content Card */}
-                <div style={{
-                    background: 'var(--surface-container-lowest)',
-                    backdropFilter: 'blur(20px)',
-                    borderRadius: '20px',
-                    padding: '24px',
-                    border: '1px solid var(--outline-variant)',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
-                    position: 'relative',
-                    overflow: 'hidden'
-                }}>
-                    {/* İslami geometrik köşe süsü */}
-                    <div style={{
-                        position: 'absolute',
-                        top: 0,
-                        right: 0,
-                        width: '80px',
-                        height: '80px',
-                        background: `linear-gradient(135deg, ${lightGreen}15, ${goldAccent}15)`,
-                        borderBottomLeftRadius: '100%'
-                    }} />
-                    <div style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        width: '60px',
-                        height: '60px',
-                        background: `linear-gradient(315deg, ${lightGreen}10, ${goldAccent}10)`,
-                        borderTopRightRadius: '100%'
-                    }} />
-
-                    {/* Title */}
-                    <h1 style={{
-                        margin: '0 0 20px 0',
-                        fontSize: '22px',
-                        color: primaryGreen,
-                        fontWeight: '700',
-                        position: 'relative',
-                        zIndex: 1
-                    }}>
-                        {t(selectedPrayer.title)}
-                    </h1>
-
-                    {/* Arabic Text */}
-                    <div style={{
-                        background: `linear-gradient(135deg, ${lightGreen}10, ${primaryGreen}10)`,
-                        borderRadius: '16px',
-                        padding: '24px',
-                        marginBottom: '16px',
-                        textAlign: 'center',
-                        border: `1px solid ${lightGreen}30`
-                    }}>
-                        <p style={{
-                            margin: 0,
-                            fontSize: '24px',
-                            fontFamily: "var(--arabic-font-family)",
-                            color: textOnLight,
-                            lineHeight: '2',
-                            fontWeight: '500',
-                            direction: 'rtl'
-                        }}>
-                            {selectedPrayer.arabic}
-                        </p>
-                    </div>
-
-                    {/* Transliteration: only reviewed, full text is shown. */}
-                    {selectedPrayer.transliteration && (
-                        <div style={{
-                            background: `${goldAccent}10`,
-                            borderRadius: '14px',
-                            padding: '16px 20px',
-                            marginBottom: '16px',
-                            borderLeft: `4px solid ${goldAccent}`
-                        }}>
-                            <h3 style={{
-                                margin: '0 0 8px 0',
-                                fontSize: '11px',
-                                color: goldAccent,
-                                fontWeight: '700',
-                                textTransform: 'uppercase',
-                                letterSpacing: '1px'
-                            }}>
-                                {t('prayers.pronunciation')}
-                            </h3>
-                            <p style={{
-                                margin: 0,
-                                fontSize: '15px',
-                                color: textOnLightMuted,
-                                lineHeight: '1.6',
-                                fontStyle: 'italic'
-                            }}>
-                                {selectedPrayer.transliteration}
-                            </p>
-                        </div>
-                    )}
-
-                    {/* Source status: never imply that a general wording is a canonical report. */}
-                    <div style={{
-                        marginBottom: '16px',
-                        padding: '12px 16px',
-                        borderRadius: '12px',
-                        background: 'var(--surface-container-high)',
-                        color: textOnLightMuted,
-                        fontSize: '13px',
-                        lineHeight: '1.5'
-                    }}>
-                        <strong style={{ color: textOnLight }}>Kaynak durumu: </strong>
-                        {sourceTypeLabels[selectedPrayer.sourceType]}
-                        {selectedPrayer.citation ? ` — ${selectedPrayer.citation}` : ''}
-                    </div>
-
-                    {/* Meaning */}
-                    <div style={{
-                        background: `${primaryGreen}08`,
-                        borderRadius: '14px',
-                        padding: '16px 20px',
-                        borderLeft: `4px solid ${primaryGreen}`
-                    }}>
-                        <h3 style={{
-                            margin: '0 0 8px 0',
-                            fontSize: '11px',
-                            color: primaryGreen,
-                            fontWeight: '700',
-                            textTransform: 'uppercase',
-                            letterSpacing: '1px'
-                        }}>
-                            {t('prayers.meaning')}
-                        </h3>
-                        <p style={{
-                            margin: 0,
-                            fontSize: '15px',
-                            color: textOnLightMuted,
-                            lineHeight: '1.7'
-                        }}>
-                            {t(selectedPrayer.meaning)}
-                        </p>
+            <div key={`category-${selectedCategory}`} className="hz-root dua-screen">
+                <PageHeader
+                    title={t(category.name)}
+                    subtitle={countLabel(categoryPrayers.length)}
+                    onBack={() => setSelectedCategory(null)}
+                />
+                <div className="dua-body">
+                    <div className="hz-card dua-list">
+                        {categoryPrayers.map((prayer) => (
+                            <button key={prayer.id} type="button" className="dua-item" onClick={() => setSelectedPrayer(prayer)}>
+                                <span className="dua-item__text">
+                                    <span className="dua-item__title">{t(prayer.title)}</span>
+                                    <span className="dua-item__meaning">{t(prayer.meaning)}</span>
+                                </span>
+                                <ChevronRight className="dua-item__chevron" size={18} strokeWidth={1.75} aria-hidden="true" />
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>
         );
     }
 
-    return null;
+    return (
+        <div key="categories" className="hz-root dua-screen">
+            <PageHeader
+                title={t('prayers.title')}
+                subtitle={`${prayerCategories.length} ${t('prayers.categories')}, ${countLabel(visiblePrayers.length)}`}
+                onBack={onClose}
+            />
+            <div className="dua-body">
+                <figure className="hz-card dua-quote">
+                    <blockquote className="dua-quote__text">{t('prayers.quote')}</blockquote>
+                    <figcaption className="hz-ref">{t('prayers.quoteAuthor')}</figcaption>
+                </figure>
+
+                <div className="dua-grid">
+                    {prayerCategories.map((category) => {
+                        const count = visiblePrayers.filter((prayer) => prayer.category === category.id).length;
+                        return (
+                            <button key={category.id} type="button" className="hz-card dua-cat" onClick={() => setSelectedCategory(category.id)}>
+                                <span className="hz-row__icon"><CategoryIcon iconName={category.icon} /></span>
+                                <span className="dua-cat__name">{t(category.name)}</span>
+                                <span className="dua-cat__meta">{countLabel(count)}</span>
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default Prayers;
-

@@ -5,7 +5,7 @@
 
 /* PageHeader */
 .hz-header { display: flex; align-items: center; gap: var(--space-3); align-self: stretch; box-sizing: border-box; width: 100%; padding: var(--space-3) var(--space-4); background: var(--paper); text-align: left; }
-.hz-header__title { flex: 1; min-width: 0; margin: 0; text-align: left; font-family: var(--font-display); font-size: 24px; line-height: 30px; font-weight: 600; color: var(--ink); }
+.hz-header__title { flex: 1; min-width: 0; margin: 0; text-align: left; font-family: var(--font-display); font-size: 24px; line-height: 30px; font-weight: 600; letter-spacing: normal; color: var(--ink); }
 .hz-header__sub { display: block; font-family: var(--font-sans); font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ink-muted); }
 .hz-iconbtn { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius-full); border: 1px solid var(--line); background: var(--paper-raised); color: var(--ink); cursor: pointer; }
 .hz-iconbtn:focus-visible, .hz-btn:focus-visible, .hz-row:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }

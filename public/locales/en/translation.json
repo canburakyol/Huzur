@@ -478,6 +478,13 @@
       "loadFailed": "Prayer times could not be loaded. Please check your internet connection.",
       "fetchError": "An error occurred while loading prayer times. Please try again.",
       "timeout": "Connection timed out."
+    },
+    "sourceStatus": "Source status",
+    "sourceTypes": {
+      "quran": "Qur’an",
+      "hadith": "Hadith",
+      "liturgical": "Worship / fiqh form",
+      "general": "General supplication (no verified canonical source)"
     }
   },
   "assistant": {

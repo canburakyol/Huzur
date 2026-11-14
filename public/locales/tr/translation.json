@@ -568,6 +568,13 @@
       "loadFailed": "Namaz vakitleri yüklenemedi. Lütfen internet bağlantınızı kontrol edin.",
       "fetchError": "Namaz vakitleri yüklenirken bir hata oluştu. Lütfen tekrar deneyin.",
       "timeout": "Bağlantı zaman aşımına uğradı."
+    },
+    "sourceStatus": "Kaynak durumu",
+    "sourceTypes": {
+      "quran": "Kur’an",
+      "hadith": "Hadis",
+      "liturgical": "İbadet / fıkıh formu",
+      "general": "Genel dua (kanonik kaynak doğrulanmadı)"
     }
   },
   "assistant": {

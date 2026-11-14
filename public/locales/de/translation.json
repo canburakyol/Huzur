@@ -478,6 +478,13 @@
       "loadFailed": "Gebetszeiten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Internetverbindung.",
       "fetchError": "Beim Laden der Gebetszeiten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
       "timeout": "Zeitüberschreitung bei der Verbindung."
+    },
+    "sourceStatus": "Quellenstatus",
+    "sourceTypes": {
+      "quran": "Koran",
+      "hadith": "Hadith",
+      "liturgical": "Gebets- / Fiqh-Form",
+      "general": "Allgemeines Bittgebet (kanonische Quelle nicht belegt)"
     }
   },
   "assistant": {
