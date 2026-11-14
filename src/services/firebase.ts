@@ -202,7 +202,9 @@ const ensureApp = async (): Promise<FirebaseApp> => {
   return _app;
 };
 
-const getNativePrivacySdkPlugin = async (): Promise<NativePrivacySdkPlugin | null> => {
+// Capacitor plugin proxies answer every property, including "then"; returning one from an async
+// function makes await call proxy.then() and reject. Wrap it so it is never treated as a thenable.
+const getNativePrivacySdkPlugin = async (): Promise<{ plugin: NativePrivacySdkPlugin } | null> => {
   if (!isNativeRuntime() || typeof window === "undefined") {
     return null;
   }
@@ -216,12 +218,12 @@ const getNativePrivacySdkPlugin = async (): Promise<NativePrivacySdkPlugin | nul
   }).Capacitor;
 
   if (capacitor?.Plugins?.AppCheck) {
-    return capacitor.Plugins.AppCheck;
+    return { plugin: capacitor.Plugins.AppCheck };
   }
 
   try {
     const { AppCheck } = await import("../plugins/AppCheckPlugin");
-    return AppCheck as NativePrivacySdkPlugin;
+    return { plugin: AppCheck as NativePrivacySdkPlugin };
   } catch (error) {
     logger.warn("[Firebase] Native AppCheck plugin registration unavailable", error);
     return null;
@@ -240,7 +242,7 @@ export const initializeTelemetryNativeSdks = async (): Promise<NativePrivacySdkI
     return { success: true, platform: Capacitor.getPlatform(), telemetryEnabled };
   }
 
-  const plugin = await getNativePrivacySdkPlugin();
+  const plugin = (await getNativePrivacySdkPlugin())?.plugin;
   if (typeof plugin?.initializePrivacySdks !== "function") {
     return { success: false, skipped: true, platform: Capacitor.getPlatform(), telemetryEnabled };
   }

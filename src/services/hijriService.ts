@@ -34,23 +34,19 @@ type FastingDay = {
 
 export const gregorianToHijri = (date = new Date()): HijriDate => {
     const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
-
-    let jd: number;
-    if (month > 1) {
-        jd = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 2)) + day - 1524.5;
-    } else {
-        const adjustedYear = year - 1;
-        const adjustedMonth = month + 13;
-        jd = Math.floor(365.25 * (adjustedYear + 4716)) + Math.floor(30.6001 * adjustedMonth) + day - 1524.5;
+    // Julian Day Number (Meeus): January/February count as months 13/14 of the previous year.
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    if (month < 3) {
+        year -= 1;
+        month += 12;
     }
-
-    const a = Math.floor((year - 100) / 100);
+    const a = Math.floor(year / 100);
     const b = 2 - a + Math.floor(a / 4);
-    jd = jd + b + 0.5;
+    const jd = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + b - 1524;
 
-    const l = Math.floor(jd - 1948439.5) + 10632;
+    // Tabular (civil) Islamic calendar from the JDN.
+    const l = jd - 1948440 + 10632;
     const n = Math.floor((l - 1) / 10631);
     const l2 = l - 10631 * n + 354;
     const j = Math.floor((10985 - l2) / 5316) * Math.floor((50 * l2) / 17719) + Math.floor(l2 / 5670) * Math.floor((43 * l2) / 15238);

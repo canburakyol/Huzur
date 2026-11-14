@@ -1,6 +1,9 @@
 import { memo, useEffect, useState } from 'react';
 import { CloudSun, Flame, Moon, Sun, SunDim, Sunrise, Sunset, Check, MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { gregorianToHijri, HIJRI_MONTHS } from '../services/hijriService';
+
+const HIJRI_MONTH_KEYS = ['muharram', 'safar', 'rabi1', 'rabi2', 'jumada1', 'jumada2', 'rajab', 'shaban', 'ramadan', 'shawwal', 'dhul_qada', 'dhul_hijja'];
 
 const PRAYERS = [
   { key: 'Fajr', nameKey: 'prayer.fajr' },
@@ -333,11 +336,18 @@ const PremiumHomeHero = memo(({
   const hijriLabel = (() => {
     try {
       const locale = String(i18n?.language || 'tr').split('-')[0];
-      return new Intl.DateTimeFormat(`${locale}-u-ca-islamic`, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      }).format(new Date());
+      // Some Android WebViews compute the islamic calendar but lack its month names and print
+      // Gregorian ones ("MÖ 05 Haziran 1448"). Read the numbers only and name the month ourselves.
+      const formatter = new Intl.DateTimeFormat('en-u-ca-islamic', { day: 'numeric', month: 'numeric', year: 'numeric' });
+      const parts = Object.fromEntries(formatter.formatToParts(new Date()).map((p) => [p.type, p.value]));
+      const fromIntl = formatter.resolvedOptions().calendar.startsWith('islamic')
+        ? { day: Number(parts.day), month: Number(parts.month), year: parseInt(parts.year, 10) }
+        : null;
+      const hijri = fromIntl && fromIntl.month >= 1 && fromIntl.month <= 12 ? fromIntl : gregorianToHijri(new Date());
+      const monthName = locale === 'tr'
+        ? HIJRI_MONTHS[hijri.month - 1]
+        : t(`calendar.hijriMonths.${HIJRI_MONTH_KEYS[hijri.month - 1]}`, HIJRI_MONTHS[hijri.month - 1]);
+      return `${hijri.day} ${monthName} ${hijri.year}`;
     } catch {
       return '';
     }
