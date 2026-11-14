@@ -59,10 +59,11 @@ const matchesPackage = (pkg, recommendedPackage) => {
   const title = String(pkg?.product?.title || '').toLowerCase();
 
   if (normalizedRecommendation === 'yearly') {
-    return identifier.includes('year') || title.includes('yil') || title.includes('year');
+    // RevenueCat names the yearly package "$rc_annual"; Turkish titles say "Yıllık" with a dotless ı.
+    return /year|annual/.test(identifier) || /yıl|yil|year|annual/.test(title);
   }
   if (normalizedRecommendation === 'monthly') {
-    return identifier.includes('month') || title.includes('ay') || title.includes('month');
+    return /month/.test(identifier) || /aylık|aylik|month/.test(title);
   }
   return false;
 };
@@ -103,7 +104,7 @@ const buildReferralCopy = (proDetails, referralProgress) => {
       isReferralPending: true,
       badge: `${completedSteps}/${totalSteps} tamamlandı`,
       title: `${totalSteps - completedSteps} adım kaldı`,
-      subtitle: `Davet ödülü için ${totalSteps - completedSteps} adım daha var. İstersen Pro'yu abonelikle hemen acabilirsin.`,
+      subtitle: `Davet ödülü için ${totalSteps - completedSteps} adım daha var. İstersen Pro'yu abonelikle hemen açabilirsin.`,
       cta: null
     };
   }

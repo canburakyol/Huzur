@@ -5,13 +5,7 @@ import SettingsActionRow from './SettingsActionRow';
 import SettingsToggle from './SettingsToggle';
 
 function getLanguageBadge(languageCode) {
-  const normalizedCode = String(languageCode || '').toUpperCase();
-
-  if (normalizedCode === 'TR' || normalizedCode === 'EN' || normalizedCode === 'AR') {
-    return normalizedCode;
-  }
-
-  return 'GL';
+  return String(languageCode || '').slice(0, 2).toUpperCase() || 'GL';
 }
 
 function SettingsBasicsSection({

@@ -1,3 +1,4 @@
+import { version } from '../package.json';
 /**
  * Application Constants
  * Centralized configuration values to replace magic numbers throughout the codebase
@@ -113,7 +114,8 @@ export const DEFAULT_LOCATION = {
 /**
  * Application Version
  */
-export const APP_VERSION = '18.2.13';
+// Single source of truth: the version in package.json (bumped on every release).
+export const APP_VERSION: string = version;
 
 // ============================================================
 // PRO/PREMIUM CONSTANTS
