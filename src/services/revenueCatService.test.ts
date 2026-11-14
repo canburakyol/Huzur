@@ -147,6 +147,32 @@ describe('revenueCatService', () => {
     expect(result).toBe(true);
   });
 
+  it('keeps a verified RevenueCat purchase active when the backend is unreachable', async () => {
+    subscriptionSyncMock.syncProStatusWithRevenueCat.mockResolvedValue(null);
+    const { purchasePackage } = await importService();
+
+    const result = await purchasePackage({ identifier: 'monthly' });
+
+    expect(result).toBe(true);
+    expect(proMock.setProStatus).toHaveBeenCalledWith(
+      true,
+      '2099-01-01T00:00:00.000Z',
+      'revenuecat',
+      expect.objectContaining({ reason: 'server_sync_unavailable' })
+    );
+  }, 10000);
+
+  it('does not grant Pro from an inactive entitlement when the backend is unreachable', async () => {
+    subscriptionSyncMock.syncProStatusWithRevenueCat.mockResolvedValue(null);
+    const { initializeRevenueCat, checkSubscriptionStatus } = await importService();
+
+    await initializeRevenueCat();
+    const result = await checkSubscriptionStatus();
+
+    expect(result).toBe(false);
+    expect(proMock.setProStatus).not.toHaveBeenCalledWith(true, expect.anything(), expect.anything(), expect.anything());
+  }, 15000);
+
   it('refreshes server status when RevenueCat listener receives inactive entitlement data', async () => {
     const { initializeRevenueCat } = await importService();
 

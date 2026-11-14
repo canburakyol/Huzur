@@ -56,7 +56,7 @@ const hasActiveProEntitlement = (customerInfo: CustomerInfo): boolean => {
   return active;
 };
 
-const syncVerifiedProStatus = async (context: string): Promise<boolean> => {
+const syncVerifiedProStatus = async (context: string, customerInfo: CustomerInfo | null = null): Promise<boolean> => {
   let lastSyncError: unknown = null;
 
   for (let attempt = 1; attempt <= 3; attempt += 1) {
@@ -67,21 +67,23 @@ const syncVerifiedProStatus = async (context: string): Promise<boolean> => {
       }
     } catch (syncError) {
       lastSyncError = syncError;
-      logger.warn(`[RevenueCat] Server sync attempt ${attempt} failed during ${context}`, syncError);
-      if (attempt < 3) {
-        await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
-      }
+    }
+    logger.warn(`[RevenueCat] Server sync attempt ${attempt} failed during ${context}`, lastSyncError);
+    if (attempt < 3) {
+      await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
     }
   }
 
-  if (lastSyncError) {
-    logger.warn(`[RevenueCat] Server sync failed during ${context}`, lastSyncError);
+  // An unreachable backend is not a verdict: never take Pro away from a payer because our server is down.
+  if (!customerInfo) {
+    return false;
   }
-  await setProStatus(false, null, "revenuecat_server_sync_failed", {
-    verificationState: "negative",
-    reason: "server_sync_failed",
+  const entitlement = customerInfo.entitlements?.active?.[ENTITLEMENT_ID];
+  await setProStatus(Boolean(entitlement), entitlement?.expirationDate ?? null, "revenuecat", {
+    verificationState: entitlement ? "client_entitlement" : "negative",
+    reason: "server_sync_unavailable",
   });
-  return false;
+  return Boolean(entitlement);
 };
 
 const ensureRevenueCatAppUserId = async (): Promise<string | null> => {
@@ -184,7 +186,7 @@ export const initializeRevenueCat = async (): Promise<void> => {
     if (!customerInfoListenerRegistered) {
       Purchases.addCustomerInfoUpdateListener((info: CustomerInfo) => {
         hasActiveProEntitlement(info);
-        void syncVerifiedProStatus("customer_info_listener");
+        void syncVerifiedProStatus("customer_info_listener", info);
       });
       customerInfoListenerRegistered = true;
     }
@@ -203,10 +205,8 @@ export const checkSubscriptionStatus = async (): Promise<boolean> => {
       return false;
     }
     const { customerInfo } = await Purchases.getCustomerInfo();
-    if (!hasActiveProEntitlement(customerInfo)) {
-      return syncVerifiedProStatus("subscription_check");
-    }
-    return syncVerifiedProStatus("subscription_check");
+    hasActiveProEntitlement(customerInfo);
+    return syncVerifiedProStatus("subscription_check", customerInfo);
   } catch (error) {
     logger.error("[RevenueCat] Error checking subscription");
     crashlyticsReporter.logExceptionWithContext(error as Error, buildCrashContext("revenuecat_check_subscription"));
@@ -228,7 +228,7 @@ export const purchasePackage = async (packageToPurchase: { identifier: string })
       return false;
     }
 
-    return syncVerifiedProStatus("purchase");
+    return syncVerifiedProStatus("purchase", customerInfo);
   } catch (error) {
     if ((error as { userCancelled?: boolean }).userCancelled) {
       logger.log("User cancelled purchase");
@@ -301,7 +301,7 @@ export const restorePurchases = async (): Promise<boolean> => {
       return false;
     }
 
-    return syncVerifiedProStatus("restore");
+    return syncVerifiedProStatus("restore", customerInfo);
   } catch (error) {
     logger.error("[RevenueCat] Error restoring purchases");
     crashlyticsReporter.logExceptionWithContext(error as Error, buildCrashContext("revenuecat_restore"));
