@@ -84,12 +84,10 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
   const primaryGoalConfig = getPrimaryGoalConfig(primaryGoal);
   const goalLabel = t(`primaryGoal.${primaryGoalConfig.id}.label`, primaryGoalConfig.label);
 
+  // Follow the store both ways so the Android back button (which clears externalOpen) closes the menu.
   useEffect(() => {
-    if (externalOpen) {
-      const timer = setTimeout(() => setIsOpen(true), 0);
-      return () => clearTimeout(timer);
-    }
-    return undefined;
+    const timer = setTimeout(() => setIsOpen(Boolean(externalOpen)), 0);
+    return () => clearTimeout(timer);
   }, [externalOpen]);
 
   const handleClose = () => {

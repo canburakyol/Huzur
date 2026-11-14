@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
-import { useBackButton } from '../../../hooks/useBackButton';
 import HatimList from './HatimList';
 import HatimDetail from './HatimDetail';
 import DuaList from './DuaList';
@@ -66,18 +65,6 @@ const SocialDashboard = ({ onClose }) => {
       setIsSharing(false);
     }
   };
-
-  // Handle back button
-  useBackButton({
-    activeFeature: true,
-    onBack: () => {
-      if (selectedHatimId) {
-        setSelectedHatimId(null);
-      } else {
-        onClose();
-      }
-    }
-  });
 
   return (
     <div className="education-container social-sanctuary">

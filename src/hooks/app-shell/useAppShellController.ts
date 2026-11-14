@@ -51,9 +51,11 @@ export function useAppShellController() {
 
   useBackButton({
     showMoodSelector: navigation.showMoodSelector,
+    showHamburgerMenu: navigation.showHamburgerMenu,
     activeFeature: navigation.activeFeature,
     activeTab: navigation.activeTab,
     setShowMoodSelector: navigation.setShowMoodSelector,
+    setShowHamburgerMenu: navigation.setShowHamburgerMenu,
     setActiveFeature: navigation.setActiveFeature,
     setActiveTab: navigation.setActiveTab,
   });

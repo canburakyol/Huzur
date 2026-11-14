@@ -3,28 +3,35 @@ import { App as CapacitorApp } from "@capacitor/app";
 
 interface UseBackButtonOptions {
   showMoodSelector: boolean;
+  showHamburgerMenu?: boolean;
   activeFeature: string | null;
   activeTab: string;
   setShowMoodSelector: (show: boolean) => void;
+  setShowHamburgerMenu?: (show: boolean) => void;
   setActiveFeature: (feature: string | null) => void;
   setActiveTab: (tab: string) => void;
 }
 
 export const useBackButton = ({
   showMoodSelector,
+  showHamburgerMenu = false,
   activeFeature,
   activeTab,
   setShowMoodSelector,
+  setShowHamburgerMenu,
   setActiveFeature,
   setActiveTab,
 }: UseBackButtonOptions): void => {
   useEffect(() => {
     let backButtonListener: { remove: () => void } | undefined;
+    let disposed = false;
 
     const setupBackButton = async () => {
-      backButtonListener = await CapacitorApp.addListener("backButton", () => {
+      const listener = await CapacitorApp.addListener("backButton", () => {
         if (showMoodSelector) {
           setShowMoodSelector(false);
+        } else if (showHamburgerMenu && setShowHamburgerMenu) {
+          setShowHamburgerMenu(false);
         } else if (activeFeature) {
           setActiveFeature(null);
         } else if (activeTab !== "home") {
@@ -33,16 +40,21 @@ export const useBackButton = ({
           CapacitorApp.exitApp();
         }
       });
-    };
-
-    setupBackButton();
-
-    return () => {
-      if (backButtonListener) {
-        backButtonListener.remove();
+      // The effect may have been cleaned up while addListener was pending; never leave a stale listener behind.
+      if (disposed) {
+        listener.remove();
+      } else {
+        backButtonListener = listener;
       }
     };
-  }, [activeFeature, activeTab, showMoodSelector, setShowMoodSelector, setActiveFeature, setActiveTab]);
+
+    void setupBackButton();
+
+    return () => {
+      disposed = true;
+      backButtonListener?.remove();
+    };
+  }, [activeFeature, activeTab, showMoodSelector, showHamburgerMenu, setShowMoodSelector, setShowHamburgerMenu, setActiveFeature, setActiveTab]);
 };
 
 export default useBackButton;
