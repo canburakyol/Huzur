@@ -46,8 +46,8 @@ android {
         applicationId "com.huzurapp.android"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 39
-        versionName "18.3.0"
+        versionCode 40
+        versionName "18.4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "boolean", "FIREBASE_APPCHECK_DISABLE", "${readRootEnvValue('.env.android-debug.local', 'VITE_FIREBASE_APPCHECK_DISABLE') == 'true'}"
         // AdMob App ID .env'den okunur, yoksa mevcut prod ID kullanılır (crash önleme).
