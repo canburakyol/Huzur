@@ -9,19 +9,19 @@ const ASMA_AL_HUSNA_API = 'https://api.aladhan.com/v1/asmaAlHusna';
 const HADITH_API_EN = 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/eng-nawawi.min.json';
 
 const DAILY_VERSES = [
-    { reference: 'Bakara, 153', arabic: 'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ', translation: 'Allah sabredenlerle beraberdir.', image: '/stories/quran-1.jpg' },
-    { reference: 'Ra\'d, 28', arabic: 'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ', translation: 'Kalpler ancak Allah\'ı anmakla huzur bulur.', image: '/stories/quran-2.jpg' },
-    { reference: 'İnşirah, 5-6', arabic: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا', translation: 'Şüphesiz güçlükle beraber bir kolaylık vardır.', image: '/stories/quran.png' },
-    { reference: 'Taha, 114', arabic: 'رَّبِّ زِدْنِي عِلْمًا', translation: 'Rabbim! İlmimi artır.', image: '/stories/quran-1.jpg' },
-    { reference: 'Talak, 3', arabic: 'وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ', translation: 'Kim Allah\'a tevekkül ederse O, ona yeter.', image: '/stories/quran-2.jpg' }
+    { reference: 'Bakara, 153', arabic: 'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ', translation: 'Allah sabredenlerle beraberdir.', image: '/stories/quran-1.webp' },
+    { reference: 'Ra\'d, 28', arabic: 'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ', translation: 'Kalpler ancak Allah\'ı anmakla huzur bulur.', image: '/stories/quran-2.webp' },
+    { reference: 'İnşirah, 5-6', arabic: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا', translation: 'Şüphesiz güçlükle beraber bir kolaylık vardır.', image: '/stories/quran.webp' },
+    { reference: 'Taha, 114', arabic: 'رَّبِّ زِدْنِي عِلْمًا', translation: 'Rabbim! İlmimi artır.', image: '/stories/quran-1.webp' },
+    { reference: 'Talak, 3', arabic: 'وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ', translation: 'Kim Allah\'a tevekkül ederse O, ona yeter.', image: '/stories/quran-2.webp' }
 ];
 
 const DAILY_QUOTES = [
-    { text: 'Kendini bilen Rabbini bilir.', author: 'Hz. Ali (r.a.)', image: '/stories/mosque-1.jpg' },
-    { text: 'Sabır, imanın yarısıdır.', author: 'Abdullah ibn Mesud (r.a.)', image: '/stories/mosque-2.jpg' },
-    { text: 'Gel, ne olursan ol yine gel.', author: 'Mevlana', image: '/stories/mosque-3.jpg' },
-    { text: 'Yaratılmışı Yaratan\'dan ötürü sev.', author: 'Yunus Emre', image: '/stories/nature.png' },
-    { text: 'Her şey zıddıyla kaimdir.', author: 'Mevlana', image: '/stories/pattern.png' }
+    { text: 'Kendini bilen Rabbini bilir.', author: 'Hz. Ali (r.a.)', image: '/stories/mosque-1.webp' },
+    { text: 'Sabır, imanın yarısıdır.', author: 'Abdullah ibn Mesud (r.a.)', image: '/stories/mosque-2.webp' },
+    { text: 'Gel, ne olursan ol yine gel.', author: 'Mevlana', image: '/stories/mosque-3.webp' },
+    { text: 'Yaratılmışı Yaratan\'dan ötürü sev.', author: 'Yunus Emre', image: '/stories/nature.webp' },
+    { text: 'Her şey zıddıyla kaimdir.', author: 'Mevlana', image: '/stories/pattern.webp' }
 ];
 
 type DailyContent = {
@@ -114,7 +114,7 @@ export const getDailyContent = (): DailyContent => {
             text: dailyHadith.text,
             arabic: dailyHadith.arabic || '',
             source: dailyHadith.source || 'Hadis-i Şerif',
-            image: '/stories/pattern-2.jpg',
+            image: '/stories/pattern-2.webp',
             sourceMeta: createReviewedSourceMeta({
                 namespace: 'hadith',
                 id: dailyHadith.id || dayOfYear,
@@ -131,7 +131,7 @@ export const getDailyContent = (): DailyContent => {
             text: dailyDuaItem.meaning,
             arabic: dailyDuaItem.arabic,
             title: dailyDuaItem.title,
-            image: '/stories/mosque.png',
+            image: '/stories/mosque.webp',
             sourceMeta: createReviewedSourceMeta({
                 namespace: 'daily_dua',
                 id: dailyDuaItem.title,

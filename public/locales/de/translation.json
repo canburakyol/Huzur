@@ -1202,7 +1202,13 @@
     "dailyPrayer": "Dua des Tages",
     "dailyVerse": "Vers des Tages",
     "heroProgressDone": "{{done}}/{{total}} Gebete",
-    "heroStartStreak": "Beginne heute deine Serie"
+    "heroStartStreak": "Beginne heute deine Serie",
+    "shareVerse": "Diesen Vers mit Liebsten teilen",
+    "preparingImage": "Bild wird vorbereitet…",
+    "shareFailed": "Teilen konnte nicht geöffnet werden. Bitte erneut versuchen.",
+    "shareCardCta": "Kostenlos bei Google Play",
+    "dailyInsight": "Inspiration des Tages",
+    "verseOfTheDay": "Vers des Tages"
   },
   "hikmet": {
     "title": "Wisdom Book",

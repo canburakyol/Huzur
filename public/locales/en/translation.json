@@ -1202,7 +1202,13 @@
     "dailyPrayer": "Prayer of the Day",
     "dailyVerse": "Verse of the Day",
     "heroProgressDone": "{{done}}/{{total}} prayers",
-    "heroStartStreak": "Start your streak today"
+    "heroStartStreak": "Start your streak today",
+    "shareVerse": "Share this verse with loved ones",
+    "preparingImage": "Preparing image…",
+    "shareFailed": "Could not open sharing. Please try again.",
+    "shareCardCta": "Free on Google Play",
+    "dailyInsight": "Daily Inspiration",
+    "verseOfTheDay": "Verse of the Day"
   },
   "hikmet": {
     "title": "Wisdom Book",

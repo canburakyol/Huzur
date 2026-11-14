@@ -494,12 +494,6 @@
   opacity: 0.72;
 }
 
-.verse-actions .verse-save-button {
-  flex: 0 0 46px;
-  width: 46px;
-  height: 46px;
-}
-
 .verse-share-render {
   position: fixed;
   left: -10000px;
@@ -658,6 +652,14 @@
   margin-bottom: 14px;
   min-width: 0;
   width: 100%;
+}
+
+.quick-access-large-card,
+.quick-access-square-card {
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  cursor: pointer;
 }
 
 .quick-access-large-card {

@@ -1292,7 +1292,13 @@
     "dailyPrayer": "Günün Duası",
     "dailyVerse": "Günün Ayeti",
     "heroProgressDone": "{{done}}/{{total}} vakit",
-    "heroStartStreak": "Seriye bugün başla"
+    "heroStartStreak": "Seriye bugün başla",
+    "shareVerse": "Bu ayeti sevdiklerinle paylaş",
+    "preparingImage": "Görsel hazırlanıyor…",
+    "shareFailed": "Paylaşım açılamadı. Lütfen tekrar deneyin.",
+    "shareCardCta": "Google Play'den ücretsiz indir",
+    "dailyInsight": "Günün İlhamı",
+    "verseOfTheDay": "Günün Ayeti"
   },
   "homeFeed": {
     "priorityCard": {

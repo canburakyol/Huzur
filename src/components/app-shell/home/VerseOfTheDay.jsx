@@ -1,5 +1,6 @@
 import { memo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BookOpenText, Share2 } from 'lucide-react';
 import { shareVerseAsImage } from '../../../services/verseImageShareService';
 import { logger } from '../../../utils/logger';
 
@@ -12,7 +13,7 @@ const VerseOfTheDay = memo(({ dailyContent }) => {
   const reference = dailyContent?.verse?.reference || "İnşirah, 5-6";
   const arabicText = dailyContent?.verse?.arabic || "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا";
   const translationText = dailyContent?.verse?.translation || `"Elbette zorlukla beraber bir kolaylık vardır. Gerçekten, zorlukla beraber bir kolaylık daha vardır."`;
-  const backgroundImage = dailyContent?.verse?.image || '/stories/quran-1.jpg';
+  const backgroundImage = dailyContent?.verse?.image || '/stories/quran-1.webp';
 
   const handleShare = async () => {
     if (isSharing) return;
@@ -39,7 +40,7 @@ const VerseOfTheDay = memo(({ dailyContent }) => {
 
   return (
     <section className="verse-section">
-      <span className="material-symbols-outlined verse-bg-icon">auto_stories</span>
+      <BookOpenText className="verse-bg-icon" size={100} aria-hidden="true" />
       <div className="verse-content">
         <span className="verse-badge">{t('home.verseOfTheDay', 'Günün Ayeti')}</span>
         
@@ -63,15 +64,12 @@ const VerseOfTheDay = memo(({ dailyContent }) => {
             onClick={handleShare}
             disabled={isSharing}
           >
-            <span className="material-symbols-outlined text-sm">share</span>
-            <span>{isSharing ? 'Görsel hazırlanıyor…' : 'Bu ayeti sevdiklerinle paylaş'}</span>
-          </button>
-          <button type="button" className="verse-save-button" aria-label={t('common.save', 'Kaydet')}>
-            <span className="material-symbols-outlined text-sm">bookmark</span>
+            <Share2 size={16} aria-hidden="true" />
+            <span>{isSharing ? t('home.preparingImage', 'Görsel hazırlanıyor…') : t('home.shareVerse', 'Bu ayeti sevdiklerinle paylaş')}</span>
           </button>
         </div>
         {shareError ? (
-          <p className="verse-share-error" role="alert">Paylaşım açılamadı. Lütfen tekrar deneyin.</p>
+          <p className="verse-share-error" role="alert">{t('home.shareFailed', 'Paylaşım açılamadı. Lütfen tekrar deneyin.')}</p>
         ) : null}
       </div>
 
@@ -84,14 +82,14 @@ const VerseOfTheDay = memo(({ dailyContent }) => {
           <div className="verse-share-card__shade" />
           <div className="verse-share-card__content">
             <div className="verse-share-card__brand">HUZUR</div>
-            <div className="verse-share-card__label">GÜNÜN AYETİ</div>
+            <div className="verse-share-card__label">{t('home.verseOfTheDay', 'Günün Ayeti')}</div>
             <p className="verse-share-card__arabic">{arabicText}</p>
             <div className="verse-share-card__divider" />
             <p className="verse-share-card__translation">“{translationText.replace(/^"|"$/g, '')}”</p>
             <p className="verse-share-card__reference">{reference}</p>
             <div className="verse-share-card__footer">
               <strong>Huzur: Namaz Vakitleri ve Kuran</strong>
-              <span>Google Play'den ücretsiz indir</span>
+              <span>{t('home.shareCardCta', "Google Play'den ücretsiz indir")}</span>
             </div>
           </div>
         </article>

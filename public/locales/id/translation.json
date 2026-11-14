@@ -1202,7 +1202,13 @@
     "dailyPrayer": "Doa Hari Ini",
     "dailyVerse": "Ayat Hari Ini",
     "heroProgressDone": "{{done}}/{{total}} salat",
-    "heroStartStreak": "Mulai streak hari ini"
+    "heroStartStreak": "Mulai streak hari ini",
+    "shareVerse": "Bagikan ayat ini kepada orang tersayang",
+    "preparingImage": "Menyiapkan gambar…",
+    "shareFailed": "Gagal membuka berbagi. Silakan coba lagi.",
+    "shareCardCta": "Gratis di Google Play",
+    "dailyInsight": "Inspirasi Harian",
+    "verseOfTheDay": "Ayat Hari Ini"
   },
   "hikmet": {
     "title": "Wisdom Book",

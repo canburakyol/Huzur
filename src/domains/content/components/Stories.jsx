@@ -23,10 +23,10 @@ const Stories = memo(() => {
         const isFridayTime = today === 4 || today === 5;
 
         const cumaImages = [
-            '/stories/cuma-1.png', '/stories/cuma-2.png', '/stories/cuma-3.png',
-            '/stories/cuma-4.png', '/stories/cuma-5.png', '/stories/cuma-6.png',
-            '/stories/cuma-7.png', '/stories/cuma-8.png', '/stories/cuma-9.png',
-            '/stories/cuma-10.png'
+            '/stories/cuma-1.webp', '/stories/cuma-2.webp', '/stories/cuma-3.webp',
+            '/stories/cuma-4.webp', '/stories/cuma-5.webp', '/stories/cuma-6.webp',
+            '/stories/cuma-7.webp', '/stories/cuma-8.webp', '/stories/cuma-9.webp',
+            '/stories/cuma-10.webp'
         ];
 
         const getWeekNumber = () => {

@@ -1,4 +1,6 @@
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Bell } from 'lucide-react';
 import FirstActivationCard from './home/FirstActivationCard';
 import LoadingFallback from './home/LoadingFallback';
 import VerseOfTheDay from './home/VerseOfTheDay';
@@ -31,7 +33,7 @@ function AppHomeTabContent({
   onShowMenu,
   isProUser
 }) {
-
+  const { t } = useTranslation();
   const [homeExperience, setHomeExperience] = useState(null);
   const [firstActivationCompleted, setFirstActivationCompleted] = useState(() => hasCompletedFirstIbadahAction());
   const resolvedHomeExperience = homeExperience || DEFAULT_HOME_EXPERIENCE_CONFIG;
@@ -124,8 +126,8 @@ function AppHomeTabContent({
           </div>
         </div>
         <div className="home-header-actions">
-          <button aria-label="Bildirimler" onClick={() => onSelectFeature && onSelectFeature('settings')}>
-            <span className="material-symbols-outlined font-light">notifications</span>
+          <button aria-label={t('settings.notifications', 'Bildirimler')} onClick={() => onSelectFeature && onSelectFeature('settings')}>
+            <Bell size={22} strokeWidth={1.6} aria-hidden="true" />
           </button>
         </div>
       </header>

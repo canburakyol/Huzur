@@ -350,12 +350,6 @@ const PremiumHomeHero = memo(({
       className="skeuo-card hero-card relative overflow-hidden"
       style={ambientStyle}
     >
-      {/* Background Arabesque Texture */}
-      <div
-        className="absolute inset-0 opacity-5 pointer-events-none"
-        style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/arabesque.png')" }}
-      ></div>
-
       {/* Background Calligraphy Glow */}
       <div style={{
           position: 'absolute',

@@ -721,51 +721,6 @@ export const AUDIO: AudioCategory[] = [
         isPro: true,
         items: []
     },
-    {
-        id: 'riyazus-salihin',
-        title: 'Riyazüs Salihin',
-        icon: '📚',
-        description: 'Hadis-i Şerif okumaları ve açıklamaları',
-        type: 'playlist',
-        isPro: true,
-        items: [
-            { number: 1, title: '1. Bölüm: İhlas ve Niyet', duration: '15:30', url: 'https://example.com/audio/riyaz-1.mp3' },
-            { number: 2, title: '2. Bölüm: Tövbe', duration: '18:45', url: 'https://example.com/audio/riyaz-2.mp3' },
-            { number: 3, title: '3. Bölüm: Sabır', duration: '22:10', url: 'https://example.com/audio/riyaz-3.mp3' },
-            { number: 4, title: '4. Bölüm: Doğruluk', duration: '14:20', url: 'https://example.com/audio/riyaz-4.mp3' },
-            { number: 5, title: '5. Bölüm: Murakabe', duration: '16:50', url: 'https://example.com/audio/riyaz-5.mp3' }
-        ]
-    },
-    {
-        id: 'siyer-sohbetleri',
-        title: 'Siyer Sohbetleri',
-        icon: '🕌',
-        description: 'Hz. Peygamber\'in hayatı üzerine sohbetler',
-        type: 'playlist',
-        isPro: true,
-        items: [
-            { number: 1, title: 'Mekke Dönemi Başlangıcı', duration: '45:00', url: 'https://example.com/audio/siyer-1.mp3' },
-            { number: 2, title: 'Habeşistan Hicreti', duration: '42:15', url: 'https://example.com/audio/siyer-2.mp3' },
-            { number: 3, title: 'Hüzün Yılı ve Taif', duration: '38:50', url: 'https://example.com/audio/siyer-3.mp3' },
-            { number: 4, title: 'İsra ve Mirac', duration: '50:10', url: 'https://example.com/audio/siyer-4.mp3' },
-            { number: 5, title: 'Hicret Yolculuğu', duration: '48:30', url: 'https://example.com/audio/siyer-5.mp3' }
-        ]
-    },
-    {
-        id: 'peygamberler-tarihi',
-        title: 'Peygamberler Tarihi',
-        icon: '🌟',
-        description: 'Peygamberlerin ibretlik hayat hikayeleri',
-        type: 'playlist',
-        isPro: true,
-        items: [
-            { number: 1, title: 'Hz. Adem ve Yaradılış', duration: '35:20', url: 'https://example.com/audio/peygamberler-1.mp3' },
-            { number: 2, title: 'Hz. Nuh ve Tufan', duration: '40:15', url: 'https://example.com/audio/peygamberler-2.mp3' },
-            { number: 3, title: 'Hz. İbrahim ve Tevhid', duration: '44:50', url: 'https://example.com/audio/peygamberler-3.mp3' },
-            { number: 4, title: 'Hz. Yusuf\'un Kıssası', duration: '55:00', url: 'https://example.com/audio/peygamberler-4.mp3' },
-            { number: 5, title: 'Hz. Musa ve Firavun', duration: '52:30', url: 'https://example.com/audio/peygamberler-5.mp3' }
-        ]
-    }
 ];
 
 export const VIDEO: VideoCategory[] = [

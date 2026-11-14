@@ -544,10 +544,9 @@ function Quran({ onClose }) {
         navigator.mediaSession.metadata = new MediaMetadata({
             title: `${activeSurah.nameTranslation} - ${playingAyah}. Ayet`,
             artist: selectedReciter.name,
-            album: 'Huzur - Kuran-i Kerim',
+            album: "Huzur - Kur'an-ı Kerim",
             artwork: [
-                { src: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
-                { src: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' }
+                { src: '/pwa-192x192.png', sizes: '192x192', type: 'image/png' }
             ]
         });
 
