@@ -33,65 +33,49 @@ const DHIKR_TRANSLATIONS = {
         nameKey: 'zikirmatikDhikrs.free.name',
         fallbackName: 'Serbest Zikir',
         meaningKey: 'zikirmatikDhikrs.free.meaning',
-        fallbackMeaning: 'İstediğiniz zikri çekin.',
-        sourceKey: 'zikirmatikDhikrs.free.source',
-        fallbackSource: 'Kullanıcı tarafından yazılır; doğrulanmamıştır.'
+        fallbackMeaning: 'İstediğiniz zikri çekin.'
     },
     subhanallah: {
         nameKey: 'zikirmatikDhikrs.subhanallah.name',
         fallbackName: 'Sübhanallah',
         meaningKey: 'zikirmatikDhikrs.subhanallah.meaning',
-        fallbackMeaning: "Allah'ı tüm eksikliklerden tenzih ederim.",
-        sourceKey: 'zikirmatikDhikrs.subhanallah.source',
-        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
+        fallbackMeaning: "Allah'ı tüm eksikliklerden tenzih ederim."
     },
     elhamdulillah: {
         nameKey: 'zikirmatikDhikrs.elhamdulillah.name',
         fallbackName: 'Elhamdülillah',
         meaningKey: 'zikirmatikDhikrs.elhamdulillah.meaning',
-        fallbackMeaning: "Hamd Allah'a mahsustur.",
-        sourceKey: 'zikirmatikDhikrs.elhamdulillah.source',
-        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
+        fallbackMeaning: "Hamd Allah'a mahsustur."
     },
     allahuekber: {
         nameKey: 'zikirmatikDhikrs.allahuekber.name',
         fallbackName: 'Allahu ekber',
         meaningKey: 'zikirmatikDhikrs.allahuekber.meaning',
-        fallbackMeaning: 'Allah en büyüktür.',
-        sourceKey: 'zikirmatikDhikrs.allahuekber.source',
-        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
+        fallbackMeaning: 'Allah en büyüktür.'
     },
     lailaheillallah: {
         nameKey: 'zikirmatikDhikrs.lailaheillallah.name',
         fallbackName: 'Lâ ilâhe illallah',
         meaningKey: 'zikirmatikDhikrs.lailaheillallah.meaning',
-        fallbackMeaning: "Allah'tan başka ilah yoktur.",
-        sourceKey: 'zikirmatikDhikrs.lailaheillallah.source',
-        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
+        fallbackMeaning: "Allah'tan başka ilah yoktur."
     },
     estagfirullah: {
         nameKey: 'zikirmatikDhikrs.estagfirullah.name',
         fallbackName: 'Estağfirullah',
         meaningKey: 'zikirmatikDhikrs.estagfirullah.meaning',
-        fallbackMeaning: "Allah'tan bağışlanma dilerim.",
-        sourceKey: 'zikirmatikDhikrs.estagfirullah.source',
-        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
+        fallbackMeaning: "Allah'tan bağışlanma dilerim."
     },
     lahavle: {
         nameKey: 'zikirmatikDhikrs.lahavle.name',
         fallbackName: 'Lâ havle ve lâ kuvvete illâ billâh',
         meaningKey: 'zikirmatikDhikrs.lahavle.meaning',
-        fallbackMeaning: "Güç ve kuvvet ancak Allah'tandır.",
-        sourceKey: 'zikirmatikDhikrs.lahavle.source',
-        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
+        fallbackMeaning: "Güç ve kuvvet ancak Allah'tandır."
     },
     salavat: {
         nameKey: 'zikirmatikDhikrs.salavat.name',
         fallbackName: 'Salavat',
         meaningKey: 'zikirmatikDhikrs.salavat.meaning',
-        fallbackMeaning: "Allah'ım, Muhammed'e salât eyle.",
-        sourceKey: 'zikirmatikDhikrs.salavat.source',
-        fallbackSource: 'Kaynak bilgisi doğrulanmamıştır.'
+        fallbackMeaning: "Allah'ım, Muhammed'e salât eyle."
     },
     hasbunallah: {
         nameKey: 'zikirmatikDhikrs.hasbunallah.name',
@@ -165,7 +149,8 @@ const Zikirmatik = ({ onClose }) => {
 
     const getDhikrSource = (dhikr) => {
         const translation = DHIKR_TRANSLATIONS[dhikr?.id];
-        return translation?.sourceKey ? t(translation.sourceKey, translation.fallbackSource) : 'Kaynak bilgisi doğrulanmamıştır.';
+        // Only show a citation that has actually been written into the locale files; never a placeholder.
+        return translation?.sourceKey ? t(translation.sourceKey, translation.fallbackSource) : null;
     };
 
     const handleFreeNameChange = (e) => {
@@ -406,7 +391,7 @@ const Zikirmatik = ({ onClose }) => {
                 <div style={{ fontSize: '2rem', fontFamily: 'var(--font-arabic)', color: 'var(--nav-text)', margin: '16px 0' }}>{selectedDhikr?.arabic}</div>
                 {getDhikrReading(selectedDhikr) && <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text)', lineHeight: '1.4' }}>{getDhikrReading(selectedDhikr)}</p>}
                 <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontStyle: 'italic', lineHeight: '1.4' }}>{getDhikrMeaning(selectedDhikr)}</p>
-                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.4' }}><strong>Kaynak:</strong> {getDhikrSource(selectedDhikr)}</p>
+                {getDhikrSource(selectedDhikr) && <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.4' }}><strong>{t('zikirmatik.sourceLabel', 'Kaynak')}:</strong> {getDhikrSource(selectedDhikr)}</p>}
             </div>
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '40px 0' }}>

@@ -44,11 +44,12 @@ describe('Zikirmatik', () => {
     expect(screen.getByText('Kur’an-ı Kerim, Âl-i İmrân 3:173')).toBeInTheDocument();
   });
 
-  it('identifies free dhikr as user-authored and unverified', () => {
+  it('shows no placeholder citation for dhikr without a verified source', () => {
     render(<Zikirmatik onClose={vi.fn()} />);
 
     fireEvent.click(screen.getByText('Serbest Zikir'));
 
-    expect(screen.getByText('Kullanıcı tarafından yazılır; doğrulanmamıştır.')).toBeInTheDocument();
+    expect(screen.queryByText(/doğrulanmamıştır/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Kaynak/)).not.toBeInTheDocument();
   });
 });

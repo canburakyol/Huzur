@@ -15,6 +15,8 @@ import {
 } from '../../../services/premiumMomentService';
 import { getRecoveryLoopPlan } from '../../../services/recoveryLoopService';
 import { logger } from '../../../utils/logger';
+import PrivacyPolicy from '../../system/components/PrivacyPolicy';
+import TermsOfService from '../../system/components/TermsOfService';
 import { getStoredPrimaryGoal } from '../../../utils/primaryGoal';
 
 const isNativePlatform = () => (
@@ -28,75 +30,28 @@ const normalizePackageRecommendation = (value = '') => {
   return normalized || 'yearly';
 };
 
-const buildPaywallCopy = (moment, valueVariant, ctaVariant) => {
-  const momentType = moment?.momentType || 'assistant_success';
-  const primaryGoal = moment?.primaryGoal || getStoredPrimaryGoal();
-  const recommendedPackage = normalizePackageRecommendation(moment?.recommendedPackage || 'yearly');
-
-  const commonFeatures = [
+// Only list benefits that work today without the backend; every claim here must be true.
+const buildPaywallCopy = (t) => ({
+  title: t('pro.paywall.title', 'Huzur Pro'),
+  subtitle: t('pro.paywall.subtitle', "Reklamsız ibadet ve Kur'an araçlarının tamamı."),
+  accent: t('pro.paywall.accent', 'Pro'),
+  cta: t('pro.paywall.cta', "Pro'ya geç"),
+  features: [
     {
-      title: 'Haftalik ritim rehberi',
-      description: 'Namaz, Kuran ve dua adimlarini haftalik olarak daha net gor.',
+      title: t('pro.paywall.noAdsTitle', 'Reklamsız kullanım'),
+      description: t('pro.paywall.noAdsDesc', 'Ana sayfada, Kur\'an\'da ve tüm ekranlarda reklam görmezsin.'),
     },
     {
-      title: 'Daha derin manevi destek',
-      description: 'Kisa gunluk ritmin oturdugunda daha sakin sonraki adim onerileri al.',
+      title: t('pro.paywall.allSurahsTitle', '114 surenin tamamı'),
+      description: t('pro.paywall.allSurahsDesc', 'Kelime kelime meal ve ezber araçları bütün surelerde açılır.'),
     },
     {
-      title: 'Kisisel toparlanma anlari',
-      description: 'Ritim koptugunda seni yormayan geri donus ve destek momentleri acilir.',
+      title: t('pro.paywall.libraryTitle', 'Kütüphanenin Pro bölümleri'),
+      description: t('pro.paywall.libraryDesc', 'Hafızlardan hatim setleri ve Pro video dersler.'),
     },
-    {
-      title: 'Kesintisiz odak',
-      description: 'Reklamsiz deneyim ana ritmini bolmeden odakta kalmana yardim eder.',
-    },
-  ];
-
-  let title = 'Huzur Pro';
-  let subtitle = 'Gunluk ibadet ritmin oturdugunda haftalik icgoru ve daha derin destek burada acilir.';
-  let accent = 'Haftalik ritim';
-
-  if (momentType === 'weekly_report') {
-    title = 'Haftalik ritmini derinlestir';
-    subtitle = 'Yuzeysel ozetin otesine gec; ritmi, aile akisini ve sakin sonraki adimlari daha net gor.';
-    accent = 'Daha derin haftalik icgoru';
-  } else if (momentType === 'home_recovery_support') {
-    title = 'Bugun icin daha derin destek ac';
-    subtitle = 'Ritmi toparlarken seni yormayan ama daha yakindan destekleyen bir premium katman acabilirsin.';
-    accent = 'Sessiz premium destek';
-  } else if (momentType === 'onboarding_complete') {
-    title = primaryGoal === 'family_consistency'
-      ? 'Aile ritmini Pro ile kur'
-      : 'Gunluk ritmini Pro ile derinlestir';
-    subtitle = primaryGoal === 'family_consistency'
-      ? 'Aile hedefleri, haftalik derinlik ve daha sakin rehberlik ayni akista toplansin.'
-      : 'Ilk 2 dakikalik adimin ustune haftalik icgoru ve daha sakin rehberlik ekle.';
-    accent = 'Aile ritmi';
-  } else if (primaryGoal === 'quran_learning') {
-    title = 'Kuran ve dua ritmini derinlestir';
-    subtitle = 'Kisa gunluk adimlari haftalik icgoru ve sakin rehberlikle daha kalici hale getir.';
-    accent = 'Kuran ritmi';
-  }
-
-  const cta = ctaVariant === 'B'
-    ? 'Bu destegi ac'
-    : recommendedPackage === 'yearly'
-      ? 'Yillik Plani Gor'
-      : 'Aylik Plani Gor';
-
-  const socialProof = valueVariant === 'B'
-    ? 'Gunluk ritmini korumak isteyen kullanicilarin en cok actigi alanlardan biri.'
-    : 'Haftalik ozet, toparlanma destegi ve reklamsiz odak birlikte daha guclu calisir.';
-
-  return {
-    title,
-    subtitle,
-    accent,
-    cta,
-    features: commonFeatures,
-    socialProof,
-  };
-};
+  ],
+  socialProof: t('pro.paywall.reassurance', "İstediğin zaman Google Play'den iptal edebilirsin."),
+});
 
 const matchesPackage = (pkg, recommendedPackage) => {
   const normalizedRecommendation = normalizePackageRecommendation(recommendedPackage);
@@ -125,20 +80,20 @@ const buildReferralCopy = (proDetails, referralProgress) => {
     const { hours, minutes, isExpiringSoon } = proDetails.remaining;
     return {
       isReferralPro: true,
-      badge: 'Arkadas Hediyesi',
-      title: '24 saatlik Pro ritmin aktif',
+      badge: 'Arkadaş Hediyesi',
+      title: '24 saatlik Pro hediyen aktif',
       subtitle: isExpiringSoon
-        ? `Hediyen ${hours > 0 ? `${hours} saat` : `${minutes} dakika`} sonra sona erecek. Dilersen sure bitmeden abonelikle devam edebilirsin.`
-        : `Hediyen ${hours} saat ${minutes} dakika daha aktif. Derin plani once sakin sekilde dene.`,
+        ? `Hediyen ${hours > 0 ? `${hours} saat` : `${minutes} dakika`} sonra sona erecek. Dilersen süre bitmeden abonelikle devam edebilirsin.`
+        : `Hediyen ${hours} saat ${minutes} dakika daha aktif. Pro özelliklerini rahatça dene.`,
       cta: null
     };
   }
 
   if (referralProgress?.invitedByCode && !referralProgress.inviteeEligible) {
     const steps = [
-      referralProgress.inviteAcceptedAt && 'Kayit tamamlandi',
-      referralProgress.onboardingCompletedAt && 'Onboarding tamamlandi',
-      referralProgress.firstIbadahCompletedAt && 'Ilk ibadet tamamlandi'
+      referralProgress.inviteAcceptedAt && 'Kayıt tamamlandı',
+      referralProgress.onboardingCompletedAt && 'Kurulum tamamlandı',
+      referralProgress.firstIbadahCompletedAt && 'İlk ibadet tamamlandı'
     ].filter(Boolean);
 
     const completedSteps = steps.length;
@@ -146,9 +101,9 @@ const buildReferralCopy = (proDetails, referralProgress) => {
 
     return {
       isReferralPending: true,
-      badge: `${completedSteps}/${totalSteps} tamamlandi`,
-      title: `${totalSteps - completedSteps} adim kaldi`,
-      subtitle: `Davet ritmini tamamlamak icin ${totalSteps - completedSteps} sakin adim daha var. Istersen Pro'yu abonelikle hemen acabilirsin.`,
+      badge: `${completedSteps}/${totalSteps} tamamlandı`,
+      title: `${totalSteps - completedSteps} adım kaldı`,
+      subtitle: `Davet ödülü için ${totalSteps - completedSteps} adım daha var. İstersen Pro'yu abonelikle hemen acabilirsin.`,
       cta: null
     };
   }
@@ -199,10 +154,8 @@ const ProUpgrade = ({
 
   const valueVariant = useMemo(() => getExperimentVariant('paywall_value_stack_v1'), []);
   const ctaVariant = useMemo(() => getExperimentVariant('paywall_cta_v1'), []);
-  const uiCopy = useMemo(
-    () => buildPaywallCopy(moment, valueVariant, ctaVariant),
-    [ctaVariant, moment, valueVariant]
-  );
+  const uiCopy = useMemo(() => buildPaywallCopy(t), [t]);
+  const [legalDoc, setLegalDoc] = useState(null);
   const referralCopy = useMemo(
     () => buildReferralCopy(proDetails, referralProgress),
     [proDetails, referralProgress]
@@ -405,12 +358,12 @@ const ProUpgrade = ({
         {proDetails?.active && proDetails.source === 'referral_reward' && (
           <div className="referral-active-banner">
             <p>
-              Arkadasinin hediyesi ile Pro aktifsin.
+              Arkadaşının hediyesi ile Pro aktifsin.
               {proDetails.remaining.isExpiringSoon && (
                 <span className="expiring-soon">
-                  {' '}Sure dolmak uzere: {proDetails.remaining.hours > 0
+                  {' '}Süre dolmak üzere: {proDetails.remaining.hours > 0
                     ? `${proDetails.remaining.hours} saat`
-                    : `${proDetails.remaining.minutes} dakika`} kaldi
+                    : `${proDetails.remaining.minutes} dakika`} kaldı
                 </span>
               )}
             </p>
@@ -444,16 +397,16 @@ const ProUpgrade = ({
                   className={`package-card ${highlighted ? 'popular' : ''}`}
                   onClick={() => handlePurchase(pkg)}
                 >
-                  {highlighted && <div className="popular-tag">{t('pro.popular', 'EN UYGUN MOMENT')}</div>}
+                  {highlighted && <div className="popular-tag">{t('pro.popular', 'EN POPÜLER')}</div>}
                   <div className="package-title">{pkg?.product?.title || t('pro.package')}</div>
                   <div className="package-price">{pkg?.product?.priceString || '-'}</div>
                   <div className="package-desc">
-                    {pkg?.identifier === 'yearly'
-                      ? t('pro.yearlyFocus', 'Daha derin rehberlik ve haftalık ritim için en guclu secenek.')
-                      : t('pro.monthlyFocus', 'Premium destegi yavaş ve esnek şekilde açmak için uygun.')}
+                    {matchesPackage(pkg, 'yearly')
+                      ? t('pro.yearlyFocus', 'Yıllık ödersen aylığa göre daha uygun.')
+                      : t('pro.monthlyFocus', 'Her ay yenilenir, istediğin zaman iptal edebilirsin.')}
                   </div>
                   <div className="package-cta">
-                    {referralCopy.cta || (ctaVariant === 'B' ? 'Bu destegi ac' : uiCopy.cta)}
+                    {referralCopy.cta || uiCopy.cta}
                   </div>
                 </button>
               );
@@ -466,9 +419,9 @@ const ProUpgrade = ({
           <p>• {t('pro.terms.cancelAnytime')}</p>
           <p>• {t('pro.terms.cancel24h')}</p>
           <p className="legal-links">
-            <a href="https://canburakyol.github.io/privacy-policy/" target="_blank" rel="noopener noreferrer">{t('settings.privacyPolicy')}</a>
+            <button type="button" className="legal-link-btn" onClick={() => setLegalDoc('privacy')}>{t('settings.privacyPolicy')}</button>
             {' | '}
-            <a href="https://canburakyol.github.io/terms.html/" target="_blank" rel="noopener noreferrer">{t('settings.termsOfService')}</a>
+            <button type="button" className="legal-link-btn" onClick={() => setLegalDoc('terms')}>{t('settings.termsOfService')}</button>
           </p>
         </div>
 
@@ -494,13 +447,27 @@ const ProUpgrade = ({
         )}
       </div>
 
+      {legalDoc === 'privacy' && <PrivacyPolicy onClose={() => setLegalDoc(null)} />}
+      {legalDoc === 'terms' && <TermsOfService onClose={() => setLegalDoc(null)} />}
+
       <style>{`
+        .legal-links .legal-link-btn {
+          background: none;
+          border: 0;
+          padding: 0;
+          font: inherit;
+          color: inherit;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
         .pro-modal-overlay {
           position: fixed;
           inset: 0;
           background: rgba(15, 61, 46, 0.95);
           backdrop-filter: blur(10px);
-          z-index: 1000;
+          /* above .feature-route-shell > .bottom-nav (1500): a purchase modal must cover navigation */
+          z-index: 2000;
           display: flex;
           align-items: center;
           justify-content: center;

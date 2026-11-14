@@ -381,7 +381,22 @@
     "trialInfo": "Coba 3 hari gratis.",
     "yearlyInfo": "Lalu {{price}} setiap tahun.",
     "yearlyTrialControl": "Coba 3 hari gratis. Diperpanjang otomatis pada {{price}}/tahun setelah masa uji coba berakhir.",
-    "nativeOnly": "Pembelian hanya didukung di aplikasi seluler."
+    "nativeOnly": "Pembelian hanya didukung di aplikasi seluler.",
+    "paywall": {
+      "title": "Huzur Pro",
+      "subtitle": "Ibadah tanpa iklan dan semua alat Al-Quran.",
+      "accent": "Pro",
+      "cta": "Jadi Pro",
+      "noAdsTitle": "Tanpa iklan",
+      "noAdsDesc": "Tanpa iklan di beranda, Al-Quran, atau di mana pun.",
+      "allSurahsTitle": "Semua 114 surah",
+      "allSurahsDesc": "Arti kata per kata dan alat hafalan terbuka untuk setiap surah.",
+      "libraryTitle": "Bagian Pro perpustakaan",
+      "libraryDesc": "Set tilawah lengkap dari qari ternama dan pelajaran video Pro.",
+      "reassurance": "Batalkan kapan saja di Google Play."
+    },
+    "yearlyFocus": "Lebih hemat daripada bayar bulanan.",
+    "monthlyFocus": "Diperpanjang bulanan, batalkan kapan saja."
   },
   "wordByWord": {
     "title": "Word by Word",
@@ -1178,7 +1193,12 @@
     "instructions": "Hold your phone parallel to the ground and calibrate by drawing figure 8.",
     "found": "QIBLA FOUND",
     "permissionDenied": "Compass permission denied. Please enable in settings.",
-    "notSupported": "Compass feature is not supported on this device."
+    "notSupported": "Compass feature is not supported on this device.",
+    "approximateNote": "Arah bisa jadi perkiraan.",
+    "retryLocation": "Coba lokasi lagi",
+    "approximate": "Arah perkiraan",
+    "locationRequired": "Lokasi saat ini diperlukan untuk arah kiblat.",
+    "calibrating": "Mengkalibrasi kompas; menunggu data arah."
   },
   "home": {
     "awesome": "Luar Biasa.",
@@ -4386,8 +4406,7 @@
   "zikirmatikDhikrs": {
     "free": {
       "name": "Serbest Zikir",
-      "meaning": "Istediginiz zikri cekin",
-      "source": "Ditulis oleh pengguna; belum diverifikasi."
+      "meaning": "Istediginiz zikri cekin"
     },
     "subhanallah": {
       "name": "Subhanallah",
@@ -4589,5 +4608,8 @@
       "description": "Tetapkan satu target salat, doa, atau zikir bersama.",
       "cta": "Mulai"
     }
+  },
+  "imsakiye": {
+    "locationRequired": "Lokasi terverifikasi diperlukan untuk imsakiyah."
   }
 }

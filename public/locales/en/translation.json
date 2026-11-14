@@ -8,7 +8,7 @@
     "loading": "Loading...",
     "error": "An issue occurred",
     "retry": "Retry",
-    "cancel": "maybe later",
+    "cancel": "Cancel",
     "save": "Save",
     "close": "Close",
     "confirm": "Confirm",
@@ -354,7 +354,7 @@
     "title": "Upgrade to Huzur Pro",
     "subtitle": "Unlock all features and enjoy an ad-free experience.",
     "mobileOnly": "Purchases can only be made through the mobile app.",
-    "noPackages": "No packages found. Please check RevenueCat Dashboard → Offerings.",
+    "noPackages": "Pro plans could not be loaded right now. Please try again later.",
     "purchaseFailed": "Purchase was not completed. Please try again.",
     "restoreError": "Restore issue.",
     "package": "Package",
@@ -374,14 +374,29 @@
     },
     "terms": {
       "autoRenew": "Subscription automatically renews at the end of the period",
-      "cancelAnytime": "You can maybe later anytime from Google Play settings",
-      "cancel24h": "You must maybe later at least 24 hours before the period ends"
+      "cancelAnytime": "You can cancel anytime from Google Play settings",
+      "cancel24h": "Cancel at least 24 hours before the period ends to avoid renewal"
     },
     "monthlyInfo": "{{price}} monthly.",
     "trialInfo": "Try 3 days for free.",
     "yearlyInfo": "Then {{price}} annually.",
     "yearlyTrialControl": "Try 3 days for free. Auto-renews at {{price}}/year after trial ends.",
-    "nativeOnly": "Purchases are only supported in the mobile app."
+    "nativeOnly": "Purchases are only supported in the mobile app.",
+    "paywall": {
+      "title": "Huzur Pro",
+      "subtitle": "Ad-free worship and every Quran tool.",
+      "accent": "Pro",
+      "cta": "Go Pro",
+      "noAdsTitle": "No ads",
+      "noAdsDesc": "No ads on the home screen, in the Quran or anywhere else.",
+      "allSurahsTitle": "All 114 surahs",
+      "allSurahsDesc": "Word-by-word meaning and memorization tools unlock for every surah.",
+      "libraryTitle": "Pro library sections",
+      "libraryDesc": "Full recitation sets from renowned reciters and Pro video lessons.",
+      "reassurance": "Cancel anytime in Google Play."
+    },
+    "yearlyFocus": "Better value than paying monthly.",
+    "monthlyFocus": "Renews monthly, cancel anytime."
   },
   "wordByWord": {
     "title": "Word by Word",
@@ -610,7 +625,7 @@
     "duaDesc": "Say amen to fellow Muslims' duas or submit your own dua request.",
     "groupHatim": "Community Hatim",
     "buttons": {
-      "cancel": "maybe later",
+      "cancel": "Cancel",
       "requestDua": "Request Dua / Leave Note",
       "share": "Share",
       "amin": "Ameen"
@@ -640,7 +655,7 @@
     "startNew": "Start New Hatim",
     "createDesc": "Name your Hatim and create your community.",
     "placeholderTitle": "Ex: Ramadan Hatim 2024",
-    "cancel": "maybe later",
+    "cancel": "Cancel",
     "create": "Create",
     "joinTitle": "Join Hatim",
     "joinDesc": "Enter the 8-digit code received from the Hatim owner.",
@@ -652,7 +667,7 @@
     "lockedTitle": "Locked Hatim",
     "lockedDesc": "You must enter the access code to join the \"{{title}}\" hatim.",
     "placeholderShortCode": "CODE",
-    "giveUp": "maybe later",
+    "giveUp": "Give up",
     "login": "Login",
     "createdTitle": "Hatim Created.",
     "createdDesc": "Copy the code below and share it with your loved ones.",
@@ -1178,7 +1193,12 @@
     "instructions": "Hold your phone parallel to the ground and calibrate by drawing figure 8.",
     "found": "QIBLA FOUND",
     "permissionDenied": "Compass permission denied. Please enable in settings.",
-    "notSupported": "Compass feature is not supported on this device."
+    "notSupported": "Compass feature is not supported on this device.",
+    "approximateNote": "The direction may be approximate.",
+    "retryLocation": "Try location again",
+    "approximate": "Approximate direction",
+    "locationRequired": "Your current location is needed for the qibla direction.",
+    "calibrating": "Calibrating compass; waiting for direction data."
   },
   "home": {
     "awesome": "Awesome.",
@@ -3570,7 +3590,7 @@
     "useTokenLabel": "Use Freeze Token",
     "tokensAvailable": "{{count}} available",
     "applyAndProtect": "Apply and Protect Streak",
-    "cancelAndReset": "maybe later (Streak Resets)",
+    "cancelAndReset": "Cancel (streak resets)",
     "appRiskTitle": "Your app streak is at risk",
     "appRiskBody": "You have not opened the app today. These are the final hours to protect your {{count}}-day streak.",
     "categoryRiskTitle": "Streak reminder",
@@ -4386,8 +4406,7 @@
   "zikirmatikDhikrs": {
     "free": {
       "name": "Serbest Zikir",
-      "meaning": "Istediginiz zikri cekin",
-      "source": "User-authored; not verified."
+      "meaning": "Istediginiz zikri cekin"
     },
     "subhanallah": {
       "name": "Subhanallah",
@@ -4589,5 +4608,8 @@
       "description": "Set one shared prayer, dua or dhikr goal.",
       "cta": "Start"
     }
+  },
+  "imsakiye": {
+    "locationRequired": "A verified location is needed for the imsakiye."
   }
 }

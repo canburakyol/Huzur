@@ -431,7 +431,7 @@
     "title": "Huzur Pro'ya Geçin",
     "subtitle": "Tüm özelliklerin kilidini açın ve reklamsız deneyimin tadını çıkarın.",
     "mobileOnly": "Satın alma işlemi sadece mobil uygulama üzerinden yapılabilir.",
-    "noPackages": "Şu anda mevcut paket bulunamadı. RevenueCat Dashboard → Offerings kısmını kontrol edin.",
+    "noPackages": "Şu anda Pro paketleri yüklenemedi. Lütfen daha sonra tekrar deneyin.",
     "purchaseFailed": "Satın alma tamamlanamadı oldu. Lütfen tekrar deneyin.",
     "restoreError": "Geri yükleme hatası.",
     "package": "Paket",
@@ -451,14 +451,29 @@
     },
     "terms": {
       "autoRenew": "Abonelik dönem sonunda otomatik olarak yenilenir",
-      "cancelAnytime": "İstediğiniz zaman Google Play ayarlarından vazgeç edebilirsiniz",
-      "cancel24h": "Dönem bitmeden en az 24 saat önce vazgeç etmelisiniz"
+      "cancelAnytime": "İstediğiniz zaman Google Play ayarlarından iptal edebilirsiniz",
+      "cancel24h": "Yenilenmemesi için dönem bitmeden en az 24 saat önce iptal etmelisiniz"
     },
     "monthlyInfo": "Aylık {{price}}.",
     "trialInfo": "3 gün ücretsiz deneyin.",
     "yearlyInfo": "Sonra yıllık {{price}}.",
     "yearlyTrialControl": "3 gün ücretsiz deneyin. Deneme bitiminde {{price}}/yıl otomatik yenilenir.",
-    "nativeOnly": "Satın alma yalnızca mobil uygulamada destekleniyor."
+    "nativeOnly": "Satın alma yalnızca mobil uygulamada destekleniyor.",
+    "paywall": {
+      "title": "Huzur Pro",
+      "subtitle": "Reklamsız ibadet ve Kur'an araçlarının tamamı.",
+      "accent": "Pro",
+      "cta": "Pro'ya geç",
+      "noAdsTitle": "Reklamsız kullanım",
+      "noAdsDesc": "Ana sayfada, Kur'an'da ve tüm ekranlarda reklam görmezsin.",
+      "allSurahsTitle": "114 surenin tamamı",
+      "allSurahsDesc": "Kelime kelime meal ve ezber araçları bütün surelerde açılır.",
+      "libraryTitle": "Kütüphanenin Pro bölümleri",
+      "libraryDesc": "Hafızlardan hatim setleri ve Pro video dersler.",
+      "reassurance": "İstediğin zaman Google Play'den iptal edebilirsin."
+    },
+    "yearlyFocus": "Yıllık ödersen aylığa göre daha uygun.",
+    "monthlyFocus": "Her ay yenilenir, istediğin zaman iptal edebilirsin."
   },
   "wordByWord": {
     "title": "Kelime Kelime",
@@ -764,7 +779,7 @@
       "cuzTaken": "Bu cüz {{name}} tarafından alınmış.",
       "cuzCompleted": "Bu cüz {{name}} tarafından okunmuş. Allah kabul etsin.",
       "confirmTake": "{{partNum}}. cüzü okumak için almak istiyor musunuz?",
-      "partActions": "Bu cüz sizin tarafınızdan alındı.\n\"okudum\" yazarak tamamlayın\n\"vazgeç\" yazarak bırakın"
+      "partActions": "Bu cüz sizin tarafınızdan alındı.\n\"okudum\" yazarak tamamlayın\n\"iptal\" yazarak bırakın"
     }
   },
   "deedJournal": {
@@ -1265,10 +1280,15 @@
   },
   "qibla": {
     "title": "Kıble Pusulası",
-    "instructions": "Telefonunuzu yere paralel tutun ve 8 çizerek kalibre edin.",
-    "found": "KIBLEYİ BULDUNUZ",
+    "instructions": "Telefonunuzu yere paralel tutun; gerekirse havada 8 çizerek pusulayı kalibre edin.",
+    "found": "Kıble Bulundu",
     "permissionDenied": "Pusula izni reddedildi. Lütfen ayarlardan izin verin.",
-    "notSupported": "Pusula özelliği bu cihazda desteklenmiyor."
+    "notSupported": "Pusula özelliği bu cihazda desteklenmiyor.",
+    "approximateNote": "Yön yaklaşık olabilir.",
+    "retryLocation": "Konumu tekrar dene",
+    "approximate": "Yaklaşık yön",
+    "locationRequired": "Kıble yönü için güncel konum gerekli.",
+    "calibrating": "Pusula kalibre ediliyor; yön bilgisi bekleniyor."
   },
   "home": {
     "awesome": "Harika.",
@@ -4428,8 +4448,7 @@
   "zikirmatikDhikrs": {
     "free": {
       "name": "Serbest Zikir",
-      "meaning": "İstediğiniz zikri çekin.",
-      "source": "Kullanıcı tarafından yazılır; doğrulanmamıştır."
+      "meaning": "İstediğiniz zikri çekin."
     },
     "subhanallah": {
       "name": "Sübhanallah",
@@ -4589,5 +4608,8 @@
       "description": "Birlikte bir namaz, dua ya da zikir hedefi belirleyin.",
       "cta": "Başla"
     }
+  },
+  "imsakiye": {
+    "locationRequired": "İmsakiye için doğrulanmış konum gerekli."
   }
 }

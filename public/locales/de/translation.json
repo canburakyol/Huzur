@@ -381,7 +381,22 @@
     "trialInfo": "3 Tage kostenlos testen.",
     "yearlyInfo": "Dann {{price}} jährlich.",
     "yearlyTrialControl": "3 Tage kostenlos testen. Verlängert sich nach Ablauf des Testzeitraums automatisch für {{price}}/Jahr.",
-    "nativeOnly": "Käufe werden nur in der mobilen App unterstützt."
+    "nativeOnly": "Käufe werden nur in der mobilen App unterstützt.",
+    "paywall": {
+      "title": "Huzur Pro",
+      "subtitle": "Werbefreie Andacht und alle Koran-Werkzeuge.",
+      "accent": "Pro",
+      "cta": "Pro holen",
+      "noAdsTitle": "Keine Werbung",
+      "noAdsDesc": "Keine Werbung auf dem Startbildschirm, im Koran oder sonst wo.",
+      "allSurahsTitle": "Alle 114 Suren",
+      "allSurahsDesc": "Wort-für-Wort-Bedeutung und Auswendiglern-Werkzeuge für jede Sure.",
+      "libraryTitle": "Pro-Bereiche der Bibliothek",
+      "libraryDesc": "Komplette Rezitationen bekannter Rezitatoren und Pro-Videolektionen.",
+      "reassurance": "Jederzeit bei Google Play kündbar."
+    },
+    "yearlyFocus": "Günstiger als monatlich zu zahlen.",
+    "monthlyFocus": "Monatlich verlängert, jederzeit kündbar."
   },
   "wordByWord": {
     "title": "Word by Word",
@@ -674,7 +689,7 @@
       "cuzTaken": "Bu cüz {{name}} tarafından alınmış.",
       "cuzCompleted": "Bu cüz {{name}} tarafından okunmuş. Allah kabul etsin.",
       "confirmTake": "{{partNum}}. cüzü okumak için almak istiyor musunuz?",
-      "partActions": "Bu cüz sizin tarafınızdan alındı.\n\"okudum\" yazarak tamamlayın\n\"vazgeç\" yazarak bırakın"
+      "partActions": "Dieser Juz ist dir zugeteilt.\nGib \"gelesen\" ein, um ihn abzuschließen.\nGib \"abbrechen\" ein, um ihn freizugeben."
     }
   },
   "deedJournal": {
@@ -1178,7 +1193,12 @@
     "instructions": "Hold your phone parallel to the ground and calibrate by drawing figure 8.",
     "found": "QIBLA FOUND",
     "permissionDenied": "Compass permission denied. Please enable in settings.",
-    "notSupported": "Compass feature is not supported on this device."
+    "notSupported": "Compass feature is not supported on this device.",
+    "approximateNote": "Die Richtung kann ungefähr sein.",
+    "retryLocation": "Standort erneut versuchen",
+    "approximate": "Ungefähre Richtung",
+    "locationRequired": "Für die Qibla-Richtung wird dein aktueller Standort benötigt.",
+    "calibrating": "Kompass wird kalibriert; Richtungsdaten werden erwartet."
   },
   "home": {
     "awesome": "Großartig.",
@@ -4386,8 +4406,7 @@
   "zikirmatikDhikrs": {
     "free": {
       "name": "Serbest Zikir",
-      "meaning": "Istediginiz zikri cekin",
-      "source": "Vom Nutzer verfasst; nicht verifiziert."
+      "meaning": "Istediginiz zikri cekin"
     },
     "subhanallah": {
       "name": "Subhanallah",
@@ -4589,5 +4608,8 @@
       "description": "Legt ein gemeinsames Gebets-, Dua- oder Dhikr-Ziel fest.",
       "cta": "Starten"
     }
+  },
+  "imsakiye": {
+    "locationRequired": "Für den Imsakiye-Kalender wird ein bestätigter Standort benötigt."
   }
 }

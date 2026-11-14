@@ -107,9 +107,11 @@ const HatimDetail = ({ hatimId, onBack }) => {
             t('hatim.messages.partActions', 'Bu cüz sizin tarafınızdan alındı.\n"okudum" yazarak tamamlayın\n"iptal" yazarak bırakın')
           );
 
-          if (action?.toLowerCase() === 'okudum') {
+          // The prompt text is translated, so accept the command words of every supported language.
+          const command = action?.trim().toLocaleLowerCase();
+          if (['okudum', 'read', 'gelesen', 'sudah dibaca'].includes(command)) {
             await completePart(partNum);
-          } else if (action?.toLowerCase() === 'iptal') {
+          } else if (['iptal', 'vazgeç', 'cancel', 'abbrechen', 'batal'].includes(command)) {
             await releasePart(partNum);
           }
         } else {
