@@ -253,7 +253,7 @@
     "nuzulExplorer": "Revelation Reasons",
     "wordByWord": "Word by Word",
     "tajweedTutor": "Tajweed Tutor",
-    "prayers": "Prayers",
+    "prayers": "Bittgebete",
     "kazaTakibi": "Verpasste Gebete",
     "prayerTeacher": "Prayer Teacher",
     "settings": "Einstellungen",
@@ -466,14 +466,14 @@
     "totalAyahsLabel": "Gesamt"
   },
   "prayers": {
-    "title": "Prayer Book",
-    "categories": "Categories",
-    "prayer": "Prayers",
+    "title": "Gebetbuch",
+    "categories": "Kategorien",
+    "prayer": "Bittgebete",
     "quote": "Das Bittgebet ist die Anbetung selbst.",
     "quoteAuthor": "Prophet Muhammad (s) · Tirmidhi 3372",
-    "prayerDetail": "Prayer Detail",
-    "pronunciation": "Pronunciation",
-    "meaning": "Meaning",
+    "prayerDetail": "Bittgebet",
+    "pronunciation": "Aussprache",
+    "meaning": "Bedeutung",
     "errors": {
       "loadFailed": "Gebetszeiten konnten nicht geladen werden. Bitte überprüfen Sie Ihre Internetverbindung.",
       "fetchError": "Beim Laden der Gebetszeiten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
@@ -2723,538 +2723,538 @@
   "prayerBook": {
     "categories": {
       "daily": {
-        "name": "Daily Prayers",
-        "desc": "Prayers for everyday recitation"
+        "name": "Tägliche Bittgebete",
+        "desc": "Bittgebete für jeden Tag"
       },
       "debt": {
-        "name": "Debt & Sustenance",
-        "desc": "Prayers for financial relief"
+        "name": "Schulden & Versorgung",
+        "desc": "Bittgebete um finanzielle Erleichterung"
       },
       "family": {
-        "name": "Family & Home",
-        "desc": "Prayers for family happiness"
+        "name": "Familie & Zuhause",
+        "desc": "Bittgebete für das Glück der Familie"
       },
       "protection": {
-        "name": "Protection Prayers",
-        "desc": "Prayers for spiritual protection"
+        "name": "Schutzgebete",
+        "desc": "Bittgebete um spirituellen Schutz"
       },
       "wishes": {
-        "name": "Wishes & Supplications",
-        "desc": "Prayers for requests"
+        "name": "Wünsche & Anliegen",
+        "desc": "Bittgebete für persönliche Anliegen"
       },
       "prophet": {
-        "name": "Prophet's Prayers",
-        "desc": "Prayers from Prophet Muhammad (PBUH)"
+        "name": "Bittgebete der Propheten",
+        "desc": "Bittgebete der Propheten aus Koran und Sunna"
       },
       "special_days": {
-        "name": "Special Day Prayers",
-        "desc": "Prayers for holy nights and festivals"
+        "name": "Besondere Tage",
+        "desc": "Bittgebete für gesegnete Nächte und Feste"
       },
       "repentance": {
-        "name": "Repentance & Forgiveness",
-        "desc": "Prayers for seeking forgiveness"
+        "name": "Reue & Vergebung",
+        "desc": "Bittgebete um Vergebung"
       },
       "prayer_duas": {
-        "name": "Salah Prayers",
-        "desc": "Prayers recited during Salah"
+        "name": "Gebete im Salah",
+        "desc": "Im rituellen Gebet gesprochene Bittgebete"
       },
       "distress": {
-        "name": "Distress Prayers",
-        "desc": "Prayers for hardship and grief"
+        "name": "In Not und Kummer",
+        "desc": "Bittgebete in Bedrängnis und Trauer"
       }
     },
     "items": {
       "1": {
-        "title": "Morning Prayer",
-        "meaning": "We have entered the morning and so has the kingdom of Allah. Praise belongs to Allah."
+        "title": "Morgengebet",
+        "meaning": "Wir sind in den Morgen eingetreten, und die Herrschaft ist in den Morgen eingetreten und gehört Allah. Alles Lob gebührt Allah. Es gibt keinen Gott außer Allah, Er allein, Er hat keinen Partner. Ihm gehört die Herrschaft und Ihm gebührt das Lob, und Er hat Macht über alle Dinge. Mein Herr, ich bitte Dich um das Gute dieses Tages und das Gute dessen, was nach ihm kommt, und ich suche Zuflucht bei Dir vor dem Übel dieses Tages und dem Übel dessen, was nach ihm kommt. Mein Herr, ich suche Zuflucht bei Dir vor Trägheit und den Beschwerden des Alters. Mein Herr, ich suche Zuflucht bei Dir vor der Strafe im Feuer und der Strafe im Grab."
       },
       "2": {
-        "title": "Evening Prayer",
-        "meaning": "We have entered the evening and so has the kingdom of Allah. Praise belongs to Allah."
+        "title": "Abendgebet",
+        "meaning": "Wir sind in den Abend eingetreten, und die Herrschaft ist in den Abend eingetreten und gehört Allah. Alles Lob gebührt Allah. Es gibt keinen Gott außer Allah, Er allein, Er hat keinen Partner. Ihm gehört die Herrschaft und Ihm gebührt das Lob, und Er hat Macht über alle Dinge. Mein Herr, ich bitte Dich um das Gute dieser Nacht und das Gute dessen, was nach ihr kommt, und ich suche Zuflucht bei Dir vor dem Übel dieser Nacht und dem Übel dessen, was nach ihr kommt. Mein Herr, ich suche Zuflucht bei Dir vor Trägheit und den Beschwerden des Alters. Mein Herr, ich suche Zuflucht bei Dir vor der Strafe im Feuer und der Strafe im Grab."
       },
       "3": {
-        "title": "Sleep Prayer",
-        "meaning": "O Allah. In Your name I die and live."
+        "title": "Gebet vor dem Schlafen",
+        "meaning": "O Allah, in Deinem Namen sterbe ich und lebe ich."
       },
       "4": {
-        "title": "Leaving Home Prayer",
-        "meaning": "In the name of Allah, I put my trust in Allah."
+        "title": "Beim Verlassen des Hauses",
+        "meaning": "Im Namen Allahs. Ich vertraue auf Allah, und es gibt keine Macht und keine Kraft außer bei Allah."
       },
       "5": {
-        "title": "Entering Home Prayer",
-        "meaning": "O Allah. I ask You for the best entry and the best exit."
+        "title": "Beim Betreten des Hauses",
+        "meaning": "O Allah, ich bitte Dich um das beste Eintreten und das beste Hinausgehen. Im Namen Allahs treten wir ein, im Namen Allahs gehen wir hinaus, und auf Allah, unseren Herrn, vertrauen wir."
       },
       "6": {
-        "title": "Ayatul Kursi",
-        "meaning": "Allah, there is no deity except Him, the Ever-Living, the Sustainer of existence."
+        "title": "Ayat al-Kursi (Thronvers)",
+        "meaning": "Allah – es gibt keinen Gott außer Ihm, dem Lebendigen, dem Beständigen. Weder Schlummer noch Schlaf überkommen Ihn. Ihm gehört, was in den Himmeln und was auf der Erde ist. Wer könnte bei Ihm Fürsprache einlegen, außer mit Seiner Erlaubnis? Er weiß, was vor ihnen und was hinter ihnen liegt, und sie umfassen nichts von Seinem Wissen, außer was Er will. Sein Kursi umfasst die Himmel und die Erde, und ihre Bewahrung fällt Ihm nicht schwer. Er ist der Erhabene, der Allmächtige."
       },
       "7": {
-        "title": "Glorification Prayer",
-        "meaning": "Glory be to Allah and His is the praise."
+        "title": "Lobpreisung",
+        "meaning": "Gepriesen sei Allah, und Ihm gebührt das Lob."
       },
       "8": {
-        "title": "Morning-Evening Protection",
-        "meaning": "In the name of Allah with whose name nothing on earth or in heaven can cause harm."
+        "title": "Schutz am Morgen und Abend",
+        "meaning": "Im Namen Allahs, mit dessen Namen nichts auf der Erde und nichts im Himmel schaden kann, und Er ist der Allhörende, der Allwissende."
       },
       "9": {
-        "title": "Health Prayer",
-        "meaning": "O Allah. Grant me health in my body."
+        "title": "Gebet um Wohlergehen",
+        "meaning": "O Allah, schenke mir Wohlergehen in meinem Körper. O Allah, schenke mir Wohlergehen in meinem Gehör. O Allah, schenke mir Wohlergehen in meinem Augenlicht. Es gibt keinen Gott außer Dir. O Allah, ich suche Zuflucht bei Dir vor Unglauben und Armut. O Allah, ich suche Zuflucht bei Dir vor der Strafe des Grabes. Es gibt keinen Gott außer Dir."
       },
       "10": {
-        "title": "Seeking Forgiveness",
-        "meaning": "I seek forgiveness from Allah and I repent to Him."
+        "title": "Bitte um Vergebung",
+        "meaning": "Ich bitte Allah um Vergebung und wende mich Ihm reuevoll zu."
       },
       "11": {
         "title": "Salawat",
-        "meaning": "O Allah. Send blessings upon Muhammad."
+        "meaning": "O Allah, segne Muhammad."
       },
       "12": {
-        "title": "Contentment Prayer",
-        "meaning": "I am pleased with Allah as my Lord."
+        "title": "Gebet der Zufriedenheit",
+        "meaning": "Ich bin zufrieden mit Allah als Herrn, mit dem Islam als Religion und mit Muhammad als Propheten."
       },
       "13": {
-        "title": "Praise Prayer",
-        "meaning": "All praise is due to Allah."
+        "title": "Lobpreis",
+        "meaning": "Alles Lob gebührt Allah."
       },
       "14": {
-        "title": "Seeking Wellbeing",
-        "meaning": "O Allah. I ask You for wellbeing."
+        "title": "Bitte um Wohlergehen",
+        "meaning": "O Allah, ich bitte Dich um Verzeihung und Wohlergehen im Diesseits und im Jenseits."
       },
       "15": {
-        "title": "Gratitude Prayer",
-        "meaning": "O Allah. All praise and thanks are Yours."
+        "title": "Dankgebet",
+        "meaning": "O Allah, Dir gebührt das Lob und Dir gebührt der Dank."
       },
       "16": {
-        "title": "Halal Sustenance Prayer",
-        "meaning": "O Allah. Suffice me with what is lawful against what is unlawful."
+        "title": "Gebet um erlaubten Lebensunterhalt",
+        "meaning": "O Allah, lass mich mit dem Erlaubten auskommen, sodass ich das Verbotene nicht brauche, und mach mich durch Deine Güte unabhängig von allen außer Dir."
       },
       "17": {
-        "title": "Anxiety Protection",
-        "meaning": "O Allah. I seek refuge in You from worry and grief."
+        "title": "Schutz vor Sorgen",
+        "meaning": "O Allah, ich suche Zuflucht bei Dir vor Sorge und Kummer, vor Unfähigkeit und Trägheit, vor Feigheit und Geiz, vor der Last der Schulden und davor, von Menschen überwältigt zu werden."
       },
       "18": {
-        "title": "Blessing Prayer",
-        "meaning": "O Allah. Bless what You have provided us."
+        "title": "Gebet um Segen",
+        "meaning": "O Allah, segne uns in dem, womit Du uns versorgt hast."
       },
       "19": {
-        "title": "Pure Sustenance Prayer",
-        "meaning": "O Allah. I ask You for pure sustenance."
+        "title": "Gebet um reine Versorgung",
+        "meaning": "O Allah, ich bitte Dich um nützliches Wissen, gute Versorgung und angenommene Taten."
       },
       "20": {
-        "title": "Doors of Mercy Prayer",
-        "meaning": "O Allah. Open for me the doors of Your mercy."
+        "title": "Tore der Barmherzigkeit",
+        "meaning": "O Allah, öffne mir die Tore Deiner Barmherzigkeit."
       },
       "21": {
-        "title": "Gratitude for Blessings",
-        "meaning": "My Lord. Inspire me to be grateful for Your blessings."
+        "title": "Dank für die Gaben",
+        "meaning": "Mein Herr, gib mir ein, für Deine Gnade dankbar zu sein, die Du mir und meinen Eltern erwiesen hast, und rechtschaffen zu handeln, wie es Dir gefällt. Und lass mich durch Deine Barmherzigkeit eingehen unter Deine rechtschaffenen Diener."
       },
       "22": {
-        "title": "Wealth Prayer",
-        "meaning": "O Allah. I ask You for sufficiency."
+        "title": "Gebet um Genügsamkeit",
+        "meaning": "O Allah, ich bitte Dich um Unabhängigkeit."
       },
       "23": {
-        "title": "Lawful Earnings Prayer",
-        "meaning": "O Allah. Provide me with lawful sustenance."
+        "title": "Gebet um erlaubten Verdienst",
+        "meaning": "O Allah, versorge mich mit erlaubtem Lebensunterhalt."
       },
       "24": {
-        "title": "Ease Prayer",
-        "meaning": "O Allah. There is no ease except what You make easy."
+        "title": "Gebet um Erleichterung",
+        "meaning": "O Allah, nichts ist leicht außer dem, was Du leicht machst."
       },
       "25": {
         "title": "Hasbunallah",
-        "meaning": "Allah is sufficient for us, and He is the best Disposer of affairs."
+        "meaning": "Allah genügt uns, und welch vortrefflicher Sachwalter ist Er."
       },
       "26": {
-        "title": "Abundance in Provision",
-        "meaning": "O Allah. Expand my provision."
+        "title": "Weite Versorgung",
+        "meaning": "O Allah, erweitere meine Versorgung."
       },
       "27": {
-        "title": "Taqwa and Solution",
-        "meaning": "Whoever fears Allah, He will make a way out for him."
+        "title": "Gottesfurcht und Ausweg",
+        "meaning": "Wer Allah fürchtet, dem verschafft Er einen Ausweg."
       },
       "28": {
-        "title": "Family Happiness Prayer",
-        "meaning": "Our Lord. Grant us from our spouses and offspring comfort to our eyes."
+        "title": "Gebet für das Familienglück",
+        "meaning": "Unser Herr, schenke uns an unseren Gattinnen und Nachkommen Augentrost und mache uns zu Vorbildern für die Gottesfürchtigen."
       },
       "29": {
-        "title": "Marriage Blessing",
-        "meaning": "May Allah bless you and send blessings upon you."
+        "title": "Segenswunsch zur Heirat",
+        "meaning": "Möge Allah dich segnen, Segen über dich kommen lassen und euch beide im Guten zusammenführen."
       },
       "30": {
-        "title": "Righteous Offspring Prayer",
-        "meaning": "My Lord. Grant me righteous offspring from Your presence."
+        "title": "Gebet um gute Nachkommen",
+        "meaning": "Mein Herr, schenke mir von Dir aus gute Nachkommenschaft. Du bist es ja, der das Gebet erhört."
       },
       "31": {
-        "title": "Parents Prayer",
-        "meaning": "My Lord. Have mercy on them as they raised me when I was small."
+        "title": "Gebet für die Eltern",
+        "meaning": "Mein Herr, erbarme Dich ihrer, so wie sie mich aufgezogen haben, als ich klein war."
       },
       "32": {
-        "title": "Home Blessing Prayer",
-        "meaning": "O Allah. Bless our home."
+        "title": "Segen für das Zuhause",
+        "meaning": "O Allah, segne uns in unserem Zuhause."
       },
       "33": {
-        "title": "Prayer Establishment",
-        "meaning": "My Lord. Make me an establisher of prayer, and from my descendants."
+        "title": "Das Gebet verrichten",
+        "meaning": "Mein Herr, mache mich zu einem, der das Gebet verrichtet, und auch Nachkommen von mir. Unser Herr, nimm mein Bittgebet an."
       },
       "34": {
-        "title": "Hellfire Protection",
-        "meaning": "Our Lord. Avert from us the punishment of Hell."
+        "title": "Schutz vor der Hölle",
+        "meaning": "Unser Herr, wende die Strafe der Hölle von uns ab. Ihre Strafe ist wahrlich eine andauernde Qual."
       },
       "35": {
-        "title": "Mercy Prayer",
-        "meaning": "Our Lord. Grant us mercy from Yourself."
+        "title": "Gebet um Barmherzigkeit",
+        "meaning": "Unser Herr, gib uns von Dir aus Barmherzigkeit und bereite uns in unserer Angelegenheit den rechten Weg."
       },
       "36": {
-        "title": "Heart Steadfastness",
-        "meaning": "Our Lord. Do not let our hearts deviate."
+        "title": "Standhaftigkeit des Herzens",
+        "meaning": "Unser Herr, lass unsere Herzen nicht abschweifen, nachdem Du uns rechtgeleitet hast, und schenke uns von Dir aus Barmherzigkeit. Du bist ja der unablässig Schenkende."
       },
       "37": {
-        "title": "Neighbor Reconciliation",
-        "meaning": "O Allah. Reconcile between us and our neighbors."
+        "title": "Frieden mit den Nachbarn",
+        "meaning": "O Allah, stifte Frieden zwischen uns und unseren Nachbarn."
       },
       "38": {
-        "title": "Submission Prayer",
-        "meaning": "Our Lord. Make us submissive to You."
+        "title": "Gebet der Hingabe",
+        "meaning": "Unser Herr, mache uns beide Dir ergeben und aus unserer Nachkommenschaft eine Dir ergebene Gemeinschaft. Zeige uns unsere Riten und wende Dich uns reue-annehmend zu. Du bist ja der Reue-Annehmende, der Barmherzige."
       },
       "39": {
-        "title": "Good in Both Worlds",
-        "meaning": "Our Lord. Give us good in this world and in the Hereafter."
+        "title": "Gutes in beiden Welten",
+        "meaning": "Unser Herr, gib uns im Diesseits Gutes und im Jenseits Gutes und bewahre uns vor der Strafe des Feuers."
       },
       "40": {
-        "title": "Satan Protection",
-        "meaning": "I seek refuge in Allah from the accursed Satan."
+        "title": "Schutz vor dem Satan",
+        "meaning": "Ich suche Zuflucht bei Allah vor dem verfluchten Satan."
       },
       "41": {
-        "title": "Mashallah Prayer",
-        "meaning": "What Allah has willed, there is no power except with Allah."
+        "title": "Maschallah",
+        "meaning": "Was Allah will (geschieht); es gibt keine Kraft außer bei Allah."
       },
       "42": {
-        "title": "Declaration of Faith",
-        "meaning": "There is no deity except Allah, Muhammad is the Messenger of Allah."
+        "title": "Glaubensbekenntnis",
+        "meaning": "Es gibt keinen Gott außer Allah, Muhammad ist der Gesandte Allahs."
       },
       "43": {
-        "title": "Complete Words Protection",
-        "meaning": "I seek refuge in Allah's perfect words from the evil of what He has created."
+        "title": "Schutz durch die vollkommenen Worte",
+        "meaning": "Ich suche Zuflucht bei den vollkommenen Worten Allahs vor dem Übel dessen, was Er erschaffen hat."
       },
       "44": {
-        "title": "Healing Ruqyah",
-        "meaning": "In the name of Allah, I perform ruqyah on you."
+        "title": "Heilungs-Ruqya",
+        "meaning": "Im Namen Allahs spreche ich über dir, vor allem, was dir schadet, vor dem Übel jeder Seele oder eines neidischen Auges. Allah möge dich heilen. Im Namen Allahs spreche ich über dir."
       },
       "45": {
-        "title": "Surah An-Nas",
-        "meaning": "Say: I seek refuge in the Lord of mankind."
+        "title": "Sure an-Nas",
+        "meaning": "Sprich: Ich suche Zuflucht beim Herrn der Menschen, dem König der Menschen, dem Gott der Menschen, vor dem Übel des sich zurückziehenden Einflüsterers, der in die Brüste der Menschen einflüstert, sei er von den Dschinn oder von den Menschen."
       },
       "46": {
-        "title": "Islamic Nature Prayer",
-        "meaning": "We have entered the morning upon the natural way of Islam."
+        "title": "Auf der natürlichen Veranlagung des Islam",
+        "meaning": "Wir sind auf der natürlichen Veranlagung des Islam in den Morgen eingetreten."
       },
       "47": {
-        "title": "Surah Al-Falaq",
-        "meaning": "Say: I seek refuge in the Lord of daybreak."
+        "title": "Sure al-Falaq",
+        "meaning": "Sprich: Ich suche Zuflucht beim Herrn des Tagesanbruchs, vor dem Übel dessen, was Er erschaffen hat, vor dem Übel der Dunkelheit, wenn sie hereinbricht, vor dem Übel der Frauen, die auf Knoten blasen, und vor dem Übel eines Neiders, wenn er neidet."
       },
       "48": {
-        "title": "Blessing Loss Protection",
-        "meaning": "O Allah. I seek refuge in You from the loss of Your blessings."
+        "title": "Schutz vor dem Verlust der Gaben",
+        "meaning": "O Allah, ich suche Zuflucht bei Dir vor dem Schwinden Deiner Gaben, vor dem Wandel des Wohlergehens, das Du geschenkt hast, vor Deiner plötzlichen Strafe und vor allem, was Dein Missfallen erregt."
       },
       "49": {
-        "title": "La Hawla Prayer",
-        "meaning": "There is no power nor strength except with Allah."
+        "title": "La Hawla",
+        "meaning": "Es gibt keine Macht und keine Kraft außer bei Allah."
       },
       "50": {
-        "title": "Heart Firmness",
-        "meaning": "O Turner of hearts. Keep my heart firm upon Your religion."
+        "title": "Festigkeit des Herzens",
+        "meaning": "O Du, der die Herzen wendet, festige mein Herz in Deiner Religion."
       },
       "51": {
-        "title": "Dajjal Fitnah Protection",
-        "meaning": "O Allah. I seek refuge in You from the trial of the Dajjal."
+        "title": "Schutz vor der Versuchung des Dadschal",
+        "meaning": "O Allah, ich suche Zuflucht bei Dir vor der Strafe der Hölle, vor der Strafe des Grabes, vor der Versuchung des Lebens und des Todes und vor dem Übel der Versuchung des falschen Messias (Dadschal)."
       },
       "52": {
-        "title": "Goodness in Both Worlds",
-        "meaning": "Our Lord. Give us good in this world and good in the Hereafter."
+        "title": "Gutes in beiden Welten",
+        "meaning": "Unser Herr, gib uns im Diesseits Gutes und im Jenseits Gutes."
       },
       "53": {
-        "title": "Increase in Knowledge",
-        "meaning": "My Lord. Increase me in knowledge."
+        "title": "Zunahme an Wissen",
+        "meaning": "Mein Herr, lass mich an Wissen zunehmen."
       },
       "54": {
-        "title": "Forgiveness of Sins",
-        "meaning": "Our Lord. Forgive us our sins."
+        "title": "Vergebung der Sünden",
+        "meaning": "Unser Herr, vergib uns unsere Sünden und unsere Maßlosigkeit in unseren Angelegenheiten, festige unsere Füße und hilf uns gegen das ungläubige Volk."
       },
       "55": {
-        "title": "Straight Path",
-        "meaning": "Guide us to the straight path."
+        "title": "Der gerade Weg",
+        "meaning": "Führe uns den geraden Weg."
       },
       "56": {
-        "title": "Mercy Prayer",
-        "meaning": "My Lord. Have mercy on us."
+        "title": "Gebet um Erbarmen",
+        "meaning": "Mein Herr, erbarme Dich unser."
       },
       "57": {
-        "title": "Patience Prayer",
-        "meaning": "Our Lord. Pour upon us patience."
+        "title": "Gebet um Geduld",
+        "meaning": "Unser Herr, gieße Geduld über uns aus, festige unsere Füße und hilf uns gegen das ungläubige Volk."
       },
       "58": {
-        "title": "Ease Not Difficulty",
-        "meaning": "My Lord. Make it easy, not difficult."
+        "title": "Leicht, nicht schwer",
+        "meaning": "Mein Herr, mach es leicht und mach es nicht schwer."
       },
       "59": {
-        "title": "Acceptance Prayer",
-        "meaning": "Our Lord. Accept from us."
+        "title": "Gebet um Annahme",
+        "meaning": "Unser Herr, nimm es von uns an."
       },
       "60": {
-        "title": "Among Righteous",
-        "meaning": "Admit me by Your mercy among Your righteous servants."
+        "title": "Unter den Rechtschaffenen",
+        "meaning": "Mein Herr, gib mir ein, für Deine Gnade dankbar zu sein, die Du mir und meinen Eltern erwiesen hast, und rechtschaffen zu handeln, wie es Dir gefällt. Und lass mich durch Deine Barmherzigkeit eingehen unter Deine rechtschaffenen Diener."
       },
       "61": {
-        "title": "Blessing Gratitude",
-        "meaning": "My Lord. Inspire me to be grateful for Your blessings."
+        "title": "Dankbarkeit für die Gaben",
+        "meaning": "Mein Herr, gib mir ein, für Deine Gaben dankbar zu sein."
       },
       "62": {
-        "title": "Hearing and Knowing",
-        "meaning": "Our Lord. Accept from us. Indeed You are the Hearing, the Knowing."
+        "title": "Der Allhörende, der Allwissende",
+        "meaning": "Unser Herr, nimm es von uns an. Du bist ja der Allhörende, der Allwissende."
       },
       "63": {
-        "title": "Pardon Prayer",
-        "meaning": "O Allah. You are Pardoning and love to pardon, so pardon me."
+        "title": "Gebet um Verzeihung",
+        "meaning": "O Allah, Du bist voller Verzeihung und liebst das Verzeihen, so verzeihe mir."
       },
       "64": {
-        "title": "Qunut Prayer",
-        "meaning": "O Allah. Guide me among those You have guided."
+        "title": "Qunut-Gebet",
+        "meaning": "O Allah, leite mich recht unter denen, die Du rechtgeleitet hast, schenke mir Wohlergehen unter denen, denen Du Wohlergehen geschenkt hast, nimm mich in Deine Obhut unter denen, die Du in Deine Obhut genommen hast, segne mir, was Du mir gegeben hast, und bewahre mich vor dem Übel dessen, was Du bestimmt hast. Denn Du bestimmst, und über Dich wird nicht bestimmt. Wen Du zum Freund nimmst, der wird nicht erniedrigt. Segensreich und erhaben bist Du, unser Herr."
       },
       "65": {
-        "title": "Master of Forgiveness",
-        "meaning": "O Allah. You are my Lord. There is no deity except You."
+        "title": "Sayyid al-Istighfar",
+        "meaning": "O Allah, Du bist mein Herr; es gibt keinen Gott außer Dir. Du hast mich erschaffen, und ich bin Dein Diener, und ich halte an Deinem Bund und Deinem Versprechen fest, so gut ich kann. Ich suche Zuflucht bei Dir vor dem Übel dessen, was ich getan habe. Ich bekenne Dir Deine Gnade an mir, und ich bekenne Dir meine Sünde. So vergib mir, denn niemand vergibt die Sünden außer Dir."
       },
       "66": {
-        "title": "Travel Prayer",
-        "meaning": "Glory be to Him who has subjected this to us."
+        "title": "Reisegebet",
+        "meaning": "Gepriesen sei Der, der uns dies dienstbar gemacht hat; wir selbst wären dazu nicht imstande gewesen. Und wahrlich, zu unserem Herrn werden wir zurückkehren."
       },
       "67": {
-        "title": "Meal Prayer",
-        "meaning": "O Allah. Bless us in what You have provided."
+        "title": "Gebet beim Essen",
+        "meaning": "O Allah, segne uns in dem, womit Du uns versorgt hast."
       },
       "68": {
-        "title": "Visiting the Sick",
-        "meaning": "No harm, it will be a purification, if Allah wills."
+        "title": "Beim Krankenbesuch",
+        "meaning": "Kein Unheil, es ist eine Reinigung, so Allah will."
       },
       "69": {
-        "title": "Refuge from Satan",
-        "meaning": "I seek refuge in Allah from the accursed Satan."
+        "title": "Zuflucht vor dem Satan",
+        "meaning": "Ich suche Zuflucht bei Allah vor dem verfluchten Satan."
       },
       "70": {
-        "title": "Grave Torment Protection",
-        "meaning": "O Allah. I seek refuge in You from the punishment of the grave."
+        "title": "Schutz vor der Strafe des Grabes",
+        "meaning": "O Allah, ich suche Zuflucht bei Dir vor der Strafe der Hölle, vor der Strafe des Grabes, vor der Versuchung des Lebens und des Todes und vor dem Übel der Versuchung des falschen Messias (Dadschal)."
       },
       "71": {
-        "title": "Mosque Entry Prayer",
-        "meaning": "O Allah. Open the gates of Your mercy for me."
+        "title": "Beim Betreten der Moschee",
+        "meaning": "O Allah, öffne mir die Tore Deiner Barmherzigkeit."
       },
       "72": {
-        "title": "Mosque Exit Prayer",
-        "meaning": "O Allah. I ask You from Your bounty."
+        "title": "Beim Verlassen der Moschee",
+        "meaning": "O Allah, ich bitte Dich um Deine Huld."
       },
       "73": {
-        "title": "Post-Ablution Testimony",
-        "meaning": "I bear witness there is no deity except Allah."
+        "title": "Bekenntnis nach der Gebetswaschung",
+        "meaning": "Ich bezeuge, dass es keinen Gott gibt außer Allah, Er allein, Er hat keinen Partner, und ich bezeuge, dass Muhammad Sein Diener und Gesandter ist."
       },
       "74": {
-        "title": "Funeral Prayer",
-        "meaning": "O Allah. Forgive him and have mercy on him."
+        "title": "Totengebet",
+        "meaning": "O Allah, vergib ihm und erbarme Dich seiner, gewähre ihm Wohlergehen und verzeihe ihm. Bereite ihm eine ehrenvolle Aufnahme und mache seinen Eingang weit. Wasche ihn mit Wasser, Schnee und Hagel und reinige ihn von den Sünden, wie Du ein weißes Gewand vom Schmutz reinigst. Gib ihm eine bessere Wohnstätte als seine Wohnstätte, eine bessere Familie als seine Familie und einen besseren Gatten als seinen Gatten. Lass ihn ins Paradies eingehen und bewahre ihn vor der Strafe des Grabes und der Strafe des Feuers."
       },
       "75": {
-        "title": "Seeking Mercy",
-        "meaning": "O Allah. I ask You by Your mercy."
+        "title": "Bitte um Barmherzigkeit",
+        "meaning": "O Allah, ich bitte Dich bei Deiner Barmherzigkeit."
       },
       "76": {
-        "title": "Friday Salawat",
-        "meaning": "O Allah. Send blessings upon our master Muhammad."
+        "title": "Freitags-Salawat",
+        "meaning": "O Allah, segne unseren Meister Muhammad."
       },
       "77": {
-        "title": "Tasbeeh",
-        "meaning": "Glory be to Allah and praise be to Allah."
+        "title": "Tasbih",
+        "meaning": "Gepriesen sei Allah, und alles Lob gebührt Allah."
       },
       "78": {
-        "title": "Intercession Prayer",
-        "meaning": "O Allah. Grant us the intercession of Your Prophet."
+        "title": "Gebet um Fürsprache",
+        "meaning": "O Allah, gewähre uns die Fürsprache Deines Propheten."
       },
       "79": {
-        "title": "Sin Forgiveness",
-        "meaning": "O Allah. Forgive my sins."
+        "title": "Vergebung der Sünden",
+        "meaning": "O Allah, vergib mir meine Sünden."
       },
       "80": {
-        "title": "Night of Power Prayer",
-        "meaning": "O Allah. You are Pardoning and love to pardon, so pardon me."
+        "title": "Gebet in der Nacht der Bestimmung",
+        "meaning": "O Allah, Du bist voller Verzeihung und liebst das Verzeihen, so verzeihe mir."
       },
       "81": {
-        "title": "Reaching Ramadan",
-        "meaning": "O Allah. Let us reach Ramadan."
+        "title": "Den Ramadan erreichen",
+        "meaning": "O Allah, lass uns den Ramadan erreichen."
       },
       "82": {
-        "title": "Tawheed Dhikr",
-        "meaning": "There is no deity except Allah, alone without partner."
+        "title": "Dhikr der Einheit",
+        "meaning": "Es gibt keinen Gott außer Allah, Er allein, Er hat keinen Partner. Ihm gehört die Herrschaft und Ihm gebührt das Lob, und Er hat Macht über alle Dinge."
       },
       "83": {
-        "title": "Eid Takbir",
-        "meaning": "Allah is the Greatest, Allah is the Greatest, there is no deity except Allah."
+        "title": "Festtags-Takbir",
+        "meaning": "Allah ist der Größte, Allah ist der Größte. Es gibt keinen Gott außer Allah. Allah ist der Größte, Allah ist der Größte, und Allah gebührt alles Lob."
       },
       "84": {
-        "title": "Talbiyah",
-        "meaning": "Here I am, O Allah, here I am at Your service."
+        "title": "Talbiya",
+        "meaning": "Hier bin ich, o Allah, hier bin ich. Hier bin ich, Du hast keinen Partner, hier bin ich. Wahrlich, das Lob und die Gnade gehören Dir, und die Herrschaft. Du hast keinen Partner."
       },
       "85": {
-        "title": "New Moon Prayer",
-        "meaning": "O Allah. Let it appear over us with blessing and faith."
+        "title": "Beim Sehen der Mondsichel",
+        "meaning": "O Allah, lass diese Mondsichel über uns aufgehen mit Segen und Glauben, mit Unversehrtheit und Islam. (O Mondsichel,) mein Herr und dein Herr ist Allah."
       },
       "86": {
-        "title": "Sha'ban Prayer",
-        "meaning": "O Allah. Bless us in Sha'ban."
+        "title": "Gebet im Monat Schaban",
+        "meaning": "O Allah, segne uns im Schaban."
       },
       "87": {
-        "title": "Blessed Days Prayer",
-        "meaning": "O Allah. Make these days blessed for us."
+        "title": "Gesegnete Tage",
+        "meaning": "O Allah, mache diese Tage zu gesegneten Tagen."
       },
       "88": {
         "title": "Istighfar",
-        "meaning": "I seek forgiveness from Allah."
+        "meaning": "Ich bitte Allah um Vergebung."
       },
       "89": {
-        "title": "Repentance Prayer",
-        "meaning": "I repent to Allah."
+        "title": "Reuegebet",
+        "meaning": "Ich wende mich Allah reuevoll zu."
       },
       "90": {
-        "title": "Forgiveness and Mercy",
-        "meaning": "My Lord. Forgive me and have mercy on me."
+        "title": "Vergebung und Erbarmen",
+        "meaning": "Mein Herr, vergib mir, erbarme Dich meiner, behebe meine Mängel, versorge mich und erhöhe meinen Rang."
       },
       "91": {
-        "title": "Self-Wrong Confession",
-        "meaning": "O Allah. I have wronged myself."
+        "title": "Bekenntnis des Unrechts gegen sich selbst",
+        "meaning": "O Allah, ich habe mir selbst viel Unrecht getan, und niemand vergibt die Sünden außer Dir. So gewähre mir Vergebung von Dir und erbarme Dich meiner. Du bist ja der Allvergebende, der Barmherzige."
       },
       "92": {
-        "title": "Adam's Repentance",
-        "meaning": "Our Lord. We have wronged ourselves."
+        "title": "Die Reue Adams",
+        "meaning": "Unser Herr, wir haben uns selbst Unrecht getan. Wenn Du uns nicht vergibst und Dich unser nicht erbarmst, werden wir ganz gewiss zu den Verlierern gehören."
       },
       "93": {
-        "title": "Best of Forgivers",
-        "meaning": "My Lord. Forgive and have mercy. You are the best of those who show mercy."
+        "title": "Der Beste der Erbarmer",
+        "meaning": "Mein Herr, vergib und erbarme Dich, und Du bist der Beste der Erbarmer."
       },
       "94": {
-        "title": "Purification from Sins",
-        "meaning": "O Allah. Wash me from my sins."
+        "title": "Reinigung von den Sünden",
+        "meaning": "O Allah, entferne mich von meinen Sünden, wie Du den Osten vom Westen entfernt hast. O Allah, reinige mich von den Sünden, wie ein weißes Gewand vom Schmutz gereinigt wird. O Allah, wasche meine Sünden ab mit Wasser, Schnee und Hagel."
       },
       "95": {
-        "title": "Living and Sustaining",
-        "meaning": "I seek forgiveness from Allah, the Ever-Living, the Sustainer."
+        "title": "Vergebung beim Lebendigen, Beständigen",
+        "meaning": "Ich bitte Allah um Vergebung, außer dem es keinen Gott gibt, den Lebendigen, den Beständigen, und ich wende mich Ihm reuevoll zu."
       },
       "96": {
-        "title": "Pardoning and Generous",
-        "meaning": "O Allah. You are Pardoning and Generous."
+        "title": "Der Verzeihende, der Großzügige",
+        "meaning": "O Allah, Du bist voller Verzeihung und großzügig."
       },
       "97": {
-        "title": "Forgetting and Mistakes",
-        "meaning": "Our Lord. Do not blame us if we forget or make mistakes."
+        "title": "Vergessen und Fehler",
+        "meaning": "Allah erlegt keiner Seele mehr auf, als sie zu leisten vermag. Ihr kommt zugute, was sie verdient hat, und ihr fällt zur Last, was sie verschuldet hat. Unser Herr, belange uns nicht, wenn wir vergessen oder einen Fehler begehen. Unser Herr, lege uns keine Bürde auf, wie Du sie denen vor uns auferlegt hast. Unser Herr, bürde uns nicht auf, wozu wir keine Kraft haben. Verzeihe uns, vergib uns und erbarme Dich unser. Du bist unser Schutzherr, so hilf uns gegen das ungläubige Volk."
       },
       "98": {
-        "title": "Cleansing from Sins",
-        "meaning": "O Allah. Cleanse me from sins."
+        "title": "Reinigung von den Sünden",
+        "meaning": "O Allah, reinige mich von den Sünden."
       },
       "99": {
-        "title": "I Have Repented",
-        "meaning": "I have repented to Allah."
+        "title": "Ich habe bereut",
+        "meaning": "Ich habe mich Allah reuevoll zugewandt."
       },
       "100": {
         "title": "Takbir",
-        "meaning": "Allah is the Greatest."
+        "meaning": "Allah ist der Größte."
       },
       "101": {
         "title": "Subhanaka",
-        "meaning": "Glory be to You, O Allah. Praise be to You."
+        "meaning": "Gepriesen seist Du, o Allah, und Dir gebührt das Lob. Gesegnet ist Dein Name und erhaben ist Deine Majestät, und es gibt keinen Gott außer Dir."
       },
       "102": {
-        "title": "Surah Al-Fatiha",
-        "meaning": "All praise is due to Allah, Lord of the worlds."
+        "title": "Sure al-Fatiha",
+        "meaning": "Im Namen Allahs, des Allerbarmers, des Barmherzigen. Alles Lob gebührt Allah, dem Herrn der Welten, dem Allerbarmer, dem Barmherzigen, dem Herrscher am Tag des Gerichts. Dir allein dienen wir, und Dich allein bitten wir um Hilfe. Führe uns den geraden Weg, den Weg derer, denen Du Gnade erwiesen hast, nicht derer, die Zorn erregt haben, und nicht der Irregehenden."
       },
       "103": {
-        "title": "Ruku Tasbeeh",
-        "meaning": "Glory be to my Lord, the Magnificent."
+        "title": "Tasbih in der Verbeugung",
+        "meaning": "Gepriesen sei mein Herr, der Gewaltige."
       },
       "104": {
-        "title": "Sujood Tasbeeh",
-        "meaning": "Glory be to my Lord, the Most High."
+        "title": "Tasbih in der Niederwerfung",
+        "meaning": "Gepriesen sei mein Herr, der Höchste."
       },
       "105": {
         "title": "Tahiyyat",
-        "meaning": "All greetings are for Allah."
+        "meaning": "Alle Grüße, Gebete und guten Worte gebühren Allah. Friede sei mit dir, o Prophet, und die Barmherzigkeit Allahs und Sein Segen. Friede sei mit uns und mit den rechtschaffenen Dienern Allahs. Ich bezeuge, dass es keinen Gott gibt außer Allah, und ich bezeuge, dass Muhammad Sein Diener und Gesandter ist."
       },
       "106": {
         "title": "Allahumma Salli",
-        "meaning": "O Allah. Send blessings upon Muhammad."
+        "meaning": "O Allah, segne Muhammad."
       },
       "107": {
         "title": "Allahumma Barik",
-        "meaning": "O Allah. Bestow blessings upon Muhammad."
+        "meaning": "O Allah, segne Muhammad und die Familie Muhammads, so wie Du Ibrahim und die Familie Ibrahims gesegnet hast. Du bist wahrlich lobenswert und ruhmreich."
       },
       "108": {
-        "title": "Rabbana Prayer",
-        "meaning": "Our Lord. Give us good in this world."
+        "title": "Rabbana-Gebet",
+        "meaning": "Unser Herr, gib uns im Diesseits Gutes."
       },
       "109": {
         "title": "Salam",
-        "meaning": "Peace and mercy of Allah be upon you."
+        "meaning": "Friede sei mit euch und die Barmherzigkeit Allahs."
       },
       "110": {
-        "title": "Post-Salam Prayer",
-        "meaning": "O Allah. You are Peace (the Source of Peace)."
+        "title": "Gebet nach dem Salam",
+        "meaning": "O Allah, Du bist der Friede, und von Dir kommt der Friede. Segensreich bist Du, o Besitzer der Majestät und der Ehre."
       },
       "111": {
-        "title": "Qunut Prayer",
-        "meaning": "O Allah. We seek Your help."
+        "title": "Qunut-Gebet (Witr)",
+        "meaning": "O Allah, wir bitten Dich um Hilfe, um Vergebung und um Rechtleitung. Wir glauben an Dich, wenden uns Dir reuevoll zu und vertrauen auf Dich. Wir preisen Dich mit allem Guten. Wir danken Dir und sind Dir gegenüber nicht undankbar, und wir sagen uns los von dem, der Dir ungehorsam ist, und verlassen ihn."
       },
       "112": {
-        "title": "Prophet Yunus Prayer",
-        "meaning": "There is no deity except You. Glory be to You. Indeed I have been of the wrongdoers."
+        "title": "Gebet des Propheten Yunus",
+        "meaning": "Es gibt keinen Gott außer Dir. Gepriesen seist Du. Ich gehörte wahrlich zu den Ungerechten."
       },
       "113": {
-        "title": "Grief Prayer",
-        "meaning": "O Allah. I am Your servant."
+        "title": "Gebet in Trauer",
+        "meaning": "O Allah, ich bin Dein Diener."
       },
       "114": {
-        "title": "Sufficiency Verse",
-        "meaning": "Allah is sufficient for me. There is no deity except Him."
+        "title": "Vers des Gottvertrauens",
+        "meaning": "Wenn sie sich abwenden, so sprich: Allah genügt mir. Es gibt keinen Gott außer Ihm. Auf Ihn verlasse ich mich, und Er ist der Herr des gewaltigen Thrones."
       },
       "115": {
-        "title": "Hope for Mercy",
-        "meaning": "O Allah. I hope for Your mercy."
+        "title": "Hoffnung auf Barmherzigkeit",
+        "meaning": "O Allah, auf Deine Barmherzigkeit hoffe ich. Überlass mich nicht einen Augenblick lang mir selbst und bringe alle meine Angelegenheiten in Ordnung. Es gibt keinen Gott außer Dir."
       },
       "116": {
-        "title": "Living and Sustaining",
-        "meaning": "O Ever-Living, O Sustainer. I seek help through Your mercy."
+        "title": "Der Lebendige, der Beständige",
+        "meaning": "O Lebendiger, o Beständiger, bei Deiner Barmherzigkeit suche ich Hilfe."
       },
       "117": {
-        "title": "Difficulty to Ease",
-        "meaning": "O Allah. Nothing is easy except what You make easy."
+        "title": "Von der Schwierigkeit zur Erleichterung",
+        "meaning": "O Allah, nichts ist leicht außer dem, was Du leicht machst."
       },
       "118": {
-        "title": "Grief Protection",
-        "meaning": "O Allah. I seek refuge in You from grief."
+        "title": "Schutz vor Kummer",
+        "meaning": "O Allah, ich suche Zuflucht bei Dir vor Kummer."
       },
       "119": {
-        "title": "Calamity Prayer",
-        "meaning": "Indeed we belong to Allah and to Him we shall return."
+        "title": "Gebet bei einem Unglück",
+        "meaning": "Wahrlich, wir gehören Allah, und zu Ihm kehren wir zurück. O Allah, belohne mich in meinem Unglück und gib mir dafür etwas Besseres als Ersatz."
       },
       "120": {
-        "title": "Rain of Patience",
-        "meaning": "Our Lord. Pour upon us patience."
+        "title": "Regen der Geduld",
+        "meaning": "Unser Herr, gieße Geduld über uns aus."
       },
       "121": {
-        "title": "Allah is With Me",
-        "meaning": "Allah is with me, Allah is watching over me."
+        "title": "Allah ist mit mir",
+        "meaning": "Allah ist mit mir, Allah sieht mich."
       },
       "122": {
-        "title": "Hope Verse",
-        "meaning": "Do not despair of the mercy of Allah."
+        "title": "Vers der Hoffnung",
+        "meaning": "Gebt die Hoffnung auf Allahs Erbarmen nicht auf."
       },
       "123": {
-        "title": "Tawakkul Verse",
-        "meaning": "And upon Allah let the believers rely."
+        "title": "Vers des Gottvertrauens",
+        "meaning": "Und auf Allah sollen die Gläubigen vertrauen."
       }
     }
   },

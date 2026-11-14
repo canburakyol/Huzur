@@ -253,7 +253,7 @@
     "nuzulExplorer": "Revelation Reasons",
     "wordByWord": "Word by Word",
     "tajweedTutor": "Tajweed Tutor",
-    "prayers": "Prayers",
+    "prayers": "Doa",
     "kazaTakibi": "Pelacak Salat Tertunda",
     "prayerTeacher": "Prayer Teacher",
     "settings": "Pengaturan",
@@ -466,14 +466,14 @@
     "totalAyahsLabel": "Total"
   },
   "prayers": {
-    "title": "Prayer Book",
-    "categories": "Categories",
-    "prayer": "Prayers",
+    "title": "Buku Doa",
+    "categories": "Kategori",
+    "prayer": "Doa",
     "quote": "Doa itu adalah ibadah.",
     "quoteAuthor": "Nabi Muhammad ﷺ · Tirmidzi 3372",
-    "prayerDetail": "Prayer Detail",
-    "pronunciation": "Pronunciation",
-    "meaning": "Meaning",
+    "prayerDetail": "Detail Doa",
+    "pronunciation": "Cara Baca",
+    "meaning": "Arti",
     "errors": {
       "loadFailed": "Waktu salat tidak dapat dimuat. Periksa koneksi internet Anda.",
       "fetchError": "Terjadi kesalahan saat memuat waktu salat. Coba lagi.",
@@ -2723,538 +2723,538 @@
   "prayerBook": {
     "categories": {
       "daily": {
-        "name": "Daily Prayers",
-        "desc": "Prayers for everyday recitation"
+        "name": "Doa Harian",
+        "desc": "Doa untuk dibaca setiap hari"
       },
       "debt": {
-        "name": "Debt & Sustenance",
-        "desc": "Prayers for financial relief"
+        "name": "Utang & Rezeki",
+        "desc": "Doa untuk kelapangan finansial"
       },
       "family": {
-        "name": "Family & Home",
-        "desc": "Prayers for family happiness"
+        "name": "Keluarga & Rumah",
+        "desc": "Doa untuk kebahagiaan keluarga"
       },
       "protection": {
-        "name": "Protection Prayers",
-        "desc": "Prayers for spiritual protection"
+        "name": "Doa Perlindungan",
+        "desc": "Doa untuk perlindungan spiritual"
       },
       "wishes": {
-        "name": "Wishes & Supplications",
-        "desc": "Prayers for requests"
+        "name": "Hajat & Permohonan",
+        "desc": "Doa untuk berbagai hajat"
       },
       "prophet": {
-        "name": "Prophet's Prayers",
-        "desc": "Prayers from Prophet Muhammad (PBUH)"
+        "name": "Doa Para Nabi",
+        "desc": "Doa para nabi dari Al-Qur'an dan Sunnah"
       },
       "special_days": {
-        "name": "Special Day Prayers",
-        "desc": "Prayers for holy nights and festivals"
+        "name": "Hari-Hari Istimewa",
+        "desc": "Doa untuk malam-malam mulia dan hari raya"
       },
       "repentance": {
-        "name": "Repentance & Forgiveness",
-        "desc": "Prayers for seeking forgiveness"
+        "name": "Taubat & Ampunan",
+        "desc": "Doa memohon ampunan"
       },
       "prayer_duas": {
-        "name": "Salah Prayers",
-        "desc": "Prayers recited during Salah"
+        "name": "Doa dalam Salat",
+        "desc": "Doa yang dibaca dalam salat"
       },
       "distress": {
-        "name": "Distress Prayers",
-        "desc": "Prayers for hardship and grief"
+        "name": "Saat Kesulitan",
+        "desc": "Doa saat kesusahan dan kesedihan"
       }
     },
     "items": {
       "1": {
-        "title": "Morning Prayer",
-        "meaning": "We have entered the morning and so has the kingdom of Allah. Praise belongs to Allah."
+        "title": "Doa Pagi",
+        "meaning": "Kami telah memasuki waktu pagi dan kerajaan pun memasuki waktu pagi milik Allah. Segala puji bagi Allah. Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan milik-Nya segala puji, dan Dia Mahakuasa atas segala sesuatu. Wahai Tuhanku, aku memohon kepada-Mu kebaikan hari ini dan kebaikan sesudahnya, dan aku berlindung kepada-Mu dari keburukan hari ini dan keburukan sesudahnya. Wahai Tuhanku, aku berlindung kepada-Mu dari kemalasan dan keburukan usia tua. Wahai Tuhanku, aku berlindung kepada-Mu dari azab di neraka dan azab di kubur."
       },
       "2": {
-        "title": "Evening Prayer",
-        "meaning": "We have entered the evening and so has the kingdom of Allah. Praise belongs to Allah."
+        "title": "Doa Sore",
+        "meaning": "Kami telah memasuki waktu sore dan kerajaan pun memasuki waktu sore milik Allah. Segala puji bagi Allah. Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan milik-Nya segala puji, dan Dia Mahakuasa atas segala sesuatu. Wahai Tuhanku, aku memohon kepada-Mu kebaikan malam ini dan kebaikan sesudahnya, dan aku berlindung kepada-Mu dari keburukan malam ini dan keburukan sesudahnya. Wahai Tuhanku, aku berlindung kepada-Mu dari kemalasan dan keburukan usia tua. Wahai Tuhanku, aku berlindung kepada-Mu dari azab di neraka dan azab di kubur."
       },
       "3": {
-        "title": "Sleep Prayer",
-        "meaning": "O Allah. In Your name I die and live."
+        "title": "Doa Sebelum Tidur",
+        "meaning": "Ya Allah, dengan nama-Mu aku mati dan aku hidup."
       },
       "4": {
-        "title": "Leaving Home Prayer",
-        "meaning": "In the name of Allah, I put my trust in Allah."
+        "title": "Doa Keluar Rumah",
+        "meaning": "Dengan nama Allah. Aku bertawakal kepada Allah, dan tiada daya serta kekuatan kecuali dengan Allah."
       },
       "5": {
-        "title": "Entering Home Prayer",
-        "meaning": "O Allah. I ask You for the best entry and the best exit."
+        "title": "Doa Masuk Rumah",
+        "meaning": "Ya Allah, aku memohon kepada-Mu sebaik-baik tempat masuk dan sebaik-baik tempat keluar. Dengan nama Allah kami masuk, dengan nama Allah kami keluar, dan kepada Allah, Tuhan kami, kami bertawakal."
       },
       "6": {
-        "title": "Ayatul Kursi",
-        "meaning": "Allah, there is no deity except Him, the Ever-Living, the Sustainer of existence."
+        "title": "Ayat Kursi",
+        "meaning": "Allah, tidak ada tuhan selain Dia, Yang Mahahidup, Yang terus-menerus mengurus makhluk-Nya. Dia tidak mengantuk dan tidak tidur. Milik-Nya apa yang ada di langit dan apa yang ada di bumi. Siapakah yang dapat memberi syafaat di sisi-Nya tanpa izin-Nya? Dia mengetahui apa yang di hadapan dan di belakang mereka, dan mereka tidak mengetahui sesuatu apa pun dari ilmu-Nya melainkan apa yang Dia kehendaki. Kursi-Nya meliputi langit dan bumi, dan Dia tidak merasa berat memelihara keduanya. Dia Mahatinggi, Mahabesar."
       },
       "7": {
-        "title": "Glorification Prayer",
-        "meaning": "Glory be to Allah and His is the praise."
+        "title": "Doa Tasbih",
+        "meaning": "Mahasuci Allah dan segala puji bagi-Nya."
       },
       "8": {
-        "title": "Morning-Evening Protection",
-        "meaning": "In the name of Allah with whose name nothing on earth or in heaven can cause harm."
+        "title": "Perlindungan Pagi dan Sore",
+        "meaning": "Dengan nama Allah yang bersama nama-Nya tidak ada sesuatu pun di bumi dan di langit yang dapat membahayakan, dan Dia Maha Mendengar lagi Maha Mengetahui."
       },
       "9": {
-        "title": "Health Prayer",
-        "meaning": "O Allah. Grant me health in my body."
+        "title": "Doa Kesehatan",
+        "meaning": "Ya Allah, sehatkanlah badanku. Ya Allah, sehatkanlah pendengaranku. Ya Allah, sehatkanlah penglihatanku. Tiada tuhan selain Engkau. Ya Allah, aku berlindung kepada-Mu dari kekufuran dan kefakiran. Ya Allah, aku berlindung kepada-Mu dari azab kubur. Tiada tuhan selain Engkau."
       },
       "10": {
-        "title": "Seeking Forgiveness",
-        "meaning": "I seek forgiveness from Allah and I repent to Him."
+        "title": "Memohon Ampunan",
+        "meaning": "Aku memohon ampunan kepada Allah dan bertaubat kepada-Nya."
       },
       "11": {
-        "title": "Salawat",
-        "meaning": "O Allah. Send blessings upon Muhammad."
+        "title": "Selawat",
+        "meaning": "Ya Allah, limpahkanlah selawat kepada Muhammad."
       },
       "12": {
-        "title": "Contentment Prayer",
-        "meaning": "I am pleased with Allah as my Lord."
+        "title": "Doa Rida",
+        "meaning": "Aku rida Allah sebagai Tuhan, Islam sebagai agama, dan Muhammad sebagai nabi."
       },
       "13": {
-        "title": "Praise Prayer",
-        "meaning": "All praise is due to Allah."
+        "title": "Doa Hamdalah",
+        "meaning": "Segala puji bagi Allah."
       },
       "14": {
-        "title": "Seeking Wellbeing",
-        "meaning": "O Allah. I ask You for wellbeing."
+        "title": "Memohon Afiat",
+        "meaning": "Ya Allah, aku memohon kepada-Mu ampunan dan afiat di dunia dan akhirat."
       },
       "15": {
-        "title": "Gratitude Prayer",
-        "meaning": "O Allah. All praise and thanks are Yours."
+        "title": "Doa Syukur",
+        "meaning": "Ya Allah, bagi-Mu segala puji dan bagi-Mu segala syukur."
       },
       "16": {
-        "title": "Halal Sustenance Prayer",
-        "meaning": "O Allah. Suffice me with what is lawful against what is unlawful."
+        "title": "Doa Rezeki Halal",
+        "meaning": "Ya Allah, cukupkanlah aku dengan yang halal dari-Mu sehingga terhindar dari yang haram, dan kayakanlah aku dengan karunia-Mu sehingga tidak bergantung kepada selain-Mu."
       },
       "17": {
-        "title": "Anxiety Protection",
-        "meaning": "O Allah. I seek refuge in You from worry and grief."
+        "title": "Perlindungan dari Kegelisahan",
+        "meaning": "Ya Allah, aku berlindung kepada-Mu dari kegelisahan dan kesedihan, dari kelemahan dan kemalasan, dari sifat pengecut dan kikir, dari beratnya utang dan dari tekanan manusia."
       },
       "18": {
-        "title": "Blessing Prayer",
-        "meaning": "O Allah. Bless what You have provided us."
+        "title": "Doa Keberkahan",
+        "meaning": "Ya Allah, berkahilah kami pada rezeki yang Engkau berikan kepada kami."
       },
       "19": {
-        "title": "Pure Sustenance Prayer",
-        "meaning": "O Allah. I ask You for pure sustenance."
+        "title": "Doa Rezeki yang Baik",
+        "meaning": "Ya Allah, aku memohon kepada-Mu ilmu yang bermanfaat, rezeki yang baik, dan amal yang diterima."
       },
       "20": {
-        "title": "Doors of Mercy Prayer",
-        "meaning": "O Allah. Open for me the doors of Your mercy."
+        "title": "Doa Pintu Rahmat",
+        "meaning": "Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu."
       },
       "21": {
-        "title": "Gratitude for Blessings",
-        "meaning": "My Lord. Inspire me to be grateful for Your blessings."
+        "title": "Syukur atas Nikmat",
+        "meaning": "Ya Tuhanku, anugerahkanlah aku ilham untuk mensyukuri nikmat-Mu yang telah Engkau anugerahkan kepadaku dan kepada kedua orang tuaku, dan untuk mengerjakan kebajikan yang Engkau ridai. Dan masukkanlah aku dengan rahmat-Mu ke dalam golongan hamba-hamba-Mu yang saleh."
       },
       "22": {
-        "title": "Wealth Prayer",
-        "meaning": "O Allah. I ask You for sufficiency."
+        "title": "Doa Kecukupan",
+        "meaning": "Ya Allah, aku memohon kepada-Mu kecukupan."
       },
       "23": {
-        "title": "Lawful Earnings Prayer",
-        "meaning": "O Allah. Provide me with lawful sustenance."
+        "title": "Doa Penghasilan Halal",
+        "meaning": "Ya Allah, berilah aku rezeki yang halal."
       },
       "24": {
-        "title": "Ease Prayer",
-        "meaning": "O Allah. There is no ease except what You make easy."
+        "title": "Doa Kemudahan",
+        "meaning": "Ya Allah, tidak ada yang mudah kecuali apa yang Engkau jadikan mudah."
       },
       "25": {
         "title": "Hasbunallah",
-        "meaning": "Allah is sufficient for us, and He is the best Disposer of affairs."
+        "meaning": "Cukuplah Allah bagi kami, dan Dia sebaik-baik pelindung."
       },
       "26": {
-        "title": "Abundance in Provision",
-        "meaning": "O Allah. Expand my provision."
+        "title": "Kelapangan Rezeki",
+        "meaning": "Ya Allah, lapangkanlah rezekiku."
       },
       "27": {
-        "title": "Taqwa and Solution",
-        "meaning": "Whoever fears Allah, He will make a way out for him."
+        "title": "Takwa dan Jalan Keluar",
+        "meaning": "Barang siapa bertakwa kepada Allah, niscaya Dia akan membukakan jalan keluar baginya."
       },
       "28": {
-        "title": "Family Happiness Prayer",
-        "meaning": "Our Lord. Grant us from our spouses and offspring comfort to our eyes."
+        "title": "Doa Kebahagiaan Keluarga",
+        "meaning": "Ya Tuhan kami, anugerahkanlah kepada kami pasangan dan keturunan sebagai penyejuk mata, dan jadikanlah kami pemimpin bagi orang-orang yang bertakwa."
       },
       "29": {
-        "title": "Marriage Blessing",
-        "meaning": "May Allah bless you and send blessings upon you."
+        "title": "Ucapan Selamat Menikah",
+        "meaning": "Semoga Allah memberkahimu, menurunkan keberkahan atasmu, dan menghimpun kalian berdua dalam kebaikan."
       },
       "30": {
-        "title": "Righteous Offspring Prayer",
-        "meaning": "My Lord. Grant me righteous offspring from Your presence."
+        "title": "Doa Keturunan Saleh",
+        "meaning": "Ya Tuhanku, anugerahkanlah kepadaku dari sisi-Mu keturunan yang baik. Sesungguhnya Engkau Maha Mendengar doa."
       },
       "31": {
-        "title": "Parents Prayer",
-        "meaning": "My Lord. Have mercy on them as they raised me when I was small."
+        "title": "Doa untuk Orang Tua",
+        "meaning": "Ya Tuhanku, sayangilah keduanya sebagaimana mereka telah mendidikku sewaktu kecil."
       },
       "32": {
-        "title": "Home Blessing Prayer",
-        "meaning": "O Allah. Bless our home."
+        "title": "Doa Keberkahan Rumah",
+        "meaning": "Ya Allah, berkahilah kami di rumah kami."
       },
       "33": {
-        "title": "Prayer Establishment",
-        "meaning": "My Lord. Make me an establisher of prayer, and from my descendants."
+        "title": "Menegakkan Salat",
+        "meaning": "Ya Tuhanku, jadikanlah aku dan anak cucuku orang-orang yang tetap mendirikan salat. Ya Tuhan kami, perkenankanlah doaku."
       },
       "34": {
-        "title": "Hellfire Protection",
-        "meaning": "Our Lord. Avert from us the punishment of Hell."
+        "title": "Perlindungan dari Neraka",
+        "meaning": "Ya Tuhan kami, jauhkanlah azab Jahanam dari kami. Sesungguhnya azabnya itu adalah kebinasaan yang kekal."
       },
       "35": {
-        "title": "Mercy Prayer",
-        "meaning": "Our Lord. Grant us mercy from Yourself."
+        "title": "Doa Rahmat",
+        "meaning": "Ya Tuhan kami, berikanlah rahmat kepada kami dari sisi-Mu dan sempurnakanlah petunjuk yang lurus bagi kami dalam urusan kami."
       },
       "36": {
-        "title": "Heart Steadfastness",
-        "meaning": "Our Lord. Do not let our hearts deviate."
+        "title": "Keteguhan Hati",
+        "meaning": "Ya Tuhan kami, janganlah Engkau condongkan hati kami setelah Engkau berikan petunjuk kepada kami, dan karuniakanlah kepada kami rahmat dari sisi-Mu. Sesungguhnya Engkau Maha Pemberi."
       },
       "37": {
-        "title": "Neighbor Reconciliation",
-        "meaning": "O Allah. Reconcile between us and our neighbors."
+        "title": "Rukun dengan Tetangga",
+        "meaning": "Ya Allah, damaikanlah antara kami dan tetangga kami."
       },
       "38": {
-        "title": "Submission Prayer",
-        "meaning": "Our Lord. Make us submissive to You."
+        "title": "Doa Berserah Diri",
+        "meaning": "Ya Tuhan kami, jadikanlah kami berdua orang yang berserah diri kepada-Mu, dan jadikanlah dari keturunan kami umat yang berserah diri kepada-Mu. Tunjukkanlah kepada kami cara-cara ibadah kami dan terimalah taubat kami. Sesungguhnya Engkau Maha Penerima taubat, Maha Penyayang."
       },
       "39": {
-        "title": "Good in Both Worlds",
-        "meaning": "Our Lord. Give us good in this world and in the Hereafter."
+        "title": "Kebaikan Dunia dan Akhirat",
+        "meaning": "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan lindungilah kami dari azab neraka."
       },
       "40": {
-        "title": "Satan Protection",
-        "meaning": "I seek refuge in Allah from the accursed Satan."
+        "title": "Perlindungan dari Setan",
+        "meaning": "Aku berlindung kepada Allah dari setan yang terkutuk."
       },
       "41": {
-        "title": "Mashallah Prayer",
-        "meaning": "What Allah has willed, there is no power except with Allah."
+        "title": "Masya Allah",
+        "meaning": "Atas kehendak Allah (semua ini terjadi); tiada kekuatan kecuali dengan Allah."
       },
       "42": {
-        "title": "Declaration of Faith",
-        "meaning": "There is no deity except Allah, Muhammad is the Messenger of Allah."
+        "title": "Kalimat Tauhid",
+        "meaning": "Tiada tuhan selain Allah, Muhammad adalah utusan Allah."
       },
       "43": {
-        "title": "Complete Words Protection",
-        "meaning": "I seek refuge in Allah's perfect words from the evil of what He has created."
+        "title": "Perlindungan dengan Kalimat Sempurna",
+        "meaning": "Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari keburukan makhluk yang Dia ciptakan."
       },
       "44": {
-        "title": "Healing Ruqyah",
-        "meaning": "In the name of Allah, I perform ruqyah on you."
+        "title": "Rukyah Penyembuhan",
+        "meaning": "Dengan nama Allah aku meruqyahmu, dari segala sesuatu yang menyakitimu, dari keburukan setiap jiwa atau mata yang dengki. Semoga Allah menyembuhkanmu. Dengan nama Allah aku meruqyahmu."
       },
       "45": {
         "title": "Surah An-Nas",
-        "meaning": "Say: I seek refuge in the Lord of mankind."
+        "meaning": "Katakanlah: Aku berlindung kepada Tuhan manusia, Raja manusia, Sembahan manusia, dari kejahatan bisikan setan yang bersembunyi, yang membisikkan ke dalam dada manusia, dari golongan jin dan manusia."
       },
       "46": {
-        "title": "Islamic Nature Prayer",
-        "meaning": "We have entered the morning upon the natural way of Islam."
+        "title": "Di atas Fitrah Islam",
+        "meaning": "Kami memasuki waktu pagi di atas fitrah Islam."
       },
       "47": {
         "title": "Surah Al-Falaq",
-        "meaning": "Say: I seek refuge in the Lord of daybreak."
+        "meaning": "Katakanlah: Aku berlindung kepada Tuhan yang menguasai subuh, dari kejahatan makhluk yang Dia ciptakan, dari kejahatan malam apabila telah gelap gulita, dari kejahatan perempuan-perempuan penyihir yang meniup pada buhul-buhul, dan dari kejahatan orang yang dengki apabila dia dengki."
       },
       "48": {
-        "title": "Blessing Loss Protection",
-        "meaning": "O Allah. I seek refuge in You from the loss of Your blessings."
+        "title": "Perlindungan dari Hilangnya Nikmat",
+        "meaning": "Ya Allah, aku berlindung kepada-Mu dari hilangnya nikmat-Mu, berubahnya afiat yang Engkau berikan, datangnya azab-Mu secara tiba-tiba, dan dari segala kemurkaan-Mu."
       },
       "49": {
-        "title": "La Hawla Prayer",
-        "meaning": "There is no power nor strength except with Allah."
+        "title": "La Hawla",
+        "meaning": "Tiada daya dan kekuatan kecuali dengan Allah."
       },
       "50": {
-        "title": "Heart Firmness",
-        "meaning": "O Turner of hearts. Keep my heart firm upon Your religion."
+        "title": "Keteguhan Hati",
+        "meaning": "Wahai Zat yang membolak-balikkan hati, teguhkanlah hatiku di atas agama-Mu."
       },
       "51": {
-        "title": "Dajjal Fitnah Protection",
-        "meaning": "O Allah. I seek refuge in You from the trial of the Dajjal."
+        "title": "Perlindungan dari Fitnah Dajjal",
+        "meaning": "Ya Allah, aku berlindung kepada-Mu dari azab Jahanam, dari azab kubur, dari fitnah kehidupan dan kematian, dan dari keburukan fitnah Al-Masih Dajjal."
       },
       "52": {
-        "title": "Goodness in Both Worlds",
-        "meaning": "Our Lord. Give us good in this world and good in the Hereafter."
+        "title": "Kebaikan Dunia dan Akhirat",
+        "meaning": "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat."
       },
       "53": {
-        "title": "Increase in Knowledge",
-        "meaning": "My Lord. Increase me in knowledge."
+        "title": "Tambahan Ilmu",
+        "meaning": "Ya Tuhanku, tambahkanlah ilmu kepadaku."
       },
       "54": {
-        "title": "Forgiveness of Sins",
-        "meaning": "Our Lord. Forgive us our sins."
+        "title": "Ampunan Dosa",
+        "meaning": "Ya Tuhan kami, ampunilah dosa-dosa kami dan tindakan kami yang berlebihan dalam urusan kami, teguhkanlah pendirian kami, dan tolonglah kami menghadapi orang-orang kafir."
       },
       "55": {
-        "title": "Straight Path",
-        "meaning": "Guide us to the straight path."
+        "title": "Jalan yang Lurus",
+        "meaning": "Tunjukilah kami jalan yang lurus."
       },
       "56": {
-        "title": "Mercy Prayer",
-        "meaning": "My Lord. Have mercy on us."
+        "title": "Doa Kasih Sayang",
+        "meaning": "Ya Tuhanku, kasihanilah kami."
       },
       "57": {
-        "title": "Patience Prayer",
-        "meaning": "Our Lord. Pour upon us patience."
+        "title": "Doa Kesabaran",
+        "meaning": "Ya Tuhan kami, limpahkanlah kesabaran kepada kami, teguhkanlah langkah kami, dan tolonglah kami menghadapi orang-orang kafir."
       },
       "58": {
-        "title": "Ease Not Difficulty",
-        "meaning": "My Lord. Make it easy, not difficult."
+        "title": "Mudahkan, Jangan Persulit",
+        "meaning": "Ya Tuhanku, mudahkanlah dan jangan Engkau persulit."
       },
       "59": {
-        "title": "Acceptance Prayer",
-        "meaning": "Our Lord. Accept from us."
+        "title": "Doa Diterimanya Amal",
+        "meaning": "Ya Tuhan kami, terimalah dari kami."
       },
       "60": {
-        "title": "Among Righteous",
-        "meaning": "Admit me by Your mercy among Your righteous servants."
+        "title": "Bersama Orang Saleh",
+        "meaning": "Ya Tuhanku, anugerahkanlah aku ilham untuk mensyukuri nikmat-Mu yang telah Engkau anugerahkan kepadaku dan kepada kedua orang tuaku, dan untuk mengerjakan kebajikan yang Engkau ridai. Dan masukkanlah aku dengan rahmat-Mu ke dalam golongan hamba-hamba-Mu yang saleh."
       },
       "61": {
-        "title": "Blessing Gratitude",
-        "meaning": "My Lord. Inspire me to be grateful for Your blessings."
+        "title": "Syukur atas Nikmat",
+        "meaning": "Ya Tuhanku, ilhamkanlah aku untuk mensyukuri nikmat-Mu."
       },
       "62": {
-        "title": "Hearing and Knowing",
-        "meaning": "Our Lord. Accept from us. Indeed You are the Hearing, the Knowing."
+        "title": "Maha Mendengar, Maha Mengetahui",
+        "meaning": "Ya Tuhan kami, terimalah dari kami. Sesungguhnya Engkau Maha Mendengar, Maha Mengetahui."
       },
       "63": {
-        "title": "Pardon Prayer",
-        "meaning": "O Allah. You are Pardoning and love to pardon, so pardon me."
+        "title": "Doa Memohon Maaf",
+        "meaning": "Ya Allah, sesungguhnya Engkau Maha Pemaaf dan menyukai pemaafan, maka maafkanlah aku."
       },
       "64": {
-        "title": "Qunut Prayer",
-        "meaning": "O Allah. Guide me among those You have guided."
+        "title": "Doa Qunut",
+        "meaning": "Ya Allah, berilah aku petunjuk bersama orang-orang yang Engkau beri petunjuk, berilah aku afiat bersama orang-orang yang Engkau beri afiat, uruslah aku bersama orang-orang yang Engkau urus, berkahilah bagiku apa yang Engkau berikan, dan lindungilah aku dari keburukan apa yang Engkau takdirkan. Sesungguhnya Engkaulah yang menetapkan dan tidak ada yang dapat menetapkan atas-Mu. Sesungguhnya tidak akan hina orang yang Engkau lindungi. Mahaberkah Engkau, wahai Tuhan kami, dan Mahatinggi."
       },
       "65": {
-        "title": "Master of Forgiveness",
-        "meaning": "O Allah. You are my Lord. There is no deity except You."
+        "title": "Sayyidul Istighfar",
+        "meaning": "Ya Allah, Engkau Tuhanku; tiada tuhan selain Engkau. Engkau telah menciptakanku dan aku adalah hamba-Mu, dan aku berada di atas perjanjian dan janji-Mu semampuku. Aku berlindung kepada-Mu dari keburukan perbuatanku. Aku mengakui nikmat-Mu kepadaku dan aku mengakui dosaku, maka ampunilah aku, karena tidak ada yang mengampuni dosa selain Engkau."
       },
       "66": {
-        "title": "Travel Prayer",
-        "meaning": "Glory be to Him who has subjected this to us."
+        "title": "Doa Bepergian",
+        "meaning": "Mahasuci Zat yang telah menundukkan ini untuk kami, padahal kami sebelumnya tidak mampu menguasainya. Dan sesungguhnya kepada Tuhan kamilah kami akan kembali."
       },
       "67": {
-        "title": "Meal Prayer",
-        "meaning": "O Allah. Bless us in what You have provided."
+        "title": "Doa Makan",
+        "meaning": "Ya Allah, berkahilah kami pada rezeki yang Engkau berikan."
       },
       "68": {
-        "title": "Visiting the Sick",
-        "meaning": "No harm, it will be a purification, if Allah wills."
+        "title": "Menjenguk Orang Sakit",
+        "meaning": "Tidak apa-apa, semoga ini menjadi penyucian, insya Allah."
       },
       "69": {
-        "title": "Refuge from Satan",
-        "meaning": "I seek refuge in Allah from the accursed Satan."
+        "title": "Berlindung dari Setan",
+        "meaning": "Aku berlindung kepada Allah dari setan yang terkutuk."
       },
       "70": {
-        "title": "Grave Torment Protection",
-        "meaning": "O Allah. I seek refuge in You from the punishment of the grave."
+        "title": "Perlindungan dari Azab Kubur",
+        "meaning": "Ya Allah, aku berlindung kepada-Mu dari azab Jahanam, dari azab kubur, dari fitnah kehidupan dan kematian, dan dari keburukan fitnah Al-Masih Dajjal."
       },
       "71": {
-        "title": "Mosque Entry Prayer",
-        "meaning": "O Allah. Open the gates of Your mercy for me."
+        "title": "Doa Masuk Masjid",
+        "meaning": "Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu."
       },
       "72": {
-        "title": "Mosque Exit Prayer",
-        "meaning": "O Allah. I ask You from Your bounty."
+        "title": "Doa Keluar Masjid",
+        "meaning": "Ya Allah, aku memohon kepada-Mu dari karunia-Mu."
       },
       "73": {
-        "title": "Post-Ablution Testimony",
-        "meaning": "I bear witness there is no deity except Allah."
+        "title": "Syahadat Setelah Wudu",
+        "meaning": "Aku bersaksi bahwa tiada tuhan selain Allah semata, tiada sekutu bagi-Nya, dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya."
       },
       "74": {
-        "title": "Funeral Prayer",
-        "meaning": "O Allah. Forgive him and have mercy on him."
+        "title": "Doa Salat Jenazah",
+        "meaning": "Ya Allah, ampunilah dia, rahmatilah dia, berilah dia afiat, dan maafkanlah dia. Muliakanlah tempat persinggahannya dan lapangkanlah tempat masuknya. Mandikanlah dia dengan air, salju, dan embun, dan bersihkanlah dia dari kesalahan sebagaimana Engkau membersihkan kain putih dari kotoran. Gantikanlah baginya rumah yang lebih baik dari rumahnya, keluarga yang lebih baik dari keluarganya, dan pasangan yang lebih baik dari pasangannya. Masukkanlah dia ke surga dan lindungilah dia dari azab kubur dan azab neraka."
       },
       "75": {
-        "title": "Seeking Mercy",
-        "meaning": "O Allah. I ask You by Your mercy."
+        "title": "Memohon Rahmat",
+        "meaning": "Ya Allah, aku memohon kepada-Mu dengan rahmat-Mu."
       },
       "76": {
-        "title": "Friday Salawat",
-        "meaning": "O Allah. Send blessings upon our master Muhammad."
+        "title": "Selawat Jumat",
+        "meaning": "Ya Allah, limpahkanlah selawat kepada junjungan kami Muhammad."
       },
       "77": {
-        "title": "Tasbeeh",
-        "meaning": "Glory be to Allah and praise be to Allah."
+        "title": "Tasbih",
+        "meaning": "Mahasuci Allah dan segala puji bagi Allah."
       },
       "78": {
-        "title": "Intercession Prayer",
-        "meaning": "O Allah. Grant us the intercession of Your Prophet."
+        "title": "Doa Syafaat",
+        "meaning": "Ya Allah, anugerahkanlah kepada kami syafaat Nabi-Mu."
       },
       "79": {
-        "title": "Sin Forgiveness",
-        "meaning": "O Allah. Forgive my sins."
+        "title": "Ampunan Dosa",
+        "meaning": "Ya Allah, ampunilah dosa-dosaku."
       },
       "80": {
-        "title": "Night of Power Prayer",
-        "meaning": "O Allah. You are Pardoning and love to pardon, so pardon me."
+        "title": "Doa Lailatul Qadar",
+        "meaning": "Ya Allah, sesungguhnya Engkau Maha Pemaaf dan menyukai pemaafan, maka maafkanlah aku."
       },
       "81": {
-        "title": "Reaching Ramadan",
-        "meaning": "O Allah. Let us reach Ramadan."
+        "title": "Sampai ke Ramadan",
+        "meaning": "Ya Allah, sampaikanlah kami ke bulan Ramadan."
       },
       "82": {
-        "title": "Tawheed Dhikr",
-        "meaning": "There is no deity except Allah, alone without partner."
+        "title": "Zikir Tauhid",
+        "meaning": "Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan milik-Nya segala puji, dan Dia Mahakuasa atas segala sesuatu."
       },
       "83": {
-        "title": "Eid Takbir",
-        "meaning": "Allah is the Greatest, Allah is the Greatest, there is no deity except Allah."
+        "title": "Takbir Hari Raya",
+        "meaning": "Allah Mahabesar, Allah Mahabesar. Tiada tuhan selain Allah. Allah Mahabesar, Allah Mahabesar, dan bagi Allah segala puji."
       },
       "84": {
         "title": "Talbiyah",
-        "meaning": "Here I am, O Allah, here I am at Your service."
+        "meaning": "Aku memenuhi panggilan-Mu, ya Allah, aku memenuhi panggilan-Mu. Aku memenuhi panggilan-Mu, tiada sekutu bagi-Mu, aku memenuhi panggilan-Mu. Sesungguhnya segala puji, nikmat, dan kerajaan adalah milik-Mu. Tiada sekutu bagi-Mu."
       },
       "85": {
-        "title": "New Moon Prayer",
-        "meaning": "O Allah. Let it appear over us with blessing and faith."
+        "title": "Doa Melihat Hilal",
+        "meaning": "Ya Allah, terbitkanlah hilal ini atas kami dengan keberkahan dan keimanan, keselamatan dan Islam. (Wahai hilal,) Tuhanku dan Tuhanmu adalah Allah."
       },
       "86": {
-        "title": "Sha'ban Prayer",
-        "meaning": "O Allah. Bless us in Sha'ban."
+        "title": "Doa Bulan Syakban",
+        "meaning": "Ya Allah, berkahilah kami di bulan Syakban."
       },
       "87": {
-        "title": "Blessed Days Prayer",
-        "meaning": "O Allah. Make these days blessed for us."
+        "title": "Hari-Hari yang Diberkahi",
+        "meaning": "Ya Allah, jadikanlah hari-hari ini hari-hari yang diberkahi."
       },
       "88": {
         "title": "Istighfar",
-        "meaning": "I seek forgiveness from Allah."
+        "meaning": "Aku memohon ampunan kepada Allah."
       },
       "89": {
-        "title": "Repentance Prayer",
-        "meaning": "I repent to Allah."
+        "title": "Doa Taubat",
+        "meaning": "Aku bertaubat kepada Allah."
       },
       "90": {
-        "title": "Forgiveness and Mercy",
-        "meaning": "My Lord. Forgive me and have mercy on me."
+        "title": "Ampunan dan Rahmat",
+        "meaning": "Ya Tuhanku, ampunilah aku, rahmatilah aku, cukupkanlah kekuranganku, berilah aku rezeki, dan angkatlah derajatku."
       },
       "91": {
-        "title": "Self-Wrong Confession",
-        "meaning": "O Allah. I have wronged myself."
+        "title": "Pengakuan Menzalimi Diri",
+        "meaning": "Ya Allah, sesungguhnya aku telah banyak menzalimi diriku sendiri, dan tidak ada yang mengampuni dosa selain Engkau. Maka ampunilah aku dengan ampunan dari sisi-Mu dan rahmatilah aku. Sesungguhnya Engkau Maha Pengampun, Maha Penyayang."
       },
       "92": {
-        "title": "Adam's Repentance",
-        "meaning": "Our Lord. We have wronged ourselves."
+        "title": "Taubat Nabi Adam",
+        "meaning": "Ya Tuhan kami, kami telah menzalimi diri kami sendiri. Jika Engkau tidak mengampuni kami dan tidak merahmati kami, niscaya kami termasuk orang-orang yang rugi."
       },
       "93": {
-        "title": "Best of Forgivers",
-        "meaning": "My Lord. Forgive and have mercy. You are the best of those who show mercy."
+        "title": "Sebaik-baik Pemberi Rahmat",
+        "meaning": "Ya Tuhanku, ampunilah dan rahmatilah, dan Engkaulah sebaik-baik pemberi rahmat."
       },
       "94": {
-        "title": "Purification from Sins",
-        "meaning": "O Allah. Wash me from my sins."
+        "title": "Penyucian dari Dosa",
+        "meaning": "Ya Allah, jauhkanlah antara aku dan kesalahan-kesalahanku sebagaimana Engkau menjauhkan antara timur dan barat. Ya Allah, bersihkanlah aku dari kesalahan sebagaimana kain putih dibersihkan dari kotoran. Ya Allah, cucilah kesalahan-kesalahanku dengan air, salju, dan embun."
       },
       "95": {
-        "title": "Living and Sustaining",
-        "meaning": "I seek forgiveness from Allah, the Ever-Living, the Sustainer."
+        "title": "Istighfar kepada Yang Mahahidup",
+        "meaning": "Aku memohon ampunan kepada Allah, yang tiada tuhan selain Dia, Yang Mahahidup lagi terus-menerus mengurus makhluk-Nya, dan aku bertaubat kepada-Nya."
       },
       "96": {
-        "title": "Pardoning and Generous",
-        "meaning": "O Allah. You are Pardoning and Generous."
+        "title": "Maha Pemaaf, Maha Pemurah",
+        "meaning": "Ya Allah, Engkau Maha Pemaaf lagi Maha Pemurah."
       },
       "97": {
-        "title": "Forgetting and Mistakes",
-        "meaning": "Our Lord. Do not blame us if we forget or make mistakes."
+        "title": "Lupa dan Kesalahan",
+        "meaning": "Allah tidak membebani seseorang melainkan sesuai dengan kesanggupannya. Ia mendapat pahala dari kebajikan yang diusahakannya dan menanggung siksa dari kejahatan yang diperbuatnya. Ya Tuhan kami, janganlah Engkau hukum kami jika kami lupa atau kami tersalah. Ya Tuhan kami, janganlah Engkau bebankan kepada kami beban yang berat sebagaimana Engkau bebankan kepada orang-orang sebelum kami. Ya Tuhan kami, janganlah Engkau pikulkan kepada kami apa yang tidak sanggup kami memikulnya. Maafkanlah kami, ampunilah kami, dan rahmatilah kami. Engkaulah pelindung kami, maka tolonglah kami menghadapi orang-orang kafir."
       },
       "98": {
-        "title": "Cleansing from Sins",
-        "meaning": "O Allah. Cleanse me from sins."
+        "title": "Penyucian dari Dosa",
+        "meaning": "Ya Allah, sucikanlah aku dari dosa-dosa."
       },
       "99": {
-        "title": "I Have Repented",
-        "meaning": "I have repented to Allah."
+        "title": "Aku Telah Bertaubat",
+        "meaning": "Aku telah bertaubat kepada Allah."
       },
       "100": {
         "title": "Takbir",
-        "meaning": "Allah is the Greatest."
+        "meaning": "Allah Mahabesar."
       },
       "101": {
         "title": "Subhanaka",
-        "meaning": "Glory be to You, O Allah. Praise be to You."
+        "meaning": "Mahasuci Engkau, ya Allah, dan dengan memuji-Mu. Mahaberkah nama-Mu, Mahatinggi keagungan-Mu, dan tiada tuhan selain Engkau."
       },
       "102": {
-        "title": "Surah Al-Fatiha",
-        "meaning": "All praise is due to Allah, Lord of the worlds."
+        "title": "Surah Al-Fatihah",
+        "meaning": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang. Segala puji bagi Allah, Tuhan seluruh alam, Yang Maha Pengasih, Maha Penyayang, Pemilik hari pembalasan. Hanya kepada Engkaulah kami menyembah dan hanya kepada Engkaulah kami mohon pertolongan. Tunjukilah kami jalan yang lurus, yaitu jalan orang-orang yang telah Engkau beri nikmat, bukan jalan mereka yang dimurkai dan bukan pula jalan mereka yang sesat."
       },
       "103": {
-        "title": "Ruku Tasbeeh",
-        "meaning": "Glory be to my Lord, the Magnificent."
+        "title": "Tasbih Rukuk",
+        "meaning": "Mahasuci Tuhanku Yang Mahaagung."
       },
       "104": {
-        "title": "Sujood Tasbeeh",
-        "meaning": "Glory be to my Lord, the Most High."
+        "title": "Tasbih Sujud",
+        "meaning": "Mahasuci Tuhanku Yang Mahatinggi."
       },
       "105": {
-        "title": "Tahiyyat",
-        "meaning": "All greetings are for Allah."
+        "title": "Tahiyat",
+        "meaning": "Segala penghormatan, salat, dan kebaikan adalah milik Allah. Semoga keselamatan tercurah kepadamu, wahai Nabi, beserta rahmat Allah dan keberkahan-Nya. Semoga keselamatan tercurah kepada kami dan kepada hamba-hamba Allah yang saleh. Aku bersaksi bahwa tiada tuhan selain Allah, dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya."
       },
       "106": {
         "title": "Allahumma Salli",
-        "meaning": "O Allah. Send blessings upon Muhammad."
+        "meaning": "Ya Allah, limpahkanlah selawat kepada Muhammad."
       },
       "107": {
         "title": "Allahumma Barik",
-        "meaning": "O Allah. Bestow blessings upon Muhammad."
+        "meaning": "Ya Allah, berkahilah Muhammad dan keluarga Muhammad sebagaimana Engkau telah memberkahi Ibrahim dan keluarga Ibrahim. Sesungguhnya Engkau Maha Terpuji lagi Mahamulia."
       },
       "108": {
-        "title": "Rabbana Prayer",
-        "meaning": "Our Lord. Give us good in this world."
+        "title": "Doa Rabbana",
+        "meaning": "Ya Tuhan kami, berilah kami kebaikan di dunia."
       },
       "109": {
         "title": "Salam",
-        "meaning": "Peace and mercy of Allah be upon you."
+        "meaning": "Semoga keselamatan dan rahmat Allah tercurah kepada kalian."
       },
       "110": {
-        "title": "Post-Salam Prayer",
-        "meaning": "O Allah. You are Peace (the Source of Peace)."
+        "title": "Doa Setelah Salam",
+        "meaning": "Ya Allah, Engkaulah As-Salam, dan dari-Mulah keselamatan. Mahaberkah Engkau, wahai Pemilik keagungan dan kemuliaan."
       },
       "111": {
-        "title": "Qunut Prayer",
-        "meaning": "O Allah. We seek Your help."
+        "title": "Doa Qunut (Witir)",
+        "meaning": "Ya Allah, kami memohon pertolongan-Mu, ampunan-Mu, dan petunjuk-Mu. Kami beriman kepada-Mu, bertaubat kepada-Mu, dan bertawakal kepada-Mu. Kami memuji-Mu dengan segala kebaikan. Kami bersyukur kepada-Mu dan tidak mengingkari nikmat-Mu, dan kami meninggalkan serta menjauhi orang yang durhaka kepada-Mu."
       },
       "112": {
-        "title": "Prophet Yunus Prayer",
-        "meaning": "There is no deity except You. Glory be to You. Indeed I have been of the wrongdoers."
+        "title": "Doa Nabi Yunus",
+        "meaning": "Tiada tuhan selain Engkau. Mahasuci Engkau. Sesungguhnya aku termasuk orang-orang yang zalim."
       },
       "113": {
-        "title": "Grief Prayer",
-        "meaning": "O Allah. I am Your servant."
+        "title": "Doa Saat Sedih",
+        "meaning": "Ya Allah, aku adalah hamba-Mu."
       },
       "114": {
-        "title": "Sufficiency Verse",
-        "meaning": "Allah is sufficient for me. There is no deity except Him."
+        "title": "Ayat Tawakal",
+        "meaning": "Jika mereka berpaling, katakanlah: Cukuplah Allah bagiku. Tidak ada tuhan selain Dia. Hanya kepada-Nya aku bertawakal, dan Dia adalah Tuhan Arasy yang agung."
       },
       "115": {
-        "title": "Hope for Mercy",
-        "meaning": "O Allah. I hope for Your mercy."
+        "title": "Mengharap Rahmat",
+        "meaning": "Ya Allah, rahmat-Mulah yang aku harapkan, maka janganlah Engkau serahkan aku kepada diriku sendiri walau sekejap mata, dan perbaikilah seluruh urusanku. Tiada tuhan selain Engkau."
       },
       "116": {
-        "title": "Living and Sustaining",
-        "meaning": "O Ever-Living, O Sustainer. I seek help through Your mercy."
+        "title": "Yang Mahahidup, Yang Berdiri Sendiri",
+        "meaning": "Wahai Yang Mahahidup, wahai Yang terus-menerus mengurus makhluk-Nya, dengan rahmat-Mu aku memohon pertolongan."
       },
       "117": {
-        "title": "Difficulty to Ease",
-        "meaning": "O Allah. Nothing is easy except what You make easy."
+        "title": "Dari Kesulitan Menuju Kemudahan",
+        "meaning": "Ya Allah, tidak ada yang mudah kecuali apa yang Engkau jadikan mudah."
       },
       "118": {
-        "title": "Grief Protection",
-        "meaning": "O Allah. I seek refuge in You from grief."
+        "title": "Perlindungan dari Kesedihan",
+        "meaning": "Ya Allah, aku berlindung kepada-Mu dari kesedihan."
       },
       "119": {
-        "title": "Calamity Prayer",
-        "meaning": "Indeed we belong to Allah and to Him we shall return."
+        "title": "Doa Saat Musibah",
+        "meaning": "Sesungguhnya kami milik Allah dan sesungguhnya kepada-Nya kami kembali. Ya Allah, berilah aku pahala dalam musibahku dan gantilah untukku dengan yang lebih baik darinya."
       },
       "120": {
-        "title": "Rain of Patience",
-        "meaning": "Our Lord. Pour upon us patience."
+        "title": "Hujan Kesabaran",
+        "meaning": "Ya Tuhan kami, limpahkanlah kesabaran kepada kami."
       },
       "121": {
-        "title": "Allah is With Me",
-        "meaning": "Allah is with me, Allah is watching over me."
+        "title": "Allah Bersamaku",
+        "meaning": "Allah bersamaku, Allah melihatku."
       },
       "122": {
-        "title": "Hope Verse",
-        "meaning": "Do not despair of the mercy of Allah."
+        "title": "Ayat Harapan",
+        "meaning": "Janganlah kamu berputus asa dari rahmat Allah."
       },
       "123": {
-        "title": "Tawakkul Verse",
-        "meaning": "And upon Allah let the believers rely."
+        "title": "Ayat Tawakal",
+        "meaning": "Dan hanya kepada Allah hendaknya orang-orang mukmin bertawakal."
       }
     }
   },

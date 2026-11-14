@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { prayers } from './prayers';
 import tr from '../../public/locales/tr/translation.json';
 import en from '../../public/locales/en/translation.json';
+import de from '../../public/locales/de/translation.json';
+import id from '../../public/locales/id/translation.json';
 
 describe('prayer catalog integrity', () => {
   it('keeps stable IDs unique and routes duplicate records through canonical aliases', () => {
@@ -24,7 +26,7 @@ describe('prayer catalog integrity', () => {
 
   it('shows a meaning that covers the whole Arabic text, not just its first sentence', () => {
     const letters = (arabic: string) => arabic.replace(/[^ء-ي]/g, '').length;
-    for (const locale of [tr, en]) {
+    for (const locale of [tr, en, de, id]) {
       const items = (locale as { prayerBook: { items: Record<string, { meaning: string }> } }).prayerBook.items;
       for (const prayer of prayers.filter((item) => !item.canonicalId && !item.archived)) {
         const meaning = items[prayer.id]?.meaning ?? '';
