@@ -315,7 +315,8 @@ export const useAppInit = (
       };
     }
 
-    if (isLocationConsentVisible || activeTab === "quran" || activeFeature === "quran") {
+    // The bottom banner is a native view above the WebView: on the paywall it would cover the terms and restore button.
+    if (isLocationConsentVisible || activeTab === "quran" || activeFeature === "quran" || activeFeature === "pro") {
       void import("../services/admobService")
         .then(({ adMobService }) => adMobService.hideBanner())
         .catch((error) => {

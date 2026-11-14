@@ -336,13 +336,13 @@ const ProUpgrade = ({
   return (
     <div className="pro-modal-overlay">
       <div className="pro-modal animate-scaleIn">
-        <button className="close-btn" onClick={closeModal}>
-          <X size={24} />
+        <button type="button" className="close-btn" onClick={closeModal} aria-label={t('common.close', 'Kapat')}>
+          <X size={22} strokeWidth={1.75} />
         </button>
 
         <div className="pro-header">
           <div className="crown-icon">
-            <Crown size={44} color="var(--tertiary)" fill="var(--tertiary)" />
+            <Crown size={40} strokeWidth={1.5} color="var(--gold-on-brand)" fill="var(--gold-on-brand)" aria-hidden="true" />
           </div>
           <div className="moment-chip">
             <Sparkles size={14} />
@@ -352,6 +352,7 @@ const ProUpgrade = ({
           <p>{referralCopy.subtitle || uiCopy.subtitle}</p>
         </div>
 
+        <div className="pro-body">
         <div className="social-proof">
           <p>{uiCopy.socialProof}</p>
         </div>
@@ -374,7 +375,7 @@ const ProUpgrade = ({
         <div className="features-list">
           {uiCopy.features.map((feature) => (
             <div key={feature.title} className="feature-item">
-              <div className="feature-icon"><Check size={18} /></div>
+              <div className="feature-icon"><Check size={16} strokeWidth={2.25} aria-hidden="true" /></div>
               <div className="feature-text">
                 <strong>{feature.title}</strong>
                 <p>{feature.description}</p>
@@ -426,7 +427,7 @@ const ProUpgrade = ({
           </p>
         </div>
 
-        <button className="restore-btn" onClick={handleRestore} disabled={processing}>
+        <button type="button" className="restore-btn hz-btn hz-btn--secondary" onClick={handleRestore} disabled={processing}>
           {t('pro.restore')}
         </button>
 
@@ -440,6 +441,7 @@ const ProUpgrade = ({
             {t('pro.restoreNotFound')}
           </div>
         )}
+        </div>
 
         {processing && (
           <div className="processing-overlay">
@@ -452,322 +454,271 @@ const ProUpgrade = ({
       {legalDoc === 'terms' && <TermsOfService onClose={() => setLegalDoc(null)} />}
 
       <style>{`
-        .legal-links .legal-link-btn {
-          background: none;
-          border: 0;
-          padding: 0;
-          font: inherit;
-          color: inherit;
-          text-decoration: underline;
-          cursor: pointer;
-        }
-
         .pro-modal-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(15, 61, 46, 0.95);
-          backdrop-filter: blur(10px);
+          background: color-mix(in srgb, var(--ink) 55%, transparent);
+          backdrop-filter: blur(6px);
           /* above .feature-route-shell > .bottom-nav (1500): a purchase modal must cover navigation */
           z-index: 2000;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 20px;
+          padding: var(--space-4);
+          font-family: var(--font-sans);
         }
 
         .pro-modal {
-          background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+          background: var(--paper);
+          color: var(--ink);
           width: 100%;
           max-width: 420px;
-          border-radius: 24px;
-          padding: 24px;
+          border-radius: var(--radius-xl);
           position: relative;
-          border: 1px solid rgba(212, 175, 55, 0.28);
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+          border: 1px solid var(--line);
+          box-shadow: var(--elevation-2);
           max-height: 90vh;
           overflow-y: auto;
         }
 
         .close-btn {
           position: absolute;
-          top: 16px;
-          right: 16px;
-          background: rgba(212, 175, 55, 0.16);
-          border: 1px solid rgba(212, 175, 55, 0.25);
-          color: var(--tertiary);
+          top: var(--space-3);
+          right: var(--space-3);
+          background: color-mix(in srgb, var(--on-brand) 14%, transparent);
+          border: 0;
+          color: var(--on-brand);
           width: 40px;
           height: 40px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          border-radius: var(--radius-full);
+          display: grid;
+          place-items: center;
           cursor: pointer;
+          z-index: 1;
         }
 
         .pro-header {
+          background: var(--brand);
+          color: var(--on-brand);
           text-align: center;
-          margin-bottom: 22px;
-          padding-top: 8px;
+          padding: var(--space-6) var(--space-5) var(--space-5);
         }
 
-        .crown-icon {
-          margin-bottom: 12px;
-          filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.5));
-        }
+        .crown-icon { display: flex; justify-content: center; margin-bottom: var(--space-2); }
 
         .moment-chip {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          border-radius: 999px;
-          background: rgba(212, 175, 55, 0.14);
-          border: 1px solid rgba(212, 175, 55, 0.22);
-          color: var(--on-tertiary-container);
-          font-size: 12px;
-          font-weight: 800;
-          padding: 6px 10px;
-          margin-bottom: 12px;
+          color: var(--gold-on-brand);
+          font: 700 11px/14px var(--font-sans);
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          margin-bottom: var(--space-2);
         }
 
         .pro-header h2 {
-          color: var(--tertiary);
-          margin: 0 0 8px 0;
-          font-size: 28px;
-          font-weight: 800;
+          color: var(--on-brand);
+          margin: 0 0 var(--space-2);
+          font: 600 28px/34px var(--font-display);
+          letter-spacing: -0.01em;
         }
 
         .pro-header p {
           margin: 0;
-          color: var(--on-surface);
-          font-size: 14px;
-          line-height: 1.6;
-          font-weight: 600;
+          color: var(--on-brand);
+          opacity: 0.88;
+          font: 400 15px/22px var(--font-sans);
         }
 
-        .social-proof {
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 12px;
-          padding: 10px 12px;
-          text-align: center;
-          margin-bottom: 20px;
-          border: 1px dashed rgba(212, 175, 55, 0.3);
+        .pro-body {
+          display: grid;
+          gap: var(--space-4);
+          padding: var(--space-5);
         }
 
         .social-proof p {
           margin: 0;
-          color: var(--tertiary);
-          font-size: 13px;
-          font-weight: 600;
-          line-height: 1.45;
+          text-align: center;
+          color: var(--ink-muted);
+          font: 500 13px/18px var(--font-sans);
         }
 
         .referral-active-banner {
-          background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.08));
-          border-radius: 12px;
-          padding: 12px 14px;
-          margin-bottom: 20px;
-          border: 1px solid rgba(16, 185, 129, 0.3);
+          background: var(--brand-soft);
+          border-radius: var(--radius-md);
+          padding: var(--space-3) var(--space-4);
           text-align: center;
         }
 
         .referral-active-banner p {
           margin: 0;
-          color: var(--on-secondary-container);
-          font-size: 13px;
-          font-weight: 600;
-          line-height: 1.5;
+          color: var(--brand-ink);
+          font: 600 13px/18px var(--font-sans);
         }
 
-        .referral-active-banner .expiring-soon {
-          color: var(--tertiary);
-          font-weight: 700;
-        }
+        .referral-active-banner .expiring-soon { color: var(--gold-ink); font-weight: 700; }
 
         .features-list {
           display: grid;
-          gap: 12px;
-          margin-bottom: 22px;
+          background: var(--paper-raised);
+          border: 1px solid var(--line);
+          border-radius: var(--radius-lg);
         }
 
         .feature-item {
           display: flex;
-          gap: 12px;
+          gap: var(--space-3);
           align-items: flex-start;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 16px;
-          padding: 14px;
+          padding: var(--space-3) var(--space-4);
         }
 
+        .feature-item + .feature-item { border-top: 1px solid var(--line); }
+
         .feature-icon {
-          width: 32px;
-          height: 32px;
-          border-radius: 10px;
-          background: rgba(212, 175, 55, 0.14);
-          color: var(--tertiary);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          width: 28px;
+          height: 28px;
+          border-radius: var(--radius-full);
+          background: var(--brand-soft);
+          color: var(--brand-ink);
+          display: grid;
+          place-items: center;
           flex-shrink: 0;
         }
 
         .feature-text strong {
           display: block;
-          color: var(--on-surface);
-          margin-bottom: 4px;
-          font-size: 14px;
+          color: var(--ink);
+          margin-bottom: 2px;
+          font: 600 15px/20px var(--font-sans);
         }
 
         .feature-text p {
           margin: 0;
-          color: var(--on-surface-variant);
-          font-size: 12px;
-          line-height: 1.55;
+          color: var(--ink-muted);
+          font: 400 13px/18px var(--font-sans);
         }
 
-        .packages-container {
-          display: grid;
-          gap: 14px;
-          margin-bottom: 18px;
-        }
+        .packages-container { display: grid; gap: var(--space-3); }
+
+        .packages-container .loading { color: var(--ink-muted); text-align: center; }
 
         .package-card {
           position: relative;
           text-align: left;
-          border: 1px solid rgba(255,255,255,0.12);
-          background: rgba(255,255,255,0.05);
-          border-radius: 18px;
-          padding: 18px 16px;
+          border: 1px solid var(--line);
+          background: var(--paper-raised);
+          border-radius: var(--radius-lg);
+          padding: var(--space-4);
           cursor: pointer;
-          color: inherit;
+          color: var(--ink);
+          font-family: var(--font-sans);
+          box-shadow: var(--elevation-1);
         }
 
         .package-card.popular {
-          background: linear-gradient(135deg, rgba(212, 175, 55, 0.26), rgba(212, 175, 55, 0.08));
-          border-color: var(--tertiary);
-          box-shadow: 0 0 24px rgba(212, 175, 55, 0.18);
+          border: 2px solid var(--brand);
+          padding: calc(var(--space-4) - 1px);
         }
+
+        .package-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
         .popular-tag {
           position: absolute;
-          top: -10px;
-          left: 16px;
-          background: linear-gradient(135deg, var(--tertiary), var(--on-tertiary-fixed-variant));
-          color: var(--on-tertiary);
-          font-size: 11px;
-          font-weight: 900;
-          padding: 5px 10px;
-          border-radius: 999px;
+          top: -11px;
+          left: var(--space-4);
+          background: var(--brand);
+          color: var(--gold-on-brand);
+          font: 700 11px/14px var(--font-sans);
+          letter-spacing: 0.1em;
+          padding: 4px 10px;
+          border-radius: var(--radius-full);
         }
 
-        .package-title {
-          color: var(--on-tertiary-container);
-          font-weight: 700;
-          margin-bottom: 6px;
-        }
+        .package-title { color: var(--ink-muted); font: 600 13px/18px var(--font-sans); }
 
         .package-price {
-          color: var(--tertiary);
-          font-size: 24px;
-          font-weight: 800;
+          color: var(--ink);
+          font: 600 26px/32px var(--font-display);
+          margin-top: 2px;
         }
 
         .package-desc {
-          color: var(--on-surface);
-          font-size: 12px;
-          line-height: 1.5;
-          margin-top: 8px;
+          color: var(--ink-muted);
+          font: 400 13px/18px var(--font-sans);
+          margin-top: var(--space-1);
         }
 
         .package-cta {
-          margin-top: 12px;
-          color: var(--on-primary);
-          font-size: 13px;
-          font-weight: 800;
+          margin-top: var(--space-3);
+          color: var(--brand-ink);
+          font: 600 14px/20px var(--font-sans);
+        }
+
+        .package-card.popular .package-cta {
+          background: var(--brand);
+          color: var(--on-brand);
+          border-radius: var(--radius-md);
+          min-height: 44px;
+          display: grid;
+          place-items: center;
         }
 
         .subscription-terms {
-          background: rgba(20, 70, 55, 0.6);
-          border: 1px solid rgba(212, 175, 55, 0.15);
-          border-radius: 12px;
-          padding: 12px 16px;
-          margin-bottom: 16px;
-          text-align: left;
+          background: var(--paper-sunken);
+          border-radius: var(--radius-md);
+          padding: var(--space-3) var(--space-4);
         }
 
         .subscription-terms p {
-          margin: 0 0 6px 0;
-          font-size: 11px;
-          color: var(--secondary);
-          line-height: 1.4;
+          margin: 0 0 4px;
+          font: 400 12px/17px var(--font-sans);
+          color: var(--ink-muted);
         }
 
-        .subscription-terms p:last-child {
-          margin-bottom: 0;
-        }
+        .subscription-terms p:last-child { margin-bottom: 0; }
 
-        .legal-links {
-          margin-top: 10px !important;
-          text-align: center;
-        }
+        .legal-links { margin-top: var(--space-2) !important; text-align: center; }
 
-        .legal-links a {
-          color: var(--tertiary);
-          text-decoration: none;
-          font-size: 11px;
-        }
-
-        .restore-btn {
-          width: 100%;
+        .legal-links .legal-link-btn {
           background: none;
-          border: none;
-          color: var(--secondary);
-          font-size: 12px;
-          cursor: pointer;
+          border: 0;
+          padding: 0;
+          font: inherit;
+          color: var(--brand-ink);
           text-decoration: underline;
-          margin-bottom: 12px;
-          padding: 8px;
+          cursor: pointer;
         }
+
+        .restore-btn { width: 100%; }
 
         .restore-success,
         .restore-not-found,
         .error-msg {
-          border-radius: 12px;
-          padding: 10px 12px;
-          margin-bottom: 12px;
-          font-size: 12px;
-          font-weight: 700;
+          border-radius: var(--radius-md);
+          padding: var(--space-2) var(--space-3);
+          font: 600 13px/18px var(--font-sans);
+          background: var(--paper-sunken);
         }
 
-        .restore-success {
-          background: rgba(16, 185, 129, 0.12);
-          border: 1px solid rgba(16, 185, 129, 0.2);
-          color: var(--on-secondary-container);
-        }
-
-        .restore-not-found,
-        .error-msg {
-          background: rgba(249, 115, 22, 0.10);
-          border: 1px solid rgba(249, 115, 22, 0.18);
-          color: var(--on-tertiary-container);
-        }
+        .restore-success { color: var(--success); }
+        .restore-not-found, .error-msg { color: var(--danger); }
 
         .processing-overlay {
           position: absolute;
           inset: 0;
-          background: rgba(4, 20, 16, 0.68);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 24px;
+          background: color-mix(in srgb, var(--paper) 70%, transparent);
+          display: grid;
+          place-items: center;
+          border-radius: var(--radius-xl);
         }
 
         .spinner {
           width: 34px;
           height: 34px;
-          border-radius: 999px;
-          border: 3px solid rgba(255,255,255,0.2);
-          border-top-color: var(--tertiary);
+          border-radius: var(--radius-full);
+          border: 3px solid var(--line);
+          border-top-color: var(--brand);
           animation: spin 0.9s linear infinite;
         }
 
