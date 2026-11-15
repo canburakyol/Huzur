@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Generated from src/styles/variables.css by scripts/sync-theme-tokens.mjs. -->
-    <color name="colorPrimary">#163B2B</color>
-    <color name="colorPrimaryDark">#163B2B</color>
+    <color name="colorPrimary">#14432F</color>
+    <color name="colorPrimaryDark">#14432F</color>
     <color name="colorAccent">#8FA997</color>
-    <color name="splash_background">#F4EFDF</color>
-    <color name="system_bar_background">#F4EFDF</color>
-    <color name="widget_background">#FAF6EA</color>
+    <color name="splash_background">#EDF2EE</color>
+    <color name="system_bar_background">#EDF2EE</color>
+    <color name="widget_background">#FFFFFF</color>
     <color name="widget_text_primary">#17231C</color>
     <color name="widget_text_secondary">#536158</color>
     <color name="widget_accent">#8FA997</color>

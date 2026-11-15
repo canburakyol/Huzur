@@ -10,15 +10,15 @@
   --bottom-stack-height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
 
   /* --- Light Theme (Matte Mushaf Paper / Warm Linen) --- */
-  --surface-page: #f4efdf;
-  --surface-dim: #dcd7c9;
-  --surface-bright: #fffefb;
+  --surface-page: #edf2ee;
+  --surface-dim: var(--line);
+  --surface-bright: var(--paper-raised);
 
-  --surface-container-lowest: #faf6ea;
-  --surface-container-low: #f1ebd8;
-  --surface-container: #ebe4cf;
-  --surface-container-high: #e3dcc7;
-  --surface-container-highest: #d9d2bb;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: var(--paper);
+  --surface-container: var(--paper-sunken);
+  --surface-container-high: var(--paper-sunken);
+  --surface-container-highest: var(--line);
 
   --on-surface: #17231c;
   --on-surface-variant: #536158;
@@ -27,19 +27,19 @@
   --inverse-on-surface: #f4efdf;
 
   --outline: #77847a;
-  --outline-variant: #e3dec9;
+  --outline-variant: var(--line);
 
-  --ambient-teal: rgba(22, 90, 70, 0.16);
-  --ambient-gold: rgba(181, 138, 71, 0.14);
-  --glass-bg: rgba(250, 246, 234, 0.65);
+  --ambient-teal: rgba(20, 67, 47, 0.07);
+  --ambient-gold: rgba(20, 67, 47, 0.03);
+  --glass-bg: rgba(255, 255, 255, 0.72);
   --glass-border: rgba(22, 59, 43, 0.08);
 
   --surface-tint: #173c2a;              /* Tint overlays */
 
   /* Primary Brand - Majestic Emerald Forest */
-  --primary: #163b2b;
-  --on-primary: #fffdf7;
-  --primary-container: #dce8de;
+  --primary: #14432f;
+  --on-primary: var(--on-brand);
+  --primary-container: var(--brand-soft);
   --on-primary-container: #0d291d;
   --inverse-primary: #94bba2;
 
@@ -87,7 +87,7 @@
   --text-primary: var(--on-surface);
   --text-secondary: var(--on-surface-variant);
   --surface-card: var(--surface-container-lowest);
-  --surface-card-strong: #fcfaf2;
+  --surface-card-strong: var(--paper-raised);
   --accent: var(--tertiary);
   --border-soft: var(--outline-variant);
   --border-strong: #aeb8ae;
@@ -180,24 +180,24 @@
 
   /* Huzur Mushaf design system (https://claude.ai/artifact/ELSbrzZ4UeoYzxU6S9SBU8).
      New screens and the hz-* components use only these; legacy tokens above are migrated screen by screen. */
-  --paper: #f4efdf;
-  --paper-raised: #fbf8ef;
-  --paper-sunken: #ebe4cf;
-  --line: #d9d0b8;
-  --ink: #17231c;
-  --ink-muted: #536158;
+  --paper: #edf2ee;
+  --paper-raised: #ffffff;
+  --paper-sunken: #e0e9e3;
+  --line: #cddad1;
+  --ink: #0f1f17;
+  --ink-muted: #4a5d52;
   /* legacy alias: used by 4 screens but never defined, which left their icons unpainted */
   --text-color-muted: var(--ink-muted);
-  --brand: #163b2b;
-  --brand-ink: #163b2b;
-  --brand-soft: #dce8de;
-  --on-brand: #f4efdf;
-  --gold: #b58a47;
-  --gold-ink: #7a5a22;
-  --gold-on-brand: #d9b46f;
+  --brand: #14432f;
+  --brand-ink: #14432f;
+  --brand-soft: #d5e8dc;
+  --on-brand: #f2f7f3;
+  --gold: #a9782a;
+  --gold-ink: #7a5214;
+  --gold-on-brand: #e2c07e;
   --danger: #a3322a;
   --success: #1f6b47;
-  --focus: #163b2b;
+  --focus: #14432f;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
