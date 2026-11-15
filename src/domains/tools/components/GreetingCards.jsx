@@ -283,8 +283,8 @@ function GreetingCards({ onClose }) {
                             >
                                 <Heart
                                     size={18}
-                                    color={favorites.includes(card.id) ? '#ff4757' : 'var(--on-primary)'}
-                                    fill={favorites.includes(card.id) ? '#ff4757' : 'transparent'}
+                                    color={favorites.includes(card.id) ? 'var(--danger)' : 'var(--on-primary)'}
+                                    fill={favorites.includes(card.id) ? 'var(--danger)' : 'transparent'}
                                 />
                             </button>
                         </div>
@@ -477,17 +477,17 @@ function GreetingCards({ onClose }) {
                                 ? 'rgba(255,107,107,0.1)'
                                 : 'var(--nav-hover)',
                             border: favorites.includes(selectedCard.id)
-                                ? '1px solid #ff6b6b'
+                                ? '1px solid var(--danger)'
                                 : '1px solid var(--nav-border)',
                             borderRadius: '16px',
-                            color: favorites.includes(selectedCard.id) ? '#ff6b6b' : 'var(--nav-text)',
+                            color: favorites.includes(selectedCard.id) ? 'var(--danger)' : 'var(--nav-text)',
                             justifyContent: 'center'
                         }}
                     >
                         <Heart
                             size={20}
-                            fill={favorites.includes(selectedCard.id) ? '#ff6b6b' : 'transparent'}
-                            color={favorites.includes(selectedCard.id) ? '#ff6b6b' : 'var(--nav-text)'}
+                            fill={favorites.includes(selectedCard.id) ? 'var(--danger)' : 'transparent'}
+                            color={favorites.includes(selectedCard.id) ? 'var(--danger)' : 'var(--nav-text)'}
                         />
                     </button>
                     <button

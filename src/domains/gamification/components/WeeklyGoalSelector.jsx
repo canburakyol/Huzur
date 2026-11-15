@@ -28,7 +28,7 @@ const WeeklyGoalSelector = () => {
             <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: '950', color: 'var(--nav-text)' }}>
                 {t('weeklyGoal.title', 'Haftalık Hedef')}
             </h4>
-            <div style={{ fontSize: '0.75rem', fontWeight: '700', color: '#10b981', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--success)', display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <Sparkles size={12} />
                 <span>DAHA FAZLA PUAN KAZAN</span>
             </div>
@@ -131,7 +131,7 @@ const WeeklyGoalSelector = () => {
             right: -8px;
             width: 24px;
             height: 24px;
-            background: #10b981;
+            background: var(--success);
             color: white;
             border-radius: 50%;
             display: flex;

@@ -46,7 +46,7 @@ const Stories = memo(() => {
                 titleKey: 'stories.fridayMessage',
                 content: t('stories.fridayContent'),
                 image: cumaImages[cumaImageIndex],
-                color: '#2e7d32',
+                color: 'var(--success)',
                 original: { text: "Hayırlı Cumalar" }
             });
         }
@@ -62,7 +62,7 @@ const Stories = memo(() => {
                 titleKey: 'stories.dailyVerse',
                 content: `${dailyContent.verse.translation} (${dailyContent.verse.reference})`,
                 image: dailyContent.verse.image,
-                color: '#e74c3c',
+                color: 'var(--danger)',
                 original: dailyContent.verse
             },
             {
@@ -70,7 +70,7 @@ const Stories = memo(() => {
                 titleKey: 'stories.dailyHadith',
                 content: `${dailyContent.hadith.text} (${dailyContent.hadith.source})`,
                 image: dailyContent.hadith.image,
-                color: '#27ae60',
+                color: 'var(--success)',
                 original: dailyContent.hadith
             },
             {

@@ -152,7 +152,7 @@ const CreateDuaModal = ({ onClose }) => {
             <div style={{ 
                 display: 'flex', alignItems: 'center', gap: '8px', 
                 padding: '10px', background: 'rgba(239, 68, 68, 0.1)', 
-                borderRadius: '10px', color: '#ef4444' 
+                borderRadius: '10px', color: 'var(--danger)' 
             }}>
               <AlertCircle size={14} />
               <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>{error}</span>

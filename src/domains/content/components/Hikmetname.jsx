@@ -135,7 +135,7 @@ function Hikmetname({ onClose }) {
             {favorites.length > 0 && (
                 <div className="settings-group" style={{ marginTop: '32px' }}>
                     <div className="settings-group-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Heart size={16} fill="#ef4444" color="#ef4444" /> {t('hikmet.favorites')} ({favorites.length})
+                        <Heart size={16} fill="var(--danger)" color="var(--danger)" /> {t('hikmet.favorites')} ({favorites.length})
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {HIKMETLER.filter(h => favorites.includes(h.id)).slice(0, 2).map(hikmet => (
@@ -170,7 +170,7 @@ function Hikmetname({ onClose }) {
                                 </div>
                                 <div style={{ display: 'flex', gap: '8px' }}>
                                     <button className="icon-btn-small" onClick={() => toggleFavorite(hikmet.id)}>
-                                        <Heart size={16} fill={favorites.includes(hikmet.id) ? '#ef4444' : 'transparent'} color={favorites.includes(hikmet.id) ? '#ef4444' : 'var(--nav-text-muted)'} />
+                                        <Heart size={16} fill={favorites.includes(hikmet.id) ? 'var(--danger)' : 'transparent'} color={favorites.includes(hikmet.id) ? 'var(--danger)' : 'var(--nav-text-muted)'} />
                                     </button>
                                     <button className="icon-btn-small" onClick={() => shareHikmet(hikmet)}>
                                         <Share2 size={16} />

@@ -60,7 +60,7 @@ const MoodSelector = ({ onClose }) => {
               padding: '32px 24px', marginBottom: '24px', textAlign: 'center', flexDirection: 'column', alignItems: 'center' 
           }}>
             <div className="settings-icon-box" style={{ 
-                width: '72px', height: '72px', background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', marginBottom: '20px' 
+                width: '72px', height: '72px', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--danger)', marginBottom: '20px' 
             }}>
               <HeartHandshake size={32} />
             </div>

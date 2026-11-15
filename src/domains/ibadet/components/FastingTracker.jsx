@@ -111,7 +111,7 @@ const FastingTracker = ({ onClose }) => {
                     <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('fasting.thisMonth', 'BU AY')}</div>
                 </div>
                 <div className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', padding: '24px', textAlign: 'center', gap: '12px' }}>
-                    <div style={{ color: '#10b981' }}><Sparkles size={24} /></div>
+                    <div style={{ color: 'var(--success)' }}><Sparkles size={24} /></div>
                     <div style={{ fontSize: '1.5rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.total}</div>
                     <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('fasting.total', 'TOPLAM')}</div>
                 </div>
@@ -125,11 +125,11 @@ const FastingTracker = ({ onClose }) => {
                     style={{ 
                         padding: '24px', 
                         justifyContent: 'space-between',
-                        border: isFastedToday ? '1px solid #10b981' : '1px solid var(--nav-border)'
+                        border: isFastedToday ? '1px solid var(--success)' : '1px solid var(--nav-border)'
                     }}
                 >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                        <div className="settings-icon-box" style={{ background: isFastedToday ? 'rgba(16, 185, 129, 0.1)' : 'var(--nav-hover)', color: isFastedToday ? '#10b981' : 'var(--nav-text-muted)' }}>
+                        <div className="settings-icon-box" style={{ background: isFastedToday ? 'rgba(16, 185, 129, 0.1)' : 'var(--nav-hover)', color: isFastedToday ? 'var(--success)' : 'var(--nav-text-muted)' }}>
                             <Moon size={24} />
                         </div>
                         <div>
@@ -147,7 +147,7 @@ const FastingTracker = ({ onClose }) => {
                             height: '56px',
                             borderRadius: '16px',
                             border: 'none',
-                            background: isFastedToday ? '#10b981' : 'var(--nav-accent)',
+                            background: isFastedToday ? 'var(--success)' : 'var(--nav-accent)',
                             color: 'var(--on-primary)',
                             cursor: 'pointer',
                             display: 'flex',
@@ -181,7 +181,7 @@ const FastingTracker = ({ onClose }) => {
                                         fontWeight: '900', 
                                         textTransform: 'uppercase',
                                         background: f.type === 'farz' ? '#fee2e2' : f.type === 'sunnah' ? 'rgba(245, 158, 11, 0.1)' : 'var(--nav-hover)',
-                                        color: f.type === 'farz' ? '#ef4444' : f.type === 'sunnah' ? 'var(--nav-accent)' : 'var(--nav-text-muted)'
+                                        color: f.type === 'farz' ? 'var(--danger)' : f.type === 'sunnah' ? 'var(--nav-accent)' : 'var(--nav-text-muted)'
                                     }}>
                                         {t(`fasting.types.${f.type}`, f.type)}
                                     </span>

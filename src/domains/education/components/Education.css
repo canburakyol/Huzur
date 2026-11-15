@@ -16,7 +16,7 @@
     --edu-shadow:        var(--shadow-card);
     --edu-border:        1px solid var(--outline-variant);
     /* Zorluk renk sabitleri */
-    --edu-difficulty-hard:   #ef4444;
+    --edu-difficulty-hard:   var(--danger);
     --edu-difficulty-medium: var(--tertiary);
     --edu-difficulty-easy:   var(--secondary);
 }

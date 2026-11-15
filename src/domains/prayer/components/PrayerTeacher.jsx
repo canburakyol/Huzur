@@ -470,9 +470,9 @@ function PrayerTeacher({ onClose }) {
                                                     : 'var(--nav-hover)',
                                                 border: showResult
                                                     ? i === currentQuizItem.correctAnswer
-                                                        ? '2px solid #22c55e'
+                                                        ? '2px solid var(--success)'
                                                         : i === selectedAnswer
-                                                            ? '2px solid #ef4444'
+                                                            ? '2px solid var(--danger)'
                                                             : '1px solid var(--nav-border)'
                                                     : '1px solid var(--nav-border)',
                                                 cursor: showResult ? 'default' : 'pointer',
@@ -483,12 +483,12 @@ function PrayerTeacher({ onClose }) {
                                         >
                                             <span className="flex-1">{option}</span>
                                             {showResult && i === currentQuizItem.correctAnswer && (
-                                                <div className="settings-icon-box rounded-8" style={{ width: '28px', height: '28px', background: '#22c55e', color: 'var(--on-primary)' }}>
+                                                <div className="settings-icon-box rounded-8" style={{ width: '28px', height: '28px', background: 'var(--success)', color: 'var(--on-primary)' }}>
                                                     <Check size={18} />
                                                 </div>
                                             )}
                                             {showResult && i === selectedAnswer && i !== currentQuizItem.correctAnswer && (
-                                                <div className="settings-icon-box rounded-8" style={{ width: '28px', height: '28px', background: '#ef4444', color: 'var(--on-primary)' }}>
+                                                <div className="settings-icon-box rounded-8" style={{ width: '28px', height: '28px', background: 'var(--danger)', color: 'var(--on-primary)' }}>
                                                     <X size={18} />
                                                 </div>
                                             )}

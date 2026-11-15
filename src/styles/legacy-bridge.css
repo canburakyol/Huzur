@@ -1,0 +1,79 @@
+/* Legacy bridge: puts screens not yet rebuilt on hz-* components onto Huzur Mushaf.
+   Selectors start with :root so they outrank the lazily loaded module CSS (Navigation.css, Education.css...).
+   Delete a rule here once every screen using that class has moved to hz-* components. */
+
+/* Gold accents were referenced on 55 places but never defined. */
+:root {
+  --accent-gold: var(--gold-ink);
+  --accent-gold-light: var(--gold-ink);
+}
+
+/* ---- Both themes: typography and shape only ---- */
+
+:root .settings-group-title {
+  font: 700 11px/14px var(--font-sans);
+  letter-spacing: 0.12em;
+  color: var(--gold-ink);
+  padding-left: 0;
+}
+
+:root .settings-card {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elevation-1);
+}
+
+:root .settings-label { font-family: var(--font-sans); font-weight: 600; }
+:root .settings-desc { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+
+:root .manuscript-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ---- Light theme: legacy tokens and surfaces follow the Avlu palette ---- */
+
+:root:not([data-theme='dark']) {
+  /* interactive accent is brand green as in Mushaf; gold stays for ornament via --tertiary */
+  --nav-accent: var(--brand);
+  --nav-hover: var(--paper-sunken);
+  --nav-border: var(--line);
+  --glass-border: var(--line);
+  --card-border: var(--line);
+}
+
+:root:not([data-theme='dark']) .settings-container {
+  background: var(--paper);
+}
+
+:root:not([data-theme='dark']) .settings-card {
+  background: var(--paper-raised);
+  border-color: var(--line);
+}
+
+:root:not([data-theme='dark']) .settings-icon-box {
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  border-radius: var(--radius-sm);
+}
+
+:root:not([data-theme='dark']) .premium-glass {
+  background: var(--paper-raised);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid var(--line);
+  box-shadow: var(--elevation-1);
+  border-radius: var(--radius-lg);
+}
+
+/* gold gradient text sat at ~2:1 on white */
+:root:not([data-theme='dark']) .premium-text {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--gold-ink);
+  text-shadow: none;
+}
+
+:root:not([data-theme='dark']) .hover-lift:hover {
+  box-shadow: var(--elevation-2);
+}

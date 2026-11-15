@@ -62,7 +62,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
 
   if (error) {
     return (
-      <div className="manuscript-card reveal-stagger" style={{ borderColor: '#ef4444' }}>
+      <div className="manuscript-card reveal-stagger" style={{ borderColor: 'var(--danger)' }}>
         <p className="lesson-title">{t('common.error', 'Hata oluştu')}</p>
         <p className="lesson-desc">{error}</p>
       </div>

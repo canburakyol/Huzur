@@ -275,12 +275,12 @@ const TajweedQuiz = ({ onBack }) => {
 
         .option-text { flex: 1; font-size: 0.95rem; font-weight: 700; color: var(--nav-text); }
 
-        .velocity-option-btn.correct { background: rgba(16, 185, 129, 0.1); border-color: #10b981; }
-        .velocity-option-btn.wrong { background: rgba(239, 68, 68, 0.1); border-color: #ef4444; }
+        .velocity-option-btn.correct { background: rgba(16, 185, 129, 0.1); border-color: var(--success); }
+        .velocity-option-btn.wrong { background: rgba(239, 68, 68, 0.1); border-color: var(--danger); }
         
         .status-indicator { margin-left: auto; }
-        .velocity-option-btn.correct .status-indicator { color: #10b981; }
-        .velocity-option-btn.wrong .status-indicator { color: #ef4444; }
+        .velocity-option-btn.correct .status-indicator { color: var(--success); }
+        .velocity-option-btn.wrong .status-indicator { color: var(--danger); }
 
         .explanation-area { margin-top: 24px; }
         

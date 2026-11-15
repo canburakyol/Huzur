@@ -12,7 +12,7 @@ const mosqueIcon = new L.DivIcon({
 });
 
 const userIcon = new L.DivIcon({
-    html: '<div style="width: 20px; height: 20px; background: #2e7d32; border: 4px solid white; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"></div>',
+    html: '<div style="width: 20px; height: 20px; background: var(--success); border: 4px solid white; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"></div>',
     className: 'user-marker',
     iconSize: [24, 24],
     iconAnchor: [12, 12]

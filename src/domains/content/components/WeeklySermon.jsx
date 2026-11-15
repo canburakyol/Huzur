@@ -171,9 +171,9 @@ function WeeklySermon({ onClose }) {
                                     background: source.id === 'diyanet-tv' ? 'rgba(231, 76, 60, 0.1)' :
                                               source.id === 'diyanet-sesli' ? 'rgba(155, 89, 182, 0.1)' :
                                               'rgba(52, 152, 219, 0.1)',
-                                    color: source.id === 'diyanet-tv' ? '#e74c3c' :
+                                    color: source.id === 'diyanet-tv' ? 'var(--danger)' :
                                            source.id === 'diyanet-sesli' ? '#9b59b6' :
-                                           '#3498db',
+                                           'var(--brand-ink)',
                                     fontSize: '1.5rem'
                                 }}>
                                     {source.icon}

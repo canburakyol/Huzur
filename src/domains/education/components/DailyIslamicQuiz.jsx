@@ -114,7 +114,7 @@ const DailyIslamicQuiz = ({ onClose }) => {
               </div>
               <div style={{ width: '1px', background: 'var(--nav-border)' }} />
               <div>
-                <div style={{ fontSize: '2rem', fontWeight: '900', color: '#10b981' }}>+{score * 15}</div>
+                <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--success)' }}>+{score * 15}</div>
                 <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('quiz.xpEarned')}</div>
               </div>
             </div>
@@ -143,7 +143,7 @@ const DailyIslamicQuiz = ({ onClose }) => {
 
       <div className="feature-content" style={{ padding: '20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-          <div style={{ background: 'rgba(59, 130, 246, 0.15)', color: '#3b82f6', padding: '6px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '800' }}>
+          <div style={{ background: 'rgba(59, 130, 246, 0.15)', color: 'var(--brand-ink)', padding: '6px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '800' }}>
             {t(`quiz.categories.${currentQ.category}`, currentQ.category)}
           </div>
           <div style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--nav-text-muted)' }}>
@@ -175,14 +175,14 @@ const DailyIslamicQuiz = ({ onClose }) => {
             if (selectedOption !== null) {
               if (isCorrect) {
                 bgStyle = 'rgba(16, 185, 129, 0.15)';
-                colorStyle = '#10b981';
-                borderStyle = '1px solid #10b981';
-                icon = <CheckCircle size={20} color="#10b981" />;
+                colorStyle = 'var(--success)';
+                borderStyle = '1px solid var(--success)';
+                icon = <CheckCircle size={20} color="var(--success)" />;
               } else if (isSelected) {
                 bgStyle = 'rgba(239, 68, 68, 0.15)';
-                colorStyle = '#ef4444';
-                borderStyle = '1px solid #ef4444';
-                icon = <XCircle size={20} color="#ef4444" />;
+                colorStyle = 'var(--danger)';
+                borderStyle = '1px solid var(--danger)';
+                icon = <XCircle size={20} color="var(--danger)" />;
               }
             }
 
@@ -215,8 +215,8 @@ const DailyIslamicQuiz = ({ onClose }) => {
             animation: 'fadeIn 0.3s ease'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-              <Brain size={18} color="#3b82f6" />
-              <span style={{ fontSize: '0.85rem', fontWeight: '800', color: '#3b82f6', textTransform: 'uppercase' }}>{t('quiz.info', 'Bilgi')}</span>
+              <Brain size={18} color="var(--brand-ink)" />
+              <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--brand-ink)', textTransform: 'uppercase' }}>{t('quiz.info', 'Bilgi')}</span>
             </div>
             <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--nav-text)', lineHeight: '1.6', fontWeight: '600' }}>
               {t(`quiz.questions.${currentQ.id}.explanation`, currentQ.explanation)}

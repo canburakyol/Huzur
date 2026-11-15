@@ -282,7 +282,7 @@ const FontSettings = ({ onClose }) => {
             gap: 6px;
             padding: 6px 12px;
             background: rgba(16, 185, 129, 0.15);
-            color: #10b981;
+            color: var(--success);
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 900;

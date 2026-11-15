@@ -140,7 +140,7 @@ function PrivacyPolicy({ onClose }) {
 
                 .privacy-shield-icon {
                     background: rgba(16, 185, 129, 0.1);
-                    color: #10b981;
+                    color: var(--success);
                 }
 
                 @keyframes fadeIn {

@@ -112,7 +112,7 @@ const Hadiths = ({ onClose }) => {
                     <IslamicBackButton onClick={goBack} size="medium" />
                     <div style={{ display: 'flex', gap: '8px' }}>
                         <button className={`velocity-target-btn ${isFav ? 'active' : ''}`} onClick={() => toggleFavorite(selectedHadith.id)}>
-                            <Heart size={20} fill={isFav ? '#ef4444' : 'transparent'} color={isFav ? '#ef4444' : 'currentColor'} />
+                            <Heart size={20} fill={isFav ? 'var(--danger)' : 'transparent'} color={isFav ? 'var(--danger)' : 'currentColor'} />
                         </button>
                         <button className="velocity-target-btn" onClick={() => handleShare(selectedHadith)}>
                             <Share2 size={20} />
@@ -229,7 +229,7 @@ const Hadiths = ({ onClose }) => {
                                 setView('category');
                             }}
                         >
-                            <Heart size={12} fill="#ef4444" color="#ef4444" /> {favorites.length}
+                            <Heart size={12} fill="var(--danger)" color="var(--danger)" /> {favorites.length}
                         </button>
                     )}
                 </div>

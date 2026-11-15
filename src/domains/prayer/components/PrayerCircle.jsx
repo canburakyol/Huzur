@@ -123,7 +123,7 @@ const PrayerCircle = ({ onClose }) => {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: req.isMine ? 'var(--nav-accent)' : '#10b981' }}></div>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: req.isMine ? 'var(--nav-accent)' : 'var(--success)' }}></div>
                 <span style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
                   {req.user}
                 </span>
@@ -230,9 +230,9 @@ const PrayerCircle = ({ onClose }) => {
         }
 
         .pray-button.prayed {
-            background: #10b981;
+            background: var(--success);
             color: white;
-            border-color: #10b981;
+            border-color: var(--success);
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
         }
 

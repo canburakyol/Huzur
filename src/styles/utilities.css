@@ -279,7 +279,7 @@
 .mb-18 { margin-bottom: 18px; }
 .px-14 { padding-left: 14px; padding-right: 14px; }
 .py-10 { padding-top: 10px; padding-bottom: 10px; }
-.text-blue-400 { color: #60a5fa; }
+.text-blue-400 { color: var(--brand-ink); }
 
 /* ─── LOADING SPINNER ─── */
 .loading-spinner {

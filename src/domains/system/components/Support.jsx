@@ -101,7 +101,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     justifyContent: 'center',
                     marginBottom: '24px'
                 }}>
-                    <CheckCircle size={40} color="#2ecc71" />
+                    <CheckCircle size={40} color="var(--success)" />
                 </div>
                 <h2 style={{
                     color: 'var(--primary)',
@@ -274,7 +274,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',
-                        color: '#e74c3c',
+                        color: 'var(--danger)',
                         fontSize: '13px'
                     }}>
                         <AlertCircle size={18} />

@@ -17,7 +17,7 @@ function SettingsMiniLeagueSection({
       <SettingsActionRow
         description={t('socialRetention.miniLeagueDesc', 'Sadece ritim bandın görünür; isim ve ham puan paylaşılmaz.')}
         icon={<span style={{ fontSize: '18px', fontWeight: '900' }}>%</span>}
-        iconStyle={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}
+        iconStyle={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--brand-ink)' }}
         onClick={onToggleMiniLeague}
         rightContent={<SettingsToggle active={miniLeaguePreferences?.optedIn} />}
         title={t('socialRetention.miniLeagueTitle', 'Anonim mini lig')}
@@ -33,7 +33,7 @@ function SettingsMiniLeagueSection({
             : t('socialRetention.visibilityOffDesc', 'Mini lig kapalıyken görünürlük kapalı kalır.')
         }
         icon={<span style={{ fontSize: '16px', fontWeight: '900' }}>#</span>}
-        iconStyle={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}
+        iconStyle={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--success)' }}
         onClick={onToggleVisibility}
         style={{ opacity: miniLeaguePreferences?.optedIn ? 1 : 0.55 }}
         title={t('socialRetention.visibilityTitle', 'Görünürlük seviyesi')}

@@ -16,9 +16,9 @@ const ToastNotification = ({ message, type = 'error', onClose, duration = 5000 }
   };
 
   const colors = {
-    error: '#ef4444',
-    success: '#10b981',
-    info: '#3b82f6'
+    error: 'var(--danger)',
+    success: 'var(--success)',
+    info: 'var(--brand-ink)'
   };
 
   return (

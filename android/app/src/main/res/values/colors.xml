@@ -3,11 +3,11 @@
     <!-- Generated from src/styles/variables.css by scripts/sync-theme-tokens.mjs. -->
     <color name="colorPrimary">#14432F</color>
     <color name="colorPrimaryDark">#14432F</color>
-    <color name="colorAccent">#8FA997</color>
+    <color name="colorAccent">#3F6B55</color>
     <color name="splash_background">#EDF2EE</color>
     <color name="system_bar_background">#EDF2EE</color>
     <color name="widget_background">#FFFFFF</color>
-    <color name="widget_text_primary">#17231C</color>
-    <color name="widget_text_secondary">#536158</color>
-    <color name="widget_accent">#8FA997</color>
+    <color name="widget_text_primary">#0F1F17</color>
+    <color name="widget_text_secondary">#4A5D52</color>
+    <color name="widget_accent">#3F6B55</color>
 </resources>

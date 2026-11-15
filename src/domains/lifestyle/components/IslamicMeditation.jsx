@@ -13,14 +13,14 @@ const MEDITATION_SESSIONS = [
     icon: <Sun size={28} />,
     duration: 5,
     color: '#f39c12',
-    gradient: 'linear-gradient(135deg, #f39c12 0%, #e74c3c 100%)'
+    gradient: 'linear-gradient(135deg, #f39c12 0%, var(--danger) 100%)'
   },
   {
     id: 'calm',
     icon: <Wind size={28} />,
     duration: 10,
-    color: '#3498db',
-    gradient: 'linear-gradient(135deg, #3498db 0%, #2ecc71 100%)'
+    color: 'var(--brand-ink)',
+    gradient: 'linear-gradient(135deg, var(--brand-ink) 0%, var(--success) 100%)'
   },
   {
     id: 'night',
@@ -33,8 +33,8 @@ const MEDITATION_SESSIONS = [
     id: 'gratitude',
     icon: <Heart size={28} />,
     duration: 5,
-    color: '#e74c3c',
-    gradient: 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)'
+    color: 'var(--danger)',
+    gradient: 'linear-gradient(135deg, var(--danger) 0%, #c0392b 100%)'
   }
 ];
 

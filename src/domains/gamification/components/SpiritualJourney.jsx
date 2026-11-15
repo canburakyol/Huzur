@@ -88,14 +88,14 @@ const SpiritualJourney = ({ onClose }) => {
     },
     {
       id: 'routine-builder',
-      icon: <CalendarDays size={18} color="#10b981" />,
+      icon: <CalendarDays size={18} color="var(--success)" />,
       title: t('routine.title', 'Günlük Rutinlerim'),
       description: 'Sabah ve aksam ritmini bugunden sekillendir.',
       onClick: () => navigateFromAction('/routine-builder')
     },
     {
       id: 'share-card',
-      icon: <Share2 size={18} color="#3b82f6" />,
+      icon: <Share2 size={18} color="var(--brand-ink)" />,
       title: t('gamification.share', 'İstatistik Kartini Paylaş'),
       description: 'Ilerlemeni gorunur kilip motive edici bir kart olustur.',
       onClick: () => setShowShareCard(true)
@@ -221,7 +221,7 @@ const SpiritualJourney = ({ onClose }) => {
           height: '48px',
           borderRadius: '14px',
           background: 'rgba(59, 130, 246, 0.15)',
-          color: '#3b82f6',
+          color: 'var(--brand-ink)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
@@ -354,7 +354,7 @@ const SpiritualJourney = ({ onClose }) => {
     }}>
       <div className="flex-between-center items-start gap-12 mb-14">
         <div>
-          <div className="text-sm font-black uppercase mb-6 text-blue-400" style={{ letterSpacing: '1px', color: '#60a5fa' }}>
+          <div className="text-sm font-black uppercase mb-6 text-blue-400" style={{ letterSpacing: '1px', color: 'var(--brand-ink)' }}>
             {t('socialRetention.gentleCompetition', 'Hafif rekabet')}
           </div>
           <h3 className="m-0 text-nav text-xl font-black">
@@ -368,7 +368,7 @@ const SpiritualJourney = ({ onClose }) => {
               : t(miniLeagueSummary.descriptionKey, 'Istersen anonim mini lige katilip sadece istikrar bandini gorebilirsin.')}
           </p>
         </div>
-        <div className="w-48 h-48 rounded-16 flex-center" style={{ background: 'rgba(59, 130, 246, 0.14)', color: '#60a5fa' }}>
+        <div className="w-48 h-48 rounded-16 flex-center" style={{ background: 'rgba(59, 130, 246, 0.14)', color: 'var(--brand-ink)' }}>
           <Trophy size={22} />
         </div>
       </div>
@@ -404,7 +404,7 @@ const SpiritualJourney = ({ onClose }) => {
             useAppStore.getState().setActiveFeature('settings');
           }}
           className="rounded-full px-14 py-10 font-extrabold border-none cursor-pointer"
-          style={{ background: 'rgba(59, 130, 246, 0.16)', color: '#60a5fa' }}
+          style={{ background: 'rgba(59, 130, 246, 0.16)', color: 'var(--brand-ink)' }}
         >
           {t(miniLeagueSummary.ctaKey, 'Gorunurlugu duzenle')}
         </button>

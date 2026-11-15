@@ -91,8 +91,8 @@ const TajweedTutor = ({ onClose }) => {
   }, [activeLevel]);
 
   const levelInfo = {
-    [TAJWEED_LEVELS.BEGINNER]: { title: tt('tajweed.levels.beginner', 'Baslangic'), icon: '🌱', color: '#10B981', desc: tt('tajweed.levels.beginnerDesc', 'Temel tecvid kurallarini adim adim ogrenin.') },
-    [TAJWEED_LEVELS.INTERMEDIATE]: { title: tt('tajweed.levels.intermediate', 'Orta Seviye'), icon: '🌿', color: '#3B82F6', desc: tt('tajweed.levels.intermediateDesc', 'Okuyusunuzu guclendiren orta seviye kurallara gecin.') },
+    [TAJWEED_LEVELS.BEGINNER]: { title: tt('tajweed.levels.beginner', 'Baslangic'), icon: '🌱', color: 'var(--success)', desc: tt('tajweed.levels.beginnerDesc', 'Temel tecvid kurallarini adim adim ogrenin.') },
+    [TAJWEED_LEVELS.INTERMEDIATE]: { title: tt('tajweed.levels.intermediate', 'Orta Seviye'), icon: '🌿', color: 'var(--brand-ink)', desc: tt('tajweed.levels.intermediateDesc', 'Okuyusunuzu guclendiren orta seviye kurallara gecin.') },
     [TAJWEED_LEVELS.ADVANCED]: { title: tt('tajweed.levels.advanced', 'Ileri Seviye'), icon: '🌳', color: '#8B5CF6', desc: tt('tajweed.levels.advancedDesc', 'Ileri tecvid detaylariyla tilavetinizi inceltin.') }
   };
 

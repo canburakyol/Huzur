@@ -42,7 +42,7 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
                 width: '32px', height: '32px', background: 'var(--nav-bg)',
                 borderRadius: '10px', border: '2px solid var(--nav-border)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#3b82f6'
+                color: 'var(--brand-ink)'
             }}>
               <Snowflake size={18} />
             </div>
@@ -73,7 +73,7 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
           }}>
             <div className="settings-icon-box" style={{ 
                 width: '40px', height: '40px', background: 'rgba(16, 185, 129, 0.1)', 
-                color: '#10b981' 
+                color: 'var(--success)' 
             }}>
               <ShieldCheck size={20} />
             </div>
@@ -81,7 +81,7 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
               <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: '800', color: 'var(--nav-text)' }}>
                 {t('streakProtection.useTokenLabel', 'Dondurma Hakkı Kullan')}
               </p>
-              <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: '600', color: '#10b981' }}>
+              <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: '600', color: 'var(--success)' }}>
                 {t('streakProtection.tokensAvailable', { count: freezeTokens, defaultValue: '{{count}} adet mevcut' })}
               </p>
             </div>

@@ -40,10 +40,10 @@ const SettingsAmbientPulseToggle = () => {
         className="settings-icon-box"
         style={{
           background: enabled ? 'rgba(239, 68, 68, 0.15)' : 'var(--nav-hover)',
-          color: enabled ? '#ef4444' : 'var(--nav-text-muted)'
+          color: enabled ? 'var(--danger)' : 'var(--nav-text-muted)'
         }}
       >
-        <Heart size={20} fill={enabled ? '#ef4444' : 'none'} />
+        <Heart size={20} fill={enabled ? 'var(--danger)' : 'none'} />
       </div>
       <div style={{ flex: 1 }}>
         <div style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--nav-text)' }}>

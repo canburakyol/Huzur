@@ -7,8 +7,8 @@ const StreakDetail = ({ streaks = {} }) => {
 
   const streakItems = [
     { key: 'fajr', icon: <Flame size={20} />, label: t('streak.fajr', 'Sabah Namazı'), color: 'var(--secondary)' },
-    { key: 'quran', icon: <BookOpen size={20} />, label: t('streak.quran', 'Kuran Okuma'), color: '#10b981' },
-    { key: 'dhikr', icon: <Heart size={20} />, label: t('streak.dhikr', 'Zikir'), color: '#3b82f6' }
+    { key: 'quran', icon: <BookOpen size={20} />, label: t('streak.quran', 'Kuran Okuma'), color: 'var(--success)' },
+    { key: 'dhikr', icon: <Heart size={20} />, label: t('streak.dhikr', 'Zikir'), color: 'var(--brand-ink)' }
   ];
 
   return (

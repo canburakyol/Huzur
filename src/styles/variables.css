@@ -20,8 +20,8 @@
   --surface-container-high: var(--paper-sunken);
   --surface-container-highest: var(--line);
 
-  --on-surface: #17231c;
-  --on-surface-variant: #536158;
+  --on-surface: #0f1f17;
+  --on-surface-variant: #4a5d52;
 
   --inverse-surface: #262c28;
   --inverse-on-surface: #f4efdf;
@@ -44,13 +44,13 @@
   --inverse-primary: #94bba2;
 
   /* Secondary - Soft Muted Sage */
-  --secondary: #8fa997;
+  --secondary: #3f6b55;
   --on-secondary: #1b3022;
   --secondary-container: #dfe9e0;
   --on-secondary-container: #334d38;
 
   /* Tertiary - Tezhip Gold (Reminiscent of Islamic Illumination) */
-  --tertiary: #b58a47;
+  --tertiary: #86601f;
   --on-tertiary: #faf9f6;
   --tertiary-container: #f3e8d2;
   --on-tertiary-container: #473516;

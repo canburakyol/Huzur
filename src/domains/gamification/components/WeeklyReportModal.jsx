@@ -273,7 +273,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
     {
       label: t('weeklyReport.activeDays', 'Aktif Gün'),
       value: weeklyStats.activeDays,
-      icon: <Target size={18} color="#10b981" />
+      icon: <Target size={18} color="var(--success)" />
     },
     {
       label: t('weeklyReport.prayerDays', 'Namaz Günü'),
@@ -283,7 +283,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
     {
       label: t('weeklyReport.quranDays', 'Kuran Günü'),
       value: weeklyStats.quranDays,
-      icon: <BookOpen size={18} color="#3b82f6" />
+      icon: <BookOpen size={18} color="var(--brand-ink)" />
     },
     {
       label: t('weeklyReport.routines', 'Rutin'),
@@ -479,7 +479,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
             <div style={{
               fontSize: '0.78rem',
               fontWeight: '800',
-              color: '#10b981',
+              color: 'var(--success)',
               textTransform: 'uppercase',
               marginBottom: '6px'
             }}>

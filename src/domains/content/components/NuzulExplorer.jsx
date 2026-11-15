@@ -415,7 +415,7 @@ const NuzulExplorer = ({ onClose }) => {
 
         .limit-badge.empty {
           background: rgba(239, 68, 68, 0.2);
-          color: #ef4444;
+          color: var(--danger);
         }
 
         .limit-separator {
@@ -598,7 +598,7 @@ const NuzulExplorer = ({ onClose }) => {
           background: rgba(239, 68, 68, 0.15);
           border: 1px solid rgba(239, 68, 68, 0.3);
           border-radius: 12px;
-          color: #ef4444;
+          color: var(--danger);
           font-size: 13px;
         }
 
@@ -606,7 +606,7 @@ const NuzulExplorer = ({ onClose }) => {
           margin-left: auto;
           background: none;
           border: none;
-          color: #ef4444;
+          color: var(--danger);
           font-size: 18px;
           cursor: pointer;
         }

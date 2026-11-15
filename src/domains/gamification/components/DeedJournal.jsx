@@ -164,7 +164,7 @@ function DeedJournal({ onClose }) {
                 <div style={{
                     fontSize: '3.5rem',
                     fontWeight: '900',
-                    color: calculateTodayPoints() >= 0 ? 'var(--nav-accent)' : '#ef4444',
+                    color: calculateTodayPoints() >= 0 ? 'var(--nav-accent)' : 'var(--danger)',
                     lineHeight: '1'
                 }}>
                     {calculateTodayPoints()}
@@ -292,7 +292,7 @@ function DeedJournal({ onClose }) {
 
             {/* Things to Avoid */}
             <div className="settings-group" style={{ marginTop: '24px' }}>
-                <div className="settings-group-title" style={{ color: '#ef4444' }}>{t('deedJournal.today.avoid')}</div>
+                <div className="settings-group-title" style={{ color: 'var(--danger)' }}>{t('deedJournal.today.avoid')}</div>
                 <p style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', marginBottom: '16px', paddingLeft: '8px' }}>
                     {t('deedJournal.today.avoidDesc')}
                 </p>
@@ -305,9 +305,9 @@ function DeedJournal({ onClose }) {
                             style={{
                                 padding: '10px 16px',
                                 borderRadius: '24px',
-                                border: todayDeeds[deed.id] ? '1px solid #ef4444' : '1px solid var(--nav-border)',
+                                border: todayDeeds[deed.id] ? '1px solid var(--danger)' : '1px solid var(--nav-border)',
                                 background: todayDeeds[deed.id] ? 'rgba(239, 68, 68, 0.1)' : 'var(--nav-hover)',
-                                color: todayDeeds[deed.id] ? '#ef4444' : 'var(--nav-text)',
+                                color: todayDeeds[deed.id] ? 'var(--danger)' : 'var(--nav-text)',
                                 fontSize: '0.8rem',
                                 fontWeight: '700'
                             }}
@@ -404,14 +404,14 @@ function DeedJournal({ onClose }) {
                     <div style={{ width: '100%' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                             <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--nav-text)' }}>{t('deedJournal.stats.sunnahs')}</span>
-                            <span style={{ fontSize: '0.85rem', fontWeight: '800', color: '#10b981' }}>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--success)' }}>
                                 {SUNNAH_DEEDS.filter(d => todayDeeds[d.id]).length}/{SUNNAH_DEEDS.length}
                             </span>
                         </div>
                         <div style={{ height: '10px', borderRadius: '5px', background: 'var(--nav-hover)', overflow: 'hidden' }}>
                             <div style={{
                                 height: '100%',
-                                background: '#10b981',
+                                background: 'var(--success)',
                                 width: `${(SUNNAH_DEEDS.filter(d => todayDeeds[d.id]).length / SUNNAH_DEEDS.length) * 100}%`,
                                 transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
                             }} />
@@ -422,14 +422,14 @@ function DeedJournal({ onClose }) {
                     <div style={{ width: '100%' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                             <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--nav-text)' }}>{t('deedJournal.stats.goodDeeds')}</span>
-                            <span style={{ fontSize: '0.85rem', fontWeight: '800', color: '#3b82f6' }}>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--brand-ink)' }}>
                                 {GOOD_DEEDS.filter(d => todayDeeds[d.id]).length}/{GOOD_DEEDS.length}
                             </span>
                         </div>
                         <div style={{ height: '10px', borderRadius: '5px', background: 'var(--nav-hover)', overflow: 'hidden' }}>
                             <div style={{
                                 height: '100%',
-                                background: '#3b82f6',
+                                background: 'var(--brand-ink)',
                                 width: `${(GOOD_DEEDS.filter(d => todayDeeds[d.id]).length / GOOD_DEEDS.length) * 100}%`,
                                 transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
                             }} />

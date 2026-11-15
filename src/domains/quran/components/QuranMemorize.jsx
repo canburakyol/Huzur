@@ -18,10 +18,10 @@ const getDifficulty = (ayahCount) => {
 
 const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
-        case 'Kolay': return '#27ae60';
+        case 'Kolay': return 'var(--success)';
         case 'Orta': return '#f39c12';
         case 'Zor': return '#e67e22';
-        case 'Çok Zor': return '#e74c3c';
+        case 'Çok Zor': return 'var(--danger)';
         default: return 'var(--text-color-muted)';
     }
 };

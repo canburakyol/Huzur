@@ -182,10 +182,10 @@ const Agenda = ({ onClose }) => {
                                 {/* Indicators */}
                                 <div style={{ position: 'absolute', bottom: '6px', display: 'flex', gap: '3px' }}>
                                     {isReligious && (
-                                        <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#ef4444' }}></div>
+                                        <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--danger)' }}></div>
                                     )}
                                     {hasEvents && (
-                                        <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#3b82f6' }}></div>
+                                        <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--brand-ink)' }}></div>
                                     )}
                                 </div>
                             </div>
@@ -229,7 +229,7 @@ const Agenda = ({ onClose }) => {
 
                         {/* Religious Day */}
                         {selectedDate.religiousDay && (
-                            <div className="settings-card" style={{ background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.1)', color: '#ef4444', marginBottom: '24px' }}>
+                            <div className="settings-card" style={{ background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.1)', color: 'var(--danger)', marginBottom: '24px' }}>
                                 <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                                     <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(239, 68, 68, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                         <CalendarIcon size={20} />
@@ -268,7 +268,7 @@ const Agenda = ({ onClose }) => {
                                             </div>
                                             <button
                                                 onClick={() => handleDeleteEvent(event.id)}
-                                                style={{ background: 'rgba(239, 68, 68, 0.05)', border: 'none', color: '#ef4444', padding: '10px', borderRadius: '12px' }}
+                                                style={{ background: 'rgba(239, 68, 68, 0.05)', border: 'none', color: 'var(--danger)', padding: '10px', borderRadius: '12px' }}
                                             >
                                                 <Trash2 size={18} />
                                             </button>

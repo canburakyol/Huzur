@@ -187,7 +187,7 @@ const WelcomeBackBonus = () => {
           justifyContent: 'center',
           animation: claimed ? 'comebackPop 0.5s ease' : 'comebackFloat 2s ease-in-out infinite'
         }}>
-          {claimed ? <span style={{ fontSize: '1.5rem', color: '#22c55e', fontWeight: 'bold' }}>✓</span> : <Gift size={28} color="var(--tertiary)" />}
+          {claimed ? <span style={{ fontSize: '1.5rem', color: 'var(--success)', fontWeight: 'bold' }}>✓</span> : <Gift size={28} color="var(--tertiary)" />}
         </div>
 
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
