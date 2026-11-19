@@ -1,4 +1,5 @@
 import { Radio, Play, ExternalLink, Tv, Info, Sparkles } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 
 // Live stream channels - Direct YouTube links
@@ -42,6 +43,7 @@ const LIVE_CHANNELS = [
 ];
 
 function LiveBroadcast({ onClose }) {
+    const { t } = useTranslation();
     const openChannel = (channel) => {
         const win = window.open(channel.youtubeUrl, '_blank', 'noopener,noreferrer');
         if (win) {
@@ -56,10 +58,10 @@ function LiveBroadcast({ onClose }) {
                 <IslamicBackButton onClick={onClose} size="medium" />
                 <div style={{ flex: 1 }}>
                     <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
-                        Canlı Yayın
+                        {t('liveBroadcast.title', 'Canlı Yayın')}
                     </h2>
                     <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
-                        Kutsal mekanlardan 7/24 kesintisiz bağlantı
+                        {t('liveBroadcast.subtitle', 'Kutsal mekanlardan 7/24 kesintisiz bağlantı')}
                     </p>
                 </div>
                 <div className="settings-icon-box" style={{ background: 'var(--nav-hover)', color: 'var(--nav-accent)' }}>
@@ -70,13 +72,13 @@ function LiveBroadcast({ onClose }) {
             <div className="settings-card info-banner" style={{ marginBottom: '32px', padding: '16px', gap: '12px' }}>
                 <Info size={18} color="var(--nav-accent)" />
                 <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>
-                    Kanalları seçerek YouTube üzerinden canlı yayına bağlanabilirsiniz.
+                    {t('liveBroadcast.info', 'Kanalları seçerek YouTube üzerinden canlı yayına bağlanabilirsiniz.')}
                 </p>
             </div>
 
             {/* Harem Channels */}
             <div className="category-section">
-                <label className="section-label">Harem-i Şerif</label>
+                <label className="section-label">{t('liveBroadcast.haram', 'Harem-i Şerif')}</label>
                 <div className="channel-grid">
                     {LIVE_CHANNELS.filter(c => c.category === 'harem').map((channel, index) => (
                         <div
@@ -89,11 +91,11 @@ function LiveBroadcast({ onClose }) {
                                 {channel.icon}
                             </div>
                             <div className="channel-info">
-                                <h4 className="channel-title">{channel.title}</h4>
-                                <p className="channel-desc">{channel.description}</p>
+                                <h4 className="channel-title">{t(`liveBroadcast.channels.${channel.id}.title`, channel.title)}</h4>
+                                <p className="channel-desc">{t(`liveBroadcast.channels.${channel.id}.description`, channel.description)}</p>
                                 <div className="live-status">
                                     <div className="live-dot" />
-                                    <span>CANLI</span>
+                                    <span>{t('liveBroadcast.live', 'CANLI')}</span>
                                 </div>
                             </div>
                             <div className="play-btn-circle">
@@ -106,7 +108,7 @@ function LiveBroadcast({ onClose }) {
 
             {/* Quran Channels */}
             <div className="category-section" style={{ marginTop: '32px' }}>
-                <label className="section-label">Kuran Kanalları</label>
+                <label className="section-label">{t('liveBroadcast.quranChannels', 'Kuran Kanalları')}</label>
                 <div className="channel-grid">
                     {LIVE_CHANNELS.filter(c => c.category === 'quran').map((channel, index) => (
                         <div
@@ -119,11 +121,11 @@ function LiveBroadcast({ onClose }) {
                                 {channel.icon}
                             </div>
                             <div className="channel-info">
-                                <h4 className="channel-title">{channel.title}</h4>
-                                <p className="channel-desc">{channel.description}</p>
+                                <h4 className="channel-title">{t(`liveBroadcast.channels.${channel.id}.title`, channel.title)}</h4>
+                                <p className="channel-desc">{t(`liveBroadcast.channels.${channel.id}.description`, channel.description)}</p>
                                 <div className="live-status" style={{ background: 'rgba(var(--nav-accent-rgb, 245, 158, 11), 0.12)', color: 'var(--nav-accent)' }}>
                                     <div className="live-dot" style={{ background: 'var(--nav-accent)' }} />
-                                    <span>AKTİF</span>
+                                    <span>{t('liveBroadcast.active', 'AKTİF')}</span>
                                 </div>
                             </div>
                             <div className="play-btn-circle" style={{ background: 'var(--nav-accent)' }}>

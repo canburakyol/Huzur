@@ -141,10 +141,10 @@ function EsmaUlHusna({ onClose }) {
             className={`esma-favorites-filter ${showFavoritesOnly ? 'is-active' : ''}`}
             onClick={() => setShowFavoritesOnly((current) => !current)}
             aria-pressed={showFavoritesOnly}
-            aria-label={showFavoritesOnly ? 'Tüm isimleri göster' : 'Yalnızca favorileri göster'}
+            aria-label={showFavoritesOnly ? t('esma.showAll', 'Tüm isimleri göster') : t('esma.showFavoritesOnly', 'Yalnızca favorileri göster')}
           >
             <Heart size={19} fill={showFavoritesOnly ? 'currentColor' : 'none'} />
-            <span>Favoriler</span>
+            <span>{t('common.favorites', 'Favoriler')}</span>
             {favorites.length > 0 && <small>{favorites.length}</small>}
           </button>
         </div>
@@ -190,7 +190,7 @@ function EsmaUlHusna({ onClose }) {
                           aria-pressed={isFavorite}
                         >
                           <Heart size={17} fill={isFavorite ? 'currentColor' : 'none'} />
-                          {isFavorite ? 'Favorilerde' : t('common.favorite', 'Favori')}
+                          {isFavorite ? t('common.inFavorites', 'Favorilerde') : t('common.favorite', 'Favori')}
                         </button>
                         <button type="button" onClick={() => shareEsma(esma)}>
                           <Share2 size={17} />

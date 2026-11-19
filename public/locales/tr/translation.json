@@ -55,7 +55,8 @@
     "copy": "Kopyala",
     "minutes": "dk",
     "appName": "Huzur",
-    "ok": "Tamam"
+    "ok": "Tamam",
+    "inFavorites": "Favorilerde"
   },
   "notifications": {
     "prayer": {
@@ -386,7 +387,9 @@
     "clearSearch": "Aramayı temizle",
     "emptyHint": "Arama kelimesini veya favori filtresini değiştirebilirsin.",
     "aboutTitle": "Esmaül Hüsna hakkında",
-    "info_note": "Esmâü'l-Hüsnâ, Allah Teâlâ'nın en güzel isimleri demektir. Bu isimleri zikretmek, anlamlarını tefekkür etmek ve bu isimlerle Allah'a dua etmek müstehaptır."
+    "info_note": "Esmâü'l-Hüsnâ, Allah Teâlâ'nın en güzel isimleri demektir. Bu isimleri zikretmek, anlamlarını tefekkür etmek ve bu isimlerle Allah'a dua etmek müstehaptır.",
+    "showAll": "Tüm isimleri göster",
+    "showFavoritesOnly": "Yalnızca favorileri göster"
   },
   "hadith": {
     "title": "Hadisler",
@@ -3743,7 +3746,11 @@
     "summaryLabel": "Kişisel kaza kaydı özeti",
     "totalLogged": "Toplam kayıtlı vakit",
     "entries": "Vakit kaydı",
-    "byPrayer": "Vakit bazında kayıt"
+    "byPrayer": "Vakit bazında kayıt",
+    "loggedCount": "{{count}} kayıtlı",
+    "counterLabel": "{{name}} sayacı",
+    "decrease": "{{name}} kaydını azalt",
+    "increase": "{{name}} kayda ekle, sayıyı artır"
   },
   "streak": {
     "fajr": "Sabah",
@@ -3755,7 +3762,39 @@
     "early_bird": "Sabah Bülbülü",
     "quran_lover": "Kuran Aşığı",
     "dhikr_master": "Zikir Ehli",
-    "family_first": "Huzurlu Aile"
+    "family_first": "Huzurlu Aile",
+    "first_prayer": "İlk Secde",
+    "pray_7_days": "Vaktinde 7 Gün",
+    "pray_30_days": "Namaz Savaşçısı",
+    "fajr_7": "Sabah Kuşu",
+    "fajr_40": "Sabah Bülbülü",
+    "tahajjud": "Teheccüd Savaşçısı",
+    "first_ayah": "İlk Ayet",
+    "read_7_days": "Kuran Dostu",
+    "read_30_days": "Kuran Aşığı",
+    "first_juz": "1 Cüz Tamam",
+    "hatim_complete": "Hatim Kahramanı",
+    "memorize_start": "Hafız Adayı",
+    "first_dhikr": "İlk Tesbih",
+    "dhikr_1000": "Bin Tesbih",
+    "dhikr_10000": "On Bin Tesbih",
+    "dhikr_100000": "Zikir Ustası",
+    "adhkar_7": "Sabah/Akşam Sadığı",
+    "tespihat_30": "Tespihat Ehli",
+    "streak_3": "3 Gün Seri",
+    "streak_7": "Haftalık Seri",
+    "streak_30": "Aylık Seri",
+    "streak_100": "Yüz Gün Efsanesi",
+    "streak_365": "Yılın Yıldızı",
+    "first_share": "İlk Paylaşım",
+    "invite_friend": "Davetçi",
+    "family_joined": "Huzurlu Aile",
+    "ramadan_warrior": "Ramazan Savaşçısı",
+    "friday_faithful": "Cuma Sadığı",
+    "night_of_power": "Kadir Gecesi",
+    "quiz_first": "İlk Quiz",
+    "quiz_master": "Quiz Ustası",
+    "esma_learner": "Esma Öğrencisi"
   },
   "gamification": {
     "badgesTitle": "Rozet Koleksiyonu",
@@ -3767,9 +3806,9 @@
       "2": "Adım Atan",
       "3": "Gayretli",
       "4": "Azimli",
-      "5": "Kararl?",
+      "5": "Kararlı",
       "6": "Gelişen",
-      "7": "?stikrarl?",
+      "7": "İstikrarlı",
       "8": "Düzenli",
       "9": "Bilinçli",
       "10": "Farkında",
@@ -3778,21 +3817,21 @@
       "13": "Mütevazı",
       "14": "Şükürlü",
       "15": "Sadık",
-      "16": "?lim Talip",
+      "16": "İlim Talip",
       "17": "Hikmet Arayan",
-      "18": "?rfan Ehli",
+      "18": "İrfan Ehli",
       "19": "Ferasetli",
       "20": "Basiretli",
       "21": "Rehber",
       "22": "Yol Gösterici",
       "23": "Nur Saçan",
-      "24": "?lham Veren",
-      "25": "?mmet Dostu",
+      "24": "İlham Veren",
+      "25": "Ümmet Dostu",
       "26": "Huzur Yolcusu",
       "27": "Gönül Eri",
       "28": "Huzur Elçisi",
-      "29": "Manevi ?nc?",
-      "30": "Huzur Ustas?"
+      "29": "Manevi Öncü",
+      "30": "Huzur Ustası"
     },
     "level": "Seviye",
     "share": "İstatistik Kartını Paylaş",
@@ -5018,7 +5057,17 @@
     "maybeLater": "Belki Sonra"
   },
   "mosqueFinder": {
-    "title": "En Yakın Camiler"
+    "title": "En Yakın Camiler",
+    "errors": {
+      "denied": "Konum izni reddedildi. Yakındaki camileri görmek için lütfen konum iznini verin.",
+      "unavailable": "Konum alınamadı. Lütfen GPS'inizi kontrol edin.",
+      "generic": "Konum alınamadı. Lütfen tekrar deneyin."
+    },
+    "locating": "Konumunuz Hesaplanıyor...",
+    "permissionTitle": "Konum İzni Gerekli",
+    "enableLocation": "Konumu Etkinleştir",
+    "noneFound": "Yakınınızda cami bulunamadı.",
+    "go": "GİT"
   },
   "legal": {
     "privacy": {
@@ -5123,5 +5172,241 @@
       "hard": "Zor",
       "veryHard": "Çok zor"
     }
+  },
+  "liveBroadcast": {
+    "title": "Canlı Yayın",
+    "subtitle": "Kutsal mekanlardan 7/24 kesintisiz bağlantı",
+    "info": "Kanalları seçerek YouTube üzerinden canlı yayına bağlanabilirsiniz.",
+    "haram": "Harem-i Şerif",
+    "quranChannels": "Kuran Kanalları",
+    "live": "CANLI",
+    "active": "AKTİF",
+    "channels": {
+      "makkah": {
+        "title": "Mekke - Kabe Canlı",
+        "description": "Mescid-i Haram 24 saat canlı yayın"
+      },
+      "madinah": {
+        "title": "Medine - Mescid-i Nebevi",
+        "description": "Peygamber Mescidi canlı yayın"
+      },
+      "quran-tv": {
+        "title": "Kuran Kanalı",
+        "description": "Kuran-ı Kerim tilaveti - Canlı"
+      },
+      "makkah-hd": {
+        "title": "Saudi Quran TV",
+        "description": "Resmi Suudi Arabistan Kuran kanalı"
+      }
+    }
+  },
+  "mmItems": {
+    "dualar": {
+      "title": "Dualı Görseller",
+      "description": "Paylaşılabilir dua kartları"
+    },
+    "camiler": {
+      "title": "Cami Fotoğrafları",
+      "description": "Dünyanın en güzel camileri"
+    },
+    "kabe": {
+      "title": "Kabe ve Harem",
+      "description": "Kutsal topraklar"
+    },
+    "ramazan": {
+      "title": "Ramazan Görselleri",
+      "description": "Ramazan ve iftar görselleri"
+    },
+    "kuran": {
+      "title": "Kuran Görselleri",
+      "description": "Kuran-ı Kerim fotoğrafları"
+    },
+    "tesbih": {
+      "title": "Tesbih ve İbadet",
+      "description": "İbadet görselleri"
+    },
+    "dua1": {
+      "title": "Sabah Duası",
+      "text": "Ya Rabbi, bugün beni hayırlı işlere muvaffak kıl."
+    },
+    "dua2": {
+      "title": "Şükür Duası",
+      "text": "Elhamdülillah, her halimde şükürler olsun."
+    },
+    "dua3": {
+      "title": "Bereket Duası",
+      "text": "Allah'ım evime, işime, aileme bereket ver."
+    },
+    "dua4": {
+      "title": "Huzur Duası",
+      "text": "Rabbim kalbime huzur, dilime doğru söz ver."
+    },
+    "dua5": {
+      "title": "Af Duası",
+      "text": "Ya Rabbi, günahlarımı affet, beni bağışla."
+    },
+    "dua6": {
+      "title": "Şifa Duası",
+      "text": "Allah'ım hastalarımıza şifa, dertlilerimize deva ver."
+    },
+    "dua7": {
+      "title": "Sabır Duası",
+      "text": "Rabbim bana sabır ver, sabredenlerden eyle."
+    },
+    "dua8": {
+      "title": "Akşam Duası",
+      "text": "Ya Rabbi, bu geceyi hayırlı eyle, bizi koru."
+    },
+    "cami1": {
+      "title": "Sultanahmet Camii",
+      "location": "İstanbul, Türkiye"
+    },
+    "cami2": {
+      "title": "Ayasofya",
+      "location": "İstanbul, Türkiye"
+    },
+    "cami3": {
+      "title": "Şeyh Zayed Camii",
+      "location": "Abu Dhabi, BAE"
+    },
+    "cami4": {
+      "title": "Mescid-i Nebevi",
+      "location": "Medine, Suudi Arabistan"
+    },
+    "cami5": {
+      "title": "Selimiye Camii",
+      "location": "Edirne, Türkiye"
+    },
+    "cami6": {
+      "title": "Cami İç Mekan",
+      "location": "İslam Mimarisi"
+    },
+    "cami7": {
+      "title": "Kubbe Detayı",
+      "location": "İslam Sanatı"
+    },
+    "kabe1": {
+      "title": "Kabe-i Muazzama",
+      "location": "Mekke, Suudi Arabistan"
+    },
+    "kabe2": {
+      "title": "Mescid-i Haram Panorama",
+      "location": "Mekke, Suudi Arabistan"
+    },
+    "kabe3": {
+      "title": "Tavaf",
+      "location": "Mekke, Suudi Arabistan"
+    },
+    "kabe4": {
+      "title": "Kabe Gece Manzarası",
+      "location": "Mekke, Suudi Arabistan"
+    },
+    "ramazan1": {
+      "title": "İftar Sofrası",
+      "description": "Ramazan bereketi"
+    },
+    "ramazan2": {
+      "title": "Hurma",
+      "description": "İftar açma sünneti"
+    },
+    "ramazan3": {
+      "title": "Ramazan Feneri",
+      "description": "Ramazan süsü"
+    },
+    "ramazan4": {
+      "title": "Hilal",
+      "description": "Ramazan ayı"
+    },
+    "ramazan5": {
+      "title": "Mahya",
+      "description": "Hoş Geldin Ramazan"
+    },
+    "kuran1": {
+      "title": "Kuran-ı Kerim",
+      "description": "Mushaf-ı Şerif"
+    },
+    "kuran2": {
+      "title": "Kuran Tilaveti",
+      "description": "Okuma anı"
+    },
+    "kuran3": {
+      "title": "Hat Sanatı",
+      "description": "İslam kaligrafisi"
+    },
+    "kuran4": {
+      "title": "Rahle ve Kuran",
+      "description": "Kuran standı"
+    },
+    "kuran5": {
+      "title": "Tezhip Sanatı",
+      "description": "Süsleme sanatı"
+    },
+    "tesbih1": {
+      "title": "Tesbih",
+      "description": "Zikir aleti"
+    },
+    "tesbih2": {
+      "title": "Namaz Kılan",
+      "description": "İbadet anı"
+    },
+    "tesbih3": {
+      "title": "Secde",
+      "description": "Kulluk"
+    },
+    "tesbih4": {
+      "title": "Dua Eden Eller",
+      "description": "Yalvarış"
+    },
+    "tesbih5": {
+      "title": "Seccade",
+      "description": "Namaz seccadesi"
+    }
+  },
+  "questsPool": {
+    "q_subhanallah_33": "33 defa \"Sübhanallah\" çek",
+    "q_elhamdulillah_33": "33 defa \"Elhamdülillah\" çek",
+    "q_allahuekber_33": "33 defa \"Allahu Ekber\" çek",
+    "q_salavat_10": "10 defa Salavat getir",
+    "q_estagfirullah_100": "100 defa İstiğfar et",
+    "q_read_esma": "Günün Esma-ül Hüsna'sını oku",
+    "q_read_hadith": "Günün Hadis-i Şerif'ini oku",
+    "q_read_verse": "Günün Ayetini oku ve düşün",
+    "q_share_dua": "Bir arkadaşınla dua paylaş",
+    "q_check_kaaba": "Kıble yönünü kontrol et",
+    "q_check_times": "Namaz vakitlerini kontrol et"
+  },
+  "badge_desc": {
+    "first_prayer": "İlk namazını kaydet",
+    "pray_7_days": "7 gün boyunca vaktinde namaz kıl",
+    "pray_30_days": "30 gün boyunca namazlarını takip et",
+    "fajr_7": "7 gün sabah namazını vaktinde kıl",
+    "fajr_40": "40 gün sabah namazını vaktinde kıl",
+    "tahajjud": "7 gece teheccüd namazı kıl",
+    "first_ayah": "İlk ayetini oku",
+    "read_7_days": "7 gün boyunca Kuran oku",
+    "read_30_days": "30 gün boyunca her gün Kuran oku",
+    "first_juz": "1 cüz oku",
+    "hatim_complete": "Bir hatim tamamla",
+    "memorize_start": "İlk sureni ezberle",
+    "first_dhikr": "İlk zikrini yap",
+    "dhikr_1000": "Toplam 1.000 zikir çek",
+    "dhikr_10000": "Toplam 10.000 zikir çek",
+    "dhikr_100000": "Toplam 100.000 zikir çek",
+    "adhkar_7": "7 gün sabah-akşam adhkarı tamamla",
+    "tespihat_30": "30 gün tespihat tamamla",
+    "streak_3": "3 gün art arda aktif ol",
+    "streak_7": "7 gün art arda aktif ol",
+    "streak_30": "30 gün art arda aktif ol",
+    "streak_100": "100 gün art arda aktif ol",
+    "streak_365": "365 gün art arda aktif ol",
+    "first_share": "İlk içeriğini paylaş",
+    "invite_friend": "Bir arkadaşını davet et",
+    "family_joined": "Bir aile grubuna katıl veya oluştur",
+    "ramadan_warrior": "Ramazan boyunca her gün aktif ol",
+    "friday_faithful": "4 Cuma art arda Cuma namazı kıl",
+    "night_of_power": "Kadir Gecesi aktif ol",
+    "quiz_first": "İlk quiz'ini tamamla",
+    "quiz_master": "50 quiz tamamla",
+    "esma_learner": "99 Esma-ül Hüsna'yı öğren"
   }
 }

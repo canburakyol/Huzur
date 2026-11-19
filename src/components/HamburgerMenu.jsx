@@ -206,7 +206,7 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
               <div style={{ display: 'flex', gap: '8px', marginTop: '16px', flexWrap: 'wrap' }}>
                 {topBadges.map((badge, index) => (
                   <div key={index} style={{ background: 'var(--surface-action-soft)', color: 'var(--menu-text)', padding: '4px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: '800', border: '1px solid var(--menu-border)' }}>
-                    {badge?.icon || 'B'} {badge?.id ? t(`badges.${badge.id}.name`, badge.name || badge.id) : t('common.badge', 'Rozet')}
+                    {badge?.icon || 'B'} {badge?.id ? t(`badges.${badge.id}`, badge.name || badge.id) : t('common.badge', 'Rozet')}
                   </div>
                 ))}
               </div>

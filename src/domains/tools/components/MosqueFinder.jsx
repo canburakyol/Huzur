@@ -117,14 +117,14 @@ const MosqueFinder = ({ onClose }) => {
             setLoading(false);
             
             if (err.message === 'PERMISSION_DENIED' || err.code === 1) {
-                setError('Konum izni reddedildi. Yakındaki camileri görmek için lütfen konum iznini verin.');
+                setError(t('mosqueFinder.errors.denied', 'Konum izni reddedildi. Yakındaki camileri görmek için lütfen konum iznini verin.'));
             } else if (err.code === 2) {
-                setError('Konum alınamadı. Lütfen GPS\'inizi kontrol edin.');
+                setError(t('mosqueFinder.errors.unavailable', 'Konum alınamadı. Lütfen GPS\'inizi kontrol edin.'));
             } else {
-                setError('Konum alınamadı. Lütfen tekrar deneyin.');
+                setError(t('mosqueFinder.errors.generic', 'Konum alınamadı. Lütfen tekrar deneyin.'));
             }
         }
-    }, [searchMosques]);
+    }, [searchMosques, t]);
 
     useEffect(() => {
         isMountedRef.current = true;
@@ -205,7 +205,7 @@ const MosqueFinder = ({ onClose }) => {
                             <Loader size={32} />
                         </div>
                         <div style={{ marginTop: '24px', color: 'var(--nav-text)', fontWeight: '800', fontSize: '1.1rem' }}>
-                            Konumunuz Hesaplanıyor...
+                            {t('mosqueFinder.locating', 'Konumunuz Hesaplanıyor...')}
                         </div>
                     </div>
                 )}
@@ -234,7 +234,7 @@ const MosqueFinder = ({ onClose }) => {
                             borderRadius: '32px'
                         }}>📍</div>
                         <div style={{ fontSize: '1.5rem', color: 'var(--nav-text)', marginBottom: '16px', fontWeight: '900' }}>
-                            Konum İzni Gerekli
+                            {t('mosqueFinder.permissionTitle', 'Konum İzni Gerekli')}
                         </div>
                         <div style={{ fontSize: '1rem', color: 'var(--nav-text-muted)', marginBottom: '32px', maxWidth: '300px', fontWeight: '600', lineHeight: '1.6' }}>
                             {error}
@@ -252,7 +252,7 @@ const MosqueFinder = ({ onClose }) => {
                                 width: 'auto'
                             }}
                         >
-                            <MapPin size={24} /> Konumu Etkinleştir
+                            <MapPin size={24} /> {t('mosqueFinder.enableLocation', 'Konumu Etkinleştir')}
                         </button>
                     </div>
                 )}
@@ -293,7 +293,7 @@ const MosqueFinder = ({ onClose }) => {
             }}>
                 {mosques.length === 0 && !loading && (
                     <div style={{ padding: '32px', textAlign: 'center', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
-                        Yakınınızda cami bulunamadı.
+                        {t('mosqueFinder.noneFound', 'Yakınınızda cami bulunamadı.')}
                     </div>
                 )}
                 {mosques.map(mosque => (
@@ -341,7 +341,7 @@ const MosqueFinder = ({ onClose }) => {
                                 fontWeight: '900'
                             }}
                         >
-                            <Navigation size={14} /> GİT
+                            <Navigation size={14} /> {t('mosqueFinder.go', 'GİT')}
                         </button>
                     </div>
                 ))}

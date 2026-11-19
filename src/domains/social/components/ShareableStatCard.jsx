@@ -158,7 +158,7 @@ const ShareableStatCard = ({ onClose }) => {
             </div>
 
             <h2 style={{ fontSize: '1.5rem', fontWeight: '800', margin: '0 0 10px', textAlign: 'center' }}>
-              {levelInfo.title}
+              {t(`gamification.levels.${levelInfo.level}`, levelInfo.title)}
             </h2>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,0,0,0.26)', padding: '8px 16px', borderRadius: '999px', marginBottom: '22px' }}>
@@ -193,7 +193,7 @@ const ShareableStatCard = ({ onClose }) => {
                   <div key={badge.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '74px' }}>
                     <div style={{ fontSize: '2rem', marginBottom: '8px' }}>{badge.icon}</div>
                     <div style={{ fontSize: '0.6rem', fontWeight: '700', textTransform: 'uppercase', textAlign: 'center', color: 'rgba(255,255,255,0.8)', lineHeight: '1.35' }}>
-                      {badge.name}
+                      {t(`badges.${badge.id}`, badge.name)}
                     </div>
                   </div>
                 ))}

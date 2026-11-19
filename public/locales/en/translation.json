@@ -47,7 +47,8 @@
     "copy": "Copy",
     "minutes": "min",
     "appName": "Huzur",
-    "ok": "OK"
+    "ok": "OK",
+    "inFavorites": "In favorites"
   },
   "notifications": {
     "prayer": {
@@ -238,7 +239,9 @@
     "clearSearch": "Clear search",
     "emptyHint": "Try another search term or turn off the favourites filter.",
     "aboutTitle": "About Asma ul-Husna",
-    "info_note": "Asma ul-Husna means the most beautiful names of Allah. Remembering these names, reflecting on their meanings and calling upon Allah by them is recommended."
+    "info_note": "Asma ul-Husna means the most beautiful names of Allah. Remembering these names, reflecting on their meanings and calling upon Allah by them is recommended.",
+    "showAll": "Show all names",
+    "showFavoritesOnly": "Show favorites only"
   },
   "hadith": {
     "title": "Hadiths",
@@ -4175,7 +4178,11 @@
     "summaryLabel": "Personal qada summary",
     "totalLogged": "Total logged prayers",
     "entries": "Prayer entries",
-    "byPrayer": "By prayer"
+    "byPrayer": "By prayer",
+    "loggedCount": "{{count}} logged",
+    "counterLabel": "{{name}} counter",
+    "decrease": "Decrease {{name}}",
+    "increase": "Add {{name}}, increase the count"
   },
   "streak": {
     "fajr": "Fajr",
@@ -4187,7 +4194,39 @@
     "early_bird": "Early Bird",
     "quran_lover": "Quran Lover",
     "dhikr_master": "Dhikr Master",
-    "family_first": "Family First"
+    "family_first": "Family First",
+    "first_prayer": "First Prostration",
+    "pray_7_days": "7 Days on Time",
+    "pray_30_days": "Prayer Champion",
+    "fajr_7": "Early Riser",
+    "fajr_40": "Dawn Nightingale",
+    "tahajjud": "Tahajjud Champion",
+    "first_ayah": "First Verse",
+    "read_7_days": "Friend of the Quran",
+    "read_30_days": "Lover of the Quran",
+    "first_juz": "1 Juz Done",
+    "hatim_complete": "Khatm Hero",
+    "memorize_start": "Hafiz in the Making",
+    "first_dhikr": "First Dhikr",
+    "dhikr_1000": "A Thousand Dhikr",
+    "dhikr_10000": "Ten Thousand Dhikr",
+    "dhikr_100000": "Dhikr Master",
+    "adhkar_7": "Morning & Evening Faithful",
+    "tespihat_30": "Devoted to Tasbihat",
+    "streak_3": "3-Day Streak",
+    "streak_7": "Weekly Streak",
+    "streak_30": "Monthly Streak",
+    "streak_100": "100-Day Legend",
+    "streak_365": "Star of the Year",
+    "first_share": "First Share",
+    "invite_friend": "Inviter",
+    "family_joined": "Peaceful Family",
+    "ramadan_warrior": "Ramadan Champion",
+    "friday_faithful": "Friday Faithful",
+    "night_of_power": "Night of Power",
+    "quiz_first": "First Quiz",
+    "quiz_master": "Quiz Master",
+    "esma_learner": "Student of the Names"
   },
   "gamification": {
     "badgesTitle": "Badge Collection",
@@ -5018,7 +5057,17 @@
     "maybeLater": "Maybe later"
   },
   "mosqueFinder": {
-    "title": "Nearest mosques"
+    "title": "Nearest mosques",
+    "errors": {
+      "denied": "Location permission was denied. Please allow location access to see nearby mosques.",
+      "unavailable": "Could not get your location. Please check your GPS.",
+      "generic": "Could not get your location. Please try again."
+    },
+    "locating": "Finding your location…",
+    "permissionTitle": "Location permission needed",
+    "enableLocation": "Enable location",
+    "noneFound": "No mosques found near you.",
+    "go": "GO"
   },
   "legal": {
     "privacy": {
@@ -5123,5 +5172,241 @@
       "hard": "Hard",
       "veryHard": "Very hard"
     }
+  },
+  "liveBroadcast": {
+    "title": "Live broadcast",
+    "subtitle": "24/7 connection to the holy sites",
+    "info": "Choose a channel to watch the live stream on YouTube.",
+    "haram": "The Two Holy Mosques",
+    "quranChannels": "Quran channels",
+    "live": "LIVE",
+    "active": "ACTIVE",
+    "channels": {
+      "makkah": {
+        "title": "Makkah – Kaaba live",
+        "description": "Masjid al-Haram live, 24 hours"
+      },
+      "madinah": {
+        "title": "Madinah – Prophet's Mosque",
+        "description": "Live from the Prophet's Mosque"
+      },
+      "quran-tv": {
+        "title": "Quran channel",
+        "description": "Live Quran recitation"
+      },
+      "makkah-hd": {
+        "title": "Saudi Quran TV",
+        "description": "Official Saudi Quran channel"
+      }
+    }
+  },
+  "mmItems": {
+    "dualar": {
+      "title": "Supplication images",
+      "description": "Shareable supplication cards"
+    },
+    "camiler": {
+      "title": "Mosque photos",
+      "description": "The world's most beautiful mosques"
+    },
+    "kabe": {
+      "title": "Kaaba and the Haram",
+      "description": "The holy lands"
+    },
+    "ramazan": {
+      "title": "Ramadan images",
+      "description": "Ramadan and iftar images"
+    },
+    "kuran": {
+      "title": "Quran images",
+      "description": "Photos of the Quran"
+    },
+    "tesbih": {
+      "title": "Prayer beads and worship",
+      "description": "Worship images"
+    },
+    "dua1": {
+      "title": "Morning supplication",
+      "text": "O my Lord, grant me success in good deeds today."
+    },
+    "dua2": {
+      "title": "Supplication of gratitude",
+      "text": "Alhamdulillah, thanks be in every state of mine."
+    },
+    "dua3": {
+      "title": "Supplication for blessing",
+      "text": "O Allah, bless my home, my work and my family."
+    },
+    "dua4": {
+      "title": "Supplication for peace",
+      "text": "My Lord, give my heart peace and my tongue truthful words."
+    },
+    "dua5": {
+      "title": "Supplication for forgiveness",
+      "text": "O my Lord, pardon my sins and forgive me."
+    },
+    "dua6": {
+      "title": "Supplication for healing",
+      "text": "O Allah, heal our sick and relieve those in distress."
+    },
+    "dua7": {
+      "title": "Supplication for patience",
+      "text": "My Lord, grant me patience and make me among the patient."
+    },
+    "dua8": {
+      "title": "Evening supplication",
+      "text": "O my Lord, make this night good and protect us."
+    },
+    "cami1": {
+      "title": "Sultan Ahmed Mosque",
+      "location": "Istanbul, Türkiye"
+    },
+    "cami2": {
+      "title": "Hagia Sophia",
+      "location": "Istanbul, Türkiye"
+    },
+    "cami3": {
+      "title": "Sheikh Zayed Mosque",
+      "location": "Abu Dhabi, UAE"
+    },
+    "cami4": {
+      "title": "The Prophet's Mosque",
+      "location": "Madinah, Saudi Arabia"
+    },
+    "cami5": {
+      "title": "Selimiye Mosque",
+      "location": "Edirne, Türkiye"
+    },
+    "cami6": {
+      "title": "Mosque interior",
+      "location": "Islamic architecture"
+    },
+    "cami7": {
+      "title": "Dome detail",
+      "location": "Islamic art"
+    },
+    "kabe1": {
+      "title": "The Noble Kaaba",
+      "location": "Makkah, Saudi Arabia"
+    },
+    "kabe2": {
+      "title": "Masjid al-Haram panorama",
+      "location": "Makkah, Saudi Arabia"
+    },
+    "kabe3": {
+      "title": "Tawaf",
+      "location": "Makkah, Saudi Arabia"
+    },
+    "kabe4": {
+      "title": "The Kaaba at night",
+      "location": "Makkah, Saudi Arabia"
+    },
+    "ramazan1": {
+      "title": "Iftar table",
+      "description": "The blessing of Ramadan"
+    },
+    "ramazan2": {
+      "title": "Dates",
+      "description": "The sunnah of breaking the fast"
+    },
+    "ramazan3": {
+      "title": "Ramadan lantern",
+      "description": "Ramadan decoration"
+    },
+    "ramazan4": {
+      "title": "Crescent moon",
+      "description": "The month of Ramadan"
+    },
+    "ramazan5": {
+      "title": "Mahya lights",
+      "description": "Welcome, Ramadan"
+    },
+    "kuran1": {
+      "title": "The Noble Quran",
+      "description": "The noble mushaf"
+    },
+    "kuran2": {
+      "title": "Quran recitation",
+      "description": "A moment of recitation"
+    },
+    "kuran3": {
+      "title": "Calligraphy",
+      "description": "Islamic calligraphy"
+    },
+    "kuran4": {
+      "title": "Quran on a stand",
+      "description": "Quran stand"
+    },
+    "kuran5": {
+      "title": "Illumination art",
+      "description": "Decorative art"
+    },
+    "tesbih1": {
+      "title": "Prayer beads",
+      "description": "For dhikr"
+    },
+    "tesbih2": {
+      "title": "Person praying",
+      "description": "A moment of worship"
+    },
+    "tesbih3": {
+      "title": "Prostration",
+      "description": "Servitude"
+    },
+    "tesbih4": {
+      "title": "Hands in supplication",
+      "description": "Imploring"
+    },
+    "tesbih5": {
+      "title": "Prayer rug",
+      "description": "Rug for prayer"
+    }
+  },
+  "questsPool": {
+    "q_subhanallah_33": "Say \"Subhanallah\" 33 times",
+    "q_elhamdulillah_33": "Say \"Alhamdulillah\" 33 times",
+    "q_allahuekber_33": "Say \"Allahu Akbar\" 33 times",
+    "q_salavat_10": "Send salawat 10 times",
+    "q_estagfirullah_100": "Seek forgiveness 100 times",
+    "q_read_esma": "Read today's Divine Name",
+    "q_read_hadith": "Read today's hadith",
+    "q_read_verse": "Read and reflect on today's verse",
+    "q_share_dua": "Share a supplication with a friend",
+    "q_check_kaaba": "Check the qibla direction",
+    "q_check_times": "Check the prayer times"
+  },
+  "badge_desc": {
+    "first_prayer": "Log your first prayer",
+    "pray_7_days": "Pray on time for 7 days",
+    "pray_30_days": "Track your prayers for 30 days",
+    "fajr_7": "Pray Fajr on time for 7 days",
+    "fajr_40": "Pray Fajr on time for 40 days",
+    "tahajjud": "Pray tahajjud on 7 nights",
+    "first_ayah": "Read your first verse",
+    "read_7_days": "Read the Quran for 7 days",
+    "read_30_days": "Read the Quran every day for 30 days",
+    "first_juz": "Read one juz",
+    "hatim_complete": "Complete a khatm",
+    "memorize_start": "Memorise your first surah",
+    "first_dhikr": "Do your first dhikr",
+    "dhikr_1000": "Reach 1,000 dhikr in total",
+    "dhikr_10000": "Reach 10,000 dhikr in total",
+    "dhikr_100000": "Reach 100,000 dhikr in total",
+    "adhkar_7": "Complete morning and evening adhkar for 7 days",
+    "tespihat_30": "Complete tasbihat for 30 days",
+    "streak_3": "Be active 3 days in a row",
+    "streak_7": "Be active 7 days in a row",
+    "streak_30": "Be active 30 days in a row",
+    "streak_100": "Be active 100 days in a row",
+    "streak_365": "Be active 365 days in a row",
+    "first_share": "Share your first content",
+    "invite_friend": "Invite a friend",
+    "family_joined": "Join or create a family group",
+    "ramadan_warrior": "Be active every day of Ramadan",
+    "friday_faithful": "Pray Jumu'ah on 4 Fridays in a row",
+    "night_of_power": "Be active on the Night of Power",
+    "quiz_first": "Complete your first quiz",
+    "quiz_master": "Complete 50 quizzes",
+    "esma_learner": "Learn the 99 Names of Allah"
   }
 }

@@ -47,7 +47,8 @@
     "copy": "Kopieren",
     "minutes": "Min.",
     "appName": "Huzur",
-    "ok": "OK"
+    "ok": "OK",
+    "inFavorites": "In Favoriten"
   },
   "notifications": {
     "prayer": {
@@ -238,7 +239,9 @@
     "clearSearch": "Suche löschen",
     "emptyHint": "Ändere den Suchbegriff oder den Favoritenfilter.",
     "aboutTitle": "Über die Asma ul-Husna",
-    "info_note": "Asma ul-Husna bedeutet die schönsten Namen Allahs. Es ist empfohlen, diese Namen zu gedenken, über ihre Bedeutungen nachzudenken und Allah mit ihnen anzurufen."
+    "info_note": "Asma ul-Husna bedeutet die schönsten Namen Allahs. Es ist empfohlen, diese Namen zu gedenken, über ihre Bedeutungen nachzudenken und Allah mit ihnen anzurufen.",
+    "showAll": "Alle Namen anzeigen",
+    "showFavoritesOnly": "Nur Favoriten anzeigen"
   },
   "hadith": {
     "title": "Hadithe",
@@ -4221,7 +4224,11 @@
     "summaryLabel": "Zusammenfassung des Nachholprotokolls",
     "totalLogged": "Erfasste Gebete gesamt",
     "entries": "Gebetseinträge",
-    "byPrayer": "Nach Gebet"
+    "byPrayer": "Nach Gebet",
+    "loggedCount": "{{count}} erfasst",
+    "counterLabel": "Zähler für {{name}}",
+    "decrease": "{{name}} verringern",
+    "increase": "{{name}} hinzufügen, Zahl erhöhen"
   },
   "streak": {
     "fajr": "Fadschr",
@@ -4233,7 +4240,39 @@
     "early_bird": "Frühaufsteher",
     "quran_lover": "Koranfreund",
     "dhikr_master": "Dhikr-Meister",
-    "family_first": "Familie zuerst"
+    "family_first": "Familie zuerst",
+    "first_prayer": "Erste Niederwerfung",
+    "pray_7_days": "7 Tage pünktlich",
+    "pray_30_days": "Gebetsheld",
+    "fajr_7": "Frühaufsteher",
+    "fajr_40": "Morgennachtigall",
+    "tahajjud": "Tahadschud-Held",
+    "first_ayah": "Erster Vers",
+    "read_7_days": "Freund des Korans",
+    "read_30_days": "Liebhaber des Korans",
+    "first_juz": "1 Dschuz geschafft",
+    "hatim_complete": "Khatm-Held",
+    "memorize_start": "Angehender Hafiz",
+    "first_dhikr": "Erster Dhikr",
+    "dhikr_1000": "Tausend Dhikr",
+    "dhikr_10000": "Zehntausend Dhikr",
+    "dhikr_100000": "Dhikr-Meister",
+    "adhkar_7": "Treu am Morgen und Abend",
+    "tespihat_30": "Treu im Tasbihat",
+    "streak_3": "3-Tage-Serie",
+    "streak_7": "Wochenserie",
+    "streak_30": "Monatsserie",
+    "streak_100": "100-Tage-Legende",
+    "streak_365": "Stern des Jahres",
+    "first_share": "Erstes Teilen",
+    "invite_friend": "Einlader",
+    "family_joined": "Friedliche Familie",
+    "ramadan_warrior": "Ramadan-Held",
+    "friday_faithful": "Treu am Freitag",
+    "night_of_power": "Nacht der Bestimmung",
+    "quiz_first": "Erstes Quiz",
+    "quiz_master": "Quiz-Meister",
+    "esma_learner": "Schüler der Namen"
   },
   "gamification": {
     "badgesTitle": "Abzeichensammlung",
@@ -4242,13 +4281,13 @@
     "beginnerTitle": "Anfänger",
     "levels": {
       "1": "Anfänger",
-      "2": "Den ersten Schritt machen",
+      "2": "Erste Schritte",
       "3": "Fleißig",
-      "4": "Bestimmt",
-      "5": "Stetig",
-      "6": "Anbau",
-      "7": "Konsistent",
-      "8": "Regulär",
+      "4": "Entschlossen",
+      "5": "Standhaft",
+      "6": "Wachsend",
+      "7": "Beständig",
+      "8": "Regelmäßig",
       "9": "Achtsam",
       "10": "Bewusst",
       "11": "Hingebungsvoll",
@@ -4256,21 +4295,21 @@
       "13": "Bescheiden",
       "14": "Dankbar",
       "15": "Treu",
-      "16": "Sucher nach Wissen",
-      "17": "Sucher der Weisheit",
-      "18": "Person der Einsicht",
-      "19": "Anspruchsvoll",
-      "20": "Klarsichtig",
-      "21": "Führung",
-      "22": "Wegfinder",
+      "16": "Wissenssuchender",
+      "17": "Weisheitssuchender",
+      "18": "Mensch der Erkenntnis",
+      "19": "Scharfsinnig",
+      "20": "Weitsichtig",
+      "21": "Begleiter",
+      "22": "Wegweiser",
       "23": "Lichtträger",
       "24": "Inspirierend",
-      "25": "Freund der Ummah",
-      "26": "Reisender von Huzur",
-      "27": "Person des Herzens",
-      "28": "Botschafter von Huzur",
+      "25": "Freund der Umma",
+      "26": "Huzur-Reisender",
+      "27": "Mensch mit Herz",
+      "28": "Huzur-Botschafter",
       "29": "Spiritueller Pionier",
-      "30": "Meister von Huzur"
+      "30": "Huzur-Meister"
     },
     "level": "Stufe",
     "share": "Statistikkarte teilen",
@@ -5018,7 +5057,17 @@
     "maybeLater": "Vielleicht später"
   },
   "mosqueFinder": {
-    "title": "Nächste Moscheen"
+    "title": "Nächste Moscheen",
+    "errors": {
+      "denied": "Die Standortberechtigung wurde verweigert. Bitte erlaube den Standortzugriff, um Moscheen in der Nähe zu sehen.",
+      "unavailable": "Standort konnte nicht ermittelt werden. Bitte prüfe dein GPS.",
+      "generic": "Standort konnte nicht ermittelt werden. Bitte versuche es erneut."
+    },
+    "locating": "Standort wird ermittelt…",
+    "permissionTitle": "Standortberechtigung erforderlich",
+    "enableLocation": "Standort aktivieren",
+    "noneFound": "Keine Moscheen in deiner Nähe gefunden.",
+    "go": "LOS"
   },
   "legal": {
     "privacy": {
@@ -5123,5 +5172,241 @@
       "hard": "Schwer",
       "veryHard": "Sehr schwer"
     }
+  },
+  "liveBroadcast": {
+    "title": "Livestream",
+    "subtitle": "Rund um die Uhr live aus den heiligen Stätten",
+    "info": "Wähle einen Kanal, um den Livestream auf YouTube zu sehen.",
+    "haram": "Die beiden heiligen Moscheen",
+    "quranChannels": "Koran-Kanäle",
+    "live": "LIVE",
+    "active": "AKTIV",
+    "channels": {
+      "makkah": {
+        "title": "Mekka – Kaaba live",
+        "description": "Masdschid al-Haram, 24 Stunden live"
+      },
+      "madinah": {
+        "title": "Medina – Prophetenmoschee",
+        "description": "Live aus der Prophetenmoschee"
+      },
+      "quran-tv": {
+        "title": "Koran-Kanal",
+        "description": "Koranrezitation – live"
+      },
+      "makkah-hd": {
+        "title": "Saudi Quran TV",
+        "description": "Offizieller saudischer Koran-Kanal"
+      }
+    }
+  },
+  "mmItems": {
+    "dualar": {
+      "title": "Bilder mit Bittgebeten",
+      "description": "Teilbare Bittgebetskarten"
+    },
+    "camiler": {
+      "title": "Moscheefotos",
+      "description": "Die schönsten Moscheen der Welt"
+    },
+    "kabe": {
+      "title": "Kaaba und Haram",
+      "description": "Die heiligen Stätten"
+    },
+    "ramazan": {
+      "title": "Ramadan-Bilder",
+      "description": "Bilder zu Ramadan und Iftar"
+    },
+    "kuran": {
+      "title": "Koran-Bilder",
+      "description": "Fotos des Korans"
+    },
+    "tesbih": {
+      "title": "Gebetskette und Gottesdienst",
+      "description": "Bilder zum Gottesdienst"
+    },
+    "dua1": {
+      "title": "Morgenbittgebet",
+      "text": "O mein Herr, lass mir heute gute Taten gelingen."
+    },
+    "dua2": {
+      "title": "Dankesbittgebet",
+      "text": "Alhamdulillah, Dank sei in jeder Lage."
+    },
+    "dua3": {
+      "title": "Bittgebet um Segen",
+      "text": "O Allah, segne mein Zuhause, meine Arbeit und meine Familie."
+    },
+    "dua4": {
+      "title": "Bittgebet um inneren Frieden",
+      "text": "Mein Herr, schenke meinem Herzen Frieden und meiner Zunge wahre Worte."
+    },
+    "dua5": {
+      "title": "Bittgebet um Vergebung",
+      "text": "O mein Herr, verzeih meine Sünden und vergib mir."
+    },
+    "dua6": {
+      "title": "Bittgebet um Heilung",
+      "text": "O Allah, heile unsere Kranken und lindere die Not der Bedrängten."
+    },
+    "dua7": {
+      "title": "Bittgebet um Geduld",
+      "text": "Mein Herr, schenke mir Geduld und lass mich zu den Geduldigen gehören."
+    },
+    "dua8": {
+      "title": "Abendbittgebet",
+      "text": "O mein Herr, mache diese Nacht gut und beschütze uns."
+    },
+    "cami1": {
+      "title": "Sultan-Ahmed-Moschee",
+      "location": "Istanbul, Türkei"
+    },
+    "cami2": {
+      "title": "Hagia Sophia",
+      "location": "Istanbul, Türkei"
+    },
+    "cami3": {
+      "title": "Scheich-Zayid-Moschee",
+      "location": "Abu Dhabi, VAE"
+    },
+    "cami4": {
+      "title": "Prophetenmoschee",
+      "location": "Medina, Saudi-Arabien"
+    },
+    "cami5": {
+      "title": "Selimiye-Moschee",
+      "location": "Edirne, Türkei"
+    },
+    "cami6": {
+      "title": "Moschee-Innenraum",
+      "location": "Islamische Architektur"
+    },
+    "cami7": {
+      "title": "Kuppeldetail",
+      "location": "Islamische Kunst"
+    },
+    "kabe1": {
+      "title": "Die edle Kaaba",
+      "location": "Mekka, Saudi-Arabien"
+    },
+    "kabe2": {
+      "title": "Panorama der Masdschid al-Haram",
+      "location": "Mekka, Saudi-Arabien"
+    },
+    "kabe3": {
+      "title": "Tawaf",
+      "location": "Mekka, Saudi-Arabien"
+    },
+    "kabe4": {
+      "title": "Die Kaaba bei Nacht",
+      "location": "Mekka, Saudi-Arabien"
+    },
+    "ramazan1": {
+      "title": "Iftar-Tafel",
+      "description": "Der Segen des Ramadan"
+    },
+    "ramazan2": {
+      "title": "Datteln",
+      "description": "Die Sunna des Fastenbrechens"
+    },
+    "ramazan3": {
+      "title": "Ramadan-Laterne",
+      "description": "Ramadan-Dekoration"
+    },
+    "ramazan4": {
+      "title": "Mondsichel",
+      "description": "Der Monat Ramadan"
+    },
+    "ramazan5": {
+      "title": "Mahya-Lichterschrift",
+      "description": "Willkommen, Ramadan"
+    },
+    "kuran1": {
+      "title": "Der edle Koran",
+      "description": "Der edle Mushaf"
+    },
+    "kuran2": {
+      "title": "Koranrezitation",
+      "description": "Ein Moment der Rezitation"
+    },
+    "kuran3": {
+      "title": "Kalligrafie",
+      "description": "Islamische Kalligrafie"
+    },
+    "kuran4": {
+      "title": "Koran auf dem Lesepult",
+      "description": "Koranständer"
+    },
+    "kuran5": {
+      "title": "Kunst der Illumination",
+      "description": "Ornamentkunst"
+    },
+    "tesbih1": {
+      "title": "Gebetskette",
+      "description": "Für den Dhikr"
+    },
+    "tesbih2": {
+      "title": "Betende Person",
+      "description": "Ein Moment der Anbetung"
+    },
+    "tesbih3": {
+      "title": "Niederwerfung",
+      "description": "Dienerschaft"
+    },
+    "tesbih4": {
+      "title": "Betende Hände",
+      "description": "Flehen"
+    },
+    "tesbih5": {
+      "title": "Gebetsteppich",
+      "description": "Teppich für das Gebet"
+    }
+  },
+  "questsPool": {
+    "q_subhanallah_33": "Sprich 33-mal „Subhanallah“",
+    "q_elhamdulillah_33": "Sprich 33-mal „Alhamdulillah“",
+    "q_allahuekber_33": "Sprich 33-mal „Allahu Akbar“",
+    "q_salavat_10": "Sprich 10-mal die Salawat",
+    "q_estagfirullah_100": "Bitte 100-mal um Vergebung",
+    "q_read_esma": "Lies den heutigen Namen Allahs",
+    "q_read_hadith": "Lies den heutigen Hadith",
+    "q_read_verse": "Lies den heutigen Vers und denk darüber nach",
+    "q_share_dua": "Teile ein Bittgebet mit einem Freund",
+    "q_check_kaaba": "Prüfe die Qibla-Richtung",
+    "q_check_times": "Prüfe die Gebetszeiten"
+  },
+  "badge_desc": {
+    "first_prayer": "Erfasse dein erstes Gebet",
+    "pray_7_days": "Bete 7 Tage lang pünktlich",
+    "pray_30_days": "Verfolge deine Gebete 30 Tage lang",
+    "fajr_7": "Bete 7 Tage lang Fadschr pünktlich",
+    "fajr_40": "Bete 40 Tage lang Fadschr pünktlich",
+    "tahajjud": "Bete in 7 Nächten Tahadschud",
+    "first_ayah": "Lies deinen ersten Vers",
+    "read_7_days": "Lies 7 Tage lang den Koran",
+    "read_30_days": "Lies 30 Tage lang täglich den Koran",
+    "first_juz": "Lies einen Dschuz",
+    "hatim_complete": "Schließe ein Khatm ab",
+    "memorize_start": "Lerne deine erste Sure auswendig",
+    "first_dhikr": "Mach deinen ersten Dhikr",
+    "dhikr_1000": "Erreiche insgesamt 1.000 Dhikr",
+    "dhikr_10000": "Erreiche insgesamt 10.000 Dhikr",
+    "dhikr_100000": "Erreiche insgesamt 100.000 Dhikr",
+    "adhkar_7": "Erledige 7 Tage lang die Morgen- und Abend-Adhkar",
+    "tespihat_30": "Erledige 30 Tage lang das Tasbihat",
+    "streak_3": "Sei 3 Tage in Folge aktiv",
+    "streak_7": "Sei 7 Tage in Folge aktiv",
+    "streak_30": "Sei 30 Tage in Folge aktiv",
+    "streak_100": "Sei 100 Tage in Folge aktiv",
+    "streak_365": "Sei 365 Tage in Folge aktiv",
+    "first_share": "Teile deinen ersten Inhalt",
+    "invite_friend": "Lade einen Freund ein",
+    "family_joined": "Tritt einer Familiengruppe bei oder gründe eine",
+    "ramadan_warrior": "Sei jeden Tag im Ramadan aktiv",
+    "friday_faithful": "Bete an 4 Freitagen in Folge das Freitagsgebet",
+    "night_of_power": "Sei in der Nacht der Bestimmung aktiv",
+    "quiz_first": "Schließe dein erstes Quiz ab",
+    "quiz_master": "Schließe 50 Quizze ab",
+    "esma_learner": "Lerne die 99 Namen Allahs"
   }
 }

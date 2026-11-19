@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Download, Share2, Heart, ChevronRight, X, Grid, Image as ImageIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { MULTIMEDIA_CATEGORIES, DUA_IMAGES, getImagesByCategory } from '../../../data/multimediaData';
+import { MULTIMEDIA_CATEGORIES as RAW_CATEGORIES, DUA_IMAGES as RAW_DUA_IMAGES, getImagesByCategory as getRawImagesByCategory } from '../../../data/multimediaData';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { Share } from '@capacitor/share';
 import { Capacitor } from '@capacitor/core';
@@ -13,6 +13,16 @@ const MULTIMEDIA_FAVORITES_KEY = 'multimedia_favorites';
 function Multimedia({ onClose }) {
     const { t } = useTranslation();
     const { showToast } = useToast();
+    const localizeItem = (item) => ({
+        ...item,
+        title: t(`mmItems.${item.id}.title`, item.title),
+        ...(item.text && { text: t(`mmItems.${item.id}.text`, item.text) }),
+        ...(item.location && { location: t(`mmItems.${item.id}.location`, item.location) }),
+        ...(item.description && { description: t(`mmItems.${item.id}.description`, item.description) }),
+    });
+    const MULTIMEDIA_CATEGORIES = RAW_CATEGORIES.map(localizeItem);
+    const DUA_IMAGES = RAW_DUA_IMAGES.map(localizeItem);
+    const getImagesByCategory = (categoryId) => getRawImagesByCategory(categoryId).map(localizeItem);
     const [activeCategory, setActiveCategory] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [favorites, setFavorites] = useState(() => {

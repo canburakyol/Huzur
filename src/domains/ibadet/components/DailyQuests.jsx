@@ -80,7 +80,7 @@ const DailyQuests = memo(() => {
                                     paddingRight: '12px',
                                     lineHeight: '1.4'
                                 }}>
-                                    {quest.text}
+                                    {t(`questsPool.${quest.id}`, quest.text)}
                                 </div>
                                 <div style={{ 
                                     fontSize: '0.75rem', 

@@ -145,7 +145,7 @@ const SpiritualJourney = ({ onClose }) => {
               {t('gamification.level', 'Seviye')} {currentLevelInfo.level}
             </div>
             <h2 className="m-0 text-2xl font-black text-nav">
-              {currentLevelInfo.title}
+              {t(`gamification.levels.${currentLevelInfo.level}`, currentLevelInfo.title)}
             </h2>
           </div>
         </div>
@@ -202,7 +202,7 @@ const SpiritualJourney = ({ onClose }) => {
               {points.toLocaleString()} XP
             </span>
             <span className="text-xs font-extrabold text-nav">
-              {t('gamification.nextLevel', 'Seviye')} {nextLevelInfo.level}: {nextLevelInfo.title} ({nextLevelInfo.minPoints.toLocaleString()} XP)
+              {t('gamification.nextLevel', 'Seviye')} {nextLevelInfo.level}: {t(`gamification.levels.${nextLevelInfo.level}`, nextLevelInfo.title)} ({nextLevelInfo.minPoints.toLocaleString()} XP)
             </span>
           </div>
         </div>
@@ -235,7 +235,7 @@ const SpiritualJourney = ({ onClose }) => {
           <p className="m-0 text-sm text-nav-muted leading-relaxed">
             {t('gamification.targetDesc', {
               remaining: remaining.toLocaleString(),
-              nextTitle: nextLevelInfo.title,
+              nextTitle: t(`gamification.levels.${nextLevelInfo.level}`, nextLevelInfo.title),
               defaultValue: '{{nextTitle}} unvanina ulasmak icin sadece {{remaining}} XP kaldi.'
             })}
           </p>

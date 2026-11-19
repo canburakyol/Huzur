@@ -47,7 +47,8 @@
     "copy": "Salin",
     "minutes": "mnt",
     "appName": "Huzur",
-    "ok": "OK"
+    "ok": "OK",
+    "inFavorites": "Di favorit"
   },
   "notifications": {
     "prayer": {
@@ -238,7 +239,9 @@
     "clearSearch": "Hapus pencarian",
     "emptyHint": "Ubah kata pencarian atau filter favorit.",
     "aboutTitle": "Tentang Asmaul Husna",
-    "info_note": "Asmaul Husna berarti nama-nama Allah yang paling indah. Menyebut nama-nama ini, merenungkan maknanya, dan berdoa kepada Allah dengannya adalah dianjurkan."
+    "info_note": "Asmaul Husna berarti nama-nama Allah yang paling indah. Menyebut nama-nama ini, merenungkan maknanya, dan berdoa kepada Allah dengannya adalah dianjurkan.",
+    "showAll": "Tampilkan semua nama",
+    "showFavoritesOnly": "Tampilkan favorit saja"
   },
   "hadith": {
     "title": "Hadis",
@@ -4221,7 +4224,11 @@
     "summaryLabel": "Ringkasan catatan qada",
     "totalLogged": "Total salat tercatat",
     "entries": "Catatan salat",
-    "byPrayer": "Per waktu salat"
+    "byPrayer": "Per waktu salat",
+    "loggedCount": "{{count}} tercatat",
+    "counterLabel": "Penghitung {{name}}",
+    "decrease": "Kurangi {{name}}",
+    "increase": "Tambah {{name}}, naikkan jumlah"
   },
   "streak": {
     "fajr": "Subuh",
@@ -4233,7 +4240,39 @@
     "early_bird": "Si Pagi",
     "quran_lover": "Pecinta Al-Qur'an",
     "dhikr_master": "Ahli Zikir",
-    "family_first": "Keluarga Utama"
+    "family_first": "Keluarga Utama",
+    "first_prayer": "Sujud Pertama",
+    "pray_7_days": "7 Hari Tepat Waktu",
+    "pray_30_days": "Pejuang Salat",
+    "fajr_7": "Si Pagi",
+    "fajr_40": "Penyanyi Fajar",
+    "tahajjud": "Pejuang Tahajud",
+    "first_ayah": "Ayat Pertama",
+    "read_7_days": "Sahabat Al-Qur'an",
+    "read_30_days": "Pecinta Al-Qur'an",
+    "first_juz": "1 Juz Selesai",
+    "hatim_complete": "Pahlawan Khatam",
+    "memorize_start": "Calon Hafiz",
+    "first_dhikr": "Zikir Pertama",
+    "dhikr_1000": "Seribu Zikir",
+    "dhikr_10000": "Sepuluh Ribu Zikir",
+    "dhikr_100000": "Ahli Zikir",
+    "adhkar_7": "Setia Pagi & Petang",
+    "tespihat_30": "Ahli Tasbihat",
+    "streak_3": "Rangkaian 3 Hari",
+    "streak_7": "Rangkaian Mingguan",
+    "streak_30": "Rangkaian Bulanan",
+    "streak_100": "Legenda 100 Hari",
+    "streak_365": "Bintang Tahun Ini",
+    "first_share": "Berbagi Pertama",
+    "invite_friend": "Pengundang",
+    "family_joined": "Keluarga Tenteram",
+    "ramadan_warrior": "Pejuang Ramadan",
+    "friday_faithful": "Setia Jumat",
+    "night_of_power": "Lailatul Qadar",
+    "quiz_first": "Kuis Pertama",
+    "quiz_master": "Ahli Kuis",
+    "esma_learner": "Pelajar Asmaul Husna"
   },
   "gamification": {
     "badgesTitle": "Koleksi Lencana",
@@ -5018,7 +5057,17 @@
     "maybeLater": "Mungkin nanti"
   },
   "mosqueFinder": {
-    "title": "Masjid terdekat"
+    "title": "Masjid terdekat",
+    "errors": {
+      "denied": "Izin lokasi ditolak. Izinkan akses lokasi untuk melihat masjid terdekat.",
+      "unavailable": "Lokasi tidak dapat diperoleh. Periksa GPS kamu.",
+      "generic": "Lokasi tidak dapat diperoleh. Silakan coba lagi."
+    },
+    "locating": "Mencari lokasimu…",
+    "permissionTitle": "Izin lokasi diperlukan",
+    "enableLocation": "Aktifkan lokasi",
+    "noneFound": "Tidak ada masjid di dekatmu.",
+    "go": "BUKA"
   },
   "legal": {
     "privacy": {
@@ -5123,5 +5172,241 @@
       "hard": "Sulit",
       "veryHard": "Sangat sulit"
     }
+  },
+  "liveBroadcast": {
+    "title": "Siaran langsung",
+    "subtitle": "Terhubung 24/7 ke tempat-tempat suci",
+    "info": "Pilih kanal untuk menonton siaran langsung di YouTube.",
+    "haram": "Dua Masjid Suci",
+    "quranChannels": "Kanal Al-Qur'an",
+    "live": "LANGSUNG",
+    "active": "AKTIF",
+    "channels": {
+      "makkah": {
+        "title": "Makkah – Ka'bah langsung",
+        "description": "Masjidil Haram siaran langsung 24 jam"
+      },
+      "madinah": {
+        "title": "Madinah – Masjid Nabawi",
+        "description": "Siaran langsung dari Masjid Nabawi"
+      },
+      "quran-tv": {
+        "title": "Kanal Al-Qur'an",
+        "description": "Tilawah Al-Qur'an – langsung"
+      },
+      "makkah-hd": {
+        "title": "Saudi Quran TV",
+        "description": "Kanal Al-Qur'an resmi Arab Saudi"
+      }
+    }
+  },
+  "mmItems": {
+    "dualar": {
+      "title": "Gambar doa",
+      "description": "Kartu doa yang bisa dibagikan"
+    },
+    "camiler": {
+      "title": "Foto masjid",
+      "description": "Masjid-masjid terindah di dunia"
+    },
+    "kabe": {
+      "title": "Ka'bah dan Masjidil Haram",
+      "description": "Tanah suci"
+    },
+    "ramazan": {
+      "title": "Gambar Ramadan",
+      "description": "Gambar Ramadan dan iftar"
+    },
+    "kuran": {
+      "title": "Gambar Al-Qur'an",
+      "description": "Foto Al-Qur'an"
+    },
+    "tesbih": {
+      "title": "Tasbih dan ibadah",
+      "description": "Gambar ibadah"
+    },
+    "dua1": {
+      "title": "Doa pagi",
+      "text": "Ya Rabb, berilah aku taufik untuk amal kebaikan hari ini."
+    },
+    "dua2": {
+      "title": "Doa syukur",
+      "text": "Alhamdulillah, syukur dalam setiap keadaanku."
+    },
+    "dua3": {
+      "title": "Doa keberkahan",
+      "text": "Ya Allah, berkahilah rumahku, pekerjaanku, dan keluargaku."
+    },
+    "dua4": {
+      "title": "Doa ketenangan",
+      "text": "Ya Rabb, berilah hatiku ketenangan dan lisanku perkataan yang benar."
+    },
+    "dua5": {
+      "title": "Doa ampunan",
+      "text": "Ya Rabb, maafkanlah dosa-dosaku dan ampunilah aku."
+    },
+    "dua6": {
+      "title": "Doa kesembuhan",
+      "text": "Ya Allah, sembuhkanlah orang-orang sakit di antara kami dan ringankanlah yang sedang kesusahan."
+    },
+    "dua7": {
+      "title": "Doa kesabaran",
+      "text": "Ya Rabb, berilah aku kesabaran dan jadikanlah aku termasuk orang yang sabar."
+    },
+    "dua8": {
+      "title": "Doa petang",
+      "text": "Ya Rabb, jadikanlah malam ini penuh kebaikan dan lindungilah kami."
+    },
+    "cami1": {
+      "title": "Masjid Sultan Ahmed",
+      "location": "Istanbul, Turki"
+    },
+    "cami2": {
+      "title": "Hagia Sophia",
+      "location": "Istanbul, Turki"
+    },
+    "cami3": {
+      "title": "Masjid Syekh Zayed",
+      "location": "Abu Dhabi, UEA"
+    },
+    "cami4": {
+      "title": "Masjid Nabawi",
+      "location": "Madinah, Arab Saudi"
+    },
+    "cami5": {
+      "title": "Masjid Selimiye",
+      "location": "Edirne, Turki"
+    },
+    "cami6": {
+      "title": "Interior masjid",
+      "location": "Arsitektur Islam"
+    },
+    "cami7": {
+      "title": "Detail kubah",
+      "location": "Seni Islam"
+    },
+    "kabe1": {
+      "title": "Ka'bah yang mulia",
+      "location": "Makkah, Arab Saudi"
+    },
+    "kabe2": {
+      "title": "Panorama Masjidil Haram",
+      "location": "Makkah, Arab Saudi"
+    },
+    "kabe3": {
+      "title": "Tawaf",
+      "location": "Makkah, Arab Saudi"
+    },
+    "kabe4": {
+      "title": "Ka'bah di malam hari",
+      "location": "Makkah, Arab Saudi"
+    },
+    "ramazan1": {
+      "title": "Hidangan iftar",
+      "description": "Berkah Ramadan"
+    },
+    "ramazan2": {
+      "title": "Kurma",
+      "description": "Sunah berbuka puasa"
+    },
+    "ramazan3": {
+      "title": "Lentera Ramadan",
+      "description": "Hiasan Ramadan"
+    },
+    "ramazan4": {
+      "title": "Hilal",
+      "description": "Bulan Ramadan"
+    },
+    "ramazan5": {
+      "title": "Lampu mahya",
+      "description": "Selamat datang Ramadan"
+    },
+    "kuran1": {
+      "title": "Al-Qur'an Al-Karim",
+      "description": "Mushaf yang mulia"
+    },
+    "kuran2": {
+      "title": "Tilawah Al-Qur'an",
+      "description": "Saat membaca"
+    },
+    "kuran3": {
+      "title": "Seni kaligrafi",
+      "description": "Kaligrafi Islam"
+    },
+    "kuran4": {
+      "title": "Al-Qur'an di atas rehal",
+      "description": "Rehal Al-Qur'an"
+    },
+    "kuran5": {
+      "title": "Seni iluminasi",
+      "description": "Seni hias"
+    },
+    "tesbih1": {
+      "title": "Tasbih",
+      "description": "Alat zikir"
+    },
+    "tesbih2": {
+      "title": "Orang yang salat",
+      "description": "Saat beribadah"
+    },
+    "tesbih3": {
+      "title": "Sujud",
+      "description": "Penghambaan"
+    },
+    "tesbih4": {
+      "title": "Tangan yang berdoa",
+      "description": "Permohonan"
+    },
+    "tesbih5": {
+      "title": "Sajadah",
+      "description": "Sajadah untuk salat"
+    }
+  },
+  "questsPool": {
+    "q_subhanallah_33": "Ucapkan \"Subhanallah\" 33 kali",
+    "q_elhamdulillah_33": "Ucapkan \"Alhamdulillah\" 33 kali",
+    "q_allahuekber_33": "Ucapkan \"Allahu Akbar\" 33 kali",
+    "q_salavat_10": "Bacalah selawat 10 kali",
+    "q_estagfirullah_100": "Beristigfar 100 kali",
+    "q_read_esma": "Baca Asmaul Husna hari ini",
+    "q_read_hadith": "Baca hadis hari ini",
+    "q_read_verse": "Baca dan renungkan ayat hari ini",
+    "q_share_dua": "Bagikan doa kepada teman",
+    "q_check_kaaba": "Periksa arah kiblat",
+    "q_check_times": "Periksa waktu salat"
+  },
+  "badge_desc": {
+    "first_prayer": "Catat salat pertamamu",
+    "pray_7_days": "Salat tepat waktu selama 7 hari",
+    "pray_30_days": "Lacak salatmu selama 30 hari",
+    "fajr_7": "Salat Subuh tepat waktu selama 7 hari",
+    "fajr_40": "Salat Subuh tepat waktu selama 40 hari",
+    "tahajjud": "Salat tahajud selama 7 malam",
+    "first_ayah": "Baca ayat pertamamu",
+    "read_7_days": "Baca Al-Qur'an selama 7 hari",
+    "read_30_days": "Baca Al-Qur'an setiap hari selama 30 hari",
+    "first_juz": "Baca satu juz",
+    "hatim_complete": "Selesaikan satu khatam",
+    "memorize_start": "Hafalkan surah pertamamu",
+    "first_dhikr": "Lakukan zikir pertamamu",
+    "dhikr_1000": "Capai total 1.000 zikir",
+    "dhikr_10000": "Capai total 10.000 zikir",
+    "dhikr_100000": "Capai total 100.000 zikir",
+    "adhkar_7": "Selesaikan zikir pagi dan petang selama 7 hari",
+    "tespihat_30": "Selesaikan tasbihat selama 30 hari",
+    "streak_3": "Aktif 3 hari berturut-turut",
+    "streak_7": "Aktif 7 hari berturut-turut",
+    "streak_30": "Aktif 30 hari berturut-turut",
+    "streak_100": "Aktif 100 hari berturut-turut",
+    "streak_365": "Aktif 365 hari berturut-turut",
+    "first_share": "Bagikan konten pertamamu",
+    "invite_friend": "Undang seorang teman",
+    "family_joined": "Bergabung atau buat grup keluarga",
+    "ramadan_warrior": "Aktif setiap hari selama Ramadan",
+    "friday_faithful": "Salat Jumat 4 kali berturut-turut",
+    "night_of_power": "Aktif pada malam Lailatul Qadar",
+    "quiz_first": "Selesaikan kuis pertamamu",
+    "quiz_master": "Selesaikan 50 kuis",
+    "esma_learner": "Pelajari 99 Asmaul Husna"
   }
 }

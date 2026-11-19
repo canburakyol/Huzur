@@ -70,21 +70,21 @@ const PrayerTracker = ({ onClose }) => {
                 <div className="practice-row__icon" aria-hidden="true">{item.icon}</div>
                 <div className="practice-row__body">
                   <h3 className="practice-row__title">{item.label}</h3>
-                  <p className="practice-row__text">{count} kayıtlı</p>
+                  <p className="practice-row__text">{t('missedPrayers.loggedCount', { count, defaultValue: '{{count}} kayıtlı' })}</p>
                 </div>
-                <div className="practice-counter" aria-label={`${item.label} sayacı`}>
+                <div className="practice-counter" aria-label={t('missedPrayers.counterLabel', { name: item.label, defaultValue: '{{name}} sayacı' })}>
                   <button
                     type="button"
                     className="practice-counter__button"
                     disabled={count === 0}
-                    aria-label={`${item.label} kaydını azalt`}
+                    aria-label={t('missedPrayers.decrease', { name: item.label, defaultValue: '{{name}} kaydını azalt' })}
                     onClick={() => updateCount(item.key, -1)}
                   ><Minus size={18} /></button>
                   <span className="practice-counter__value" aria-live="polite">{count}</span>
                   <button
                     type="button"
                     className="practice-counter__button practice-counter__button--primary"
-                    aria-label={`${item.label} kayda ekle, sayıyı artır`}
+                    aria-label={t('missedPrayers.increase', { name: item.label, defaultValue: '{{name}} kayda ekle, sayıyı artır' })}
                     onClick={() => updateCount(item.key, 1)}
                   ><Plus size={18} /></button>
                 </div>
