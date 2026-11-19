@@ -2,14 +2,18 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight, MapPin, Calendar, BookOpen, Map, Info, Sparkles } from 'lucide-react';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
-import { SEERAH_PERIODS, SEERAH_EVENTS } from '../../../data/seerahData';
+import { SEERAH_PERIODS as RAW_PERIODS, SEERAH_EVENTS as RAW_EVENTS } from '../../../data/seerahData';
+import { localizeSeerahEvent, localizeSeerahPeriod } from '../../../data/seerahTranslations';
 
 /**
  * İnteraktif Siyer Haritası Bileşeni
  * Peygamberimizin hayatını kronolojik olarak sunar
  */
 const SeerahMap = ({ onClose }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n?.language || 'tr';
+  const SEERAH_PERIODS = RAW_PERIODS.map((period) => localizeSeerahPeriod(period, lang));
+  const SEERAH_EVENTS = RAW_EVENTS.map((event) => localizeSeerahEvent(event, lang));
   const [selectedPeriod, setSelectedPeriod] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
