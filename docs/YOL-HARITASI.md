@@ -112,8 +112,9 @@ Bu dillerden indirme olmadığı için en sonda. Önce arayüz metinleri, sonra 
 - **Durum (19 Kas):** Arayüz, bildirimler, Kur'an (Bubenheim/Kemenag mealleri), günlük içerik, Esma, hadisler,
   Siyer, Namaz Hocası, Tespihat, kütüphane, fihrist, kelime kelime meal, asistan cevapları ve paylaşım metinleri
   4 dilde. Tüm ekranlarda tr↔de fark taramasında yalnızca marka/özel adlar kaldı.
-  Kalan: davet penceresi ve referral metinleri (referralGrowthService), lisanslar sayfası, Android bildirim
-  kanal adları, zekâtta para birimi (her dilde ₺), telefonda dil değiştirerek göz kontrolü.
+  Davet ekranları, lisanslar, bildirim kanalları ve yerel ezan bildirimi de 4 dilde (19 Kas akşam).
+  Endonezya/Malezya/Singapur/Brunei'de vakitler Kemenag açılarıyla (20°/18°) hesaplanıyor.
+  Kalan: telefonda dil değiştirerek göz kontrolü (özellikle ezan bildirimi). Zekât bilinçli olarak ₺.
 
 ---
 
