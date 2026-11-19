@@ -1,6 +1,7 @@
 import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { logger } from '../utils/logger';
+import i18n from '../i18n';
 
 type NotificationChannel = {
   id: string;
@@ -117,7 +118,12 @@ export const createNotificationChannels = async (): Promise<void> => {
   if (Capacitor.getPlatform() !== 'android') return;
 
   try {
-    await Promise.all(CHANNEL_LIST.map((channel) => LocalNotifications.createChannel(channel)));
+    // Re-creating a channel with the same id updates its name, so this follows the app language.
+    await Promise.all(CHANNEL_LIST.map((channel) => LocalNotifications.createChannel({
+      ...channel,
+      name: i18n.t(`notify.channels.${channel.id}.name`, channel.name),
+      description: i18n.t(`notify.channels.${channel.id}.description`, channel.description),
+    })));
     logger.log('[NotificationPlatform] Notification channels ensured');
   } catch (error) {
     logger.error('[NotificationPlatform] Channel creation failed', error);

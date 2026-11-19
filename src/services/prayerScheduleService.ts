@@ -4,6 +4,7 @@ import { fetchMonthlyPrayerTimes, getNextPrayer } from './prayerService';
 import { syncPrayerScheduleCacheToNative } from './storageService';
 import { updateWidget } from './widgetService';
 import { logger } from '../utils/logger';
+import i18n from '../i18n';
 import crashlyticsReporter, { buildCrashContext } from '../utils/crashlyticsReporter';
 
 type PrayerTimings = Record<string, string>;
@@ -140,6 +141,7 @@ export const syncPrayerSchedule = async ({
     }
 
     const monthlySnapshots = await collectMonthlySnapshots({ latitude, longitude, locationName });
+    const prayerKey = (key: string) => i18n.t(`prayer.${key.toLowerCase()}`, key);
     const result = await syncPrayerScheduleCacheToNative({
       timings,
       latitude: roundCoordinate(latitude),
@@ -147,7 +149,13 @@ export const syncPrayerSchedule = async ({
       locationName,
       adhanSound,
       prayerNotificationsEnabled,
-      monthlySnapshots
+      monthlySnapshots,
+      labels: {
+        prayerNames: Object.fromEntries(['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].map((key) => [key, prayerKey(key)])),
+        adhanTitle: i18n.t('notify.adhanTitle', { prayer: '%s', defaultValue: '🕌 %s Vakti' }),
+        adhanChannelName: i18n.t('notify.channels.adhan.name', 'Ezan Sesi'),
+        adhanChannelDescription: i18n.t('notify.channels.adhan.description', 'Namaz vakitlerinde ezan sesi çalar'),
+      }
     });
 
     crashlyticsReporter.logCrash(

@@ -3736,6 +3736,201 @@
       "default": "Einladen",
       "variantB": "Freunde einladen",
       "variantC": "Lass uns gemeinsam beginnen"
+    },
+    "plan": {
+      "headline": {
+        "default": "Teile Huzur mit einer herzlichen Einladung",
+        "blocked": "Einladungen sind kurz pausiert",
+        "converted": "Deine Einladungen zeigen Wirkung",
+        "inviteeReward": "Deine Einladungsbelohnung ist bereit",
+        "waiting": "Deine Einladungen sind unterwegs",
+        "firstInvite": "Sende deine erste Einladung",
+        "proReady": "Dein 24-Stunden-Pro ist bereit",
+        "proInvite": "Schick sie einem Freund und schalte 24 Stunden Pro frei"
+      },
+      "description": {
+        "default": "Die beste Einladung kommt in einem ruhigen Moment, in dem du spürst, dass sie jemandem wirklich guttun kann.",
+        "blocked": "Aus Sicherheitsgründen warten wir kurz. Danach kannst du dort weitermachen, wo du aufgehört hast.",
+        "convertedMany": "{{n}} deiner Einladungen sind abgeschlossen. Du lässt Huzur in deinem Umfeld wachsen.",
+        "convertedOne": "Deine erste Einladung ist abgeschlossen. Du kannst auch der nächsten Person eine schicken.",
+        "inviteeReward": "Du hast die ersten Schritte geschafft. Jetzt kannst du dieselbe Erfahrung an einen Freund weitergeben.",
+        "waiting": "{{n}} Einladungen warten auf die ersten Schritte. Eine kurze Erinnerung kann helfen.",
+        "firstInvite": "Schicke sie einfach an eine Person, mit einer kurzen Notiz, warum sie ihr guttun könnte.",
+        "proReady": "Deine Einladung ist abgeschlossen. Du kannst Pro-Funktionen 24 Stunden lang nutzen.",
+        "proInvite": "Eine herzliche Einladung genügt. Sobald sie abgeschlossen ist, werden Pro-Funktionen für 24 Stunden freigeschaltet."
+      },
+      "badge": {
+        "default": "Beide Seiten profitieren",
+        "blocked": "Sicherheitspause",
+        "converted": "Abgeschlossene Einladung",
+        "inviteeReward": "Belohnung freigeschaltet",
+        "linkReady": "Link bereit",
+        "pro": "24 h Pro"
+      }
+    },
+    "steps": {
+      "link": {
+        "label": "Link vorbereiten",
+        "description": "Erstelle deinen Einladungscode und entscheide, wem du ihn schickst."
+      },
+      "accept": {
+        "label": "Dein Freund macht den ersten Schritt",
+        "description": "Die erste Person, die über deinen Link kommt und die Einrichtung abschließt, bringt alles ins Rollen."
+      },
+      "convert": {
+        "label": "Das erste Gebet schaltet die Belohnung frei",
+        "description": "Sobald dein Freund die Einrichtung und das erste Gebet abgeschlossen hat, gilt die Einladung als abgeschlossen."
+      },
+      "invitee": {
+        "label": "Dein Willkommensgeschenk",
+        "doneDescription": "Deine Einladungsbelohnung ist freigeschaltet. Du kannst diese Erfahrung weitergeben.",
+        "pendingDescription": "Sobald du deine ersten Schritte abschließt, wird auch für dich eine Belohnung freigeschaltet."
+      }
+    },
+    "stats": {
+      "converted": "Abgeschlossene Einladungen",
+      "waiting": "Offene Einladungen",
+      "reward": "Dein Status",
+      "ready": "Bereit",
+      "tracking": "Läuft"
+    },
+    "shareCta": {
+      "A": {
+        "primary": "Link teilen",
+        "secondary": "Sende die fertige Einladung mit einem Tippen"
+      },
+      "B": {
+        "primary": "An einen Freund senden",
+        "secondary": "Eine schlichte, herzliche Einladung ist bereit"
+      },
+      "C": {
+        "primary": "Gemeinsam den Rhythmus beginnen",
+        "secondary": "Eine stärkere Einladung ist bereit"
+      }
+    },
+    "note": {
+      "ramadan": "Im Ramadan geteilte Einladungen können bedeutungsvoller sein.",
+      "friday": "Eine Einladung am Freitag gibt einen herzlicheren Anlass.",
+      "kandil": "In gesegneten Nächten können Einladungen eine tiefere Verbindung schaffen.",
+      "default": "Eine ruhige, aufrichtige Einladung mit einem klaren Nutzen wirkt am besten."
+    },
+    "shareText": {
+      "intro": {
+        "A": "Komm mit zu Huzur und beginne mit einem ruhigen ersten Schritt.",
+        "B": "Ich dachte, Huzur könnte dir wirklich guttun.",
+        "C": "Lass uns gemeinsam in Huzur einen ruhigeren spirituellen Rhythmus finden."
+      },
+      "seasonal": {
+        "friday": " Ein schöner Anfang für einen gesegneten Freitag.",
+        "ramadan": " Gerade im Ramadan ist das besonders wertvoll."
+      },
+      "title": "Huzur-Einladung",
+      "dialogTitle": "Freund einladen",
+      "codeLine": "Mein Einladungscode: {{code}}"
+    },
+    "modal": {
+      "feedback": {
+        "linkReady": "Dein Einladungslink ist bereit. Schick ihn mit einer kurzen Notiz an eine Person.",
+        "noClipboard": "Kopieren wird auf diesem Gerät nicht unterstützt.",
+        "shared": "Einladung geteilt. Die erste Rückmeldung siehst du hier.",
+        "textCopied": "Einladungstext kopiert. Es reicht, ihn einer Person zu schicken.",
+        "shareFailed": "Teilen wurde nicht abgeschlossen. Du kannst den Link kopieren und selbst senden.",
+        "codeCopied": "Einladungscode kopiert.",
+        "linkCopied": "Einladungslink kopiert."
+      },
+      "syncing": "Wird synchronisiert",
+      "proActive": "Deine Pro-Mitgliedschaft ist aktiv!",
+      "remainingHours": "Noch {{hours}} Std. {{minutes}} Min.",
+      "remainingMinutes": "Noch {{minutes}} Min.",
+      "proHint": "Du kannst sie durch Einladungen verlängern oder ein Abo abschließen.",
+      "funnelTitle": "Deine Einladungen im Überblick",
+      "funnel": {
+        "link_ready": "Link bereit",
+        "accepted": "Angenommen",
+        "onboarding": "Eingerichtet",
+        "ibadah": "Erstes Gebet",
+        "reward": "Belohnung"
+      },
+      "funnelHelper": "Sobald dein Link bereit ist, siehst du hier, wie weit deine Einladungen sind.",
+      "blockedTitle": "Sicherheitspause aktiv",
+      "blockedUntil": "Du kannst es nach {{time}} erneut versuchen.",
+      "blockedSoon": "Du kannst es in Kürze erneut versuchen.",
+      "stepsTitle": "So funktioniert's",
+      "noteTitle": "Tipp zum Teilen",
+      "syncIssue": "Die Einladung ist auf dem Server noch nicht vollständig zugeordnet. Sobald jemand deinen Link nutzt, wird es hier aktualisiert.",
+      "yourCode": "Dein Einladungscode",
+      "copy": "Kopieren",
+      "notReady": "Nicht bereit",
+      "linkPlaceholder": "Dein Link wird vor dem ersten Teilen mit einem Tippen erstellt.",
+      "prepareLink": "Einladungslink erstellen",
+      "reuseHint": "Einmal erstellt, kannst du den Link beliebig oft verwenden.",
+      "close": "Schließen"
+    },
+    "triggers": {
+      "reward_ready": {
+        "badge": "Einladungsbelohnung bereit",
+        "headline": "Dein Willkommensgeschenk ist freigeschaltet – jetzt schick die nächste Einladung",
+        "description": "Deine erste Einladung ist abgeschlossen. Jetzt kannst du einem Freund denselben Start schenken.",
+        "support": "Eine herzliche Nachricht an eine Person genügt.",
+        "cta": "Einen Freund einladen"
+      },
+      "inviter_progress": {
+        "badge": "Abgeschlossene Einladung",
+        "headline": "Deine Einladungen tragen Früchte",
+        "description": "{{n}} deiner Einladungen sind abgeschlossen. Wenn du möchtest, kannst du noch jemanden einladen.",
+        "support": "Die beste Einladung kommt, wenn du spürst, dass sie jemandem wirklich guttun kann.",
+        "cta": "Neue Einladung senden"
+      },
+      "invite_waiting": {
+        "badge": "Offene Einladung",
+        "headline": "Deine Einladung wartet auf den ersten Schritt",
+        "description": "{{n}} Personen stehen kurz vor dem Start. Eine kurze Erinnerung heute könnte helfen.",
+        "support": "Einladungen, die ohne Druck einen Nutzen nennen, wirken am besten.",
+        "cta": "Einladung öffnen"
+      },
+      "weekly_reward_ready": {
+        "badge": "Einladung der Woche",
+        "headline": "Du kannst den Rhythmus dieser Woche mit einem Freund teilen",
+        "description": "Deine Einladungsbelohnung ist freigeschaltet. Nach einer guten Woche zu teilen, wirkt herzlicher.",
+        "support": "Du kannst einen Einladungslink erstellen, bevor du die Wochenübersicht schließt.",
+        "cta": "Einladung der Woche erstellen"
+      },
+      "weekly_progress": {
+        "badge": "Deine Einladungen",
+        "headline": "Ein guter Moment, deinen Wochenrhythmus wachsen zu lassen",
+        "descriptionWaiting": "{{n}} Einladungen warten auf den ersten Schritt. Der Schwung dieser Woche kann auch eine neue Einladung tragen.",
+        "description": "{{n}} deiner Einladungen sind abgeschlossen. Wenn du möchtest, kannst du noch jemanden einladen.",
+        "support": "Das Wochenende ist einer der besten Momente für eine ruhige Einladung.",
+        "cta": "Einen Freund hinzufügen"
+      },
+      "weekly_momentum": {
+        "badge": "Eine gute Woche",
+        "headline": "Der Rhythmus dieser Woche ist es wert, geteilt zu werden",
+        "description": "Nach einer guten Woche stellt eine Einladung an eine Person Huzur ganz natürlich vor.",
+        "support": "Einmal erstellt, kannst du den Link beliebig oft verwenden.",
+        "cta": "Einladungslink erstellen"
+      },
+      "assistant_reward_ready": {
+        "badge": "Deine Einladung ist bereit",
+        "headline": "Du kannst diese Erfahrung auch mit einem Freund teilen",
+        "description": "Deine Einladungsbelohnung ist freigeschaltet. Wenn dir die Hilfe genützt hat, kannst du sie weiterempfehlen.",
+        "support": "Konzentriere dich auf eine Sache, die jemandem helfen könnte.",
+        "cta": "Einladung öffnen"
+      },
+      "assistant_progress": {
+        "badge": "Deine Einladungen",
+        "headline": "Du kannst den Nutzen weitergeben",
+        "description": "Deine Einladungen wirken bereits. Direkt nach einer hilfreichen Antwort einzuladen, fühlt sich natürlicher an.",
+        "support": "Kurze, wertfreie Nachrichten mit einem klaren Nutzen wirken am besten.",
+        "cta": "Neue Einladung senden"
+      },
+      "assistant_value_moment": {
+        "badge": "Ein hilfreicher Moment",
+        "headline": "Wenn dir diese Antwort geholfen hat, hilft sie vielleicht auch einem Freund",
+        "description": "Eine Einladung direkt nachdem dir der Huzur-Ratgeber wirklich geholfen hat, wirkt aufrichtiger.",
+        "support": "Der Einladungstext wird vorbereitet; du entscheidest nur, wem du ihn schickst.",
+        "cta": "Einen Freund einladen"
+      }
     }
   },
   "agenda": {
@@ -4287,6 +4482,26 @@
       "recitations": "Rezitationen",
       "prayerTimes": "Gebetszeiten",
       "openSource": "Open-Source-Bibliotheken"
+    },
+    "subtitle": "Technik und Inhalte, die Huzur möglich machen",
+    "items": {
+      "alquranCloud": "Korantext, Übersetzungen und Rezitationen",
+      "islamicNetwork": "Bereitstellung der Rezitationsdateien",
+      "acikKuran": "Türkische Umschrift und Übersetzungen",
+      "corpus": "Wort für Wort: Wurzel, Grundform und Grammatik (Kais Dukes, v0.4)",
+      "alafasy": "Kuwait - über Al Quran Cloud",
+      "classicEgypt": "Ägypten - klassische Aufnahmen",
+      "aladhan": "Dienst zur Berechnung der Gebetszeiten",
+      "diyanet": "Referenz für Gebetszeiten in der Türkei",
+      "react": "Entwicklung der Benutzeroberfläche",
+      "vite": "Build- und Entwicklungsumgebung",
+      "lucide": "Icon-Bibliothek"
+    },
+    "license": {
+      "openUse": "Freie Nutzung",
+      "openSource": "Open Source",
+      "freeApi": "Kostenlose API",
+      "official": "Offizielle Quelle"
     }
   },
   "tafsir": {
@@ -5653,7 +5868,38 @@
         "body": "Erfrische dein Herz in dieser gesegneten Nacht mit Bittgebet und Dhikr.",
         "bodyDiaspora": "Erfrische dein Herz mit einem kurzen Bittgebet und Dhikr für diese gesegnete Nacht."
       }
-    }
+    },
+    "channels": {
+      "prayer_times": {
+        "name": "Gebetszeiten",
+        "description": "Benachrichtigungen zu Gebetszeiten"
+      },
+      "prayer_reminders": {
+        "name": "Gebetserinnerungen",
+        "description": "Erinnerungen vor der Gebetszeit"
+      },
+      "sticky_counter": {
+        "name": "Gebets-Countdown",
+        "description": "Dauerhafte Countdown-Benachrichtigung"
+      },
+      "streak_channel": {
+        "name": "Serien-Hinweise",
+        "description": "Benachrichtigungen zum Serienschutz"
+      },
+      "daily_reminders": {
+        "name": "Tägliche Erinnerungen",
+        "description": "Tägliche Dhikr- und Aufgabenerinnerungen"
+      },
+      "updates_channel": {
+        "name": "App-Updates",
+        "description": "Neue Funktionen und Ankündigungen"
+      },
+      "adhan": {
+        "name": "Adhan",
+        "description": "Spielt den Adhan zu den Gebetszeiten"
+      }
+    },
+    "adhanTitle": "🕌 Zeit für {{prayer}}"
   },
   "nafile": {
     "items": {

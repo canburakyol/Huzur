@@ -97,7 +97,8 @@ object PrayerScheduleCoordinator {
             AdhanForegroundService.hasPlayableAdhan(context, scheduleContext.adhanSound)
 
         slots.forEach { slot ->
-            val localizedName = prayerNamesTr[slot.prayerKey] ?: slot.prayerKey
+            val localizedName = PrayerScheduleStore.getPrayerName(context, slot.prayerKey)
+                ?: prayerNamesTr[slot.prayerKey] ?: slot.prayerKey
 
             if (shouldScheduleAdhan) {
                 AdhanAlarmReceiver.scheduleAdhanAlarm(

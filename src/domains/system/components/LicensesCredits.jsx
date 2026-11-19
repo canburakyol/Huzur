@@ -16,25 +16,25 @@ const LicensesCredits = ({ onClose }) => {
             items: [
                 {
                     name: 'Al Quran Cloud API',
-                    description: 'Kur\'an metni, mealler ve ses kayıtları',
+                    description: t('licenses.items.alquranCloud'),
                     url: 'https://alquran.cloud',
-                    license: 'Açık Kullanım'
+                    license: t('licenses.license.openUse')
                 },
                 {
                     name: 'Islamic Network CDN',
-                    description: 'Hafız ses dosyaları dağıtımı',
+                    description: t('licenses.items.islamicNetwork'),
                     url: 'https://cdn.islamic.network',
-                    license: 'Açık Kullanım'
+                    license: t('licenses.license.openUse')
                 },
                 {
                     name: 'Açık Kuran API',
-                    description: 'Türkçe okunuş ve çeviriler',
+                    description: t('licenses.items.acikKuran'),
                     url: 'https://acikkuran.com',
-                    license: 'Açık Kaynak'
+                    license: t('licenses.license.openSource')
                 },
                 {
                     name: 'Quranic Arabic Corpus',
-                    description: 'Kelime kelime meal: kök, sözlük biçimi ve dilbilgisi (Kais Dukes, v0.4)',
+                    description: t('licenses.items.corpus'),
                     url: 'https://corpus.quran.com',
                     license: 'GNU GPL'
                 }
@@ -46,17 +46,17 @@ const LicensesCredits = ({ onClose }) => {
             items: [
                 {
                     name: 'Mishary Rashid Alafasy',
-                    description: 'Kuveyt - Al Quran Cloud üzerinden',
+                    description: t('licenses.items.alafasy'),
                     license: 'Streaming'
                 },
                 {
                     name: 'Abdul Basit Abdus-Samad',
-                    description: 'Mısır - Klasik kayıtlar',
+                    description: t('licenses.items.classicEgypt'),
                     license: 'Public Domain'
                 },
                 {
                     name: 'Mahmoud Khalil Al-Husary',
-                    description: 'Mısır - Klasik kayıtlar',
+                    description: t('licenses.items.classicEgypt'),
                     license: 'Public Domain'
                 }
             ]
@@ -67,15 +67,15 @@ const LicensesCredits = ({ onClose }) => {
             items: [
                 {
                     name: 'Aladhan API',
-                    description: 'Namaz vakitlerini hesaplama servisi',
+                    description: t('licenses.items.aladhan'),
                     url: 'https://aladhan.com',
-                    license: 'Ücretsiz API'
+                    license: t('licenses.license.freeApi')
                 },
                 {
                     name: 'Diyanet İşleri Başkanlığı',
-                    description: 'Türkiye namaz vakitleri referansı',
+                    description: t('licenses.items.diyanet'),
                     url: 'https://namazvakitleri.diyanet.gov.tr',
-                    license: 'Resmi Kaynak'
+                    license: t('licenses.license.official')
                 }
             ]
         },
@@ -85,19 +85,19 @@ const LicensesCredits = ({ onClose }) => {
             items: [
                 {
                     name: 'React',
-                    description: 'Kullanıcı arayüzü geliştirme',
+                    description: t('licenses.items.react'),
                     url: 'https://react.dev',
                     license: 'MIT'
                 },
                 {
                     name: 'Vite',
-                    description: 'Build ve geliştirme ortamı',
+                    description: t('licenses.items.vite'),
                     url: 'https://vitejs.dev',
                     license: 'MIT'
                 },
                 {
                     name: 'Lucide Icons',
-                    description: 'İkon kütüphanesi',
+                    description: t('licenses.items.lucide'),
                     url: 'https://lucide.dev',
                     license: 'ISC'
                 }
@@ -115,7 +115,7 @@ const LicensesCredits = ({ onClose }) => {
                         {t('licenses.title', 'Lisanslar & Kaynaklar')}
                     </h2>
                     <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
-                        Huzur'u mümkün kılan teknoloji ve içerikler
+                        {t('licenses.subtitle')}
                     </p>
                 </div>
                 <div className="settings-icon-box" style={{ background: 'rgba(79, 70, 229, 0.1)', color: 'var(--nav-accent)' }}>

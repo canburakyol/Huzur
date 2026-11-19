@@ -1,4 +1,5 @@
 import { getActiveCampaign } from './campaignService';
+import i18n from '../i18n';
 import { buildReferralAnalyticsPayload, getReferralGrowthPlan, ReferralGrowthPlan } from './referralGrowthService';
 
 interface Campaign {
@@ -66,139 +67,122 @@ const hasHelpfulAssistantMoment = (assistantMeta: AssistantMeta | null | undefin
   assistantMeta?.safeModeNotice !== true
 );
 
+// Copy lives in referral.triggers.<triggerId>.*; these Turkish strings are the fallbacks.
+const TRIGGER_COPY: Record<string, Record<string, string>> = {
+  reward_ready: {
+    badge: 'Davet ödülün hazır',
+    headline: 'Hoş geldin hediyen açıldı, sıradaki daveti sen gönder',
+    description: 'İlk davetin tamamlandı. Şimdi aynı başlangıcı bir dostuna da ulaştırabilirsin.',
+    support: 'Tek bir kişiye samimi bir not bırakman yeterli.',
+    cta: 'Bir dostunu davet et',
+  },
+  inviter_progress: {
+    badge: 'Tamamlanan davet',
+    headline: 'Davetlerin sonuç veriyor',
+    description: '{{n}} davetin tamamlandı. İstersen bir kişiyi daha davet edebilirsin.',
+    support: 'En iyi davet, birine gerçekten iyi geleceğini hissettiğin andadır.',
+    cta: 'Yeni bir davet gönder',
+  },
+  invite_waiting: {
+    badge: 'Bekleyen davet',
+    headline: 'Davetin ilk adımı bekliyor',
+    description: '{{n}} kişi başlamaya yakın. Bugün kısa bir hatırlatma iyi gelebilir.',
+    support: 'Baskı kurmadan, tek bir faydayı anlatan davetler daha iyi sonuç verir.',
+    cta: 'Davetini aç',
+  },
+  weekly_reward_ready: {
+    badge: 'Haftanın daveti',
+    headline: 'Bu haftaki ritmini bir dostunla paylaşabilirsin',
+    description: 'Davet ödülün açıldı. İyi geçen bir haftanın ardından yapılan paylaşımlar daha sıcak karşılanır.',
+    support: 'Haftalık özeti kapatmadan önce bir davet linki hazırlayabilirsin.',
+    cta: 'Haftanın davetini hazırla',
+  },
+  weekly_progress: {
+    badge: 'Davetlerin',
+    headline: 'Haftalık ritmini büyütmek için doğru zaman',
+    descriptionWaiting: '{{n}} davet ilk adımını bekliyor. Bu haftaki ivmen yeni bir davete de taşınabilir.',
+    description: '{{n}} davetin tamamlandı. İstersen bir kişiyi daha davet edebilirsin.',
+    support: 'Hafta kapanışları, sakin bir davet için en uygun anlardan biridir.',
+    cta: 'Bir dostunu ekle',
+  },
+  weekly_momentum: {
+    badge: 'İyi bir hafta',
+    headline: 'Bu haftaki ritmin paylaşmaya değer',
+    description: 'İyi giden bir haftanın ardından tek bir kişiye yapılan davet, Huzur\'u daha doğal şekilde tanıtır.',
+    support: 'Link bir kez hazırlandıktan sonra tekrar tekrar kullanabilirsin.',
+    cta: 'Davet linkini hazırla',
+  },
+  assistant_reward_ready: {
+    badge: 'Davetin hazır',
+    headline: 'Bu deneyimi bir dostunla da paylaşabilirsin',
+    description: 'Davet ödülün açıldı. Rehberlik işine yaradıysa bir kişiye daha önerebilirsin.',
+    support: 'Birine iyi gelebileceğini düşündüğün tek bir konuya odaklanman yeterli.',
+    cta: 'Davetini aç',
+  },
+  assistant_progress: {
+    badge: 'Davetlerin',
+    headline: 'Faydayı çevrene yayabilirsin',
+    description: 'Davetlerin zaten sonuç veriyor. Faydalı bir cevabın hemen ardından yapılan davetler daha doğal hissettirir.',
+    support: 'Kısa, yargısız ve tek bir faydaya odaklanan notlar en iyi sonucu verir.',
+    cta: 'Yeni bir davet gönder',
+  },
+  assistant_value_moment: {
+    badge: 'Faydalı bir an',
+    headline: 'Bu cevap işine yaradıysa bir dostuna da yarayabilir',
+    description: 'Huzur Rehberi gerçekten işine yaradığında yapılan bir davet daha samimi olur.',
+    support: 'Davet metni hazırlanır; sen sadece kime göndereceğine karar verirsin.',
+    cta: 'Bir dostunu davet et',
+  },
+};
+
+const surfacePlan = (
+  triggerId: string,
+  entrySource: string,
+  emphasis: SurfacePlan['emphasis'],
+  n = 0,
+  descriptionKey = 'description',
+): SurfacePlan => {
+  const copy = (field: string) =>
+    String(i18n.t(`referral.triggers.${triggerId}.${field}`, { n, defaultValue: TRIGGER_COPY[triggerId][field] }));
+  return {
+    triggerId,
+    entrySource,
+    badge: copy('badge'),
+    headline: copy('headline'),
+    description: copy(descriptionKey),
+    supportLabel: copy('support'),
+    ctaLabel: copy('cta'),
+    emphasis,
+  };
+};
+
 const buildSurfacePlan = (basePlan: ReferralGrowthPlan | null, surface: string, weeklyStats: WeeklyStats | null | undefined, assistantMeta: AssistantMeta | null | undefined): SurfacePlan | null => {
   if (!basePlan || basePlan.riskState === 'blocked') {
     return null;
   }
 
   if (surface === 'home') {
-    if (basePlan.inviteeRewardReady) {
-      return {
-        triggerId: 'reward_ready',
-        entrySource: 'home_referral_trigger',
-        badge: 'Davet halkasi hazir',
-        headline: 'Starter paketin acildi, siradaki daveti sen baslat',
-        description: 'Ilk davet zincirin tamamlandi. Simdi ayni sakin baslangici tek bir dosta tasiyabilirsin.',
-        supportLabel: 'Tek bir kisiye samimi bir not birakman yeterli.',
-        ctaLabel: 'Bir dostunu davet et',
-        emphasis: 'reward',
-      };
-    }
-
-    if (basePlan.convertedCount > 0) {
-      return {
-        triggerId: 'inviter_progress',
-        entrySource: 'home_referral_trigger',
-        badge: 'Donusen davet',
-        headline: 'Davet halkan buyuyor',
-        description: `${basePlan.convertedCount} tamamlanan davet ile Huzur etkini buyutuyorsun. Istersen ikinci halkayi da ayni sadelikle acabilirsin.`,
-        supportLabel: 'En iyi davet anlari, birine gercekten iyi gelebilecegini hissettigin anlardir.',
-        ctaLabel: 'Yeni bir davet baslat',
-        emphasis: 'progress',
-      };
-    }
-
-    if (basePlan.waitingCount > 0) {
-      return {
-        triggerId: 'invite_waiting',
-        entrySource: 'home_referral_trigger',
-        badge: 'Bekleyen akis',
-        headline: 'Bir davetin ilk adimini bekliyor',
-        description: `${basePlan.waitingCount} kisi ilk ritmini kurmaya yakin. Bugun bir kisiye daha sakin bir davet birakmak loopu guclendirebilir.`,
-        supportLabel: 'Baski kurmadan, tek bir faydayi soyleyen davet metinleri daha iyi doner.',
-        ctaLabel: 'Davetini ac',
-        emphasis: 'progress',
-      };
-    }
-
+    if (basePlan.inviteeRewardReady) return surfacePlan('reward_ready', 'home_referral_trigger', 'reward');
+    if (basePlan.convertedCount > 0) return surfacePlan('inviter_progress', 'home_referral_trigger', 'progress', basePlan.convertedCount);
+    if (basePlan.waitingCount > 0) return surfacePlan('invite_waiting', 'home_referral_trigger', 'progress', basePlan.waitingCount);
     return null;
   }
 
   if (surface === 'weekly_report') {
-    if (basePlan.inviteeRewardReady) {
-      return {
-        triggerId: 'weekly_reward_ready',
-        entrySource: 'weekly_report_referral',
-        badge: 'Haftanin daveti',
-        headline: 'Bu haftaki ritmi bir dostuna da tasiyabilirsin',
-        description: 'Kendi davet akisin acildi. Haftalik istikrar anindan sonra yapilan paylasimlar daha sicak bir bag kurar.',
-        supportLabel: 'Haftalik ozeti kapatmadan once tek bir davet linki hazirlayabilirsin.',
-        ctaLabel: 'Haftanin davetini hazirla',
-        emphasis: 'reward',
-      };
-    }
-
+    if (basePlan.inviteeRewardReady) return surfacePlan('weekly_reward_ready', 'weekly_report_referral', 'reward');
     if (basePlan.convertedCount > 0 || basePlan.waitingCount > 0) {
-      return {
-        triggerId: 'weekly_progress',
-        entrySource: 'weekly_report_referral',
-        badge: 'Growth loop',
-        headline: 'Haftalik ritmini buyutmek icin dogru andasin',
-        description: basePlan.waitingCount > 0
-          ? `${basePlan.waitingCount} davet ilk manevi adimini bekliyor. Bu haftaki ivme yeni bir halkayi da tasiyabilir.`
-          : `${basePlan.convertedCount} davet bu hafta tamamlandi. Istersen ayni akisi bir kisi daha icin baslatabilirsin.`,
-        supportLabel: 'Haftalik kapanislar, sakin ve guvenli davet anlari icin en temiz yerlerden biridir.',
-        ctaLabel: 'Bir dostunu ekle',
-        emphasis: 'progress',
-      };
+      return basePlan.waitingCount > 0
+        ? surfacePlan('weekly_progress', 'weekly_report_referral', 'progress', basePlan.waitingCount, 'descriptionWaiting')
+        : surfacePlan('weekly_progress', 'weekly_report_referral', 'progress', basePlan.convertedCount);
     }
-
-    if (hasWeeklyMomentum(weeklyStats)) {
-      return {
-        triggerId: 'weekly_momentum',
-        entrySource: 'weekly_report_referral',
-        badge: 'Iyi hafta momenti',
-        headline: 'Bu haftaki ritim paylasmaya deger',
-        description: 'Iyi giden bir haftanin ardindan yapilan tek kisilik davet, Huzur deneyimini daha dogal sekilde yayar.',
-        supportLabel: 'Hazir link bir kez olustugunda tekrar tekrar kullanabilirsin.',
-        ctaLabel: 'Davet linkini hazirla',
-        emphasis: 'share',
-      };
-    }
-
+    if (hasWeeklyMomentum(weeklyStats)) return surfacePlan('weekly_momentum', 'weekly_report_referral', 'share');
     return null;
   }
 
   if (surface === 'assistant') {
-    if (basePlan.inviteeRewardReady) {
-      return {
-        triggerId: 'assistant_reward_ready',
-        entrySource: 'assistant_referral',
-        badge: 'Davet akisi hazir',
-        headline: 'Bu sakin deneyimi bir dostuna da acabilirsin',
-        description: 'Kendi davet akisin tamamlandi. Rehberlik faydali geldiyse ayni kapayi bir kisi daha icin aralayabilirsin.',
-        supportLabel: 'Birine iyi gelebilecegini dusundugun tek bir ana odak secmen yeterli.',
-        ctaLabel: 'Davet akisini ac',
-        emphasis: 'reward',
-      };
-    }
-
-    if (basePlan.convertedCount > 0) {
-      return {
-        triggerId: 'assistant_progress',
-        entrySource: 'assistant_referral',
-        badge: 'Davet zinciri',
-        headline: 'Rehberlik momentini buyutebilirsin',
-        description: 'Davet halkan zaten calisiyor. Fayda anindan hemen sonra yapilan davetler daha dogal hissedilir.',
-        supportLabel: 'Kisa, yargisiz ve tek faydali notlar en iyi donusu verir.',
-        ctaLabel: 'Yeni davet baslat',
-        emphasis: 'progress',
-      };
-    }
-
-    if (hasHelpfulAssistantMoment(assistantMeta)) {
-      return {
-        triggerId: 'assistant_value_moment',
-        entrySource: 'assistant_referral',
-        badge: 'Fayda ani',
-        headline: 'Bu cevap iyi geldiyse bir dosta da kapi olabilir',
-        description: 'Huzur Rehberi tam bir fayda ani yakaladiginda, tek kisilik davet daha samimi ve daha yuksek niyetli olur.',
-        supportLabel: 'Davet metni hazirlanir; sadece kime gonderecegine karar verirsin.',
-        ctaLabel: 'Bir dostunu davet et',
-        emphasis: 'share',
-      };
-    }
-
+    if (basePlan.inviteeRewardReady) return surfacePlan('assistant_reward_ready', 'assistant_referral', 'reward');
+    if (basePlan.convertedCount > 0) return surfacePlan('assistant_progress', 'assistant_referral', 'progress');
+    if (hasHelpfulAssistantMoment(assistantMeta)) return surfacePlan('assistant_value_moment', 'assistant_referral', 'share');
     return null;
   }
 

@@ -24,6 +24,16 @@ export interface SyncPrayerScheduleOptions {
   adhanSound?: string | null;
   prayerNotificationsEnabled?: boolean;
   monthlySnapshots?: unknown[];
+  labels?: NativeNotificationLabels;
+}
+
+/** Texts the native adhan alarm shows; native code cannot read the app language itself. */
+export interface NativeNotificationLabels {
+  prayerNames: Record<string, string>;
+  /** Contains %s where the prayer name goes. */
+  adhanTitle: string;
+  adhanChannelName: string;
+  adhanChannelDescription: string;
 }
 
 export interface PrayerNotificationsEnabledOptions {

@@ -67,6 +67,7 @@ class PrayerSchedulePlugin : Plugin() {
             val adhanSound = call.getString("adhanSound") ?: existingContext?.adhanSound
             val prayerNotificationsEnabled = call.getBoolean("prayerNotificationsEnabled")
             val monthlySnapshots = call.getArray("monthlySnapshots")
+            call.getObject("labels")?.let { PrayerScheduleStore.saveNotificationLabels(context, it.toString()) }
 
             prayerNotificationsEnabled?.let {
                 applyPrayerNotificationPreference(it, "js_schedule_sync")

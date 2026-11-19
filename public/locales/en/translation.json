@@ -4241,6 +4241,26 @@
       "recitations": "Reciter Recitations",
       "prayerTimes": "Prayer Times",
       "openSource": "Open Source Libraries"
+    },
+    "subtitle": "The technology and content that make Huzur possible",
+    "items": {
+      "alquranCloud": "Quran text, translations and recitations",
+      "islamicNetwork": "Delivery of reciter audio files",
+      "acikKuran": "Turkish transliteration and translations",
+      "corpus": "Word by word: root, dictionary form and grammar (Kais Dukes, v0.4)",
+      "alafasy": "Kuwait - via Al Quran Cloud",
+      "classicEgypt": "Egypt - classic recordings",
+      "aladhan": "Prayer time calculation service",
+      "diyanet": "Reference for prayer times in Turkey",
+      "react": "User interface development",
+      "vite": "Build and development environment",
+      "lucide": "Icon library"
+    },
+    "license": {
+      "openUse": "Open use",
+      "openSource": "Open source",
+      "freeApi": "Free API",
+      "official": "Official source"
     }
   },
   "tafsir": {
@@ -4530,6 +4550,201 @@
       "default": "Invite",
       "variantB": "Invite Friends",
       "variantC": "Let's Start Together"
+    },
+    "plan": {
+      "headline": {
+        "default": "Share Huzur with a heartfelt invite",
+        "blocked": "Invites are paused for a short while",
+        "converted": "Your invites are starting to work",
+        "inviteeReward": "Your invite reward is ready",
+        "waiting": "Your invites are on their way",
+        "firstInvite": "Send your first invite",
+        "proReady": "Your 24-hour Pro is ready",
+        "proInvite": "Send it to a friend and unlock 24 hours of Pro"
+      },
+      "description": {
+        "default": "The best invite comes at a calm moment when you feel it could truly help someone.",
+        "blocked": "We're waiting a little for security reasons. You can continue where you left off once the time is up.",
+        "convertedMany": "{{n}} of your invites are complete. You're growing Huzur around you.",
+        "convertedOne": "Your first invite is complete. You can send one to the next person too.",
+        "inviteeReward": "You've completed the first steps. Now you can pass the same experience on to a friend.",
+        "waiting": "{{n}} invites are waiting for their first steps. A short reminder can make a difference.",
+        "firstInvite": "Just send it to one person with a short note on why it might help them.",
+        "proReady": "Your invite is complete. You can use Pro features for 24 hours.",
+        "proInvite": "One heartfelt invite is enough. When it's complete, Pro features unlock for 24 hours."
+      },
+      "badge": {
+        "default": "Both sides benefit",
+        "blocked": "Security pause",
+        "converted": "Completed invite",
+        "inviteeReward": "Reward unlocked",
+        "linkReady": "Link ready",
+        "pro": "24h Pro"
+      }
+    },
+    "steps": {
+      "link": {
+        "label": "Prepare your link",
+        "description": "Create your invite code and decide who to send it to."
+      },
+      "accept": {
+        "label": "Your friend takes the first step",
+        "description": "The first person who joins with your link and finishes setup gets things started."
+      },
+      "convert": {
+        "label": "The first worship unlocks the reward",
+        "description": "Once your friend finishes setup and their first worship, the invite counts as complete."
+      },
+      "invitee": {
+        "label": "Your welcome gift",
+        "doneDescription": "Your invite reward is unlocked. You can pass this experience on to the next person.",
+        "pendingDescription": "Once you finish your first steps, a reward unlocks for you too."
+      }
+    },
+    "stats": {
+      "converted": "Completed invites",
+      "waiting": "Pending invites",
+      "reward": "Your status",
+      "ready": "Ready",
+      "tracking": "In progress"
+    },
+    "shareCta": {
+      "A": {
+        "primary": "Share the link",
+        "secondary": "Send the ready-made invite in one tap"
+      },
+      "B": {
+        "primary": "Send to a friend",
+        "secondary": "A simple, heartfelt invite message is ready"
+      },
+      "C": {
+        "primary": "Start the rhythm together",
+        "secondary": "A stronger invite message is ready"
+      }
+    },
+    "note": {
+      "ramadan": "Invites shared during Ramadan can feel more meaningful.",
+      "friday": "Inviting on a Friday gives a warmer reason to join.",
+      "kandil": "On blessed nights, invites can build a deeper bond.",
+      "default": "A calm, sincere invite focused on one benefit works best."
+    },
+    "shareText": {
+      "intro": {
+        "A": "Join me in Huzur and start with one calm next step.",
+        "B": "I thought Huzur could genuinely feel calming for you.",
+        "C": "Let's build a calmer spiritual rhythm together in Huzur."
+      },
+      "seasonal": {
+        "friday": " It's a lovely start for a blessed Friday.",
+        "ramadan": " Ramadan mode is especially meaningful right now."
+      },
+      "title": "Huzur Invitation",
+      "dialogTitle": "Invite a Friend",
+      "codeLine": "My invite code: {{code}}"
+    },
+    "modal": {
+      "feedback": {
+        "linkReady": "Your invite link is ready. Send it to one person with a short note.",
+        "noClipboard": "Copying isn't supported on this device.",
+        "shared": "Invite shared. You'll see the first response here.",
+        "textCopied": "Invite text copied. Sending it to one person is enough.",
+        "shareFailed": "Sharing didn't finish. You can copy the link and send it yourself.",
+        "codeCopied": "Invite code copied.",
+        "linkCopied": "Invite link copied."
+      },
+      "syncing": "Syncing",
+      "proActive": "Your Pro membership is active!",
+      "remainingHours": "{{hours}} h {{minutes}} min left",
+      "remainingMinutes": "{{minutes}} min left",
+      "proHint": "You can extend it by inviting friends, or subscribe.",
+      "funnelTitle": "Your invites at a glance",
+      "funnel": {
+        "link_ready": "Link ready",
+        "accepted": "Accepted",
+        "onboarding": "Set up",
+        "ibadah": "First worship",
+        "reward": "Reward"
+      },
+      "funnelHelper": "Once your link is ready, you can see here how far your invites have got.",
+      "blockedTitle": "Security pause active",
+      "blockedUntil": "You can try again after {{time}}.",
+      "blockedSoon": "You can try again shortly.",
+      "stepsTitle": "How it works",
+      "noteTitle": "Sharing tip",
+      "syncIssue": "The invite isn't fully matched on the server yet. It will update here once someone uses your link.",
+      "yourCode": "Your invite code",
+      "copy": "Copy",
+      "notReady": "Not ready",
+      "linkPlaceholder": "Your link is created with one tap before the first share.",
+      "prepareLink": "Prepare invite link",
+      "reuseHint": "Once created, you can reuse the link as often as you like.",
+      "close": "Close"
+    },
+    "triggers": {
+      "reward_ready": {
+        "badge": "Invite reward ready",
+        "headline": "Your welcome gift is unlocked – now send the next invite",
+        "description": "Your first invite is complete. Now you can give a friend the same start.",
+        "support": "A heartfelt note to one person is enough.",
+        "cta": "Invite a friend"
+      },
+      "inviter_progress": {
+        "badge": "Completed invite",
+        "headline": "Your invites are paying off",
+        "description": "{{n}} of your invites are complete. You can invite one more person if you like.",
+        "support": "The best invite comes when you feel it could truly help someone.",
+        "cta": "Send a new invite"
+      },
+      "invite_waiting": {
+        "badge": "Pending invite",
+        "headline": "Your invite is waiting for a first step",
+        "description": "{{n}} people are close to getting started. A short reminder today could help.",
+        "support": "Invites that mention one benefit without pressure work best.",
+        "cta": "Open your invite"
+      },
+      "weekly_reward_ready": {
+        "badge": "Invite of the week",
+        "headline": "You can share this week's rhythm with a friend",
+        "description": "Your invite reward is unlocked. Sharing after a good week feels warmer.",
+        "support": "You can prepare an invite link before closing the weekly summary.",
+        "cta": "Prepare this week's invite"
+      },
+      "weekly_progress": {
+        "badge": "Your invites",
+        "headline": "A good time to grow your weekly rhythm",
+        "descriptionWaiting": "{{n}} invites are waiting for a first step. This week's momentum can carry a new invite too.",
+        "description": "{{n}} of your invites are complete. You can invite one more person if you like.",
+        "support": "The end of the week is one of the best moments for a calm invite.",
+        "cta": "Add a friend"
+      },
+      "weekly_momentum": {
+        "badge": "A good week",
+        "headline": "This week's rhythm is worth sharing",
+        "description": "After a good week, inviting one person introduces Huzur more naturally.",
+        "support": "Once created, you can reuse the link as often as you like.",
+        "cta": "Prepare invite link"
+      },
+      "assistant_reward_ready": {
+        "badge": "Your invite is ready",
+        "headline": "You can share this experience with a friend too",
+        "description": "Your invite reward is unlocked. If the guidance helped you, you can recommend it to someone else.",
+        "support": "Focus on one thing you think could help someone.",
+        "cta": "Open your invite"
+      },
+      "assistant_progress": {
+        "badge": "Your invites",
+        "headline": "You can pass the benefit on",
+        "description": "Your invites are already working. Inviting right after a helpful answer feels more natural.",
+        "support": "Short, non-judgmental notes focused on one benefit work best.",
+        "cta": "Send a new invite"
+      },
+      "assistant_value_moment": {
+        "badge": "A helpful moment",
+        "headline": "If this answer helped you, it might help a friend too",
+        "description": "An invite sent right after Huzur Guide truly helped you feels more sincere.",
+        "support": "The invite text is prepared for you; you just choose who to send it to.",
+        "cta": "Invite a friend"
+      }
     }
   },
   "journey": {
@@ -5653,7 +5868,38 @@
         "body": "Refresh your heart with supplication and dhikr on this blessed night.",
         "bodyDiaspora": "Refresh your heart with a short supplication and dhikr for this blessed night."
       }
-    }
+    },
+    "channels": {
+      "prayer_times": {
+        "name": "Prayer times",
+        "description": "Prayer time notifications"
+      },
+      "prayer_reminders": {
+        "name": "Prayer reminders",
+        "description": "Reminders before prayer time"
+      },
+      "sticky_counter": {
+        "name": "Prayer countdown",
+        "description": "Persistent countdown notification"
+      },
+      "streak_channel": {
+        "name": "Streak alerts",
+        "description": "Streak protection notifications"
+      },
+      "daily_reminders": {
+        "name": "Daily reminders",
+        "description": "Daily dhikr and task reminders"
+      },
+      "updates_channel": {
+        "name": "App updates",
+        "description": "New features and announcements"
+      },
+      "adhan": {
+        "name": "Adhan",
+        "description": "Plays the adhan at prayer times"
+      }
+    },
+    "adhanTitle": "🕌 {{prayer}} time"
   },
   "nafile": {
     "items": {

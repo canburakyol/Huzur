@@ -192,7 +192,10 @@ class AdhanForegroundService : Service() {
         )
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("🕌 $prayerName Vakti")
+            .setContentTitle(
+                PrayerScheduleStore.getNotificationLabel(this, "adhanTitle")?.replace("%s", prayerName)
+                    ?: "🕌 $prayerName Vakti"
+            )
             .setContentText("Ezan okunuyor...")
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentIntent(openAppPendingIntent)
@@ -207,10 +210,11 @@ class AdhanForegroundService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Ezan Sesi",
+                PrayerScheduleStore.getNotificationLabel(this, "adhanChannelName") ?: "Ezan Sesi",
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "Namaz vakitlerinde ezan sesi çalar"
+                description = PrayerScheduleStore.getNotificationLabel(this@AdhanForegroundService, "adhanChannelDescription")
+                    ?: "Namaz vakitlerinde ezan sesi çalar"
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             }
             val manager = getSystemService(NotificationManager::class.java)

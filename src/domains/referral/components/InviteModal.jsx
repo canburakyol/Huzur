@@ -32,18 +32,20 @@ import {
 } from '../../../services/referralServerService';
 import { getActiveCampaign } from '../../../services/campaignService';
 import { logger } from '../../../utils/logger';
+import { useTranslation } from 'react-i18next';
 
-const formatBlockedUntil = (value) => {
+const formatBlockedUntil = (value, language) => {
   const parsed = Date.parse(value || '');
   if (!Number.isFinite(parsed)) return null;
 
-  return new Intl.DateTimeFormat('tr-TR', {
+  return new Intl.DateTimeFormat(language, {
     hour: '2-digit',
     minute: '2-digit',
   }).format(new Date(parsed));
 };
 
 const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
+  const { t, i18n } = useTranslation();
   const [modalSeedProgress] = useState(() => getReferralProgress());
   const [localProgress, setLocalProgress] = useState(modalSeedProgress);
   const [serverSnapshot, setServerSnapshot] = useState(null);
@@ -122,13 +124,13 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
     const linkReadyCount = localProgress?.ownCode ? 1 : 0;
 
     return [
-      { id: 'link_ready', label: 'Link hazir', value: linkReadyCount },
-      { id: 'accepted', label: 'Kabul', value: Math.max(0, Number(inviterSummary.acceptedCount) || 0) },
-      { id: 'onboarding', label: 'Onboarding', value: Math.max(0, Number(inviterSummary.onboardingCompletedCount) || 0) },
-      { id: 'ibadah', label: 'Ilk ibadet', value: Math.max(0, Number(inviterSummary.firstIbadahCompletedCount) || 0) },
-      { id: 'reward', label: 'Odul', value: Math.max(0, Number(inviterSummary.rewardUnlockedCount) || 0) },
+      { id: 'link_ready', label: t('referral.modal.funnel.link_ready', 'Link hazır'), value: linkReadyCount },
+      { id: 'accepted', label: t('referral.modal.funnel.accepted', 'Kabul'), value: Math.max(0, Number(inviterSummary.acceptedCount) || 0) },
+      { id: 'onboarding', label: t('referral.modal.funnel.onboarding', 'Kurulum'), value: Math.max(0, Number(inviterSummary.onboardingCompletedCount) || 0) },
+      { id: 'ibadah', label: t('referral.modal.funnel.ibadah', 'İlk ibadet'), value: Math.max(0, Number(inviterSummary.firstIbadahCompletedCount) || 0) },
+      { id: 'reward', label: t('referral.modal.funnel.reward', 'Ödül'), value: Math.max(0, Number(inviterSummary.rewardUnlockedCount) || 0) },
     ];
-  }, [localProgress?.ownCode, serverSnapshot]);
+  }, [localProgress?.ownCode, serverSnapshot, t]);
 
   if (!isOpen || !localProgress || !growthPlan) return null;
 
@@ -156,14 +158,14 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
     const result = createInviteLink({
       source: entrySource,
       campaign: campaign.id,
-      lang: campaign.variant === 'diaspora' ? 'en' : 'tr',
+      lang: i18n.language,
     });
 
     setInviteUrl(result.inviteUrl);
     setInviteCode(result.code);
     const nextProgress = getReferralProgress();
     await refreshAfterLocalMutation(nextProgress, entrySource);
-    setFeedback('Davet linkin hazir. Simdi tek bir kisiye sakin bir notla gonderebilirsin.');
+    setFeedback(t('referral.modal.feedback.linkReady', 'Davet linkin hazır. Şimdi tek bir kişiye kısa bir notla gönderebilirsin.'));
 
     return {
       ...result,
@@ -173,7 +175,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
 
   const writeClipboard = async (text, successMessage, analyticsEvent) => {
     if (!navigator.clipboard?.writeText) {
-      setFeedback('Bu cihazda kopyalama destegi su an gorunmuyor.');
+      setFeedback(t('referral.modal.feedback.noClipboard', 'Bu cihazda kopyalama desteklenmiyor.'));
       return;
     }
 
@@ -198,7 +200,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
       inviteCode: preparedInvite.code,
       inviteUrl: preparedInvite.inviteUrl,
       variant: growthPlan.shareVariant,
-      lang: preparedInvite.campaign.variant === 'diaspora' ? 'en' : 'tr',
+      lang: i18n.language,
       campaign: preparedInvite.campaign,
     });
 
@@ -220,7 +222,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
           channel: 'native_share',
           ...baseAnalyticsPayload,
         });
-        setFeedback('Davet paylasildi. Ilk donus oldugunda burada gormeye baslayacaksin.');
+        setFeedback(t('referral.modal.feedback.shared', 'Davet paylaşıldı. İlk dönüş olduğunda burada göreceksin.'));
         return;
       }
 
@@ -236,7 +238,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
           channel: 'web_share',
           ...baseAnalyticsPayload,
         });
-        setFeedback('Davet paylasildi. Ilk donus oldugunda burada gormeye baslayacaksin.');
+        setFeedback(t('referral.modal.feedback.shared', 'Davet paylaşıldı. İlk dönüş olduğunda burada göreceksin.'));
         return;
       }
 
@@ -247,14 +249,14 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
         channel: 'clipboard',
         ...baseAnalyticsPayload,
       });
-      setFeedback('Paylasim metni kopyalandi. Tek bir kisiye gondermen yeterli.');
+      setFeedback(t('referral.modal.feedback.textCopied', 'Paylaşım metni kopyalandı. Tek bir kişiye göndermen yeterli.'));
     } catch (error) {
-      setFeedback('Paylasim yarida kaldi. Istersen once linki kopyalayip elle gonderebilirsin.');
+      setFeedback(t('referral.modal.feedback.shareFailed', 'Paylaşım tamamlanamadı. İstersen linki kopyalayıp kendin gönderebilirsin.'));
       logger.error('[InviteModal] Share error', error);
     }
   };
 
-  const blockedLabel = formatBlockedUntil(growthPlan.blockedUntil);
+  const blockedLabel = formatBlockedUntil(growthPlan.blockedUntil, i18n.language);
   const hasInviteReady = Boolean(inviteUrl && inviteCode);
 
   return (
@@ -263,7 +265,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
         <button
           onClick={onClose}
           className="invite-modal-close"
-          aria-label="Kapat"
+          aria-label={t('referral.modal.close', 'Kapat')}
         >
           <X size={18} />
         </button>
@@ -277,7 +279,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
             {syncing ? (
               <span className="invite-sync-pill">
                 <LoaderCircle size={12} className="spin-icon" />
-                Esitleniyor
+                {t('referral.modal.syncing', 'Eşitleniyor')}
               </span>
             ) : null}
           </div>
@@ -291,14 +293,14 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
               <Sparkles size={16} />
             </div>
             <div className="referral-expiry-content">
-              <p className="referral-expiry-title">Pro üyeliğin aktif!</p>
+              <p className="referral-expiry-title">{t('referral.modal.proActive', 'Pro üyeliğin aktif!')}</p>
               <p className="referral-expiry-timer">
-                {referralExpiry.hours > 0 
-                  ? `${referralExpiry.hours} saat ${referralExpiry.minutes} dakika`
-                  : `${referralExpiry.minutes} dakika`} kaldı
+                {referralExpiry.hours > 0
+                  ? t('referral.modal.remainingHours', { hours: referralExpiry.hours, minutes: referralExpiry.minutes, defaultValue: '{{hours}} saat {{minutes}} dakika kaldı' })
+                  : t('referral.modal.remainingMinutes', { minutes: referralExpiry.minutes, defaultValue: '{{minutes}} dakika kaldı' })}
               </p>
               <p className="referral-expiry-hint">
-                Davet ederek süreyi uzatabilir veya abone olabilirsin.
+                {t('referral.modal.proHint', 'Davet ederek süreyi uzatabilir veya abone olabilirsin.')}
               </p>
             </div>
           </div>
@@ -316,7 +318,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
         <div className="invite-funnel-card">
           <div className="invite-section-title">
             <Sparkles size={14} />
-            Referral hunisi
+            {t('referral.modal.funnelTitle', 'Davetlerinin durumu')}
           </div>
           <div className="invite-funnel-grid">
             {funnelMetrics.map((metric) => (
@@ -327,7 +329,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
             ))}
           </div>
           <div className="invite-funnel-helper">
-            Link hazirlandiktan sonra hangi asamada hareket oldugunu buradan gorebilirsin.
+            {t('referral.modal.funnelHelper', 'Link hazırlandıktan sonra davetlerinin hangi aşamada olduğunu buradan görebilirsin.')}
           </div>
         </div>
 
@@ -335,11 +337,11 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
           <div className="invite-warning-card">
             <ShieldAlert size={18} />
             <div>
-              <strong>Guvenlik molasi aktif</strong>
+              <strong>{t('referral.modal.blockedTitle', 'Güvenlik molası aktif')}</strong>
               <p>
                 {blockedLabel
-                  ? `${blockedLabel} sonrasinda tekrar deneyebilirsin.`
-                  : 'Kisa bir sure sonra tekrar deneyebilirsin.'}
+                  ? t('referral.modal.blockedUntil', { time: blockedLabel, defaultValue: '{{time}} sonrasında tekrar deneyebilirsin.' })
+                  : t('referral.modal.blockedSoon', 'Kısa bir süre sonra tekrar deneyebilirsin.')}
               </p>
             </div>
           </div>
@@ -348,7 +350,7 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
         <div className="invite-steps-card">
           <div className="invite-section-title">
             <Sparkles size={14} />
-            Growth loop
+            {t('referral.modal.stepsTitle', 'Nasıl çalışır')}
           </div>
           <div className="invite-step-list">
             {growthPlan.steps.map((step) => (
@@ -368,47 +370,47 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
         <div className="invite-note-card">
           <div className="invite-section-title">
             <Link2 size={14} />
-            Paylasim notu
+            {t('referral.modal.noteTitle', 'Paylaşım notu')}
           </div>
           <p>{growthPlan.supportingNote}</p>
           {growthPlan.syncIssue ? (
             <p className="invite-note-subtle">
-              Davet iliskisi sunucuda henuz tam eslesmedi. Linki kullanan ilk kisi geldikce burada netlesecek.
+              {t('referral.modal.syncIssue', 'Davet bağlantısı sunucuda henüz tam eşleşmedi. Linki kullanan ilk kişi geldikçe burada netleşecek.')}
             </p>
           ) : null}
         </div>
 
         <div className="invite-actions-card">
           <div className="invite-actions-topline">
-            <span>Davet kodun</span>
+            <span>{t('referral.modal.yourCode', 'Davet kodun')}</span>
             {inviteCode ? (
               <button
                 type="button"
                 className="invite-inline-copy"
-                onClick={() => writeClipboard(inviteCode, 'Davet kodu kopyalandi.', 'code')}
+                onClick={() => writeClipboard(inviteCode, t('referral.modal.feedback.codeCopied', 'Davet kodu kopyalandı.'), 'code')}
               >
                 <Copy size={14} />
-                Kopyala
+                {t('referral.modal.copy', 'Kopyala')}
               </button>
             ) : null}
           </div>
 
           <div className="invite-code-pill">
-            {inviteCode || 'Hazir degil'}
+            {inviteCode || t('referral.modal.notReady', 'Hazır değil')}
           </div>
 
           {inviteUrl ? (
             <button
               type="button"
               className="invite-link-preview"
-              onClick={() => writeClipboard(inviteUrl, 'Davet linki kopyalandi.', 'link')}
+              onClick={() => writeClipboard(inviteUrl, t('referral.modal.feedback.linkCopied', 'Davet linki kopyalandı.'), 'link')}
             >
               <span>{inviteUrl}</span>
               <Copy size={14} />
             </button>
           ) : (
             <div className="invite-link-placeholder">
-              Link ilk paylasim oncesi tek tikla hazirlanir.
+              {t('referral.modal.linkPlaceholder', 'Link, ilk paylaşımdan önce tek dokunuşla hazırlanır.')}
             </div>
           )}
 
@@ -417,11 +419,11 @@ const InviteModal = ({ isOpen, onClose, entrySource = 'invite_modal' }) => {
             className="invite-primary-button"
           >
             <Send size={18} />
-            {hasInviteReady ? growthPlan.shareLabel : 'Davet linkini hazirla'}
+            {hasInviteReady ? growthPlan.shareLabel : t('referral.modal.prepareLink', 'Davet linkini hazırla')}
           </button>
 
           <div className="invite-support-text">
-            {hasInviteReady ? growthPlan.shareSupportLabel : 'Link bir kez hazirlandiktan sonra tekrar tekrar kullanabilirsin.'}
+            {hasInviteReady ? growthPlan.shareSupportLabel : t('referral.modal.reuseHint', 'Link bir kez hazırlandıktan sonra tekrar tekrar kullanabilirsin.')}
           </div>
         </div>
 

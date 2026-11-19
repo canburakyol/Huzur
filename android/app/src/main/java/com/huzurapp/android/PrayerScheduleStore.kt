@@ -9,6 +9,7 @@ object PrayerScheduleStore {
     private const val KEY_CONTEXT = "huzur_prayer_schedule_context"
     private const val LEGACY_KEY_CONTEXT = "schedule_context"
     private const val KEY_PRAYER_NOTIFICATIONS_ENABLED = "huzur_prayer_notifications_enabled"
+    private const val KEY_NOTIFICATION_LABELS = "huzur_native_notification_labels"
 
     data class ScheduleContext(
         val timingsJson: String,
@@ -45,6 +46,33 @@ object PrayerScheduleStore {
             .apply()
     }
 
+    /** Labels in the app's chosen language, sent from JS with every schedule sync. */
+    @JvmStatic
+    fun saveNotificationLabels(context: Context, labelsJson: String) {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .putString(KEY_NOTIFICATION_LABELS, labelsJson)
+            .apply()
+    }
+
+    @JvmStatic
+    fun getNotificationLabel(context: Context, key: String): String? = try {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .getString(KEY_NOTIFICATION_LABELS, null)
+            ?.let { JSONObject(it).optString(key).ifBlank { null } }
+    } catch (e: Exception) {
+        null
+    }
+
+    @JvmStatic
+    fun getPrayerName(context: Context, prayerKey: String): String? = try {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .getString(KEY_NOTIFICATION_LABELS, null)
+            ?.let { JSONObject(it).optJSONObject("prayerNames")?.optString(prayerKey)?.ifBlank { null } }
+    } catch (e: Exception) {
+        null
+    }
+
     @JvmStatic
     fun getScheduleContext(context: Context): ScheduleContext? {
         val raw = getStoredContext(context)
@@ -60,7 +88,7 @@ object PrayerScheduleStore {
                 adhanSound = payload.optString("adhanSound").ifBlank { null },
                 updatedAt = payload.optLong("updatedAt", 0L)
             )
-        } catch (_: Exception) {
+        } catch (e: Exception) {
             null
         }
     }

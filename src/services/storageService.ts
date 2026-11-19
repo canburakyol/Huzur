@@ -146,6 +146,7 @@ const buildPrayerSyncSignature = (payload: PendingPrayerSync): string => JSON.st
   adhanSound: payload.adhanSound ?? null,
   prayerNotificationsEnabled: payload.prayerNotificationsEnabled ?? null,
   monthlySnapshots: payload.monthlySnapshots ?? [],
+  labels: payload.labels ?? null,
 });
 
 const hasPrayerTimings = (timings: PrayerTimings | undefined): timings is PrayerTimings =>

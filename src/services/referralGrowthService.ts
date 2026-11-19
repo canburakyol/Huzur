@@ -1,5 +1,9 @@
 import { getActiveCampaign } from './campaignService';
 import { getExperimentVariant } from './experimentService';
+import i18n from '../i18n';
+
+const tx = (key: string, fallback: string, options: Record<string, unknown> = {}): string =>
+  String(i18n.t(`referral.${key}`, { ...options, defaultValue: fallback }));
 
 interface Campaign {
   id?: string;
@@ -137,36 +141,28 @@ interface ShareLabels {
 }
 
 const getShareLabels = (variant = 'A'): ShareLabels => {
-  if (variant === 'B') {
-    return {
-      primary: 'Bir dostuna gonder',
-      secondary: 'Sessiz ve samimi bir davet metni hazir',
-    };
-  }
-
-  if (variant === 'C') {
-    return {
-      primary: 'Ritmi birlikte baslat',
-      secondary: 'Daha guclu bir davet cagrisi hazir',
-    };
-  }
-
+  const v = ['B', 'C'].includes(variant) ? variant : 'A';
+  const fallback: Record<string, ShareLabels> = {
+    A: { primary: 'Linki paylaş', secondary: 'Hazır davet metnini tek dokunuşla gönder' },
+    B: { primary: 'Bir dostuna gönder', secondary: 'Sade ve samimi bir davet metni hazır' },
+    C: { primary: 'Ritmi birlikte başlat', secondary: 'Daha güçlü bir davet çağrısı hazır' },
+  };
   return {
-    primary: 'Linki paylas',
-    secondary: 'Hazir davet metnini bir tikla gonder',
+    primary: tx(`shareCta.${v}.primary`, fallback[v].primary),
+    secondary: tx(`shareCta.${v}.secondary`, fallback[v].secondary),
   };
 };
 
 const getCampaignSupportingCopy = (campaign: Campaign | undefined): string => {
   switch (campaign?.id) {
     case 'ramadan':
-      return 'Ramazan akisi icin paylasilan davetler daha anlamli bir geri donus uretebilir.';
+      return tx('note.ramadan', 'Ramazan\'da paylaşılan davetler daha anlamlı olabilir.');
     case 'friday':
-      return 'Cuma bereketi etrafinda yapilan davetler daha sicak bir neden sunar.';
+      return tx('note.friday', 'Cuma bereketiyle yapılan davetler daha sıcak bir sebep sunar.');
     case 'kandil':
-      return 'Kandil gibi ozel gunlerde davetler daha yavas ama daha derin bir bag kurar.';
+      return tx('note.kandil', 'Kandil gibi özel günlerde davetler daha derin bir bağ kurar.');
     default:
-      return 'Davet akisini sakin, samimi ve tek bir fayda cevresinde kurman en iyi sonucu verir.';
+      return tx('note.default', 'Daveti sakin, samimi ve tek bir faydaya odaklanarak yapman en iyi sonucu verir.');
   }
 };
 
@@ -228,63 +224,60 @@ export const getReferralGrowthPlan = ({
   const hasOwnInvite = Boolean(progress?.ownCode || progress?.server?.inviterSummary?.ownCode);
   const cameFromInvite = Boolean(progress?.invitedByCode);
 
-  let headline = 'Huzur\'u sakin bir davetle yay';
-  let description = 'En iyi davet anlari, kisiye gercekten iyi gelebilecegini hissettigin sakin anlardir.';
-  let badge = 'Cift tarafli deger';
+  let headline = tx('plan.headline.default', 'Huzur\'u samimi bir davetle paylaş');
+  let description = tx('plan.description.default', 'En iyi davet, birine gerçekten iyi geleceğini hissettiğin sakin bir anda yapılır.');
+  let badge = tx('plan.badge.default', 'İki taraf da kazanır');
   let riskState = 'healthy';
 
   if (blocked) {
-    headline = 'Davet akisi gecici olarak dinleniyor';
-    description = 'Guvenlik nedeniyle kisa bir sure bekliyoruz. Sure dolunca ayni akistan devam edebilirsin.';
-    badge = 'Guvenlik molasi';
+    headline = tx('plan.headline.blocked', 'Davetler kısa bir süre duraklatıldı');
+    description = tx('plan.description.blocked', 'Güvenlik nedeniyle kısa bir süre bekliyoruz. Süre dolunca kaldığın yerden devam edebilirsin.');
+    badge = tx('plan.badge.blocked', 'Güvenlik molası');
     riskState = 'blocked';
   } else if (inviterRewardReady || convertedCount > 0) {
-    headline = 'Davet halkan calismaya basladi';
+    headline = tx('plan.headline.converted', 'Davetlerin sonuç vermeye başladı');
     description = convertedCount > 1
-      ? `${convertedCount} tamamlanan davet ile Huzur etkini buyutuyorsun.`
-      : 'Ilk tamamlanan davetin gorundu. Bu sakin ve duzenli loop buyumeye hazir.';
-    badge = 'Donusen davet';
+      ? tx('plan.description.convertedMany', '{{n}} davetin tamamlandı. Huzur\'u çevrende büyütüyorsun.', { n: convertedCount })
+      : tx('plan.description.convertedOne', 'İlk davetin tamamlandı. Bir sonraki kişiye de gönderebilirsin.');
+    badge = tx('plan.badge.converted', 'Tamamlanan davet');
   } else if (cameFromInvite && inviteeRewardReady) {
-    headline = 'Senin davet odulun hazir';
-    description = 'Ilk adimlari tamamladin. Simdi ayni sakin deneyimi bir dostuna tasiyabilirsin.';
-    badge = 'Odul acildi';
+    headline = tx('plan.headline.inviteeReward', 'Davet ödülün hazır');
+    description = tx('plan.description.inviteeReward', 'İlk adımları tamamladın. Şimdi aynı deneyimi bir dostuna da ulaştırabilirsin.');
+    badge = tx('plan.badge.inviteeReward', 'Ödül açıldı');
   } else if (hasOwnInvite) {
     headline = waitingCount > 0
-      ? 'Davetlerin ilerliyor'
-      : 'Ilk sakin davetini gonder';
+      ? tx('plan.headline.waiting', 'Davetlerin ilerliyor')
+      : tx('plan.headline.firstInvite', 'İlk davetini gönder');
     description = waitingCount > 0
-      ? `${waitingCount} davet ilk adimlarini bekliyor. Kisa bir hatirlatma fark yaratabilir.`
-      : 'Tek bir kisiye, neden iyi gelebilecegini kisaca soyleyerek paylasman yeterli.';
-    badge = 'Hazir link';
+      ? tx('plan.description.waiting', '{{n}} davet ilk adımlarını bekliyor. Kısa bir hatırlatma fark yaratabilir.', { n: waitingCount })
+      : tx('plan.description.firstInvite', 'Tek bir kişiye, neden iyi gelebileceğini kısaca söyleyerek göndermen yeterli.');
+    badge = tx('plan.badge.linkReady', 'Link hazır');
   }
 
   if (!blocked && surface === 'onboarding_huzur_ritmi_reward') {
-    headline = inviterRewardReady || convertedCount > 0
-      ? '24 saatlik Pro ritmin hazir'
-      : 'Bir dostuna gonder, 24 saatlik Pro ritmini ac';
-    description = inviterRewardReady || convertedCount > 0
-      ? 'Davet halkan tamamlandi. Derin ritim destegini sakin sekilde kullanabilirsin.'
-      : 'Tek bir samimi davet yeterli. Davet tamamlaninca derin ritim destegi 24 saatligine acilir.';
-    badge = '24 saat Pro';
+    const proReady = inviterRewardReady || convertedCount > 0;
+    headline = proReady ? tx('plan.headline.proReady', '24 saatlik Pro\'n hazır') : tx('plan.headline.proInvite', 'Bir dostuna gönder, 24 saatlik Pro\'yu aç');
+    description = proReady ? tx('plan.description.proReady', 'Davetin tamamlandı. Pro özelliklerini 24 saat boyunca kullanabilirsin.') : tx('plan.description.proInvite', 'Tek bir samimi davet yeterli. Davet tamamlanınca Pro özellikleri 24 saatliğine açılır.');
+    badge = tx('plan.badge.pro', '24 saat Pro');
   }
 
   const steps: GrowthStep[] = [
     {
       id: 'link',
-      label: 'Linkini hazirla',
-      description: 'Davet kodunu olustur ve kime gonderecegine karar ver.',
+      label: tx('steps.link.label', 'Linkini hazırla'),
+      description: tx('steps.link.description', 'Davet kodunu oluştur ve kime göndereceğine karar ver.'),
       status: hasOwnInvite ? 'done' : 'pending',
     },
     {
       id: 'accept',
-      label: 'Dostun ilk adimi atsin',
-      description: 'Davet linkiyle gelip kurulumu tamamlayan ilk kisi loopu baslatir.',
+      label: tx('steps.accept.label', 'Dostun ilk adımı atsın'),
+      description: tx('steps.accept.description', 'Davet linkinle gelip kurulumu tamamlayan ilk kişi süreci başlatır.'),
       status: acceptedCount > 0 ? 'done' : 'pending',
     },
     {
       id: 'convert',
-      label: 'Ilk ibadetle odul acilsin',
-      description: 'Onboarding ve ilk ibadet tamamlaninca davet halkasi gercekten calisir.',
+      label: tx('steps.convert.label', 'İlk ibadetle ödül açılsın'),
+      description: tx('steps.convert.description', 'Dostun kurulumu ve ilk ibadetini tamamlayınca davet tamamlanmış sayılır.'),
       status: inviterRewardReady || convertedCount > 0 ? 'done' : 'pending',
     },
   ];
@@ -292,29 +285,21 @@ export const getReferralGrowthPlan = ({
   if (cameFromInvite) {
     steps.push({
       id: 'invitee',
-      label: 'Senin starter paket akisin',
+      label: tx('steps.invitee.label', 'Senin hoş geldin hediyen'),
       description: inviteeRewardReady
-        ? 'Senin davet odulun acildi. Bu deneyimi bir sonraki kisiye tasiyabilirsin.'
-        : 'Kendi davet akisin tamamlanirsa senin tarafinda da destek acilir.',
+        ? tx('steps.invitee.doneDescription', 'Davet ödülün açıldı. Bu deneyimi bir sonraki kişiye ulaştırabilirsin.')
+        : tx('steps.invitee.pendingDescription', 'İlk adımlarını tamamlayınca senin tarafında da ödül açılır.'),
       status: inviteeRewardReady ? 'done' : 'active',
     });
   }
 
   const stats: GrowthStat[] = [
-    {
-      id: 'converted',
-      label: 'Tamamlanan davet',
-      value: String(convertedCount),
-    },
-    {
-      id: 'waiting',
-      label: 'Bekleyen akis',
-      value: String(waitingCount),
-    },
+    { id: 'converted', label: tx('stats.converted', 'Tamamlanan davet'), value: String(convertedCount) },
+    { id: 'waiting', label: tx('stats.waiting', 'Bekleyen davet'), value: String(waitingCount) },
     {
       id: 'reward',
-      label: 'Senin durumun',
-      value: inviteeRewardReady || inviterRewardReady ? 'Hazir' : 'Takipte',
+      label: tx('stats.reward', 'Senin durumun'),
+      value: inviteeRewardReady || inviterRewardReady ? tx('stats.ready', 'Hazır') : tx('stats.tracking', 'Takipte'),
     },
   ];
 
@@ -356,45 +341,31 @@ export const buildReferralShareText = ({
   inviteCode = '',
   inviteUrl = '',
   variant = 'A',
-  lang = 'tr',
+  lang,
   campaign = getActiveCampaign(),
 }: ShareTextOptions = {}): ShareTextResult => {
   const safeCode = String(inviteCode || '').trim().toUpperCase();
   const safeUrl = String(inviteUrl || '').trim();
-  const normalizedLang = String(lang || 'tr').toLowerCase().startsWith('en') ? 'en' : 'tr';
-
-  if (normalizedLang === 'en') {
-    const intro = variant === 'B'
-      ? 'I thought Huzur could genuinely feel calming for you.'
-      : variant === 'C'
-        ? 'Let\'s build a calmer spiritual rhythm together in Huzur.'
-        : 'Join me in Huzur and start with one calm next step.';
-    const seasonalNote = campaign?.id === 'ramadan'
-      ? ' Ramadan mode is especially meaningful right now.'
-      : '';
-
-    return {
-      title: 'Huzur Invitation',
-      dialogTitle: 'Invite a Friend',
-      text: `${intro}${seasonalNote}\n\nMy invite code: ${safeCode}\n${safeUrl}`.trim(),
-    };
-  }
-
-  const intro = variant === 'B'
-    ? 'Sana iyi gelebilecegini dusundugum sakin bir Huzur daveti biraktim.'
-    : variant === 'C'
-      ? 'Bu hafta Huzur\'da daha sakin bir ritim kurmak istersen buradan baslayabilirsin.'
-      : 'Huzur\'a birlikte baslayalim. Tek bir sakin adimla ritim kurmak daha kolay oluyor.';
+  // Text follows the given language (defaults to the app language); the invite link carries its own lang.
+  const lng = lang || i18n.language;
+  const t = (key: string, fallback: string, options: Record<string, unknown> = {}) => tx(key, fallback, { ...options, lng });
+  const v = ['B', 'C'].includes(variant) ? variant : 'A';
+  const introFallback: Record<string, string> = {
+    A: 'Huzur\'a birlikte başlayalım. Tek bir sakin adımla ritim kurmak daha kolay oluyor.',
+    B: 'Sana iyi gelebileceğini düşündüğüm bir Huzur daveti bıraktım.',
+    C: 'Bu hafta Huzur\'da daha sakin bir ritim kurmak istersen buradan başlayabilirsin.',
+  };
+  const intro = t(`shareText.intro.${v}`, introFallback[v]);
   const seasonalNote = campaign?.id === 'friday'
-    ? ' Cuma bereketi icin de guzel bir baslangic olur.'
+    ? t('shareText.seasonal.friday', ' Cuma bereketi için de güzel bir başlangıç olur.')
     : campaign?.id === 'ramadan'
-      ? ' Ramazan akisi icin de iyi bir eslik edebilir.'
+      ? t('shareText.seasonal.ramadan', ' Ramazan için de iyi bir eşlik olabilir.')
       : '';
 
   return {
-    title: 'Huzur Daveti',
-    dialogTitle: 'Arkadasini Davet Et',
-    text: `${intro}${seasonalNote}\n\nDavet kodum: ${safeCode}\n${safeUrl}`.trim(),
+    title: t('shareText.title', 'Huzur Daveti'),
+    dialogTitle: t('shareText.dialogTitle', 'Arkadaşını Davet Et'),
+    text: `${intro}${seasonalNote}\n\n${t('shareText.codeLine', 'Davet kodum: {{code}}', { code: safeCode })}\n${safeUrl}`.trim(),
   };
 };
 

@@ -59,7 +59,7 @@ describe('referralGrowthService', () => {
 
     expect(plan.riskState).toBe('blocked');
     expect(plan.waitingCount).toBe(2);
-    expect(plan.shareLabel).toBe('Ritmi birlikte baslat');
+    expect(plan.shareLabel).toBe('Ritmi birlikte başlat');
     expect(plan.supportingNote).toContain('Ramazan');
   });
 

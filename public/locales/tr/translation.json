@@ -640,6 +640,26 @@
       "recitations": "Hafız Tilavetleri",
       "prayerTimes": "Namaz Vakitleri",
       "openSource": "Açık Kaynak Kütüphaneler"
+    },
+    "subtitle": "Huzur'u mümkün kılan teknoloji ve içerikler",
+    "items": {
+      "alquranCloud": "Kur'an metni, mealler ve ses kayıtları",
+      "islamicNetwork": "Hafız ses dosyaları dağıtımı",
+      "acikKuran": "Türkçe okunuş ve çeviriler",
+      "corpus": "Kelime kelime meal: kök, sözlük biçimi ve dilbilgisi (Kais Dukes, v0.4)",
+      "alafasy": "Kuveyt - Al Quran Cloud üzerinden",
+      "classicEgypt": "Mısır - Klasik kayıtlar",
+      "aladhan": "Namaz vakitlerini hesaplama servisi",
+      "diyanet": "Türkiye namaz vakitleri referansı",
+      "react": "Kullanıcı arayüzü geliştirme",
+      "vite": "Build ve geliştirme ortamı",
+      "lucide": "İkon kütüphanesi"
+    },
+    "license": {
+      "openUse": "Açık Kullanım",
+      "openSource": "Açık Kaynak",
+      "freeApi": "Ücretsiz API",
+      "official": "Resmi Kaynak"
     }
   },
   "ads": {
@@ -4779,6 +4799,201 @@
       "default": "Undang",
       "variantB": "Undang Teman",
       "variantC": "Mari Mulai Bersama"
+    },
+    "plan": {
+      "headline": {
+        "default": "Huzur'u samimi bir davetle paylaş",
+        "blocked": "Davetler kısa bir süre duraklatıldı",
+        "converted": "Davetlerin sonuç vermeye başladı",
+        "inviteeReward": "Davet ödülün hazır",
+        "waiting": "Davetlerin ilerliyor",
+        "firstInvite": "İlk davetini gönder",
+        "proReady": "24 saatlik Pro'n hazır",
+        "proInvite": "Bir dostuna gönder, 24 saatlik Pro'yu aç"
+      },
+      "description": {
+        "default": "En iyi davet, birine gerçekten iyi geleceğini hissettiğin sakin bir anda yapılır.",
+        "blocked": "Güvenlik nedeniyle kısa bir süre bekliyoruz. Süre dolunca kaldığın yerden devam edebilirsin.",
+        "convertedMany": "{{n}} davetin tamamlandı. Huzur'u çevrende büyütüyorsun.",
+        "convertedOne": "İlk davetin tamamlandı. Bir sonraki kişiye de gönderebilirsin.",
+        "inviteeReward": "İlk adımları tamamladın. Şimdi aynı deneyimi bir dostuna da ulaştırabilirsin.",
+        "waiting": "{{n}} davet ilk adımlarını bekliyor. Kısa bir hatırlatma fark yaratabilir.",
+        "firstInvite": "Tek bir kişiye, neden iyi gelebileceğini kısaca söyleyerek göndermen yeterli.",
+        "proReady": "Davetin tamamlandı. Pro özelliklerini 24 saat boyunca kullanabilirsin.",
+        "proInvite": "Tek bir samimi davet yeterli. Davet tamamlanınca Pro özellikleri 24 saatliğine açılır."
+      },
+      "badge": {
+        "default": "İki taraf da kazanır",
+        "blocked": "Güvenlik molası",
+        "converted": "Tamamlanan davet",
+        "inviteeReward": "Ödül açıldı",
+        "linkReady": "Link hazır",
+        "pro": "24 saat Pro"
+      }
+    },
+    "steps": {
+      "link": {
+        "label": "Linkini hazırla",
+        "description": "Davet kodunu oluştur ve kime göndereceğine karar ver."
+      },
+      "accept": {
+        "label": "Dostun ilk adımı atsın",
+        "description": "Davet linkinle gelip kurulumu tamamlayan ilk kişi süreci başlatır."
+      },
+      "convert": {
+        "label": "İlk ibadetle ödül açılsın",
+        "description": "Dostun kurulumu ve ilk ibadetini tamamlayınca davet tamamlanmış sayılır."
+      },
+      "invitee": {
+        "label": "Senin hoş geldin hediyen",
+        "doneDescription": "Davet ödülün açıldı. Bu deneyimi bir sonraki kişiye ulaştırabilirsin.",
+        "pendingDescription": "İlk adımlarını tamamlayınca senin tarafında da ödül açılır."
+      }
+    },
+    "stats": {
+      "converted": "Tamamlanan davet",
+      "waiting": "Bekleyen davet",
+      "reward": "Senin durumun",
+      "ready": "Hazır",
+      "tracking": "Takipte"
+    },
+    "shareCta": {
+      "A": {
+        "primary": "Linki paylaş",
+        "secondary": "Hazır davet metnini tek dokunuşla gönder"
+      },
+      "B": {
+        "primary": "Bir dostuna gönder",
+        "secondary": "Sade ve samimi bir davet metni hazır"
+      },
+      "C": {
+        "primary": "Ritmi birlikte başlat",
+        "secondary": "Daha güçlü bir davet çağrısı hazır"
+      }
+    },
+    "note": {
+      "ramadan": "Ramazan'da paylaşılan davetler daha anlamlı olabilir.",
+      "friday": "Cuma bereketiyle yapılan davetler daha sıcak bir sebep sunar.",
+      "kandil": "Kandil gibi özel günlerde davetler daha derin bir bağ kurar.",
+      "default": "Daveti sakin, samimi ve tek bir faydaya odaklanarak yapman en iyi sonucu verir."
+    },
+    "shareText": {
+      "intro": {
+        "A": "Huzur'a birlikte başlayalım. Tek bir sakin adımla ritim kurmak daha kolay oluyor.",
+        "B": "Sana iyi gelebileceğini düşündüğüm bir Huzur daveti bıraktım.",
+        "C": "Bu hafta Huzur'da daha sakin bir ritim kurmak istersen buradan başlayabilirsin."
+      },
+      "seasonal": {
+        "friday": " Cuma bereketi için de güzel bir başlangıç olur.",
+        "ramadan": " Ramazan için de iyi bir eşlik olabilir."
+      },
+      "title": "Huzur Daveti",
+      "dialogTitle": "Arkadaşını Davet Et",
+      "codeLine": "Davet kodum: {{code}}"
+    },
+    "modal": {
+      "feedback": {
+        "linkReady": "Davet linkin hazır. Şimdi tek bir kişiye kısa bir notla gönderebilirsin.",
+        "noClipboard": "Bu cihazda kopyalama desteklenmiyor.",
+        "shared": "Davet paylaşıldı. İlk dönüş olduğunda burada göreceksin.",
+        "textCopied": "Paylaşım metni kopyalandı. Tek bir kişiye göndermen yeterli.",
+        "shareFailed": "Paylaşım tamamlanamadı. İstersen linki kopyalayıp kendin gönderebilirsin.",
+        "codeCopied": "Davet kodu kopyalandı.",
+        "linkCopied": "Davet linki kopyalandı."
+      },
+      "syncing": "Eşitleniyor",
+      "proActive": "Pro üyeliğin aktif!",
+      "remainingHours": "{{hours}} saat {{minutes}} dakika kaldı",
+      "remainingMinutes": "{{minutes}} dakika kaldı",
+      "proHint": "Davet ederek süreyi uzatabilir veya abone olabilirsin.",
+      "funnelTitle": "Davetlerinin durumu",
+      "funnel": {
+        "link_ready": "Link hazır",
+        "accepted": "Kabul",
+        "onboarding": "Kurulum",
+        "ibadah": "İlk ibadet",
+        "reward": "Ödül"
+      },
+      "funnelHelper": "Link hazırlandıktan sonra davetlerinin hangi aşamada olduğunu buradan görebilirsin.",
+      "blockedTitle": "Güvenlik molası aktif",
+      "blockedUntil": "{{time}} sonrasında tekrar deneyebilirsin.",
+      "blockedSoon": "Kısa bir süre sonra tekrar deneyebilirsin.",
+      "stepsTitle": "Nasıl çalışır",
+      "noteTitle": "Paylaşım notu",
+      "syncIssue": "Davet bağlantısı sunucuda henüz tam eşleşmedi. Linki kullanan ilk kişi geldikçe burada netleşecek.",
+      "yourCode": "Davet kodun",
+      "copy": "Kopyala",
+      "notReady": "Hazır değil",
+      "linkPlaceholder": "Link, ilk paylaşımdan önce tek dokunuşla hazırlanır.",
+      "prepareLink": "Davet linkini hazırla",
+      "reuseHint": "Link bir kez hazırlandıktan sonra tekrar tekrar kullanabilirsin.",
+      "close": "Kapat"
+    },
+    "triggers": {
+      "reward_ready": {
+        "badge": "Davet ödülün hazır",
+        "headline": "Hoş geldin hediyen açıldı, sıradaki daveti sen gönder",
+        "description": "İlk davetin tamamlandı. Şimdi aynı başlangıcı bir dostuna da ulaştırabilirsin.",
+        "support": "Tek bir kişiye samimi bir not bırakman yeterli.",
+        "cta": "Bir dostunu davet et"
+      },
+      "inviter_progress": {
+        "badge": "Tamamlanan davet",
+        "headline": "Davetlerin sonuç veriyor",
+        "description": "{{n}} davetin tamamlandı. İstersen bir kişiyi daha davet edebilirsin.",
+        "support": "En iyi davet, birine gerçekten iyi geleceğini hissettiğin andadır.",
+        "cta": "Yeni bir davet gönder"
+      },
+      "invite_waiting": {
+        "badge": "Bekleyen davet",
+        "headline": "Davetin ilk adımı bekliyor",
+        "description": "{{n}} kişi başlamaya yakın. Bugün kısa bir hatırlatma iyi gelebilir.",
+        "support": "Baskı kurmadan, tek bir faydayı anlatan davetler daha iyi sonuç verir.",
+        "cta": "Davetini aç"
+      },
+      "weekly_reward_ready": {
+        "badge": "Haftanın daveti",
+        "headline": "Bu haftaki ritmini bir dostunla paylaşabilirsin",
+        "description": "Davet ödülün açıldı. İyi geçen bir haftanın ardından yapılan paylaşımlar daha sıcak karşılanır.",
+        "support": "Haftalık özeti kapatmadan önce bir davet linki hazırlayabilirsin.",
+        "cta": "Haftanın davetini hazırla"
+      },
+      "weekly_progress": {
+        "badge": "Davetlerin",
+        "headline": "Haftalık ritmini büyütmek için doğru zaman",
+        "descriptionWaiting": "{{n}} davet ilk adımını bekliyor. Bu haftaki ivmen yeni bir davete de taşınabilir.",
+        "description": "{{n}} davetin tamamlandı. İstersen bir kişiyi daha davet edebilirsin.",
+        "support": "Hafta kapanışları, sakin bir davet için en uygun anlardan biridir.",
+        "cta": "Bir dostunu ekle"
+      },
+      "weekly_momentum": {
+        "badge": "İyi bir hafta",
+        "headline": "Bu haftaki ritmin paylaşmaya değer",
+        "description": "İyi giden bir haftanın ardından tek bir kişiye yapılan davet, Huzur'u daha doğal şekilde tanıtır.",
+        "support": "Link bir kez hazırlandıktan sonra tekrar tekrar kullanabilirsin.",
+        "cta": "Davet linkini hazırla"
+      },
+      "assistant_reward_ready": {
+        "badge": "Davetin hazır",
+        "headline": "Bu deneyimi bir dostunla da paylaşabilirsin",
+        "description": "Davet ödülün açıldı. Rehberlik işine yaradıysa bir kişiye daha önerebilirsin.",
+        "support": "Birine iyi gelebileceğini düşündüğün tek bir konuya odaklanman yeterli.",
+        "cta": "Davetini aç"
+      },
+      "assistant_progress": {
+        "badge": "Davetlerin",
+        "headline": "Faydayı çevrene yayabilirsin",
+        "description": "Davetlerin zaten sonuç veriyor. Faydalı bir cevabın hemen ardından yapılan davetler daha doğal hissettirir.",
+        "support": "Kısa, yargısız ve tek bir faydaya odaklanan notlar en iyi sonucu verir.",
+        "cta": "Yeni bir davet gönder"
+      },
+      "assistant_value_moment": {
+        "badge": "Faydalı bir an",
+        "headline": "Bu cevap işine yaradıysa bir dostuna da yarayabilir",
+        "description": "Huzur Rehberi gerçekten işine yaradığında yapılan bir davet daha samimi olur.",
+        "support": "Davet metni hazırlanır; sen sadece kime göndereceğine karar verirsin.",
+        "cta": "Bir dostunu davet et"
+      }
     }
   },
   "shareCard": {
@@ -5653,7 +5868,38 @@
         "body": "Kandil gecesinde dua ve zikirle kalbini ferahlat.",
         "bodyDiaspora": "Kandil gecesi için kısa bir dua ve zikirle kalbini ferahlat."
       }
-    }
+    },
+    "channels": {
+      "prayer_times": {
+        "name": "Namaz Vakitleri",
+        "description": "Namaz vakti bildirimleri"
+      },
+      "prayer_reminders": {
+        "name": "Vakit Hatırlatmaları",
+        "description": "Namaz vaktinden önce hatırlatmalar"
+      },
+      "sticky_counter": {
+        "name": "Vakit Sayacı",
+        "description": "Kalıcı geri sayım bildirimi"
+      },
+      "streak_channel": {
+        "name": "Seri Uyarıları",
+        "description": "Seri koruma bildirimleri"
+      },
+      "daily_reminders": {
+        "name": "Günlük Hatırlatıcılar",
+        "description": "Günlük zikir ve görev hatırlatmaları"
+      },
+      "updates_channel": {
+        "name": "Uygulama Güncellemeleri",
+        "description": "Yeni özellik ve duyuru bildirimleri"
+      },
+      "adhan": {
+        "name": "Ezan Sesi",
+        "description": "Namaz vakitlerinde ezan sesi çalar"
+      }
+    },
+    "adhanTitle": "🕌 {{prayer}} Vakti"
   },
   "nafile": {
     "items": {

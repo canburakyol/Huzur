@@ -3736,6 +3736,201 @@
       "default": "Undang",
       "variantB": "Undang Teman",
       "variantC": "Mari Mulai Bersama"
+    },
+    "plan": {
+      "headline": {
+        "default": "Bagikan Huzur dengan undangan yang tulus",
+        "blocked": "Undangan dijeda sebentar",
+        "converted": "Undanganmu mulai membuahkan hasil",
+        "inviteeReward": "Hadiah undanganmu sudah siap",
+        "waiting": "Undanganmu sedang berjalan",
+        "firstInvite": "Kirim undangan pertamamu",
+        "proReady": "Pro 24 jam milikmu sudah siap",
+        "proInvite": "Kirim ke teman dan buka Pro selama 24 jam"
+      },
+      "description": {
+        "default": "Undangan terbaik datang di saat tenang ketika kamu merasa itu benar-benar bisa membantu seseorang.",
+        "blocked": "Kami menunggu sebentar demi keamanan. Setelah waktunya habis, kamu bisa melanjutkan.",
+        "convertedMany": "{{n}} undanganmu telah selesai. Kamu menyebarkan Huzur di sekitarmu.",
+        "convertedOne": "Undangan pertamamu telah selesai. Kamu juga bisa mengirim ke orang berikutnya.",
+        "inviteeReward": "Kamu telah menyelesaikan langkah pertama. Sekarang kamu bisa membagikan pengalaman yang sama kepada teman.",
+        "waiting": "{{n}} undangan menunggu langkah pertama. Pengingat singkat bisa membantu.",
+        "firstInvite": "Cukup kirim ke satu orang dengan catatan singkat mengapa ini bisa membantunya.",
+        "proReady": "Undanganmu selesai. Kamu bisa memakai fitur Pro selama 24 jam.",
+        "proInvite": "Satu undangan tulus sudah cukup. Setelah selesai, fitur Pro terbuka selama 24 jam."
+      },
+      "badge": {
+        "default": "Kedua pihak mendapat manfaat",
+        "blocked": "Jeda keamanan",
+        "converted": "Undangan selesai",
+        "inviteeReward": "Hadiah terbuka",
+        "linkReady": "Tautan siap",
+        "pro": "Pro 24 jam"
+      }
+    },
+    "steps": {
+      "link": {
+        "label": "Siapkan tautanmu",
+        "description": "Buat kode undanganmu dan tentukan kepada siapa akan dikirim."
+      },
+      "accept": {
+        "label": "Temanmu mengambil langkah pertama",
+        "description": "Orang pertama yang bergabung lewat tautanmu dan menyelesaikan pengaturan memulai prosesnya."
+      },
+      "convert": {
+        "label": "Ibadah pertama membuka hadiah",
+        "description": "Setelah temanmu menyelesaikan pengaturan dan ibadah pertamanya, undangan dianggap selesai."
+      },
+      "invitee": {
+        "label": "Hadiah selamat datangmu",
+        "doneDescription": "Hadiah undanganmu terbuka. Kamu bisa membagikan pengalaman ini ke orang berikutnya.",
+        "pendingDescription": "Setelah kamu menyelesaikan langkah pertama, hadiah juga terbuka untukmu."
+      }
+    },
+    "stats": {
+      "converted": "Undangan selesai",
+      "waiting": "Undangan tertunda",
+      "reward": "Statusmu",
+      "ready": "Siap",
+      "tracking": "Berjalan"
+    },
+    "shareCta": {
+      "A": {
+        "primary": "Bagikan tautan",
+        "secondary": "Kirim undangan siap pakai dengan sekali ketuk"
+      },
+      "B": {
+        "primary": "Kirim ke teman",
+        "secondary": "Pesan undangan yang sederhana dan tulus sudah siap"
+      },
+      "C": {
+        "primary": "Mulai ritme bersama",
+        "secondary": "Ajakan undangan yang lebih kuat sudah siap"
+      }
+    },
+    "note": {
+      "ramadan": "Undangan yang dibagikan saat Ramadan bisa terasa lebih bermakna.",
+      "friday": "Undangan di hari Jumat memberi alasan yang lebih hangat.",
+      "kandil": "Pada malam-malam mulia, undangan bisa membangun ikatan yang lebih dalam.",
+      "default": "Undangan yang tenang, tulus, dan fokus pada satu manfaat paling efektif."
+    },
+    "shareText": {
+      "intro": {
+        "A": "Ayo bergabung di Huzur dan mulai dengan satu langkah yang tenang.",
+        "B": "Aku rasa Huzur bisa benar-benar menenangkan untukmu.",
+        "C": "Mari bangun ritme ibadah yang lebih tenang bersama di Huzur."
+      },
+      "seasonal": {
+        "friday": " Awal yang indah untuk Jumat yang berkah.",
+        "ramadan": " Sangat bermakna terutama di bulan Ramadan."
+      },
+      "title": "Undangan Huzur",
+      "dialogTitle": "Undang Teman",
+      "codeLine": "Kode undanganku: {{code}}"
+    },
+    "modal": {
+      "feedback": {
+        "linkReady": "Tautan undanganmu siap. Kirim ke satu orang dengan catatan singkat.",
+        "noClipboard": "Menyalin tidak didukung di perangkat ini.",
+        "shared": "Undangan dibagikan. Respons pertama akan terlihat di sini.",
+        "textCopied": "Teks undangan disalin. Cukup kirim ke satu orang.",
+        "shareFailed": "Berbagi tidak selesai. Kamu bisa menyalin tautan dan mengirimnya sendiri.",
+        "codeCopied": "Kode undangan disalin.",
+        "linkCopied": "Tautan undangan disalin."
+      },
+      "syncing": "Menyinkronkan",
+      "proActive": "Keanggotaan Pro-mu aktif!",
+      "remainingHours": "Sisa {{hours}} jam {{minutes}} menit",
+      "remainingMinutes": "Sisa {{minutes}} menit",
+      "proHint": "Kamu bisa memperpanjangnya dengan mengundang teman atau berlangganan.",
+      "funnelTitle": "Ringkasan undanganmu",
+      "funnel": {
+        "link_ready": "Tautan siap",
+        "accepted": "Diterima",
+        "onboarding": "Pengaturan",
+        "ibadah": "Ibadah pertama",
+        "reward": "Hadiah"
+      },
+      "funnelHelper": "Setelah tautanmu siap, kamu bisa melihat perkembangan undanganmu di sini.",
+      "blockedTitle": "Jeda keamanan aktif",
+      "blockedUntil": "Kamu bisa mencoba lagi setelah {{time}}.",
+      "blockedSoon": "Kamu bisa mencoba lagi sebentar lagi.",
+      "stepsTitle": "Cara kerjanya",
+      "noteTitle": "Tips berbagi",
+      "syncIssue": "Undangan belum sepenuhnya tercocokkan di server. Ini akan diperbarui setelah seseorang memakai tautanmu.",
+      "yourCode": "Kode undanganmu",
+      "copy": "Salin",
+      "notReady": "Belum siap",
+      "linkPlaceholder": "Tautanmu dibuat dengan sekali ketuk sebelum dibagikan pertama kali.",
+      "prepareLink": "Siapkan tautan undangan",
+      "reuseHint": "Setelah dibuat, tautan bisa dipakai berulang kali.",
+      "close": "Tutup"
+    },
+    "triggers": {
+      "reward_ready": {
+        "badge": "Hadiah undangan siap",
+        "headline": "Hadiah selamat datangmu terbuka, sekarang kirim undangan berikutnya",
+        "description": "Undangan pertamamu selesai. Sekarang kamu bisa memberi teman awal yang sama.",
+        "support": "Cukup tinggalkan pesan tulus untuk satu orang.",
+        "cta": "Undang teman"
+      },
+      "inviter_progress": {
+        "badge": "Undangan selesai",
+        "headline": "Undanganmu membuahkan hasil",
+        "description": "{{n}} undanganmu selesai. Kamu bisa mengundang satu orang lagi jika mau.",
+        "support": "Undangan terbaik datang saat kamu merasa itu bisa benar-benar membantu seseorang.",
+        "cta": "Kirim undangan baru"
+      },
+      "invite_waiting": {
+        "badge": "Undangan tertunda",
+        "headline": "Undanganmu menunggu langkah pertama",
+        "description": "{{n}} orang hampir memulai. Pengingat singkat hari ini bisa membantu.",
+        "support": "Undangan yang menyebut satu manfaat tanpa tekanan paling efektif.",
+        "cta": "Buka undanganmu"
+      },
+      "weekly_reward_ready": {
+        "badge": "Undangan minggu ini",
+        "headline": "Kamu bisa berbagi ritme minggu ini dengan teman",
+        "description": "Hadiah undanganmu terbuka. Berbagi setelah minggu yang baik terasa lebih hangat.",
+        "support": "Kamu bisa menyiapkan tautan undangan sebelum menutup ringkasan mingguan.",
+        "cta": "Siapkan undangan minggu ini"
+      },
+      "weekly_progress": {
+        "badge": "Undanganmu",
+        "headline": "Waktu yang tepat untuk menumbuhkan ritme mingguanmu",
+        "descriptionWaiting": "{{n}} undangan menunggu langkah pertama. Semangat minggu ini bisa membawa undangan baru.",
+        "description": "{{n}} undanganmu selesai. Kamu bisa mengundang satu orang lagi jika mau.",
+        "support": "Akhir pekan adalah salah satu saat terbaik untuk undangan yang tenang.",
+        "cta": "Tambahkan teman"
+      },
+      "weekly_momentum": {
+        "badge": "Minggu yang baik",
+        "headline": "Ritme minggu ini layak dibagikan",
+        "description": "Setelah minggu yang baik, mengundang satu orang memperkenalkan Huzur dengan lebih alami.",
+        "support": "Setelah dibuat, tautan bisa dipakai berulang kali.",
+        "cta": "Siapkan tautan undangan"
+      },
+      "assistant_reward_ready": {
+        "badge": "Undanganmu siap",
+        "headline": "Kamu juga bisa berbagi pengalaman ini dengan teman",
+        "description": "Hadiah undanganmu terbuka. Jika panduan ini membantumu, kamu bisa merekomendasikannya ke orang lain.",
+        "support": "Fokus pada satu hal yang menurutmu bisa membantu seseorang.",
+        "cta": "Buka undanganmu"
+      },
+      "assistant_progress": {
+        "badge": "Undanganmu",
+        "headline": "Kamu bisa meneruskan manfaatnya",
+        "description": "Undanganmu sudah membuahkan hasil. Mengundang tepat setelah jawaban yang bermanfaat terasa lebih alami.",
+        "support": "Pesan singkat, tanpa menghakimi, dan fokus pada satu manfaat paling efektif.",
+        "cta": "Kirim undangan baru"
+      },
+      "assistant_value_moment": {
+        "badge": "Momen yang bermanfaat",
+        "headline": "Jika jawaban ini membantumu, mungkin juga membantu temanmu",
+        "description": "Undangan yang dikirim setelah Pemandu Huzur benar-benar membantumu terasa lebih tulus.",
+        "support": "Teks undangan disiapkan; kamu hanya memilih kepada siapa dikirim.",
+        "cta": "Undang teman"
+      }
     }
   },
   "agenda": {
@@ -4287,6 +4482,26 @@
       "recitations": "Bacaan qari",
       "prayerTimes": "Jadwal salat",
       "openSource": "Pustaka sumber terbuka"
+    },
+    "subtitle": "Teknologi dan konten yang memungkinkan Huzur",
+    "items": {
+      "alquranCloud": "Teks Al-Qur'an, terjemahan dan murattal",
+      "islamicNetwork": "Distribusi berkas audio qari",
+      "acikKuran": "Transliterasi dan terjemahan Turki",
+      "corpus": "Kata per kata: akar, bentuk dasar dan tata bahasa (Kais Dukes, v0.4)",
+      "alafasy": "Kuwait - melalui Al Quran Cloud",
+      "classicEgypt": "Mesir - rekaman klasik",
+      "aladhan": "Layanan perhitungan waktu salat",
+      "diyanet": "Acuan waktu salat di Turki",
+      "react": "Pengembangan antarmuka pengguna",
+      "vite": "Lingkungan build dan pengembangan",
+      "lucide": "Pustaka ikon"
+    },
+    "license": {
+      "openUse": "Penggunaan terbuka",
+      "openSource": "Sumber terbuka",
+      "freeApi": "API gratis",
+      "official": "Sumber resmi"
     }
   },
   "tafsir": {
@@ -5653,7 +5868,38 @@
         "body": "Lapangkan hatimu dengan doa dan zikir di malam istimewa ini.",
         "bodyDiaspora": "Lapangkan hatimu dengan doa dan zikir singkat untuk malam istimewa ini."
       }
-    }
+    },
+    "channels": {
+      "prayer_times": {
+        "name": "Waktu salat",
+        "description": "Notifikasi waktu salat"
+      },
+      "prayer_reminders": {
+        "name": "Pengingat salat",
+        "description": "Pengingat sebelum waktu salat"
+      },
+      "sticky_counter": {
+        "name": "Hitung mundur salat",
+        "description": "Notifikasi hitung mundur tetap"
+      },
+      "streak_channel": {
+        "name": "Peringatan runtutan",
+        "description": "Notifikasi perlindungan runtutan"
+      },
+      "daily_reminders": {
+        "name": "Pengingat harian",
+        "description": "Pengingat zikir dan tugas harian"
+      },
+      "updates_channel": {
+        "name": "Pembaruan aplikasi",
+        "description": "Fitur baru dan pengumuman"
+      },
+      "adhan": {
+        "name": "Azan",
+        "description": "Memutar azan saat waktu salat"
+      }
+    },
+    "adhanTitle": "🕌 Waktu {{prayer}}"
   },
   "nafile": {
     "items": {
