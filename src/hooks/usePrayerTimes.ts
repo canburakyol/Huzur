@@ -12,6 +12,7 @@ import smartNotificationService, {
   showStickyNotification,
 } from "../services/smartNotificationService";
 import { syncPrayerSchedule } from "../services/prayerScheduleService";
+import { NOTIFICATION_PREFS_CHANGED_EVENT } from "../services/smartNotificationService";
 import { TIMING, STORAGE_KEYS } from "../constants";
 import { logger } from "../utils/logger";
 import { scheduleDeferredTask } from "../utils/startupScheduler";
@@ -142,12 +143,15 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const lastScheduledTimingsRef = useRef("");
+  const lastScheduledRef = useRef<{ timings: PrayerTimings; coords: LocationCoords | null } | null>(null);
   const latestPrayerRequestRef = useRef(0);
   const fcmModuleRef = useRef<FcmService | null>(null);
 
   const schedulePrayerSideEffects = useCallback(async (prayerTimings: PrayerTimings, coords: LocationCoords | null = null): Promise<void> => {
+    lastScheduledRef.current = { timings: prayerTimings, coords };
     try {
       const upcomingPrayerDays = await loadUpcomingPrayerDays(coords);
+      const prefs = smartNotificationService.getNotificationPreferences();
       await Promise.allSettled([
         smartNotificationService.initializeSmartNotifications({ prayerTimes: prayerTimings, upcomingPrayerDays }),
         syncPrayerSchedule({
@@ -155,7 +159,9 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
           latitude: coords?.latitude ?? null,
           longitude: coords?.longitude ?? null,
           locationName: coords?.locationName || coords?.city || coords?.name || "Huzur",
-          prayerNotificationsEnabled: smartNotificationService.getNotificationPreferences().prayer,
+          prayerNotificationsEnabled: prefs.prayer,
+          // "" switches the adhan off natively; null would keep the old choice there.
+          adhanSound: prefs.adhanSound || "",
         }),
       ]);
 
@@ -164,6 +170,16 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
       logger.warn("[usePrayerTimes] Failed to schedule notifications:", scheduleError);
     }
   }, []);
+
+  // Notification settings changed (e.g. adhan on/off): reschedule with the timings we already have.
+  useEffect(() => {
+    const onPrefsChanged = () => {
+      const last = lastScheduledRef.current;
+      if (last) void schedulePrayerSideEffects(last.timings, last.coords);
+    };
+    window.addEventListener(NOTIFICATION_PREFS_CHANGED_EVENT, onPrefsChanged);
+    return () => window.removeEventListener(NOTIFICATION_PREFS_CHANGED_EVENT, onPrefsChanged);
+  }, [schedulePrayerSideEffects]);
 
   const fetchPrayerTimes = useCallback(
     async (coords: LocationCoords | null = null, isInitialLoad = false): Promise<void> => {

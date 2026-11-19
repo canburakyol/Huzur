@@ -43,6 +43,13 @@ const analyticsMock = vi.hoisted(() => ({
   },
 }));
 
+const adhanMock = vi.hoisted(() => ({ known: false }));
+
+vi.mock('../config/adhanSounds', () => ({
+  ADHAN_SOUNDS: [],
+  isKnownAdhanSound: (id) => adhanMock.known && Boolean(id),
+}));
+
 vi.mock('@capacitor/local-notifications', () => ({
   LocalNotifications: localNotificationsMock,
 }));
@@ -204,6 +211,27 @@ describe('smartNotificationService (Unified)', () => {
     expect(main[0].schedule.at.getMinutes()).toBe(1);
     expect(scheduled.some((item) => item.extra.type === 'prayer_pre' && item.extra.prayer === 'Sunrise')).toBe(true);
     expect(new Set(scheduled.map((item) => item.id)).size).toBe(scheduled.length);
+  });
+
+  it('leaves the main prayer notification to Android when the adhan is on, keeping the heads-up', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-05-10T09:00:00+03:00'));
+    adhanMock.known = true;
+    storageMock.getItem.mockImplementation((key, fallback = null) => (
+      key === 'notification_preferences' || key === 'huzur_notification_prefs'
+        ? { prayer: true, adhanSound: 'adhan_test' }
+        : fallback
+    ));
+    try {
+      const { schedulePrayerNotifications } = await importService();
+      await schedulePrayerNotifications({ Dhuhr: '13:00', Asr: '16:30' }, new Date('2026-05-10T09:00:00+03:00'));
+      const scheduled = localNotificationsMock.schedule.mock.calls[0][0].notifications;
+      expect(scheduled.some((item) => item.extra.type === 'prayer')).toBe(false);
+      expect(scheduled.filter((item) => item.extra.type === 'prayer_pre')).toHaveLength(2);
+    } finally {
+      adhanMock.known = false;
+      storageMock.getItem.mockImplementation((key, fallback = null) => fallback);
+    }
   });
 
   it('applies AI push hints per scheduled prayer notification with prayer context', async () => {

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { useTranslation } from 'react-i18next';
 import { AlarmClock, AlertCircle, Bell, BellRing, Flame, Megaphone, Moon } from 'lucide-react';
 import {
@@ -15,6 +16,10 @@ import {
 } from '../../../services/AlarmPermissionService';
 import SettingsActionRow from '../../settings/components/SettingsActionRow';
 import SettingsToggle from '../../settings/components/SettingsToggle';
+import { ADHAN_SOUNDS } from '../../../config/adhanSounds';
+
+// Only Android plays the adhan natively, and only once recordings are bundled.
+const ADHAN_PICKER_AVAILABLE = Capacitor.getPlatform() === 'android' && ADHAN_SOUNDS.length > 0;
 
 const ICON = { size: 20, strokeWidth: 1.75 };
 const fieldStyle = {
@@ -135,6 +140,26 @@ const NotificationSettings = () => {
             <option value="45">45 {t('common.minutes', 'dk')}</option>
             <option value="0">{t('settings.off', 'Kapalı')}</option>
           </select>
+        </label>
+      )}
+      {prefs.prayer && ADHAN_PICKER_AVAILABLE && (
+        <label style={{ ...subPanelStyle, display: 'grid', gap: 'var(--space-2)' }}>
+          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)' }}>
+            <span className="hz-label">{t('settings.adhanSound', 'Ezan sesi')}</span>
+            <select
+              value={prefs.adhanSound || ''}
+              onChange={(e) => savePrefs({ ...prefs, adhanSound: e.target.value })}
+              style={fieldStyle}
+            >
+              <option value="">{t('settings.adhanSoundOff', 'Ezan yok, yalnızca bildirim')}</option>
+              {ADHAN_SOUNDS.map((sound) => (
+                <option key={sound.id} value={sound.id}>{t(sound.labelKey, sound.fallback)}</option>
+              ))}
+            </select>
+          </span>
+          <span className="hz-label" style={{ fontSize: 13 }}>
+            {t('settings.adhanSoundDesc', 'Telefon sessiz ya da titreşimdeyken ezan okunmaz, yalnızca bildirim gelir.')}
+          </span>
         </label>
       )}
 

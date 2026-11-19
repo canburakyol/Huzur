@@ -34,6 +34,10 @@ export type NativeNotificationLabels = {
   adhanTitle: string;
   adhanChannelName: string;
   adhanChannelDescription: string;
+  adhanPlaying: string;
+  adhanStop: string;
+  prayerTimeBody: string;
+  prayerChannelName: string;
 }
 
 export type PrayerNotificationsEnabledOptions = {
@@ -43,6 +47,7 @@ export type PrayerNotificationsEnabledOptions = {
 export type PrayerSchedulePlugin = {
   syncPrayerSchedule(options: SyncPrayerScheduleOptions): Promise<PrayerScheduleResult>;
   setPrayerNotificationsEnabled(options: PrayerNotificationsEnabledOptions): Promise<PrayerScheduleResult>;
+  setAdhanSound(options: { sound: string }): Promise<PrayerScheduleResult & { playable?: boolean }>;
   getExactAlarmPermissionStatus(): Promise<ExactAlarmPermissionStatus>;
   openExactAlarmSettings(): Promise<ExactAlarmPermissionStatus>;
 }
@@ -52,6 +57,9 @@ const noopPlugin: PrayerSchedulePlugin = {
     return { success: false, platform: Capacitor.getPlatform(), error: 'Plugin not available' };
   },
   async setPrayerNotificationsEnabled(): Promise<PrayerScheduleResult> {
+    return { success: false, platform: Capacitor.getPlatform(), error: 'Plugin not available' };
+  },
+  async setAdhanSound(): Promise<PrayerScheduleResult> {
     return { success: false, platform: Capacitor.getPlatform(), error: 'Plugin not available' };
   },
   async getExactAlarmPermissionStatus(): Promise<ExactAlarmPermissionStatus> {

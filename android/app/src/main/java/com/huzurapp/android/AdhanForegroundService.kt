@@ -31,7 +31,10 @@ class AdhanForegroundService : Service() {
 
     companion object {
         private const val TAG = "AdhanForegroundService"
-        const val CHANNEL_ID = "adhan_playback_channel"
+        // v2: the first channel was created with the default notification sound, which rang over the adhan.
+        // Channel sounds cannot change after creation, so a new silent channel replaces it.
+        const val CHANNEL_ID = "adhan_playback_v2"
+        private const val LEGACY_CHANNEL_ID = "adhan_playback_channel"
         const val NOTIFICATION_ID = 9001
         const val EXTRA_PRAYER_NAME = "prayer_name"
         const val EXTRA_PRAYER_NAME_LOCALIZED = "prayer_name_localized"
@@ -62,6 +65,8 @@ class AdhanForegroundService : Service() {
     private var mediaPlayer: MediaPlayer? = null
     private var wakeLock: PowerManager.WakeLock? = null
     private var audioFocusRequest: AudioFocusRequest? = null
+    private var currentPrayerKey: String = "Dhuhr"
+    private var currentLocalizedName: String = ""
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -82,6 +87,11 @@ class AdhanForegroundService : Service() {
             ?: prayerKey
         val adhanSound = intent?.getStringExtra(EXTRA_ADHAN_SOUND)
 
+        // A second alarm while one adhan still plays must not leave the first player running.
+        releasePlayer()
+        currentPrayerKey = prayerKey
+        currentLocalizedName = localizedName
+
         // Acquire partial wake lock to keep CPU running during playback
         acquireWakeLock()
 
@@ -93,6 +103,19 @@ class AdhanForegroundService : Service() {
         playAdhan(adhanSound, prayerKey)
 
         return START_NOT_STICKY
+    }
+
+    private fun releasePlayer() {
+        mediaPlayer?.apply {
+            try {
+                if (isPlaying) stop()
+            } catch (ignored: IllegalStateException) {
+            }
+            release()
+        }
+        mediaPlayer = null
+        wakeLock?.let { if (it.isHeld) it.release() }
+        wakeLock = null
     }
 
     private fun acquireWakeLock() {
@@ -141,6 +164,8 @@ class AdhanForegroundService : Service() {
                 setOnCompletionListener {
                     Log.d(TAG, "Adhan playback completed for $prayerKey")
                     stopPlaybackAndService()
+                    // Leave a normal prayer-time notification behind; the playback one disappears with the service.
+                    PrayerNotifier.showPrayerNotification(this@AdhanForegroundService, currentPrayerKey, currentLocalizedName)
                 }
                 setOnErrorListener { _, what, extra ->
                     Log.e(TAG, "MediaPlayer error: what=$what extra=$extra")
@@ -196,10 +221,10 @@ class AdhanForegroundService : Service() {
                 PrayerScheduleStore.getNotificationLabel(this, "adhanTitle")?.replace("%s", prayerName)
                     ?: "🕌 $prayerName Vakti"
             )
-            .setContentText("Ezan okunuyor...")
+            .setContentText(PrayerScheduleStore.getNotificationLabel(this, "adhanPlaying") ?: "Ezan okunuyor…")
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentIntent(openAppPendingIntent)
-            .addAction(0, "Durdur", stopPendingIntent)
+            .addAction(0, PrayerScheduleStore.getNotificationLabel(this, "adhanStop") ?: "Durdur", stopPendingIntent)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
@@ -216,8 +241,12 @@ class AdhanForegroundService : Service() {
                 description = PrayerScheduleStore.getNotificationLabel(this@AdhanForegroundService, "adhanChannelDescription")
                     ?: "Namaz vakitlerinde ezan sesi çalar"
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                // The adhan itself is the sound; the notification must stay silent.
+                setSound(null, null)
+                enableVibration(false)
             }
             val manager = getSystemService(NotificationManager::class.java)
+            manager.deleteNotificationChannel(LEGACY_CHANNEL_ID)
             manager.createNotificationChannel(channel)
         }
     }

@@ -489,7 +489,10 @@
     "adPrivacyOptions": "Reklam gizlilik tercihleri",
     "exactAlarmTitle": "Vakit bildirimleri gecikebilir",
     "exactAlarmDesc": "Bildirimlerin tam vaktinde gelmesi için Android ayarlarında \"Alarmlar ve hatırlatıcılar\" iznini açın.",
-    "exactAlarmButton": "İzni aç"
+    "exactAlarmButton": "İzni aç",
+    "adhanSound": "Ezan sesi",
+    "adhanSoundOff": "Ezan yok, yalnızca bildirim",
+    "adhanSoundDesc": "Telefon sessiz ya da titreşimdeyken ezan okunmaz, yalnızca bildirim gelir."
   },
   "pro": {
     "title": "Huzur Pro'ya Geçin",
@@ -5926,7 +5929,10 @@
       "eveningTitle": "{{title}} - akşam",
       "streakBody": "{{body}} {{days}} günlük zincirini yavaşça sürdürebilirsin.",
       "eveningBody": "{{description}} Bugün kısa bir dönüş bile yeterli."
-    }
+    },
+    "adhanPlaying": "Ezan okunuyor…",
+    "adhanStop": "Durdur",
+    "prayerTimeBody": "Vakit girdi."
   },
   "nafile": {
     "items": {

@@ -408,7 +408,10 @@
     "adPrivacyOptions": "Ad privacy options",
     "exactAlarmTitle": "Prayer notifications may be late",
     "exactAlarmDesc": "To get notifications exactly on time, turn on \"Alarms & reminders\" for Huzur in Android settings.",
-    "exactAlarmButton": "Turn on"
+    "exactAlarmButton": "Turn on",
+    "adhanSound": "Adhan",
+    "adhanSoundOff": "No adhan, notification only",
+    "adhanSoundDesc": "When the phone is on silent or vibrate, no adhan plays; you get a notification instead."
   },
   "pro": {
     "title": "Upgrade to Huzur Pro",
@@ -5926,7 +5929,10 @@
       "eveningTitle": "{{title}} – evening",
       "streakBody": "{{body}} You can gently continue your {{days}}-day streak.",
       "eveningBody": "{{description}} Even a short return today is enough."
-    }
+    },
+    "adhanPlaying": "Adhan is playing…",
+    "adhanStop": "Stop",
+    "prayerTimeBody": "It is prayer time."
   },
   "nafile": {
     "items": {

@@ -157,6 +157,10 @@ export const syncPrayerSchedule = async ({
         adhanTitle: i18n.t('notify.adhanTitle', { prayer: '%s', defaultValue: '🕌 %s Vakti' }),
         adhanChannelName: i18n.t('notify.channels.adhan.name', 'Ezan Sesi'),
         adhanChannelDescription: i18n.t('notify.channels.adhan.description', 'Namaz vakitlerinde ezan sesi çalar'),
+        adhanPlaying: i18n.t('notify.adhanPlaying', 'Ezan okunuyor…'),
+        adhanStop: i18n.t('notify.adhanStop', 'Durdur'),
+        prayerTimeBody: i18n.t('notify.prayerTimeBody', 'Vakit girdi.'),
+        prayerChannelName: i18n.t('notify.channels.prayer_times.name', 'Namaz Vakitleri'),
       }
     });
 

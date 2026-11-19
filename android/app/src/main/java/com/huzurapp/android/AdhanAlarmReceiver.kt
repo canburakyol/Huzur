@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
@@ -121,14 +122,20 @@ class AdhanAlarmReceiver : BroadcastReceiver() {
 
         val notificationsAllowed = NotificationManagerCompat.from(context).areNotificationsEnabled()
         val preferenceEnabled = PrayerScheduleStore.arePrayerNotificationsEnabled(context)
-        val playableSound = AdhanForegroundService.hasPlayableAdhan(context, adhanSound)
-        if (!notificationsAllowed || !preferenceEnabled || !playableSound) {
-            Log.i(
-                TAG,
-                "Skipping adhan playback: notificationsAllowed=$notificationsAllowed " +
-                    "preferenceEnabled=$preferenceEnabled playableSound=$playableSound"
-            )
+        if (!notificationsAllowed || !preferenceEnabled) {
+            Log.i(TAG, "Skipping adhan: notificationsAllowed=$notificationsAllowed preferenceEnabled=$preferenceEnabled")
             PrayerScheduleCoordinator.rescheduleFromStore(context, "adhan_alarm_blocked")
+            return
+        }
+
+        // A phone on silent or vibrate gets the plain notification, never the adhan audio.
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val ringerNormal = audioManager.ringerMode == AudioManager.RINGER_MODE_NORMAL
+        val playableSound = AdhanForegroundService.hasPlayableAdhan(context, adhanSound)
+        if (!ringerNormal || !playableSound) {
+            Log.i(TAG, "Adhan audio skipped (ringerNormal=$ringerNormal playableSound=$playableSound); showing notification")
+            PrayerNotifier.showPrayerNotification(context, prayerKey, localizedName)
+            PrayerScheduleCoordinator.rescheduleFromStore(context, "adhan_alarm_silent")
             return
         }
 
@@ -140,7 +147,13 @@ class AdhanAlarmReceiver : BroadcastReceiver() {
             }
         }
 
-        ContextCompat.startForegroundService(context, serviceIntent)
+        try {
+            ContextCompat.startForegroundService(context, serviceIntent)
+        } catch (error: Exception) {
+            // Android 12+ refuses foreground services from inexact alarms (no exact-alarm permission).
+            Log.w(TAG, "Adhan service not allowed to start; showing notification instead", error)
+            PrayerNotifier.showPrayerNotification(context, prayerKey, localizedName)
+        }
         PrayerScheduleCoordinator.rescheduleFromStore(context, "adhan_alarm_fired")
     }
 }

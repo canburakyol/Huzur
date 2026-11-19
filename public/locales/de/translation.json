@@ -408,7 +408,10 @@
     "adPrivacyOptions": "Datenschutzoptionen für Werbung",
     "exactAlarmTitle": "Gebetsbenachrichtigungen können sich verspäten",
     "exactAlarmDesc": "Damit Benachrichtigungen pünktlich kommen, aktiviere in den Android-Einstellungen „Wecker und Erinnerungen“ für Huzur.",
-    "exactAlarmButton": "Aktivieren"
+    "exactAlarmButton": "Aktivieren",
+    "adhanSound": "Adhan",
+    "adhanSoundOff": "Kein Adhan, nur Benachrichtigung",
+    "adhanSoundDesc": "Ist das Telefon lautlos oder auf Vibration, wird kein Adhan abgespielt, nur eine Benachrichtigung."
   },
   "pro": {
     "title": "Huzur Pro",
@@ -5926,7 +5929,10 @@
       "eveningTitle": "{{title}} – Abend",
       "streakBody": "{{body}} Du kannst deine {{days}}-Tage-Serie sanft fortsetzen.",
       "eveningBody": "{{description}} Schon eine kurze Rückkehr heute genügt."
-    }
+    },
+    "adhanPlaying": "Adhan wird abgespielt…",
+    "adhanStop": "Stopp",
+    "prayerTimeBody": "Die Gebetszeit ist da."
   },
   "nafile": {
     "items": {

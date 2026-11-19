@@ -408,7 +408,10 @@
     "adPrivacyOptions": "Opsi privasi iklan",
     "exactAlarmTitle": "Notifikasi salat bisa terlambat",
     "exactAlarmDesc": "Agar notifikasi tepat waktu, aktifkan \"Alarm & pengingat\" untuk Huzur di setelan Android.",
-    "exactAlarmButton": "Aktifkan"
+    "exactAlarmButton": "Aktifkan",
+    "adhanSound": "Azan",
+    "adhanSoundOff": "Tanpa azan, hanya notifikasi",
+    "adhanSoundDesc": "Saat ponsel dalam mode senyap atau getar, azan tidak diputar; hanya notifikasi yang muncul."
   },
   "pro": {
     "title": "Huzur Pro",
@@ -5926,7 +5929,10 @@
       "eveningTitle": "{{title}} – malam",
       "streakBody": "{{body}} Kamu bisa melanjutkan runtutan {{days}} harimu dengan perlahan.",
       "eveningBody": "{{description}} Kembali sebentar hari ini pun sudah cukup."
-    }
+    },
+    "adhanPlaying": "Azan sedang diputar…",
+    "adhanStop": "Hentikan",
+    "prayerTimeBody": "Waktu salat telah tiba."
   },
   "nafile": {
     "items": {

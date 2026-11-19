@@ -94,6 +94,37 @@ class PrayerSchedulePlugin : Plugin() {
         }
     }
 
+    /** Turns the adhan on/off (sound "" = off) and reschedules without waiting for the next timings sync. */
+    @PluginMethod
+    fun setAdhanSound(call: PluginCall) {
+        try {
+            val sound = call.getString("sound") ?: ""
+            val existing = PrayerScheduleStore.getScheduleContext(context)
+            if (existing != null) {
+                PrayerScheduleStore.saveScheduleContext(
+                    context = context,
+                    timingsJson = existing.timingsJson,
+                    latitude = existing.latitude,
+                    longitude = existing.longitude,
+                    locationName = existing.locationName,
+                    adhanSound = sound
+                )
+                PrayerScheduleCoordinator.rescheduleFromStore(context, "js_adhan_sound")
+            }
+            if (sound.isEmpty()) {
+                AdhanForegroundService.stopPlayback(context)
+            }
+            call.resolve(JSObject().apply {
+                put("success", true)
+                put("platform", "android")
+                put("playable", AdhanForegroundService.hasPlayableAdhan(context, sound))
+            })
+        } catch (error: Exception) {
+            Log.e(TAG, "Failed to set adhan sound", error)
+            call.reject("Failed to set adhan sound: ${error.message}")
+        }
+    }
+
     @PluginMethod
     fun setPrayerNotificationsEnabled(call: PluginCall) {
         val enabled = call.getBoolean("enabled")

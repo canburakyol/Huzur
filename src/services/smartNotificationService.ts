@@ -11,6 +11,7 @@ import { getPersonalizedPushHintsV1 } from './aiService';
 import { buildAiContext } from './aiContextService';
 import { getRecoveryLoopPlan } from './recoveryLoopService';
 import PrayerSchedule from '../plugins/PrayerSchedulePlugin';
+import { isKnownAdhanSound } from '../config/adhanSounds';
 import {
   NOTIFICATION_CHANNELS,
   checkNotificationPermission,
@@ -32,6 +33,8 @@ type NotificationPreferences = {
   quietHoursEnabled: boolean;
   quietHoursStart: string;
   quietHoursEnd: string;
+  /** Bundled adhan id from ADHAN_SOUNDS; '' = no adhan. */
+  adhanSound?: string;
 };
 
 type PrayerNotificationConfig = {
@@ -186,9 +189,10 @@ export const getNotificationPreferences = (): NotificationPreferences => {
     preAlertMinutes: 15,
     quietHoursEnabled: false,
     quietHoursStart: '22:00',
-    quietHoursEnd: '07:00'
+    quietHoursEnd: '07:00',
+    adhanSound: ''
   };
-  return storageService.getItem(NOTIFICATION_PREFS_KEY) || defaults;
+  return { ...defaults, ...(storageService.getItem<Partial<NotificationPreferences>>(NOTIFICATION_PREFS_KEY) || {}) };
 };
 
 const parseHourMinute = (timeValue: string | undefined, fallbackHour: number, fallbackMinute: number): { hour: number; minute: number } => {
@@ -304,6 +308,9 @@ const resolveScheduledPushCopy = async ({
   }
 };
 
+/** Fired after notification preferences change, so the prayer hook reschedules with the current timings. */
+export const NOTIFICATION_PREFS_CHANGED_EVENT = 'huzur:notification-prefs-changed';
+
 export const updateNotificationPreferences = async (newPrefs: Partial<NotificationPreferences>): Promise<NotificationPreferences> => {
   const current = getNotificationPreferences();
   const updated = { ...current, ...newPrefs };
@@ -321,6 +328,18 @@ export const updateNotificationPreferences = async (newPrefs: Partial<Notificati
   if (!updated.streak) await cancelNotificationsByType('streak');
   if (!updated.reminder) await cancelNotificationsByType('reminder');
   if (!updated.winback) await cancelNotificationsByType('winback');
+
+  if (typeof newPrefs.adhanSound === 'string' && Capacitor.getPlatform() === 'android') {
+    try {
+      await PrayerSchedule.setAdhanSound({ sound: isKnownAdhanSound(updated.adhanSound) ? String(updated.adhanSound) : '' });
+    } catch (error) {
+      logger.warn('[Notifications] Native adhan preference sync failed', error);
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent(NOTIFICATION_PREFS_CHANGED_EVENT));
+  }
 
   return updated;
 };
@@ -349,6 +368,9 @@ export const schedulePrayerNotifications = async (
 
   const hasPermission = await requestNotificationPermission();
   if (!hasPermission) return;
+
+  // With the adhan on, Android posts the prayer-time notification itself (adhan or, when silent, a plain one).
+  const nativeAdhanOn = Capacitor.getPlatform() === 'android' && isKnownAdhanSound(prefs.adhanSound);
 
   // Clear what an earlier run (maybe with the old colliding IDs) left behind before rescheduling.
   await cancelNotificationsByType('prayer');
@@ -379,7 +401,7 @@ export const schedulePrayerNotifications = async (
     prayerTime.setHours(clock[0], clock[1], 0, 0);
 
     // Sunrise ends the Fajr time and is not a prayer time; only its heads-up below is sent.
-    if (prayer !== 'Sunrise' && prayerTime > new Date()) {
+    if (prayer !== 'Sunrise' && !nativeAdhanOn && prayerTime > new Date()) {
       if (!shouldScheduleAt(prayerTime, prefs, 'prayer_main')) continue;
 
       const campaignCopy = resolveCampaignCopy({
