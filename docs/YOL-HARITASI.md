@@ -76,7 +76,7 @@ Her parça ayrı oturum; her parçada **yanlış atıf, eksik meal, kaynağı ol
 | 5b Hadisler ✅ 19 Kas | `src/data/hadiths.ts`, `contentService.ts` | 91 hadis 7 koleksiyonla karşılaştırıldı; 4 zayıf/hadis olmayan kaldırıldı, 6 metin/kaynak düzeltildi |
 | 5c Zikir / Tespihat / Nafile ✅ 19 Kas | `zikirData.ts`, `tespihatData.ts`, `NafilePrayers.jsx`, `Zikirmatik.jsx` | Tespihat doğru (Ayetel Kürsî Uthmani ile birebir); Nafile'de vitir/duha/işrak/teheccüd açıklamaları düzeltildi; `zikirData.ts` kullanılmıyor (ölü kod) |
 | 5d Hikmetler ✅ 19 Kas | `src/data/hikmetData.ts` | 6 zayıf/hadis olmayan kaldırıldı, 5 lafız/atıf düzeltildi; âlim sözlerinin çoğu kaynaksız (ekran gizli) |
-| 5e Esmâü'l-Hüsnâ, Namaz Hocası | `esmaUlHusnaData.ts`, `prayerTeacherData.ts` | Fıkhi bilgi: Diyanet ilmihaline göre |
+| 5e Esmâü'l-Hüsnâ, Namaz Hocası ✅ 19 Kas | `esmaUlHusnaData.ts`, `prayerTeacherData.ts` | 99 isim Tirmizî 3507 sırasıyla birebir; rekât tablosu doğru; selamı almak vaciptir düzeltmesi |
 
 - **Bitti sayılır:** Her parçada doğrulanamayan madde ya düzeltildi ya "kaynak doğrulanmadı" diye işaretlendi; regresyon testi var.
 

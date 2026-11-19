@@ -263,7 +263,7 @@ export const RELIGIOUS_TERMS: ReligiousTerm[] = [
     name: 'Sünnet',
     icon: '✨',
     description: 'Hz. Peygamber\'in (s.a.v.) yaptığı ve yapmamızı istediği ibadetlerdir.',
-    examples: ['Vakit namazlarının sünnetleri', 'Misvak kullanmak', 'Ezan ve kaamete icabet', 'Selama karşılık vermek']
+    examples: ['Vakit namazlarının sünnetleri', 'Misvak kullanmak', 'Ezan ve kaamete icabet', 'Selam vermek']
   },
   {
     id: 'mustehap',
