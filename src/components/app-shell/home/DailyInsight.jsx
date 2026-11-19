@@ -4,8 +4,8 @@ import { Lightbulb } from 'lucide-react';
 
 const DailyInsight = memo(({ dailyContent }) => {
   const { t } = useTranslation();
-  // Use dailyContent if available, otherwise static placeholder
-  const text = dailyContent?.insight?.text || `"Güzel söz sadakadır." (Buhari)`;
+  const text = dailyContent?.insight?.text;
+  if (!text) return null;
 
   return (
     <section className="hz-card hz-home-card">

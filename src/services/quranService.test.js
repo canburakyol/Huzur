@@ -195,7 +195,7 @@ describe('quranService', () => {
     expect(identifiers).toContain('tr.vakfi');
     expect(identifiers).not.toContain('tr.diyanet');
     expect(identifiers).toContain('tr.foo');
-    expect(identifiers.slice(0, 3)).toEqual(['tr.vakfi', 'en.sahih', 'ar.jalalayn']);
+    expect(identifiers.slice(0, 3)).toEqual(['tr.vakfi', 'en.sahih', 'de.bubenheim']);
   });
 
   it('keeps the Vakif Turkish option even if the editions API omits it', async () => {
@@ -219,6 +219,8 @@ describe('quranService', () => {
     expect(translations.map((translation) => translation.identifier)).toEqual([
       'tr.vakfi',
       'en.sahih',
+      'de.bubenheim',
+      'id.indonesian',
       'ar.jalalayn',
       'tr.foo'
     ]);
