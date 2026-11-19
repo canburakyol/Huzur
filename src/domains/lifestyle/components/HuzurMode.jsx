@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Volume2, Moon, Clock, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import PageHeader from '../../../components/shared/PageHeader';
 import { SLEEP_SOUNDS, CATEGORIES } from '../../../data/sleepModeData';
 import { logger } from '../../../utils/logger';
 import { useAppStore } from '../../../stores/useAppStore';
@@ -130,22 +130,16 @@ const HuzurMode = ({ onClose }) => {
 
             <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px', opacity: isSleepMode ? 0 : 1 }}>
                 {/* Header */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
-                    <IslamicBackButton onClick={onClose} size="medium" />
-                    <div>
-                        <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <Moon size={24} color="var(--nav-accent)" />
-                            {t('menu.huzurMode')}
-                        </h2>
-                    </div>
-                    <button 
-                        onClick={toggleSleepMode}
-                        className="gece-modu-btn"
-                    >
-                        <Moon size={16} />
-                        {t('huzurMode.night_mode', 'Gece Modu')}
-                    </button>
-                </div>
+                <PageHeader
+                    title={t('menu.huzurMode')}
+                    onBack={onClose}
+                    action={(
+                        <button type="button" onClick={toggleSleepMode} className="gece-modu-btn">
+                            <Moon size={16} strokeWidth={1.75} aria-hidden="true" />
+                            {t('huzurMode.night_mode', 'Gece Modu')}
+                        </button>
+                    )}
+                />
 
                 {/* Main Visual / Timer */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin: '40px 0' }}>

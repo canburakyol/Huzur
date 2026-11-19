@@ -830,7 +830,8 @@
     "featuredHatimsDesc": "Offene Gemeinschaftskreise, empfohlen von Huzur",
     "publicHatims": "Khatms aus der Gemeinschaft",
     "publicHatimsDesc": "Tritt bei, lade ein und begleite gemeinsam abgeschlossene Khatms",
-    "shareCopied": "Link zum Teilen kopiert."
+    "shareCopied": "Link zum Teilen kopiert.",
+    "share": "Gemeinschaft teilen"
   },
   "hatim": {
     "title": "Khatm-Tracker",

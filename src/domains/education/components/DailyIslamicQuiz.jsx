@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Brain, Trophy, CheckCircle, XCircle } from 'lucide-react';
 import PageHeader from '../../../components/shared/PageHeader';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { useGamification } from '../../../hooks/useGamification';
 import { getDailyQuestions } from '../../../data/dailyQuizData';
 import { storageService } from '../../../services/storageService';

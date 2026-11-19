@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import { storageService } from '../../../services/storageService';
 import PageHeader from '../../../components/shared/PageHeader';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import '../../../components/app-shell/Navigation.css';
 
 // Quran passages are complete and carry their exact verse references. Other entries remain general/uncited.

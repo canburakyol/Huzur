@@ -89,7 +89,7 @@ const SocialDashboard = ({ onClose }) => {
                 opacity: isSharing ? 0.7 : 1,
                 transition: 'opacity 0.2s ease, transform 0.2s ease'
               }}
-              aria-label="Share community"
+              aria-label={t('community.share', 'Topluluğu paylaş')}
               onClick={handleShare}
             >
               <Share2 size={20} />

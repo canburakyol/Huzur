@@ -944,7 +944,8 @@
     "featuredHatimsDesc": "Huzur tarafından önerilen açık topluluk halkaları",
     "publicHatims": "Topluluktan gerçek hatimler",
     "publicHatimsDesc": "Katıl, davet et ve birlikte tamamlanan hatimlere eşlik et",
-    "shareCopied": "Paylaşım linki kopyalandı."
+    "shareCopied": "Paylaşım linki kopyalandı.",
+    "share": "Topluluğu paylaş"
   },
   "hatim": {
     "title": "Hatim Takibi",

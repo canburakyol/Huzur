@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Brain, CalendarDays, Share2, Star, Target, TrendingUp, Trophy } from 'lucide-react';
 import PageHeader from '../../../components/shared/PageHeader';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { useGamification } from '../../../hooks/useGamification';
 import { useFamily } from '../../../context/FamilyContext';
 import { getLevelProgress, getNextLevel, TIER_COLORS } from '../../../data/gamificationData';

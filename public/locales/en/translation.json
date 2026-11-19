@@ -830,7 +830,8 @@
     "featuredHatimsDesc": "Open community circles recommended by Huzur",
     "publicHatims": "Khatms from the community",
     "publicHatimsDesc": "Join, invite and take part in khatms completed together",
-    "shareCopied": "Share link copied."
+    "shareCopied": "Share link copied.",
+    "share": "Share community"
   },
   "hatim": {
     "title": "Khatm Tracker",
