@@ -6,7 +6,7 @@ import { recordAiIncident } from './aiIncidentService';
 import { getLocalHomeRanking, getLocalPushHint } from './localIntelligenceService';
 import { buildWeeklyInsightFallback } from './spiritualInterventionService';
 
-interface AiIncidentMetadata {
+type AiIncidentMetadata = {
   hasContext: boolean;
   hasMessage: boolean;
   hasSessionId: boolean;
@@ -15,12 +15,12 @@ interface AiIncidentMetadata {
   notificationType?: string;
 }
 
-interface AssistantSessionState {
+type AssistantSessionState = {
   sessionId: string;
   summary: string;
 }
 
-interface AssistantPayload {
+type AssistantPayload = {
   message?: string;
   sessionId?: string;
   sessionSummary?: string;
@@ -28,40 +28,46 @@ interface AssistantPayload {
   [key: string]: unknown;
 }
 
-interface AssistantResponse {
+type AssistantResponse = {
   sessionId?: string;
   sessionSummary?: string;
+  answer?: string;
+  provider?: string;
+  confidence?: string;
+  suggestedActions?: unknown[];
   [key: string]: unknown;
 }
 
-interface HomeRankingPayload {
+type HomeRankingPayload = {
   context?: Record<string, unknown>;
   candidates?: Array<{ id: string }>;
 }
 
-interface HomeRankingResult {
+type HomeRankingResult = {
   provider: string;
   headline: string;
   explanation: string;
   socialHint: string;
   rankedModules: string[];
   riskBand: string;
+  suggestedActionFeature?: string | null;
+  suggestedActionLabel?: string;
 }
 
-interface WeeklyInsightsPayload {
+type WeeklyInsightsPayload = {
   context?: Record<string, unknown>;
   weekKey?: string;
   [key: string]: unknown;
 }
 
-interface PushHintPayload {
+type PushHintPayload = {
   type?: string;
   context?: Record<string, unknown>;
   fallbackTitle?: string;
   fallbackBody?: string;
 }
 
-interface PushHintResult {
+type PushHintResult = {
   title: string;
   body: string;
   provider: string;
@@ -153,7 +159,7 @@ export const getPersonalizedPushHintsV1 = async (payload: PushHintPayload = {}):
     recordAiIncident('push_hint', 'local_heuristic_failed', error as Error, buildAiIncidentMetadata(payload));
     logger.warn('[AIService] getPersonalizedPushHintsV1 failed', error);
     return {
-      title: payload?.fallbackTitle || 'Bugun tek bir manevi mola yeter',
+      title: payload?.fallbackTitle || 'Bugün tek bir manevi mola yeter',
       body: payload?.fallbackBody || 'Hatirlatma metni cihaz icindeki son kullanim sinyallerine gore secildi.',
       provider: 'local_fallback',
       reason: 'fallback',

@@ -15,7 +15,7 @@ import { useGrowthOnboardingFlow } from "./useGrowthOnboardingFlow";
 import { useNavigationState } from "./useNavigationState";
 import { useStreakGuards } from "./useStreakGuards";
 
-interface LocationCoords {
+type LocationCoords = {
   latitude: number;
   longitude: number;
   locationName?: string;

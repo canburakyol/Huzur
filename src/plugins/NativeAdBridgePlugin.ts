@@ -1,13 +1,13 @@
 import { registerPlugin, Capacitor } from '@capacitor/core';
 import { logger } from '../utils/logger';
 
-export interface NativeAdResult {
+export type NativeAdResult = {
   success: boolean;
   platform: string;
   error?: string;
 }
 
-export interface NativeAdBridgePlugin {
+export type NativeAdBridgePlugin = {
   initialize(): Promise<NativeAdResult>;
   loadAd(options?: { adUnitId?: string }): Promise<NativeAdResult>;
   showAd(options: {

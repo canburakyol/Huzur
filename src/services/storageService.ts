@@ -265,16 +265,19 @@ const queuePrayerScheduleCacheSync = (key: string, value: unknown): void => {
   pendingPrayerSyncTimer = setTimeout(flushQueuedPrayerSync, NATIVE_PRAYER_SYNC_DEBOUNCE_MS);
 };
 
-export const getItem = <T = unknown>(key: string, defaultValue: T | null = null): T | null => {
+export function getItem<T = unknown>(key: string, defaultValue: T): T;
+export function getItem<T = unknown>(key: string, defaultValue?: T | null): T | null;
+export function getItem<T = unknown>(key: string, defaultValue: T | null = null): T | null {
   try {
     const item = localStorage.getItem(key);
     if (item === null) return defaultValue;
-    return JSON.parse(item) as T;
+    // A stored JSON null falls back to the default too, so callers that pass one never see null.
+    return (JSON.parse(item) as T | null) ?? defaultValue;
   } catch (error) {
     logger.error(`[StorageService] Error reading ${key}`, error);
     return defaultValue;
   }
-};
+}
 
 export const setItem = (key: string, value: unknown): boolean => {
   try {

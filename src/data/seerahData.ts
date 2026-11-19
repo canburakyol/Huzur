@@ -1,4 +1,4 @@
-export interface SeerahPeriod {
+export type SeerahPeriod = {
   id: string;
   name: string;
   color: string;
@@ -6,7 +6,7 @@ export interface SeerahPeriod {
 
 export type ImportanceLevel = 'critical' | 'high' | 'medium' | 'low';
 
-export interface SeerahEvent {
+export type SeerahEvent = {
   id: number;
   period: string;
   year: number;
@@ -28,7 +28,7 @@ export const SEERAH_EVENTS: SeerahEvent[] = [
   {
     id: 1,
     period: 'mecca_early',
-    year: 570,
+    year: 571,
     title: 'Hz. Muhammed\'in Doğumu',
     location: 'Mekke',
     description: 'Peygamberimiz (s.a.v.) Fil Yılı\'nda, Rebiülevvel ayının 12\'sinde Mekke\'de, Hâşimoğulları ailesine mensup Abdullah ve Âmine\'nin oğlu olarak dünyaya geldi. Babası doğumundan önce vefat etmişti. Doğumunda birçok mucize gerçekleştiği rivayet edilir.',
@@ -38,7 +38,7 @@ export const SEERAH_EVENTS: SeerahEvent[] = [
   {
     id: 2,
     period: 'mecca_early',
-    year: 575,
+    year: 577,
     title: 'Annesinin Vefatı',
     location: 'Ebva (Medine yakınları)',
     description: 'Hz. Muhammed 6 yaşındayken annesi Âmine vefat etti. Bu dönemi "yetim" olarak geçirdi. Daha sonra önce dedesi Abdülmuttalib, sonra amcası Ebu Talip tarafından himaye edildi.',
@@ -48,7 +48,7 @@ export const SEERAH_EVENTS: SeerahEvent[] = [
   {
     id: 3,
     period: 'mecca_early',
-    year: 578,
+    year: 579,
     title: 'Dedesinin Himayesinde',
     location: 'Mekke',
     description: 'Dedesi Abdülmuttalib, Mekke\'nin saygın liderleri arasında idi ve torunu Muhammed\'e çok özen gösterdi. 8 yaşına geldiğinde dedesi de vefat etti.',
@@ -111,7 +111,7 @@ export const SEERAH_EVENTS: SeerahEvent[] = [
     year: 610,
     title: 'İlk Vahiy - Hira Mağarası',
     location: 'Hira Mağarası, Mekke',
-    description: 'Ramazan ayının 21. gecesi (Kadir Gecesi), Cebrail (a.s.) ilk vahyi getirdi: "İkra!" (Oku!). Alak Suresi\'nin ilk 5 ayeti indi. Bu, peygamberliğin başlangıcıdır. Hz. Muhammed 40 yaşındaydı.',
+    description: 'Ramazan ayında, yaygın kabule göre Kadir Gecesi\'nde Cebrail (a.s.) ilk vahyi getirdi: "İkra!" (Oku!). Alak Suresi\'nin ilk 5 ayeti indi. Bu, peygamberliğin başlangıcıdır. Hz. Muhammed 40 yaşındaydı.',
     icon: '📖',
     importance: 'critical'
   },
@@ -211,7 +211,7 @@ export const SEERAH_EVENTS: SeerahEvent[] = [
     year: 622,
     title: 'İkinci Akabe Biatı',
     location: 'Akabe, Mina',
-    description: '73 erkek ve 2 kadın, Hz. Muhammed\'e biat ederek O\'nu Medine\'ye davet etti ve koruyacaklarına söz verdi. Hz. Mus\'ab ibn Umeyr ilk İslam öğretmeni olarak Medine\'ye gönderildi. Hicret için zemin hazırlandı.',
+    description: '73 erkek ve 2 kadın, Hz. Muhammed\'e biat ederek O\'nu Medine\'ye davet etti ve koruyacaklarına söz verdi. Bir yıl önce ilk İslam öğretmeni olarak Medine\'ye gönderilen Hz. Mus\'ab ibn Umeyr\'in tebliğiyle Müslümanların sayısı artmıştı. Hicret için zemin hazırlandı.',
     icon: '✋',
     importance: 'critical'
   },
@@ -278,10 +278,10 @@ export const SEERAH_EVENTS: SeerahEvent[] = [
   {
     id: 26,
     period: 'medina',
-    year: 623,
+    year: 624,
     title: 'Kıble\'nin Değişmesi',
     location: 'Medine',
-    description: 'İlk başta Kudüs yönüne dönülerek namaz kılınırken, 16-17 ay sonra Kabe yönüne (Mekke) dönülmesi emredildi. Bu değişiklik Müslümanların kendi kimliklerini pekiştirdi.',
+    description: 'İlk başta Kudüs yönüne dönülerek namaz kılınırken, hicretten 16-17 ay sonra Kabe yönüne (Mekke) dönülmesi emredildi. Bu değişiklik Müslümanların kendi kimliklerini pekiştirdi.',
     icon: '🧭',
     importance: 'high'
   },

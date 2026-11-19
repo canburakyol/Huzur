@@ -6,28 +6,28 @@ import { sanitizePrayerTimings, PRAYER_KEYS_ALL } from '../constants/prayerTimes
 import { getTodayDiyanetTimes, fetchMonthlyDiyanetTimes, mapDiyanetToInternalTimings } from './diyanetApiService';
 import { findDistrictByName, getSelectedDistrictId } from './diyanetLocationService';
 
-interface PrayerTimings {
+type PrayerTimings = {
   [key: string]: string;
 }
 
-interface PrayerDate {
+type PrayerDate = {
   readable: string;
 }
 
-interface PrayerMeta {
+type PrayerMeta = {
   method: {
     name: string;
   };
 }
 
-interface PrayerPayload {
+type PrayerPayload = {
   timings: PrayerTimings;
   date?: PrayerDate;
   meta?: PrayerMeta;
   [key: string]: unknown;
 }
 
-interface MonthlyPrayerData {
+type MonthlyPrayerData = {
   timings: PrayerPayload[];
   timestamp: number;
   month: number;
@@ -36,7 +36,7 @@ interface MonthlyPrayerData {
   longitude: number;
 }
 
-interface NextPrayer {
+type NextPrayer = {
   name: string;
   time: string;
   key: string;
@@ -101,7 +101,7 @@ export const fetchMonthlyPrayerTimes = async (
   try {
     const month = targetDate.getMonth() + 1;
     const year = targetDate.getFullYear();
-    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    if (typeof latitude !== 'number' || typeof longitude !== 'number' || !Number.isFinite(latitude) || !Number.isFinite(longitude)) {
       throw new Error('Monthly prayer times require trustworthy coordinates');
     }
     const lat = latitude;

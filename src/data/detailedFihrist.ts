@@ -1,14 +1,14 @@
-export interface AyahReference {
+export type AyahReference = {
   s: number;
   a: number;
 }
 
-export interface FihristTopic {
+export type FihristTopic = {
   title: string;
   ayahs: AyahReference[];
 }
 
-export interface FihristCategory {
+export type FihristCategory = {
   category: string;
   topics: FihristTopic[];
 }

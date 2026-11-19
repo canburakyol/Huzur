@@ -79,6 +79,7 @@ Her parça ayrı oturum; her parçada **yanlış atıf, eksik meal, kaynağı ol
 | 5d Hikmetler ✅ 19 Kas | `src/data/hikmetData.ts` | 6 zayıf/hadis olmayan kaldırıldı, 5 lafız/atıf düzeltildi; âlim sözlerinin çoğu kaynaksız (ekran gizli) |
 | 5e Esmâü'l-Hüsnâ, Namaz Hocası ✅ 19 Kas | `esmaUlHusnaData.ts`, `prayerTeacherData.ts` | 99 isim Tirmizî 3507 sırasıyla birebir; rekât tablosu doğru; selamı almak vaciptir düzeltmesi |
 | 5f Yarışma, Duygu ayetleri, Tecvid, Nüzul, Fihrist ✅ 19 Kas | `dailyQuizData.ts`, `moodData.ts`, `tajweed*.ts`, `nuzulData.ts`, `detailedFihrist.ts` | Zamm-ı sure "her rekâtta" yanlışı, kıble 16-17 ay; kalkale örneği (قُلْ → الْفَلَقِ), Mü'minûn 23:55; Nüzul'de Duha/Tebbet/Mâide rivayetleri Buhârî'ye göre; fihristin ~280 ayeti konusuyla uyumlu. tr çeviride "?" olmuş 30 harf düzeltildi, testle korunuyor |
+| 5h Kütüphane, Zekât, manevi öneriler ✅ 20 Kas | `libraryData.ts` (+en/de/id), `ZakatCalculator.jsx`, `spiritualInterventions` | Kütüphane'de 18 hata 4 dilde (Varaka "son peygamber", Hz. Ömer'in İslam'a girişi, Karahanlı 840, Mus'ab'ın kefeni, Talha "1000 dinar", Süleyman "cin dili", Fatiha'nın Arapçası eksikti...). Zekât: gümüş sabit 30 TL/gr ve eski altın fiyatıyla hesaplanıyordu; artık fiyatlar giriliyor, test var. Manevi öneri metinleri (haftalık rapor, bildirim) Türkçe harfsizdi ve her dilde Türkçe çıkıyordu: harfler düzeltildi, Türkçe dışında çevrilmiş yedek metin gösteriliyor |
 | 5g Siyer ⬜ | `seerahData.ts` | Siyer Haritası ve Nüzul ekranları menüde yok (gizli); açılacaksa önce doğrulanmalı |
 
 - **Bitti sayılır:** Her parçada doğrulanamayan madde ya düzeltildi ya "kaynak doğrulanmadı" diye işaretlendi; regresyon testi var.
@@ -101,7 +102,7 @@ Sıra (en çok kullanılan önce):
 
 ## 7. Teknik borç
 
-- `npx tsc --noEmit` 432 hata veriyor (derleme denetlemediği için uygulama çalışıyor). Alan alan sıfırla; en sonda CI'a tip kontrolü ekle.
+- `npx tsc --noEmit` 100 hata veriyor (20 Kas: 269→100; interface→type, storage getItem overload, servis tipleri) (derleme denetlemediği için uygulama çalışıyor). Alan alan sıfırla; en sonda CI'a tip kontrolü ekle.
 - ✅ `scope-files` zaman aşımı ve testlerdeki i18n HTTP istekleri (teardown sonrası AbortError) giderildi.
 - ✅ `reports/*.md` artık yalnızca içerik değişince yeniden yazılıyor.
 - **Bitti sayılır:** `tsc` sıfır hata, test paketi kararlı geçiyor, `git status` temiz kalıyor.

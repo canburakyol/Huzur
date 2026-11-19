@@ -2,7 +2,7 @@ import { storageService } from "./storageService";
 
 export type FocusSessionKind = "huzur_mode" | "islamic_meditation";
 
-export interface FocusSession {
+export type FocusSession = {
   sessionId: string;
   kind: FocusSessionKind;
   presetId: string;
@@ -13,7 +13,7 @@ export interface FocusSession {
   pausedRemainingMs?: number;
 }
 
-interface CompletedFocusSession {
+type CompletedFocusSession = {
   sessionId: string;
   completedAt: number;
   kind: FocusSessionKind;

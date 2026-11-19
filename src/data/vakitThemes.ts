@@ -1,8 +1,8 @@
-export interface VakitThemeColors {
+export type VakitThemeColors = {
   [key: string]: string;
 }
 
-export interface VakitTheme {
+export type VakitTheme = {
   id: string;
   name: string;
   colors: VakitThemeColors;

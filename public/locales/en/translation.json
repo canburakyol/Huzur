@@ -3623,7 +3623,12 @@
     "discoverTitle": "Discovered families",
     "discoverSubtitle": "See families who joined the community, get inspired and create your own family",
     "createHint": "Create a new family group",
-    "joinHint": "Join a group with an invite code"
+    "joinHint": "Join a group with an invite code",
+    "weeklyGoal": {
+      "updating": "Updating...",
+      "contributed": "Today's contribution saved",
+      "contribute": "Contribute today"
+    }
   },
   "hatimCoach": {
     "title": "Smart Khatm Coach",
@@ -4452,7 +4457,9 @@
     "netWealth": "Net Wealth",
     "zakatLabel": "Zakat",
     "noZakatRequired": "No Zakat Required",
-    "percentNote": "(2.5% of net wealth)"
+    "percentNote": "(2.5% of net wealth)",
+    "silverPriceLabel": "Silver Price (per gram)",
+    "enterPrice": "Enter today's gold price per gram (and silver, if you have any) to calculate"
   },
   "modules": {
     "core": "Core Features",
@@ -5899,7 +5906,12 @@
         "description": "Plays the adhan at prayer times"
       }
     },
-    "adhanTitle": "🕌 {{prayer}} time"
+    "adhanTitle": "🕌 {{prayer}} time",
+    "recovery": {
+      "eveningTitle": "{{title}} – evening",
+      "streakBody": "{{body}} You can gently continue your {{days}}-day streak.",
+      "eveningBody": "{{description}} Even a short return today is enough."
+    }
   },
   "nafile": {
     "items": {
@@ -6048,6 +6060,85 @@
     "quiz": {
       "correctAnswers": "CORRECT ANSWERS",
       "label": "TAJWEED QUIZ"
+    }
+  },
+  "recovery": {
+    "default": {
+      "headline": "Keep your rhythm, gently",
+      "description": "Choosing one small step today may be enough to keep your rhythm.",
+      "notificationTitle": "One step is enough today",
+      "notificationBody": "With one small touch you can calmly set the rhythm of your day."
+    },
+    "cta": {
+      "default": "Open today's step",
+      "quran": "Open your Quran journey",
+      "family": "Open family rhythm"
+    },
+    "comeback": {
+      "headline": "A good moment to begin again",
+      "description": "After a {{days}}-day break, a slow, judgement-free return is the healthiest step.",
+      "notificationTitle": "Come back gently",
+      "notificationBody": "Today a small start is all you need."
+    },
+    "atRisk": {
+      "headline": "Pick it up before the rhythm fades",
+      "description": "Your rhythm may have cooled a little. One easy action can help you hold on again.",
+      "notificationTitle": "A short step to keep your rhythm",
+      "notificationBody": "No big goal needed; calmly gathering today is enough."
+    },
+    "cooling": {
+      "headline": "Refresh your rhythm today",
+      "description": "A brief moment of connection can revive the flow of your week.",
+      "notificationTitle": "Renew your intention today",
+      "notificationBody": "A short pause can reconnect you with the flow of the day."
+    },
+    "steady": {
+      "headline": "Your rhythm is flowing well",
+      "description": "To keep a good rhythm without strain, pick one clear step again today.",
+      "notificationTitle": "A small step that keeps your rhythm",
+      "notificationBody": "One calm step today keeps this consistency going."
+    }
+  },
+  "premiumMoment": {
+    "weeklyDepth": {
+      "headline": "See your weekly summary in more depth",
+      "description": "Deeper weekly insight, calm follow-up and clear next steps come with Pro."
+    },
+    "familyRhythm": {
+      "headline": "Open the flow that builds a family rhythm",
+      "description": "Bring family rhythm, shared goals and deeper guidance together in one place."
+    },
+    "quietSupport": {
+      "headline": "Unlock quiet premium support",
+      "description": "On hard days you can unlock a calmer, more personal and deeper layer of support."
+    },
+    "aiGuidanceAssistant": {
+      "headline": "Unlock deeper AI guidance",
+      "description": "Get deeper direction, follow-up steps and calm premium support with the Huzur Guide."
+    },
+    "aiGuidance": {
+      "headline": "Unlock deeper guidance",
+      "description": "Move into a deeper flow with AI guidance, weekly insights and rhythm support."
+    },
+    "family": {
+      "headline": "Unlock Pro support for your family rhythm",
+      "description": "Family goals, weekly depth and calm premium support in a single flow."
+    },
+    "quran": {
+      "headline": "Deepen your Quran journey",
+      "description": "Build a calmer Quran focus with deeper weekly summaries and guidance."
+    },
+    "recovery": {
+      "headline": "Unlock deeper support for today",
+      "description": "Don't rebuild your rhythm alone; unlock calm premium guidance."
+    },
+    "weeklyInsight": {
+      "headline": "See your weekly rhythm more clearly",
+      "description": "Deeper insights and family rhythm suggestions are added on top of your weekly summary."
+    },
+    "assistantUsed": {
+      "headline": "Deepen your guidance",
+      "description": "Go further with longer memory, deeper follow-up and calm premium support."
     }
   }
 }

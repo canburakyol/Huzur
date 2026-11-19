@@ -6,7 +6,7 @@
 
 import { allFeatures } from '../features';
 
-interface FeatureEntry {
+type FeatureEntry = {
   component: React.LazyExoticComponent<() => JSX.Element>;
   category: string;
   module: string;

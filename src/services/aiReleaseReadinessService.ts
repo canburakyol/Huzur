@@ -1,32 +1,32 @@
-interface Surface {
+type Surface = {
   updatedAtIso?: string;
 }
 
-interface HealthSummary {
+type HealthSummary = {
   latestAiHealthAt?: string;
   surfaces?: Surface[];
   actionCount?: number;
   watchCount?: number;
 }
 
-interface RolloutGate {
+type RolloutGate = {
   recommendation?: string;
   label?: string;
 }
 
-interface IncidentSummary {
+type IncidentSummary = {
   criticalCount?: number;
   last24hCount?: number;
 }
 
-interface ReadinessCheck {
+type ReadinessCheck = {
   key: string;
   label: string;
   status: 'pass' | 'warn' | 'fail';
   detail: string;
 }
 
-interface ReleaseReadinessResult {
+type ReleaseReadinessResult = {
   status: 'blocked' | 'monitor' | 'ready';
   failedChecks: number;
   warnedChecks: number;
@@ -34,7 +34,7 @@ interface ReleaseReadinessResult {
   ageHours: number | null;
 }
 
-interface BuildReadinessOptions {
+type BuildReadinessOptions = {
   healthSummary?: HealthSummary | null;
   rolloutGate?: RolloutGate | null;
   incidentSummary?: IncidentSummary | null;

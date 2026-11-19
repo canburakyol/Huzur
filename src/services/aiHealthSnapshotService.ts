@@ -5,7 +5,7 @@ import { getCurrentUserIdEnsured } from './authService';
 import { getDb } from './firebase';
 import { storageService } from './storageService';
 
-interface AiHealthSource {
+type AiHealthSource = {
   sourceId: string | null;
   label: string;
   type: string;
@@ -14,7 +14,7 @@ interface AiHealthSource {
   origin: string;
 }
 
-interface AiHealthSnapshot {
+type AiHealthSnapshot = {
   kind: string;
   provider: string;
   confidence: string | null;
@@ -30,7 +30,7 @@ interface AiHealthSnapshot {
   sources: AiHealthSource[];
 }
 
-interface AiHealthData {
+type AiHealthData = {
   latestAssistantSnapshot: AiHealthSnapshot | null;
   latestHomeRankingSnapshot: AiHealthSnapshot | null;
   latestWeeklyInsightSnapshot: AiHealthSnapshot | null;
@@ -38,7 +38,7 @@ interface AiHealthData {
   latestAiHealthAt: string | null;
 }
 
-interface GetAiHealthOptions {
+type GetAiHealthOptions = {
   forceRefresh?: boolean;
 }
 

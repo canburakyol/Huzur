@@ -3811,7 +3811,12 @@
     "discoverTitle": "Keşfedilen aileler",
     "discoverSubtitle": "Topluluğa katılan aileleri gör, ilham al ve kendi aileni oluştur",
     "createHint": "Yeni bir aile grubu oluşturun",
-    "joinHint": "Davet kodu ile bir gruba katılın"
+    "joinHint": "Davet kodu ile bir gruba katılın",
+    "weeklyGoal": {
+      "updating": "Güncelleniyor...",
+      "contributed": "Bugünkü katkı kaydedildi",
+      "contribute": "Bugün katkı yap"
+    }
   },
   "hatimCoach": {
     "title": "Akıllı Hatim Koçu",
@@ -4230,7 +4235,9 @@
     "netWealth": "Net Servet",
     "zakatLabel": "Zekat",
     "noZakatRequired": "Zekat Gerekmez",
-    "percentNote": "(Net servetin %2.5’i)"
+    "percentNote": "(Net servetin %2.5’i)",
+    "silverPriceLabel": "Gümüş Fiyatı (TL/gram)",
+    "enterPrice": "Hesap için güncel altın (ve gümüşünüz varsa gümüş) gram fiyatını girin"
   },
   "weeklySermon": {
     "title": "Haftanın Hutbesi",
@@ -5899,7 +5906,12 @@
         "description": "Namaz vakitlerinde ezan sesi çalar"
       }
     },
-    "adhanTitle": "🕌 {{prayer}} Vakti"
+    "adhanTitle": "🕌 {{prayer}} Vakti",
+    "recovery": {
+      "eveningTitle": "{{title}} - akşam",
+      "streakBody": "{{body}} {{days}} günlük zincirini yavaşça sürdürebilirsin.",
+      "eveningBody": "{{description}} Bugün kısa bir dönüş bile yeterli."
+    }
   },
   "nafile": {
     "items": {
@@ -6048,6 +6060,85 @@
     "quiz": {
       "correctAnswers": "DOĞRU CEVAP",
       "label": "TECVİD QUİZ"
+    }
+  },
+  "recovery": {
+    "default": {
+      "headline": "Ritmini sakin biçimde sürdür",
+      "description": "Bugün tek bir küçük adım seçmek ritmi korumak için yeterli olabilir.",
+      "notificationTitle": "Bugün tek bir adım yeterli",
+      "notificationBody": "Küçük bir dokunuşla günün ritmini sakin biçimde kurabilirsin."
+    },
+    "cta": {
+      "default": "Bugünün adımını aç",
+      "quran": "Kur'an yolculuğunu aç",
+      "family": "Aile ritmini aç"
+    },
+    "comeback": {
+      "headline": "Yeniden başlamak için iyi bir an",
+      "description": "{{days}} günlük aradan sonra yavaş ve yargısız bir dönüş en sağlıklı adım olur.",
+      "notificationTitle": "Yavaşça geri dön",
+      "notificationBody": "Bugün sadece küçük bir başlangıç yapman yeterli."
+    },
+    "atRisk": {
+      "headline": "Ritmi kaybetmeden toparla",
+      "description": "Ritim biraz soğumuş olabilir. Tek bir kolay aksiyonla yeniden tutunabilirsin.",
+      "notificationTitle": "Ritmi korumak için kısa bir adım",
+      "notificationBody": "Büyük hedef değil, sadece bugünü sakin biçimde toparlamak yeterli."
+    },
+    "cooling": {
+      "headline": "Bugün ritmi tazele",
+      "description": "Kısa bir temas, haftanın akışını yeniden canlandırabilir.",
+      "notificationTitle": "Bugün niyetini tazele",
+      "notificationBody": "Kısa bir mola ile günün akışına tekrar bağlanabilirsin."
+    },
+    "steady": {
+      "headline": "Ritmin güzel bir akışta",
+      "description": "İyi giden ritmi zorlamadan sürdürmek için bugün yine tek bir net adım seç.",
+      "notificationTitle": "Ritmini koruyan küçük adım",
+      "notificationBody": "Bugün sakin bir adımla bu istikrarı sürdürebilirsin."
+    }
+  },
+  "premiumMoment": {
+    "weeklyDepth": {
+      "headline": "Haftalık özeti daha derin gör",
+      "description": "Daha derin haftalık içgörü, sakin takip ve net sonraki adımlar Pro ile açılır."
+    },
+    "familyRhythm": {
+      "headline": "Ailece ritim kuran akışı aç",
+      "description": "Aile ritmini, ortak hedefleri ve daha derin rehberliği tek yerde toparla."
+    },
+    "quietSupport": {
+      "headline": "Sessiz premium desteği aç",
+      "description": "Zorlanan günlerde daha sakin, kişisel ve derin bir destek katmanı açabilirsin."
+    },
+    "aiGuidanceAssistant": {
+      "headline": "Daha derin AI rehberliği aç",
+      "description": "Huzur Rehberi ile daha derin yönlendirmeler, takip odaklı adımlar ve sakin premium destek al."
+    },
+    "aiGuidance": {
+      "headline": "Daha derin rehberliği aç",
+      "description": "AI rehberlik, haftalık içgörüler ve ritim desteğiyle daha derin bir akışa geç."
+    },
+    "family": {
+      "headline": "Aile ritmi için Pro desteği aç",
+      "description": "Aile hedefleri, haftalık derinlik ve sakin premium destek tek akışta toplansın."
+    },
+    "quran": {
+      "headline": "Kur'an yolculuğunu derinleştir",
+      "description": "Daha derin haftalık özetler ve rehberlik ile Kur'an odağını daha sakin kur."
+    },
+    "recovery": {
+      "headline": "Bugün için daha derin destek aç",
+      "description": "Ritmi yeniden kurarken tek başına kalma; sakin premium rehberlik katmanını aç."
+    },
+    "weeklyInsight": {
+      "headline": "Haftalık ritmini daha net gör",
+      "description": "Haftalık özetinin üstüne daha derin içgörüler ve aile ritmi önerileri eklenir."
+    },
+    "assistantUsed": {
+      "headline": "Rehberliği derinleştir",
+      "description": "Daha uzun hafıza, daha derin takip ve sakin premium destek ile ilerle."
     }
   }
 }

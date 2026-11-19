@@ -17,7 +17,7 @@ export type ReligiousDayKind =
   | 'asure'
   | 'mevlid';
 
-export interface ReligiousDay {
+export type ReligiousDay = {
   /** Local calendar date, YYYY-MM-DD. Parse with parseLocalDate, never new Date(string) (that is UTC). */
   date: string;
   kind: ReligiousDayKind;

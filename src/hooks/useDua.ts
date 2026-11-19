@@ -6,7 +6,7 @@ import { ensureAuthenticated } from "../services/authService";
 import { logger } from "../utils/logger";
 import { DUA_DISCOVERY_SEEDS } from "../features/social/discoverySeeds";
 
-interface Dua {
+type Dua = {
   id: string;
   text: string;
   authorName?: string;
@@ -17,7 +17,7 @@ interface Dua {
   [key: string]: unknown;
 }
 
-interface UseDuaResult {
+type UseDuaResult = {
   loading: boolean;
   error: string | null;
   duas: Dua[];
@@ -181,7 +181,8 @@ export const useDua = (): UseDuaResult => {
           current.map((dua) => (dua.id === duaId ? { ...dua, aminCount: result.aminCount } : dua))
         );
       }
-      return result;
+      // The call resolved, so the prayer was recorded even if the server sent no body.
+      return result ?? { success: true };
     } catch (err) {
       logger.error("Pray action error:", err);
       throw err;

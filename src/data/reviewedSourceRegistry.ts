@@ -9,7 +9,7 @@ export const REVIEWED_SOURCE_STATUS = {
 
 export type ReviewedSourceStatus = typeof REVIEWED_SOURCE_STATUS[keyof typeof REVIEWED_SOURCE_STATUS];
 
-interface SourceTemplate {
+type SourceTemplate = {
   type: string;
   reviewStatus: ReviewedSourceStatus;
   confidence: string;
@@ -41,7 +41,7 @@ export const getCanonicalSourceTemplate = (type = 'content', namespace = 'conten
   };
 };
 
-interface SourceMetaInput {
+type SourceMetaInput = {
   namespace?: string;
   id?: string;
   label?: string;
@@ -51,7 +51,7 @@ interface SourceMetaInput {
   origin?: string;
 }
 
-interface SourceMeta {
+type SourceMeta = {
   sourceId: string;
   label: string;
   type: string;

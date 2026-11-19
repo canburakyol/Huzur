@@ -2,13 +2,13 @@ import streakService from './streakService';
 import smartNotificationService from './smartNotificationService';
 import i18n from '../i18n';
 
-interface StreakData {
+type StreakData = {
   lastVisitDate: string | null;
   currentStreak: number;
   streaks?: Record<string, { count: number; lastDate: string | null }>;
 }
 
-interface NotificationMetadata {
+type NotificationMetadata = {
   type: string;
   category: string;
   level: string;

@@ -1,4 +1,4 @@
-export interface MultimediaCategory {
+export type MultimediaCategory = {
   id: string;
   title: string;
   icon: string;
@@ -6,7 +6,7 @@ export interface MultimediaCategory {
   count: number;
 }
 
-export interface DuaImage {
+export type DuaImage = {
   id: string;
   title: string;
   text: string;
@@ -14,7 +14,7 @@ export interface DuaImage {
   textColor: string;
 }
 
-export interface MosqueImage {
+export type MosqueImage = {
   id: string;
   title: string;
   location: string;
@@ -22,7 +22,7 @@ export interface MosqueImage {
   thumbnail: string;
 }
 
-export interface KabeImage {
+export type KabeImage = {
   id: string;
   title: string;
   location: string;
@@ -30,7 +30,7 @@ export interface KabeImage {
   thumbnail: string;
 }
 
-export interface RamazanImage {
+export type RamazanImage = {
   id: string;
   title: string;
   description: string;
@@ -38,7 +38,7 @@ export interface RamazanImage {
   thumbnail: string;
 }
 
-export interface KuranImage {
+export type KuranImage = {
   id: string;
   title: string;
   description: string;
@@ -46,7 +46,7 @@ export interface KuranImage {
   thumbnail: string;
 }
 
-export interface TesbihImage {
+export type TesbihImage = {
   id: string;
   title: string;
   description: string;

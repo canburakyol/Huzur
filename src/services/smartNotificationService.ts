@@ -1,4 +1,4 @@
-import { LocalNotifications } from '@capacitor/local-notifications';
+import { LocalNotifications, type ScheduleEvery } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import { storageService } from './storageService';
 import i18n from '../i18n';
@@ -51,7 +51,7 @@ type DailyReminderConfig = {
   id: string;
   title: string;
   body: string;
-  slot: string;
+  slot: 'morning' | 'afternoon' | 'evening';
   fallbackHour: number;
   minute: number;
 };
@@ -72,7 +72,7 @@ type ScheduledNotification = {
     at?: Date;
     allowWhileIdle?: boolean;
     repeats?: boolean;
-    every?: string;
+    every?: ScheduleEvery;
   };
   sound?: string;
   channelId?: string;
@@ -392,7 +392,7 @@ export const schedulePrayerNotifications = async (prayerTimes: Record<string, st
           at: prayerTime,
           allowWhileIdle: true
         },
-        sound: NOTIFICATION_CHANNELS.PRAYER.sound,
+        sound: NOTIFICATION_CHANNELS.PRAYER.sound ?? undefined,
         channelId: NOTIFICATION_CHANNELS.PRAYER.id,
         smallIcon: 'ic_notification',
         actionTypeId: 'PRAYER_ACTION',
@@ -511,12 +511,12 @@ export const scheduleStreakNotifications = async (currentStreak: number): Promis
     const personalizedTitle = recoveryPlan
       ? index === 0
         ? recoveryPlan.notificationTitle
-        : `${recoveryPlan.notificationTitle} - aksam`
+        : i18n.t('notify.recovery.eveningTitle', { title: recoveryPlan.notificationTitle, defaultValue: '{{title}} - akşam' })
       : config.title;
     const personalizedBody = recoveryPlan
       ? index === 0
-        ? `${recoveryPlan.notificationBody} ${currentStreak} gunluk zincirini yavasca surdurebilirsin.`
-        : `${recoveryPlan.description} Bugun kisa bir donus bile yeterli.`
+        ? i18n.t('notify.recovery.streakBody', { body: recoveryPlan.notificationBody, days: currentStreak, defaultValue: '{{body}} {{days}} günlük zincirini yavaşça sürdürebilirsin.' })
+        : i18n.t('notify.recovery.eveningBody', { description: recoveryPlan.description, defaultValue: '{{description}} Bugün kısa bir dönüş bile yeterli.' })
       : config.body.replace('{days}', String(currentStreak));
 
     notifications.push({
@@ -527,7 +527,7 @@ export const scheduleStreakNotifications = async (currentStreak: number): Promis
         at: scheduleTime,
         allowWhileIdle: true
       },
-      sound: NOTIFICATION_CHANNELS.STREAK.sound,
+      sound: NOTIFICATION_CHANNELS.STREAK.sound ?? undefined,
       channelId: NOTIFICATION_CHANNELS.STREAK.id,
       smallIcon: 'ic_notification',
       largeIcon: 'ic_fire',
@@ -614,7 +614,7 @@ export const scheduleDailyReminders = async (): Promise<void> => {
           repeats: true,
           every: 'day'
         },
-        sound: NOTIFICATION_CHANNELS.REMINDER.sound,
+        sound: NOTIFICATION_CHANNELS.REMINDER.sound ?? undefined,
         channelId: NOTIFICATION_CHANNELS.REMINDER.id,
         smallIcon: 'ic_notification',
         extra: {
@@ -647,7 +647,7 @@ export const scheduleDailyReminders = async (): Promise<void> => {
   }
 };
 
-export const buildWinbackNotifications = (now: Date = new Date(), prefs: NotificationPreferences = getNotificationPreferences()): (ScheduledNotification | null)[] => {
+export const buildWinbackNotifications = (now: Date = new Date(), prefs: NotificationPreferences = getNotificationPreferences()): ScheduledNotification[] => {
   return WINBACK_NOTIFICATIONS.map((config) => {
     const scheduleTime = new Date(now);
     scheduleTime.setDate(scheduleTime.getDate() + config.delayDays);
@@ -832,7 +832,7 @@ const getScheduledNotifications = (): NotificationStorage => {
   };
 };
 
-const saveToHistory = (notification: NotificationHistoryEntry): void => {
+const saveToHistory = (notification: Omit<NotificationHistoryEntry, 'timestamp'>): void => {
   try {
     const history = storageService.getItem<NotificationHistoryEntry[]>(NOTIFICATION_HISTORY_KEY) || [];
     history.unshift({

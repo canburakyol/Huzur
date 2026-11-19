@@ -3,7 +3,7 @@ import { storageService } from './storageService';
 
 // --- Types ---
 
-export interface DiyanetRawPrayerDay {
+export type DiyanetRawPrayerDay = {
   Imsak: string;
   Gunes: string;
   Ogle: string;
@@ -24,25 +24,25 @@ export interface DiyanetRawPrayerDay {
   [key: string]: unknown;
 }
 
-export interface DiyanetCountry {
+export type DiyanetCountry = {
   UlkeID: string;
   UlkeAdi: string;
   UlkeAdiEn: string;
 }
 
-export interface DiyanetCity {
+export type DiyanetCity = {
   SehirID: string;
   SehirAdi: string;
   SehirAdiEn: string;
 }
 
-export interface DiyanetDistrict {
+export type DiyanetDistrict = {
   IlceID: string;
   IlceAdi: string;
   IlceAdiEn: string;
 }
 
-interface NormalizedTimings {
+type NormalizedTimings = {
   Fajr: string;
   Sunrise: string;
   Dhuhr: string;
@@ -52,7 +52,7 @@ interface NormalizedTimings {
   Imsak: string;
 }
 
-export interface DiyanetMonthlyCache {
+export type DiyanetMonthlyCache = {
   districtId: string;
   timestamp: number;
   days: DiyanetRawPrayerDay[];

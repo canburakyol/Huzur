@@ -4,22 +4,22 @@ import { getDb, getFunctionsInstance } from './firebase';
 import { getCurrentUserIdEnsured } from './authService';
 import { logger } from '../utils/logger';
 
-interface FamilyMember {
+type FamilyMember = {
   uid: string;
   [key: string]: unknown;
 }
 
-interface FamilyData {
+type FamilyData = {
   members?: string[];
   [key: string]: unknown;
 }
 
-interface FamilyResult {
+type FamilyResult = {
   familyId: string | null;
   [key: string]: unknown;
 }
 
-interface FamilyWeeklyGoalResult {
+type FamilyWeeklyGoalResult = {
   goal: unknown | null;
 }
 
@@ -27,7 +27,7 @@ interface FamilyWithMembers extends DocumentData {
   membersDetails: FamilyMember[];
 }
 
-interface ContributeOptions {
+type ContributeOptions = {
   familyId?: string | null;
   weekKey?: string | null;
   amount?: number;

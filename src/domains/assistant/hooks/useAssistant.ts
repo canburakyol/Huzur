@@ -29,18 +29,18 @@ const COMMUNITY_FEATURES = new Set(['community', 'social']);
 
 const getPersonalizedSuggestions = () => ({ suggestions: [], context: '' });
 
-interface AssistantMessage {
+type AssistantMessage = {
   id: number;
   type: 'user' | 'bot';
   text: string;
   meta: Record<string, unknown> | null;
 }
 
-interface UseAssistantProps {
+type UseAssistantProps = {
   streakData?: Record<string, unknown>;
   dailyContent?: Record<string, unknown>;
   timings?: Record<string, unknown>;
-  nextPrayer?: string;
+  nextPrayer?: { key?: string; name?: string } | null;
   locationName?: string;
   isProUser?: boolean;
   onSelectFeature?: (feature: string) => void;

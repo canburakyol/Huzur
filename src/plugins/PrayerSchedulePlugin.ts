@@ -1,7 +1,7 @@
 import { registerPlugin, Capacitor } from '@capacitor/core';
 import { logger } from '../utils/logger';
 
-export interface ExactAlarmPermissionStatus {
+export type ExactAlarmPermissionStatus = {
   granted: boolean;
   canScheduleExactAlarms: boolean;
   requiresUserApproval: boolean;
@@ -10,13 +10,13 @@ export interface ExactAlarmPermissionStatus {
   error?: string;
 }
 
-export interface PrayerScheduleResult {
+export type PrayerScheduleResult = {
   success: boolean;
   platform: string;
   error?: string;
 }
 
-export interface SyncPrayerScheduleOptions {
+export type SyncPrayerScheduleOptions = {
   timings: Record<string, string>;
   latitude?: number | null;
   longitude?: number | null;
@@ -28,7 +28,7 @@ export interface SyncPrayerScheduleOptions {
 }
 
 /** Texts the native adhan alarm shows; native code cannot read the app language itself. */
-export interface NativeNotificationLabels {
+export type NativeNotificationLabels = {
   prayerNames: Record<string, string>;
   /** Contains %s where the prayer name goes. */
   adhanTitle: string;
@@ -36,11 +36,11 @@ export interface NativeNotificationLabels {
   adhanChannelDescription: string;
 }
 
-export interface PrayerNotificationsEnabledOptions {
+export type PrayerNotificationsEnabledOptions = {
   enabled: boolean;
 }
 
-export interface PrayerSchedulePlugin {
+export type PrayerSchedulePlugin = {
   syncPrayerSchedule(options: SyncPrayerScheduleOptions): Promise<PrayerScheduleResult>;
   setPrayerNotificationsEnabled(options: PrayerNotificationsEnabledOptions): Promise<PrayerScheduleResult>;
   getExactAlarmPermissionStatus(): Promise<ExactAlarmPermissionStatus>;

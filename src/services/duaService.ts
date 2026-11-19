@@ -3,6 +3,19 @@ import { getFunctionsInstance } from './firebase';
 import { getCurrentUserIdEnsured } from './authService';
 import { logger } from '../utils/logger';
 
+export type ServerDua = {
+  id: string;
+  text: string;
+  authorName?: string;
+  isAnonymous?: boolean;
+  aminCount?: number;
+  createdAtMs?: number;
+  createdAt?: { seconds: number };
+  [key: string]: unknown;
+};
+
+type PrayResult = { success: boolean; alreadyPrayed?: boolean; aminCount?: number };
+
 type DuaResult = {
   dua?: { id?: string; [key: string]: unknown };
   [key: string]: unknown;
@@ -29,7 +42,7 @@ export const duaService = {
         authorName,
       }) as DuaResult | null;
       logger.log('[DuaService] Dua created:', result?.dua?.id);
-      return result?.dua || null;
+      return (result?.dua as ServerDua | undefined) || null;
     } catch (error) {
       logger.error('[DuaService] Create dua error:', error);
       throw error;
@@ -44,7 +57,7 @@ export const duaService = {
 
     try {
       const result = await callDuaFunction('listRecentDuas', { limitCount }) as { duas?: unknown[] } | null;
-      return Array.isArray(result?.duas) ? result.duas : [];
+      return Array.isArray(result?.duas) ? (result.duas as ServerDua[]) : [];
     } catch (error) {
       logger.error('[DuaService] Get duas error:', error);
       return [];
@@ -58,7 +71,7 @@ export const duaService = {
     }
 
     try {
-      const result = await callDuaFunction('prayForDua', { duaId });
+      const result = await callDuaFunction('prayForDua', { duaId }) as PrayResult | null;
       logger.log('[DuaService] Prayed for dua:', duaId);
       return result;
     } catch (error) {

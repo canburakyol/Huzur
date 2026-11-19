@@ -192,7 +192,7 @@ const FamilyDashboard = ({ onClose }) => {
 
             <DiscoveryList
               title={t('family.discoverTitle', 'Kesfedilen aileler')}
-              subtitle={t('family.discoverSubtitle', 'Topluluga katilan aileleri gor, ilham al ve kendi ailenizi oluşturun')}
+              subtitle={t('family.discoverSubtitle', 'Topluluğa katılan aileleri gör, ilham al ve kendi ailenizi oluşturun')}
               items={visibleDiscoveries}
               t={t}
             />
@@ -309,7 +309,11 @@ const FamilyDashboard = ({ onClose }) => {
             }}
           >
             {weeklyGoalLoading ? <Clock size={16} className="spin" /> : <HeartHandshake size={16} />}
-            {weeklyGoalLoading ? 'Guncelleniyor...' : alreadyContributedToday ? 'Bugunku katki kaydedildi' : 'Bugun katki yap'}
+            {weeklyGoalLoading
+              ? t('family.weeklyGoal.updating', 'Güncelleniyor...')
+              : alreadyContributedToday
+                ? t('family.weeklyGoal.contributed', 'Bugünkü katkı kaydedildi')
+                : t('family.weeklyGoal.contribute', 'Bugün katkı yap')}
           </button>
         </div>
 
@@ -382,7 +386,7 @@ const FamilyDashboard = ({ onClose }) => {
       <div className="mt-24 reveal-stagger">
         <DiscoveryList
           title={t('family.discoverTitle', 'Kesfedilen aileler')}
-          subtitle={t('family.discoverSubtitle', 'Diğer ailelerin adlarini gorerek kendi grubunu buyutmek için ilham al.')}
+          subtitle={t('family.discoverSubtitle', 'Diğer ailelerin adlarını görerek kendi grubunu büyütmek için ilham al.')}
           items={visibleDiscoveries}
           t={t}
         />

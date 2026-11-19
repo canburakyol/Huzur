@@ -3623,7 +3623,12 @@
     "discoverTitle": "Entdeckte Familien",
     "discoverSubtitle": "Sieh dir Familien aus der Gemeinschaft an, lass dich inspirieren und gründe deine eigene",
     "createHint": "Erstelle eine neue Familiengruppe",
-    "joinHint": "Tritt mit einem Einladungscode einer Gruppe bei"
+    "joinHint": "Tritt mit einem Einladungscode einer Gruppe bei",
+    "weeklyGoal": {
+      "updating": "Wird aktualisiert...",
+      "contributed": "Heutiger Beitrag gespeichert",
+      "contribute": "Heute beitragen"
+    }
   },
   "hatimCoach": {
     "title": "Intelligenter Khatm-Coach",
@@ -4693,7 +4698,9 @@
     "netWealth": "Nettovermögen",
     "zakatLabel": "Zakat",
     "noZakatRequired": "Keine Zakat fällig",
-    "percentNote": "(2,5 % des Nettovermögens)"
+    "percentNote": "(2,5 % des Nettovermögens)",
+    "silverPriceLabel": "Silberpreis (pro Gramm)",
+    "enterPrice": "Geben Sie den aktuellen Goldpreis pro Gramm ein (und den Silberpreis, falls Sie Silber haben)"
   },
   "modules": {
     "core": "Kernfunktionen",
@@ -5899,7 +5906,12 @@
         "description": "Spielt den Adhan zu den Gebetszeiten"
       }
     },
-    "adhanTitle": "🕌 Zeit für {{prayer}}"
+    "adhanTitle": "🕌 Zeit für {{prayer}}",
+    "recovery": {
+      "eveningTitle": "{{title}} – Abend",
+      "streakBody": "{{body}} Du kannst deine {{days}}-Tage-Serie sanft fortsetzen.",
+      "eveningBody": "{{description}} Schon eine kurze Rückkehr heute genügt."
+    }
   },
   "nafile": {
     "items": {
@@ -6048,6 +6060,85 @@
     "quiz": {
       "correctAnswers": "RICHTIGE ANTWORTEN",
       "label": "TADSCHWID-QUIZ"
+    }
+  },
+  "recovery": {
+    "default": {
+      "headline": "Halte deinen Rhythmus in Ruhe",
+      "description": "Ein einziger kleiner Schritt heute kann reichen, um deinen Rhythmus zu halten.",
+      "notificationTitle": "Heute reicht ein Schritt",
+      "notificationBody": "Mit einer kleinen Geste findest du ruhig in den Rhythmus deines Tages."
+    },
+    "cta": {
+      "default": "Heutigen Schritt öffnen",
+      "quran": "Deine Koranreise öffnen",
+      "family": "Familienrhythmus öffnen"
+    },
+    "comeback": {
+      "headline": "Ein guter Moment für einen Neuanfang",
+      "description": "Nach {{days}} Tagen Pause ist eine langsame Rückkehr ohne Selbstvorwürfe der gesündeste Schritt.",
+      "notificationTitle": "Komm sanft zurück",
+      "notificationBody": "Heute genügt ein kleiner Anfang."
+    },
+    "atRisk": {
+      "headline": "Finde zurück in den Rhythmus, bevor er verloren geht",
+      "description": "Dein Rhythmus ist vielleicht etwas abgekühlt. Eine einfache Handlung hilft dir, wieder Halt zu finden.",
+      "notificationTitle": "Ein kurzer Schritt für deinen Rhythmus",
+      "notificationBody": "Kein großes Ziel nötig – heute in Ruhe dranzubleiben genügt."
+    },
+    "cooling": {
+      "headline": "Frische heute deinen Rhythmus auf",
+      "description": "Ein kurzer Moment der Verbindung kann deine Woche neu beleben.",
+      "notificationTitle": "Erneuere heute deine Absicht",
+      "notificationBody": "Eine kurze Pause verbindet dich wieder mit dem Tag."
+    },
+    "steady": {
+      "headline": "Dein Rhythmus läuft gut",
+      "description": "Um den guten Rhythmus ohne Druck zu halten, wähle heute wieder einen klaren Schritt.",
+      "notificationTitle": "Ein kleiner Schritt für deinen Rhythmus",
+      "notificationBody": "Mit einem ruhigen Schritt heute bleibst du beständig."
+    }
+  },
+  "premiumMoment": {
+    "weeklyDepth": {
+      "headline": "Deine Wochenübersicht ausführlicher sehen",
+      "description": "Tiefere Wocheneinblicke, ruhige Begleitung und klare nächste Schritte gibt es mit Pro."
+    },
+    "familyRhythm": {
+      "headline": "Gemeinsam einen Familienrhythmus aufbauen",
+      "description": "Familienrhythmus, gemeinsame Ziele und tiefere Begleitung an einem Ort."
+    },
+    "quietSupport": {
+      "headline": "Stille Premium-Unterstützung freischalten",
+      "description": "An schweren Tagen kannst du ruhigere, persönlichere und tiefere Unterstützung freischalten."
+    },
+    "aiGuidanceAssistant": {
+      "headline": "Tiefere KI-Begleitung freischalten",
+      "description": "Mit dem Huzur-Begleiter bekommst du tiefere Orientierung, Folgeschritte und ruhige Premium-Unterstützung."
+    },
+    "aiGuidance": {
+      "headline": "Tiefere Begleitung freischalten",
+      "description": "Mit KI-Begleitung, Wocheneinblicken und Rhythmus-Unterstützung tiefer einsteigen."
+    },
+    "family": {
+      "headline": "Pro-Unterstützung für den Familienrhythmus freischalten",
+      "description": "Familienziele, Wochentiefe und ruhige Premium-Unterstützung in einem Ablauf."
+    },
+    "quran": {
+      "headline": "Vertiefe deine Koranreise",
+      "description": "Mit tieferen Wochenübersichten und Begleitung findest du einen ruhigeren Koran-Fokus."
+    },
+    "recovery": {
+      "headline": "Tiefere Unterstützung für heute freischalten",
+      "description": "Bau deinen Rhythmus nicht allein wieder auf – schalte ruhige Premium-Begleitung frei."
+    },
+    "weeklyInsight": {
+      "headline": "Deinen Wochenrhythmus klarer sehen",
+      "description": "Zu deiner Wochenübersicht kommen tiefere Einblicke und Vorschläge für den Familienrhythmus."
+    },
+    "assistantUsed": {
+      "headline": "Vertiefe die Begleitung",
+      "description": "Mit längerem Gedächtnis, tieferer Begleitung und ruhiger Premium-Unterstützung weitergehen."
     }
   }
 }

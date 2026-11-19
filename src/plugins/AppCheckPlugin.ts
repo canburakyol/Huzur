@@ -5,7 +5,7 @@
 
 import { registerPlugin } from '@capacitor/core';
 
-export interface FirebaseStatusResult {
+export type FirebaseStatusResult = {
   success: boolean;
   initialized: boolean;
   configured: boolean;
@@ -14,19 +14,19 @@ export interface FirebaseStatusResult {
   platform: string;
 }
 
-export interface AppCheckStatusResult {
+export type AppCheckStatusResult = {
   success: boolean;
   tokenPresent: boolean;
   platform: string;
   message?: string;
 }
 
-export interface ForceRefreshTokenResult {
+export type ForceRefreshTokenResult = {
   success: boolean;
   error?: string;
 }
 
-export interface AppCheckPlugin {
+export type AppCheckPlugin = {
   getFirebaseStatus(): Promise<FirebaseStatusResult>;
   getAppCheckStatus(): Promise<AppCheckStatusResult>;
   forceRefreshToken(): Promise<ForceRefreshTokenResult>;

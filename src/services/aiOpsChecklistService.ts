@@ -1,31 +1,31 @@
-interface SmokeCheckTemplate {
+type SmokeCheckTemplate = {
   key: string;
   label: string;
   detail: string;
   expectedSignal: string;
 }
 
-interface Surface {
+type Surface = {
   key: string;
   label: string;
   status: string;
   [key: string]: unknown;
 }
 
-interface HealthSummary {
+type HealthSummary = {
   surfaces?: Surface[];
 }
 
-interface ReleaseReadiness {
+type ReleaseReadiness = {
   status?: string;
   checks?: Array<{ key: string; status: string }>;
 }
 
-interface RolloutGate {
+type RolloutGate = {
   recommendation?: string;
 }
 
-interface IncidentSummary {
+type IncidentSummary = {
   criticalCount?: number;
   last24hCount?: number;
 }
@@ -34,20 +34,20 @@ interface SmokeCheck extends SmokeCheckTemplate {
   severity: string;
 }
 
-interface ManualCheck {
+type ManualCheck = {
   key: string;
   label: string;
   detail: string;
 }
 
-interface Runbook {
+type Runbook = {
   key: string;
   label: string;
   trigger: string;
   firstStep: string;
 }
 
-interface AiOpsChecklistResult {
+type AiOpsChecklistResult = {
   stage: string;
   headline: string;
   operatorActions: string[];
@@ -56,7 +56,7 @@ interface AiOpsChecklistResult {
   incidentRunbooks: Runbook[];
 }
 
-interface BuildChecklistOptions {
+type BuildChecklistOptions = {
   healthSummary?: HealthSummary | null;
   rolloutGate?: RolloutGate | null;
   releaseReadiness?: ReleaseReadiness | null;
@@ -68,37 +68,37 @@ const SURFACE_TO_SMOKE_CHECK: Record<string, SmokeCheckTemplate> = {
   latestAssistantSnapshot: {
     key: 'assistant_smoke',
     label: 'Assistant V2 smoke',
-    detail: 'Rehber ekraninda bir normal, bir hassas ve bir fallback senaryosu dene.',
-    expectedSignal: 'JSON cevap, safe-mode davranisi ve trust metadata gorunmeli.',
+    detail: 'Rehber ekranında bir normal, bir hassas ve bir fallback senaryosu dene.',
+    expectedSignal: 'JSON cevap, safe-mode davranışı ve trust metadata görünmeli.',
   },
   latestHomeRankingSnapshot: {
     key: 'home_smoke',
     label: 'Home ranking smoke',
-    detail: 'Ana ekrani iki kez acip siralama ve kart tekrarlarini kontrol et.',
-    expectedSignal: 'Ilk moduller anlamli kalmali, duplicate ve bos durum olmamali.',
+    detail: 'Ana ekranı iki kez açıp sıralama ve kart tekrarlarını kontrol et.',
+    expectedSignal: 'İlk modüller anlamlı kalmalı, duplicate ve boş durum olmamalı.',
   },
   latestWeeklyInsightSnapshot: {
     key: 'weekly_smoke',
     label: 'Weekly insight smoke',
-    detail: 'Haftalik ozet modalini acip kisa ve yargisiz bir ozet geldigini dogrula.',
-    expectedSignal: 'Risk bandi ve trust sinyali ile uyumlu metin gorunmeli.',
+    detail: 'Haftalık özet modalını açıp kısa ve yargısız bir özet geldiğini doğrula.',
+    expectedSignal: 'Risk bandı ve trust sinyali ile uyumlu metin görünmeli.',
   },
   latestPushHintSnapshot: {
     key: 'push_smoke',
     label: 'Push hint smoke',
-    detail: 'Bildirim akisini tetikleyip kopya ve zaman onerilerinin sakin tonda kaldigini incele.',
+    detail: 'Bildirim akışını tetikleyip kopya ve zaman önerilerinin sakin tonda kaldığını incele.',
     expectedSignal: 'Schedule bozulmadan yeni hint metadata loglara dusmeli.',
   },
 };
 
 const buildSurfaceAction = (surface: Surface): string => {
   if (surface.status === 'action') {
-    return `Once ${surface.label} yuzeyini gozden gecir; trust dusuk veya review eksik gorunuyor.`;
+    return `Önce ${surface.label} yüzeyini gözden geçir; trust düşük veya review eksik görünüyor.`;
   }
   if (surface.status === 'watch') {
-    return `${surface.label} yuzeyini smoke test ve log ile izlemeye devam et.`;
+    return `${surface.label} yüzeyini smoke test ve log ile izlemeye devam et.`;
   }
-  return `${surface.label} yuzeyi saglam gorunuyor; yalnizca canli metrikleri izle.`;
+  return `${surface.label} yüzeyi sağlam görünüyor; yalnızca canlı metrikleri izle.`;
 };
 
 const dedupeByKey = (items: Array<{ key: string } | null> = []): Array<{ key: string }> => {
@@ -126,26 +126,26 @@ export const buildAiOpsChecklist = ({
   const watchSurfaces = surfaces.filter((item) => item.status === 'watch');
 
   let stage = 'stable';
-  let headline = 'Canli AI akislarini izleyerek devam et.';
+  let headline = 'Canlı AI akışlarını izleyerek devam et.';
 
   if (releaseReadiness?.status === 'blocked' || rolloutGate?.recommendation === 'hold') {
     stage = 'intervene';
-    headline = 'Rolloutu yavaslat ve dusuk trust sinyallerini kapatmadan yeni acilim yapma.';
+    headline = 'Rolloutu yavaşlat ve düşük trust sinyallerini kapatmadan yeni açılım yapma.';
   } else if (releaseReadiness?.status === 'monitor' || rolloutGate?.recommendation === 'cautious') {
     stage = 'verify';
-    headline = 'Yeni acilimdan once cekirdek smoke setini ve canli loglari yeniden dogrula.';
+    headline = 'Yeni açılımdan önce çekirdek smoke setini ve canlı logları yeniden doğrula.';
   }
 
   const operatorActions: string[] = [];
 
   if (releaseReadiness?.checks?.some((check) => check.key === 'freshness' && check.status !== 'pass')) {
-    operatorActions.push('AI health taze degil; Assistant, Home ve Weekly akislarini cihazda bir kez tetikle.');
+    operatorActions.push('AI health taze değil; Assistant, Home ve Weekly akışlarını cihazda bir kez tetikle.');
   }
 
   if (Number(incidentSummary?.criticalCount) > 0) {
     operatorActions.push('Son 24 saatte kritik AI incident var; yeni rollout acmadan once bunu kapat.');
   } else if (Number(incidentSummary?.last24hCount) > 0) {
-    operatorActions.push('Son AI incidentlerini log ve Crashlytics tarafinda dogrula; tekrar etmiyorsa rollouta kontrollu devam et.');
+    operatorActions.push('Son AI incidentlerini log ve Crashlytics tarafında doğrula; tekrar etmiyorsa rollouta kontrollü devam et.');
   }
 
   actionSurfaces.forEach((surface) => {
@@ -159,9 +159,9 @@ export const buildAiOpsChecklist = ({
   }
 
   if (enabledFlagCount < totalFlagCount) {
-    operatorActions.push('Tum AI flagleri acik degil; kademeli rollout mantigini koru ve eksik yuzeyleri sonradan ac.');
+    operatorActions.push('Tüm AI flagleri açık değil; kademeli rollout mantığını koru ve eksik yüzeyleri sonradan aç.');
   } else {
-    operatorActions.push('Tum AI flagleri acik; 24 saat boyunca fallback ve trust trendini yakindan izle.');
+    operatorActions.push('Tüm AI flagleri açık; 24 saat boyunca fallback ve trust trendini yakından izle.');
   }
 
   const smokeChecks = dedupeByKey(
@@ -185,7 +185,7 @@ export const buildAiOpsChecklist = ({
     {
       key: 'functions_logs',
       label: 'Functions loglari',
-      detail: 'assistant_v2_resolved, home_ranking_v2_resolved ve weekly_insight_v1_resolved loglarini kontrol et.',
+      detail: 'assistant_v2_resolved, home_ranking_v2_resolved ve weekly_insight_v1_resolved loglarını kontrol et.',
     },
     {
       key: 'firestore_health',
@@ -195,7 +195,7 @@ export const buildAiOpsChecklist = ({
     {
       key: 'analytics_trend',
       label: 'Analytics trendi',
-      detail: 'assistant_v2_fallback, ai_trust_surfaced ve ai_release_readiness_surfaced eventlerinde anormal artis var mi bak.',
+      detail: 'assistant_v2_fallback, ai_trust_surfaced ve ai_release_readiness_surfaced eventlerinde anormal artış var mi bak.',
     },
     {
       key: 'incident_log',
@@ -211,19 +211,19 @@ export const buildAiOpsChecklist = ({
       key: 'assistant_trust_drop',
       label: 'Assistant trust dususu',
       trigger: 'Assistant action bandine dusuyor veya fallback hizi artiyor.',
-      firstStep: 'Assistant smoke setini kos, safe-mode ve provider fallback loglarini incele.',
+      firstStep: 'Assistant smoke setini koş, safe-mode ve provider fallback loglarını incele.',
     },
     {
       key: 'home_regression',
       label: 'Home ranking regresyonu',
       trigger: 'Ana ekranda anlamsiz sira, duplicate veya bos kart raporu geliyor.',
-      firstStep: 'Home smoke testini kos ve home_ranking_v2_resolved loglarinda ranked_count/risk_band uyumuna bak.',
+      firstStep: 'Home smoke testini koş ve home_ranking_v2_resolved loglarında ranked_count/risk_band uyumuna bak.',
     },
     {
       key: 'weekly_push_drift',
       label: 'Weekly veya push drift',
-      trigger: 'Ozet tazi degil, push kopyasi sert veya alakasiz hissettiriyor.',
-      firstStep: 'Weekly insight ve push hint snapshotlarini tazele, source_count ve review_status alanlarini kontrol et.',
+      trigger: 'Özet tazi değil, push kopyası sert veya alakasız hissettiriyor.',
+      firstStep: 'Weekly insight ve push hint snapshotlarını tazele, source_count ve review_status alanlarını kontrol et.',
     },
   ];
 

@@ -4,7 +4,7 @@ import { STORAGE_KEYS } from '../constants';
 import { storageService } from './storageService';
 import { logger } from '../utils/logger';
 
-interface AiFlags {
+type AiFlags = {
   assistant_v2_enabled: boolean;
   home_ranking_v2_enabled: boolean;
   weekly_insights_v1_enabled: boolean;
@@ -15,7 +15,7 @@ interface AiFlags {
   premium_moments_v1_enabled: boolean;
 }
 
-interface GetFlagsOptions {
+type GetFlagsOptions = {
   forceRefresh?: boolean;
 }
 

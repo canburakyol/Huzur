@@ -4,7 +4,7 @@ import DIYANET_DISTRICTS from '../data/diyanetDistricts.json';
 
 // --- Types ---
 
-interface DistrictMapping {
+type DistrictMapping = {
   districtId: string;
   districtName: string;
   cityName: string;

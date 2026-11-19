@@ -7,12 +7,12 @@ import { logger } from "../utils/logger";
 import { findDistrictByName, setDistrictById } from "../services/diyanetLocationService";
 import { forwardCoordinatesBeforeEnrichment } from "./locationResolution";
 
-interface WeatherData {
+type WeatherData = {
   temperature: number;
   [key: string]: unknown;
 }
 
-interface LocationCoords {
+type LocationCoords = {
   latitude: number;
   longitude: number;
   locationName?: string;
@@ -20,13 +20,13 @@ interface LocationCoords {
   name?: string;
 }
 
-interface LocationSnapshot {
+type LocationSnapshot = {
   weather: WeatherData | null;
   locationName: string;
   timestamp: number;
 }
 
-interface UseLocationConsentResult {
+type UseLocationConsentResult = {
   weather: WeatherData | null;
   locationName: string;
   location: LocationCoords | null;

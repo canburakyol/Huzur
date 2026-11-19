@@ -96,7 +96,7 @@ const SpiritualJourney = ({ onClose }) => {
     {
       id: 'share-card',
       icon: <Share2 size={18} color="var(--brand-ink)" />,
-      title: t('gamification.share', 'İstatistik Kartini Paylaş'),
+      title: t('gamification.share', 'İstatistik Kartını Paylaş'),
       description: t('journey.quick.share', 'İlerlemeni görünür kılıp motive edici bir kart oluştur.'),
       onClick: () => setShowShareCard(true)
     }
@@ -230,13 +230,13 @@ const SpiritualJourney = ({ onClose }) => {
         </div>
         <div className="flex-1">
           <h4 className="m-0 mb-4 text-lg font-extrabold text-nav">
-            {t('gamification.targetTitle', 'Hedefe Çok Yakinsin')}
+            {t('gamification.targetTitle', 'Hedefe Çok Yakınsın')}
           </h4>
           <p className="m-0 text-sm text-nav-muted leading-relaxed">
             {t('gamification.targetDesc', {
               remaining: remaining.toLocaleString(),
               nextTitle: t(`gamification.levels.${nextLevelInfo.level}`, nextLevelInfo.title),
-              defaultValue: '{{nextTitle}} unvanina ulasmak icin sadece {{remaining}} XP kaldi.'
+              defaultValue: '{{nextTitle}} unvanına ulaşmak için sadece {{remaining}} XP kaldı.'
             })}
           </p>
         </div>
@@ -365,7 +365,7 @@ const SpiritualJourney = ({ onClose }) => {
           <p className="mt-8 m-0 text-nav-muted text-sm font-semibold leading-relaxed">
             {miniLeagueSummary.enabled
               ? t(miniLeagueSummary.encouragementKey, 'Ritmini sakin sekilde kurarken kendi gecen haftan en iyi referans olsun.')
-              : t(miniLeagueSummary.descriptionKey, 'Istersen anonim mini lige katilip sadece istikrar bandini gorebilirsin.')}
+              : t(miniLeagueSummary.descriptionKey, 'İstersen anonim mini lige katılıp sadece istikrar bandını görebilirsin.')}
           </p>
         </div>
         <div className="w-48 h-48 rounded-16 flex-center" style={{ background: 'rgba(59, 130, 246, 0.14)', color: 'var(--brand-ink)' }}>

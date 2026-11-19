@@ -13,14 +13,14 @@ export const logger = {
   /**
    * General logging - only in development
    */
-  log: (...args) => {
+  log: (...args: unknown[]) => {
     if (isDev) console.log(...args);
   },
 
   /**
    * Warnings - only in development
    */
-  warn: (...args) => {
+  warn: (...args: unknown[]) => {
     if (isDev) console.warn(...args);
   },
 
@@ -29,21 +29,21 @@ export const logger = {
    * In production, errors are captured by Crashlytics via unhandled exception handlers.
    * This prevents leaking storage keys, API endpoints, and error details via logcat.
    */
-  error: (...args) => {
+  error: (...args: unknown[]) => {
     if (isDev) console.error(...args);
   },
 
   /**
    * Debug info - only in development
    */
-  debug: (...args) => {
+  debug: (...args: unknown[]) => {
     if (isDev) console.debug(...args);
   },
 
   /**
    * Info level - only in development
    */
-  info: (...args) => {
+  info: (...args: unknown[]) => {
     if (isDev) console.info(...args);
   },
 

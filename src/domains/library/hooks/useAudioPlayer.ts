@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { logger } from '../../../utils/logger';
 
-interface SpeakArabicOptions {
+type SpeakArabicOptions = {
   onNotSupported?: () => void;
 }
 

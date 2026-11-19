@@ -1,4 +1,4 @@
-export interface TajweedExample {
+export type TajweedExample = {
   text: string;
   transliteration: string;
   explanation: string;
@@ -6,7 +6,7 @@ export interface TajweedExample {
   ayah?: number;
 }
 
-export interface TajweedRule {
+export type TajweedRule = {
   id: string;
   level: string;
   title: string;

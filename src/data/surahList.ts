@@ -1,4 +1,4 @@
-export interface SurahInfo {
+export type SurahInfo = {
   number: number;
   name: string;
   nameTranslation: string;
@@ -7,7 +7,7 @@ export interface SurahInfo {
   revelationType: string;
 }
 
-export interface Reciter {
+export type Reciter = {
   id: string;
   name: string;
   country: string;

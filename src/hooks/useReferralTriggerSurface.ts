@@ -3,19 +3,11 @@ import { getReferralServerSnapshot } from "../services/referralServerService";
 import { getReferralProgress } from "../services/referralService";
 import { buildReferralTriggerSurfacePlan } from "../services/referralTriggerSurfaceService";
 
-interface UseReferralTriggerSurfaceOptions {
+type UseReferralTriggerSurfaceOptions = {
   surface?: string;
   enabled?: boolean;
   weeklyStats?: Record<string, unknown> | null;
   assistantMeta?: Record<string, unknown> | null;
-}
-
-interface ReferralProgress {
-  [key: string]: unknown;
-}
-
-interface ReferralTriggerPlan {
-  [key: string]: unknown;
 }
 
 export function useReferralTriggerSurface({
@@ -24,8 +16,8 @@ export function useReferralTriggerSurface({
   weeklyStats = null,
   assistantMeta = null,
 }: UseReferralTriggerSurfaceOptions = {}) {
-  const [serverSnapshot, setServerSnapshot] = useState<Record<string, unknown> | null>(null);
-  const localProgress: ReferralProgress = getReferralProgress();
+  const [serverSnapshot, setServerSnapshot] = useState<Awaited<ReturnType<typeof getReferralServerSnapshot>> | null>(null);
+  const localProgress = getReferralProgress();
 
   useEffect(() => {
     if (!enabled) return undefined;
@@ -46,7 +38,7 @@ export function useReferralTriggerSurface({
     };
   }, [enabled, surface]);
 
-  const plan = useMemo((): ReferralTriggerPlan | null => {
+  const plan = useMemo(() => {
     if (!enabled) {
       return null;
     }
@@ -55,8 +47,8 @@ export function useReferralTriggerSurface({
       surface,
       localProgress,
       serverSnapshot,
-      weeklyStats,
-      assistantMeta,
+      weeklyStats: weeklyStats ?? undefined,
+      assistantMeta: assistantMeta ?? undefined,
     });
   }, [assistantMeta, enabled, localProgress, serverSnapshot, surface, weeklyStats]);
 

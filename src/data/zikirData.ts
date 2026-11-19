@@ -1,11 +1,11 @@
-export interface DhikrCategory {
+export type DhikrCategory = {
   id: string;
   title: string;
   icon: string;
   color: string;
 }
 
-export interface Dhikr {
+export type Dhikr = {
   id: number;
   category: string;
   arabic: string;

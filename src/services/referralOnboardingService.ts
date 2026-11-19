@@ -1,14 +1,14 @@
 import { getActiveCampaign } from './campaignService';
 import { mergeReferralProgress } from './referralGrowthService';
 
-interface ReferralStep {
+type ReferralStep = {
   id: string;
   label: string;
   description: string;
   status: 'done' | 'active' | 'pending';
 }
 
-interface ReferralOnboardingPlan {
+type ReferralOnboardingPlan = {
   invitedByCode: string;
   rewardReady: boolean;
   onboardingDone: boolean;
@@ -26,7 +26,7 @@ interface ReferralOnboardingPlan {
   signature: string;
 }
 
-interface BuildPlanOptions {
+type BuildPlanOptions = {
   localProgress?: Record<string, unknown>;
   serverSnapshot?: Record<string, unknown>;
   currentStep?: string;

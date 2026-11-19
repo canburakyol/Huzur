@@ -1,4 +1,4 @@
-export interface AccentColor {
+export type AccentColor = {
   id: string;
   name: string;
   color: string;
@@ -6,11 +6,11 @@ export interface AccentColor {
   rgb: string;
 }
 
-export interface ThemeColors {
+export type ThemeColors = {
   [key: string]: string;
 }
 
-export interface Theme {
+export type Theme = {
   id: string;
   name: string;
   colors: ThemeColors;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Calculator, Info, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
@@ -9,10 +9,23 @@ const NISAB = {
     silver: 561.2 // 200 dirhem = 561.2 gram gümüş
 };
 
+const priceInputStyle = {
+    width: '100%',
+    padding: '16px',
+    borderRadius: '16px',
+    background: 'var(--nav-hover)',
+    border: '1px solid var(--nav-border)',
+    fontSize: '1.25rem',
+    fontWeight: '900',
+    color: 'var(--nav-accent)',
+    outline: 'none'
+};
+
 const ZakatCalculator = ({ onClose }) => {
     const { t } = useTranslation();
-    const [goldPrice, setGoldPrice] = useState(2500); // TL/gram
-    const silverPrice = 30; // TL/gram (constant)
+    // Prices change daily; no stale default, the user enters today's TL/gram price.
+    const [goldPrice, setGoldPrice] = useState(0);
+    const [silverPrice, setSilverPrice] = useState(0);
 
     const [assets, setAssets] = useState({
         cash: 0,
@@ -25,14 +38,6 @@ const ZakatCalculator = ({ onClose }) => {
 
     const [debts, setDebts] = useState(0);
     const [showInfo, setShowInfo] = useState(false);
-
-    // Altın fiyatını API'den çek (opsiyonel)
-    useEffect(() => {
-        // Gerçek API entegrasyonu için:
-        // fetch('https://api.example.com/gold-price')
-        //   .then(res => res.json())
-        //   .then(data => setGoldPrice(data.price));
-    }, []);
 
     const updateAsset = (key, value) => {
         const numValue = parseFloat(value) || 0;
@@ -54,11 +59,14 @@ const ZakatCalculator = ({ onClose }) => {
     // Nisab hesaplama (altın üzerinden)
     const nisabValue = NISAB.gold * goldPrice;
 
-    // Zekat miktarı (%2.5)
-    const zakatAmount = netWealth >= nisabValue ? netWealth * 0.025 : 0;
+    // Without the gold price there is no nisab; without the silver price silver would count as 0.
+    const needsPrice = goldPrice <= 0 || (assets.silver > 0 && silverPrice <= 0);
 
     // Nisab'a ulaşıldı mı?
-    const isNisabReached = netWealth >= nisabValue;
+    const isNisabReached = !needsPrice && netWealth >= nisabValue;
+
+    // Zekat miktarı (%2.5)
+    const zakatAmount = isNisabReached ? netWealth * 0.025 : 0;
 
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(value);
@@ -135,19 +143,22 @@ const ZakatCalculator = ({ onClose }) => {
                     </label>
                     <input
                         type="number"
-                        value={goldPrice}
+                        inputMode="decimal"
+                        value={goldPrice || ''}
+                        placeholder="0"
                         onChange={(e) => setGoldPrice(parseFloat(e.target.value) || 0)}
-                        style={{
-                            width: '100%',
-                            padding: '16px',
-                            borderRadius: '16px',
-                            background: 'var(--nav-hover)',
-                            border: '1px solid var(--nav-border)',
-                            fontSize: '1.25rem',
-                            fontWeight: '900',
-                            color: 'var(--nav-accent)',
-                            outline: 'none'
-                        }}
+                        style={priceInputStyle}
+                    />
+                    <label style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', margin: '16px 0 12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                        {t('zakatCalculator.silverPriceLabel', 'Gümüş Fiyatı (TL/gram)')}
+                    </label>
+                    <input
+                        type="number"
+                        inputMode="decimal"
+                        value={silverPrice || ''}
+                        placeholder="0"
+                        onChange={(e) => setSilverPrice(parseFloat(e.target.value) || 0)}
+                        style={priceInputStyle}
                     />
                 </div>
 
@@ -254,14 +265,16 @@ const ZakatCalculator = ({ onClose }) => {
                     border: 'none',
                     fontWeight: '900'
                 }}>
-                    {isNisabReached
-                        ? `${t('zakatCalculator.nisabReached', 'Nisap Miktarına Ulaşıldı')}`
-                        : `${t('zakatCalculator.nisabNotReached', 'Nisap Miktarına Ulaşılamadı')}`}
+                    {needsPrice
+                        ? t('zakatCalculator.enterPrice', 'Hesap için güncel altın (ve gümüşünüz varsa gümüş) gram fiyatını girin')
+                        : isNisabReached
+                            ? t('zakatCalculator.nisabReached', 'Nisap Miktarına Ulaşıldı')
+                            : t('zakatCalculator.nisabNotReached', 'Nisap Miktarına Ulaşılamadı')}
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                     <div style={{ fontSize: '0.85rem', opacity: 0.8, fontWeight: '700' }}>
-                        {t('zakatCalculator.nisabLabel', 'Nisap Hesabı')} ({formatCurrency(nisabValue)})
+                        {t('zakatCalculator.nisabLabel', 'Nisap Hesabı')} ({needsPrice ? '—' : formatCurrency(nisabValue)})
                     </div>
                     <div style={{ fontSize: '1.25rem', fontWeight: '900' }}>
                         {t('zakatCalculator.netWealth', 'Net Servet')}: {formatCurrency(netWealth)}
@@ -278,7 +291,7 @@ const ZakatCalculator = ({ onClose }) => {
                     }}>
                         {isNisabReached
                             ? formatCurrency(zakatAmount)
-                            : t('zakatCalculator.noZakatRequired', 'Zekat Gerekmiyor')}
+                            : needsPrice ? '—' : t('zakatCalculator.noZakatRequired', 'Zekat Gerekmiyor')}
                     </div>
                     <div style={{ fontSize: '0.9rem', opacity: 0.9, fontWeight: '800' }}>
                         {isNisabReached ? t('zakatCalculator.zakatLabel', 'Ödenmesi Gereken Zekat') : ''}

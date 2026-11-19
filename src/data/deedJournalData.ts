@@ -1,4 +1,4 @@
-export interface WorshipItem {
+export type WorshipItem = {
   id: string;
   title: string;
   icon: string;
@@ -18,7 +18,7 @@ export interface ThingToAvoid extends WorshipItem {
   description: string;
 }
 
-export interface DailyGoal {
+export type DailyGoal = {
   id: string;
   title: string;
   description: string;
@@ -27,7 +27,7 @@ export interface DailyGoal {
   reward: number;
 }
 
-export interface Achievement {
+export type Achievement = {
   id: string;
   title: string;
   description: string;

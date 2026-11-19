@@ -1,23 +1,23 @@
 import { useCallback, useMemo, useState } from 'react';
 
-interface Breadcrumb {
+type Breadcrumb = {
   id: string;
   label: string;
 }
 
-interface LibraryItem {
+type LibraryItem = {
   id?: string;
   title?: string;
   type?: string;
   category?: string;
 }
 
-interface Reciter {
+type Reciter = {
   id: string;
   name: string;
 }
 
-interface Category {
+type Category = {
   id: string;
   title: string;
 }

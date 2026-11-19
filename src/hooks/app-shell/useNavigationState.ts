@@ -4,7 +4,7 @@ import { featureConfig } from "../../data/featureConfig";
 import { ANALYTICS_EVENTS, logEvent } from "../../services/analyticsService";
 import { markFirstActivationAction } from "../../services/activationService";
 
-interface InviteModalContext {
+type InviteModalContext = {
   source: string;
 }
 

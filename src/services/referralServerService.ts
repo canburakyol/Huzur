@@ -2,7 +2,7 @@ import { getCurrentUserIdEnsured } from './authService';
 import { getFunctionsInstance } from './firebase';
 import { logger } from '../utils/logger';
 
-interface InviterSummary {
+type InviterSummary = {
   ownCode: string;
   inviteCreatedAt: string | null;
   acceptedCount: number;
@@ -13,7 +13,7 @@ interface InviterSummary {
   latestInviterRewardAt: string | null;
 }
 
-interface InviteeSummary {
+type InviteeSummary = {
   invitedByCode: string;
   inviteAcceptedAt: string | null;
   onboardingCompletedAt: string | null;
@@ -23,12 +23,12 @@ interface InviteeSummary {
   syncIssue: string;
 }
 
-interface ServerSnapshot {
+type ServerSnapshot = {
   inviterSummary: InviterSummary;
   inviteeSummary: InviteeSummary;
 }
 
-interface SyncPayload {
+type SyncPayload = {
   source: string;
   ownCode: string;
   inviteCreatedAt: string | null;
@@ -38,12 +38,12 @@ interface SyncPayload {
   firstIbadahCompletedAt: string | null;
 }
 
-interface SyncOptions {
+type SyncOptions = {
   source?: string;
   force?: boolean;
 }
 
-interface ReferralProgress {
+type ReferralProgress = {
   ownCode?: string;
   inviteCreatedAt?: string | null;
   invitedByCode?: string;

@@ -9,7 +9,7 @@ export const SECURE_STORAGE_KEYS = {
   USER_ID: "huzur_user_id",
 } as const;
 
-interface ProStatusState {
+type ProStatusState = {
   active: boolean;
   expiresAt: string | null;
   source?: string;

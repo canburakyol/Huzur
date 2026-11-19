@@ -1,4 +1,4 @@
-export interface GreetingCategory {
+export type GreetingCategory = {
   id: string;
   titleKey: string;
   icon: string;
@@ -6,7 +6,7 @@ export interface GreetingCategory {
 }
 
 // Concrete Stitch palette colors are required because cards are rasterized by html2canvas.
-export interface GreetingCard {
+export type GreetingCard = {
   id: string;
   titleKey: string;
   messageKey: string;

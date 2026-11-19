@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { App as CapacitorApp } from "@capacitor/app";
 
-interface UseBackButtonOptions {
+type UseBackButtonOptions = {
   showMoodSelector: boolean;
   showHamburgerMenu?: boolean;
   activeFeature: string | null;

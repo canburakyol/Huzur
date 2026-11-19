@@ -6,24 +6,24 @@ import { buildAiContext, getHomeRankingV2, getRecoveryLoopPlan } from "../../ser
 import { logger } from "../../utils/logger";
 import { getStoredPrimaryGoal } from "../../utils/primaryGoal";
 
-interface StreakData {
+type StreakData = {
   current: number;
   [key: string]: unknown;
 }
 
-interface DailyContent {
+type DailyContent = {
   [key: string]: unknown;
 }
 
-interface Family {
+type Family = {
   [key: string]: unknown;
 }
 
-interface WeeklyGoal {
+type WeeklyGoal = {
   [key: string]: unknown;
 }
 
-interface RankingState {
+type RankingState = {
   headline: string;
   explanation: string;
   socialHint: string;
@@ -33,18 +33,18 @@ interface RankingState {
   riskBand: string;
 }
 
-interface ReferralTriggerPlan {
+type ReferralTriggerPlan = {
   triggerId: string;
   entrySource: string;
   analyticsPayload: Record<string, unknown>;
 }
 
-interface RecoveryPlan {
+type RecoveryPlan = {
   riskBand: string;
   feature: string;
 }
 
-interface UseHomeFeedStateOptions {
+type UseHomeFeedStateOptions = {
   timings: Record<string, string> | null;
   nextPrayer: { key: string; name: string } | null;
   locationName: string;

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { getDailyContent } from "../services/contentService";
 import { TIMING } from "../constants";
 
-interface DailyContent {
+type DailyContent = {
   [key: string]: unknown;
 }
 

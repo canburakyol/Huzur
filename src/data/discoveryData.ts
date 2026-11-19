@@ -9,7 +9,7 @@ export const DISCOVERY_CARD_TYPES = {
 
 export type DiscoveryCardType = typeof DISCOVERY_CARD_TYPES[keyof typeof DISCOVERY_CARD_TYPES];
 
-export interface DiscoveryCard {
+export type DiscoveryCard = {
   id: string;
   type: DiscoveryCardType;
   icon: string;
@@ -20,7 +20,7 @@ export interface DiscoveryCard {
   action?: string;
 }
 
-export interface CardTypeConfig {
+export type CardTypeConfig = {
   gradient: string;
   bgColor: string;
 }

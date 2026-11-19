@@ -1,4 +1,4 @@
-export interface PrayerCategory {
+export type PrayerCategory = {
   id: string;
   name: string;
   icon: string;
@@ -6,7 +6,7 @@ export interface PrayerCategory {
   color: string;
 }
 
-export interface PrayerItem {
+export type PrayerItem = {
   type: string;
   id: number;
   category: string;

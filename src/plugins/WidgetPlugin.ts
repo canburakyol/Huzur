@@ -6,13 +6,13 @@
 import { registerPlugin, Capacitor } from '@capacitor/core';
 import { logger } from '../utils/logger';
 
-export interface WidgetResult {
+export type WidgetResult = {
   success: boolean;
   platform: string;
   error?: string;
 }
 
-export interface WidgetPlugin {
+export type WidgetPlugin = {
   updateWidget(data?: unknown): Promise<WidgetResult>;
   scheduleWidgetAlarms(data?: unknown): Promise<WidgetResult>;
   cancelWidgetAlarms(data?: unknown): Promise<WidgetResult>;

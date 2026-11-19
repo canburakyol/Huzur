@@ -6,7 +6,7 @@ import { ensureAuthenticated } from "../services/authService";
 import { logger } from "../utils/logger";
 import { HATIM_DISCOVERY_SEEDS } from "../features/social/discoverySeeds";
 
-interface Hatim {
+type Hatim = {
   id: string;
   name: string;
   description?: string;
@@ -17,7 +17,7 @@ interface Hatim {
   [key: string]: unknown;
 }
 
-interface UseGroupHatimResult {
+type UseGroupHatimResult = {
   loading: boolean;
   error: string | null;
   activeHatims: Hatim[];
@@ -27,9 +27,9 @@ interface UseGroupHatimResult {
   fetchAllPublicHatims: () => Promise<void>;
   createHatim: (name: string, desc: string, parts: number) => Promise<unknown>;
   joinHatim: (code: string) => Promise<unknown>;
-  takePart: (partId: string) => Promise<void>;
-  releasePart: (partId: string) => Promise<void>;
-  completePart: (partId: string) => Promise<void>;
+  takePart: (partId: number) => Promise<void>;
+  releasePart: (partId: number) => Promise<void>;
+  completePart: (partId: number) => Promise<void>;
 }
 
 const mergeHatimsWithSeeds = (hatims: Hatim[] = []): Hatim[] =>
@@ -94,7 +94,7 @@ export const useGroupHatim = (hatimId: string | null = null): UseGroupHatimResul
     setLoading(true);
     setError(null);
     try {
-      const uid = await ensureAuthenticated({ requireFirebaseUser: true });
+      const uid = await ensureAuthenticated();
       if (!uid) {
         setActiveHatims(mergeHatimsWithSeeds());
         return;
@@ -115,7 +115,7 @@ export const useGroupHatim = (hatimId: string | null = null): UseGroupHatimResul
     setLoading(true);
     setError(null);
     try {
-      const uid = await ensureAuthenticated({ requireFirebaseUser: true });
+      const uid = await ensureAuthenticated();
       if (!uid) {
         setActiveHatims(mergeHatimsWithSeeds());
         return;
@@ -126,7 +126,7 @@ export const useGroupHatim = (hatimId: string | null = null): UseGroupHatimResul
         loadMemberHatims(uid),
       ]);
 
-      const publicHatims = publicResult.status === "fulfilled" && Array.isArray(publicResult.value) ? publicResult.value : [];
+      const publicHatims = publicResult.status === "fulfilled" && Array.isArray(publicResult.value) ? (publicResult.value as Hatim[]) : [];
       const memberHatims = memberResult.status === "fulfilled" && Array.isArray(memberResult.value) ? memberResult.value : [];
 
       setActiveHatims(mergeHatimsWithSeeds([...memberHatims, ...publicHatims]));
@@ -209,29 +209,29 @@ export const useGroupHatim = (hatimId: string | null = null): UseGroupHatimResul
     return result;
   };
 
-  const takePart = async (partId: string): Promise<void> => {
+  const takePart = async (partId: number): Promise<void> => {
     try {
       const visibleName = `Mumin-${userId ? userId.substring(0, 4) : "User"}`;
-      await hatimService.updatePartStatus(hatimId, partId, "taken", { name: visibleName });
+      await hatimService.updatePartStatus(hatimId ?? "", partId, "taken", { name: visibleName });
     } catch (err) {
       setError((err as Error).message);
       throw err;
     }
   };
 
-  const releasePart = async (partId: string): Promise<void> => {
+  const releasePart = async (partId: number): Promise<void> => {
     try {
-      await hatimService.updatePartStatus(hatimId, partId, "free", null);
+      await hatimService.updatePartStatus(hatimId ?? "", partId, "free", null);
     } catch (err) {
       setError((err as Error).message);
       throw err;
     }
   };
 
-  const completePart = async (partId: string): Promise<void> => {
+  const completePart = async (partId: number): Promise<void> => {
     try {
       const visibleName = `Mumin-${userId ? userId.substring(0, 4) : "User"}`;
-      await hatimService.updatePartStatus(hatimId, partId, "completed", { name: visibleName });
+      await hatimService.updatePartStatus(hatimId ?? "", partId, "completed", { name: visibleName });
     } catch (err) {
       setError((err as Error).message);
       throw err;

@@ -3,7 +3,7 @@
 // Generated per surah; regenerate with scripts/build-word-morphology.mjs when more surahs get word meanings.
 import data from './wordMorphology.json';
 
-export interface WordMorphology {
+export type WordMorphology = {
   pos: string;
   features: string[];
   lemma?: string;

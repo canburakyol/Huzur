@@ -1,16 +1,16 @@
-export interface WordEntry {
+export type WordEntry = {
   arabic: string;
   transliteration: string;
   meaning: string;
 }
 
-export interface Verse {
+export type Verse = {
   number: number;
   arabic: string;
   words: WordEntry[];
 }
 
-export interface SurahWordData {
+export type SurahWordData = {
   name: string;
   arabicName: string;
   meaning: string;
@@ -18,7 +18,7 @@ export interface SurahWordData {
   verses: Verse[];
 }
 
-export interface WordByWordDataMap {
+export type WordByWordDataMap = {
   [surahNumber: number]: SurahWordData;
 }
 

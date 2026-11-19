@@ -7,7 +7,7 @@ import { ANALYTICS_EVENTS, logEvent } from './analyticsService';
 import { logger } from '../utils/logger';
 import crashlyticsReporter, { buildCrashContext } from '../utils/crashlyticsReporter';
 
-interface ServerStatusPayload {
+type ServerStatusPayload = {
   isPro?: boolean;
   expiresAt?: string | null;
   verificationState?: string;
@@ -16,7 +16,7 @@ interface ServerStatusPayload {
   entitlementId?: string;
 }
 
-interface PersistedStatus {
+type PersistedStatus = {
   timestamp: string;
   isPro: boolean;
   expiresAt: string | null;
@@ -24,7 +24,7 @@ interface PersistedStatus {
   verificationState: string;
 }
 
-interface SyncResult {
+type SyncResult = {
   isPro: boolean;
   expiresAt: string | null;
   source: string;

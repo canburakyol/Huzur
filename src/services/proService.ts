@@ -5,7 +5,7 @@ import { logger } from "../utils/logger";
 import crashlyticsReporter from "../utils/crashlyticsReporter";
 import { useAppStore } from "../stores/useAppStore";
 
-interface FreeLimits {
+type FreeLimits = {
   nuzul_ai: number;
   tajweed_ai: number;
   word_analysis: number;
@@ -16,29 +16,32 @@ interface FreeLimits {
   themes: number;
 }
 
-interface ProState {
+type ProState = {
   active: boolean;
   expiresAt: string | null;
   verifiedAt: string | null;
   lastCheckAt: string | null;
   source: string;
   verificationState: string;
+  // Older stored states used these names.
+  updatedAt?: string;
+  verifiedBy?: string;
 }
 
-interface LimitCheck {
+type LimitCheck = {
   allowed: boolean;
   remaining: number;
   max: number;
   isPro: boolean;
 }
 
-interface DailyLimitStatus {
+type DailyLimitStatus = {
   isPro: boolean;
   nuzul_ai: { used: number; max: number; remaining: number };
   tajweed_ai: { used: number; max: number; remaining: number };
 }
 
-interface ProDetails {
+type ProDetails = {
   active: boolean;
   source: string;
   expiresAt: string | null;
@@ -51,7 +54,7 @@ interface ProDetails {
   };
 }
 
-interface PersistOptions {
+type PersistOptions = {
   persistSecure?: boolean;
   announce?: boolean;
   verifiedAt?: string;
@@ -338,12 +341,12 @@ export const setProStatus = async (
   }
 };
 
-interface DailyLimits {
+type DailyLimits = {
   date: string;
   nuzul_ai: number;
   tajweed_ai: number;
   word_analysis: number;
-}
+} & Partial<Record<keyof FreeLimits, number>>
 
 const getDailyLimits = async (): Promise<DailyLimits> => {
   try {
@@ -385,7 +388,7 @@ export const checkLimit = async (feature: keyof FreeLimits): Promise<LimitCheck>
   }
 
   const limits = await getDailyLimits();
-  const used = (limits as Record<string, number>)[feature] || 0;
+  const used = limits[feature] || 0;
   const max = FREE_LIMITS[feature] || 0;
   const remaining = Math.max(0, max - used);
 
@@ -408,7 +411,7 @@ export const consumeLimit = async (feature: keyof FreeLimits): Promise<boolean> 
   }
 
   const limits = await getDailyLimits();
-  (limits as Record<string, number>)[feature] = ((limits as Record<string, number>)[feature] || 0) + 1;
+  limits[feature] = (limits[feature] || 0) + 1;
   await saveDailyLimits(limits);
 
   return true;
@@ -426,7 +429,7 @@ export const canAccessMemorize = (surahNumber: number): boolean => {
   return FREE_MEMORIZE_SURAHS.includes(surahNumber);
 };
 
-interface ProFeature {
+type ProFeature = {
   id: string;
   icon: string;
   title: string;

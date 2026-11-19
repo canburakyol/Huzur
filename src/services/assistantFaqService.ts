@@ -1,4 +1,6 @@
-type TFn = (key: string, fallback?: string) => string;
+import type { TFunction } from 'i18next';
+
+type TFn = TFunction;
 
 export type FaqItem = {
   key: string;

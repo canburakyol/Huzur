@@ -1,4 +1,4 @@
-interface AiHealthSnapshot {
+type AiHealthSnapshot = {
   trustScore?: number;
   sourceCount?: number;
   reviewStatus?: string;
@@ -6,7 +6,7 @@ interface AiHealthSnapshot {
   updatedAtIso?: string;
 }
 
-interface AiHealthSurface {
+type AiHealthSurface = {
   key: string;
   label: string;
   status: 'healthy' | 'watch' | 'action';
@@ -18,7 +18,7 @@ interface AiHealthSurface {
   updatedAtIso: string | null;
 }
 
-interface AiHealthSummary {
+type AiHealthSummary = {
   overallStatus: 'healthy' | 'watch' | 'action';
   actionCount: number;
   watchCount: number;
@@ -27,7 +27,7 @@ interface AiHealthSummary {
   latestAiHealthAt: string | null;
 }
 
-interface HealthData {
+type HealthData = {
   latestAssistantSnapshot?: AiHealthSnapshot;
   latestHomeRankingSnapshot?: AiHealthSnapshot;
   latestWeeklyInsightSnapshot?: AiHealthSnapshot;

@@ -1,10 +1,10 @@
-export interface FihristVerse {
+export type FihristVerse = {
   surah: number;
   ayah: number;
   note: string;
 }
 
-export interface FihristTopic {
+export type FihristTopic = {
   topic: string;
   verses: FihristVerse[];
 }

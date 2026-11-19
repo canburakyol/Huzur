@@ -77,7 +77,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
       <div className="manuscript-card reveal-stagger" style={{ textAlign: 'center' }}>
         <Info size={48} color="var(--soc-teal-dark)" style={{ marginBottom: '15px' }} />
         <p className="lesson-desc">
-          {t('hatim.membershipRequired', 'Bu hatimin detaylarini gormek için önce katilmalisiniz.')}
+          {t('hatim.membershipRequired', 'Bu hatimin detaylarını görmek için önce katılmalısınız.')}
         </p>
         <button onClick={onBack} className="sanctuary-btn-primary" style={{ marginTop: '20px', width: '100%' }}>
           {t('common.back', 'Geri don')}
@@ -89,7 +89,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
   const shareText = t('hatim.shareText', {
     title: hatimDetails.name,
     code: hatimDetails.joinCode,
-    defaultValue: `${hatimDetails.name} hatmine katilmak icin davet kodu: ${hatimDetails.joinCode}`,
+    defaultValue: `${hatimDetails.name} hatmine katılmak için davet kodu: ${hatimDetails.joinCode}`,
   });
 
   const handlePartClick = async (partNum, partData) => {
@@ -98,7 +98,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
 
     try {
       if (partData.status === 'free') {
-        if (window.confirm(t('hatim.messages.confirmTake', { partNum, defaultValue: '{{partNum}}. cuzu okumak icin almak istiyor musunuz?' }))) {
+        if (window.confirm(t('hatim.messages.confirmTake', { partNum, defaultValue: '{{partNum}}. cüzü okumak için almak istiyor musunuz?' }))) {
           await takePart(partNum);
         }
       } else if (partData.status === 'taken') {
@@ -152,7 +152,7 @@ const HatimDetail = ({ hatimId, onBack }) => {
       }
     }
 
-    await copyText(shareText, t('hatim.messages.inviteCopied', 'Davet mesaji kopyalandı.'));
+    await copyText(shareText, t('hatim.messages.inviteCopied', 'Davet mesajı kopyalandı.'));
   };
 
   return (
@@ -230,9 +230,9 @@ const HatimDetail = ({ hatimId, onBack }) => {
 
         <div className="hatim-grid-header">
           <div>
-            <h4 className="hatim-grid-title">{t('hatim.statusGrid', 'Cüz Durumlari')}</h4>
+            <h4 className="hatim-grid-title">{t('hatim.statusGrid', 'Cüz Durumları')}</h4>
             <p className="hatim-grid-subtitle">
-              {t('hatim.gridSubtitle', 'Uygun olan cüzü seç, okumayi tamamlayinca durumu guncelle.')}
+              {t('hatim.gridSubtitle', 'Uygun olan cüzü seç, okumayı tamamlayınca durumu güncelle.')}
             </p>
           </div>
           <div className="hatim-grid-badge">

@@ -1,4 +1,4 @@
-export interface TajweedQuizQuestion {
+export type TajweedQuizQuestion = {
   id: number;
   question: string;
   ayah?: string;

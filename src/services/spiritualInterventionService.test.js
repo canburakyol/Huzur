@@ -1,4 +1,6 @@
-import { describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+
+import i18n from '../i18n';
 
 import spiritualInterventions from '../data/spiritualInterventions/index.js';
 import {
@@ -9,6 +11,15 @@ import {
 } from './spiritualInterventionService';
 
 describe('spiritualInterventionService', () => {
+  beforeAll(() => i18n.changeLanguage('tr'));
+  afterAll(() => i18n.changeLanguage('en'));
+
+  it('stays silent outside Turkish, whose corpus it has not', async () => {
+    await i18n.changeLanguage('de');
+    expect(getSpiritualIntervention({ context: {}, now: new Date('2026-03-27T09:00:00.000Z') })).toBeNull();
+    await i18n.changeLanguage('tr');
+  });
+
   it('ships a reviewed corpus with exactly 100 entries', () => {
     expect(spiritualInterventions).toHaveLength(100);
     expect(spiritualInterventions.every((entry) => entry.reviewStatus === 'reviewed')).toBe(true);

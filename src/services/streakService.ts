@@ -2,7 +2,7 @@ import { storageService } from "./storageService";
 import { analyticsService } from "./analyticsService";
 import { STORAGE_KEYS } from "../constants";
 
-interface Badge {
+type Badge = {
   id: string;
   days: number;
   emoji: string;
@@ -10,14 +10,14 @@ interface Badge {
   message: string;
 }
 
-interface CategoryStreak {
+type CategoryStreak = {
   count: number;
   lastDate: string | null;
   freezeTokens: number;
   history: Array<{ date: string; type: string }>;
 }
 
-interface StreakData {
+type StreakData = {
   currentStreak: number;
   longestStreak: number;
   lastVisitDate: string | null;
@@ -32,24 +32,24 @@ interface StreakData {
   };
 }
 
-interface StreakResult {
+type StreakResult = {
   streakData: StreakData;
   newBadge: Badge | null;
 }
 
-interface ActivityResult {
+type ActivityResult = {
   success: boolean;
   message?: string;
   count?: number;
 }
 
-interface FreezeTokenResult {
+type FreezeTokenResult = {
   success: boolean;
   message?: string;
   tokensRemaining?: number;
 }
 
-interface StreakDisplay {
+type StreakDisplay = {
   current: number;
   longest: number;
   total: number;
@@ -57,13 +57,13 @@ interface StreakDisplay {
   emoji: string;
 }
 
-interface RecoveryStatus {
+type RecoveryStatus = {
   canRecover: boolean;
   daysMissed: number;
   recoveryDeadline: string | null;
 }
 
-interface CategoryRecoveryStatus {
+type CategoryRecoveryStatus = {
   canRecover: boolean;
   category: string;
   deadline: string | null;
@@ -71,7 +71,7 @@ interface CategoryRecoveryStatus {
   currentCount?: number;
 }
 
-interface CategoryRecoveryResult {
+type CategoryRecoveryResult = {
   success: boolean;
   category: string;
   message: string;

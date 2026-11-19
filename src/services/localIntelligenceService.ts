@@ -354,23 +354,23 @@ const scoreCandidate = ({ candidateId, context = {}, slot, state, riskBand }: {
 
 const buildHeadline = (topModule: string, riskBand: RiskBand): string => {
   if (riskBand === 'comeback') {
-    return 'Bugun geri donusu kolaylastiracak modulleri one aldik';
+    return 'Bugün geri dönüşü kolaylaştıracak modülleri öne aldık';
   }
 
   if (riskBand === 'at_risk') {
-    return 'Ritmi koruman icin en hafif girisleri ustte tuttuk';
+    return 'Ritmi koruman için en hafif girişleri üstte tuttuk';
   }
 
   const titles: Record<string, string> = {
-    familyMomentum: 'Aile ritmini destekleyecek akislari ustte tuttuk',
-    dailyQuests: 'Bugun istikrarini koruyacak gorevleri one aldik',
-    featureGrid: 'Su an en hizli ulasilacak araclari ustte tuttuk',
-    dailyDiscovery: 'Kesif ve Kuran odagini one aldik',
-    dailyContent: 'Gunluk icerik bloklari su an senin ritmine daha uygun',
-    stories: 'Daha sakin ve akici bir akisi ustte tuttuk',
+    familyMomentum: 'Aile ritmini destekleyecek akışları üstte tuttuk',
+    dailyQuests: 'Bugün istikrarını koruyacak görevleri öne aldık',
+    featureGrid: 'Şu an en hızlı ulaşılacak araçları üstte tuttuk',
+    dailyDiscovery: 'Keşif ve Kuran odağını öne aldık',
+    dailyContent: 'Günlük içerik blokları şu an senin ritmine daha uygun',
+    stories: 'Daha sakin ve akıcı bir akışı üstte tuttuk',
   };
 
-  return titles[topModule] || 'Ana ekran cihaz icinde yerel olarak yeniden siralandi';
+  return titles[topModule] || 'Ana ekran cihaz içinde yerel olarak yeniden sıralandı';
 };
 
 const buildExplanation = (topModule: string, context: RankingContext = {}, slot: SlotName): string => {
@@ -378,21 +378,21 @@ const buildExplanation = (topModule: string, context: RankingContext = {}, slot:
   const activeDays = Number(context?.weeklySnapshot?.activeDays) || 0;
   const slotCopy: Record<SlotName, string> = {
     morning: 'sabah rutini',
-    afternoon: 'ogle ritmi',
-    evening: 'aksam akisi',
-    night: 'gece sakinligi',
+    afternoon: 'öğle ritmi',
+    evening: 'akşam akışı',
+    night: 'gece sakinliği',
   };
 
   const specificCopy: Record<string, string> = {
-    familyMomentum: 'Aile hedefleri ve birlikte istikrar sinyalleri bu karti yukari tasidi.',
-    dailyQuests: 'Kisa, tamamlanabilir adimlar bugun seni daha hizli tekrar ritme sokar.',
-    featureGrid: 'Son kullanim aliskanliklarin hizli erisim odagini guclendiriyor.',
-    dailyDiscovery: 'Kuran ve kesif sinyalleri bu saatte daha yuksek puan aldi.',
-    dailyContent: 'Gunluk icerik ve kampanya baglami bu karti destekledi.',
-    stories: 'Aksam ve gece saatlerinde daha yumusak tuketim akislari one cikiyor.',
+    familyMomentum: 'Aile hedefleri ve birlikte istikrar sinyalleri bu kartı yukarı taşıdı.',
+    dailyQuests: 'Kısa, tamamlanabilir adımlar bugün seni daha hızlı tekrar ritme sokar.',
+    featureGrid: 'Son kullanım alışkanlıkların hızlı erişim odağını güçlendiriyor.',
+    dailyDiscovery: 'Kuran ve keşif sinyalleri bu saatte daha yüksek puan aldı.',
+    dailyContent: 'Günlük içerik ve kampanya bağlamı bu kartı destekledi.',
+    stories: 'Akşam ve gece saatlerinde daha yumuşak tüketim akışları öne çıkıyor.',
   };
 
-  return `${slotCopy[slot] || 'bugunku'} ile son 7 gundeki ${activeDays} aktif gun ve ${streak} gunluk seri birlikte degerlendirildi. ${specificCopy[topModule] || 'Yerel sinyaller bu siralamayi olusturdu.'}`;
+  return `${slotCopy[slot] || 'bugünkü'} ile son 7 gündeki ${activeDays} aktif gün ve ${streak} günlük seri birlikte değerlendirildi. ${specificCopy[topModule] || 'Yerel sinyaller bu sıralamayı oluşturdu.'}`;
 };
 
 const buildSocialHint = (context: RankingContext = {}, topModule: string): string => {
@@ -401,11 +401,11 @@ const buildSocialHint = (context: RankingContext = {}, topModule: string): strin
   if (context?.social?.family && familyGoal && topModule !== 'familyMomentum') {
     const currentValue = Number(familyGoal.currentValue) || 0;
     const targetValue = Number(familyGoal.targetValue) || 0;
-    return `Aile hedefinde ${currentValue}/${targetValue} ilerleme var; uygun oldugunda aile alanina donmek ritmi destekler.`;
+    return `Aile hedefinde ${currentValue}/${targetValue} ilerleme var; uygun olduğunda aile alanına dönmek ritmi destekler.`;
   }
 
   if (context?.social?.family && topModule === 'familyMomentum') {
-    return 'Aile baglami bugunluk motivasyonu yukari cekiyor.';
+    return 'Aile bağlamı bugünlük motivasyonu yukarı çekiyor.';
   }
 
   return '';
@@ -413,8 +413,8 @@ const buildSocialHint = (context: RankingContext = {}, topModule: string): strin
 
 const buildFallbackRanking = (candidates: RankingCandidate[] = []): HomeRankingResult => ({
   provider: 'local_fallback',
-  headline: 'Ana ekran yerelde siralaniyor',
-  explanation: 'Bulut cagri yok. Sira, saat ve aliskanlik sayaclari cihaz icinde hesaplandi.',
+  headline: 'Ana ekran yerelde sıralanıyor',
+  explanation: 'Bulut çağrı yok. Sıra, saat ve alışkanlık sayaçları cihaz içinde hesaplandı.',
   socialHint: '',
   rankedModules: Array.isArray(candidates) ? candidates.map((candidate) => candidate.id).filter(Boolean) : [],
   riskBand: 'steady',
@@ -497,12 +497,12 @@ const buildPushTitle = ({ type, fallbackTitle, nextPrayerLabel }: {
   }
 
   const titles: Record<string, string> = {
-    prayer_pre: `${nextPrayerLabel} icin sakin bir hazirlik`,
-    prayer_main: `${nextPrayerLabel} vakti yaklasiyor`,
-    reminder: 'Bugun tek bir manevi mola yeter',
+    prayer_pre: `${nextPrayerLabel} için sakin bir hazırlık`,
+    prayer_main: `${nextPrayerLabel} vakti yaklaşıyor`,
+    reminder: 'Bugün tek bir manevi mola yeter',
   };
 
-  return titles[type] || 'Huzur sana gore zamanlandi';
+  return titles[type] || 'Huzur sana göre zamanlandı';
 };
 
 const buildPushBody = ({ type, slot, riskBand, preferredSlot, lastFeature, fallbackBody }: {
@@ -518,26 +518,26 @@ const buildPushBody = ({ type, slot, riskBand, preferredSlot, lastFeature, fallb
   }
 
   if (type === 'prayer_pre') {
-    return 'Bildirim saati, son acilis saatlerin ve vakit akisi cihaz icinde eslestirilerek secildi.';
+    return 'Bildirim saati, son açılış saatlerin ve vakit akışı cihaz içinde eşleştirilerek seçildi.';
   }
 
   if (type === 'prayer_main') {
     return riskBand === 'comeback'
-      ? 'Ritmi zorlamadan yeniden kurmak icin bu vakti yumusak bir giris olarak one aldik.'
-      : 'Son aliskanlik ritmine gore bu vakitte donus ihtimali daha yuksek gorunuyor.';
+      ? 'Ritmi zorlamadan yeniden kurmak için bu vakti yumuşak bir giriş olarak öne aldık.'
+      : 'Son alışkanlık ritmine göre bu vakitte dönüş ihtimali daha yüksek görünüyor.';
   }
 
   if (lastFeature === 'quran') {
-    return 'Kisa bir Kuran molasi bugunku ritmini toparlamaya yardim edebilir.';
+    return 'Kısa bir Kuran molası bugünkü ritmini toparlamaya yardım edebilir.';
   }
 
   if (preferredSlot === slot) {
-    return 'Bu saat, son gunlerde en tutarli donus yaptigin zaman araligina yakin.';
+    return 'Bu saat, son günlerde en tutarlı dönüş yaptığın zaman aralığına yakın.';
   }
 
   return riskBand === 'at_risk'
-    ? 'Bugun ritmi korumak icin en hafif hatirlatmayi sectik.'
-    : 'Hatirlatma metni son kullanim desenlerine gore cihaz icinde olusturuldu.';
+    ? 'Bugün ritmi korumak için en hafif hatırlatmayı seçtik.'
+    : 'Hatırlatma metni son kullanım desenlerine göre cihaz içinde oluşturuldu.';
 };
 
 export const getLocalPushHint = async ({

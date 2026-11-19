@@ -31,7 +31,7 @@ export const PRAYER_VALIDATION_SEVERITY: Record<Uppercase<ValidationSeverity>, V
   CRITICAL: 'critical'
 };
 
-export interface PrayerValidationRules {
+export type PrayerValidationRules = {
   WARN_MULTIPLIER: number;
   CRITICAL_MULTIPLIER: number;
   SECONDARY_UNAVAILABLE_SEVERITY: ValidationSeverity;

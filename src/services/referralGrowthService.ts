@@ -5,14 +5,14 @@ import i18n from '../i18n';
 const tx = (key: string, fallback: string, options: Record<string, unknown> = {}): string =>
   String(i18n.t(`referral.${key}`, { ...options, defaultValue: fallback }));
 
-interface Campaign {
+type Campaign = {
   id?: string;
   region?: string;
   variant?: string;
   [key: string]: unknown;
 }
 
-interface InviterSummary {
+type InviterSummary = {
   ownCode?: string;
   inviteCreatedAt?: string | null;
   acceptedCount?: number;
@@ -23,7 +23,7 @@ interface InviterSummary {
   latestInviterRewardAt?: string | null;
 }
 
-interface InviteeSummary {
+type InviteeSummary = {
   invitedByCode?: string;
   inviteAcceptedAt?: string | null;
   onboardingCompletedAt?: string | null;
@@ -33,18 +33,18 @@ interface InviteeSummary {
   syncIssue?: string;
 }
 
-interface ServerData {
+type ServerData = {
   inviterSummary: InviterSummary;
   inviteeSummary: InviteeSummary;
 }
 
-interface Rewards {
+type Rewards = {
   inviterUnlockedAt?: string | null;
   inviteeUnlockedAt?: string | null;
   [key: string]: unknown;
 }
 
-interface LocalProgress {
+type LocalProgress = {
   ownCode?: string;
   inviteCreatedAt?: string | null;
   invitedByCode?: string;
@@ -60,20 +60,20 @@ interface MergedProgress extends LocalProgress {
   server: ServerData;
 }
 
-interface GrowthStep {
+type GrowthStep = {
   id: string;
   label: string;
   description: string;
   status: 'done' | 'pending' | 'active';
 }
 
-interface GrowthStat {
+type GrowthStat = {
   id: string;
   label: string;
   value: string;
 }
 
-export interface ReferralGrowthPlan {
+export type ReferralGrowthPlan = {
   source: string;
   campaign: Campaign | undefined;
   shareVariant: string;
@@ -98,7 +98,7 @@ export interface ReferralGrowthPlan {
   signature: string;
 }
 
-interface ShareTextOptions {
+type ShareTextOptions = {
   inviteCode?: string;
   inviteUrl?: string;
   variant?: string;
@@ -106,13 +106,13 @@ interface ShareTextOptions {
   campaign?: Campaign;
 }
 
-interface ShareTextResult {
+type ShareTextResult = {
   title: string;
   dialogTitle: string;
   text: string;
 }
 
-interface GrowthPlanOptions {
+type GrowthPlanOptions = {
   localProgress?: LocalProgress;
   serverSnapshot?: Record<string, unknown>;
   surface?: string;
@@ -135,7 +135,7 @@ const resolveShareVariant = (explicitVariant: string | undefined): string => {
   return getExperimentVariant('share_cta_v1');
 };
 
-interface ShareLabels {
+type ShareLabels = {
   primary: string;
   secondary: string;
 }

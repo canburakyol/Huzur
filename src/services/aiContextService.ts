@@ -6,30 +6,33 @@ import { getCurrentUserId } from './authService';
 import { getStreakData, getWeeklyGoalPreference } from './streakService';
 import { getStoredPrimaryGoal } from '../utils/primaryGoal';
 
-interface StreakData {
+type StreakData = {
+  // Callers pass the gamification shape (current/longest); storage uses currentStreak/longestStreak.
+  current?: number;
+  longest?: number;
   currentStreak?: number;
   longestStreak?: number;
   streaks?: Record<string, { count: number }>;
 }
 
-interface NextPrayer {
+type NextPrayer = {
   key?: string;
   name?: string;
 }
 
-interface Family {
+type Family = {
   id?: string;
   name?: string;
   membersDetails?: unknown[];
 }
 
-interface FamilyWeeklyGoal {
+type FamilyWeeklyGoal = {
   title?: string;
   currentValue?: number;
   targetValue?: number;
 }
 
-interface DailyContent {
+type DailyContent = {
   esma?: { name?: string; sourceMeta?: unknown };
   dailyDua?: { title?: string; source?: string; sourceMeta?: unknown };
   dua?: { source?: string };
@@ -38,12 +41,12 @@ interface DailyContent {
   hadith?: { sourceMeta?: unknown };
 }
 
-interface NotificationPrefs {
+type NotificationPrefs = {
   reminder?: boolean;
   quietHoursEnabled?: boolean;
 }
 
-interface AiContextResult {
+type AiContextResult = {
   userId: string | null;
   activeTab: string;
   activeFeature: string | null;
@@ -73,7 +76,7 @@ interface AiContextResult {
     campaignId: string;
     sources: unknown[];
   } | null;
-  activityPattern: Record<string, number>;
+  activityPattern: { morning: number; afternoon: number; evening: number };
   weeklySnapshot: unknown;
   notificationPrefs: {
     reminder: boolean;
@@ -86,10 +89,10 @@ interface AiContextResult {
   };
 }
 
-interface BuildAiContextOptions {
+type BuildAiContextOptions = {
   activeTab?: string;
   activeFeature?: string | null;
-  streakData?: Partial<StreakData>;
+  streakData?: Partial<StreakData> | null;
   dailyContent?: DailyContent | null;
   timings?: unknown;
   nextPrayer?: NextPrayer | null;

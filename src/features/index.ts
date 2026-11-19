@@ -45,7 +45,7 @@ export const allFeatures: Record<string, FeatureConfig> = {
   ...familyFeatures
 };
 
-export interface ModuleEntry {
+export type ModuleEntry = {
   features: Record<string, FeatureConfig>;
   info: ModuleInfo;
 }

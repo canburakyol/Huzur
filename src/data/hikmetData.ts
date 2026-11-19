@@ -1,11 +1,11 @@
-export interface HikmetCategory {
+export type HikmetCategory = {
   id: string;
   title: string;
   icon: string;
   description: string;
 }
 
-export interface Hikmet {
+export type Hikmet = {
   id: number;
   category: string;
   text: string;

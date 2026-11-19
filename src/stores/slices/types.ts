@@ -1,11 +1,11 @@
-export interface Toast {
+export type Toast = {
   id: number;
   message: string;
   type: string;
   duration: number;
 }
 
-export interface Quest {
+export type Quest = {
   id: string;
   type: string;
   subType?: string;
@@ -16,16 +16,16 @@ export interface Quest {
   xp: number;
 }
 
-export interface DailyQuests {
+export type DailyQuests = {
   date: string;
   quests: Quest[];
 }
 
-export interface InviteModalContext {
+export type InviteModalContext = {
   source: string;
 }
 
-export interface Settings {
+export type Settings = {
   language: string;
   theme: string;
   accentColor: string;
@@ -33,27 +33,27 @@ export interface Settings {
   stickyNotification: boolean;
 }
 
-export interface Family {
+export type Family = {
   id: string;
   name: string;
   [key: string]: unknown;
 }
 
-export interface WeeklyGoal {
+export type WeeklyGoal = {
   id: string;
   [key: string]: unknown;
 }
 
-export interface PrayerTimes {
+export type PrayerTimes = {
   [key: string]: unknown;
 }
 
-export interface NextPrayer {
+export type NextPrayer = {
   name: string;
   [key: string]: unknown;
 }
 
-export interface SettingsSlice {
+export type SettingsSlice = {
   settings: Settings;
   setLanguage: (lang: string) => void;
   setTheme: (theme: string) => void;
@@ -62,7 +62,7 @@ export interface SettingsSlice {
   setStickyNotification: (enabled: boolean) => void;
 }
 
-export interface FocusSlice {
+export type FocusSlice = {
   isFocusMode: boolean;
   activeFocusSession: import("../../services/focusSessionService").FocusSession | null;
   setActiveFocusSession: (session: import("../../services/focusSessionService").FocusSession | null) => void;
@@ -71,19 +71,19 @@ export interface FocusSlice {
   disableFocusMode: () => void;
 }
 
-export interface TimeSlice {
+export type TimeSlice = {
   timeOfDay: string;
   greetingKey: string;
   refreshTimeState: () => void;
 }
 
-export interface ToastSlice {
+export type ToastSlice = {
   toasts: Toast[];
   showToast: (message: string, type?: string, duration?: number) => void;
   removeToast: (id: number) => void;
 }
 
-export interface GamificationSlice {
+export type GamificationSlice = {
   points: number;
   level: number | null;
   earnedBadges: string[];
@@ -102,7 +102,7 @@ export interface GamificationSlice {
   refreshQuests: (getRandomQuests: () => Quest[]) => void;
 }
 
-export interface NavigationSlice {
+export type NavigationSlice = {
   activeFeature: string | null;
   activeTab: string;
   showHamburgerMenu: boolean;
@@ -119,12 +119,12 @@ export interface NavigationSlice {
   closeInviteModal: () => void;
 }
 
-export interface ProSlice {
+export type ProSlice = {
   isProUser: boolean;
   setIsProUser: (active: boolean) => void;
 }
 
-export interface FamilySlice {
+export type FamilySlice = {
   family: Family | null;
   publicFamilies: Family[];
   weeklyGoal: WeeklyGoal | null;
@@ -139,7 +139,7 @@ export interface FamilySlice {
   setWeeklyGoalLoading: (loading: boolean) => void;
 }
 
-export interface PrayerSlice {
+export type PrayerSlice = {
   prayerTimes: PrayerTimes | null;
   nextPrayer: NextPrayer | null;
   setPrayerTimes: (times: PrayerTimes | null) => void;

@@ -4,7 +4,7 @@ import { logger } from "../utils/logger";
 
 const RTL_LANGUAGES = ["ar", "he", "fa", "ur"];
 
-interface DirectionResult {
+type DirectionResult = {
   isRTL: boolean;
   direction: "rtl" | "ltr";
   language: string;

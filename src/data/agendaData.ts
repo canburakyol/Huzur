@@ -40,14 +40,14 @@ const DAYS: string[] = [
   'calendar.days.saturday'
 ];
 
-export interface HijriDate {
+export type HijriDate = {
   day: number;
   month: number;
   year: number;
   monthName: string;
 }
 
-export interface CalendarDay {
+export type CalendarDay = {
   day: number;
   date: Date;
   dateStr: string;

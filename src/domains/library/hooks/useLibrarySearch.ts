@@ -1,6 +1,6 @@
 import { useDeferredValue, useMemo, useState } from 'react';
 
-interface LibraryItem {
+type LibraryItem = {
   id?: string;
   title?: string;
   icon?: string;
@@ -8,12 +8,20 @@ interface LibraryItem {
   type?: string;
   chapters?: Array<{ title: string; content: string }>;
   items?: Array<Record<string, string>>;
-  topics?: Array<Record<string, string>>;
+  // Education topics are objects; video topics are plain strings.
+  topics?: Array<string | Record<string, string>>;
   questions?: Array<{ q: string; a: string }>;
   duration?: string;
+  meaning?: string;
+  situation?: string;
+  transliteration?: string;
+  turkish?: string;
+  source?: string;
+  description?: string;
+  category?: string;
 }
 
-interface LibraryCategory {
+type LibraryCategory = {
   id: string;
   title: string;
   icon: string;
@@ -21,7 +29,7 @@ interface LibraryCategory {
   data: LibraryItem[];
 }
 
-interface SearchResult {
+type SearchResult = {
   type: string;
   category?: string;
   icon?: string;
@@ -117,7 +125,9 @@ export function useLibrarySearch(categories: LibraryCategory[]) {
         pushMatch('education', educationItem, { type: 'education' });
       }
 
-      educationItem.topics?.forEach((topic) => {
+      educationItem.topics?.forEach((entry) => {
+        if (typeof entry === 'string') return;
+        const topic = entry;
         if (includesQuery(joinText(topic.title, topic.name, topic.content, topic.description, topic.pronunciation), normalizedQuery)) {
           pushMatch('education', educationItem, {
             type: 'topic',
@@ -179,11 +189,12 @@ export function useLibrarySearch(categories: LibraryCategory[]) {
       }
 
       videoItem.topics?.forEach((topic) => {
-        if (includesQuery(topic as string, normalizedQuery)) {
+        if (typeof topic !== 'string') return;
+        if (includesQuery(topic, normalizedQuery)) {
           pushMatch('video', videoItem, {
             type: 'video-topic',
             category: videoItem.title,
-            match: topic as string,
+            match: topic,
             requiresPro: videoItem.isPro
           });
         }

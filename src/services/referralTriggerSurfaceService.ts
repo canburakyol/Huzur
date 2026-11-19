@@ -2,21 +2,21 @@ import { getActiveCampaign } from './campaignService';
 import i18n from '../i18n';
 import { buildReferralAnalyticsPayload, getReferralGrowthPlan, ReferralGrowthPlan } from './referralGrowthService';
 
-interface Campaign {
+type Campaign = {
   id?: string;
   region?: string;
   variant?: string;
   [key: string]: unknown;
 }
 
-interface WeeklyStats {
+type WeeklyStats = {
   activeDays?: number;
   tasksCompleted?: number;
   xpEarned?: number;
   [key: string]: unknown;
 }
 
-interface AssistantMeta {
+type AssistantMeta = {
   answered?: boolean;
   confidence?: string;
   safeModeNotice?: boolean;
@@ -24,7 +24,7 @@ interface AssistantMeta {
   [key: string]: unknown;
 }
 
-interface SurfacePlan {
+type SurfacePlan = {
   triggerId: string;
   entrySource: string;
   badge: string;
@@ -44,7 +44,7 @@ interface TriggerSurfacePlan extends SurfacePlan {
   signature: string;
 }
 
-interface BuildPlanOptions {
+type BuildPlanOptions = {
   surface?: string;
   localProgress?: Record<string, unknown>;
   serverSnapshot?: Record<string, unknown>;

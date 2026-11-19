@@ -5,14 +5,14 @@ import { localizeWordByWord } from '../../../../data/wordByWordTranslations';
 import { getWordMorphology, type WordMorphology } from '../../../../data/wordMorphology';
 import { canAccessWordByWord, isPro } from '../../../../services/proService';
 
-interface WordAnalysis {
+type WordAnalysis = {
   arabic: string;
   meaning: string;
   transliteration: string;
   morphology: WordMorphology | null;
 }
 
-interface UseWordByWordReturn {
+type UseWordByWordReturn = {
   userIsPro: boolean;
   freeSurahs: number[];
   surahData: Record<string, unknown> | null;

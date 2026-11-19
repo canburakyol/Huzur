@@ -15,7 +15,7 @@ type RemoteConfig = import("firebase/remote-config").RemoteConfig;
 type RemoteConfigFetchAndActivate = typeof import("firebase/remote-config").fetchAndActivate;
 type RemoteConfigGetValue = typeof import("firebase/remote-config").getValue;
 
-interface FirebaseConfig {
+type FirebaseConfig = {
   apiKey: string | undefined;
   authDomain: string | undefined;
   projectId: string | undefined;
@@ -25,23 +25,23 @@ interface FirebaseConfig {
   measurementId: string | undefined;
 }
 
-interface AppCheckTokenResult {
+type AppCheckTokenResult = {
   token: string;
   expireTimeMillis: number;
 }
 
-interface AnalyticsInstanceResult {
+type AnalyticsInstanceResult = {
   analytics: Analytics | null;
   logEvent: FirebaseLogEvent | null;
 }
 
-interface RemoteConfigInstanceResult {
+type RemoteConfigInstanceResult = {
   remoteConfig: RemoteConfig | null;
   fetchAndActivate: RemoteConfigFetchAndActivate | null;
   getValue: RemoteConfigGetValue | null;
 }
 
-interface NativePrivacySdkInitResult {
+type NativePrivacySdkInitResult = {
   success?: boolean;
   skipped?: boolean;
   platform?: string;
@@ -53,7 +53,7 @@ interface NativePrivacySdkInitResult {
   error?: string;
 }
 
-interface NativePrivacySdkPlugin {
+type NativePrivacySdkPlugin = {
   initializePrivacySdks?: (options: { telemetryEnabled: boolean; crashReportingEnabled: boolean }) => Promise<NativePrivacySdkInitResult>;
 }
 

@@ -5,7 +5,7 @@ export const SUPPORTED_LANGUAGE_CODES = ['tr', 'en', 'id', 'de'] as const;
 
 export type SupportedLanguageCode = typeof SUPPORTED_LANGUAGE_CODES[number];
 
-export interface LanguageOption {
+export type LanguageOption = {
   code: SupportedLanguageCode | string;
   name: string;
   nativeName: string;

@@ -1,5 +1,5 @@
 import i18n from '../../i18n';
-interface HatimDiscoverySeed {
+type HatimDiscoverySeed = {
   id: string;
   name: string;
   description: string;
@@ -13,7 +13,7 @@ interface HatimDiscoverySeed {
   createdAtMs: number;
 }
 
-interface DuaDiscoverySeed {
+type DuaDiscoverySeed = {
   id: string;
   text: string;
   isAnonymous: boolean;
@@ -25,7 +25,7 @@ interface DuaDiscoverySeed {
   createdAtMs: number;
 }
 
-interface FamilyDiscoverySeed {
+type FamilyDiscoverySeed = {
   id: string;
   name: string;
   isSeed: true;

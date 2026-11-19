@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import errorHandler from "../services/errorHandler";
 
-interface HandledError {
+type HandledError = {
   message: string;
   [key: string]: unknown;
 }

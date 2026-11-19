@@ -1,10 +1,10 @@
-interface HealthSummary {
+type HealthSummary = {
   actionCount?: number;
   watchCount?: number;
   averageTrust?: number | null;
 }
 
-interface RolloutGateResult {
+type RolloutGateResult = {
   recommendation: string;
   label: string;
   enabledFlagCount: number;
@@ -15,7 +15,7 @@ interface RolloutGateResult {
   actions: string[];
 }
 
-interface BuildGateOptions {
+type BuildGateOptions = {
   healthSummary?: HealthSummary | null;
   flags?: Record<string, boolean>;
 }
@@ -42,16 +42,16 @@ export const buildAiRolloutGate = ({
   if (actionCount > 0) {
     recommendation = 'hold';
     label = 'Yavaslat';
-    actions.push('Dusuk trust sinyali veren yuzeyleri once gozden gecir.');
-    actions.push('Gerekirse ilgili AI flagini gecici olarak kapat.');
+    actions.push('Düşük trust sinyali veren yüzeyleri önce gözden geçir.');
+    actions.push('Gerekirse ilgili AI flagini geçici olarak kapat.');
   } else if (watchCount > 1 || (averageTrust !== null && averageTrust < 0.7)) {
     recommendation = 'cautious';
     label = 'Izleyerek devam et';
-    actions.push('Watch bandindeki yuzeyleri log ve smoke test ile izle.');
+    actions.push('Watch bandındaki yüzeyleri log ve smoke test ile izle.');
   }
 
   if (enabledFlagCount < 5) {
-    actions.push('Tum AI yuzeyleri acik degil; kademeli rollout mantigi korunuyor.');
+    actions.push('Tüm AI yüzeyleri açık değil; kademeli rollout mantığı korunuyor.');
   } else {
     actions.push('Tum Faz 1-2 AI flagleri aktif durumda.');
   }

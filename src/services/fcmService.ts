@@ -13,21 +13,21 @@ import {
     createNotificationChannels as ensureNotificationChannels
 } from './notificationPlatformService';
 
-interface FirebaseStatus {
+type FirebaseStatus = {
     initialized: boolean;
     configured: boolean;
     messagingAvailable: boolean;
 }
 
-interface InitializeOptions {
+type InitializeOptions = {
     requestPermission?: boolean;
 }
 
-interface PrayerTimes {
+type PrayerTimes = {
   [key: string]: string;
 }
 
-interface FCMServiceInstance {
+type FCMServiceInstance = {
     token: string | null;
     listenersSetup: boolean;
     getFirebaseStatus(): Promise<FirebaseStatus>;

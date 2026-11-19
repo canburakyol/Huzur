@@ -2,22 +2,22 @@ import { STORAGE_KEYS } from '../constants';
 import { storageService } from './storageService';
 import { logExperimentAssigned } from './analyticsService';
 
-interface ExperimentConfig {
+type ExperimentConfig = {
   variants: string[];
   fallbackVariant: string;
 }
 
-interface ExperimentAssignment {
+type ExperimentAssignment = {
   variant: string;
   assignedAt: string;
   forced?: boolean;
 }
 
-interface ExperimentAssignments {
+type ExperimentAssignments = {
   [key: string]: ExperimentAssignment;
 }
 
-interface ExperimentDefinition {
+type ExperimentDefinition = {
   variants: string[];
   fallbackVariant: string;
 }

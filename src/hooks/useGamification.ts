@@ -12,12 +12,12 @@ import { getDb } from "../services/firebase";
 import crashlyticsReporter from "../utils/crashlyticsReporter";
 import { logger } from "../utils/logger";
 
-interface AddPointsOptions {
+type AddPointsOptions = {
   applyMultiplier?: boolean;
   source?: string;
 }
 
-interface GamificationResult {
+type GamificationResult = {
   points: number;
   level: typeof LEVELS[number];
   title: string;

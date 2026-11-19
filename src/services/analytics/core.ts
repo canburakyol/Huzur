@@ -3,17 +3,19 @@ import { getAnalyticsInstance } from "../firebase";
 import { storageService } from "../storageService";
 import { getPrivacySettingsSync, setTelemetryConsent } from "../privacyModeService";
 import { ANALYTICS_CONFIG, ANALYTICS_EVENTS, ANALYTICS_STORAGE_KEYS } from "./constants";
-import type { Analytics, LogEventFn } from "firebase/analytics";
+import type { Analytics, logEvent as firebaseLogEventFn } from "firebase/analytics";
+
+type LogEventFn = typeof firebaseLogEventFn;
 
 const PII_FIELDS = ["userId", "referralCode", "familyId", "email", "phone", "uid", "user_id"];
 
-interface AnalyticsEvent {
+type AnalyticsEvent = {
   name: string;
   params: Record<string, unknown>;
   retryCount?: number;
 }
 
-interface AnalyticsSummary {
+type AnalyticsSummary = {
   totalEvents: number;
   eventsByType: Record<string, number>;
   lastEvent: string | null;
@@ -137,9 +139,8 @@ export class AnalyticsService {
     }
   }
 
-  stubEvent(eventName: string, params: Record<string, unknown> = {}): null {
+  stubEvent(eventName: string, params: Record<string, unknown> = {}): void {
     logger.log("[AnalyticsStub]", eventName, params);
-    return null;
   }
 
   init(): void {

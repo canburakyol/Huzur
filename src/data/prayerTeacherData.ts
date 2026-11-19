@@ -1,4 +1,4 @@
-export interface PrayerStep {
+export type PrayerStep = {
   id: number;
   name: string;
   icon: string;
@@ -6,7 +6,7 @@ export interface PrayerStep {
   detail: string;
 }
 
-export interface Recitation {
+export type Recitation = {
   id: string;
   name: string;
   arabic: string;
@@ -14,13 +14,13 @@ export interface Recitation {
   meaning: string;
 }
 
-export interface RakatDetail {
+export type RakatDetail = {
   type: string;
   rakat: number;
   description: string;
 }
 
-export interface PrayerType {
+export type PrayerType = {
   id: string;
   name: string;
   icon: string;
@@ -29,7 +29,7 @@ export interface PrayerType {
   note: string;
 }
 
-export interface ReligiousTerm {
+export type ReligiousTerm = {
   id: string;
   name: string;
   icon: string;
@@ -37,13 +37,13 @@ export interface ReligiousTerm {
   examples: string[];
 }
 
-export interface PrayerInvalidator {
+export type PrayerInvalidator = {
   id: number;
   text: string;
   icon: string;
 }
 
-export interface QuizQuestion {
+export type QuizQuestion = {
   id: number;
   question: string;
   options: string[];

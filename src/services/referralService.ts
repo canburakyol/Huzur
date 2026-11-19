@@ -12,7 +12,7 @@ import {
 import { getActiveCampaign } from './campaignService';
 import { syncReferralState } from './referralServerService';
 
-interface AntiAbuseState {
+type AntiAbuseState = {
   attemptCount: number;
   attemptsWindowStartedAt: string | null;
   blockedUntil: string | null;
@@ -21,12 +21,12 @@ interface AntiAbuseState {
   suspiciousFlags: Array<{ reason: string; flaggedAt: string; metadata: Record<string, unknown> }>;
 }
 
-interface ReferralRewards {
+type ReferralRewards = {
   inviteeUnlockedAt: string | null;
   inviterUnlockedAt: string | null;
 }
 
-interface ReferralState {
+type ReferralState = {
   ownCode: string | null;
   inviteCreatedAt: string | null;
   invitedByCode: string | null;
@@ -38,20 +38,20 @@ interface ReferralState {
   antiAbuse: AntiAbuseState;
 }
 
-interface CaptureResult {
+type CaptureResult = {
   status: string;
   reason: string | null;
   blockedUntil: string | null;
   state: ReferralState;
 }
 
-interface InviteLinkOptions {
+type InviteLinkOptions = {
   source?: string;
   campaign?: string;
   lang?: string;
 }
 
-interface InviteLinkResult {
+type InviteLinkResult = {
   code: string;
   inviteUrl: string;
 }

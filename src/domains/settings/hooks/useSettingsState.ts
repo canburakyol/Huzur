@@ -21,12 +21,12 @@ const applyTheme = (isDarkMode: boolean) => {
   document.documentElement.setAttribute('data-theme', isDarkMode ? THEME_DARK : THEME_LIGHT);
 };
 
-interface UseSettingsStateProps {
+type UseSettingsStateProps = {
   i18n: { language?: string };
   onClose?: () => void;
 }
 
-interface MiniLeaguePreferences {
+type MiniLeaguePreferences = {
   optedIn: boolean;
   visibilityMode: 'private' | 'group' | 'league';
 }

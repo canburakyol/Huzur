@@ -1,4 +1,4 @@
-import { DAILY_TASKS, TASK_BADGES, TASK_CATEGORIES } from '../data/dailyTasksData';
+import { DAILY_TASKS, TASK_BADGES, TASK_CATEGORIES, type TaskBadge } from '../data/dailyTasksData';
 import { storageService } from './storageService';
 import { saveDailyTasksSnapshot } from './engagementSummaryService';
 import { logger } from '../utils/logger';
@@ -12,13 +12,6 @@ type DailyTask = {
   points: number;
   completed: boolean;
   completedAt: string | null;
-};
-
-type TaskBadge = {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
 };
 
 type TaskStats = {

@@ -1,4 +1,4 @@
-export interface ReferralRewardRules {
+export type ReferralRewardRules = {
   invitee: {
     rewardType: string;
     requires: string[];
@@ -9,7 +9,7 @@ export interface ReferralRewardRules {
   };
 }
 
-export interface ReferralAntiAbuseRules {
+export type ReferralAntiAbuseRules = {
   minInviteAcceptanceIntervalMs: number;
   attemptWindowMs: number;
   maxAttemptsPerWindow: number;
@@ -18,11 +18,11 @@ export interface ReferralAntiAbuseRules {
   blockDurationMs: number;
 }
 
-export interface ReferralAntiAbuseState {
+export type ReferralAntiAbuseState = {
   blockedUntil?: string;
 }
 
-export interface ReferralState {
+export type ReferralState = {
   invitedByCode?: string;
   inviteAcceptedAt?: string;
   onboardingCompletedAt?: string;
@@ -33,7 +33,7 @@ export interface ReferralState {
   antiAbuse?: ReferralAntiAbuseState;
 }
 
-export interface ReferralEligibilityResult {
+export type ReferralEligibilityResult = {
   inviteeEligible: boolean;
   inviterEligible: boolean;
   rewardBlocked: boolean;

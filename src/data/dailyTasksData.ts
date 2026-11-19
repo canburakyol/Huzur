@@ -8,7 +8,7 @@ export const TASK_CATEGORIES = {
 
 export type TaskCategory = typeof TASK_CATEGORIES[keyof typeof TASK_CATEGORIES];
 
-export interface DailyTask {
+export type DailyTask = {
   id: string;
   category: TaskCategory;
   title: string;
@@ -18,7 +18,7 @@ export interface DailyTask {
   recurring: boolean;
 }
 
-export interface TaskBadge {
+export type TaskBadge = {
   id: string;
   title: string;
   emoji: string;

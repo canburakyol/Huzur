@@ -1,11 +1,11 @@
-export interface HadithCategory {
+export type HadithCategory = {
   id: string;
   name: string;
   icon: string;
   color: string;
 }
 
-export interface Hadith {
+export type Hadith = {
   id: number;
   category: string;
   arabic: string;

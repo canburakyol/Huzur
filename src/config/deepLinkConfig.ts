@@ -1,4 +1,4 @@
-export interface DeepLinkConfig {
+export type DeepLinkConfig = {
   appScheme: string;
   androidPackageId: string;
   webFallbackBase: string;
@@ -6,7 +6,7 @@ export interface DeepLinkConfig {
   defaultSource: string;
 }
 
-export interface BuildInviteUrlOptions {
+export type BuildInviteUrlOptions = {
   code: string;
   source?: string;
   campaign?: string;

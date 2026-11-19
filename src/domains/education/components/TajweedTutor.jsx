@@ -18,13 +18,13 @@ const TajweedTutor = ({ onClose }) => {
 
   const TAJWEED_QA = useMemo(() => ({
     [tt('tajweed.faq.items.tenvin.question', 'Tenvin nedir?')]: tt('tajweed.faq.items.tenvin.answer', 'Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Uc cesidi vardir:\n• Fethatan (ً): Ustun tenvin\n• Kesretan (ٍ): Esre tenvin\n• Dammetan (ٌ): Otre tenvin\nTenvin, kelimenin sonundaki nunun yazilmadan okunmasidir.'),
-    [tt('tajweed.faq.items.gunne.question', 'Gunneli okuyus nasil olur?')]: tt('tajweed.faq.items.gunne.answer', 'Gunne, nun ve mim harflerinin genizden okunmasidir. Iki hareke miktari tutulur.\n• Idgam (mealgunne): Nun sakineden sonra ي، ن، م، و gelirse\n• Ihfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• Iklab: Nun sakineden sonra ب gelirse, mime donusur ve gunneli okunur.'),
-    [tt('tajweed.faq.items.kalkale.question', 'Kalkale harfleri hangileri?')]: tt('tajweed.faq.items.kalkale.answer', 'Kalkale harfleri 5 tanedir ve "قطب جد" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) oldugunda, cikis noktasinda bir sicrama veya titresim yapilir.'),
-    [tt('tajweed.faq.items.med.question', 'Med harfleri nelerdir?')]: tt('tajweed.faq.items.med.answer', 'Uzatma (Med) harfleri uctur: Elif (ا), Vav (و) ve Ya (ي). Bu harfler kendinden onceki harfi bir elif miktari (yaklasik 1-1.5 saniye) uzatir.'),
-    [tt('tajweed.faq.items.makhraj.question', 'Mahrec nedir?')]: tt('tajweed.faq.items.makhraj.answer', 'Mahrec, harflerin agizdan cikis yeridir. Kuran okurken harflerin dogru mahreclerinden cikarilmasi anlamin bozulmamasi icin cok onemlidir.'),
-    [tt('tajweed.faq.items.ihfa.question', 'Ihfa nasil yapilir?')]: tt('tajweed.faq.items.ihfa.answer', 'Ihfa, sozlukte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiginde, nun sesini genizden getirerek hafifce gizleyerek okumaktir.'),
-    [tt('tajweed.faq.items.sekte.question', 'Sekte nedir?')]: tt('tajweed.faq.items.sekte.answer', 'Sekte, sesi bir an icin kesip nefes almadan beklemektir. Kuran-i Kerim\'de 4 yerde sekte bulunur (Kehf, Yasin, Kiyame ve Mutaffifin surelerinde).'),
-    [tt('tajweed.faq.items.izhar.question', 'Izhar nedir?')]: tt('tajweed.faq.items.izhar.answer', 'Izhar, acikca okumaktir. Sakin nun veya tenvinden sonra bogaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hic tutulmadan ve gizlenmeden oldugu gibi okunur.')
+    [tt('tajweed.faq.items.gunne.question', 'Gunneli okuyus nasıl olur?')]: tt('tajweed.faq.items.gunne.answer', 'Gunne, nun ve mim harflerinin genizden okunmasıdır. İki hareke miktarı tutulur.\n• İdgam (mealgunne): Nun sakineden sonra ي، ن، م، و gelirse\n• İhfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• İklab: Nun sakineden sonra ب gelirse, mime dönüşür ve gunneli okunur.'),
+    [tt('tajweed.faq.items.kalkale.question', 'Kalkale harfleri hangileri?')]: tt('tajweed.faq.items.kalkale.answer', 'Kalkale harfleri 5 tanedir ve "قطب جد" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) olduğunda, çıkış noktasında bir sıçrama veya titreşim yapılır.'),
+    [tt('tajweed.faq.items.med.question', 'Med harfleri nelerdir?')]: tt('tajweed.faq.items.med.answer', 'Uzatma (Med) harfleri üçtür: Elif (ا), Vav (و) ve Ya (ي). Bu harfler kendinden önceki harfi bir elif miktarı (yaklaşık 1-1.5 saniye) uzatır.'),
+    [tt('tajweed.faq.items.makhraj.question', 'Mahrec nedir?')]: tt('tajweed.faq.items.makhraj.answer', 'Mahrec, harflerin ağızdan çıkış yeridir. Kuran okurken harflerin doğru mahreclerinden çıkarılması anlamın bozulmaması için çok önemlidir.'),
+    [tt('tajweed.faq.items.ihfa.question', 'İhfa nasıl yapılır?')]: tt('tajweed.faq.items.ihfa.answer', 'Ihfa, sozlukte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiginde, nun sesini genizden getirerek hafifce gizleyerek okumaktir.'),
+    [tt('tajweed.faq.items.sekte.question', 'Sekte nedir?')]: tt('tajweed.faq.items.sekte.answer', 'Sekte, sesi bir an için kesip nefes almadan beklemektir. Kuran-ı Kerim\'de 4 yerde sekte bulunur (Kehf, Yasin, Kıyame ve Mutaffifin surelerinde).'),
+    [tt('tajweed.faq.items.izhar.question', 'İzhar nedir?')]: tt('tajweed.faq.items.izhar.answer', 'İzhar, açıkça okumaktır. Sakin nun veya tenvinden sonra boğaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hiç tutulmadan ve gizlenmeden olduğu gibi okunur.')
   }), [tt]);
   /*
   const TAJWEED_QA_REMOVED = {
@@ -66,7 +66,7 @@ const TajweedTutor = ({ onClose }) => {
 
   const playAudio = (example) => {
     if (!example.surah || !example.ayah) {
-        showToast(tt('tajweed.audioNotReady', 'Ses dosyasi hazir degil.'), 'info');
+        showToast(tt('tajweed.audioNotReady', 'Ses dosyası hazır değil.'), 'info');
         return;
     }
 
@@ -106,7 +106,7 @@ const TajweedTutor = ({ onClose }) => {
           </div>
           <div className="manuscript-header-content reveal-stagger">
             <h1 className="manuscript-title">{tt('tajweed.quizTitle', 'Tecvid Quiz')}</h1>
-            <p className="manuscript-subtitle">{tt('tajweed.quizDesc', 'Kisa bir tekrar ile tecvid bilginizi olcun.')}</p>
+            <p className="manuscript-subtitle">{tt('tajweed.quizDesc', 'Kısa bir tekrar ile tecvid bilginizi ölçün.')}</p>
           </div>
         </div>
         <TajweedQuiz onBack={() => setShowQuiz(false)} />
@@ -188,7 +188,7 @@ const TajweedTutor = ({ onClose }) => {
             <span className="manuscript-badge">{tt('tajweed.academy', 'Huzur Akademi')}</span>
           </div>
           <p className="manuscript-subtitle">
-            {selectedRule ? t(selectedRule.title) : tt('tajweed.mainSubtitle', 'Tecvid kurallarini sade ve anlasilir adimlarla ogrenin.')}
+            {selectedRule ? t(selectedRule.title) : tt('tajweed.mainSubtitle', 'Tecvid kurallarını sade ve anlaşılır adımlarla öğrenin.')}
           </p>
         </div>
       </div>
@@ -260,7 +260,7 @@ const TajweedTutor = ({ onClose }) => {
                 <Trophy size={32} color="var(--edu-gold)" />
                 <div className="card-text">
                     <h4>{tt('tajweed.quizTitle', 'Tecvid Quiz')}</h4>
-                    <p>{tt('tajweed.quizSubtitle', 'Ogrendiklerinizi hizli bir testle pekistirin.')}</p>
+                    <p>{tt('tajweed.quizSubtitle', 'Öğrendiklerinizi hızlı bir testle pekiştirin.')}</p>
                 </div>
                 <ChevronRight size={20} color="var(--edu-gold)" />
             </div>

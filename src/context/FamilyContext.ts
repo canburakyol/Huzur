@@ -1,8 +1,8 @@
 import { createContext, useContext, Context } from 'react';
 
-interface FamilyContextValue {
-  family: unknown;
-  weeklyGoal: unknown;
+type FamilyContextValue = {
+  family: { id?: string; name?: string; membersDetails?: unknown[] } | null;
+  weeklyGoal: { title?: string; currentValue?: number; targetValue?: number } | null;
 }
 
 const FamilyContext: Context<FamilyContextValue | null> = createContext<FamilyContextValue | null>(null);

@@ -1,12 +1,12 @@
 // Library Data - Kütüphane İçerikleri
 // Comprehensive Islamic Library Content
 
-interface Chapter {
+type Chapter = {
   title: string;
   content: string;
 }
 
-interface Book {
+type Book = {
   id: string;
   title: string;
   icon: string;
@@ -14,7 +14,7 @@ interface Book {
   chapters: Chapter[];
 }
 
-interface TextItem {
+type TextItem = {
   number: number;
   title?: string;
   arabic?: string;
@@ -25,7 +25,7 @@ interface TextItem {
   meaning?: string;
 }
 
-interface ReligiousText {
+type ReligiousText = {
   id: string;
   title: string;
   icon: string;
@@ -33,7 +33,7 @@ interface ReligiousText {
   items: TextItem[];
 }
 
-interface Topic {
+type Topic = {
   // alphabet rows carry letter/name/pronunciation instead of title/content
   title?: string;
   content?: string;
@@ -43,7 +43,7 @@ interface Topic {
   letter?: string;
 }
 
-interface EducationItem {
+type EducationItem = {
   id: string;
   title: string;
   icon: string;
@@ -51,7 +51,7 @@ interface EducationItem {
   topics: Topic[];
 }
 
-interface ReferenceItem {
+type ReferenceItem = {
   number: number;
   arabic?: string;
   name: string;
@@ -60,7 +60,7 @@ interface ReferenceItem {
   description?: string;
 }
 
-interface Reference {
+type Reference = {
   id: string;
   title: string;
   icon: string;
@@ -68,26 +68,26 @@ interface Reference {
   items: ReferenceItem[];
 }
 
-interface FaqQuestion {
+type FaqQuestion = {
   q: string;
   a: string;
 }
 
-interface FaqCategory {
+type FaqCategory = {
   id: string;
   category: string;
   icon: string;
   questions: FaqQuestion[];
 }
 
-interface AudioItem {
+type AudioItem = {
   number: number;
   title: string;
   duration: string;
   url: string;
 }
 
-interface AudioCategory {
+type AudioCategory = {
   id: string;
   title: string;
   icon: string;
@@ -97,7 +97,7 @@ interface AudioCategory {
   items: AudioItem[];
 }
 
-interface VideoCategory {
+type VideoCategory = {
   id: string;
   title: string;
   icon: string;
@@ -111,7 +111,7 @@ interface VideoCategory {
   topics: string[];
 }
 
-interface LibraryCategory {
+type LibraryCategory = {
   id: string;
   title: string;
   icon: string;
@@ -136,7 +136,7 @@ Ancak bu dönemde Hz. İbrahim'den kalan "Haniflik" geleneği tamamen yok olmam�
             },
             {
                 title: 'Hz. Muhammed\'in Doğumu',
-                content: `Hz. Muhammed (s.a.v.), Miladi 571 yılında Mekke'de doğdu. Doğum tarihi, "Fil Vakası"ndan yaklaşık 50-55 gün sonrasına denk gelir. Fil Vakası, Habeşistan Valisi Ebrehe'nin Kâbe'yi yıkmak için fil ordusuyla saldırması ve Allah'ın gönderdiği ebabil kuşlarıyla helak edilmesi olayıdır.
+                content: `Hz. Muhammed (s.a.v.), Miladi 571 yılında Mekke'de doğdu. Doğum tarihi, "Fil Vakası"ndan yaklaşık 50-55 gün sonrasına denk gelir. Fil Vakası, Habeşlilerin Yemen valisi Ebrehe'nin Kâbe'yi yıkmak için fil ordusuyla saldırması ve Allah'ın gönderdiği ebabil kuşlarıyla helak edilmesi olayıdır.
 
 Babası Abdullah, annesi Âmine'dir. Babası Abdullah, Hz. Muhammed doğmadan önce ticaret yolculuğu dönüşünde Medine'de vefat etti. Hz. Muhammed yetim olarak dünyaya geldi.
 
@@ -148,7 +148,7 @@ Dönemin geleneğine göre çöl havasının daha sağlıklı olması nedeniyle 
 
 "Oku!" emriyle başlayan Alak Suresi'nin ilk beş ayeti nazil oldu: "Yaratan Rabbinin adıyla oku! O, insanı alaktan (asılıp tutunan zigottan) yarattı. Oku! Rabbin sonsuz kerem sahibidir. O kalemle öğretendir. İnsana bilmediğini öğretendir."
 
-Hz. Muhammed bu olaydan çok etkilendi ve titreyerek eve döndü. Eşi Hz. Hatice onu teselli etti ve amcasının oğlu Varaka bin Nevfel'e götürdü. Varaka, Tevrat ve İncil'i bilen bir Hristiyan'dı. O, bunun peygamberlik işareti olduğunu söyledi ve Hz. Muhammed'in son peygamber olacağını müjdeledi.`
+Hz. Muhammed bu olaydan çok etkilendi ve titreyerek eve döndü. Eşi Hz. Hatice onu teselli etti ve amcasının oğlu Varaka bin Nevfel'e götürdü. Varaka, Tevrat ve İncil'i bilen bir Hristiyan'dı. Varaka, gelenin Hz. Musa'ya gelen Nâmûs (vahiy meleği) olduğunu söyledi ve kavminin onu yurdundan çıkaracağını haber verdi (Buhârî, Bed'ü'l-vahy 3).`
             },
             {
                 title: 'Mekke Dönemi',
@@ -176,7 +176,7 @@ Hz. Ali, yatağına yatarak onu korudu. Hz. Muhammed ve Hz. Ebubekir gizlice evd
                 title: 'Medine Dönemi',
                 content: `Medine dönemi 10 yıl sürdü (622-632). İslam devletinin ilk nüvesi burada atıldı. Mescid-i Nebevi inşa edildi. Ensar (Medineli Müslümanlar) ve Muhacir (Mekke'den göç edenler) arasında kardeşlik ilan edildi.
 
-"Medine Vesikası" ile şehirdeki tüm gruplar (Müslümanlar, Yahudiler, müşrikler) tek bir anayasa altında toplandı. Bu, tarihin ilk yazılı anayasası olarak kabul edilir.
+"Medine Vesikası" ile şehirdeki tüm gruplar (Müslümanlar, Yahudiler, müşrikler) tek bir anayasa altında toplandı. Bazı araştırmacılar onu tarihteki ilk yazılı anayasalardan sayar.
 
 Önemli savaşlar:
 • Bedir Savaşı (624): 313 Müslüman, 1000 müşriğe karşı mucizevi zafer kazandı.
@@ -185,7 +185,7 @@ Hz. Ali, yatağına yatarak onu korudu. Hz. Muhammed ve Hz. Ebubekir gizlice evd
 
 Antlaşmalar:
 • Hudeybiye Antlaşması (628): Görünürde Müslümanların aleyhine olan bu antlaşma, aslında "Fethu'l-Mübin" (apaçık fetih) olarak nitelendirildi.
-• Mekke'nin Fethi (630): 10.000 kişilik orduyla kan dökülmeden Mekke fethedildi. Genel af ilan edildi.`
+• Mekke'nin Fethi (630): 10.000 kişilik orduyla neredeyse hiç kan dökülmeden Mekke fethedildi. Genel af ilan edildi.`
             },
             {
                 title: 'Dört Halife Dönemi',
@@ -221,13 +221,13 @@ Abbasiler döneminde:
             },
             {
                 title: 'Selçuklular ve Osmanlılar',
-                content: `Türklerin İslam'a Girişi: Türkler 10. yüzyılda kitleler halinde İslam'ı kabul etti. Karahanlılar, İslam'ı kabul eden ilk Türk devletidir (840).
+                content: `Türklerin İslam'a Girişi: Türkler 10. yüzyılda kitleler halinde İslam'ı kabul etti. Karahanlılar, İslam'ı kabul eden ilk Türk devletidir (10. yüzyılda, Satuk Buğra Han döneminde).
 
 Büyük Selçuklu İmparatorluğu (1037-1194):
 • Tuğrul Bey Bağdat'a girerek Abbasi halifesini Şii Büveyhoğulları'ndan kurtardı
 • Sultan Alparslan, 1071 Malazgirt Zaferi ile Anadolu'nun kapılarını Türklere açtı
 • Melikşah döneminde imparatorluk en geniş sınırlarına ulaştı
-• Nizamiye Medreseleri kuruldu (ilk düzenli üniversiteler)
+• Nizamiye Medreseleri kuruldu (ilk düzenli yükseköğretim kurumlarından)
 • Haçlı Seferlerine karşı mücadele edildi
 
 Osmanlı İmparatorluğu (1299-1922):
@@ -247,7 +247,7 @@ Sömürge Dönemi: 19. ve 20. yüzyıllarda Müslüman coğrafyasının büyük 
 Bağımsızlık Hareketleri: 1940'lardan itibaren Müslüman ülkeler bağımsızlıklarını kazanmaya başladı:
 • Pakistan (1947)
 • Endonezya (1949)  
-• Mısır (1952)
+• Libya (1951)
 • Cezayir (1962)
 • Körfez ülkeleri (1970'ler)
 
@@ -279,7 +279,7 @@ Modern dönemde İslami uyanış hareketleri, İslami finans, helal endüstrisi 
             { title: 'Hz. Musa (a.s.)', content: 'Kelimullah. Firavun\'a karşı mücadele, denizin yarılması, Tur Dağı\'nda vahiy. Ulul-azm peygamberlerden.' },
             { title: 'Hz. Harun (a.s.)', content: 'Hz. Musa\'nın kardeşi ve yardımcısı. Fasih konuşmasıyla bilinir.' },
             { title: 'Hz. Davud (a.s.)', content: 'Hem peygamber hem hükümdar. Zebur kendisine verildi. Demiri yumuşatma mucizesi. Güzel sesi vardı.' },
-            { title: 'Hz. Süleyman (a.s.)', content: 'Hz. Davud\'un oğlu. Hayvanların ve cinlerin dili, rüzgarın emrine verilmesi. Sebe Kraliçesi Belkıs kıssası.' },
+            { title: 'Hz. Süleyman (a.s.)', content: 'Hz. Davud\'un oğlu. Kuşların ve karıncaların dilini anlaması; cinlerin ve rüzgârın emrine verilmesi. Sebe Kraliçesi Belkıs kıssası.' },
             { title: 'Hz. İlyas (a.s.)', content: 'İsrailoğullarına gönderildi. Baal putuna tapan kavmini uyardı.' },
             { title: 'Hz. Elyesa (a.s.)', content: 'Hz. İlyas\'tan sonra gelen peygamber. Faziletli kimselerden.' },
             { title: 'Hz. Yunus (a.s.)', content: 'Balık tarafından yutuldu. Karanlıklar içinde dua etti. Tövbesi kabul edildi. Ninova halkına gönderildi.' },
@@ -312,7 +312,7 @@ Modern dönemde İslami uyanış hareketleri, İslami finans, helal endüstrisi 
             { title: 'Uhud Savaşı', content: '625\'te yaşanan savaş. Okçuların yerlerini terk etmesiyle yaşanan sıkıntı.' },
             { title: 'Hendek Savaşı', content: '627\'de Medine\'yi kuşatan düşmana karşı hendek kazıldı. Psikolojik zafer.' },
             { title: 'Hudeybiye Antlaşması', content: '628\'de yapılan antlaşma. Görünürde aleyhte, sonuçta büyük fetih.' },
-            { title: 'Mekke\'nin Fethi', content: '630\'da 10.000 kişilik orduyla kan dökülmeden Mekke fethedildi. Genel af ilan edildi.' },
+            { title: 'Mekke\'nin Fethi', content: '630\'da 10.000 kişilik orduyla neredeyse hiç kan dökülmeden Mekke fethedildi. Genel af ilan edildi.' },
             { title: 'Veda Haccı', content: '632\'de yapılan son hac. Veda Hutbesi. "Bugün dininizi tamamladım" ayeti.' },
             { title: 'Vefatı', content: '632\'de Medine\'de vefat etti. Ravza-i Mutahhara\'ya defnedildi. 63 yaşındaydı.' }
         ]
@@ -332,7 +332,7 @@ Tüm malını İslam için harcadı. Bilal-i Habeşi gibi işkence gören kölel
             {
                 title: 'Hz. Ömer (r.a.)', content: `"Faruk" (hak ile batılı ayıran) lakabıyla bilinen Hz. Ömer, İslam'ın ikinci halifesidir. Müslüman olmadan önce İslam'ın en şiddetli düşmanlarındandı.
 
-Nuaym bin Abdullah'ın Müslüman olduğunu öğrenince kız kardeşinin evine gitti. Orada Taha Suresi'ni duyunca kalbi yumuşadı ve Müslüman oldu. İslam'a girişiyle Müslümanlar güç kazandı, açıkça namaz kılmaya başladılar.
+Nuaym bin Abdullah'tan kız kardeşinin Müslüman olduğunu öğrenince onun evine gitti. Orada Taha Suresi'ni duyunca kalbi yumuşadı ve Müslüman oldu. İslam'a girişiyle Müslümanlar güç kazandı, açıkça namaz kılmaya başladılar.
 
 Hilafeti döneminde (634-644) Kudüs, Mısır, İran, Suriye fethedildi. Adaletiyle meşhurdur. Geceleri halkın arasına kılık değiştirip çıkar, sorunlarını dinlerdi. Divan teşkilatını kurdu, maaş sistemi başlattı, Hicri takvimi başlattı. 644'te namaz kılırken bir Mecusi köle tarafından hançerlenerek şehit edildi.` },
             {
@@ -340,7 +340,7 @@ Hilafeti döneminde (634-644) Kudüs, Mısır, İran, Suriye fethedildi. Adaleti
 
 İlk Müslümanlardan biri ve çok zengin bir tüccardı. Cömertliğiyle tanınır. Tebük Seferi'nde ordunun üçte birini tek başına donatmıştı. Rume kuyusunu satın alıp Müslümanlara vakfetmişti.
 
-Hilafeti döneminde (644-656) Kuran nüshalarını çoğaltarak tüm vilayetlere gönderdi (Mushaf-ı Osmani). İslam tarihindeki ilk deniz savaşı (Zâtü's-Savari) yapıldı. Kıbrıs fethedildi. Fitne döneminde evini kuşatan isyancılar tarafından Kuran okurken şehit edildi (656).` },
+Hilafeti döneminde (644-656) Kuran nüshalarını çoğaltarak tüm vilayetlere gönderdi (Mushaf-ı Osmani). İslam tarihinin ilk büyük deniz savaşı (Zâtü's-Savârî, 655) yapıldı. Kıbrıs fethedildi. Fitne döneminde evini kuşatan isyancılar tarafından Kuran okurken şehit edildi (656).` },
             {
                 title: 'Hz. Ali (r.a.)', content: `"Esedullah" (Allah'ın Aslanı) ve "Haydar-ı Kerrar" lakabıyla bilinen Hz. Ali, Hz. Muhammed'in amcası Ebu Talib'in oğlu ve damadıdır. İslam'ın dördüncü halifesidir.
 
@@ -352,7 +352,7 @@ Hilafeti döneminde (644-656) Kuran nüshalarını çoğaltarak tüm vilayetlere
 
 Uhud Savaşı'nda Hz. Muhammed'i korumak için canını ortaya koydu. Vücudunda 70'ten fazla yara aldı. Üzerine gelen okları eliyle tuttu, eli sakat kaldı. Hz. Muhammed, "Talha cenneti hak etti" buyurdu.
 
-Çok zengin ve cömert bir sahabeydi. Günlük geliri 1000 dinardı ve hepsini fakirlere dağıtırdı. Cemel Vakası'nda (656) şehit düştü.` },
+Çok zengin ve cömert bir sahabeydi; malını ihtiyaç sahiplerine dağıtmasıyla tanınırdı. Cemel Vakası'nda (656) şehit düştü.` },
             {
                 title: 'Hz. Zübeyr (r.a.)', content: `Aşere-i Mübeşşere'dendir. "Havariyyü'r-Rasul" (Peygamber'in havarisi) lakabıyla anılır. Hz. Hatice'nin yeğeni ve Hz. Muhammed'in halası Safiye'nin oğludur.
 
@@ -364,11 +364,11 @@ Mısır'ın fethinde önemli rol oynadı. Hz. Ebubekir ve Hz. Ömer dönemlerind
 
 İlk Müslümanlardandır. Hz. Ebubekir vesilesiyle Müslüman oldu. Habeşistan ve Medine hicretlerine katıldı. Çok başarılı bir tüccardı, ancak kazancının büyük bölümünü İslam yolunda harcardı.
 
-Tebük Seferi'nde ordunun yarısını donatmıştı. Hz. Ömer'in şehit edilmesinden sonra halife seçimi komitesinde görev aldı. Hayır işlerinden geri kalmaz, fakirlere sürekli yardım ederdi. 652'de Medine'de vefat etti.` },
+Tebük Seferi için büyük bağışta bulundu. Hz. Ömer'in şehit edilmesinden sonra halife seçimi komitesinde görev aldı. Hayır işlerinden geri kalmaz, fakirlere sürekli yardım ederdi. 652'de Medine'de vefat etti.` },
             {
-                title: 'Hz. Sad bin Ebi Vakkas (r.a.)', content: `Aşere-i Mübeşşere'dendir. İslam uğrunda ilk ok atan sahabedir. Hz. Muhammed'in dayısıdır (annesi Peygamber'in anne tarafından akrabasıdır).
+                title: 'Hz. Sad bin Ebi Vakkas (r.a.)', content: `Aşere-i Mübeşşere'dendir. İslam uğrunda ilk ok atan sahabedir. Peygamber'in annesi Âmine'nin kabilesi Zühreoğullarından olduğu için "Peygamber'in dayısı" diye anılır.
 
-17 yaşında Müslüman oldu, ilk Müslümanlardan biridir. Uhud'da Hz. Muhammed'i korumak için ok attı. Peygamber, "At ya Sa'd! Anam babam sana feda olsun!" dedi. Bu sözü duyan tek sahabedir.
+17 yaşında Müslüman oldu, ilk Müslümanlardan biridir. Uhud'da Hz. Muhammed'i korumak için ok attı. Peygamber, "At ya Sa'd! Anam babam sana feda olsun!" dedi. Hz. Ali, Peygamber'in bu sözü Sa'd'dan başkası için söylediğini duymadığını anlatır (Buhârî).
 
 Hz. Ömer döneminde Kadisiye Savaşı'nın komutanlığını yaptı (636). İran'ın büyük bölümünü fethetti. Kufe şehrini kurdu. Fitnelerden uzak durdu. 675'te Medine yakınlarında vefat etti.` },
             {
@@ -382,7 +382,7 @@ Hz. Ömer'in Müslüman olmasına vesile olan ayet (Taha Suresi), onun evinde ok
 
 İlk Müslümanlardandır. Bedir Savaşı'nda babasıyla karşı karşıya geldi ve onu öldürmek zorunda kaldı. Bu durum çok ağrına gitti ancak İslam için her şeyi feda etmişti.
 
-Hz. Ebubekir döneminde Suriye ordularının genel komutanlığına atandı. Hz. Ömer döneminde Şam, Kudüs ve Filistin'in fethini gerçekleştirdi. 639'da Amvas'ta (Filistin) veba salgınında şehit düştü.` },
+Hz. Ebubekir döneminde Suriye'ye gönderilen komutanlardandı; Hz. Ömer onu Suriye ordularının genel komutanı yaptı. Hz. Ömer döneminde Şam, Kudüs ve Filistin'in fethini gerçekleştirdi. 639'da Amvas'ta (Filistin) veba salgınında şehit düştü.` },
             {
                 title: 'Hz. Bilal-i Habeşi (r.a.)', content: `İslam'ın ilk müezzinidir. Habeşistan asıllı bir köleydi. İşkenceci sahibi Ümeyye bin Halef, Müslüman olduğunu öğrenince ona ağır işkenceler yaptı.
 
@@ -390,7 +390,7 @@ Yakıcı güneş altında kızgın kumlara yatırılıp göğsüne kocaman kayal
 
 Mekke'nin fethinde Kâbe'nin üzerine çıkarak ezan okudu. Hz. Muhammed'in vefatından sonra büyük acı duydu, bir daha ezan okumadı (sadece Hz. Ömer'in ısrarıyla bir kez okudu). Şam'a gitti ve 640'ta orada vefat etti.` },
             {
-                title: 'Hz. Halid bin Velid (r.a.)', content: `"Seyfullah" (Allah'ın Kılıcı) lakabıyla bilinen büyük komutandır. Hz. Muhammed onu bu lakapla ödüllendirdi. 100'den fazla savaşa katıldı, hiçbirinde yenilmedi.
+                title: 'Hz. Halid bin Velid (r.a.)', content: `"Seyfullah" (Allah'ın Kılıcı) lakabıyla bilinen büyük komutandır. Hz. Muhammed onu bu lakapla ödüllendirdi. Katıldığı savaşların hiçbirinde yenilmediği nakledilir.
 
 Uhud Savaşı'nda (henüz müşrikken) okçuların boş bıraktığı geçitten saldırarak Müslümanlara ağır kayıplar verdirmişti. 629'da Müslüman oldu. Mute Savaşı'nda üç komutan şehit düşünce komutayı aldı ve orduyu kurtardı.
 
@@ -400,7 +400,7 @@ Hz. Ebubekir döneminde Ridde Savaşları'nda büyük başarılar kazandı. Yerm
 
 Müslüman olunca ailesi onu evden kovdu, tüm mallarından mahrum bıraktı. Açlık ve sefalet çekti ama imanından vazgeçmedi. Birinci Akabe Biatı'ndan sonra Medine'ye İslam'ı öğretmek üzere gönderildi - İslam'ın ilk elçisidir.
 
-Uhud Savaşı'nda sancaktardı. Sağ eli kesildi, sancağı sol eline aldı. Sol eli de kesilince sancağı kollarıyla tuttu. Son nefesine kadar sancağı bırakmadı ve şehit düştü. Kefenlenecek bez bile yoktu, onu hurma lifleriyle örttüler.` },
+Uhud Savaşı'nda sancaktardı. Sağ eli kesildi, sancağı sol eline aldı. Sol eli de kesilince sancağı kollarıyla tuttu. Son nefesine kadar sancağı bırakmadı ve şehit düştü. Kefeni yetmedi; başı örtülünce ayakları açıkta kaldı, ayaklarına izhir otu kondu (Buhârî).` },
             {
                 title: 'Hz. Selman-ı Farisi (r.a.)', content: `İranlı (Fars) bir sahabedir. Aslen Zerdüşt dinindendi, sonra Hristiyanlığa geçti. Rahiplerin "Son peygamber Arap topraklarından çıkacak" demesi üzerine yola çıktı.
 
@@ -408,7 +408,7 @@ Yolda köle olarak satıldı. Medine'ye geldiğinde Hz. Muhammed'i buldu ve Müs
 
 Hendek Savaşı'nda (627) şehrin etrafına hendek kazılması fikrini veren odur. Bu, Arapların bilmediği bir İran savaş taktiğiydi. Hz. Ömer döneminde Medain valiliği yaptı. Çok mütevazı yaşardı. 656'da vefat etti.` },
             {
-                title: 'Hz. Ebu Hureyre (r.a.)', content: `En çok hadis rivayet eden sahabedir. 5374 hadis nakletmiştir. Gerçek adı Abdurrahman'dır. Küçük bir kedisi olduğu için "Ebu Hureyre" (kedicik babası) lakabını Hz. Muhammed verdi.
+                title: 'Hz. Ebu Hureyre (r.a.)', content: `En çok hadis rivayet eden sahabedir. 5374 hadis nakletmiştir. Gerçek adı Abdurrahman'dır. Küçük bir kedisi olduğu için "Ebu Hureyre" (kedicik babası) diye anıldı.
 
 Hayber Savaşı'ndan (628) sonra Müslüman oldu. Hz. Muhammed'in yanından hiç ayrılmadı. Suffe ashabındandı - Mescid-i Nebevi'de kalarak ilim öğrenen fakir sahabelerden.
 
@@ -422,7 +422,7 @@ export const RELIGIOUS_TEXTS: ReligiousText[] = [
         id: 'kirk-hadis',
         title: 'Kırk Hadis',
         icon: '📜',
-        description: 'İmam Nevevi\'nin derlediği 40 önemli hadis',
+        description: 'İmam Nevevî\'nin Kırk Hadis\'inden ve sahih kaynaklardan seçmeler',
         items: [
             { number: 1, arabic: 'إنَّمَا الأَعْمَالُ بِالنِّيَّاتِ', text: 'Ameller niyetlere göredir.', explanation: 'Her iş yapılırken niyet çok önemlidir. Allah, yapılan işin dış görünüşünden ziyade kalpteki niyete bakar.' },
             { number: 2, arabic: 'بُنِيَ الإِسْلَامُ عَلَى خَمْسٍ', text: 'İslam beş temel üzerine kurulmuştur.', explanation: 'İslam; Allah\'tan başka ilah olmadığına ve Muhammed\'in O\'nun elçisi olduğuna şehadet etmek, namaz kılmak, zekat vermek, hacca gitmek ve Ramazan orucunu tutmak üzerine bina edilmiştir.' },
@@ -431,7 +431,7 @@ export const RELIGIOUS_TEXTS: ReligiousText[] = [
             { number: 5, arabic: 'الْحَلَالُ بَيِّنٌ وَالْحَرَامُ بَيِّنٌ', text: 'Helal bellidir, haram da bellidir.', explanation: 'Helal de haram da açıklanmıştır. Ancak ikisi arasında şüpheli şeyler vardır. Şüpheli şeylerden kaçınan, dinini ve ırzını korumuş olur.' },
             { number: 6, arabic: 'أَلَا وَإِنَّ فِي الْجَسَدِ مُضْغَةً', text: 'Vücudun içinde bir et parçası vardır; o düzelirse bütün vücut düzelir.', explanation: 'Dikkat edin! Vücutta bir et parçası vardır ki, o iyi olursa bütün vücut iyi olur; o bozulursa bütün vücut bozulur. İşte o kalptir.' },
             { number: 7, arabic: 'الدِّينُ النَّصِيحَةُ', text: 'Din nasihattir (samimiyettir).', explanation: 'Din samimiyettir. Allah\'a, Kitabı\'na, Resulü\'ne, Müslümanların idarecilerine ve bütün Müslümanlara karşı samimi olmaktır.' },
-            { number: 8, arabic: 'كُلُّ الْمُسْلِمِ عَلَى الْمُسْلِمِ حَرَامٌ', text: 'Müslüman Müslümanın kardeşidir.', explanation: 'Her Müslümanın kanı, malı ve onuru diğer Müslümana haramdır. Müslüman Müslümana zulmetmez, onu yardımsız bırakmaz ve onu küçük görmez.' },
+            { number: 8, arabic: 'الْمُسْلِمُ أَخُو الْمُسْلِمِ', text: 'Müslüman Müslümanın kardeşidir.', explanation: 'Her Müslümanın kanı, malı ve onuru diğer Müslümana haramdır. Müslüman Müslümana zulmetmez, onu yardımsız bırakmaz ve onu küçük görmez.' },
             { number: 9, arabic: 'مَا نَهَيْتُكُمْ عَنْهُ فَاجْتَنِبُوهُ', text: 'Yasakladığım şeylerden kaçının.', explanation: 'Size bir şeyi yasakladığımda ondan sakının. Bir şeyi emrettiğimde ise gücünüz yettiğince onu yerine getirin.' },
             { number: 10, arabic: 'إِنَّ اللَّهَ طَيِّبٌ لَا يَقْبَلُ إِلَّا طَيِّبًا', text: 'Allah temizdir, ancak temiz olanı kabul eder.', explanation: 'Allah Teala tayyiptir (temizdir), sadece tayyip olanları kabul eder. Helal kazanç ve temiz niyet ibadetlerin kabulü için şarttır.' }
         ]
@@ -472,7 +472,7 @@ export const RELIGIOUS_TEXTS: ReligiousText[] = [
             { 
                 number: 1, 
                 title: 'Fatiha Suresi', 
-                arabic: 'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ', 
+                arabic: 'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',
                 text: 'Bismillahirrahmanirrahim. Elhamdülillahi rabbil alemin. Errahmanirrahim. Maliki yevmiddin. İyyake na\'büdü ve iyyake nestain. İhdinassıratal müstakim. Sıratallezine en\'amte aleyhim. Gayril mağdubi aleyhim veleddallin.', 
                 explanation: 'Rahman ve Rahim olan Allah\'ın adıyla. Hamd, alemlerin Rabbi Allah\'a mahsustur. O, Rahman ve Rahim\'dir. Din gününün sahibidir. Yalnız sana ibadet eder ve yalnız senden yardım dileriz. Bizi doğru yola ilet. Kendilerine nimet verdiklerinin yoluna; gazaba uğrayanların ve sapıtanların yoluna değil.' 
             },
@@ -501,7 +501,7 @@ export const RELIGIOUS_TEXTS: ReligiousText[] = [
                 number: 5, 
                 title: 'Kevser Suresi', 
                 arabic: 'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ ۝ فَصَلِّ لِرَبِّكَ وَانْحَرْ ۝ إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ', 
-                text: 'İnna a\'taynakeül kevser. Fesalli lirabbike venhar. İnne şanieke hüvel ebter.', 
+                text: 'İnna a\'taynakel kevser. Fesalli lirabbike venhar. İnne şanieke hüvel ebter.', 
                 explanation: 'Şüphesiz biz sana Kevser\'i verdik. Öyleyse Rabbin için namaz kıl ve kurban kes. Asıl sonu kesik olan, sana kin duyandır.' 
             },
             { 

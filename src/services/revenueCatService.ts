@@ -4,13 +4,13 @@ import { getCurrentUserIdEnsured } from "./authService";
 import { logger } from "../utils/logger";
 import crashlyticsReporter, { buildCrashContext } from "../utils/crashlyticsReporter";
 
-interface ApiKeys {
+type ApiKeys = {
   android: string | undefined;
   ios: string | undefined;
   test: string | undefined;
 }
 
-interface SyncResult {
+type SyncResult = {
   isPro?: boolean;
   source?: string;
 }

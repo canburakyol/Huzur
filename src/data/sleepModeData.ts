@@ -1,6 +1,6 @@
 import { CloudRain, Wind, Waves, Music, Book, Disc, LucideIcon } from 'lucide-react';
 
-export interface SleepSound {
+export type SleepSound = {
   id: string;
   nameKey: string;
   category: string;
@@ -8,7 +8,7 @@ export interface SleepSound {
   icon: LucideIcon;
 }
 
-export interface SoundCategory {
+export type SoundCategory = {
   id: string;
   nameKey: string;
   icon: LucideIcon;

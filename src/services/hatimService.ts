@@ -4,7 +4,7 @@ import { getDb, getFunctionsInstance } from './firebase';
 import { getCurrentUserIdEnsured } from './authService';
 import { logger } from '../utils/logger';
 
-interface HatimResult {
+type HatimResult = {
   hatimId?: string | null;
   joinCode?: string | null;
   alreadyJoined?: boolean;
@@ -15,7 +15,7 @@ interface HatimDetails extends DocumentData {
   id: string;
 }
 
-interface HatimListResult {
+type HatimListResult = {
   hatims?: unknown[];
 }
 

@@ -1,7 +1,7 @@
 import { Capacitor, registerPlugin } from '@capacitor/core';
 import { logger } from '../utils/logger';
 
-export interface InstallReferrerResult {
+export type InstallReferrerResult = {
   success: boolean;
   referrer?: string;
   consumed?: boolean;
@@ -9,7 +9,7 @@ export interface InstallReferrerResult {
   error?: string;
 }
 
-export interface InstallReferrerPlugin {
+export type InstallReferrerPlugin = {
   getInstallReferrerDetails(): Promise<InstallReferrerResult>;
   markInstallReferrerConsumed(): Promise<InstallReferrerResult>;
 }

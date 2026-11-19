@@ -19,25 +19,25 @@ import {
 } from "../../services/domains/onboarding";
 import { getStoredPrimaryGoal } from "../../utils/primaryGoal";
 
-interface GrowthOnboardingOptions {
+type GrowthOnboardingOptions = {
   handleLocationConsent: (accepted: boolean) => Promise<unknown>;
   handleEnableNotifications: () => Promise<void>;
   setActiveTab: (tab: string, source?: string) => void;
   isProUser?: boolean;
 }
 
-interface ReferralProgress {
+type ReferralProgress = {
   invitedByCode?: string;
   firstIbadahCompletedAt?: string;
   rewards?: { inviteeUnlockedAt?: string };
   [key: string]: unknown;
 }
 
-interface ReferralServerSnapshot {
+type ReferralServerSnapshot = {
   [key: string]: unknown;
 }
 
-interface OnboardingConfig {
+type OnboardingConfig = {
   enabled?: boolean;
   steps?: string[];
   flowVersion?: string;
@@ -48,7 +48,7 @@ interface OnboardingConfig {
   };
 }
 
-interface GrowthOnboardingResult {
+type GrowthOnboardingResult = {
   showGrowthOnboarding: boolean;
   setShowGrowthOnboarding: (show: boolean) => void;
   onboardingStep: number;

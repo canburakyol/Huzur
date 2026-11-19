@@ -1,6 +1,6 @@
 export type SourceType = 'hadith' | 'quran' | 'general';
 
-export interface SourceMetadata {
+export type SourceMetadata = {
   sourceType: SourceType;
   citation?: string;
 }
@@ -16,7 +16,7 @@ export interface TespihatSection extends SourceMetadata {
   meaning: string;
 }
 
-export interface Tesbih {
+export type Tesbih = {
   id: string;
   title: string;
   arabic: string;

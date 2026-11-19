@@ -2,11 +2,11 @@ import { STORAGE_KEYS } from '../constants';
 import errorHandler from './errorHandler';
 import { storageService } from './storageService';
 
-interface AiIncidentMetadata {
+type AiIncidentMetadata = {
   [key: string]: string | number | boolean;
 }
 
-interface AiIncident {
+type AiIncident = {
   id: string;
   kind: string;
   stage: string;
@@ -17,7 +17,7 @@ interface AiIncident {
   metadata: AiIncidentMetadata;
 }
 
-interface AiIncidentSummary {
+type AiIncidentSummary = {
   totalCount: number;
   last24hCount: number;
   criticalCount: number;

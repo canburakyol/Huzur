@@ -3623,7 +3623,12 @@
     "discoverTitle": "Keluarga yang ditemukan",
     "discoverSubtitle": "Lihat keluarga yang bergabung, dapatkan inspirasi, dan buat keluargamu sendiri",
     "createHint": "Buat grup keluarga baru",
-    "joinHint": "Bergabung ke grup dengan kode undangan"
+    "joinHint": "Bergabung ke grup dengan kode undangan",
+    "weeklyGoal": {
+      "updating": "Memperbarui...",
+      "contributed": "Kontribusi hari ini tersimpan",
+      "contribute": "Berkontribusi hari ini"
+    }
   },
   "hatimCoach": {
     "title": "Pelatih Khatam Pintar",
@@ -4693,7 +4698,9 @@
     "netWealth": "Harta bersih",
     "zakatLabel": "Zakat",
     "noZakatRequired": "Tidak wajib zakat",
-    "percentNote": "(2,5% dari harta bersih)"
+    "percentNote": "(2,5% dari harta bersih)",
+    "silverPriceLabel": "Harga perak (per gram)",
+    "enterPrice": "Masukkan harga emas per gram hari ini (dan perak, jika Anda memilikinya) untuk menghitung"
   },
   "modules": {
     "core": "Fitur Utama",
@@ -5899,7 +5906,12 @@
         "description": "Memutar azan saat waktu salat"
       }
     },
-    "adhanTitle": "🕌 Waktu {{prayer}}"
+    "adhanTitle": "🕌 Waktu {{prayer}}",
+    "recovery": {
+      "eveningTitle": "{{title}} – malam",
+      "streakBody": "{{body}} Kamu bisa melanjutkan runtutan {{days}} harimu dengan perlahan.",
+      "eveningBody": "{{description}} Kembali sebentar hari ini pun sudah cukup."
+    }
   },
   "nafile": {
     "items": {
@@ -6048,6 +6060,85 @@
     "quiz": {
       "correctAnswers": "JAWABAN BENAR",
       "label": "KUIS TAJWID"
+    }
+  },
+  "recovery": {
+    "default": {
+      "headline": "Jaga ritmemu dengan tenang",
+      "description": "Memilih satu langkah kecil hari ini bisa cukup untuk menjaga ritmemu.",
+      "notificationTitle": "Hari ini satu langkah sudah cukup",
+      "notificationBody": "Dengan sentuhan kecil kamu bisa menata ritme harimu dengan tenang."
+    },
+    "cta": {
+      "default": "Buka langkah hari ini",
+      "quran": "Buka perjalanan Al-Qur'an",
+      "family": "Buka ritme keluarga"
+    },
+    "comeback": {
+      "headline": "Saat yang baik untuk memulai lagi",
+      "description": "Setelah jeda {{days}} hari, kembali perlahan tanpa menghakimi diri adalah langkah paling sehat.",
+      "notificationTitle": "Kembalilah perlahan",
+      "notificationBody": "Hari ini cukup memulai dengan langkah kecil."
+    },
+    "atRisk": {
+      "headline": "Bangkit sebelum ritmenya hilang",
+      "description": "Ritmemu mungkin sedikit menurun. Satu tindakan mudah bisa membuatmu kembali bertahan.",
+      "notificationTitle": "Langkah singkat untuk menjaga ritme",
+      "notificationBody": "Tidak perlu target besar; cukup menata hari ini dengan tenang."
+    },
+    "cooling": {
+      "headline": "Segarkan ritmemu hari ini",
+      "description": "Sejenak terhubung bisa menghidupkan kembali alur minggumu.",
+      "notificationTitle": "Perbarui niatmu hari ini",
+      "notificationBody": "Jeda singkat bisa menghubungkanmu kembali dengan alur hari ini."
+    },
+    "steady": {
+      "headline": "Ritmemu mengalir dengan baik",
+      "description": "Agar ritme yang baik terjaga tanpa paksaan, pilih lagi satu langkah jelas hari ini.",
+      "notificationTitle": "Langkah kecil penjaga ritmemu",
+      "notificationBody": "Dengan satu langkah tenang hari ini kamu bisa menjaga konsistensi ini."
+    }
+  },
+  "premiumMoment": {
+    "weeklyDepth": {
+      "headline": "Lihat ringkasan mingguan lebih mendalam",
+      "description": "Wawasan mingguan lebih dalam, pendampingan tenang, dan langkah berikutnya yang jelas tersedia dengan Pro."
+    },
+    "familyRhythm": {
+      "headline": "Buka alur untuk membangun ritme keluarga",
+      "description": "Satukan ritme keluarga, tujuan bersama, dan bimbingan lebih dalam di satu tempat."
+    },
+    "quietSupport": {
+      "headline": "Buka dukungan premium yang tenang",
+      "description": "Di hari-hari berat kamu bisa membuka dukungan yang lebih tenang, personal, dan mendalam."
+    },
+    "aiGuidanceAssistant": {
+      "headline": "Buka bimbingan AI yang lebih dalam",
+      "description": "Dapatkan arahan lebih dalam, langkah tindak lanjut, dan dukungan premium yang tenang dengan Pemandu Huzur."
+    },
+    "aiGuidance": {
+      "headline": "Buka bimbingan lebih dalam",
+      "description": "Masuki alur lebih dalam dengan bimbingan AI, wawasan mingguan, dan dukungan ritme."
+    },
+    "family": {
+      "headline": "Buka dukungan Pro untuk ritme keluarga",
+      "description": "Tujuan keluarga, kedalaman mingguan, dan dukungan premium yang tenang dalam satu alur."
+    },
+    "quran": {
+      "headline": "Perdalam perjalanan Al-Qur'anmu",
+      "description": "Bangun fokus Al-Qur'an yang lebih tenang dengan ringkasan mingguan dan bimbingan yang lebih dalam."
+    },
+    "recovery": {
+      "headline": "Buka dukungan lebih dalam untuk hari ini",
+      "description": "Jangan membangun ritme sendirian; buka bimbingan premium yang tenang."
+    },
+    "weeklyInsight": {
+      "headline": "Lihat ritme mingguanmu lebih jelas",
+      "description": "Wawasan lebih dalam dan saran ritme keluarga ditambahkan ke ringkasan mingguanmu."
+    },
+    "assistantUsed": {
+      "headline": "Perdalam bimbinganmu",
+      "description": "Melangkah lebih jauh dengan memori lebih panjang, pendampingan lebih dalam, dan dukungan premium yang tenang."
     }
   }
 }

@@ -223,7 +223,7 @@ export class RetentionAnalyticsMethods {
       confidence,
       had_actions: hadActions === true,
       provider,
-      latency_ms: Number.isFinite(latencyMs) ? Math.max(0, Math.round(latencyMs)) : undefined,
+      latency_ms: Number.isFinite(latencyMs) ? Math.max(0, Math.round(Number(latencyMs))) : undefined,
       action_count: Math.max(0, Number(actionCount) || 0),
       review_status: trustMetadata.reviewStatus || undefined,
       trust_score: Number.isFinite(Number(trustMetadata.trustScore))
@@ -242,7 +242,7 @@ export class RetentionAnalyticsMethods {
     this.logEvent(ANALYTICS_EVENTS.ASSISTANT_V2_FALLBACK, {
       reason,
       provider,
-      latency_ms: Number.isFinite(latencyMs) ? Math.max(0, Math.round(latencyMs)) : undefined,
+      latency_ms: Number.isFinite(latencyMs) ? Math.max(0, Math.round(Number(latencyMs))) : undefined,
     });
   }
 
@@ -258,7 +258,7 @@ export class RetentionAnalyticsMethods {
       source,
       ranked_count: rankedCount,
       provider,
-      latency_ms: Number.isFinite(latencyMs) ? Math.max(0, Math.round(latencyMs)) : undefined,
+      latency_ms: Number.isFinite(latencyMs) ? Math.max(0, Math.round(Number(latencyMs))) : undefined,
       risk_band: riskBand,
     });
   }
@@ -275,7 +275,7 @@ export class RetentionAnalyticsMethods {
       week_key: weekKey,
       risk_band: riskBand,
       provider,
-      latency_ms: Number.isFinite(latencyMs) ? Math.max(0, Math.round(latencyMs)) : undefined,
+      latency_ms: Number.isFinite(latencyMs) ? Math.max(0, Math.round(Number(latencyMs))) : undefined,
       review_status: trustMetadata.reviewStatus || undefined,
       trust_score: Number.isFinite(Number(trustMetadata.trustScore))
         ? Math.round(Number(trustMetadata.trustScore) * 100) / 100
@@ -309,6 +309,6 @@ export const registerRetentionAnalytics = (AnalyticsServiceClass: typeof Analyti
   Object.getOwnPropertyNames(RetentionAnalyticsMethods.prototype)
     .filter((name) => name !== "constructor")
     .forEach((name) => {
-      (AnalyticsServiceClass.prototype as Record<string, unknown>)[name] = (RetentionAnalyticsMethods.prototype as Record<string, unknown>)[name];
+      (AnalyticsServiceClass.prototype as unknown as Record<string, unknown>)[name] = (RetentionAnalyticsMethods.prototype as unknown as Record<string, unknown>)[name];
     });
 };

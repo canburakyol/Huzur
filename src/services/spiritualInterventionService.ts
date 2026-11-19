@@ -1,4 +1,8 @@
 import spiritualInterventions from '../data/spiritualInterventions/index.js';
+import i18n from '../i18n';
+
+// The reviewed corpus is written in Turkish only; other languages get their already translated fallback copy.
+const isCorpusLanguage = (): boolean => (i18n.resolvedLanguage || i18n.language || 'tr').startsWith('tr');
 
 type SourceMeta = {
   confidence: string;
@@ -123,7 +127,7 @@ const ACTION_MAP: Record<string, SuggestedAction> = {
   do_zikir: {
     feature: 'zikirmatik',
     id: 'do_zikir',
-    label: 'Zikre gec'
+    label: 'Zikre geç'
   },
   open_quran: {
     feature: 'quran',
@@ -133,15 +137,15 @@ const ACTION_MAP: Record<string, SuggestedAction> = {
   play_huzur_audio: {
     feature: 'library',
     id: 'play_huzur_audio',
-    label: 'Huzur seslerini ac'
+    label: 'Huzur seslerini aç'
   }
 };
 
 const DEFAULT_CONTENT: InterventionContent = {
-  greeting: 'Bugun kalbine iyi gelebilecek kucuk bir durak var.',
+  greeting: 'Bugün kalbine iyi gelebilecek küçük bir durak var.',
   coreMessage: '',
   reference: '',
-  reflection: 'Kucuk ama duzenli bir manevi temas, gunun ritmini yumusatabilir.'
+  reflection: 'Küçük ama düzenli bir manevi temas, günün ritmini yumuşatabilir.'
 };
 
 const getSourceTemplate = (sourceType: string = 'general_islamic_guidance'): SourceMeta => (
@@ -265,6 +269,7 @@ export const getSpiritualIntervention = ({ context = {}, now = new Date() }: {
   context?: SpiritualContext;
   now?: Date;
 } = {}): InterventionWithTrigger | null => {
+  if (!isCorpusLanguage()) return null;
   const timeOfDay = getCurrentSpiritualTimeOfDay(now);
   const dayOfWeek = normalizeDayOfWeek(now);
   const userState = deriveSpiritualUserState(context);
@@ -369,7 +374,7 @@ export const buildWeeklyInsightFallback = ({ context = {}, weekKey = '', now = n
     reviewStatus,
     riskBand: intervention.resolvedTrigger?.userState === 'steady' ? 'steady' : 'watch',
     socialHint: intervention.resolvedAction?.label
-      ? `${intervention.content.reflection} ${intervention.resolvedAction.label} ile kucuk bir adim atabilirsin.`
+      ? `${intervention.content.reflection} ${intervention.resolvedAction.label} ile küçük bir adım atabilirsin.`
       : intervention.content.reflection,
     sourceCount: 1,
     sources: [intervention.sourceMeta],

@@ -1,4 +1,4 @@
-export interface MoodAyah {
+export type MoodAyah = {
   surah: string;
   surahNumber: number;
   ayah: number;
@@ -6,7 +6,7 @@ export interface MoodAyah {
   translation: string;
 }
 
-export interface Mood {
+export type Mood = {
   id: string;
   label: string;
   emoji: string;

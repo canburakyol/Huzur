@@ -2,14 +2,14 @@ import { surahList } from '../data/surahList';
 import { storageService } from './storageService';
 import { logger } from '../utils/logger';
 
-interface Ayah {
+type Ayah = {
   number: number;
   arabic: string;
   transliteration: string;
   translation: string;
 }
 
-interface SurahData {
+type SurahData = {
   number: number;
   name: string;
   englishName: string;
@@ -20,7 +20,7 @@ interface SurahData {
   ayahs: Ayah[];
 }
 
-interface ApiResponse {
+type ApiResponse = {
   code: number;
   data: {
     number?: number;
@@ -37,35 +37,35 @@ interface ApiResponse {
   };
 }
 
-interface TranslationEdition {
+type TranslationEdition = {
   identifier: string;
   name: string;
   language: string;
   type: string;
 }
 
-interface Reciter {
+type Reciter = {
   id: string;
   name: string;
   country: string;
 }
 
-interface SurahCacheEntry {
+type SurahCacheEntry = {
   data: SurahData;
   timestamp: number;
 }
 
-interface AcikKuranVerse {
+type AcikKuranVerse = {
   verse_number: number;
   transcription?: string;
 }
 
-interface AcikKuranData {
+type AcikKuranData = {
   id: number;
   verses: AcikKuranVerse[];
 }
 
-interface AcikKuranResponse {
+type AcikKuranResponse = {
   data: AcikKuranData;
 }
 
@@ -187,7 +187,7 @@ const buildSurahData = (surahNumber: number, arabicPayload: ApiResponse, transla
     });
 
     if (ayahs.length === 0 || ayahs.some((ayah) => !ayah.arabic.trim() || !ayah.translation.trim())) {
-        throw new Error(`Sure ${surahNumber} icin ayet veya meal verisi eksik`);
+        throw new Error(`Sure ${surahNumber} için ayet veya meal verisi eksik`);
     }
 
     return {

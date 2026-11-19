@@ -1,4 +1,4 @@
-export interface Quest {
+export type Quest = {
   id: string;
   text: string;
   xp: number;

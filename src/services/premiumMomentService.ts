@@ -6,6 +6,9 @@ import { getRecoveryLoopPlan } from './recoveryLoopService';
 import { storageService } from './storageService';
 import { DEFAULT_PREMIUM_MOMENTS_CONFIG, getCachedPremiumMomentsConfig } from './premiumMomentConfigService';
 import { useAppStore } from '../stores/useAppStore';
+import i18n from '../i18n';
+
+const pt = (key: string, fallback: string): string => i18n.t(`premiumMoment.${key}`, { defaultValue: fallback });
 
 const PREMIUM_SURFACES = new Set([
   'home_recovery_support',
@@ -57,29 +60,29 @@ const buildMomentCopy = (momentType: string, copyVariant: string): MomentCopy =>
   switch (copyVariant) {
     case 'weekly_depth':
       return {
-        headline: 'Haftalik ozeti daha derin gor',
-        description: 'Daha derin haftalik icgoru, sakin takip ve net sonraki adimlar Pro ile acilir.',
+        headline: pt('weeklyDepth.headline', 'Haftalık özeti daha derin gör'),
+        description: pt('weeklyDepth.description', 'Daha derin haftalık içgörü, sakin takip ve net sonraki adımlar Pro ile açılır.'),
       };
     case 'family_rhythm':
       return {
-        headline: 'Ailece ritim kuran akisi ac',
-        description: 'Aile ritmini, ortak hedefleri ve daha derin rehberligi tek yerde toparla.',
+        headline: pt('familyRhythm.headline', 'Ailece ritim kuran akışı aç'),
+        description: pt('familyRhythm.description', 'Aile ritmini, ortak hedefleri ve daha derin rehberliği tek yerde toparla.'),
       };
     case 'quiet_support':
       return {
-        headline: 'Sessiz premium destegi ac',
-        description: 'Zorlanan gunlerde daha sakin, kisisel ve derin bir destek katmani acabilirsin.',
+        headline: pt('quietSupport.headline', 'Sessiz premium desteği aç'),
+        description: pt('quietSupport.description', 'Zorlanan günlerde daha sakin, kişisel ve derin bir destek katmanı açabilirsin.'),
       };
     case 'ai_guidance':
     default:
       return momentType === 'assistant_success'
         ? {
-            headline: 'Daha derin AI rehberligi ac',
-            description: 'Huzur Rehberi ile daha derin yonlendirmeler, takip odakli adimlar ve sakin premium destek al.',
+            headline: pt('aiGuidanceAssistant.headline', 'Daha derin AI rehberliği aç'),
+            description: pt('aiGuidanceAssistant.description', 'Huzur Rehberi ile daha derin yönlendirmeler, takip odaklı adımlar ve sakin premium destek al.'),
           }
         : {
-            headline: 'Daha derin rehberligi ac',
-            description: 'AI rehberlik, haftalik icgoruler ve ritim destegiyle daha derin bir akisa gec.',
+            headline: pt('aiGuidance.headline', 'Daha derin rehberliği aç'),
+            description: pt('aiGuidance.description', 'AI rehberlik, haftalık içgörüler ve ritim desteğiyle daha derin bir akışa geç.'),
           };
   }
 };
@@ -118,20 +121,20 @@ export const getPremiumMoment = ({
   let description = baseCopy.description;
 
   if (safeGoal === 'family_consistency' || familyState?.hasFamily) {
-    headline = 'Aile ritmi icin Pro destegi ac';
-    description = 'Aile hedefleri, haftalik derinlik ve sakin premium destek tek akista toplansin.';
+    headline = pt('family.headline', 'Aile ritmi için Pro desteği aç');
+    description = pt('family.description', 'Aile hedefleri, haftalık derinlik ve sakin premium destek tek akışta toplansın.');
   } else if (safeGoal === 'quran_learning') {
-    headline = 'Kuran yolculugunu derinlestir';
-    description = 'Daha derin haftalik ozetler ve rehberlik ile Kuran odagini daha sakin kur.';
+    headline = pt('quran.headline', 'Kur\'an yolculuğunu derinleştir');
+    description = pt('quran.description', 'Daha derin haftalık özetler ve rehberlik ile Kur\'an odağını daha sakin kur.');
   } else if (safeType === 'home_recovery_support' && ['at_risk', 'comeback'].includes(effectiveRecoveryBand)) {
-    headline = 'Bugun icin daha derin destek ac';
-    description = 'Ritmi yeniden kurarken tek basina kalma; sakin premium rehberlik katmanini ac.';
+    headline = pt('recovery.headline', 'Bugün için daha derin destek aç');
+    description = pt('recovery.description', 'Ritmi yeniden kurarken tek başına kalma; sakin premium rehberlik katmanını aç.');
   } else if (safeType === 'weekly_report' && weeklyInsightState?.hasInsight) {
-    headline = 'Haftalik ritmini daha net gor';
-    description = 'Haftalik ozetinin ustune daha derin icgoruler ve aile ritmi onerileri eklenir.';
+    headline = pt('weeklyInsight.headline', 'Haftalık ritmini daha net gör');
+    description = pt('weeklyInsight.description', 'Haftalık özetinin üstüne daha derin içgörüler ve aile ritmi önerileri eklenir.');
   } else if (safeType === 'assistant_success' && Number(assistantUsage) > 0) {
-    headline = 'Rehberligi derinlestir';
-    description = 'Daha uzun hafiza, daha derin takip ve sakin premium destek ile ilerle.';
+    headline = pt('assistantUsed.headline', 'Rehberliği derinleştir');
+    description = pt('assistantUsed.description', 'Daha uzun hafıza, daha derin takip ve sakin premium destek ile ilerle.');
   }
 
   return {

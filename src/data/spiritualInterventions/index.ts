@@ -1,4 +1,4 @@
-interface SpiritualSource {
+type SpiritualSource = {
   coreMessage: string;
   confidence: 'high' | 'medium';
   reference: string;
@@ -7,13 +7,13 @@ interface SpiritualSource {
   sourceUrl: string;
 }
 
-interface TriggerCondition {
+type TriggerCondition = {
   dayOfWeek: 'any' | 'friday';
   timeOfDay: 'morning' | 'noon' | 'afternoon' | 'evening' | 'night' | 'late_night';
   userState: 'low_iman_streak' | 'steady' | 'stressed';
 }
 
-interface SpiritualIntervention {
+type SpiritualIntervention = {
   confidence: 'high' | 'medium';
   content: {
     coreMessage: string;
@@ -32,7 +32,7 @@ interface SpiritualIntervention {
 
 const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
   ali_imran_3_8: {
-    coreMessage: 'Rabbimiz, bizi hidayete erdirdikten sonra kalplerimizi egip bukme; bize katindan rahmet ver.',
+    coreMessage: 'Rabbimiz, bizi hidayete erdirdikten sonra kalplerimizi eğip bükme; bize katından rahmet ver.',
     confidence: 'high',
     reference: "Ali 'Imran 3:8",
     sourceId: 'ali_imran_3_8',
@@ -40,7 +40,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/3/8'
   },
   ali_imran_3_139: {
-    coreMessage: 'Gevsemeyin, uzulmeyin; imanla ayakta kalirsaniz ustun olan siz olursunuz.',
+    coreMessage: 'Gevşemeyin, üzülmeyin; imanla ayakta kalırsanız üstün olan siz olursunuz.',
     confidence: 'high',
     reference: "Ali 'Imran 3:139",
     sourceId: 'ali_imran_3_139',
@@ -48,7 +48,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/3/139'
   },
   ahzab_33_56: {
-    coreMessage: 'Allah ve melekleri Peygamber\'e salat eder; muminler de salat ve selam getirin.',
+    coreMessage: 'Allah ve melekleri Peygamber\'e salat eder; müminler de salat ve selam getirin.',
     confidence: 'high',
     reference: 'Al-Ahzab 33:56',
     sourceId: 'ahzab_33_56',
@@ -56,7 +56,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/33/56'
   },
   anfal_8_2: {
-    coreMessage: 'Muminlerin kalpleri Allah anildiginda urperir ve ayetler onlara iman artisi verir.',
+    coreMessage: 'Müminlerin kalpleri Allah anıldığında ürperir ve ayetler onlara iman artışı verir.',
     confidence: 'high',
     reference: 'Al-Anfal 8:2',
     sourceId: 'anfal_8_2',
@@ -64,7 +64,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/8/2'
   },
   ankabut_29_45: {
-    coreMessage: 'Namaz cirkinlikten ve taskinliktan alikoyar; Allah\'i anmak ise hepsinden buyuktur.',
+    coreMessage: 'Namaz çirkinlikten ve taşkınlıktan alıkoyar; Allah\'ı anmak ise hepsinden büyüktür.',
     confidence: 'high',
     reference: "Al-'Ankabut 29:45",
     sourceId: 'ankabut_29_45',
@@ -72,7 +72,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/29/45'
   },
   baqarah_2_152: {
-    coreMessage: 'Siz Beni anin ki Ben de sizi anayim; sukredin ve nankorluk etmeyin.',
+    coreMessage: 'Siz Beni anın ki Ben de sizi anayım; şükredin ve nankörlük etmeyin.',
     confidence: 'high',
     reference: 'Al-Baqarah 2:152',
     sourceId: 'baqarah_2_152',
@@ -80,7 +80,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/2/152'
   },
   baqarah_2_286: {
-    coreMessage: 'Allah hicbir nefse gucunun yeteceginden fazlasini yuklemez.',
+    coreMessage: 'Allah hiçbir nefse gücünün yeteceğinden fazlasını yüklemez.',
     confidence: 'high',
     reference: 'Al-Baqarah 2:286',
     sourceId: 'baqarah_2_286',
@@ -88,7 +88,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/2/286'
   },
   bukhari_1145: {
-    coreMessage: 'Resulullah, gecenin son ucunun dua ve istiğfar icin rahmet kapilarinin acildigi bir vakit oldugunu haber verdi.',
+    coreMessage: 'Resulullah, gecenin son üçte birinin dua ve istiğfar için rahmet kapılarının açıldığı bir vakit olduğunu haber verdi.',
     confidence: 'medium',
     reference: 'Sahih al-Bukhari 1145',
     sourceId: 'bukhari_1145',
@@ -96,7 +96,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://sunnah.com/bukhari:1145'
   },
   bukhari_5641: {
-    coreMessage: 'Muslumani yoran her yorgunluk, uzuntu ve sikinti Allah\'in izniyle gunahlara kefaret olur.',
+    coreMessage: 'Müslümanı yoran her yorgunluk, üzüntü ve sıkıntı Allah\'ın izniyle günahlara kefaret olur.',
     confidence: 'medium',
     reference: 'Sahih al-Bukhari 5641',
     sourceId: 'bukhari_5641',
@@ -104,7 +104,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://sunnah.com/bukhari:5641'
   },
   bukhari_6464: {
-    coreMessage: 'Allah\'a en sevimli amel, az da olsa devamli olandir.',
+    coreMessage: 'Allah\'a en sevimli amel, az da olsa devamlı olandır.',
     confidence: 'medium',
     reference: 'Sahih al-Bukhari 6464',
     sourceId: 'bukhari_6464',
@@ -112,7 +112,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://sunnah.com/bukhari:6464'
   },
   bukhari_935: {
-    coreMessage: 'Cuma gununde, kulun dua ettiginde karsilik bulacagi ozel bir zaman vardir.',
+    coreMessage: 'Cuma gününde, kulun dua ettiğinde karşılık bulacağı özel bir zaman vardır.',
     confidence: 'medium',
     reference: 'Sahih al-Bukhari 935',
     sourceId: 'bukhari_935',
@@ -120,7 +120,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://sunnah.com/bukhari:935'
   },
   duha_93_5: {
-    coreMessage: 'Rabbin sana lutfedecek ve sonunda gonlun hosnut olacak.',
+    coreMessage: 'Rabbin sana lütfedecek ve sonunda gönlün hoşnut olacak.',
     confidence: 'high',
     reference: 'Ad-Duha 93:5',
     sourceId: 'duha_93_5',
@@ -128,7 +128,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/93/5'
   },
   dhariyat_51_55: {
-    coreMessage: 'Hatirlat; cunku hatirlatma muminlere fayda verir.',
+    coreMessage: 'Hatırlat; çünkü hatırlatma müminlere fayda verir.',
     confidence: 'high',
     reference: 'Adh-Dhariyat 51:55',
     sourceId: 'dhariyat_51_55',
@@ -136,7 +136,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/51/55'
   },
   furqan_25_74: {
-    coreMessage: 'Rabbimiz, eslerimizi ve nesillerimizi goz aydinligi kil; bizi takva sahiplerine ornek yap.',
+    coreMessage: 'Rabbimiz, eşlerimizi ve nesillerimizi göz aydınlığı kıl; bizi takva sahiplerine örnek yap.',
     confidence: 'high',
     reference: 'Al-Furqan 25:74',
     sourceId: 'furqan_25_74',
@@ -144,7 +144,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/25/74'
   },
   ghafir_40_60: {
-    coreMessage: 'Rabbiniz, Bana dua edin ki size karsilik vereyim, buyurur.',
+    coreMessage: 'Rabbiniz, Bana dua edin ki size karşılık vereyim, buyurur.',
     confidence: 'high',
     reference: 'Ghafir 40:60',
     sourceId: 'ghafir_40_60',
@@ -152,7 +152,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/40/60'
   },
   isra_17_79: {
-    coreMessage: 'Gecenin bir kisminda ilave namazla Rabbine yonel.',
+    coreMessage: 'Gecenin bir kısmında ilave namazla Rabbine yönel.',
     confidence: 'high',
     reference: 'Al-Isra 17:79',
     sourceId: 'isra_17_79',
@@ -160,7 +160,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/17/79'
   },
   jumuah_62_9: {
-    coreMessage: 'Cuma ezani okundugunda Allah\'i anmaya kosun ve alisverisi birakin.',
+    coreMessage: 'Cuma ezanı okunduğunda Allah\'ı anmaya koşun ve alışverişi bırakın.',
     confidence: 'high',
     reference: "Al-Jumu'ah 62:9",
     sourceId: 'jumuah_62_9',
@@ -168,7 +168,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/62/9'
   },
   kahf_18_10: {
-    coreMessage: 'Rabbimiz, bize katindan rahmet ver ve isimizde dogru yolu kolaylastir.',
+    coreMessage: 'Rabbimiz, bize katından rahmet ver ve işimizde doğru yolu kolaylaştır.',
     confidence: 'high',
     reference: 'Al-Kahf 18:10',
     sourceId: 'kahf_18_10',
@@ -176,7 +176,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/18/10'
   },
   muslim_2664: {
-    coreMessage: 'Guclu mumin Allah katinda daha sevimlidir; faydali olana saril, Allah\'tan yardim iste ve gevseme.',
+    coreMessage: 'Güçlü mümin Allah katında daha sevimlidir; faydalı olana sarıl, Allah\'tan yardım iste ve gevşeme.',
     confidence: 'medium',
     reference: 'Sahih Muslim 2664',
     sourceId: 'muslim_2664',
@@ -184,7 +184,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://sunnah.com/muslim:2664'
   },
   muslim_2999: {
-    coreMessage: 'Muminin isi hayirdir; nimet gelirse sukreder, sikinti gelirse sabreder.',
+    coreMessage: 'Müminin işi hayırdır; nimet gelirse şükreder, sıkıntı gelirse sabreder.',
     confidence: 'medium',
     reference: 'Sahih Muslim 2999',
     sourceId: 'muslim_2999',
@@ -192,7 +192,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://sunnah.com/muslim:2999'
   },
   muslim_854b: {
-    coreMessage: 'Resulullah, gunesin dogdugu en hayirli gunun cuma oldugunu bildirdi.',
+    coreMessage: 'Resulullah, güneşin doğduğu en hayırlı günün cuma olduğunu bildirdi.',
     confidence: 'medium',
     reference: 'Sahih Muslim 854b',
     sourceId: 'muslim_854b',
@@ -200,7 +200,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://sunnah.com/muslim:854b'
   },
   muzzammil_73_6: {
-    coreMessage: 'Gece ibadeti, kalbi daha derinden etkileyen ve sozu daha berrak kilan bir vakittir.',
+    coreMessage: 'Gece ibadeti, kalbi daha derinden etkileyen ve sözü daha berrak kılan bir vakittir.',
     confidence: 'high',
     reference: 'Al-Muzzammil 73:6',
     sourceId: 'muzzammil_73_6',
@@ -208,7 +208,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/73/6'
   },
   nahl_16_97: {
-    coreMessage: 'Imanla salih amel isleyene Allah temiz ve guzel bir hayat vaad eder.',
+    coreMessage: 'İmanla salih amel işleyene Allah temiz ve güzel bir hayat vaat eder.',
     confidence: 'high',
     reference: 'An-Nahl 16:97',
     sourceId: 'nahl_16_97',
@@ -216,7 +216,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/16/97'
   },
   qaf_50_16: {
-    coreMessage: 'Allah insana sah damarindan daha yakindir.',
+    coreMessage: 'Allah insana şah damarından daha yakındır.',
     confidence: 'high',
     reference: 'Qaf 50:16',
     sourceId: 'qaf_50_16',
@@ -224,7 +224,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/50/16'
   },
   rad_13_28: {
-    coreMessage: 'Kalpler ancak Allah\'i anmakla huzur bulur.',
+    coreMessage: 'Kalpler ancak Allah\'ı anmakla huzur bulur.',
     confidence: 'high',
     reference: "Ar-Ra'd 13:28",
     sourceId: 'rad_13_28',
@@ -232,7 +232,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/13/28'
   },
   sharh_94_5_6: {
-    coreMessage: 'Suphesiz zorlugun yaninda kolaylik vardir; evet, zorlugun yaninda kolaylik vardir.',
+    coreMessage: 'Şüphesiz zorluğun yanında kolaylık vardır; evet, zorluğun yanında kolaylık vardır.',
     confidence: 'high',
     reference: 'Ash-Sharh 94:5-6',
     sourceId: 'sharh_94_5_6',
@@ -240,7 +240,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/94/5-6'
   },
   taha_20_25_28: {
-    coreMessage: 'Rabbim, gogsumu genislet, isimi kolaylastir ve dilimdeki dugumu cozumle.',
+    coreMessage: 'Rabbim, göğsümü genişlet, işimi kolaylaştır ve dilimdeki düğümü çözümle.',
     confidence: 'high',
     reference: 'Ta-Ha 20:25-28',
     sourceId: 'taha_20_25_28',
@@ -248,7 +248,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/20/25-28'
   },
   taha_20_46: {
-    coreMessage: 'Korkmayin; Ben sizinle birlikteyim, isitir ve gorurum.',
+    coreMessage: 'Korkmayın; Ben sizinle birlikteyim, işitir ve görürüm.',
     confidence: 'high',
     reference: 'Ta-Ha 20:46',
     sourceId: 'taha_20_46',
@@ -256,7 +256,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/20/46'
   },
   tawbah_9_51: {
-    coreMessage: 'Bize ancak Allah\'in bizim icin yazdigi sey isabet eder; O bizim Mevlamizdir.',
+    coreMessage: 'Bize ancak Allah\'ın bizim için yazdığı şey isabet eder; O bizim Mevlâmızdır.',
     confidence: 'high',
     reference: 'At-Tawbah 9:51',
     sourceId: 'tawbah_9_51',
@@ -264,7 +264,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/9/51'
   },
   yunus_10_57: {
-    coreMessage: 'Kur\'an, kalplerde olana sifa, hidayet ve rahmet olarak gelmistir.',
+    coreMessage: 'Kur\'an, kalplerde olana şifa, hidayet ve rahmet olarak gelmiştir.',
     confidence: 'high',
     reference: 'Yunus 10:57',
     sourceId: 'yunus_10_57',
@@ -272,7 +272,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/10/57'
   },
   yusuf_12_86: {
-    coreMessage: 'Yakup aleyhisselam, uzuntusunu ve tasasi yalniz Allah\'a arz ettigini soyledi.',
+    coreMessage: 'Yakup aleyhisselam, üzüntüsünü ve tasasını yalnız Allah\'a arz ettiğini söyledi.',
     confidence: 'high',
     reference: 'Yusuf 12:86',
     sourceId: 'yusuf_12_86',
@@ -280,7 +280,7 @@ const SOURCE_LIBRARY: Record<string, SpiritualSource> = {
     sourceUrl: 'https://quran.com/12/86'
   },
   zumar_39_53: {
-    coreMessage: 'Kendi nefisleri aleyhine giden kullar bile Allah\'in rahmetinden umit kesmesin.',
+    coreMessage: 'Kendi nefisleri aleyhine giden kullar bile Allah\'ın rahmetinden ümit kesmesin.',
     confidence: 'high',
     reference: 'Az-Zumar 39:53',
     sourceId: 'zumar_39_53',
@@ -296,68 +296,68 @@ const ACTION_FALLBACK_BY_STATE: Record<string, 'open_quran' | 'play_huzur_audio'
 };
 
 const ACTION_COPY: Record<string, string> = {
-  do_zikir: 'kisa bir zikir',
-  open_quran: "Kur'an ile birkac dakikalik temas",
+  do_zikir: 'kısa bir zikir',
+  open_quran: "Kur'an ile birkaç dakikalık temas",
   play_huzur_audio: 'sakin bir Huzur sesi'
 };
 
 const TIME_GREETING_VARIANTS: Record<string, Record<string, string[]>> = {
   any: {
     afternoon: [
-      'Ikindiye dogru kalbini bir nebze hafifletmeye ne dersin?',
-      'Gunun ikinci yarisi baslarken ic ritmini toparlayalim.',
-      'Ogleden sonraki akis hizlandiysa once kalbine yer ac.'
+      'İkindiye doğru kalbini bir nebze hafifletmeye ne dersin?',
+      'Günün ikinci yarısı başlarken iç ritmini toparlayalım.',
+      'Öğleden sonraki akış hızlandıysa önce kalbine yer aç.'
     ],
     evening: [
-      'Aksam inerken gunun yukunu biraz birak.',
-      'Gunun sonuna gelirken kalbini yumusatacak bir durak var.',
-      'Aksam vakti, icindeki sesi daha net duymak icin guzel bir esik.'
+      'Akşam inerken günün yükünü biraz bırak.',
+      'Günün sonuna gelirken kalbini yumuşatacak bir durak var.',
+      'Akşam vakti, içindeki sesi daha net duymak için güzel bir eşik.'
     ],
     late_night: [
-      'Gecenin derinliginde kurulan temas daha sahici olabilir.',
-      'Bu sessiz vakitte kalbinle Rabbine daha yakin olabilirsin.',
-      'Teheccud saatleri kalbi toplamaya cok musaittir.'
+      'Gecenin derinliğinde kurulan temas daha sahici olabilir.',
+      'Bu sessiz vakitte kalbinle Rabbine daha yakın olabilirsin.',
+      'Teheccüd saatleri kalbi toplamaya çok müsaittir.'
     ],
     morning: [
-      'Sabah yeni acilirken kalbine yumusak bir baslangic ver.',
-      'Gun daha yeni baslarken aceleyi biraz yavaslatalim.',
-      'Bugunun ilk saatlerinde kalbine nefes alacak alan ac.'
+      'Sabah yeni açılırken kalbine yumuşak bir başlangıç ver.',
+      'Gün daha yeni başlarken aceleyi biraz yavaşlatalım.',
+      'Bugünün ilk saatlerinde kalbine nefes alacak alan aç.'
     ],
     night: [
-      'Gece sakinliginde kalbini toplamak daha kolay olabilir.',
-      'Gun kapanirken icindeki agirligi Rabbine birak.',
-      'Gece, dis gurultunun azaldigi ve kalbin duyuldugu bir vakit.'
+      'Gece sakinliğinde kalbini toplamak daha kolay olabilir.',
+      'Gün kapanırken içindeki ağırlığı Rabbine bırak.',
+      'Gece, dış gürültünün azaldığı ve kalbin duyulduğu bir vakit.'
     ],
     noon: [
-      'Ogle saatleri yogunlastiysa once nefesini duzelt.',
-      'Gun ortasinda kisa bir manevi mola ritmi toparlayabilir.',
-      'Ogle akisi hizliysa kalbine bir durak acmak iyi gelir.'
+      'Öğle saatleri yoğunlaştıysa önce nefesini düzelt.',
+      'Gün ortasında kısa bir manevi mola ritmi toparlayabilir.',
+      'Öğle akışı hızlıysa kalbine bir durak açmak iyi gelir.'
     ]
   },
   friday: {
     afternoon: [
       'Cuma ikindisi, kalbi toparlayan nadir vakitlerden biridir.',
-      'Cuma ikindisinin sükuneti bugunu daha derli toplu bitirebilir.'
+      'Cuma ikindisinin sükuneti bugünü daha derli toplu bitirebilir.'
     ],
     evening: [
-      'Cuma aksami, haftayi yumusak bir bicimde kapatmak icin guzel bir esik.',
-      'Mubarek gunun sonuna gelirken kalbine biraz daha huzur ver.'
+      'Cuma akşamı, haftayı yumuşak bir biçimde kapatmak için güzel bir eşik.',
+      'Mübarek günün sonuna gelirken kalbine biraz daha huzur ver.'
     ],
     late_night: [
-      'Cuma gecesinin sessizligi, duayi daha derin hissettirebilir.',
-      'Bu mubarek gecede kalbinle Rabbine donmek daha kolay olabilir.'
+      'Cuma gecesinin sessizliği, duayı daha derin hissettirebilir.',
+      'Bu mübarek gecede kalbinle Rabbine dönmek daha kolay olabilir.'
     ],
     morning: [
-      'Cuma sabahi aceleyi azaltip niyetini tazele.',
-      'Mubarek cuma sabahi kalbine sakin bir baslangic ver.'
+      'Cuma sabahı aceleyi azaltıp niyetini tazele.',
+      'Mübarek cuma sabahı kalbine sakin bir başlangıç ver.'
     ],
     night: [
-      'Cuma gecesi kalbi yumusatmak icin guzel bir vakittir.',
-      'Mubarek gecede kucuk bir hatirlatma bile ic ritmi toparlayabilir.'
+      'Cuma gecesi kalbi yumuşatmak için güzel bir vakittir.',
+      'Mübarek gecede küçük bir hatırlatma bile iç ritmi toparlayabilir.'
     ],
     noon: [
-      'Cuma oglesi, zikrin ve duanin agirlik kazandigi bir esik.',
-      'Cuma namazina yaklasan saatlerde kalbini toplayacak kisa bir durak var.'
+      'Cuma öğlesi, zikrin ve duanın ağırlık kazandığı bir eşik.',
+      'Cuma namazına yaklaşan saatlerde kalbini toplayacak kısa bir durak var.'
     ]
   }
 };
@@ -365,79 +365,79 @@ const TIME_GREETING_VARIANTS: Record<string, Record<string, string[]>> = {
 const TIME_REFLECTION_VARIANTS: Record<string, Record<string, string[]>> = {
   any: {
     afternoon: [
-      'Ikindiye yaklasan saatler, gunun yorgunlugunu fark edip yon duzeltmek icin iyi bir esiktir.',
-      'Ogleden sonraki akis, zihnin dagildigi ama niyetin yeniden toparlanabildigi bir zamandir.',
-      'Gunun ikinci yarisi, baskiyi buyutmeden ritmi duzeltmek icin kucuk adimlara cok aciktir.'
+      'İkindiye yaklaşan saatler, günün yorgunluğunu fark edip yön düzeltmek için iyi bir eşiktir.',
+      'Öğleden sonraki akış, zihnin dağıldığı ama niyetin yeniden toparlanabildiği bir zamandır.',
+      'Günün ikinci yarısı, baskıyı büyütmeden ritmi düzeltmek için küçük adımlara çok açıktır.'
     ],
     evening: [
-      'Aksam vakti, gun boyu biriken duygularin yavas yavas gorunur oldugu bir esiktir.',
-      'Gun kapanirken kurulan kucuk manevi temas, ic huzuru geceye tasiyabilir.',
-      'Aksam saatleri, gunun agirligini Rabbine emanet etmek icin dogal bir davettir.'
+      'Akşam vakti, gün boyu biriken duyguların yavaş yavaş görünür olduğu bir eşiktir.',
+      'Gün kapanırken kurulan küçük manevi temas, iç huzuru geceye taşıyabilir.',
+      'Akşam saatleri, günün ağırlığını Rabbine emanet etmek için doğal bir davettir.'
     ],
     late_night: [
-      'Gecenin bu vakti, gosteristen uzak bir samimiyetle Rabbine yonelmek icin cok elverislidir.',
-      'Teheccud saatleri, kalbin daha duru duyuldugu ve duanin daha derinden kuruldugu anlardandir.',
-      'Derin gece, dunyanin sesi kisilirken kalbin hakikate daha acik hale geldigi bir zaman olur.'
+      'Gecenin bu vakti, gösterişten uzak bir samimiyetle Rabbine yönelmek için çok elverişlidir.',
+      'Teheccüd saatleri, kalbin daha duru duyulduğu ve duanın daha derinden kurulduğu anlardandır.',
+      'Derin gece, dünyanın sesi kısılırken kalbin hakikate daha açık hale geldiği bir zaman olur.'
     ],
     morning: [
-      'Sabah, niyetin gunun ritmini belirledigi en hassas esiklerden biridir.',
-      'Gun baslarken kalbe verilen yon, kalan saatlerin tonunu buyuk olcude belirler.',
-      'Sabah saatleri, ic ritmi zorlamadan yeniden duzene alma firsati verir.'
+      'Sabah, niyetin günün ritmini belirlediği en hassas eşiklerden biridir.',
+      'Gün başlarken kalbe verilen yön, kalan saatlerin tonunu büyük ölçüde belirler.',
+      'Sabah saatleri, iç ritmi zorlamadan yeniden düzene alma fırsatı verir.'
     ],
     night: [
-      'Gece, dis kosusturmanin azaldigi ve kalbin kendi sesini daha net duydugu bir vakittir.',
-      'Gun sona ererken kurulan manevi temas, zihni yumusatip kalbi guvende hissettirebilir.',
-      'Gece vakti, hesaplasmak yerine teslimiyetle sakinlesmeyi ogrenmek icin guzel bir alandir.'
+      'Gece, dış koşuşturmanın azaldığı ve kalbin kendi sesini daha net duyduğu bir vakittir.',
+      'Gün sona ererken kurulan manevi temas, zihni yumuşatıp kalbi güvende hissettirebilir.',
+      'Gece vakti, hesaplaşmak yerine teslimiyetle sakinleşmeyi öğrenmek için güzel bir alandır.'
     ],
     noon: [
-      'Gun ortasi, yogunlukla niyet arasindaki mesafenin kolayca acildigi bir zamandir.',
-      'Ogle saatleri, hem bedeni hem zihni yeniden merkezlemek icin dogal bir durak sunar.',
-      'Gunun tam ortasinda verilen kisa bir manevi mola, dagilan dikkati toparlamaya yardim eder.'
+      'Gün ortası, yoğunlukla niyet arasındaki mesafenin kolayca açıldığı bir zamandır.',
+      'Öğle saatleri, hem bedeni hem zihni yeniden merkezlemek için doğal bir durak sunar.',
+      'Günün tam ortasında verilen kısa bir manevi mola, dağılan dikkati toparlamaya yardım eder.'
     ]
   },
   friday: {
     afternoon: [
-      'Cuma ikindisi, dua ve tefekkure diger gunlere gore daha toplayici bir iklim tasir.',
-      'Bu saatler, cuma bereketini haftanin geri kalanina tasimak icin guzel bir kapidir.'
+      'Cuma ikindisi, dua ve tefekküre diğer günlere göre daha toplayıcı bir iklim taşır.',
+      'Bu saatler, cuma bereketini haftanın geri kalanına taşımak için güzel bir kapıdır.'
     ],
     evening: [
-      'Cuma aksami, haftanin yorgunlugunu merhamet ve sukru merkeze alarak kapatma firsati verir.',
-      'Mubarek gunun son saatleri, kalbi yumusatan kucuk amelleri daha anlamli kilabilir.'
+      'Cuma akşamı, haftanın yorgunluğunu merhamet ve şükrü merkeze alarak kapatma fırsatı verir.',
+      'Mübarek günün son saatleri, kalbi yumuşatan küçük amelleri daha anlamlı kılabilir.'
     ],
     late_night: [
-      'Cuma gecesinin sessizligi, duaya ve ic hesaplasmaya baska gecelerden daha yumusak bir zemin sunar.',
-      'Bu mubarek vakit, kalbi yormadan toparlayan samimi bir yonelis icin cok kiymetlidir.'
+      'Cuma gecesinin sessizliği, duaya ve iç hesaplaşmaya başka gecelerden daha yumuşak bir zemin sunar.',
+      'Bu mübarek vakit, kalbi yormadan toparlayan samimi bir yöneliş için çok kıymetlidir.'
     ],
     morning: [
-      'Cuma sabahi, haftalik kosusturmaya ragmen kalbi toparlayan ozel bir ferahlik tasir.',
-      'Mubarek gunun basi, niyeti tazelemek ve haftaya anlam vermek icin essiz bir esiktir.'
+      'Cuma sabahı, haftalık koşuşturmaya rağmen kalbi toparlayan özel bir ferahlık taşır.',
+      'Mübarek günün başı, niyeti tazelemek ve haftaya anlam vermek için eşsiz bir eşiktir.'
     ],
     night: [
-      'Cuma gecesi, haftanin geri kalanindan daha derli toplu bir teslimiyet duygusu uyandirabilir.',
-      'Mubarek gecede kurulan kisa manevi temas, kalbi tahmin edilenden daha hizli toparlayabilir.'
+      'Cuma gecesi, haftanın geri kalanından daha derli toplu bir teslimiyet duygusu uyandırabilir.',
+      'Mübarek gecede kurulan kısa manevi temas, kalbi tahmin edilenden daha hızlı toparlayabilir.'
     ],
     noon: [
-      'Cuma oglesi, zikrin ve duanin gunluk akisa daha kolay yerlestigi bir vakittir.',
-      'Bu esik, cuma namazinin bereketiyle niyeti yeniden merkeze almak icin cok elverislidir.'
+      'Cuma öğlesi, zikrin ve duanın günlük akışa daha kolay yerleştiği bir vakittir.',
+      'Bu eşik, cuma namazının bereketiyle niyeti yeniden merkeze almak için çok elverişlidir.'
     ]
   }
 };
 
 const STATE_SECOND_SENTENCE_VARIANTS: Record<string, string[]> = {
   low_iman_streak: [
-    'Kendini uzak hissettigin anlarda bile kisa ama duzenli bir donus, kalbin tekrar isinmasina yardim eder; bugun bunun icin {action} yeterli olabilir.',
-    'Iman ritmi dustugunde buyuk adimlar yerine samimi bir donus daha kalici olur; istersen bunu {action} ile baslatabilirsin.',
-    'Bugun kalbin tamamen toparlanmasa bile yonunu yeniden cevirmek cok degerli; {action} bu donusu yumusaklastirabilir.'
+    'Kendini uzak hissettiğin anlarda bile kısa ama düzenli bir dönüş, kalbin tekrar ısınmasına yardım eder; bugün bunun için {action} yeterli olabilir.',
+    'İman ritmi düştüğünde büyük adımlar yerine samimi bir dönüş daha kalıcı olur; istersen bunu {action} ile başlatabilirsin.',
+    'Bugün kalbin tamamen toparlanmasa bile yönünü yeniden çevirmek çok değerli; {action} bu dönüşü yumuşaklaştırabilir.'
   ],
   steady: [
-    'Dengedeyken kurulan bu kucuk temas, sevat duygusunu korur ve sukru derinlestirir; istersen bunu {action} ile pekistirebilirsin.',
-    'Kalbin sakin oldugunda kucuk ameller daha kolay kok salar; {action} bu istikrari gunun icine yaymana yardim edebilir.',
-    'Ritmin yerindeyken bu tarz hatirlatmalar, dagilmadan devam etmeni saglar; {action} ile bunu nazikce surdurebilirsin.'
+    'Dengedeyken kurulan bu küçük temas, sebat duygusunu korur ve şükrü derinleştirir; istersen bunu {action} ile pekiştirebilirsin.',
+    'Kalbin sakin olduğunda küçük ameller daha kolay kök salar; {action} bu istikrarı günün içine yaymana yardım edebilir.',
+    'Ritmin yerindeyken bu tarz hatırlatmalar, dağılmadan devam etmeni sağlar; {action} ile bunu nazikçe sürdürebilirsin.'
   ],
   stressed: [
-    'Bu hatirlatmayi, kontrol etme baskisini bir anligina Rabbine birakman icin yumusak bir durak gibi dusun; ardindan {action} ile devam edebilirsin.',
-    'Zihnin hizlandiginda kalbin daha kisa ve daha sade bir temasa ihtiyac duyar; bugun bunu {action} ile desteklemek iyi gelebilir.',
-    'Baskinin buyudugu anlarda derin ve uzun bir plan gerekmeyebilir; sadece {action} ile ic ritmini biraz toparlaman yeterli olabilir.'
+    'Bu hatırlatmayı, kontrol etme baskısını bir anlığına Rabbine bırakman için yumuşak bir durak gibi düşün; ardından {action} ile devam edebilirsin.',
+    'Zihnin hızlandığında kalbin daha kısa ve daha sade bir temasa ihtiyaç duyar; bugün bunu {action} ile desteklemek iyi gelebilir.',
+    'Baskının büyüdüğü anlarda derin ve uzun bir plan gerekmeyebilir; sadece {action} ile iç ritmini biraz toparlaman yeterli olabilir.'
   ]
 };
 
@@ -507,7 +507,7 @@ const FRIDAY_ASSIGNMENTS: Record<string, Record<string, string[]>> = {
   }
 };
 
-interface ExtraEntry {
+type ExtraEntry = {
   dayOfWeek: 'any' | 'friday';
   sourceId: string;
   timeOfDay: string;
@@ -556,19 +556,19 @@ const buildGreeting = ({ dayOfWeek, timeOfDay, userState, variantIndex }: { dayO
 
   const stateTail: Record<string, string[]> = {
     low_iman_streak: [
-      'Bugun yeniden yon bulmak icin fazla buyuk bir adim gerekmiyor.',
-      'Kalbinin yeniden isinmasi icin kucuk bir temas yeterli olabilir.',
-      'Uzaklastigini hissetsen de donus kapisi hala acik.'
+      'Bugün yeniden yön bulmak için fazla büyük bir adım gerekmiyor.',
+      'Kalbinin yeniden ısınması için küçük bir temas yeterli olabilir.',
+      'Uzaklaştığını hissetsen de dönüş kapısı hâlâ açık.'
     ],
     steady: [
       'Bu dengeyi sessizce korumak da bir nimettir.',
-      'Bugunku sakinligini sukru buyuten bir alan olarak koru.',
-      'Ritmin yerindeyken bunu daha da koklendirmek mumkun.'
+      'Bugünkü sakinliğini şükrü büyüten bir alan olarak koru.',
+      'Ritmin yerindeyken bunu daha da köklendirmek mümkün.'
     ],
     stressed: [
-      'Bugun her seyi bir anda cozmen gerekmiyor.',
-      'Biraz yavaslamak kalbine iyi gelebilir.',
-      'Ilk olarak icindeki gerginligi yumusatmak yeterli.'
+      'Bugün her şeyi bir anda çözmen gerekmiyor.',
+      'Biraz yavaşlamak kalbine iyi gelebilir.',
+      'İlk olarak içindeki gerginliği yumuşatmak yeterli.'
     ]
   };
 

@@ -1,4 +1,4 @@
-export interface EsmaUlHusnaEntry {
+export type EsmaUlHusnaEntry = {
   id: number;
   arabic: string;
   latin: string;

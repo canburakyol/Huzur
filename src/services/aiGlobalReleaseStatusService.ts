@@ -4,7 +4,7 @@ import { logger } from '../utils/logger';
 import { getDb } from './firebase';
 import { storageService } from './storageService';
 
-interface AiGlobalReleaseStatus {
+type AiGlobalReleaseStatus = {
   status: 'healthy' | 'watch' | 'critical';
   updatedAt: string | null;
   fallbackRate: number;
@@ -17,7 +17,7 @@ interface AiGlobalReleaseStatus {
   recommendedAction: string;
 }
 
-interface GetStatusOptions {
+type GetStatusOptions = {
   forceRefresh?: boolean;
 }
 

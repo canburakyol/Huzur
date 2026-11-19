@@ -1,19 +1,19 @@
 import { storageService } from '../services/storageService';
 
-export interface Level {
+export type Level = {
   level: number;
   minPoints: number;
   title: string;
   tier: string;
 }
 
-export interface TierColor {
+export type TierColor = {
   primary: string;
   secondary: string;
   gradient: string;
 }
 
-export interface Badge {
+export type Badge = {
   id: string;
   icon: string;
   name: string;
@@ -21,7 +21,7 @@ export interface Badge {
   category: string;
 }
 
-export interface Challenge {
+export type Challenge = {
   id: string;
   icon: string;
   title: string;
@@ -40,7 +40,7 @@ export interface AdaptiveChallenge extends Challenge {
   completed: boolean;
 }
 
-export interface ChallengeProgress {
+export type ChallengeProgress = {
   progress: number;
   completed: boolean;
   lastUpdated?: string;

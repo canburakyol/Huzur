@@ -12,7 +12,7 @@ import crashlyticsReporter from "../utils/crashlyticsReporter";
 import { useAppStore } from "../stores/useAppStore";
 import { initializeThemeMode } from "../services/themeModeService";
 
-interface StreakDisplay {
+type StreakDisplay = {
   current: number;
   longest: number;
   total: number;
@@ -20,7 +20,7 @@ interface StreakDisplay {
   emoji: string;
 }
 
-interface Badge {
+type Badge = {
   id: string;
   days: number;
   emoji: string;
@@ -28,24 +28,24 @@ interface Badge {
   message: string;
 }
 
-interface AccentColor {
+type AccentColor = {
   id: string;
   color: string;
   dark?: string;
   rgb?: string;
 }
 
-interface ThemeColors {
+type ThemeColors = {
   [key: string]: string;
 }
 
-interface Theme {
+type Theme = {
   id: string;
   colors?: ThemeColors;
   bodyGradient?: string;
 }
 
-interface PrayerTimings {
+type PrayerTimings = {
   Fajr: string;
   Dhuhr: string;
   Asr: string;
@@ -54,7 +54,7 @@ interface PrayerTimings {
   [key: string]: string;
 }
 
-interface UseAppInitResult {
+type UseAppInitResult = {
   streakData: StreakDisplay;
   newBadge: Badge | null;
   clearBadge: () => void;

@@ -1,36 +1,36 @@
-interface Decision {
+type Decision = {
   key: string;
   label: string;
   tone: string;
   summary: string;
 }
 
-interface ReleaseReadiness {
+type ReleaseReadiness = {
   status?: string;
   checks?: Array<{ status: string; label: string; detail: string }>;
 }
 
-interface RolloutGate {
+type RolloutGate = {
   recommendation?: string;
 }
 
-interface GlobalStatus {
+type GlobalStatus = {
   status?: string;
   recommendedAction?: string;
 }
 
-interface IncidentSummary {
+type IncidentSummary = {
   latestIncident?: { kind: string; stage: string };
   last24hCount?: number;
 }
 
-interface HealthSummary {
+type HealthSummary = {
   averageTrust?: number | null;
   actionCount?: number;
   watchCount?: number;
 }
 
-interface OpsChecklist {
+type OpsChecklist = {
   operatorActions?: string[];
 }
 
@@ -46,7 +46,7 @@ interface AiReleaseBriefResult extends Decision {
   nextSteps: string[];
 }
 
-interface BuildBriefOptions {
+type BuildBriefOptions = {
   healthSummary?: HealthSummary | null;
   rolloutGate?: RolloutGate | null;
   releaseReadiness?: ReleaseReadiness | null;
@@ -84,7 +84,7 @@ const mapDecision = (releaseReadiness: ReleaseReadiness | null, rolloutGate: Rol
       key: 'staged',
       label: 'Kademeli devam et',
       tone: 'watch',
-      summary: 'Release mumkun, ancak smoke ve canli log izlemesi zorunlu.',
+      summary: 'Release mümkün, ancak smoke ve canlı log izlemesi zorunlu.',
     };
   }
 
@@ -92,7 +92,7 @@ const mapDecision = (releaseReadiness: ReleaseReadiness | null, rolloutGate: Rol
     key: 'ship',
     label: 'Devam et',
     tone: 'healthy',
-    summary: 'AI katmani ship icin saglam gorunuyor; standart gozlemle devam et.',
+    summary: 'AI katmanı ship için sağlam görünüyor; standart gözlemle devam et.',
   };
 };
 
@@ -139,20 +139,20 @@ export const buildAiReleaseBrief = ({
 
   const nextSteps = decision.key === 'no_ship'
     ? [
-        'Kritik incident veya action bandindeki yuzeyleri kapat.',
-        'Assistant, Home, Weekly ve Push smoke setini yeniden kos.',
-        'Firebase loglari ve snapshot tazeligini yeniden dogrula.',
+        'Kritik incident veya action bandındaki yüzeyleri kapat.',
+        'Assistant, Home, Weekly ve Push smoke setini yeniden koş.',
+        'Firebase logları ve snapshot tazeliğini yeniden doğrula.',
       ]
     : decision.key === 'staged'
       ? [
           'Rolloutu kademeli tut ve ilk 24 saat incident trendini izle.',
-          'Watch bandindeki yuzeyleri cihaz smoke testiyle dogrula.',
+          'Watch bandındaki yüzeyleri cihaz smoke testiyle doğrula.',
           'Fallback ve trust eventlerinde sivrilme var mi kontrol et.',
         ]
       : [
-          'Flag kapsamini koru ve standart release akisina devam et.',
-          'Ilk 24 saat AI trust ve fallback trendini izle.',
-          'Haftalik ozet ve push hint snapshotlarinin taze kaldigini dogrula.',
+          'Flag kapsamını koru ve standart release akışına devam et.',
+          'İlk 24 saat AI trust ve fallback trendini izle.',
+          'Haftalık özet ve push hint snapshotlarının taze kaldığını doğrula.',
         ];
 
   return {

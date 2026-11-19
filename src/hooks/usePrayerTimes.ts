@@ -18,24 +18,24 @@ import { scheduleDeferredTask } from "../utils/startupScheduler";
 import { useVisibilityAwareInterval } from "./useVisibilityAwareInterval";
 import { useAppStore } from "../stores/useAppStore";
 
-interface PrayerTimings {
+type PrayerTimings = {
   [key: string]: string;
 }
 
-interface NextPrayer {
+type NextPrayer = {
   key: string;
   name: string;
   time: string;
   isTomorrow: boolean;
 }
 
-interface FcmService {
+type FcmService = {
   initialize: (options?: { requestPermission?: boolean }) => Promise<string | null>;
   getFirebaseStatus: () => Promise<{ initialized: boolean; configured: boolean; messagingAvailable: boolean }>;
   removeListeners?: () => Promise<void>;
 }
 
-interface UsePrayerTimesResult {
+type UsePrayerTimesResult = {
   timings: PrayerTimings | null;
   nextPrayer: NextPrayer | null;
   loading: boolean;
@@ -47,7 +47,7 @@ interface UsePrayerTimesResult {
   handleCloseWelcome: () => void;
 }
 
-interface LocationCoords {
+type LocationCoords = {
   latitude: number | null;
   longitude: number | null;
   locationName?: string;

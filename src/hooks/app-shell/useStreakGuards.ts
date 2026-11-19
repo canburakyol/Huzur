@@ -5,12 +5,12 @@ import { isPro } from "../../services/proService";
 import { logger } from "../../utils/logger";
 import crashlyticsReporter from "../../utils/crashlyticsReporter";
 
-interface ProtectionTarget {
+type ProtectionTarget = {
   category: string;
   data: Record<string, unknown>;
 }
 
-interface Streak24hRecovery {
+type Streak24hRecovery = {
   canRecover: boolean;
   category: string;
   deadline: string | null;
@@ -18,7 +18,7 @@ interface Streak24hRecovery {
   currentCount?: number;
 }
 
-interface RewardedAdResult {
+type RewardedAdResult = {
   success: boolean;
   error?: string;
   source?: string;

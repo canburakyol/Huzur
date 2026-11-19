@@ -1,6 +1,6 @@
 import { storageService } from './storageService';
 
-interface AppOpenEntry {
+type AppOpenEntry = {
   date: string;
   hour: number;
   ts: number;
@@ -10,7 +10,7 @@ type ReminderSlot = 'morning' | 'afternoon' | 'evening';
 
 type LifecycleStage = 'first_open' | 'same_day' | 'returning_1d' | 'cooling_2_4d' | 'comeback_5_13d' | 'dormant_14d_plus';
 
-interface RecordAppOpenResult {
+type RecordAppOpenResult = {
   recorded: boolean;
   days_since_last_open: number | null;
   lifecycle_stage: LifecycleStage;
@@ -19,7 +19,7 @@ interface RecordAppOpenResult {
   previous_open_date: string;
 }
 
-interface ActivityPattern {
+type ActivityPattern = {
   morning: number;
   afternoon: number;
   evening: number;

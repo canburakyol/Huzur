@@ -1,4 +1,4 @@
-export interface NuzulEntry {
+export type NuzulEntry = {
   id: string;
   keywords: string[];
   title: string;
