@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getWordByWordData, getFreeSurahs, hasWordByWordData } from '../../../../data/wordByWordData';
+import { localizeWordByWord } from '../../../../data/wordByWordTranslations';
 import { canAccessWordByWord, isPro } from '../../../../services/proService';
 
 interface WordAnalysis {
@@ -42,10 +44,11 @@ const useWordByWord = (initialSurah: number | null = null): UseWordByWordReturn 
   const userIsPro = isPro();
   const freeSurahs = useMemo(() => getFreeSurahs(), []);
 
+  const { t, i18n } = useTranslation();
   const surahData = useMemo(() => {
     if (!selectedSurah) return null;
-    return getWordByWordData(selectedSurah);
-  }, [selectedSurah]);
+    return localizeWordByWord(getWordByWordData(selectedSurah), selectedSurah, i18n.language || 'tr');
+  }, [selectedSurah, i18n.language]);
 
   const handleSelectSurah = useCallback((surahNumber: number) => {
     if (!canAccessWordByWord(surahNumber) && !hasWordByWordData(surahNumber)) {
@@ -70,13 +73,12 @@ const useWordByWord = (initialSurah: number | null = null): UseWordByWordReturn 
         arabic: word.arabic,
         meaning: word.meaning,
         transliteration: word.transliteration || '-',
-        details:
-          'Bu kelimenin kök analizi ve morfolojik yapısı yakında eklenecek olan çevrimdışı veritabanımızda yer alacaktır.',
-        status: 'İşlem Tamamlandı',
+        details: t('wordByWord.analysisPlaceholder', 'Bu kelimenin kök analizi ve morfolojik yapısı yakında eklenecek olan çevrimdışı veritabanımızda yer alacaktır.'),
+        status: t('wordByWord.analysisDone', 'İşlem Tamamlandı'),
       });
       setIsAnalyzing(false);
     }, 800);
-  }, []);
+  }, [t]);
 
   const dismissWordModal = useCallback(() => setSelectedWord(null), []);
   const dismissLimitModal = useCallback(() => setShowLimitModal(false), []);

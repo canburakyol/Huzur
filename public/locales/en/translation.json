@@ -473,7 +473,14 @@
     "unknownError": "Unknown issue",
     "limitTitle": "Daily Limit Reached",
     "limitDesc": "Free users can analyze 3 words per day. Upgrade to Pro for unlimited analysis.",
-    "goToPro": "Go Pro"
+    "goToPro": "Go Pro",
+    "analysisPlaceholder": "Root and morphological analysis for this word will be added in an upcoming offline database.",
+    "analysisDone": "Done",
+    "labels": {
+      "pronunciation": "Pronunciation",
+      "meaning": "Meaning",
+      "detailed": "Detailed analysis"
+    }
   },
   "error": {
     "title": "An issue Occurred",

@@ -554,7 +554,14 @@
     "unknownError": "Bilinmeyen sorun",
     "limitTitle": "Günlük Limit Doldu",
     "limitDesc": "Ücretsiz kullanıcılar günde 3 kelime analizi yapabilir. Pro'ya geçerek sınırsız analiz yapın.",
-    "goToPro": "Pro'ya Geç"
+    "goToPro": "Pro'ya Geç",
+    "analysisPlaceholder": "Bu kelimenin kök analizi ve morfolojik yapısı yakında eklenecek olan çevrimdışı veritabanımızda yer alacaktır.",
+    "analysisDone": "İşlem Tamamlandı",
+    "labels": {
+      "pronunciation": "Okunuş",
+      "meaning": "Anlam",
+      "detailed": "Detaylı Analiz"
+    }
   },
   "error": {
     "title": "Bir sorun Oluştu",

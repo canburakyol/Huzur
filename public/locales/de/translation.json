@@ -473,7 +473,14 @@
     "unknownError": "Unknown error",
     "limitTitle": "Tageslimit erreicht",
     "limitDesc": "Kostenlos kannst du 3 Wörter pro Tag analysieren. Mit Pro ohne Limit.",
-    "goToPro": "Zu Pro"
+    "goToPro": "Zu Pro",
+    "analysisPlaceholder": "Wurzel- und Formenanalyse für dieses Wort folgen in einer kommenden Offline-Datenbank.",
+    "analysisDone": "Fertig",
+    "labels": {
+      "pronunciation": "Aussprache",
+      "meaning": "Bedeutung",
+      "detailed": "Ausführliche Analyse"
+    }
   },
   "error": {
     "title": "An Error Occurred",

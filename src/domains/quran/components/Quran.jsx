@@ -4,6 +4,7 @@ import { getSurahComplete, getAyahAudioUrl, getAvailableTranslations } from '../
 import { ChevronLeft, Play, Pause, Menu, X, SkipBack, SkipForward, Bookmark, Globe, Eye, EyeOff } from 'lucide-react';
 import { storageService } from '../../../services/storageService';
 import { getLocalizedSurahList, reciters as staticReciters } from '../../../data/surahList';
+import { translateFihristLabel } from '../../../data/fihristTranslations';
 import { logger } from '../../../utils/logger';
 import './Quran.css';
 
@@ -780,7 +781,7 @@ function Quran({ onClose }) {
                                             className="fihrist-category-btn"
                                             onClick={() => setExpandedCategory(expandedCategory === index ? null : index)}
                                         >
-                                            <span>{category.category}</span>
+                                            <span>{translateFihristLabel(category.category, i18n.language)}</span>
                                             <span>{expandedCategory === index ? '-' : '+'}</span>
                                         </button>
 
@@ -793,7 +794,7 @@ function Quran({ onClose }) {
                                                         onClick={() => setSelectedTopic(topic)}
                                                     >
                                                         <div className="item-main-info">
-                                                            <div className="item-primary-text">{topic.title}</div>
+                                                            <div className="item-primary-text">{translateFihristLabel(topic.title, i18n.language)}</div>
                                                             <div className="item-secondary-text">
                                                                 {topic.ayahs.length} {t('quran.ayah')}
                                                             </div>

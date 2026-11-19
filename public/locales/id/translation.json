@@ -473,7 +473,14 @@
     "unknownError": "Unknown error",
     "limitTitle": "Batas harian tercapai",
     "limitDesc": "Pengguna gratis dapat menganalisis 3 kata per hari. Tanpa batas dengan Pro.",
-    "goToPro": "Ke Pro"
+    "goToPro": "Ke Pro",
+    "analysisPlaceholder": "Analisis akar kata dan morfologi untuk kata ini akan ditambahkan dalam basis data offline mendatang.",
+    "analysisDone": "Selesai",
+    "labels": {
+      "pronunciation": "Bacaan",
+      "meaning": "Arti",
+      "detailed": "Analisis rinci"
+    }
   },
   "error": {
     "title": "An Error Occurred",

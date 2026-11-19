@@ -64,8 +64,8 @@ const WordDetailPanel = ({ t, selectedWord, wordAnalysis, isAnalyzing, onDismiss
                 className="reveal-stagger"
                 style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
               >
-                <AnalysisRow label="Okunuş" value={wordAnalysis.transliteration} />
-                <AnalysisRow label="Anlam" value={wordAnalysis.meaning} />
+                <AnalysisRow label={t('wordByWord.labels.pronunciation', 'Okunuş')} value={wordAnalysis.transliteration} />
+                <AnalysisRow label={t('wordByWord.labels.meaning', 'Anlam')} value={wordAnalysis.meaning} />
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <span
@@ -76,7 +76,7 @@ const WordDetailPanel = ({ t, selectedWord, wordAnalysis, isAnalyzing, onDismiss
                       textTransform: 'uppercase',
                     }}
                   >
-                    Detaylı Analiz
+                    {t('wordByWord.labels.detailed', 'Detaylı Analiz')}
                   </span>
                   <div
                     className="settings-card"
