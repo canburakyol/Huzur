@@ -131,7 +131,7 @@ const NuzulExplorer = ({ onClose }) => {
                 <div className="message-avatar">📖</div>
                 <div className="message-content">
                   <Loader className="spin" size={20} />
-                  <span>Araştırılıyor...</span>
+                  <span>{t('nuzul.searching', 'Araştırılıyor...')}</span>
                 </div>
               </div>
             )}
@@ -159,7 +159,7 @@ const NuzulExplorer = ({ onClose }) => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Bir ayet veya sure hakkında sorun..."
+            placeholder={t('nuzul.placeholder', 'Bir ayet veya sure hakkında sorun...')}
             disabled={isLoading}
           />
           <button 

@@ -600,7 +600,9 @@
       "Maide 3. ayet ne zaman indi?",
       "?lk inen ayetler (Alak Suresi)",
       "?hlas suresi neden indirildi?"
-    ]
+    ],
+    "searching": "Araştırılıyor...",
+    "placeholder": "Bir ayet veya sure hakkında sorun..."
   },
   "quran": {
     "menu": "Menü",
@@ -5665,6 +5667,60 @@
     },
     "seed-family-bereket": {
       "name": "Bereket Sofrası Ailesi"
+    }
+  },
+  "proReferral": {
+    "badge": "Arkadaş Hediyesi",
+    "activeTitle": "24 saatlik Pro hediyen aktif",
+    "hours": "{{count}} saat",
+    "minutes": "{{count}} dakika",
+    "expiringSoon": "Hediyen {{time}} sonra sona erecek. Dilersen süre bitmeden abonelikle devam edebilirsin.",
+    "remaining": "Hediyen {{time}} daha aktif. Pro özelliklerini rahatça dene.",
+    "steps": {
+      "signup": "Kayıt tamamlandı",
+      "onboarding": "Kurulum tamamlandı",
+      "firstIbadah": "İlk ibadet tamamlandı"
+    },
+    "pendingBadge": "{{done}}/{{total}} tamamlandı",
+    "pendingTitle": "{{count}} adım kaldı",
+    "pendingSubtitle": "Davet ödülü için {{count}} adım daha var. İstersen Pro'yu abonelikle hemen açabilirsin.",
+    "activeBanner": "Arkadaşının hediyesi ile Pro aktifsin.",
+    "endingSoon": "Süre dolmak üzere: {{time}} kaldı"
+  },
+  "shareText": {
+    "signature": "📱 Huzur Uygulaması",
+    "verseFallback": "Ayet",
+    "verseTitle": "Günün Ayeti - {{ref}}",
+    "duaFallback": "Günün Duası",
+    "duaTitle": "Günün Duası - {{title}}",
+    "esmaTitle": "Allah'ın Güzel İsimleri - {{name}}",
+    "dialogTitle": "Paylaş",
+    "dailyVerse": "Günün Ayeti",
+    "verseInvite": "Her gün yeni bir ayet için Huzur: Namaz Vakitleri ve Kuran'ı ücretsiz indir:",
+    "verseDialog": "Bu ayeti paylaş"
+  },
+  "streakMilestones": {
+    "7_days": {
+      "title": "7 Gün Serisi",
+      "message": "Tebrikler! 7 gün boyunca her gün uygulamamızı açtınız!"
+    },
+    "15_days": {
+      "title": "15 Gün Serisi",
+      "message": "Harika! 2 haftayı aştınız, devam edin!"
+    },
+    "30_days": {
+      "title": "30 Gün Serisi",
+      "message": "Muhteşem! 1 aylık seri başarısı!"
+    },
+    "100_days": {
+      "title": "100 Gün Serisi",
+      "message": "Efsanevi! 100 gün kesintisiz kullanım!"
+    }
+  },
+  "tajweed": {
+    "quiz": {
+      "correctAnswers": "DOĞRU CEVAP",
+      "label": "TECVİD QUİZ"
     }
   }
 }

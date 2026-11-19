@@ -1,3 +1,4 @@
+import i18n from '../i18n';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
@@ -33,20 +34,23 @@ export const shareVerseAsImage = async (
   element: HTMLElement | null,
   verse: VerseShareDetails,
 ): Promise<VerseImageShareResult> => {
-  const reference = verse.reference || 'Günün Ayeti';
+  const reference = verse.reference || i18n.t('shareText.dailyVerse', { defaultValue: 'Günün Ayeti' });
+  const lang = (i18n.language || 'tr').slice(0, 2);
   const translation = verse.translation || verse.text || '';
   const { code } = createInviteLink({
     source: 'daily_verse_share',
     campaign: 'daily_verse',
-    lang: 'tr',
+    lang,
   });
   const playStoreUrl = buildPlayStoreReferralUrl({
     code,
     source: 'daily_verse_share',
     campaign: 'daily_verse',
-    lang: 'tr',
+    lang,
   });
-  const shareText = `“${translation}”\n\n${reference}\n\nHer gün yeni bir ayet için Huzur: Namaz Vakitleri ve Kuran'ı ücretsiz indir:\n${playStoreUrl}`;
+  const shareText = `“${translation}”\n\n${reference}\n\n${i18n.t('shareText.verseInvite', { defaultValue: "Her gün yeni bir ayet için Huzur: Namaz Vakitleri ve Kuran'ı ücretsiz indir:" })}\n${playStoreUrl}`;
+  const shareTitle = i18n.t('shareText.verseTitle', { ref: reference, defaultValue: 'Günün Ayeti - {{ref}}' });
+  const shareDialogTitle = i18n.t('shareText.verseDialog', { defaultValue: 'Bu ayeti paylaş' });
   const fileName = `huzur-${slugify(reference)}-${Date.now()}.jpg`;
 
   logShareOpened('verse_image', 'home_daily_verse');
@@ -54,16 +58,16 @@ export const shareVerseAsImage = async (
   const shareTextOnly = async (): Promise<VerseImageShareResult> => {
     if (Capacitor.isNativePlatform()) {
       await Share.share({
-        title: `Günün Ayeti - ${reference}`,
+        title: shareTitle,
         text: shareText,
-        dialogTitle: 'Bu ayeti paylaş',
+        dialogTitle: shareDialogTitle,
       });
       logShareSent('verse_text', 'native_share_fallback');
       return { success: true };
     }
 
     if (navigator.share) {
-      await navigator.share({ title: `Günün Ayeti - ${reference}`, text: shareText });
+      await navigator.share({ title: shareTitle, text: shareText });
       logShareSent('verse_text', 'web_share_fallback');
       return { success: true };
     }
@@ -105,10 +109,10 @@ export const shareVerseAsImage = async (
       });
 
       await Share.share({
-        title: `Günün Ayeti - ${reference}`,
+        title: shareTitle,
         text: shareText,
         files: [writeResult.uri],
-        dialogTitle: 'Bu ayeti paylaş',
+        dialogTitle: shareDialogTitle,
       });
       logShareSent('verse_image', 'native_share');
       return { success: true };
@@ -119,13 +123,13 @@ export const shareVerseAsImage = async (
 
     const file = new File([blob], fileName, { type: 'image/jpeg' });
     if (navigator.share && navigator.canShare?.({ files: [file] })) {
-      await navigator.share({ files: [file], title: `Günün Ayeti - ${reference}`, text: shareText });
+      await navigator.share({ files: [file], title: shareTitle, text: shareText });
       logShareSent('verse_image', 'web_share');
       return { success: true };
     }
 
     if (navigator.share) {
-      await navigator.share({ title: `Günün Ayeti - ${reference}`, text: shareText });
+      await navigator.share({ title: shareTitle, text: shareText });
       logShareSent('verse_image', 'web_share_text_fallback');
       return { success: true };
     }

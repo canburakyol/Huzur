@@ -1,5 +1,6 @@
 import { StrictMode, Suspense, lazy } from 'react'
 import { createRoot } from 'react-dom/client'
+import { getLoadingLabel } from './utils/loadingLabel'
 import '@fontsource/noto-naskh-arabic/400.css'
 // Mushaf type, bundled so it renders offline: Manrope (UI), Literata (titles), Amiri (Quran).
 import '@fontsource/manrope/latin-400.css'
@@ -105,7 +106,7 @@ initializeThemeMode();
 try {
   createRoot(document.getElementById('root')).render(
     <StrictMode>
-      <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'linear-gradient(135deg, var(--primary-container), var(--surface-page))', color: 'var(--on-tertiary-container)', fontWeight: 700 }}>Yukleniyor...</div>}>
+      <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'linear-gradient(135deg, var(--primary-container), var(--surface-page))', color: 'var(--on-tertiary-container)', fontWeight: 700 }}>{getLoadingLabel()}</div>}>
         <AppProviders />
       </Suspense>
     </StrictMode>,

@@ -2,8 +2,10 @@ import { logShareOpened, logShareSent, analyticsService } from './analyticsServi
 import { getExperimentVariant } from './experimentService';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
+import i18n from '../i18n';
 
-const APP_SIGNATURE = '📱 Huzur Uygulaması';
+const st = (key: string, fallback: string, opts: Record<string, unknown> = {}) => i18n.t(`shareText.${key}`, { defaultValue: fallback, ...opts });
+const appSignature = () => st('signature', '📱 Huzur Uygulaması');
 
 type ShareCard = {
   cardType: string;
@@ -25,26 +27,26 @@ const truncateText = (text = '', maxLength = 220): string => {
 };
 
 export const buildVerseShareCard = (verse: { reference?: string; arabic?: string; translation?: string; text?: string }): ShareCard => {
-  const reference = verse?.reference || 'Ayet';
+  const reference = verse?.reference || st('verseFallback', 'Ayet');
   const arabic = truncateText(verse?.arabic || '');
   const translation = truncateText(verse?.translation || verse?.text || '');
 
   return {
     cardType: 'verse',
-    title: `Günün Ayeti - ${reference}`,
-    text: `${arabic}\n\n${translation}\n\n(${reference})\n\n${APP_SIGNATURE}`
+    title: st('verseTitle', 'Günün Ayeti - {{ref}}', { ref: reference }),
+    text: `${arabic}\n\n${translation}\n\n(${reference})\n\n${appSignature()}`
   };
 };
 
 export const buildDuaShareCard = (dua: { title?: string; source?: string; arabic?: string; text?: string }): ShareCard => {
-  const title = dua?.title || dua?.source || 'Günün Duası';
+  const title = dua?.title || dua?.source || st('duaFallback', 'Günün Duası');
   const arabic = truncateText(dua?.arabic || '');
   const text = truncateText(dua?.text || '');
 
   return {
     cardType: 'dua',
-    title: `Günün Duası - ${title}`,
-    text: `${arabic}\n\n${text}\n\n${APP_SIGNATURE}`
+    title: st('duaTitle', 'Günün Duası - {{title}}', { title }),
+    text: `${arabic}\n\n${text}\n\n${appSignature()}`
   };
 };
 
@@ -58,11 +60,11 @@ export const buildEsmaShareCard = (esma: { name?: string; latin?: string; arabic
   if (detail) {
     text += `\n\n${detail}`;
   }
-  text += `\n\n${APP_SIGNATURE}`;
+  text += `\n\n${appSignature()}`;
 
   return {
     cardType: 'esma',
-    title: `Allah'ın Güzel İsimleri - ${name}`,
+    title: st('esmaTitle', "Allah'ın Güzel İsimleri - {{name}}", { name }),
     text
   };
 };
@@ -88,7 +90,7 @@ export const shareCard = async (card: ShareCard | undefined | null, channelHint 
       await Share.share({
         title: payload.title,
         text: payload.text,
-        dialogTitle: 'Paylaş'
+        dialogTitle: st('dialogTitle', 'Paylaş')
       });
       logShareSent(card.cardType, channelHint);
       return { success: true, channel: 'native_share' };

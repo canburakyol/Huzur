@@ -70,7 +70,7 @@ const TajweedQuiz = ({ onBack }) => {
                 <span className="score-value">{score}</span>
                 <span className="score-total">/ {shuffledQuestions.length}</span>
             </div>
-            <div className="score-label">DOĞRU CEVAP</div>
+            <div className="score-label">{t('tajweed.quiz.correctAnswers', 'DOĞRU CEVAP')}</div>
           </div>
 
           <p style={{ margin: '0 0 32px 0', fontSize: '1rem', color: 'var(--nav-text)', fontWeight: '700', lineHeight: '1.6' }}>
@@ -117,7 +117,7 @@ const TajweedQuiz = ({ onBack }) => {
         </div>
         <div className="progress-meta">
             <span className="question-count">{currentQuestion + 1} / {shuffledQuestions.length}</span>
-            <span className="quiz-label">TECVİD QUİZ</span>
+            <span className="quiz-label">{t('tajweed.quiz.label', 'TECVİD QUİZ')}</span>
         </div>
       </div>
 

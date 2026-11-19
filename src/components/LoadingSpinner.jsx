@@ -1,4 +1,6 @@
-function LoadingSpinner({ height = '100px', label = 'Yukleniyor...' }) {
+import { getLoadingLabel } from '../utils/loadingLabel';
+
+function LoadingSpinner({ height = '100px', label = getLoadingLabel() }) {
   return (
     <div
       role="status"

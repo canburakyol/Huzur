@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 import { Check, Crown, Sparkles, X } from 'lucide-react';
 import { getExperimentVariant } from '../../../services/experimentService';
 import { getOfferings, purchasePackage, restorePurchases } from '../../../services/revenueCatService';
@@ -81,20 +82,20 @@ const buildReferralCopy = (proDetails, referralProgress) => {
     const { hours, minutes, isExpiringSoon } = proDetails.remaining;
     return {
       isReferralPro: true,
-      badge: 'Arkadaş Hediyesi',
-      title: '24 saatlik Pro hediyen aktif',
+      badge: i18n.t('proReferral.badge'),
+      title: i18n.t('proReferral.activeTitle'),
       subtitle: isExpiringSoon
-        ? `Hediyen ${hours > 0 ? `${hours} saat` : `${minutes} dakika`} sonra sona erecek. Dilersen süre bitmeden abonelikle devam edebilirsin.`
-        : `Hediyen ${hours} saat ${minutes} dakika daha aktif. Pro özelliklerini rahatça dene.`,
+        ? i18n.t('proReferral.expiringSoon', { time: hours > 0 ? i18n.t('proReferral.hours', { count: hours }) : i18n.t('proReferral.minutes', { count: minutes }) })
+        : i18n.t('proReferral.remaining', { time: `${i18n.t('proReferral.hours', { count: hours })} ${i18n.t('proReferral.minutes', { count: minutes })}` }),
       cta: null
     };
   }
 
   if (referralProgress?.invitedByCode && !referralProgress.inviteeEligible) {
     const steps = [
-      referralProgress.inviteAcceptedAt && 'Kayıt tamamlandı',
-      referralProgress.onboardingCompletedAt && 'Kurulum tamamlandı',
-      referralProgress.firstIbadahCompletedAt && 'İlk ibadet tamamlandı'
+      referralProgress.inviteAcceptedAt && i18n.t('proReferral.steps.signup'),
+      referralProgress.onboardingCompletedAt && i18n.t('proReferral.steps.onboarding'),
+      referralProgress.firstIbadahCompletedAt && i18n.t('proReferral.steps.firstIbadah')
     ].filter(Boolean);
 
     const completedSteps = steps.length;
@@ -102,9 +103,9 @@ const buildReferralCopy = (proDetails, referralProgress) => {
 
     return {
       isReferralPending: true,
-      badge: `${completedSteps}/${totalSteps} tamamlandı`,
-      title: `${totalSteps - completedSteps} adım kaldı`,
-      subtitle: `Davet ödülü için ${totalSteps - completedSteps} adım daha var. İstersen Pro'yu abonelikle hemen açabilirsin.`,
+      badge: i18n.t('proReferral.pendingBadge', { done: completedSteps, total: totalSteps }),
+      title: i18n.t('proReferral.pendingTitle', { count: totalSteps - completedSteps }),
+      subtitle: i18n.t('proReferral.pendingSubtitle', { count: totalSteps - completedSteps }),
       cta: null
     };
   }
@@ -360,12 +361,12 @@ const ProUpgrade = ({
         {proDetails?.active && proDetails.source === 'referral_reward' && (
           <div className="referral-active-banner">
             <p>
-              Arkadaşının hediyesi ile Pro aktifsin.
+              {t('proReferral.activeBanner', 'Arkadaşının hediyesi ile Pro aktifsin.')}
               {proDetails.remaining.isExpiringSoon && (
                 <span className="expiring-soon">
-                  {' '}Süre dolmak üzere: {proDetails.remaining.hours > 0
-                    ? `${proDetails.remaining.hours} saat`
-                    : `${proDetails.remaining.minutes} dakika`} kaldı
+                  {' '}{t('proReferral.endingSoon', { time: proDetails.remaining.hours > 0
+                    ? t('proReferral.hours', { count: proDetails.remaining.hours })
+                    : t('proReferral.minutes', { count: proDetails.remaining.minutes }), defaultValue: 'Süre dolmak üzere: {{time}} kaldı' })}
                 </span>
               )}
             </p>

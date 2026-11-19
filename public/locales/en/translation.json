@@ -506,7 +506,9 @@
       "When was Al-Ma'idah verse 3 revealed?",
       "The first revealed verses (Surah Al-Alaq)",
       "Why was Surah Al-Ikhlas revealed?"
-    ]
+    ],
+    "searching": "Searching…",
+    "placeholder": "Ask about a verse or surah…"
   },
   "quran": {
     "menu": "Menu",
@@ -5665,6 +5667,60 @@
     },
     "seed-family-bereket": {
       "name": "Blessed Table family"
+    }
+  },
+  "proReferral": {
+    "badge": "Friend's gift",
+    "activeTitle": "Your 24-hour Pro gift is active",
+    "hours": "{{count}} h",
+    "minutes": "{{count}} min",
+    "expiringSoon": "Your gift ends in {{time}}. You can continue with a subscription before it runs out.",
+    "remaining": "Your gift is active for another {{time}}. Try the Pro features freely.",
+    "steps": {
+      "signup": "Sign-up completed",
+      "onboarding": "Setup completed",
+      "firstIbadah": "First worship step completed"
+    },
+    "pendingBadge": "{{done}}/{{total}} completed",
+    "pendingTitle": "{{count}} steps left",
+    "pendingSubtitle": "{{count}} more steps until the invite reward. You can also unlock Pro right away with a subscription.",
+    "activeBanner": "Pro is active thanks to your friend's gift.",
+    "endingSoon": "Ending soon: {{time}} left"
+  },
+  "shareText": {
+    "signature": "📱 Huzur app",
+    "verseFallback": "Verse",
+    "verseTitle": "Verse of the day – {{ref}}",
+    "duaFallback": "Supplication of the day",
+    "duaTitle": "Supplication of the day – {{title}}",
+    "esmaTitle": "The beautiful names of Allah – {{name}}",
+    "dialogTitle": "Share",
+    "dailyVerse": "Verse of the day",
+    "verseInvite": "Get a new verse every day – download Huzur for free:",
+    "verseDialog": "Share this verse"
+  },
+  "streakMilestones": {
+    "7_days": {
+      "title": "7-day streak",
+      "message": "Congratulations! You opened the app every day for 7 days!"
+    },
+    "15_days": {
+      "title": "15-day streak",
+      "message": "Great! You've passed two weeks – keep going!"
+    },
+    "30_days": {
+      "title": "30-day streak",
+      "message": "Amazing! A one-month streak!"
+    },
+    "100_days": {
+      "title": "100-day streak",
+      "message": "Legendary! 100 days without a break!"
+    }
+  },
+  "tajweed": {
+    "quiz": {
+      "correctAnswers": "CORRECT ANSWERS",
+      "label": "TAJWEED QUIZ"
     }
   }
 }

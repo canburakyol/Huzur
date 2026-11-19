@@ -506,7 +506,9 @@
       "Wann wurde Al-Ma'idah Vers 3 offenbart?",
       "Die ersten offenbarten Verse (Sure Al-Alaq)",
       "Warum wurde Sure Al-Ikhlas offenbart?"
-    ]
+    ],
+    "searching": "Wird gesucht…",
+    "placeholder": "Frag zu einem Vers oder einer Sure…"
   },
   "quran": {
     "menu": "Menü",
@@ -5665,6 +5667,60 @@
     },
     "seed-family-bereket": {
       "name": "Familie Gesegneter Tisch"
+    }
+  },
+  "proReferral": {
+    "badge": "Geschenk eines Freundes",
+    "activeTitle": "Dein 24-Stunden-Pro-Geschenk ist aktiv",
+    "hours": "{{count}} Std.",
+    "minutes": "{{count}} Min.",
+    "expiringSoon": "Dein Geschenk endet in {{time}}. Du kannst vorher mit einem Abo weitermachen.",
+    "remaining": "Dein Geschenk ist noch {{time}} aktiv. Probier die Pro-Funktionen in Ruhe aus.",
+    "steps": {
+      "signup": "Registrierung abgeschlossen",
+      "onboarding": "Einrichtung abgeschlossen",
+      "firstIbadah": "Erster Andachtsschritt erledigt"
+    },
+    "pendingBadge": "{{done}}/{{total}} erledigt",
+    "pendingTitle": "Noch {{count}} Schritte",
+    "pendingSubtitle": "Noch {{count}} Schritte bis zur Einladungsbelohnung. Du kannst Pro auch sofort mit einem Abo freischalten.",
+    "activeBanner": "Pro ist dank des Geschenks deines Freundes aktiv.",
+    "endingSoon": "Läuft bald ab: noch {{time}}"
+  },
+  "shareText": {
+    "signature": "📱 Huzur-App",
+    "verseFallback": "Vers",
+    "verseTitle": "Vers des Tages – {{ref}}",
+    "duaFallback": "Bittgebet des Tages",
+    "duaTitle": "Bittgebet des Tages – {{title}}",
+    "esmaTitle": "Die schönen Namen Allahs – {{name}}",
+    "dialogTitle": "Teilen",
+    "dailyVerse": "Vers des Tages",
+    "verseInvite": "Jeden Tag ein neuer Vers – lade Huzur kostenlos herunter:",
+    "verseDialog": "Diesen Vers teilen"
+  },
+  "streakMilestones": {
+    "7_days": {
+      "title": "7-Tage-Serie",
+      "message": "Glückwunsch! Du hast die App 7 Tage lang jeden Tag geöffnet!"
+    },
+    "15_days": {
+      "title": "15-Tage-Serie",
+      "message": "Super! Du hast zwei Wochen geschafft – mach weiter!"
+    },
+    "30_days": {
+      "title": "30-Tage-Serie",
+      "message": "Großartig! Eine Serie von einem Monat!"
+    },
+    "100_days": {
+      "title": "100-Tage-Serie",
+      "message": "Legendär! 100 Tage ohne Unterbrechung!"
+    }
+  },
+  "tajweed": {
+    "quiz": {
+      "correctAnswers": "RICHTIGE ANTWORTEN",
+      "label": "TADSCHWID-QUIZ"
     }
   }
 }

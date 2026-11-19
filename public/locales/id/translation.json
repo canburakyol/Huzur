@@ -506,7 +506,9 @@
       "Kapan Al-Ma'idah ayat 3 diturunkan?",
       "Ayat-ayat pertama yang turun (Surah Al-Alaq)",
       "Mengapa Surah Al-Ikhlas diturunkan?"
-    ]
+    ],
+    "searching": "Mencari…",
+    "placeholder": "Tanyakan tentang ayat atau surah…"
   },
   "quran": {
     "menu": "Menu",
@@ -5665,6 +5667,60 @@
     },
     "seed-family-bereket": {
       "name": "Keluarga Meja Berkah"
+    }
+  },
+  "proReferral": {
+    "badge": "Hadiah teman",
+    "activeTitle": "Hadiah Pro 24 jam-mu aktif",
+    "hours": "{{count}} jam",
+    "minutes": "{{count}} menit",
+    "expiringSoon": "Hadiahmu berakhir dalam {{time}}. Kamu bisa lanjut berlangganan sebelum waktunya habis.",
+    "remaining": "Hadiahmu masih aktif {{time}} lagi. Coba fitur Pro dengan leluasa.",
+    "steps": {
+      "signup": "Pendaftaran selesai",
+      "onboarding": "Pengaturan selesai",
+      "firstIbadah": "Ibadah pertama selesai"
+    },
+    "pendingBadge": "{{done}}/{{total}} selesai",
+    "pendingTitle": "{{count}} langkah lagi",
+    "pendingSubtitle": "{{count}} langkah lagi menuju hadiah undangan. Kamu juga bisa membuka Pro sekarang dengan berlangganan.",
+    "activeBanner": "Pro aktif berkat hadiah dari temanmu.",
+    "endingSoon": "Segera berakhir: tersisa {{time}}"
+  },
+  "shareText": {
+    "signature": "📱 Aplikasi Huzur",
+    "verseFallback": "Ayat",
+    "verseTitle": "Ayat hari ini – {{ref}}",
+    "duaFallback": "Doa hari ini",
+    "duaTitle": "Doa hari ini – {{title}}",
+    "esmaTitle": "Nama-nama Allah yang indah – {{name}}",
+    "dialogTitle": "Bagikan",
+    "dailyVerse": "Ayat hari ini",
+    "verseInvite": "Dapatkan ayat baru setiap hari – unduh Huzur gratis:",
+    "verseDialog": "Bagikan ayat ini"
+  },
+  "streakMilestones": {
+    "7_days": {
+      "title": "Rangkaian 7 hari",
+      "message": "Selamat! Kamu membuka aplikasi setiap hari selama 7 hari!"
+    },
+    "15_days": {
+      "title": "Rangkaian 15 hari",
+      "message": "Hebat! Kamu sudah melewati dua minggu – teruskan!"
+    },
+    "30_days": {
+      "title": "Rangkaian 30 hari",
+      "message": "Luar biasa! Rangkaian satu bulan!"
+    },
+    "100_days": {
+      "title": "Rangkaian 100 hari",
+      "message": "Legendaris! 100 hari tanpa putus!"
+    }
+  },
+  "tajweed": {
+    "quiz": {
+      "correctAnswers": "JAWABAN BENAR",
+      "label": "KUIS TAJWID"
     }
   }
 }

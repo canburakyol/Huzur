@@ -109,8 +109,8 @@ function AppOverlays({
         <div className="badge-celebration-overlay" onClick={onClearBadge}>
           <div className="badge-celebration" onClick={(e) => e.stopPropagation()}>
             <div className="badge-emoji">{newBadge.emoji}</div>
-            <div className="badge-title">{newBadge.title}</div>
-            <div className="badge-message">{newBadge.message}</div>
+            <div className="badge-title">{t(`streakMilestones.${newBadge.id}.title`, newBadge.title)}</div>
+            <div className="badge-message">{t(`streakMilestones.${newBadge.id}.message`, newBadge.message)}</div>
             <button className="badge-close-btn" onClick={onClearBadge}>{t('home.awesome')}</button>
           </div>
         </div>
