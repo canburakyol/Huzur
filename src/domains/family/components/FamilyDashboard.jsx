@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useFamily } from '../../../context/FamilyContext';
 import { useTranslation } from 'react-i18next';
 import MemberCard from './MemberCard';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import PageHeader from '../../../components/shared/PageHeader';
 import BadgeGrid from '../../gamification/components/BadgeGrid';
 import StreakDetail from '../../gamification/components/StreakDetail';
 import {
@@ -148,12 +148,7 @@ const FamilyDashboard = ({ onClose }) => {
   if (!family && !loading) {
     return (
       <div className="settings-container reveal-stagger pb-120">
-        <div className="flex items-center gap-16 mb-32">
-          <IslamicBackButton onClick={onClose} size="medium" />
-          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
-            {t('family.title')}
-          </h2>
-        </div>
+        <PageHeader title={t('family.title')} onBack={onClose} />
 
         <div className="settings-card reveal-stagger flex flex-col items-stretch border-none mb-24" style={{ padding: '32px 24px', background: 'linear-gradient(135deg, var(--nav-accent) 0%, var(--tertiary) 100%)', color: 'var(--on-primary)', boxShadow: '0 15px 35px color-mix(in srgb, var(--nav-accent) 25%, transparent)', borderRadius: '28px' }}>
           <div className="settings-icon-box" style={{ width: '64px', height: '64px', background: 'color-mix(in srgb, var(--on-primary) 20%, transparent)', borderRadius: '18px', marginBottom: '20px', color: 'var(--on-primary)' }}>
@@ -237,9 +232,7 @@ const FamilyDashboard = ({ onClose }) => {
   if (selectedMember) {
     return (
       <div className="settings-container reveal-stagger pb-120">
-        <div className="flex items-center gap-16 mb-24">
-          <IslamicBackButton onClick={() => setSelectedMember(null)} showLabel={true} label={t('common.back')} />
-        </div>
+        <PageHeader title={selectedMember.displayName || t('family.title')} onBack={() => setSelectedMember(null)} />
 
         <div className="settings-card reveal-stagger mb-24 text-center flex flex-col items-stretch" style={{ padding: '32px 24px', background: 'var(--nav-hover)' }}>
           <div className="settings-icon-box rounded-24" style={{ width: '84px', height: '84px', background: 'var(--nav-accent)', margin: '0 auto 20px', color: 'var(--on-primary)', fontSize: '2.5rem' }}>
@@ -337,9 +330,7 @@ const FamilyDashboard = ({ onClose }) => {
 
   return (
     <div className="settings-container reveal-stagger pb-120">
-      <div className="flex items-center gap-16 mb-24">
-        <IslamicBackButton onClick={onClose} showLabel={true} label={t('family.title')} />
-      </div>
+      <PageHeader title={t('family.title')} onBack={onClose} />
 
       <div className="settings-card reveal-stagger mb-32 border-none rounded-24 flex flex-row items-center gap-20 relative overflow-hidden" style={{ padding: '32px 24px', background: 'linear-gradient(135deg, var(--nav-accent) 0%, var(--tertiary) 100%)', color: 'var(--on-primary)', boxShadow: '0 15px 35px color-mix(in srgb, var(--nav-accent) 25%, transparent)' }}>
         <Shield size={120} style={{ position: 'absolute', right: '-20px', bottom: '-20px', opacity: 0.1, transform: 'rotate(-15deg)' }} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, Flame, BookOpen, Trophy } from 'lucide-react';
+import { Baby, ChevronRight, Flame, BookOpen, Trophy, User } from 'lucide-react';
 
 const MemberCard = ({ member, isChild = false, onClick, style }) => {
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ const MemberCard = ({ member, isChild = false, onClick, style }) => {
         background: 'var(--nav-hover)',
         borderRadius: '16px'
       }}>
-        {isChild ? '🧒' : '👤'}
+        {isChild ? <Baby size={26} strokeWidth={1.75} aria-hidden="true" /> : <User size={26} strokeWidth={1.75} aria-hidden="true" />}
       </div>
       
       <div style={{ flex: 1 }}>
