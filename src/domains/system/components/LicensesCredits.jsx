@@ -31,6 +31,12 @@ const LicensesCredits = ({ onClose }) => {
                     description: 'Türkçe okunuş ve çeviriler',
                     url: 'https://acikkuran.com',
                     license: 'Açık Kaynak'
+                },
+                {
+                    name: 'Quranic Arabic Corpus',
+                    description: 'Kelime kelime meal: kök, sözlük biçimi ve dilbilgisi (Kais Dukes, v0.4)',
+                    url: 'https://corpus.quran.com',
+                    license: 'GNU GPL'
                 }
             ]
         },

@@ -547,21 +547,82 @@
     "changeSurah": "Başka Sure Seç",
     "ayahCount": "{{count}} Ayet",
     "close": "Kapat",
-    "analyzing": "AI Analiz Ediliyor...",
     "analyze": "Analiz",
-    "analysisError": "Analiz yüklenemedi",
-    "analysisErrorGeneric": "Analiz sırasında bir sorun oluştu.",
     "unknownError": "Bilinmeyen sorun",
     "limitTitle": "Günlük Limit Doldu",
     "limitDesc": "Ücretsiz kullanıcılar günde 3 kelime analizi yapabilir. Pro'ya geçerek sınırsız analiz yapın.",
     "goToPro": "Pro'ya Geç",
-    "analysisPlaceholder": "Bu kelimenin kök analizi ve morfolojik yapısı yakında eklenecek olan çevrimdışı veritabanımızda yer alacaktır.",
-    "analysisDone": "İşlem Tamamlandı",
     "labels": {
       "pronunciation": "Okunuş",
       "meaning": "Anlam",
-      "detailed": "Detaylı Analiz"
-    }
+      "detailed": "Detaylı Analiz",
+      "root": "Kök",
+      "lemma": "Sözlük biçimi",
+      "pos": "Kelime türü",
+      "grammar": "Dilbilgisi",
+      "affixes": "Bitişik ekler",
+      "related": "Aynı kökten"
+    },
+    "morph": {
+      "pos": {
+        "N": "İsim",
+        "PN": "Özel isim",
+        "ADJ": "Sıfat",
+        "V": "Fiil",
+        "PRON": "Zamir",
+        "DEM": "İşaret ismi",
+        "REL": "İsm-i mevsûl",
+        "P": "Harf-i cer",
+        "NEG": "Olumsuzluk edatı",
+        "T": "Zaman zarfı",
+        "LOC": "Mekân zarfı",
+        "CONJ": "Bağlaç",
+        "INTG": "Soru edatı"
+      },
+      "feature": {
+        "PERF": "Mâzi (geçmiş zaman)",
+        "IMPF": "Muzâri (şimdiki/gelecek zaman)",
+        "IMPV": "Emir kipi",
+        "PASS": "Edilgen (meçhul)",
+        "ACT_PCPL": "İsm-i fâil (yapan)",
+        "PASS_PCPL": "İsm-i mef'ûl (yapılan)",
+        "VN": "Mastar",
+        "NOM": "Merfû (ötreli)",
+        "ACC": "Mansûb (üstünlü)",
+        "GEN": "Mecrûr (esreli)",
+        "INDEF": "Belirsiz (nekra)",
+        "MOOD_JUS": "Meczûm",
+        "MOOD_SUBJ": "Mansûb fiil"
+      },
+      "person": {
+        "1": "1. şahıs",
+        "2": "2. şahıs",
+        "3": "3. şahıs"
+      },
+      "gender": {
+        "M": "eril",
+        "F": "dişil"
+      },
+      "number": {
+        "S": "tekil",
+        "D": "ikil",
+        "P": "çoğul"
+      },
+      "form": "{{form}}. bab",
+      "prefix": {
+        "al": "Belirlilik takısı (el-)",
+        "bi": "Harf-i cer (bi-: ile)",
+        "li": "Harf-i cer (li-: için)",
+        "wa": "Bağlaç (ve-)",
+        "fa": "Bağlaç (fe-)",
+        "ka": "Teşbih edatı (ke-: gibi)",
+        "sa": "Gelecek takısı (se-)"
+      },
+      "pronounSuffix": "Zamir eki ({{who}})"
+    },
+    "occurrences": "Kur'an'da {{count}} kez",
+    "morphSource": "Kaynak: Quranic Arabic Corpus",
+    "noMorphology": "Bu kelime için dilbilgisi verisi yok."
   },
   "error": {
     "title": "Bir sorun Oluştu",

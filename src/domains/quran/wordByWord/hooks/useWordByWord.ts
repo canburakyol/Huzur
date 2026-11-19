@@ -2,14 +2,14 @@ import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getWordByWordData, getFreeSurahs, hasWordByWordData } from '../../../../data/wordByWordData';
 import { localizeWordByWord } from '../../../../data/wordByWordTranslations';
+import { getWordMorphology, type WordMorphology } from '../../../../data/wordMorphology';
 import { canAccessWordByWord, isPro } from '../../../../services/proService';
 
 interface WordAnalysis {
   arabic: string;
   meaning: string;
   transliteration: string;
-  details: string;
-  status: string;
+  morphology: WordMorphology | null;
 }
 
 interface UseWordByWordReturn {
@@ -21,11 +21,10 @@ interface UseWordByWordReturn {
   showSurahList: boolean;
   selectedWord: Record<string, unknown> | null;
   wordAnalysis: WordAnalysis | null;
-  isAnalyzing: boolean;
   showLimitModal: boolean;
   handleSelectSurah: (surahNumber: number) => void;
   toggleAyah: (ayahNumber: number) => void;
-  handleWordClick: (word: Record<string, string>) => void;
+  handleWordClick: (word: Record<string, string>, ayah: number, index: number) => void;
   dismissWordModal: () => void;
   dismissLimitModal: () => void;
   openLimitModal: () => void;
@@ -38,13 +37,12 @@ const useWordByWord = (initialSurah: number | null = null): UseWordByWordReturn 
   const [showSurahList, setShowSurahList] = useState(!initialSurah);
   const [selectedWord, setSelectedWord] = useState<Record<string, unknown> | null>(null);
   const [wordAnalysis, setWordAnalysis] = useState<WordAnalysis | null>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showLimitModal, setShowLimitModal] = useState(false);
 
   const userIsPro = isPro();
   const freeSurahs = useMemo(() => getFreeSurahs(), []);
 
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const surahData = useMemo(() => {
     if (!selectedSurah) return null;
     return localizeWordByWord(getWordByWordData(selectedSurah), selectedSurah, i18n.language || 'tr');
@@ -63,22 +61,16 @@ const useWordByWord = (initialSurah: number | null = null): UseWordByWordReturn 
     setExpandedAyah((prev) => (prev === ayahNumber ? null : ayahNumber));
   }, []);
 
-  const handleWordClick = useCallback((word: Record<string, string>) => {
+  // ayah and index (1-based) locate the word in the bundled morphology data
+  const handleWordClick = useCallback((word: Record<string, string>, ayah: number, index: number) => {
     setSelectedWord(word);
-    setWordAnalysis(null);
-    setIsAnalyzing(true);
-
-    setTimeout(() => {
-      setWordAnalysis({
-        arabic: word.arabic,
-        meaning: word.meaning,
-        transliteration: word.transliteration || '-',
-        details: t('wordByWord.analysisPlaceholder', 'Bu kelimenin kök analizi ve morfolojik yapısı yakında eklenecek olan çevrimdışı veritabanımızda yer alacaktır.'),
-        status: t('wordByWord.analysisDone', 'İşlem Tamamlandı'),
-      });
-      setIsAnalyzing(false);
-    }, 800);
-  }, [t]);
+    setWordAnalysis({
+      arabic: word.arabic,
+      meaning: word.meaning,
+      transliteration: word.transliteration || '-',
+      morphology: selectedSurah ? getWordMorphology(selectedSurah, ayah, index) : null,
+    });
+  }, [selectedSurah]);
 
   const dismissWordModal = useCallback(() => setSelectedWord(null), []);
   const dismissLimitModal = useCallback(() => setShowLimitModal(false), []);
@@ -94,7 +86,6 @@ const useWordByWord = (initialSurah: number | null = null): UseWordByWordReturn 
     showSurahList,
     selectedWord,
     wordAnalysis,
-    isAnalyzing,
     showLimitModal,
     handleSelectSurah,
     toggleAyah,

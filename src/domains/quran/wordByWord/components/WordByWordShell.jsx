@@ -25,7 +25,6 @@ const WordByWordShell = ({ onClose, onUpgrade, initialSurah = null }) => {
     showSurahList,
     selectedWord,
     wordAnalysis,
-    isAnalyzing,
     showLimitModal,
     handleSelectSurah,
     toggleAyah,
@@ -116,7 +115,6 @@ const WordByWordShell = ({ onClose, onUpgrade, initialSurah = null }) => {
         t={t}
         selectedWord={selectedWord}
         wordAnalysis={wordAnalysis}
-        isAnalyzing={isAnalyzing}
         onDismiss={dismissWordModal}
       />
 

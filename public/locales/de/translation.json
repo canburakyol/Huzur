@@ -466,21 +466,82 @@
     "changeSurah": "Sure wechseln",
     "ayahCount": "{{count}} Verse",
     "close": "Schließen",
-    "analyzing": "KI analysiert…",
     "analyze": "Analysieren",
-    "analysisError": "Analysis failed",
-    "analysisErrorGeneric": "An error occurred during analysis.",
     "unknownError": "Unknown error",
     "limitTitle": "Tageslimit erreicht",
     "limitDesc": "Kostenlos kannst du 3 Wörter pro Tag analysieren. Mit Pro ohne Limit.",
     "goToPro": "Zu Pro",
-    "analysisPlaceholder": "Wurzel- und Formenanalyse für dieses Wort folgen in einer kommenden Offline-Datenbank.",
-    "analysisDone": "Fertig",
     "labels": {
       "pronunciation": "Aussprache",
       "meaning": "Bedeutung",
-      "detailed": "Ausführliche Analyse"
-    }
+      "detailed": "Ausführliche Analyse",
+      "root": "Wurzel",
+      "lemma": "Grundform",
+      "pos": "Wortart",
+      "grammar": "Grammatik",
+      "affixes": "Angehängte Partikeln",
+      "related": "Gleiche Wurzel"
+    },
+    "morph": {
+      "pos": {
+        "N": "Nomen",
+        "PN": "Eigenname",
+        "ADJ": "Adjektiv",
+        "V": "Verb",
+        "PRON": "Pronomen",
+        "DEM": "Demonstrativpronomen",
+        "REL": "Relativpronomen",
+        "P": "Präposition",
+        "NEG": "Negationspartikel",
+        "T": "Zeitadverb",
+        "LOC": "Ortsadverb",
+        "CONJ": "Konjunktion",
+        "INTG": "Fragepartikel"
+      },
+      "feature": {
+        "PERF": "Perfekt (Vergangenheit)",
+        "IMPF": "Imperfekt (Gegenwart/Zukunft)",
+        "IMPV": "Imperativ",
+        "PASS": "Passiv",
+        "ACT_PCPL": "Aktivpartizip",
+        "PASS_PCPL": "Passivpartizip",
+        "VN": "Verbalnomen",
+        "NOM": "Nominativ",
+        "ACC": "Akkusativ",
+        "GEN": "Genitiv",
+        "INDEF": "Unbestimmt",
+        "MOOD_JUS": "Jussiv",
+        "MOOD_SUBJ": "Subjunktiv"
+      },
+      "person": {
+        "1": "1. Person",
+        "2": "2. Person",
+        "3": "3. Person"
+      },
+      "gender": {
+        "M": "maskulin",
+        "F": "feminin"
+      },
+      "number": {
+        "S": "Singular",
+        "D": "Dual",
+        "P": "Plural"
+      },
+      "form": "Verbform {{form}}",
+      "prefix": {
+        "al": "Bestimmter Artikel (al-)",
+        "bi": "Präposition (bi-: mit)",
+        "li": "Präposition (li-: für)",
+        "wa": "Konjunktion (wa-: und)",
+        "fa": "Konjunktion (fa-: so)",
+        "ka": "Präposition (ka-: wie)",
+        "sa": "Futurpartikel (sa-)"
+      },
+      "pronounSuffix": "Pronomensuffix ({{who}})"
+    },
+    "occurrences": "{{count}}-mal im Koran",
+    "morphSource": "Quelle: Quranic Arabic Corpus",
+    "noMorphology": "Für dieses Wort gibt es keine Grammatikdaten."
   },
   "error": {
     "title": "An Error Occurred",

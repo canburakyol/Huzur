@@ -136,7 +136,7 @@ const AyahList = ({ t, surahData, expandedAyah, onToggleAyah, onWordClick }) => 
                       borderRadius: '16px',
                       cursor: 'pointer',
                     }}
-                    onClick={() => onWordClick(word)}
+                    onClick={() => onWordClick(word, verse.number, i + 1)}
                   >
                     <div style={{ fontWeight: '900', fontSize: '0.85rem', color: 'var(--nav-text)' }}>
                       {word.meaning}

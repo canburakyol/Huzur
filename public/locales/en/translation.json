@@ -466,21 +466,82 @@
     "changeSurah": "Change Surah",
     "ayahCount": "{{count}} Ayahs",
     "close": "Close",
-    "analyzing": "AI Analyzing...",
     "analyze": "Analyze",
-    "analysisError": "Analysis was not completed",
-    "analysisErrorGeneric": "An issue occurred during analysis.",
     "unknownError": "Unknown issue",
     "limitTitle": "Daily Limit Reached",
     "limitDesc": "Free users can analyze 3 words per day. Upgrade to Pro for unlimited analysis.",
     "goToPro": "Go Pro",
-    "analysisPlaceholder": "Root and morphological analysis for this word will be added in an upcoming offline database.",
-    "analysisDone": "Done",
     "labels": {
       "pronunciation": "Pronunciation",
       "meaning": "Meaning",
-      "detailed": "Detailed analysis"
-    }
+      "detailed": "Detailed analysis",
+      "root": "Root",
+      "lemma": "Dictionary form",
+      "pos": "Part of speech",
+      "grammar": "Grammar",
+      "affixes": "Attached particles",
+      "related": "Same root"
+    },
+    "morph": {
+      "pos": {
+        "N": "Noun",
+        "PN": "Proper noun",
+        "ADJ": "Adjective",
+        "V": "Verb",
+        "PRON": "Pronoun",
+        "DEM": "Demonstrative",
+        "REL": "Relative pronoun",
+        "P": "Preposition",
+        "NEG": "Negative particle",
+        "T": "Time adverb",
+        "LOC": "Location adverb",
+        "CONJ": "Conjunction",
+        "INTG": "Interrogative particle"
+      },
+      "feature": {
+        "PERF": "Perfect (past)",
+        "IMPF": "Imperfect (present/future)",
+        "IMPV": "Imperative",
+        "PASS": "Passive",
+        "ACT_PCPL": "Active participle",
+        "PASS_PCPL": "Passive participle",
+        "VN": "Verbal noun",
+        "NOM": "Nominative",
+        "ACC": "Accusative",
+        "GEN": "Genitive",
+        "INDEF": "Indefinite",
+        "MOOD_JUS": "Jussive",
+        "MOOD_SUBJ": "Subjunctive"
+      },
+      "person": {
+        "1": "1st person",
+        "2": "2nd person",
+        "3": "3rd person"
+      },
+      "gender": {
+        "M": "masculine",
+        "F": "feminine"
+      },
+      "number": {
+        "S": "singular",
+        "D": "dual",
+        "P": "plural"
+      },
+      "form": "Verb form {{form}}",
+      "prefix": {
+        "al": "Definite article (al-)",
+        "bi": "Preposition (bi-: with)",
+        "li": "Preposition (li-: for)",
+        "wa": "Conjunction (wa-: and)",
+        "fa": "Conjunction (fa-: so)",
+        "ka": "Preposition (ka-: like)",
+        "sa": "Future particle (sa-)"
+      },
+      "pronounSuffix": "Pronoun suffix ({{who}})"
+    },
+    "occurrences": "{{count}} times in the Quran",
+    "morphSource": "Source: Quranic Arabic Corpus",
+    "noMorphology": "No grammar data for this word."
   },
   "error": {
     "title": "An issue Occurred",

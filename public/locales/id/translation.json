@@ -466,21 +466,82 @@
     "changeSurah": "Ganti surah",
     "ayahCount": "{{count}} ayat",
     "close": "Tutup",
-    "analyzing": "AI menganalisis…",
     "analyze": "Analisis",
-    "analysisError": "Analysis failed",
-    "analysisErrorGeneric": "An error occurred during analysis.",
     "unknownError": "Unknown error",
     "limitTitle": "Batas harian tercapai",
     "limitDesc": "Pengguna gratis dapat menganalisis 3 kata per hari. Tanpa batas dengan Pro.",
     "goToPro": "Ke Pro",
-    "analysisPlaceholder": "Analisis akar kata dan morfologi untuk kata ini akan ditambahkan dalam basis data offline mendatang.",
-    "analysisDone": "Selesai",
     "labels": {
       "pronunciation": "Bacaan",
       "meaning": "Arti",
-      "detailed": "Analisis rinci"
-    }
+      "detailed": "Analisis rinci",
+      "root": "Akar kata",
+      "lemma": "Bentuk dasar",
+      "pos": "Jenis kata",
+      "grammar": "Tata bahasa",
+      "affixes": "Imbuhan",
+      "related": "Akar yang sama"
+    },
+    "morph": {
+      "pos": {
+        "N": "Isim (kata benda)",
+        "PN": "Nama diri",
+        "ADJ": "Sifat",
+        "V": "Fi'il (kata kerja)",
+        "PRON": "Dhamir (kata ganti)",
+        "DEM": "Isim isyarah",
+        "REL": "Isim maushul",
+        "P": "Huruf jar",
+        "NEG": "Partikel negasi",
+        "T": "Keterangan waktu",
+        "LOC": "Keterangan tempat",
+        "CONJ": "Kata sambung",
+        "INTG": "Kata tanya"
+      },
+      "feature": {
+        "PERF": "Madhi (lampau)",
+        "IMPF": "Mudhari' (sekarang/akan datang)",
+        "IMPV": "Amr (perintah)",
+        "PASS": "Pasif (majhul)",
+        "ACT_PCPL": "Isim fa'il",
+        "PASS_PCPL": "Isim maf'ul",
+        "VN": "Mashdar",
+        "NOM": "Marfu'",
+        "ACC": "Manshub",
+        "GEN": "Majrur",
+        "INDEF": "Nakirah",
+        "MOOD_JUS": "Majzum",
+        "MOOD_SUBJ": "Manshub (fi'il)"
+      },
+      "person": {
+        "1": "orang pertama",
+        "2": "orang kedua",
+        "3": "orang ketiga"
+      },
+      "gender": {
+        "M": "maskulin",
+        "F": "feminin"
+      },
+      "number": {
+        "S": "tunggal",
+        "D": "ganda",
+        "P": "jamak"
+      },
+      "form": "Wazan {{form}}",
+      "prefix": {
+        "al": "Kata sandang (al-)",
+        "bi": "Huruf jar (bi-: dengan)",
+        "li": "Huruf jar (li-: bagi)",
+        "wa": "Kata sambung (wa-: dan)",
+        "fa": "Kata sambung (fa-: maka)",
+        "ka": "Huruf jar (ka-: seperti)",
+        "sa": "Partikel masa depan (sa-)"
+      },
+      "pronounSuffix": "Dhamir muttashil ({{who}})"
+    },
+    "occurrences": "{{count}} kali dalam Al-Qur'an",
+    "morphSource": "Sumber: Quranic Arabic Corpus",
+    "noMorphology": "Tidak ada data tata bahasa untuk kata ini."
   },
   "error": {
     "title": "An Error Occurred",
