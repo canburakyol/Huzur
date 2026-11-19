@@ -6,7 +6,7 @@ interface RetentionThis extends AnalyticsService {
   getMilestoneLabel: (days: number) => string;
 }
 
-class RetentionAnalyticsMethods {
+export class RetentionAnalyticsMethods {
   logOnboardingStarted(this: RetentionThis, step = "language_selection", metadata: Record<string, unknown> = {}): void {
     this.logEvent(ANALYTICS_EVENTS.ONBOARDING_STARTED, {
       step,

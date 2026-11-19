@@ -15,7 +15,9 @@ export const Settings = lazy(() => import(/* webpackChunkName: "feature-core" */
 export type FeatureCategory = 'CORE' | 'IBADET' | 'EDUCATION' | 'CONTENT' | 'TOOLS' | 'SOCIAL' | 'LIFESTYLE' | 'AI' | 'SYSTEM' | 'FAMILY' | 'GAMIFICATION';
 
 export interface FeatureConfig {
-  component: LazyExoticComponent<ComponentType<unknown>>;
+  // Feature screens are JS components with differing props (onClose, onNavigate...).
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: LazyExoticComponent<ComponentType<any>>;
   category: FeatureCategory;
   module: string;
   nameKey: string;

@@ -5,7 +5,7 @@ interface CampaignAnalyticsThis extends AnalyticsService {
   logEvent: (name: string, params?: Record<string, unknown>) => void;
 }
 
-class CampaignAnalyticsMethods {
+export class CampaignAnalyticsMethods {
   logShareOpened(this: CampaignAnalyticsThis, cardType: string, source = "daily_content"): void {
     this.logEvent(ANALYTICS_EVENTS.SHARE_OPENED, {
       card_type: cardType,

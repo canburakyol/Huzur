@@ -10,7 +10,7 @@ interface EventTrackingThis extends AnalyticsService {
   getSessionCount: () => number;
 }
 
-class EventTrackingAnalyticsMethods {
+export class EventTrackingAnalyticsMethods {
   logScreenView(this: EventTrackingThis, screenName: string, screenClass: string | null = null): void {
     this.logEvent(ANALYTICS_EVENTS.SCREEN_VIEW, {
       screen_name: screenName,

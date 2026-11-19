@@ -4,6 +4,16 @@ import { registerCampaignAnalytics } from "./analytics/campaignAnalytics";
 import { registerEventTrackingAnalytics } from "./analytics/eventTracking";
 import { registerRevenueAnalytics } from "./analytics/revenueAnalytics";
 import { registerRetentionAnalytics } from "./analytics/retentionAnalytics";
+import type { CampaignAnalyticsMethods } from "./analytics/campaignAnalytics";
+import type { EventTrackingAnalyticsMethods } from "./analytics/eventTracking";
+import type { RevenueAnalyticsMethods } from "./analytics/revenueAnalytics";
+import type { RetentionAnalyticsMethods } from "./analytics/retentionAnalytics";
+
+// The register* calls below copy these methods onto AnalyticsService.prototype; tell TypeScript.
+declare module "./analytics/core" {
+  interface AnalyticsService
+    extends CampaignAnalyticsMethods, EventTrackingAnalyticsMethods, RevenueAnalyticsMethods, RetentionAnalyticsMethods {}
+}
 
 registerEventTrackingAnalytics(AnalyticsService);
 registerCampaignAnalytics(AnalyticsService);

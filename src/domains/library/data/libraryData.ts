@@ -18,9 +18,11 @@ interface TextItem {
   number: number;
   title?: string;
   arabic?: string;
-  text: string;
+  // glossary entries carry name/meaning instead of text
+  text?: string;
   explanation: string;
   name?: string;
+  meaning?: string;
 }
 
 interface ReligiousText {
@@ -32,8 +34,9 @@ interface ReligiousText {
 }
 
 interface Topic {
-  title: string;
-  content: string;
+  // alphabet rows carry letter/name/pronunciation instead of title/content
+  title?: string;
+  content?: string;
   name?: string;
   pronunciation?: string;
   description?: string;
@@ -52,7 +55,7 @@ interface ReferenceItem {
   number: number;
   arabic?: string;
   name: string;
-  meaning: string;
+  meaning?: string;
   title?: string;
   description?: string;
 }

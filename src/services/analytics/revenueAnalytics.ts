@@ -5,7 +5,7 @@ interface RevenueThis extends AnalyticsService {
   logEvent: (name: string, params?: Record<string, unknown>) => void;
 }
 
-class RevenueAnalyticsMethods {
+export class RevenueAnalyticsMethods {
   logPremiumRecoveryMomentOpened(
     this: RevenueThis,
     surface = "home_recovery_support",
