@@ -31,8 +31,11 @@ const fallbackLng: Record<string, string[]> = SUPPORTED_LANGUAGE_CODES.reduce(
   }
 );
 
+// Tests have no server for /locales; fetching there only produces aborted requests after teardown.
+const isTest = import.meta.env.MODE === 'test';
+if (!isTest) i18n.use(HttpBackend);
+
 i18n
-  .use(HttpBackend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
@@ -40,7 +43,7 @@ i18n
     fallbackLng,
     ns: I18N_NAMESPACES,
     defaultNS: 'translation',
-    debug: import.meta.env.DEV,
+    debug: import.meta.env.DEV && !isTest,
     interpolation: {
       escapeValue: false,
     },

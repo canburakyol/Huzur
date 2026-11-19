@@ -13,7 +13,7 @@ sonra **görünüm**, en son **iç kalite**. Yanlış dini bilgi, eski görünü
 | 2 | Gizlilik URL'si ve yayın sonrası izleme | Sen + ben | 30 dk | 🟨 URL ✅ 14 Kas · vitals: ~17 ve ~21 Kas |
 | 3 | Özel Günler takvimini düzelt | Ben | 1 oturum | ✅ 19 Kas |
 | 4 | Satın alma / geri yükleme testi | Sen + ben | 1 oturum | ⬜ |
-| 5 | Dini içerik doğrulaması (5 parça) | Ben | 5 oturum | ⬜ |
+| 5 | Dini içerik doğrulaması (5 parça) | Ben | 5 oturum | ✅ 19 Kas |
 | 6 | Mushaf tasarımına taşıma (ekran ekran) | Ben | ~10 oturum | ⬜ |
 | 7 | Teknik borç | Ben | 3–4 oturum | ⬜ |
 | 8 | Almanca / Endonezce çeviri | Ben | 3–4 oturum | 🟨 |
@@ -99,8 +99,8 @@ Sıra (en çok kullanılan önce):
 ## 7. Teknik borç
 
 - `npx tsc --noEmit` 432 hata veriyor (derleme denetlemediği için uygulama çalışıyor). Alan alan sıfırla; en sonda CI'a tip kontrolü ekle.
-- `scripts/scope-files.test.js` tam pakette 5 sn zaman aşımına takılıyor: testin süresini kısalt ya da zaman aşımını yükselt.
-- `reports/*.md` testler/dev sunucu tarafından yeniden yazılıyor ve her seferinde git'i kirletiyor: `.gitignore`'a al ya da üretimi durdur.
+- ✅ `scope-files` zaman aşımı ve testlerdeki i18n HTTP istekleri (teardown sonrası AbortError) giderildi.
+- ✅ `reports/*.md` artık yalnızca içerik değişince yeniden yazılıyor.
 - **Bitti sayılır:** `tsc` sıfır hata, test paketi kararlı geçiyor, `git status` temiz kalıyor.
 
 ## 8. Almanca / Endonezce çeviri

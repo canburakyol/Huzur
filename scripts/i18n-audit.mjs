@@ -233,7 +233,11 @@ reportLines.push('## Result');
 reportLines.push(`- Namespace mismatch: ${namespaceMismatch ? 'FAIL' : 'PASS'}`);
 reportLines.push(`- Key diff mismatch: ${keyMismatch ? 'FAIL' : 'PASS'}`);
 
-fs.writeFileSync(reportPath, `${reportLines.join('\n')}\n`, 'utf-8');
+const report = `${reportLines.join('\n')}\n`;
+// Only the Generated timestamp differs on unchanged runs; skip the write so git stays clean.
+const stripStamp = (text) => text.replace(/^Generated: .*$/m, '');
+const previous = fs.existsSync(reportPath) ? fs.readFileSync(reportPath, 'utf-8').replace(/\r\n/g, '\n') : '';
+if (stripStamp(previous) !== stripStamp(report)) fs.writeFileSync(reportPath, report, 'utf-8');
 
 log(`Audit report yazıldı: ${path.relative(rootDir, reportPath)}`);
 
