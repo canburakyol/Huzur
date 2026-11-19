@@ -118,7 +118,9 @@ class AdhanAlarmReceiver : BroadcastReceiver() {
 
         val prayerKey = intent.getStringExtra(EXTRA_PRAYER_NAME) ?: "Dhuhr"
         val localizedName = intent.getStringExtra(EXTRA_PRAYER_NAME_LOCALIZED) ?: prayerKey
-        val adhanSound = intent.getStringExtra(EXTRA_ADHAN_SOUND)
+        val chosenSound = intent.getStringExtra(EXTRA_ADHAN_SOUND)
+        // The Fajr adhan adds "as-salatu khayrun min an-nawm"; play it only from a dedicated "<sound>_fajr" file.
+        val adhanSound = if (prayerKey == "Fajr") chosenSound?.let { "${it}_fajr" } else chosenSound
 
         val notificationsAllowed = NotificationManagerCompat.from(context).areNotificationsEnabled()
         val preferenceEnabled = PrayerScheduleStore.arePrayerNotificationsEnabled(context)
