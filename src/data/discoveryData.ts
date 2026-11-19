@@ -34,7 +34,7 @@ export const DISCOVERY_CARDS: DiscoveryCard[] = [
   { id: 'ayah_6', type: DISCOVERY_CARD_TYPES.AYAH, icon: '🕋', label: 'Günün Ayeti', title: '"Kim Allah\'a güvenirse O, ona yeter."', source: 'Talâk, 65:3', xp: 5, action: '/kuran' },
   { id: 'ayah_7', type: DISCOVERY_CARD_TYPES.AYAH, icon: '🕋', label: 'Günün Ayeti', title: '"Biz insanı en güzel biçimde yarattık."', source: 'Tîn, 95:4', xp: 5, action: '/kuran' },
   { id: 'ayah_8', type: DISCOVERY_CARD_TYPES.AYAH, icon: '🕋', label: 'Günün Ayeti', title: '"Gerçekten namaz, hayâsızlıktan ve kötülükten alıkoyar."', source: 'Ankebût, 29:45', xp: 5, action: '/kuran' },
-  { id: 'ayah_9', type: DISCOVERY_CARD_TYPES.AYAH, icon: '🕋', label: 'Günün Ayeti', title: '"O, gökleri ve yeri altı günde yarattı ve Arş\'ın üzerine kuruldu."', source: 'Hûd, 11:7', xp: 5, action: '/kuran' },
+  { id: 'ayah_9', type: DISCOVERY_CARD_TYPES.AYAH, icon: '🕋', label: 'Günün Ayeti', title: '"Gökleri ve yeri altı günde yaratan, sonra Arş\'a hükmeden O\'dur."', source: 'Hadîd, 57:4', xp: 5, action: '/kuran' },
   { id: 'ayah_10', type: DISCOVERY_CARD_TYPES.AYAH, icon: '🕋', label: 'Günün Ayeti', title: '"Allah adaleti, iyilik yapmayı, yakınlara yardım etmeyi emreder."', source: 'Nahl, 16:90', xp: 5, action: '/kuran' },
   { id: 'hadith_1', type: DISCOVERY_CARD_TYPES.HADITH, icon: '📜', label: 'Günün Hadisi', title: '"Kolaylaştırın, zorlaştırmayın; müjdeleyin, nefret ettirmeyin."', source: 'Buhârî & Müslim', xp: 5, action: '/hadis' },
   { id: 'hadith_2', type: DISCOVERY_CARD_TYPES.HADITH, icon: '📜', label: 'Günün Hadisi', title: '"Güler yüzle kardeşini karşılaman da sadakadır."', source: 'Tirmizî', xp: 5, action: '/hadis' },

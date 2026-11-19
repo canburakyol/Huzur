@@ -11,7 +11,7 @@ const VerseOfTheDay = memo(({ dailyContent }) => {
   const [shareError, setShareError] = useState(false);
   
   const reference = dailyContent?.verse?.reference || "İnşirah, 5-6";
-  const arabicText = dailyContent?.verse?.arabic || "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا";
+  const arabicText = dailyContent?.verse?.arabic || "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ۝ إِنَّ مَعَ الْعُسْرِ يُسْرًا";
   const translationText = dailyContent?.verse?.translation || `"Elbette zorlukla beraber bir kolaylık vardır. Gerçekten, zorlukla beraber bir kolaylık daha vardır."`;
   const backgroundImage = dailyContent?.verse?.image || '/stories/quran-1.webp';
 

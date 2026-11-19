@@ -11,7 +11,7 @@ const HADITH_API_EN = 'https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/edit
 const DAILY_VERSES = [
     { reference: 'Bakara, 153', arabic: 'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ', translation: 'Allah sabredenlerle beraberdir.', image: '/stories/quran-1.webp' },
     { reference: 'Ra\'d, 28', arabic: 'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ', translation: 'Kalpler ancak Allah\'ı anmakla huzur bulur.', image: '/stories/quran-2.webp' },
-    { reference: 'İnşirah, 5-6', arabic: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا', translation: 'Şüphesiz güçlükle beraber bir kolaylık vardır.', image: '/stories/quran.webp' },
+    { reference: 'İnşirah, 5', arabic: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا', translation: 'Şüphesiz güçlükle beraber bir kolaylık vardır.', image: '/stories/quran.webp' },
     { reference: 'Taha, 114', arabic: 'رَّبِّ زِدْنِي عِلْمًا', translation: 'Rabbim! İlmimi artır.', image: '/stories/quran-1.webp' },
     { reference: 'Talak, 3', arabic: 'وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ', translation: 'Kim Allah\'a tevekkül ederse O, ona yeter.', image: '/stories/quran-2.webp' }
 ];
