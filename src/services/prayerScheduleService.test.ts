@@ -5,7 +5,7 @@ const capacitorMock = vi.hoisted(() => ({
 }));
 
 const alarmPermissionMock = vi.hoisted(() => ({
-  ensureExactAlarmPermission: vi.fn()
+  getExactAlarmPermissionStatus: vi.fn()
 }));
 
 const storageServiceMock = vi.hoisted(() => ({
@@ -57,7 +57,7 @@ describe('prayerScheduleService exact alarm integration', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     capacitorMock.getPlatform.mockReturnValue('android');
-    alarmPermissionMock.ensureExactAlarmPermission.mockResolvedValue({
+    alarmPermissionMock.getExactAlarmPermissionStatus.mockResolvedValue({
       granted: true,
       canScheduleExactAlarms: true,
       requiresUserApproval: true,
@@ -93,7 +93,7 @@ describe('prayerScheduleService exact alarm integration', () => {
     });
 
     expect(result).toEqual({ success: true, platform: 'android' });
-    expect(alarmPermissionMock.ensureExactAlarmPermission).toHaveBeenCalledTimes(1);
+    expect(alarmPermissionMock.getExactAlarmPermissionStatus).toHaveBeenCalledTimes(1);
     expect(storageServiceMock.syncPrayerScheduleCacheToNative).toHaveBeenCalledWith(
       expect.objectContaining({
         timings: { Dhuhr: '13:10' },
@@ -107,7 +107,7 @@ describe('prayerScheduleService exact alarm integration', () => {
   });
 
   it('continues native sync with inexact fallback when exact alarm permission is missing', async () => {
-    alarmPermissionMock.ensureExactAlarmPermission.mockResolvedValue({
+    alarmPermissionMock.getExactAlarmPermissionStatus.mockResolvedValue({
       granted: false,
       canScheduleExactAlarms: false,
       requiresUserApproval: true,
@@ -142,7 +142,7 @@ describe('prayerScheduleService exact alarm integration', () => {
     });
 
     expect(result).toEqual({ success: false, platform: 'web' });
-    expect(alarmPermissionMock.ensureExactAlarmPermission).not.toHaveBeenCalled();
+    expect(alarmPermissionMock.getExactAlarmPermissionStatus).not.toHaveBeenCalled();
     expect(storageServiceMock.syncPrayerScheduleCacheToNative).not.toHaveBeenCalled();
   });
 
@@ -155,7 +155,7 @@ describe('prayerScheduleService exact alarm integration', () => {
 
     expect(result).toEqual({ success: false, error: 'Prayer timings are required' });
     expect(widgetServiceMock.updateWidget).not.toHaveBeenCalled();
-    expect(alarmPermissionMock.ensureExactAlarmPermission).not.toHaveBeenCalled();
+    expect(alarmPermissionMock.getExactAlarmPermissionStatus).not.toHaveBeenCalled();
     expect(storageServiceMock.syncPrayerScheduleCacheToNative).not.toHaveBeenCalled();
   });
 });

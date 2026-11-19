@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { getPrayerTimes, getNextPrayer } from "../services/prayerService";
+import { getPrayerTimes, getNextPrayer, fetchMonthlyPrayerTimes } from "../services/prayerService";
 import { storageService } from "../services/storageService";
 import { sanitizePrayerTimings, PRAYER_KEYS_ALL } from "../constants/prayerTimes";
 import { format } from "date-fns";
@@ -105,6 +105,29 @@ const loadFcmRuntime = async (): Promise<{ fcmService: FcmService; createNotific
   };
 };
 
+// The next two days from the monthly (Diyanet when available) cache, so notifications keep coming
+// even if the app is not opened tomorrow. Empty when there are no trustworthy coordinates.
+const loadUpcomingPrayerDays = async (coords: LocationCoords | null): Promise<Array<{ date: Date; timings: Record<string, string> }>> => {
+  const latitude = coords?.latitude;
+  const longitude = coords?.longitude;
+  if (typeof latitude !== "number" || typeof longitude !== "number") return [];
+  const city = coords?.locationName || coords?.city || coords?.name || "Istanbul";
+  const days: Array<{ date: Date; timings: Record<string, string> }> = [];
+  for (const offset of [1, 2]) {
+    const date = new Date();
+    date.setDate(date.getDate() + offset);
+    date.setHours(0, 0, 0, 0);
+    try {
+      const monthly = await fetchMonthlyPrayerTimes(latitude, longitude, city, "Turkey", date);
+      const timings = monthly?.timings?.[date.getDate() - 1]?.timings as unknown as Record<string, string> | undefined;
+      if (timings) days.push({ date, timings });
+    } catch (error) {
+      logger.warn("[usePrayerTimes] Upcoming prayer days unavailable", error);
+    }
+  }
+  return days;
+};
+
 export const usePrayerTimes = (): UsePrayerTimesResult => {
   const { t } = useTranslation();
   const initialPrayerSnapshotRef = useRef<ReturnType<typeof getInitialPrayerSnapshot> | null>(null);
@@ -124,8 +147,9 @@ export const usePrayerTimes = (): UsePrayerTimesResult => {
 
   const schedulePrayerSideEffects = useCallback(async (prayerTimings: PrayerTimings, coords: LocationCoords | null = null): Promise<void> => {
     try {
+      const upcomingPrayerDays = await loadUpcomingPrayerDays(coords);
       await Promise.allSettled([
-        smartNotificationService.initializeSmartNotifications({ prayerTimes: prayerTimings }),
+        smartNotificationService.initializeSmartNotifications({ prayerTimes: prayerTimings, upcomingPrayerDays }),
         syncPrayerSchedule({
           timings: prayerTimings,
           latitude: coords?.latitude ?? null,

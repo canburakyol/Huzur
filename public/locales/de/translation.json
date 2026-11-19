@@ -405,7 +405,10 @@
     "ambientPulseTitle": "Spiritueller Herzschlag",
     "ambientPulseDesc": "Spüre vor der Gebetszeit eine sanfte Vibration",
     "appearance": "Darstellung",
-    "adPrivacyOptions": "Datenschutzoptionen für Werbung"
+    "adPrivacyOptions": "Datenschutzoptionen für Werbung",
+    "exactAlarmTitle": "Gebetsbenachrichtigungen können sich verspäten",
+    "exactAlarmDesc": "Damit Benachrichtigungen pünktlich kommen, aktiviere in den Android-Einstellungen „Wecker und Erinnerungen“ für Huzur.",
+    "exactAlarmButton": "Aktivieren"
   },
   "pro": {
     "title": "Huzur Pro",

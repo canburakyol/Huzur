@@ -100,7 +100,8 @@ object PrayerScheduleCoordinator {
             val localizedName = PrayerScheduleStore.getPrayerName(context, slot.prayerKey)
                 ?: prayerNamesTr[slot.prayerKey] ?: slot.prayerKey
 
-            if (shouldScheduleAdhan) {
+            // Sunrise ends the Fajr time; no adhan is called then.
+            if (shouldScheduleAdhan && slot.prayerKey != "Sunrise") {
                 AdhanAlarmReceiver.scheduleAdhanAlarm(
                     context = context,
                     prayerKey = slot.prayerKey,
@@ -119,7 +120,7 @@ object PrayerScheduleCoordinator {
             )
         }
 
-        val adhanAlarmCount = if (shouldScheduleAdhan) slots.size else 0
+        val adhanAlarmCount = if (shouldScheduleAdhan) slots.count { it.prayerKey != "Sunrise" } else 0
         logSchedule("rescheduled:$source:widget=${slots.size}:adhan=$adhanAlarmCount")
         Log.d(TAG, "Prayer schedule refreshed from $source with ${slots.size} widget alarms and $adhanAlarmCount adhan alarms")
         return true

@@ -172,6 +172,40 @@ describe('smartNotificationService (Unified)', () => {
     expect(notifications).toHaveLength(0);
   });
 
+  it('keeps prayer notification IDs clear of streak, sticky, reminder and winback IDs on every day', async () => {
+    const { prayerNotificationId } = await importService();
+    const reserved = new Set([1000, 1001, 2000, 2001, 2002, 3100, 3101, 3102, 999]);
+    for (let day = 1; day <= 31; day += 1) {
+      const date = new Date(2026, 0, day);
+      for (let index = 0; index < 6; index += 1) {
+        expect(reserved.has(prayerNotificationId(date, index, false))).toBe(false);
+        expect(reserved.has(prayerNotificationId(date, index, true))).toBe(false);
+      }
+    }
+  });
+
+  it('schedules the next days too, skips a sunrise "prayer time" and reads times with a zone suffix', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-05-10T23:00:00+03:00'));
+    const { schedulePrayerNotifications } = await importService();
+    const tomorrow = new Date('2026-05-11T00:00:00+03:00');
+
+    await schedulePrayerNotifications(
+      { Fajr: '04:00', Sunrise: '05:30', Dhuhr: '13:00' },
+      new Date('2026-05-10T23:00:00+03:00'),
+      [{ date: tomorrow, timings: { Fajr: '04:01 (+03)', Sunrise: '05:31 (+03)', Dhuhr: '13:00 (+03)' } }]
+    );
+
+    const scheduled = localNotificationsMock.schedule.mock.calls[0][0].notifications;
+    const main = scheduled.filter((item) => item.extra.type === 'prayer');
+    expect(main.map((item) => item.extra.prayer)).toEqual(['Fajr', 'Dhuhr']);
+    expect(main[0].schedule.at.getDate()).toBe(11);
+    expect(main[0].schedule.at.getHours()).toBe(4);
+    expect(main[0].schedule.at.getMinutes()).toBe(1);
+    expect(scheduled.some((item) => item.extra.type === 'prayer_pre' && item.extra.prayer === 'Sunrise')).toBe(true);
+    expect(new Set(scheduled.map((item) => item.id)).size).toBe(scheduled.length);
+  });
+
   it('applies AI push hints per scheduled prayer notification with prayer context', async () => {
     const now = new Date('2026-05-19T12:00:00+03:00');
     vi.useFakeTimers();

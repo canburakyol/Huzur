@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AlertCircle, Bell, BellRing, Flame, Megaphone, Moon } from 'lucide-react';
+import { AlarmClock, AlertCircle, Bell, BellRing, Flame, Megaphone, Moon } from 'lucide-react';
 import {
   getNotificationPreferences,
   updateNotificationPreferences,
@@ -8,6 +8,11 @@ import {
   requestNotificationPermission
 } from '../../../services/smartNotificationService';
 import { checkNotificationPermission } from '../../../services/notificationPlatformService';
+import {
+  getExactAlarmPermissionStatus,
+  openExactAlarmSettings,
+  shouldOpenExactAlarmSettings
+} from '../../../services/AlarmPermissionService';
 import SettingsActionRow from '../../settings/components/SettingsActionRow';
 import SettingsToggle from '../../settings/components/SettingsToggle';
 
@@ -35,14 +40,28 @@ const NotificationSettings = () => {
   const [prefs, setPrefs] = useState(() => getNotificationPreferences());
   // null until checked, so the warning does not flash before the real answer arrives.
   const [permissionGranted, setPermissionGranted] = useState(null);
+  const [needsExactAlarm, setNeedsExactAlarm] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    // The web Notification API does not exist in the Android WebView; ask the native layer instead.
-    void checkNotificationPermission().then((granted) => {
-      if (!cancelled) setPermissionGranted(granted);
-    });
-    return () => { cancelled = true; };
+    const refresh = () => {
+      // The web Notification API does not exist in the Android WebView; ask the native layer instead.
+      void checkNotificationPermission().then((granted) => {
+        if (!cancelled) setPermissionGranted(granted);
+      });
+      // Android 14+ denies exact alarms by default; without them prayer notifications drift in Doze.
+      void getExactAlarmPermissionStatus().then((status) => {
+        if (!cancelled) setNeedsExactAlarm(shouldOpenExactAlarmSettings(status));
+      });
+    };
+    refresh();
+    // Re-check when the user comes back from the system settings screen.
+    const onVisible = () => { if (document.visibilityState === 'visible') refresh(); };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      cancelled = true;
+      document.removeEventListener('visibilitychange', onVisible);
+    };
   }, []);
 
   const savePrefs = async (newPrefs) => {
@@ -83,6 +102,21 @@ const NotificationSettings = () => {
           </div>
           <button type="button" className="hz-btn hz-btn--primary" onClick={requestPermission}>
             {t('settings.allowPermission')}
+          </button>
+        </div>
+      )}
+
+      {permissionGranted !== false && needsExactAlarm && (
+        <div className="hz-card" style={{ display: 'grid', gap: 'var(--space-3)', borderColor: 'var(--gold)' }}>
+          <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'flex-start' }}>
+            <AlarmClock {...ICON} aria-hidden="true" style={{ flex: 'none', color: 'var(--gold-ink)' }} />
+            <div style={{ display: 'grid', gap: 2 }}>
+              <div className="hz-row__title">{t('settings.exactAlarmTitle', 'Vakit bildirimleri gecikebilir')}</div>
+              <div className="hz-label">{t('settings.exactAlarmDesc', 'Bildirimlerin tam vaktinde gelmesi için Android ayarlarında "Alarmlar ve hatırlatıcılar" iznini açın.')}</div>
+            </div>
+          </div>
+          <button type="button" className="hz-btn hz-btn--secondary" onClick={() => void openExactAlarmSettings()}>
+            {t('settings.exactAlarmButton', 'İzni aç')}
           </button>
         </div>
       )}

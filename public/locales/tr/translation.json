@@ -486,7 +486,10 @@
     "ambientPulseTitle": "Manevi Kalp Atışı",
     "ambientPulseDesc": "Namaz vaktinden önce yumuşak titreşim hisset",
     "appearance": "Görünüm",
-    "adPrivacyOptions": "Reklam gizlilik tercihleri"
+    "adPrivacyOptions": "Reklam gizlilik tercihleri",
+    "exactAlarmTitle": "Vakit bildirimleri gecikebilir",
+    "exactAlarmDesc": "Bildirimlerin tam vaktinde gelmesi için Android ayarlarında \"Alarmlar ve hatırlatıcılar\" iznini açın.",
+    "exactAlarmButton": "İzni aç"
   },
   "pro": {
     "title": "Huzur Pro'ya Geçin",

@@ -405,7 +405,10 @@
     "ambientPulseTitle": "Detak hati spiritual",
     "ambientPulseDesc": "Rasakan getaran lembut sebelum waktu salat",
     "appearance": "Tampilan",
-    "adPrivacyOptions": "Opsi privasi iklan"
+    "adPrivacyOptions": "Opsi privasi iklan",
+    "exactAlarmTitle": "Notifikasi salat bisa terlambat",
+    "exactAlarmDesc": "Agar notifikasi tepat waktu, aktifkan \"Alarm & pengingat\" untuk Huzur di setelan Android.",
+    "exactAlarmButton": "Aktifkan"
   },
   "pro": {
     "title": "Huzur Pro",

@@ -325,15 +325,35 @@ export const updateNotificationPreferences = async (newPrefs: Partial<Notificati
   return updated;
 };
 
-export const schedulePrayerNotifications = async (prayerTimes: Record<string, string>, date: Date = new Date()): Promise<void> => {
+// Prayer IDs live in their own range: day-of-month * 100 used to collide with streak (1000+),
+// the sticky counter (1001), daily reminders (2000+) and winback (3100+) on the 10th, 20th and 31st.
+const PRAYER_NOTIFICATION_ID_BASE = 50000;
+export const prayerNotificationId = (day: Date, index: number, isPre: boolean): number =>
+  PRAYER_NOTIFICATION_ID_BASE + day.getDate() * 100 + (isPre ? 50 : 0) + index;
+
+// "05:12 (+03)" and "05:12" both become [5, 12].
+const parsePrayerClock = (value: string): [number, number] | null => {
+  const [hours, minutes] = String(value || '').trim().split(' ')[0].split(':').map(Number);
+  return Number.isFinite(hours) && Number.isFinite(minutes) ? [hours, minutes] : null;
+};
+
+export type UpcomingPrayerDay = { date: Date; timings: Record<string, string> };
+
+export const schedulePrayerNotifications = async (
+  prayerTimes: Record<string, string>,
+  date: Date = new Date(),
+  upcomingDays: UpcomingPrayerDay[] = []
+): Promise<void> => {
   const prefs = getNotificationPreferences();
   if (!prefs.prayer || !prayerTimes) return;
 
   const hasPermission = await requestNotificationPermission();
   if (!hasPermission) return;
 
+  // Clear what an earlier run (maybe with the old colliding IDs) left behind before rescheduling.
+  await cancelNotificationsByType('prayer');
+
   const notifications: ScheduledNotification[] = [];
-  const baseId = date.getDate() * 100;
   const campaign = getActiveCampaign(date);
   analyticsService.logCampaignResolved(campaign.id, campaign.region, campaign.variant);
   const pushVariant = getExperimentVariant('push_copy_v1');
@@ -347,16 +367,19 @@ export const schedulePrayerNotifications = async (prayerTimes: Record<string, st
     Isha: nt('names.Isha', 'Yatsı')
   };
 
+  // Today plus the next days from the monthly cache, so a day without opening the app is still covered.
+  const days: UpcomingPrayerDay[] = [{ date, timings: prayerTimes }, ...upcomingDays];
+
+  for (const day of days) {
   for (const [index, [prayer, config]] of Object.entries(PRAYER_NOTIFICATIONS).entries()) {
-    const timeStr = prayerTimes[prayer];
-    if (!timeStr) continue;
+    const clock = parsePrayerClock(day.timings?.[prayer]);
+    if (!clock) continue;
 
-    const [hours, minutes] = timeStr.split(':').map(Number);
+    const prayerTime = new Date(day.date);
+    prayerTime.setHours(clock[0], clock[1], 0, 0);
 
-    const prayerTime = new Date(date);
-    prayerTime.setHours(hours, minutes, 0, 0);
-
-    if (prayerTime > new Date()) {
+    // Sunrise ends the Fajr time and is not a prayer time; only its heads-up below is sent.
+    if (prayer !== 'Sunrise' && prayerTime > new Date()) {
       if (!shouldScheduleAt(prayerTime, prefs, 'prayer_main')) continue;
 
       const campaignCopy = resolveCampaignCopy({
@@ -377,7 +400,7 @@ export const schedulePrayerNotifications = async (prayerTimes: Record<string, st
         fallback: variantFallback,
         contextFactory: () => ({
             activeTab: 'home',
-            timings: prayerTimes,
+            timings: day.timings,
             dailyContent: { campaignId: campaign.id },
             locationName: '',
             nextPrayer: { key: prayer, name: prayerNames[prayer] || prayer },
@@ -385,7 +408,7 @@ export const schedulePrayerNotifications = async (prayerTimes: Record<string, st
       });
 
       notifications.push({
-        id: baseId + index,
+        id: prayerNotificationId(day.date, index, false),
         title: variantCopy.title,
         body: variantCopy.body,
         schedule: {
@@ -433,7 +456,7 @@ export const schedulePrayerNotifications = async (prayerTimes: Record<string, st
           fallback: variantFallback,
           contextFactory: () => ({
               activeTab: 'home',
-              timings: prayerTimes,
+              timings: day.timings,
               dailyContent: { campaignId: campaign.id },
               locationName: '',
               nextPrayer: { key: prayer, name: prayerNames[prayer] || prayer },
@@ -441,7 +464,7 @@ export const schedulePrayerNotifications = async (prayerTimes: Record<string, st
         });
 
         notifications.push({
-          id: baseId + 50 + index,
+          id: prayerNotificationId(day.date, index, true),
           title: variantCopy.title,
           body: variantCopy.body,
           schedule: {
@@ -463,6 +486,7 @@ export const schedulePrayerNotifications = async (prayerTimes: Record<string, st
         analyticsService.logPushVariantDelivered(pushVariant, campaign.id, 'prayer_pre');
       }
     }
+  }
   }
 
   try {
@@ -881,9 +905,10 @@ export const addNotificationClickListener = (callback?: (notification: unknown) 
 
 export const initializeSmartNotifications = async (options: {
   prayerTimes?: Record<string, string>;
+  upcomingPrayerDays?: UpcomingPrayerDay[];
   currentStreak?: number;
 } = {}): Promise<void> => {
-  const { prayerTimes, currentStreak } = options;
+  const { prayerTimes, upcomingPrayerDays = [], currentStreak } = options;
 
   logger.log('Notifications: Initializing smart notifications');
 
@@ -898,7 +923,7 @@ export const initializeSmartNotifications = async (options: {
   const prefs = getNotificationPreferences();
 
   if (prayerTimes && prefs.prayer) {
-    await schedulePrayerNotifications(prayerTimes);
+    await schedulePrayerNotifications(prayerTimes, new Date(), upcomingPrayerDays);
   }
 
   if (currentStreak && prefs.streak) {

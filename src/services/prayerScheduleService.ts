@@ -1,5 +1,5 @@
 import { Capacitor } from '@capacitor/core';
-import { ensureExactAlarmPermission } from './AlarmPermissionService';
+import { getExactAlarmPermissionStatus } from './AlarmPermissionService';
 import { fetchMonthlyPrayerTimes, getNextPrayer } from './prayerService';
 import { syncPrayerScheduleCacheToNative } from './storageService';
 import { updateWidget } from './widgetService';
@@ -128,7 +128,9 @@ export const syncPrayerSchedule = async ({
   }
 
   try {
-    const alarmPermission = await ensureExactAlarmPermission();
+    // Only read it here: this runs on every app open, and opening system settings unasked drove users away.
+    // NotificationSettings explains the permission and offers the button.
+    const alarmPermission = await getExactAlarmPermissionStatus();
     if (!alarmPermission.granted) {
       logger.warn('[PrayerSchedule] Exact alarm permission is not granted; native inexact fallback will be used', {
         platform: alarmPermission.platform,

@@ -405,7 +405,10 @@
     "ambientPulseTitle": "Spiritual heartbeat",
     "ambientPulseDesc": "Feel a gentle vibration before prayer time",
     "appearance": "Appearance",
-    "adPrivacyOptions": "Ad privacy options"
+    "adPrivacyOptions": "Ad privacy options",
+    "exactAlarmTitle": "Prayer notifications may be late",
+    "exactAlarmDesc": "To get notifications exactly on time, turn on \"Alarms & reminders\" for Huzur in Android settings.",
+    "exactAlarmButton": "Turn on"
   },
   "pro": {
     "title": "Upgrade to Huzur Pro",
