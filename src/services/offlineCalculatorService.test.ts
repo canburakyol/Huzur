@@ -21,7 +21,6 @@ describe('offlineCalculatorService regional method', () => {
     const local = (v: string | null) => (minutes(v) + offset + 1440) % 1440;
     // api.aladhan.com method=20 (Kemenag), Jakarta, 19 Nov 2026
     const expected = { Fajr: '04:03', Sunrise: '05:26', Dhuhr: '11:38', Asr: '15:01', Maghrib: '17:50', Isha: '19:04' };
-');
     for (const [key, value] of Object.entries(expected)) {
       expect(Math.abs(local(t[key as keyof typeof t]) - minutes(value)), key).toBeLessThanOrEqual(3);
     }
