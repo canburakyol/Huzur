@@ -30,7 +30,8 @@ class OfflineCalculatorService {
       const coordinates = new Coordinates(latitude, longitude);
 
       const params = CalculationMethod.Turkey();
-      params.madhab = Madhab.Hanafi;
+      // Diyanet's calendar ikindi is asr-ı evvel (shadow = 1 length). Hanafi here gave asr-ı sani, ~40 min late.
+      params.madhab = Madhab.Shafi;
 
       const prayerTimes = new PrayerTimes(coordinates, date, params);
       const sunnahTimes = new SunnahTimes(prayerTimes);

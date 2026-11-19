@@ -1,6 +1,9 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
+// Prayer times and religious days are local-time values; pin the zone so tests agree on every machine.
+process.env.TZ = 'Europe/Istanbul';
+
 export default defineConfig({
   plugins: [react()],
   test: {

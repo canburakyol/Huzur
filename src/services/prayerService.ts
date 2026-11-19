@@ -51,9 +51,17 @@ const DEFAULT_LON = 28.9784;
 
 const isValidPrayerTimeValue = (value: unknown): boolean => typeof value === 'string' && /^\d{2}:\d{2}$/.test(value);
 
-export const resolvePrayerDistrictId = (locationName?: string | null): string => (
-  (locationName ? findDistrictByName(locationName)?.districtId : null) || getSelectedDistrictId()
-);
+/**
+ * Diyanet district for the current place, or null to calculate from coordinates instead.
+ * With real coordinates an unknown name must not fall back to a stored or default district:
+ * that showed Istanbul's (or a stale city's) times far away. The coordinate calculation
+ * matches Diyanet within a minute.
+ */
+export const resolvePrayerDistrictId = (locationName?: string | null, hasRealCoords = false): string | null => {
+  const match = locationName ? findDistrictByName(locationName) : null;
+  if (match) return match.districtId;
+  return hasRealCoords ? null : getSelectedDistrictId();
+};
 
 const normalizePrayerPayload = (payload: unknown): PrayerPayload | null => {
   if (!payload || typeof payload !== 'object') {
@@ -185,8 +193,9 @@ export const getPrayerTimes = async (
   const today = format(new Date(), 'dd-MM-yyyy');
   const lat = latitude || DEFAULT_LAT;
   const lon = longitude || DEFAULT_LON;
-  const districtId = resolvePrayerDistrictId(locationName);
-  const cacheKey = `${CACHE_KEY_PREFIX}${districtId}_${lat.toFixed(4)}_${lon.toFixed(4)}_${today}`;
+  const hasRealCoords = Number.isFinite(latitude) && Number.isFinite(longitude) && latitude !== null && longitude !== null;
+  const districtId = resolvePrayerDistrictId(locationName, hasRealCoords);
+  const cacheKey = `${CACHE_KEY_PREFIX}${districtId || 'calculated'}_${lat.toFixed(4)}_${lon.toFixed(4)}_${today}`;
 
   try {
     // Check daily cache first (Only accept real Diyanet API cache on success path)
@@ -198,6 +207,7 @@ export const getPrayerTimes = async (
 
     // Try Diyanet API
     try {
+      if (!districtId) throw new Error('No Diyanet district for current location; calculating from coordinates');
       const diyanetTimings = await getTodayDiyanetTimes(districtId);
 
       if (diyanetTimings) {
