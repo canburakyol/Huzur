@@ -68,7 +68,7 @@ export const recordAiIncident = (kind: string, stage: string, error: Error | nul
     kind: sanitizeText(kind, 40) || 'unknown',
     stage: sanitizeText(stage, 40) || 'unknown',
     severity: CRITICAL_STAGES.has(stage) ? 'critical' : 'warning',
-    code: sanitizeText(error?.code ? String(error.code) : '', 40),
+    code: sanitizeText((error as Error & { code?: unknown })?.code ? String((error as Error & { code?: unknown }).code) : '', 40),
     message: sanitizeText(error?.message || (metadata as Record<string, string>)?.reason || 'AI incident', 140),
     at: new Date().toISOString(),
     metadata: sanitizeMetadata(metadata),

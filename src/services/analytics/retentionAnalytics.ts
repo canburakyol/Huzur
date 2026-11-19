@@ -1,7 +1,7 @@
 import { ANALYTICS_EVENTS } from "./constants";
 import type { AnalyticsService } from "./core";
 
-interface RetentionThis extends AnalyticsService {
+type RetentionThis = AnalyticsService & {
   logEvent: (name: string, params?: Record<string, unknown>) => void;
   getMilestoneLabel: (days: number) => string;
 }

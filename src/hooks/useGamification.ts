@@ -71,7 +71,8 @@ export const useGamification = (): GamificationResult => {
   );
 
   const badgeDetails = useMemo(() => {
-    const badgeIds = earnedBadges.map((badge) => (typeof badge === "string" ? badge : badge?.badgeId || badge?.id));
+    // Older saves stored badge objects; read both shapes.
+    const badgeIds = (earnedBadges as Array<string | { badgeId?: string; id?: string }>).map((badge) => (typeof badge === "string" ? badge : badge?.badgeId || badge?.id));
     return badgeIds.map((badgeId) => Object.values(BADGES).find((badge) => badge.id === badgeId)).filter(Boolean) as (typeof BADGES)[string][];
   }, [earnedBadges]);
 

@@ -162,7 +162,7 @@ export const logAppError = (error: Error, context: string, additionalInfo: Recor
     logExceptionWithContext(
       error,
       buildCrashContext(context, {
-        code: error?.code,
+        code: (error as Error & { code?: unknown })?.code,
         ...sanitizedInfo
       })
     );

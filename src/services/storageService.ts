@@ -369,7 +369,7 @@ export const removeItemAsync = async (key: string): Promise<boolean> => {
 };
 
 export const getStringAsync = async (key: string, defaultValue = ""): Promise<string> => {
-  return secureStorage.getString(key, defaultValue);
+  return (await secureStorage.getString(key, defaultValue)) ?? defaultValue;
 };
 
 export const setStringAsync = async (key: string, value: string): Promise<boolean> => {

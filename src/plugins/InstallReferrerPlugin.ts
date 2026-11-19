@@ -11,7 +11,7 @@ export type InstallReferrerResult = {
 
 export type InstallReferrerPlugin = {
   getInstallReferrerDetails(): Promise<InstallReferrerResult>;
-  markInstallReferrerConsumed(): Promise<InstallReferrerResult>;
+  markInstallReferrerConsumed(options?: { referrer?: string }): Promise<InstallReferrerResult>;
 }
 
 const platform = Capacitor.getPlatform();

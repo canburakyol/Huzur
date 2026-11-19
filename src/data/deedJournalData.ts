@@ -6,15 +6,15 @@ export type WorshipItem = {
   category: string;
 }
 
-export interface SunnahDeed extends WorshipItem {
+export type SunnahDeed = WorshipItem & {
   description: string;
 }
 
-export interface GoodDeed extends WorshipItem {
+export type GoodDeed = WorshipItem & {
   description: string;
 }
 
-export interface ThingToAvoid extends WorshipItem {
+export type ThingToAvoid = WorshipItem & {
   description: string;
 }
 

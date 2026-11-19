@@ -1,4 +1,4 @@
-import { Purchases, LOG_LEVEL, CustomerInfo, Offering } from "@revenuecat/purchases-capacitor";
+import { Purchases, LOG_LEVEL, CustomerInfo, type PurchasesOffering as Offering, type PurchasesPackage } from "@revenuecat/purchases-capacitor";
 import { setProStatus } from "./proService";
 import { getCurrentUserIdEnsured } from "./authService";
 import { logger } from "../utils/logger";
@@ -32,7 +32,7 @@ let isRevenueCatConfigured = false;
 let customerInfoListenerRegistered = false;
 let configuredAppUserId: string | null = null;
 
-const syncPurchaseStateWithServer = async (): Promise<SyncResult> => {
+const syncPurchaseStateWithServer = async (): Promise<SyncResult | null> => {
   const { syncProStatusWithRevenueCat } = await import("./subscriptionSyncService");
   return syncProStatusWithRevenueCat();
 };
@@ -214,7 +214,7 @@ export const checkSubscriptionStatus = async (): Promise<boolean> => {
   }
 };
 
-export const purchasePackage = async (packageToPurchase: { identifier: string }): Promise<boolean> => {
+export const purchasePackage = async (packageToPurchase: PurchasesPackage): Promise<boolean> => {
   try {
     if (!isRevenueCatConfigured) {
       await initializeRevenueCat();

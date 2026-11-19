@@ -113,7 +113,7 @@ export const getPremiumMoment = ({
   const safeType = PREMIUM_SURFACES.has(momentType) ? momentType : 'assistant_success';
   const safeGoal = primaryGoal || getStoredPrimaryGoal();
   const effectiveRecoveryBand = recoveryBand || getRecoveryLoopPlan().riskBand;
-  const preferredPackage = config?.preferredPackages?.[safeType] || 'yearly';
+  const preferredPackage = (config?.preferredPackages?.[safeType] || 'yearly') as RecommendedPackage;
   const copyVariant = config?.copyVariants?.[safeType] || 'ai_guidance';
   const baseCopy = buildMomentCopy(safeType, copyVariant);
 

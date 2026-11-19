@@ -34,7 +34,7 @@ type OpsChecklist = {
   operatorActions?: string[];
 }
 
-interface AiReleaseBriefResult extends Decision {
+type AiReleaseBriefResult = Decision & {
   enabledFlagCount: number;
   totalFlagCount: number;
   averageTrust: number | null;

@@ -1,7 +1,7 @@
 import { ANALYTICS_EVENTS } from "./constants";
 import type { AnalyticsService } from "./core";
 
-interface RevenueThis extends AnalyticsService {
+type RevenueThis = AnalyticsService & {
   logEvent: (name: string, params?: Record<string, unknown>) => void;
 }
 
@@ -24,6 +24,6 @@ export const registerRevenueAnalytics = (AnalyticsServiceClass: typeof Analytics
   Object.getOwnPropertyNames(RevenueAnalyticsMethods.prototype)
     .filter((name) => name !== "constructor")
     .forEach((name) => {
-      (AnalyticsServiceClass.prototype as Record<string, unknown>)[name] = (RevenueAnalyticsMethods.prototype as Record<string, unknown>)[name];
+      (AnalyticsServiceClass.prototype as unknown as Record<string, unknown>)[name] = (RevenueAnalyticsMethods.prototype as unknown as Record<string, unknown>)[name];
     });
 };

@@ -56,7 +56,7 @@ type InviteLinkResult = {
   inviteUrl: string;
 }
 
-interface ReferralProgressResult extends ReferralState {
+type ReferralProgressResult = ReferralState & {
   inviteeEligible?: boolean;
   inviterEligible?: boolean;
   inviteeRewardType: string;

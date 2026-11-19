@@ -35,7 +35,7 @@ type SurfacePlan = {
   emphasis: string;
 }
 
-interface TriggerSurfacePlan extends SurfacePlan {
+type TriggerSurfacePlan = SurfacePlan & {
   surface: string;
   shareVariant: string;
   riskState: string;

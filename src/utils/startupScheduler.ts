@@ -24,7 +24,7 @@ export const scheduleDeferredTask = (
   }
 
   let frameId: number | null = null;
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+  let timeoutId: number | null = null;
   let idleId: number | null = null;
   let cancelled = false;
 

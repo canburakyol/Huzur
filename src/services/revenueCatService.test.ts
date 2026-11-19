@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { PurchasesPackage } from '@revenuecat/purchases-capacitor';
 
 const purchasesMock = vi.hoisted(() => ({
   setLogLevel: vi.fn(),
@@ -124,7 +125,7 @@ describe('revenueCatService', () => {
     });
     const { purchasePackage } = await importService();
 
-    const result = await purchasePackage({ identifier: 'monthly' });
+    const result = await purchasePackage({ identifier: 'monthly' } as unknown as PurchasesPackage);
 
     expect(result).toBe(false);
     expect(proMock.setProStatus).not.toHaveBeenCalledWith(
@@ -140,7 +141,7 @@ describe('revenueCatService', () => {
 
     await initializeRevenueCat();
     subscriptionSyncMock.syncProStatusWithRevenueCat.mockClear();
-    const result = await purchasePackage({ identifier: 'monthly' });
+    const result = await purchasePackage({ identifier: 'monthly' } as unknown as PurchasesPackage);
 
     expect(purchasesMock.purchasePackage).toHaveBeenCalled();
     expect(subscriptionSyncMock.syncProStatusWithRevenueCat).toHaveBeenCalled();
@@ -151,7 +152,7 @@ describe('revenueCatService', () => {
     subscriptionSyncMock.syncProStatusWithRevenueCat.mockResolvedValue(null);
     const { purchasePackage } = await importService();
 
-    const result = await purchasePackage({ identifier: 'monthly' });
+    const result = await purchasePackage({ identifier: 'monthly' } as unknown as PurchasesPackage);
 
     expect(result).toBe(true);
     expect(proMock.setProStatus).toHaveBeenCalledWith(

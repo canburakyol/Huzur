@@ -32,7 +32,7 @@ export const buildAiRolloutGate = ({
   const actionCount = Number(healthSummary?.actionCount) || 0;
   const watchCount = Number(healthSummary?.watchCount) || 0;
   const averageTrust = Number.isFinite(Number(healthSummary?.averageTrust))
-    ? Number(healthSummary.averageTrust)
+    ? Number(healthSummary?.averageTrust)
     : null;
 
   let recommendation = 'go';

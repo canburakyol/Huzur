@@ -48,7 +48,7 @@ export const getTimeUntilReset = (key: string, windowMs = 60000): number => {
     return 0;
   }
 
-  const timestamps = rateLimiters.get(key);
+  const timestamps = rateLimiters.get(key) ?? [];
   if (timestamps.length === 0) {
     return 0;
   }

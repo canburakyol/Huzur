@@ -8,7 +8,7 @@ export type Quest = {
   action?: string;
 }
 
-export interface QuestWithProgress extends Quest {
+export type QuestWithProgress = Quest & {
   progress: number;
   completed: boolean;
   isClaimed: boolean;

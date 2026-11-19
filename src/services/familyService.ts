@@ -23,7 +23,7 @@ type FamilyWeeklyGoalResult = {
   goal: unknown | null;
 }
 
-interface FamilyWithMembers extends DocumentData {
+type FamilyWithMembers = DocumentData & {
   membersDetails: FamilyMember[];
 }
 

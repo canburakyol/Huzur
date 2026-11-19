@@ -17,7 +17,7 @@ export type Dhikr = {
   color: string;
 }
 
-export interface DhikrCategoryWithCount extends DhikrCategory {
+export type DhikrCategoryWithCount = DhikrCategory & {
   count: number;
 }
 

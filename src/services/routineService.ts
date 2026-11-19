@@ -110,7 +110,7 @@ export const completeRoutineTask = (routineId: string, taskId: string): Complete
   return {
     progress: history[today],
     isFullyCompleted: newlyCompleted,
-    bonusXp: newlyCompleted ? routine.bonusXp : 0
+    bonusXp: newlyCompleted && routine ? routine.bonusXp : 0
   };
 };
 

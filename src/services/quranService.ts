@@ -256,7 +256,7 @@ const fetchJson = async (url: string): Promise<ApiResponse> => {
 };
 
 const withSoftTimeout = async <T>(promise: Promise<T>, timeoutMs: number): Promise<T | null> => {
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    let timeoutId: number | null = null;
 
     try {
         return await Promise.race([

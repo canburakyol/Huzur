@@ -51,7 +51,7 @@ const diffInDays = (fromValue: string | undefined | null, toValue: string | unde
 
   const fromStart = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
   const toStart = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate());
-  return Math.max(0, Math.round((toStart - fromStart) / (1000 * 60 * 60 * 24)));
+  return Math.max(0, Math.round((toStart.getTime() - fromStart.getTime()) / (1000 * 60 * 60 * 24)));
 };
 
 export const persistRecoverySessionReference = (todayKey: string, lastVisitKey = ''): void => {

@@ -51,7 +51,7 @@ export const logger = {
    * SENSITIVE DATA - Never log anywhere
    * Use this for tokens, API keys, user IDs, etc.
    */
-  sensitive: () => {
+  sensitive: (..._args: unknown[]) => {
     // Intentionally empty - never log sensitive data
   }
 };

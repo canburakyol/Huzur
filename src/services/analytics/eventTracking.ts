@@ -1,7 +1,7 @@
 import { ANALYTICS_EVENTS } from "./constants";
 import type { AnalyticsService } from "./core";
 
-interface EventTrackingThis extends AnalyticsService {
+type EventTrackingThis = AnalyticsService & {
   logEvent: (name: string, params?: Record<string, unknown>) => void;
   stubEvent: (name: string, params?: Record<string, unknown>) => null;
   enabled: boolean;
@@ -87,6 +87,6 @@ export const registerEventTrackingAnalytics = (AnalyticsServiceClass: typeof Ana
   Object.getOwnPropertyNames(EventTrackingAnalyticsMethods.prototype)
     .filter((name) => name !== "constructor")
     .forEach((name) => {
-      (AnalyticsServiceClass.prototype as Record<string, unknown>)[name] = (EventTrackingAnalyticsMethods.prototype as Record<string, unknown>)[name];
+      (AnalyticsServiceClass.prototype as unknown as Record<string, unknown>)[name] = (EventTrackingAnalyticsMethods.prototype as unknown as Record<string, unknown>)[name];
     });
 };

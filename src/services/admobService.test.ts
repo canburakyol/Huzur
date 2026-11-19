@@ -66,7 +66,7 @@ vi.mock("@capacitor-community/admob", () => ({
     Loaded: "rewardLoaded",
     FailedToLoad: "rewardFailedToLoad",
     Rewarded: "rewarded",
-  },
+  },  MaxAdContentRating: { General: "General" },
 }));
 
 vi.mock("./adEnvironmentService", () => ({
@@ -165,6 +165,17 @@ describe("admobService consent and cleanup", () => {
     expect(adMobMock.initialize).toHaveBeenCalledTimes(1);
     expect(adMobMock.showConsentForm).toHaveBeenCalledTimes(1);
     expect(adMobMock.addListener).not.toHaveBeenCalled();
+  });
+
+  it("sends the family-safe content rating with initialize, where the plugin applies it", async () => {
+    const { adMobService } = await importAdMobService();
+    await adMobService.initialize();
+
+    expect(adMobMock.initialize).toHaveBeenCalledWith(expect.objectContaining({
+      maxAdContentRating: "General",
+      tagForChildDirectedTreatment: false,
+      tagForUnderAgeOfConsent: false,
+    }));
   });
 
   it("uses the Google UMP result instead of a custom ad opt-out gate", async () => {

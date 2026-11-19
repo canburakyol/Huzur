@@ -5,7 +5,7 @@ export type SourceMetadata = {
   citation?: string;
 }
 
-export interface TespihatSection extends SourceMetadata {
+export type TespihatSection = SourceMetadata & {
   id: string;
   title: string;
   subtitle?: string;
@@ -26,7 +26,7 @@ export type Tesbih = {
   color: string;
 }
 
-export interface TevhidEntry extends SourceMetadata {
+export type TevhidEntry = SourceMetadata & {
   id: string;
   title: string;
   subtitle?: string;
@@ -36,7 +36,7 @@ export interface TevhidEntry extends SourceMetadata {
   meaning: string;
 }
 
-export interface Dua extends SourceMetadata {
+export type Dua = SourceMetadata & {
   id: string;
   title: string;
   arabic: string;

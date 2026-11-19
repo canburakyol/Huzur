@@ -30,7 +30,7 @@ type IncidentSummary = {
   last24hCount?: number;
 }
 
-interface SmokeCheck extends SmokeCheckTemplate {
+type SmokeCheck = SmokeCheckTemplate & {
   severity: string;
 }
 

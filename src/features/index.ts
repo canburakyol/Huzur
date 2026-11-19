@@ -50,7 +50,7 @@ export type ModuleEntry = {
   info: ModuleInfo;
 }
 
-export interface ModuleWithKey extends ModuleEntry {
+export type ModuleWithKey = ModuleEntry & {
   key: string;
 }
 

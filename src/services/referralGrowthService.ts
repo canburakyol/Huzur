@@ -56,7 +56,7 @@ type LocalProgress = {
   [key: string]: unknown;
 }
 
-interface MergedProgress extends LocalProgress {
+type MergedProgress = LocalProgress & {
   server: ServerData;
 }
 

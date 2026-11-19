@@ -47,7 +47,7 @@ export function useStreakGuards() {
           const yesterday = new Date();
           yesterday.setDate(yesterday.getDate() - 1);
 
-          if (lastDate < yesterday.setHours(0, 0, 0, 0)) {
+          if (lastDate.getTime() < yesterday.setHours(0, 0, 0, 0)) {
             setProtectionTarget({ category: "prayer", data: prayerStreak });
           }
         }

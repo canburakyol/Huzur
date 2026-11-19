@@ -11,7 +11,7 @@ type HatimResult = {
   success?: boolean;
 }
 
-interface HatimDetails extends DocumentData {
+type HatimDetails = DocumentData & {
   id: string;
 }
 

@@ -3,7 +3,8 @@ import {
     BannerAdSize,
     BannerAdPosition,
     BannerAdPluginEvents,
-    RewardAdPluginEvents
+    RewardAdPluginEvents,
+    MaxAdContentRating
 } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 import { logger } from '../utils/logger';
@@ -170,20 +171,13 @@ export const ensureAdMobReady = async (): Promise<boolean> => {
             try {
                 const runtime = await getAdRuntime();
 
-                try {
-                    await AdMob.setRequestConfiguration({
-                        maxAdContentRating: 'General',
-                        tagForChildDirectedTreatment: false,
-                        tagForUnderAgeOfConsent: false
-                    });
-                    await adLog('[AdMob] request configuration set');
-                } catch (configError) {
-                    await adWarn('[AdMob] request configuration failed', configError);
-                }
-
+                // The plugin applies the request configuration only inside initialize();
+                // a separate setRequestConfiguration call is private natively and was rejected.
                 await AdMob.initialize({
-                    requestTrackingAuthorization: true,
                     initializeForTesting: runtime.useTestAds,
+                    maxAdContentRating: MaxAdContentRating.General,
+                    tagForChildDirectedTreatment: false,
+                    tagForUnderAgeOfConsent: false,
                 });
 
                 let consentInfo = await AdMob.requestConsentInfo();

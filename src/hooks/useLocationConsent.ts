@@ -227,8 +227,9 @@ export const useLocationConsent = (onLocationUpdate?: (coords: LocationCoords) =
       return { weather: nextWeather, locationName: nextLocationName, timestamp: Date.now() };
     } catch (error) {
       logger.error("[useLocationConsent] Weather/Location error:", error);
-      const fallbackLocationName = cachedSnapshot?.locationName || (isDefault ? DEFAULT_LOCATION_NAME : "Konum");
-      setWeather(cachedSnapshot?.weather || null);
+      // A cached snapshot would have returned above, so there is none to fall back on here.
+      const fallbackLocationName = isDefault ? DEFAULT_LOCATION_NAME : "Konum";
+      setWeather(null);
       setLocationName(fallbackLocationName);
       return null;
     }

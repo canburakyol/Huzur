@@ -1,7 +1,7 @@
 import { ANALYTICS_EVENTS } from "./constants";
 import type { AnalyticsService } from "./core";
 
-interface CampaignAnalyticsThis extends AnalyticsService {
+type CampaignAnalyticsThis = AnalyticsService & {
   logEvent: (name: string, params?: Record<string, unknown>) => void;
 }
 
@@ -197,6 +197,6 @@ export const registerCampaignAnalytics = (AnalyticsServiceClass: typeof Analytic
   Object.getOwnPropertyNames(CampaignAnalyticsMethods.prototype)
     .filter((name) => name !== "constructor")
     .forEach((name) => {
-      (AnalyticsServiceClass.prototype as Record<string, unknown>)[name] = (CampaignAnalyticsMethods.prototype as Record<string, unknown>)[name];
+      (AnalyticsServiceClass.prototype as unknown as Record<string, unknown>)[name] = (CampaignAnalyticsMethods.prototype as unknown as Record<string, unknown>)[name];
     });
 };

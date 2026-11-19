@@ -24,6 +24,7 @@ type StreakData = {
   totalDays: number;
   earnedBadges: string[];
   recoveryUsed: boolean;
+  recoveryUsedDate?: string;
   streaks: {
     prayer: CategoryStreak;
     quran: CategoryStreak;

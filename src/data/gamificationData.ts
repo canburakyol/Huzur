@@ -34,7 +34,7 @@ export type Challenge = {
   color: string;
 }
 
-export interface AdaptiveChallenge extends Challenge {
+export type AdaptiveChallenge = Challenge & {
   isAdaptive: boolean;
   progress: number;
   completed: boolean;
