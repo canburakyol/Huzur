@@ -4106,6 +4106,14 @@
           ]
         }
       }
+    },
+    "tabs": {
+      "steps": "Schritte",
+      "recitations": "Rezitationen",
+      "types": "Gebete",
+      "terms": "Bewertungen",
+      "invalidators": "Ungültigmacher",
+      "quiz": "Quiz"
     }
   },
   "nafilePrayers": {
@@ -5521,6 +5529,42 @@
         "title": "🕯️ Gesegnete Nacht",
         "body": "Erfrische dein Herz in dieser gesegneten Nacht mit Bittgebet und Dhikr.",
         "bodyDiaspora": "Erfrische dein Herz mit einem kurzen Bittgebet und Dhikr für diese gesegnete Nacht."
+      }
+    }
+  },
+  "nafile": {
+    "items": {
+      "teravih": {
+        "name": "Tarawih-Gebet",
+        "desc": "Ein Gebet mit 20 Rak'a nach dem Ischa-Gebet im Ramadan"
+      },
+      "duha": {
+        "name": "Duha-Gebet",
+        "desc": "Das Vormittagsgebet, wenn die Sonne hoch genug steht, bis vor Dhuhr (2–12 Rak'a)"
+      },
+      "teheccud": {
+        "name": "Tahadschud-Gebet",
+        "desc": "Ein Gebet mit 2–12 Rak'a, das man nach etwas Schlaf in der Nacht verrichtet"
+      },
+      "kusluk": {
+        "name": "Ischraq-Gebet",
+        "desc": "Ein Gebet mit 2–4 Rak'a etwa 45 Minuten nach Sonnenaufgang, wenn die verpönte Zeit vorbei ist"
+      },
+      "vitr": {
+        "name": "Witr-Gebet",
+        "desc": "Ein Gebet mit 3 Rak'a nach Ischa; nach der hanafitischen Rechtsschule wadschib"
+      },
+      "istihare": {
+        "name": "Istichara-Gebet",
+        "desc": "Ein Gebet, um vor einer Entscheidung Rat bei Allah zu suchen"
+      },
+      "tevbe": {
+        "name": "Gebet der Reue",
+        "desc": "Ein Gebet, mit dem man um Vergebung der Sünden bittet"
+      },
+      "hacet": {
+        "name": "Gebet der Bedürftigkeit",
+        "desc": "Ein Gebet für ein bestimmtes Anliegen"
       }
     }
   }

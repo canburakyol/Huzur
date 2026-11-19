@@ -4020,6 +4020,14 @@
           ]
         }
       }
+    },
+    "tabs": {
+      "steps": "Steps",
+      "recitations": "Recitations",
+      "types": "Prayers",
+      "terms": "Rulings",
+      "invalidators": "Invalidators",
+      "quiz": "Quiz"
     }
   },
   "nafilePrayers": {
@@ -5521,6 +5529,42 @@
         "title": "🕯️ Blessed night",
         "body": "Refresh your heart with supplication and dhikr on this blessed night.",
         "bodyDiaspora": "Refresh your heart with a short supplication and dhikr for this blessed night."
+      }
+    }
+  },
+  "nafile": {
+    "items": {
+      "teravih": {
+        "name": "Tarawih prayer",
+        "desc": "A 20-rak'ah prayer offered after Isha during Ramadan"
+      },
+      "duha": {
+        "name": "Duha prayer",
+        "desc": "The forenoon prayer, from when the sun is well up until before Dhuhr (2–12 rak'ah)"
+      },
+      "teheccud": {
+        "name": "Tahajjud prayer",
+        "desc": "A 2–12 rak'ah prayer offered after rising from some sleep at night"
+      },
+      "kusluk": {
+        "name": "Ishraq prayer",
+        "desc": "A 2–4 rak'ah prayer about 45 minutes after sunrise, once the disliked time has passed"
+      },
+      "vitr": {
+        "name": "Witr prayer",
+        "desc": "A 3-rak'ah prayer after Isha; wajib in the Hanafi school"
+      },
+      "istihare": {
+        "name": "Istikhara prayer",
+        "desc": "A prayer for seeking guidance before a decision"
+      },
+      "tevbe": {
+        "name": "Prayer of repentance",
+        "desc": "A prayer offered seeking forgiveness of sins"
+      },
+      "hacet": {
+        "name": "Prayer of need",
+        "desc": "A prayer offered for a particular need"
       }
     }
   }

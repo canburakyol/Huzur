@@ -3,13 +3,14 @@ import { Award, HelpCircle, ChevronRight, ChevronDown, Check, X } from 'lucide-r
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import {
-    PRAYER_STEPS,
-    RECITATIONS,
-    PRAYER_TYPES,
-    RELIGIOUS_TERMS,
-    PRAYER_INVALIDATORS,
-    QUIZ_QUESTIONS
+    PRAYER_STEPS as RAW_STEPS,
+    RECITATIONS as RAW_RECITATIONS,
+    PRAYER_TYPES as RAW_TYPES,
+    RELIGIOUS_TERMS as RAW_TERMS,
+    PRAYER_INVALIDATORS as RAW_INVALIDATORS,
+    QUIZ_QUESTIONS as RAW_QUIZ
 } from '../../../data/prayerTeacherData';
+import { localizePrayerTeacher } from '../../../data/prayerTeacherTranslations';
 
 // Tab configuration
 const TABS = [
@@ -22,7 +23,18 @@ const TABS = [
 ];
 
 function PrayerTeacher({ onClose }) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const { PRAYER_STEPS, RECITATIONS, PRAYER_TYPES, RELIGIOUS_TERMS, PRAYER_INVALIDATORS, QUIZ_QUESTIONS } = useMemo(() => {
+        const loc = localizePrayerTeacher(i18n?.language || 'tr');
+        return {
+            PRAYER_STEPS: RAW_STEPS.map(loc.step),
+            RECITATIONS: RAW_RECITATIONS.map(loc.recitation),
+            PRAYER_TYPES: RAW_TYPES.map(loc.type),
+            RELIGIOUS_TERMS: RAW_TERMS.map(loc.term),
+            PRAYER_INVALIDATORS: RAW_INVALIDATORS.map(loc.invalidator),
+            QUIZ_QUESTIONS: RAW_QUIZ.map(loc.quiz),
+        };
+    }, [i18n?.language]);
     const [activeTab, setActiveTab] = useState('steps');
     const [expandedStep, setExpandedStep] = useState(null);
     const [expandedRecitation, setExpandedRecitation] = useState(null);
@@ -37,7 +49,7 @@ function PrayerTeacher({ onClose }) {
     const [score, setScore] = useState(0);
     const [quizFinished, setQuizFinished] = useState(false);
 
-    const currentQuizItem = useMemo(() => QUIZ_QUESTIONS[currentQuestion], [currentQuestion]);
+    const currentQuizItem = useMemo(() => QUIZ_QUESTIONS[currentQuestion], [QUIZ_QUESTIONS, currentQuestion]);
 
     const handleAnswer = (index) => {
         if (showResult) return;
@@ -101,7 +113,7 @@ function PrayerTeacher({ onClose }) {
                         }}
                     >
                         <span style={{ fontSize: '1.5rem' }}>{tab.icon}</span>
-                        <span className="uppercase" style={{ fontSize: '0.75rem', fontWeight: '800', letterSpacing: '0.5px' }}>{tab.label}</span>
+                        <span className="uppercase" style={{ fontSize: '0.75rem', fontWeight: '800', letterSpacing: '0.5px' }}>{t(`prayerTeacher.tabs.${tab.id}`, tab.label)}</span>
                     </button>
                 ))}
             </div>

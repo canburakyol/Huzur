@@ -45,7 +45,7 @@ const NAFILE_PRAYERS = [
   {
     id: 'teheccud',
     name: 'Tahajjud',
-    nameTr: 'Tahaccüt Namazı',
+    nameTr: 'Teheccüd Namazı',
     description: 'Gece bir miktar uyuduktan sonra kalkılarak kılınan 2-12 rekatlık namaz',
     icon: '🌟',
     rekat: 12,
@@ -337,8 +337,8 @@ export function NafilePrayers({ onClose }) {
                 </div>
                 
                 <div className="nafile-info">
-                  <h3>{prayer.nameTr}</h3>
-                  <p>{prayer.description}</p>
+                  <h3>{t(`nafile.items.${prayer.id}.name`, prayer.nameTr)}</h3>
+                  <p>{t(`nafile.items.${prayer.id}.desc`, prayer.description)}</p>
                 </div>
 
                 <button 

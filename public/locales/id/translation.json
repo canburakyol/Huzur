@@ -4106,6 +4106,14 @@
           ]
         }
       }
+    },
+    "tabs": {
+      "steps": "Langkah",
+      "recitations": "Bacaan",
+      "types": "Waktu",
+      "terms": "Hukum",
+      "invalidators": "Pembatal",
+      "quiz": "Kuis"
     }
   },
   "nafilePrayers": {
@@ -5521,6 +5529,42 @@
         "title": "🕯️ Malam istimewa",
         "body": "Lapangkan hatimu dengan doa dan zikir di malam istimewa ini.",
         "bodyDiaspora": "Lapangkan hatimu dengan doa dan zikir singkat untuk malam istimewa ini."
+      }
+    }
+  },
+  "nafile": {
+    "items": {
+      "teravih": {
+        "name": "Salat Tarawih",
+        "desc": "Salat 20 rakaat yang dikerjakan setelah Isya pada bulan Ramadan"
+      },
+      "duha": {
+        "name": "Salat Duha",
+        "desc": "Salat di waktu pagi, sejak matahari cukup tinggi hingga sebelum Zuhur (2–12 rakaat)"
+      },
+      "teheccud": {
+        "name": "Salat Tahajud",
+        "desc": "Salat 2–12 rakaat yang dikerjakan setelah bangun dari tidur di malam hari"
+      },
+      "kusluk": {
+        "name": "Salat Isyraq",
+        "desc": "Salat 2–4 rakaat sekitar 45 menit setelah matahari terbit, setelah waktu makruh berlalu"
+      },
+      "vitr": {
+        "name": "Salat Witir",
+        "desc": "Salat 3 rakaat setelah Isya; wajib menurut mazhab Hanafi"
+      },
+      "istihare": {
+        "name": "Salat Istikharah",
+        "desc": "Salat untuk memohon petunjuk sebelum mengambil keputusan"
+      },
+      "tevbe": {
+        "name": "Salat Taubat",
+        "desc": "Salat untuk memohon ampunan atas dosa"
+      },
+      "hacet": {
+        "name": "Salat Hajat",
+        "desc": "Salat untuk suatu hajat atau kebutuhan"
       }
     }
   }

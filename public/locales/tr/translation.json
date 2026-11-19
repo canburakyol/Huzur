@@ -4542,6 +4542,14 @@
           ]
         }
       }
+    },
+    "tabs": {
+      "steps": "Adımlar",
+      "recitations": "Okunuşlar",
+      "types": "Vakit",
+      "terms": "Hükümler",
+      "invalidators": "Bozanlar",
+      "quiz": "Quiz"
     }
   },
   "nafilePrayers": {
@@ -5521,6 +5529,42 @@
         "title": "🕯️ Kandil gecesi",
         "body": "Kandil gecesinde dua ve zikirle kalbini ferahlat.",
         "bodyDiaspora": "Kandil gecesi için kısa bir dua ve zikirle kalbini ferahlat."
+      }
+    }
+  },
+  "nafile": {
+    "items": {
+      "teravih": {
+        "name": "Teravih Namazı",
+        "desc": "Ramazan ayında yatsı namazından sonra kılınan 20 rekatlık namaz"
+      },
+      "duha": {
+        "name": "Duha Namazı",
+        "desc": "Güneş iyice yükseldikten sonra öğleye kadar kılınan kuşluk namazı (2-12 rekat)"
+      },
+      "teheccud": {
+        "name": "Teheccüd Namazı",
+        "desc": "Gece bir miktar uyuduktan sonra kalkılarak kılınan 2-12 rekatlık namaz"
+      },
+      "kusluk": {
+        "name": "Kuşluk Namazı",
+        "desc": "Güneş doğduktan yaklaşık 45 dakika sonra, kerahat vakti çıkınca kılınan 2-4 rekatlık işrak namazı"
+      },
+      "vitr": {
+        "name": "Vitir Namazı",
+        "desc": "Yatsıdan sonra kılınan 3 rekatlık namaz; Hanefî mezhebine göre vaciptir"
+      },
+      "istihare": {
+        "name": "İstihare Namazı",
+        "desc": "Bir işe başlamadan önce danışma namazı"
+      },
+      "tevbe": {
+        "name": "Tevbe Namazı",
+        "desc": "Günahların affı için kılınan namaz"
+      },
+      "hacet": {
+        "name": "Hacet Namazı",
+        "desc": "Bir ihtiyaç için kılınan namaz"
       }
     }
   }
