@@ -46,7 +46,7 @@ function SettingsAiHealthPanel() {
 
   return (
     <div className="settings-group">
-      <div className="settings-group-title premium-text">AI guven durumu</div>
+      <div className="settings-group-title hz-overline">AI guven durumu</div>
       <div
         className="settings-card premium-glass hover-lift"
         style={{

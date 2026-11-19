@@ -21,38 +21,38 @@ function SettingsLegalSection({ onShowLicenses, onShowPrivacy, onShowTerms, t })
   return (
     <>
       <div className="settings-group">
-        <div className="settings-group-title premium-text">{t('settings.legal')}</div>
+        <div className="settings-group-title hz-overline">{t('settings.legal')}</div>
 
         <SettingsActionRow
-          icon={<Shield size={20} />}
+          icon={<Shield size={20} strokeWidth={1.75} />}
           onClick={onShowPrivacy}
           title={t('settings.privacyPolicy')}
         />
 
         {showAdPrivacy && (
           <SettingsActionRow
-            icon={<SlidersHorizontal size={20} />}
+            icon={<SlidersHorizontal size={20} strokeWidth={1.75} />}
             onClick={() => void showAdPrivacyOptions()}
             title={t('settings.adPrivacyOptions', 'Reklam gizlilik tercihleri')}
           />
         )}
 
         <SettingsActionRow
-          icon={<FileText size={20} />}
+          icon={<FileText size={20} strokeWidth={1.75} />}
           onClick={onShowTerms}
           title={t('settings.termsOfService')}
         />
 
         <SettingsActionRow
-          icon={<Info size={20} />}
+          icon={<Info size={20} strokeWidth={1.75} />}
           onClick={onShowLicenses}
           title={t('settings.licensesAndCredits')}
         />
       </div>
 
-      <div style={{ textAlign: 'center', opacity: 0.5, fontSize: '0.8rem', padding: '20px' }}>
+      <p className="hz-label" style={{ margin: 0, textAlign: 'center' }}>
         {t('app.name')} v{APP_VERSION}
-      </div>
+      </p>
     </>
   );
 }

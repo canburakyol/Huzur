@@ -1,3 +1,5 @@
+import { Eye, Trophy } from 'lucide-react';
+
 import SettingsActionRow from './SettingsActionRow';
 import SettingsToggle from './SettingsToggle';
 
@@ -10,14 +12,14 @@ function SettingsMiniLeagueSection({
 }) {
   return (
     <div className="settings-group">
-      <div className="settings-group-title premium-text">
+      <div className="settings-group-title hz-overline">
         {t('socialRetention.settingsTitle', 'Sosyal Ritim')}
       </div>
 
       <SettingsActionRow
         description={t('socialRetention.miniLeagueDesc', 'Sadece ritim bandın görünür; isim ve ham puan paylaşılmaz.')}
-        icon={<span style={{ fontSize: '18px', fontWeight: '900' }}>%</span>}
-        iconStyle={{ background: 'rgba(59, 130, 246, 0.1)', color: 'var(--brand-ink)' }}
+        checked={Boolean(miniLeaguePreferences?.optedIn)}
+        icon={<Trophy size={20} strokeWidth={1.75} />}
         onClick={onToggleMiniLeague}
         rightContent={<SettingsToggle active={miniLeaguePreferences?.optedIn} />}
         title={t('socialRetention.miniLeagueTitle', 'Anonim mini lig')}
@@ -32,10 +34,9 @@ function SettingsMiniLeagueSection({
               })
             : t('socialRetention.visibilityOffDesc', 'Mini lig kapalıyken görünürlük kapalı kalır.')
         }
-        icon={<span style={{ fontSize: '16px', fontWeight: '900' }}>#</span>}
-        iconStyle={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--success)' }}
+        dimmed={!miniLeaguePreferences?.optedIn}
+        icon={<Eye size={20} strokeWidth={1.75} />}
         onClick={onToggleVisibility}
-        style={{ opacity: miniLeaguePreferences?.optedIn ? 1 : 0.55 }}
         title={t('socialRetention.visibilityTitle', 'Görünürlük seviyesi')}
       />
     </div>

@@ -1,231 +1,143 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  getNotificationPreferences, 
-  updateNotificationPreferences, 
+import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { AlertCircle, Bell, BellRing, Flame, Megaphone, Moon } from 'lucide-react';
+import {
+  getNotificationPreferences,
+  updateNotificationPreferences,
   NOTIFICATION_CHANNELS,
   requestNotificationPermission
 } from '../../../services/smartNotificationService';
-import { useTranslation } from 'react-i18next';
-import { 
-    BellRing, Bell, Flame, Megaphone, Moon, 
-    AlertCircle, ChevronDown, Clock
-} from 'lucide-react';
-import '../../../components/app-shell/Navigation.css';
-import './NotificationSettings.css';
+import { checkNotificationPermission } from '../../../services/notificationPlatformService';
+import SettingsActionRow from '../../settings/components/SettingsActionRow';
+import SettingsToggle from '../../settings/components/SettingsToggle';
+
+const ICON = { size: 20, strokeWidth: 1.75 };
+const fieldStyle = {
+  minHeight: 40,
+  padding: '0 var(--space-3)',
+  borderRadius: 'var(--radius-sm)',
+  border: '1px solid var(--line)',
+  background: 'var(--paper-raised)',
+  color: 'var(--ink)',
+  font: '500 14px/20px var(--font-sans)',
+};
+const subPanelStyle = {
+  marginTop: 'calc(-1 * var(--space-2))',
+  padding: 'var(--space-3)',
+  borderRadius: '0 0 var(--radius-md) var(--radius-md)',
+  border: '1px solid var(--line)',
+  borderTop: 0,
+  background: 'var(--paper-sunken)',
+};
 
 const NotificationSettings = () => {
   const { t } = useTranslation();
-  const [prefs, setPrefs] = useState({
-    prayer: true,
-    streak: true,
-    reminder: true,
-    updates: true,
-    preAlertMinutes: 15,
-    quietHoursEnabled: false,
-    quietHoursStart: '22:00',
-    quietHoursEnd: '07:00'
-  });
-  const [permissionGranted, setPermissionGranted] = useState(false);
+  const [prefs, setPrefs] = useState(() => getNotificationPreferences());
+  // null until checked, so the warning does not flash before the real answer arrives.
+  const [permissionGranted, setPermissionGranted] = useState(null);
 
   useEffect(() => {
-    const loadPrefs = () => {
-      const saved = getNotificationPreferences();
-      setPrefs(saved);
-    };
-
-    const checkPermission = async () => {
-      if ('Notification' in window) {
-        setPermissionGranted(Notification.permission === 'granted');
-      }
-    };
-
-    loadPrefs();
-    checkPermission();
+    let cancelled = false;
+    // The web Notification API does not exist in the Android WebView; ask the native layer instead.
+    void checkNotificationPermission().then((granted) => {
+      if (!cancelled) setPermissionGranted(granted);
+    });
+    return () => { cancelled = true; };
   }, []);
 
-  const handleToggle = async (key) => {
-    const newPrefs = { ...prefs, [key]: !prefs[key] };
+  const savePrefs = async (newPrefs) => {
     setPrefs(newPrefs);
     await updateNotificationPreferences(newPrefs);
   };
 
-  const handleTimeChange = async (e) => {
-    const minutes = parseInt(e.target.value);
-    const newPrefs = { ...prefs, preAlertMinutes: minutes };
-    setPrefs(newPrefs);
-    await updateNotificationPreferences(newPrefs);
-  };
-
-  const handleQuietHoursTimeChange = async (key, value) => {
-    const newPrefs = { ...prefs, [key]: value };
-    setPrefs(newPrefs);
-    await updateNotificationPreferences(newPrefs);
-  };
+  const handleToggle = (key) => savePrefs({ ...prefs, [key]: !prefs[key] });
 
   const requestPermission = async () => {
     const granted = await requestNotificationPermission();
     setPermissionGranted(granted);
   };
 
-  return (
-    <div className="notification-settings-section">
-      <div className="settings-group-title" style={{ marginTop: '24px' }}>{t('settings.notificationSettingsTitle', 'Bildirim Kanalları')}</div>
+  const channelRow = (key, channelKey, channel, icon) => (
+    <SettingsActionRow
+      checked={Boolean(prefs[key])}
+      description={t(`notifications.channels.${channelKey}.description`, channel.description)}
+      icon={icon}
+      onClick={() => handleToggle(key)}
+      rightContent={<SettingsToggle active={Boolean(prefs[key])} />}
+      title={t(`notifications.channels.${channelKey}.name`, channel.name)}
+    />
+  );
 
-      {!permissionGranted && (
-        <div className="settings-card" style={{ background: 'var(--tertiary-container)', borderColor: 'var(--tertiary-fixed-dim)', flexDirection: 'column', alignItems: 'flex-start', gap: '12px' }}>
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <AlertCircle size={24} color="var(--tertiary)" />
-            <div>
-              <div className="settings-label" style={{ color: 'var(--on-tertiary-container)' }}>{t('settings.notificationPermissionRequiredTitle')}</div>
-              <div className="settings-desc" style={{ color: 'var(--on-tertiary-container)' }}>{t('settings.notificationPermissionRequiredDesc')}</div>
+  return (
+    <div className="settings-group">
+      <div className="settings-group-title hz-overline">{t('settings.notificationSettingsTitle', 'Bildirim Kanalları')}</div>
+
+      {permissionGranted === false && (
+        <div className="hz-card" style={{ display: 'grid', gap: 'var(--space-3)', borderColor: 'var(--gold)' }}>
+          <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'flex-start' }}>
+            <AlertCircle {...ICON} aria-hidden="true" style={{ flex: 'none', color: 'var(--gold-ink)' }} />
+            <div style={{ display: 'grid', gap: 2 }}>
+              <div className="hz-row__title">{t('settings.notificationPermissionRequiredTitle')}</div>
+              <div className="hz-label">{t('settings.notificationPermissionRequiredDesc')}</div>
             </div>
           </div>
-          <button 
-            onClick={requestPermission}
-            className="hamburger-pro-badge"
-            style={{ width: '100%', justifyContent: 'center' }}
-          >
+          <button type="button" className="hz-btn hz-btn--primary" onClick={requestPermission}>
             {t('settings.allowPermission')}
           </button>
         </div>
       )}
 
-      <div className="settings-group">
-        {/* Ezan Vakitleri */}
-        <div className="settings-card" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} onClick={() => handleToggle('prayer')}>
-            <div className="settings-card-left">
-                <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--tertiary) 10%, transparent)', color: 'var(--tertiary)' }}>
-                    <BellRing size={20} />
-                </div>
-                <div>
-                    <div className="settings-label">{t('notifications.channels.prayer.name', NOTIFICATION_CHANNELS.PRAYER.name)}</div>
-                    <div className="settings-desc">{t('notifications.channels.prayer.description', NOTIFICATION_CHANNELS.PRAYER.description)}</div>
-                </div>
-            </div>
-            <div className={`velocity-switch ${prefs.prayer ? 'active' : ''}`}>
-                <div className="velocity-knob" />
-            </div>
-          </div>
-          
-          {prefs.prayer && (
-            <div className="val-selection" style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid var(--nav-border)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span className="settings-desc" style={{ fontSize: '14px', color: 'var(--nav-text)' }}>{t('settings.preAlertMinutes')}</span>
-                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                    <select 
-                        value={prefs.preAlertMinutes} 
-                        onChange={handleTimeChange}
-                        className="themed-select-min"
-                        style={{ paddingRight: '24px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '8px', color: 'var(--nav-text)', appearance: 'none' }}
-                    >
-                        <option value="15">15 {t('common.minutes', 'dk')}</option>
-                        <option value="30">30 {t('common.minutes', 'dk')}</option>
-                        <option value="45">45 {t('common.minutes', 'dk')}</option>
-                        <option value="0">{t('settings.off', 'Kapalı')}</option>
-                    </select>
-                    <ChevronDown size={14} style={{ position: 'absolute', right: '8px', pointerEvents: 'none', color: 'var(--nav-text-muted)' }} />
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+      {channelRow('prayer', 'prayer', NOTIFICATION_CHANNELS.PRAYER, <BellRing {...ICON} />)}
+      {prefs.prayer && (
+        <label style={{ ...subPanelStyle, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)' }}>
+          <span className="hz-label">{t('settings.preAlertMinutes')}</span>
+          <select
+            value={prefs.preAlertMinutes}
+            onChange={(e) => savePrefs({ ...prefs, preAlertMinutes: parseInt(e.target.value, 10) })}
+            style={fieldStyle}
+          >
+            <option value="15">15 {t('common.minutes', 'dk')}</option>
+            <option value="30">30 {t('common.minutes', 'dk')}</option>
+            <option value="45">45 {t('common.minutes', 'dk')}</option>
+            <option value="0">{t('settings.off', 'Kapalı')}</option>
+          </select>
+        </label>
+      )}
 
-        {/* Günlük Hatırlatıcılar */}
-        <div className="settings-card" onClick={() => handleToggle('reminder')}>
-          <div className="settings-card-left">
-              <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--secondary) 10%, transparent)', color: 'var(--secondary)' }}>
-                  <Bell size={20} />
-              </div>
-              <div>
-                  <div className="settings-label">{t('notifications.channels.reminder.name', NOTIFICATION_CHANNELS.REMINDER.name)}</div>
-                  <div className="settings-desc">{t('notifications.channels.reminder.description', NOTIFICATION_CHANNELS.REMINDER.description)}</div>
-              </div>
-          </div>
-          <div className={`velocity-switch ${prefs.reminder ? 'active' : ''}`}>
-              <div className="velocity-knob" />
-          </div>
-        </div>
+      {channelRow('reminder', 'reminder', NOTIFICATION_CHANNELS.REMINDER, <Bell {...ICON} />)}
+      {channelRow('streak', 'streak', NOTIFICATION_CHANNELS.STREAK, <Flame {...ICON} />)}
+      {channelRow('updates', 'updates', NOTIFICATION_CHANNELS.UPDATES, <Megaphone {...ICON} />)}
 
-        {/* Seri Koruması */}
-        <div className="settings-card" onClick={() => handleToggle('streak')}>
-          <div className="settings-card-left">
-              <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--tertiary) 10%, transparent)', color: 'var(--tertiary)' }}>
-                  <Flame size={20} />
-              </div>
-              <div>
-                  <div className="settings-label">{t('notifications.channels.streak.name', NOTIFICATION_CHANNELS.STREAK.name)}</div>
-                  <div className="settings-desc">{t('notifications.channels.streak.description', NOTIFICATION_CHANNELS.STREAK.description)}</div>
-              </div>
-          </div>
-          <div className={`velocity-switch ${prefs.streak ? 'active' : ''}`}>
-              <div className="velocity-knob" />
-          </div>
+      <SettingsActionRow
+        checked={Boolean(prefs.quietHoursEnabled)}
+        description={t('settings.quietHoursDesc')}
+        icon={<Moon {...ICON} />}
+        onClick={() => handleToggle('quietHoursEnabled')}
+        rightContent={<SettingsToggle active={Boolean(prefs.quietHoursEnabled)} />}
+        title={t('settings.quietHoursTitle')}
+      />
+      {prefs.quietHoursEnabled && (
+        <div style={{ ...subPanelStyle, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-3)' }}>
+          <label style={{ display: 'grid', gap: 'var(--space-1)' }}>
+            <span className="hz-label">{t('settings.start')}</span>
+            <input
+              type="time"
+              value={prefs.quietHoursStart}
+              onChange={(e) => savePrefs({ ...prefs, quietHoursStart: e.target.value })}
+              style={fieldStyle}
+            />
+          </label>
+          <label style={{ display: 'grid', gap: 'var(--space-1)' }}>
+            <span className="hz-label">{t('settings.end')}</span>
+            <input
+              type="time"
+              value={prefs.quietHoursEnd}
+              onChange={(e) => savePrefs({ ...prefs, quietHoursEnd: e.target.value })}
+              style={fieldStyle}
+            />
+          </label>
         </div>
-
-        {/* Güncellemeler */}
-        <div className="settings-card" onClick={() => handleToggle('updates')}>
-          <div className="settings-card-left">
-              <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--primary) 10%, transparent)', color: 'var(--primary)' }}>
-                  <Megaphone size={20} />
-              </div>
-              <div>
-                  <div className="settings-label">{t('notifications.channels.updates.name', NOTIFICATION_CHANNELS.UPDATES.name)}</div>
-                  <div className="settings-desc">{t('notifications.channels.updates.description', NOTIFICATION_CHANNELS.UPDATES.description)}</div>
-              </div>
-          </div>
-          <div className={`velocity-switch ${prefs.updates ? 'active' : ''}`}>
-              <div className="velocity-knob" />
-          </div>
-        </div>
-
-        {/* Sessiz Saatler */}
-        <div className="settings-card" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} onClick={() => handleToggle('quietHoursEnabled')}>
-            <div className="settings-card-left">
-                <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--secondary) 10%, transparent)', color: 'var(--secondary)' }}>
-                    <Moon size={20} />
-                </div>
-                <div>
-                    <div className="settings-label">{t('settings.quietHoursTitle')}</div>
-                    <div className="settings-desc">{t('settings.quietHoursDesc')}</div>
-                </div>
-            </div>
-            <div className={`velocity-switch ${prefs.quietHoursEnabled ? 'active' : ''}`}>
-                <div className="velocity-knob" />
-            </div>
-          </div>
-
-          {prefs.quietHoursEnabled && (
-            <div className="quiet-hours-grid" style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid var(--nav-border)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <span className="settings-desc" style={{ fontWeight: '700' }}>{t('settings.start')}</span>
-                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                    <input
-                        type="time"
-                        value={prefs.quietHoursStart}
-                        onChange={(e) => handleQuietHoursTimeChange('quietHoursStart', e.target.value)}
-                        style={{ width: '100%', padding: '10px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '8px', color: 'var(--nav-text)', outline: 'none' }}
-                    />
-                    <Clock size={14} style={{ position: 'absolute', right: '10px', pointerEvents: 'none', color: 'var(--nav-text-muted)' }} />
-                </div>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <span className="settings-desc" style={{ fontWeight: '700' }}>{t('settings.end')}</span>
-                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                    <input
-                        type="time"
-                        value={prefs.quietHoursEnd}
-                        onChange={(e) => handleQuietHoursTimeChange('quietHoursEnd', e.target.value)}
-                        style={{ width: '100%', padding: '10px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '8px', color: 'var(--nav-text)', outline: 'none' }}
-                    />
-                    <Clock size={14} style={{ position: 'absolute', right: '10px', pointerEvents: 'none', color: 'var(--nav-text-muted)' }} />
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

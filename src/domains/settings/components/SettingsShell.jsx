@@ -1,6 +1,8 @@
 import React, { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import PageHeader from '../../../components/shared/PageHeader';
+
 import CancelFlowModal from '../../onboarding/components/CancelFlowModal';
 import LicensesCredits from '../../system/components/LicensesCredits';
 import PrivacyPolicy from '../../system/components/PrivacyPolicy';
@@ -8,11 +10,11 @@ import TermsOfService from '../../system/components/TermsOfService';
 import { useSettingsState } from '../hooks/useSettingsState';
 import SettingsAccessSection from './SettingsAccessSection';
 import SettingsBasicsSection from './SettingsBasicsSection';
-import SettingsHeader from './SettingsHeader';
 import SettingsHistoryScreen from './SettingsHistoryScreen';
 import SettingsLegalSection from './SettingsLegalSection';
 import SettingsMiniLeagueSection from './SettingsMiniLeagueSection';
 import SettingsNotificationSection from './SettingsNotificationSection';
+import './settings.css';
 
 const SettingsAiHealthPanel = import.meta.env.DEV
   ? React.lazy(() => import('./SettingsAiHealthPanel'))
@@ -53,8 +55,9 @@ function SettingsShell({ onClose }) {
   }
 
   return (
-    <div className="settings-container reveal-stagger">
-      <SettingsHeader onClose={onClose} title={t('settings.title')} />
+    <div className="app-container hz-root hz-settings">
+      <PageHeader title={t('settings.title')} onBack={onClose} />
+      <div className="hz-settings__body">
 
       <SettingsBasicsSection
         currentLang={settingsState.currentLang}
@@ -100,6 +103,7 @@ function SettingsShell({ onClose }) {
         onShowTerms={() => settingsState.openOverlay('terms')}
         t={t}
       />
+      </div>
     </div>
   );
 }

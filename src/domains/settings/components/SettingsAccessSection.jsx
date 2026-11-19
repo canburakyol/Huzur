@@ -6,30 +6,25 @@ function SettingsAccessSection({ onManageSubscription, onOpenFeature, t, userIsP
   return (
     <>
       <div className="settings-group">
-        <div className="settings-group-title premium-text">{t('settings.proFeatures', 'Premium Özellikler')}</div>
+        <div className="settings-group-title hz-overline">{t('settings.proFeatures', 'Premium Özellikler')}</div>
         <SettingsActionRow
           description={t('settings.removeAdsDesc')}
-          icon={<Shield size={20} />}
-          iconStyle={{ background: 'rgba(245, 158, 11, 0.1)', color: 'var(--accent)' }}
+          icon={<Shield size={20} strokeWidth={1.75} />}
           onClick={() => onOpenFeature('pro')}
           title={t('settings.removeAdsTitle')}
         />
       </div>
-
       {userIsPro ? (
         <div className="settings-group">
-          <div className="settings-group-title premium-text">
-            {t('settings.subscriptionManagement', 'Abonelik Yonetimi')}
+          <div className="settings-group-title hz-overline">
+            {t('settings.subscriptionManagement', 'Abonelik Yönetimi')}
           </div>
           <SettingsActionRow
-            chevronColor="rgba(239, 68, 68, 0.4)"
-            description={t('settings.cancelSubscriptionDesc', 'Huzur Pro aboneliginizi sonlandirin.')}
-            icon={<AlertCircle size={20} />}
-            iconStyle={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--error-color)' }}
+            description={t('settings.cancelSubscriptionDesc', 'Huzur Pro aboneliğinizi sonlandırın.')}
+            icon={<AlertCircle size={20} strokeWidth={1.75} />}
             onClick={onManageSubscription}
-            style={{ border: '1px solid rgba(239, 68, 68, 0.2)', background: 'rgba(239, 68, 68, 0.05)' }}
-            title={t('settings.cancelSubscription', 'Aboneligi İptal Et')}
-            titleStyle={{ color: 'var(--error-color)' }}
+            title={t('settings.cancelSubscription', 'Aboneliği İptal Et')}
+            tone="danger"
           />
         </div>
       ) : null}

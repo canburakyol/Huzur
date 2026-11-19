@@ -1,8 +1,9 @@
+// Visual only: the row around it carries role="switch" and aria-checked.
 function SettingsToggle({ active = false }) {
   return (
-    <div className={`velocity-switch ${active ? 'active' : ''}`}>
-      <div className="velocity-knob" />
-    </div>
+    <span className={`settings-switch ${active ? 'is-on' : ''}`} aria-hidden="true">
+      <span className="settings-switch__knob" />
+    </span>
   );
 }
 

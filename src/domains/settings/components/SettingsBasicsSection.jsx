@@ -19,15 +19,17 @@ function SettingsBasicsSection({
   return (
     <>
       <div className="settings-group">
-        <div className="settings-group-title premium-text">{t('settings.language')}</div>
-        <div className="settings-card premium-glass hover-lift flex flex-col items-stretch">
-          <div className="flex gap-8 flex-wrap">
+        <div className="settings-group-title hz-overline">{t('settings.language')}</div>
+        <div className="settings-languages" role="group" aria-label={t('settings.language')}>
+          <>
             {supportedLanguages.map((language) => {
               const isActive = currentLang === language.code;
 
               return (
                 <button
+                  type="button"
                   key={language.code}
+                  aria-pressed={isActive}
                   className={`settings-language-button ${isActive ? 'active' : ''}`}
                   onClick={() => onLanguageChange(language.code)}
                 >
@@ -38,91 +40,31 @@ function SettingsBasicsSection({
                 </button>
               );
             })}
-          </div>
+          </>
         </div>
       </div>
 
       <div className="settings-group">
-        <div className="settings-group-title premium-text">{t('settings.appearance', 'Gorunum')}</div>
+        <div className="settings-group-title hz-overline">{t('settings.appearance', 'Gorunum')}</div>
         <SettingsActionRow
           description={darkMode ? t('settings.darkMode') : t('settings.lightMode')}
-          icon={darkMode ? <Moon size={20} /> : <Sun size={20} />}
+          checked={darkMode}
+          icon={darkMode ? <Moon size={20} strokeWidth={1.75} /> : <Sun size={20} strokeWidth={1.75} />}
           onClick={onToggleDarkMode}
           rightContent={<SettingsToggle active={darkMode} />}
           title={t('settings.theme')}
         />
       </div>
 
-      <div className="settings-basics-about-card">
-        <div className="settings-basics-about-header">
-          <Info size={22} color="var(--primary)" />
-          <div className="settings-basics-about-title">
-            {t('settings.about')}
-          </div>
-        </div>
-        <div className="settings-basics-about-body">
-          <div>{t('app.name')} {t('settings.appName')} v{APP_VERSION}</div>
-          <div className="mt-4">{t('settings.appDescription')}</div>
+      <div className="hz-card" style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'flex-start' }}>
+        <Info size={20} strokeWidth={1.75} aria-hidden="true" style={{ flex: 'none', color: 'var(--gold-ink)', marginTop: 2 }} />
+        <div style={{ display: 'grid', gap: 'var(--space-1)' }}>
+          <div className="hz-row__title">{t('settings.about')}</div>
+          <div className="hz-label">{t('app.name')} {t('settings.appName')} v{APP_VERSION}</div>
+          <div className="hz-label">{t('settings.appDescription')}</div>
         </div>
       </div>
 
-      <style>{`
-        .settings-language-button {
-          flex: 1;
-          min-width: 80px;
-          padding: 12px;
-          border-radius: 16px;
-          border: 1px solid var(--nav-border);
-          background: var(--nav-hover);
-          cursor: pointer;
-          font-size: 13px;
-          font-weight: 600;
-          color: var(--nav-text);
-          transition: all 0.2s;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 4px;
-        }
-
-        .settings-language-button.active {
-          border: 2px solid var(--nav-accent);
-          background: rgba(245, 158, 11, 0.1);
-          font-weight: 800;
-        }
-
-        .settings-language-badge {
-          font-size: 16px;
-          font-weight: 900;
-          letter-spacing: 0.08em;
-        }
-
-        .settings-basics-about-card {
-          margin-bottom: 16px;
-          padding: 16px;
-          background: var(--card-bg);
-          border-radius: 14px;
-          border: 1px solid var(--glass-border);
-        }
-
-        .settings-basics-about-header {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 10px;
-        }
-
-        .settings-basics-about-title {
-          font-weight: 600;
-          font-size: 15px;
-          color: var(--text-color);
-        }
-
-        .settings-basics-about-body {
-          font-size: 14px;
-          color: var(--text-color-muted);
-        }
-      `}</style>
     </>
   );
 }

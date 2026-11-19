@@ -15,11 +15,11 @@ function SettingsNotificationSection({
       <NotificationSettings />
 
       <div className="settings-group">
-        <div className="settings-group-title premium-text">{t('settings.notifications')}</div>
+        <div className="settings-group-title hz-overline">{t('settings.notifications')}</div>
 
         <SettingsActionRow
           description={t('settings.historyDesc')}
-          icon={<History size={20} />}
+          icon={<History size={20} strokeWidth={1.75} />}
           onClick={onShowHistory}
           title={t('settings.historyTitle', 'Bildirim Geçmişi')}
         />
@@ -27,7 +27,8 @@ function SettingsNotificationSection({
 
         <SettingsActionRow
           description={t('settings.stickyCounterDesc')}
-          icon={<Clock size={20} />}
+          checked={stickyNotification}
+          icon={<Clock size={20} strokeWidth={1.75} />}
           onClick={onToggleStickyNotification}
           rightContent={<SettingsToggle active={stickyNotification} />}
           title={t('settings.stickyCounter')}
