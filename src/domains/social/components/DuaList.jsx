@@ -64,7 +64,7 @@ const DuaList = () => {
       <div className="reveal-stagger" style={{ marginBottom: '24px' }}>
         <button className="sanctuary-btn-primary" onClick={() => setShowCreateModal(true)} style={{ width: '100%' }}>
           <Plus size={20} />
-          {t('dua.create', 'Dua isteği ekle')}
+          {t('dua.createRequest', 'Dua isteği ekle')}
         </button>
       </div>
 

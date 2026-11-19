@@ -71,13 +71,13 @@ function Tespihat({ onClose }) {
     <main className="practice-page">
       <header className="practice-header">
         <IslamicBackButton onClick={onClose} size="medium" />
-        <div className="practice-header__copy"><h1 className="practice-title">{t('tespihat.ui.title', 'Tespihat')}</h1><p className="practice-subtitle">Namaz sonrası zikir ve dualarınızı takip edin.</p></div>
+        <div className="practice-header__copy"><h1 className="practice-title">{t('tespihat.ui.title', 'Tespihat')}</h1><p className="practice-subtitle">{t('tespihat.ui.subtitle', 'Namaz sonrası zikir ve dualarınızı takip edin.')}</p></div>
       </header>
 
       <section className="practice-summary">
         <div className="practice-summary__top">
           <div><div className="practice-summary__value">{totalProgress}%</div><div className="practice-summary__label">{t('tespihat.ui.progressToday', 'Bugünkü ilerleme')}</div></div>
-          <button type="button" className="practice-icon-button" aria-label="Tespihat ilerlemesini sıfırla" onClick={() => { setTesbihCounts({ ...DEFAULT_TESBIH_COUNTS }); setCompletedSections([]); }}><RotateCcw size={18} /></button>
+          <button type="button" className="practice-icon-button" aria-label={t('tespihat.ui.resetLabel', 'Tespihat ilerlemesini sıfırla')} onClick={() => { setTesbihCounts({ ...DEFAULT_TESBIH_COUNTS }); setCompletedSections([]); }}><RotateCcw size={18} /></button>
         </div>
         <div className="practice-progress"><span style={{ width: `${totalProgress}%` }} /></div>
       </section>
@@ -124,7 +124,7 @@ function Tespihat({ onClose }) {
               <span className="practice-row__icon"><Sparkles size={17} /></span>
               <button type="button" className="tesbih-accordion-trigger" onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}><span className="practice-row__title">{TEVHID.title}</span></button>
               <button type="button" className={`practice-pill ${completedSections.includes('tevhid') ? 'practice-chip--active' : ''}`} onClick={() => toggleComplete('tevhid')}>{completedSections.includes('tevhid') ? 'Tamam' : 'Bitti'}</button>
-              <button type="button" className="tesbih-chevron-button" aria-label="Tevhid metnini aç veya kapat" onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}>{expandedItem === 'tevhid' ? <ChevronDown size={18} /> : <ChevronRight size={18} />}</button>
+              <button type="button" className="tesbih-chevron-button" aria-label={t('tespihat.ui.toggleTawhid', 'Tevhid metnini aç veya kapat')} onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}>{expandedItem === 'tevhid' ? <ChevronDown size={18} /> : <ChevronRight size={18} />}</button>
             </div>
             {expandedItem === 'tevhid' && renderExpandedContent(TEVHID)}
           </div>

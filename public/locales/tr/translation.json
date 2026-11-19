@@ -40,7 +40,22 @@
     "processing": "İşleniyor...",
     "home": "Ana Ekrana Dön",
     "all": "Tümü",
-    "source": "Kaynak"
+    "source": "Kaynak",
+    "edit": "Düzenle",
+    "saved": "Kaydedildi",
+    "badge": "Rozet",
+    "days": "Gün",
+    "completed": "Tamamlandı",
+    "upgrade_pro": "Pro'ya Yükselt",
+    "later": "Belki Daha Sonra",
+    "surah": "Suresi",
+    "ayah": "ayet",
+    "refresh": "Yenile",
+    "people": "kişi",
+    "copy": "Kopyala",
+    "minutes": "dk",
+    "appName": "Huzur",
+    "ok": "Tamam"
   },
   "notifications": {
     "prayer": {
@@ -121,7 +136,11 @@
       "system": "Ayarlar ve destek",
       "focus": "Ana odak"
     },
-    "specialDays": "Dini Günler"
+    "specialDays": "Dini Günler",
+    "quran": "Kur'an",
+    "esma": "Esmalar",
+    "more": "Daha Fazla",
+    "qibla": "Kıble Pusulası"
   },
   "prayerCircle": {
     "title": "Dua Kardeşliği",
@@ -137,7 +156,9 @@
       "health": "Hastamız için şifa duası eder misiniz?",
       "exam": "Sınavlarımda başarı için dua istiyorum.",
       "family": "Aile huzuru için dualarınızı bekliyorum."
-    }
+    },
+    "subtitle": "Dualarda buluşalım",
+    "askForPrayer": "Dua İste"
   },
   "dailyFiqh": {
     "title": "Günün Fıkıh Bilgisi",
@@ -193,12 +214,14 @@
     "encouragement_rising": "Küçük ama istikrarlı adımlar seni lig ortalamasının üstüne taşıyabilir.",
     "standing_top_quarter": "İlk ceyrektesin",
     "standing_upper_half": "Ligin üst yarisindasin",
-    "standing_rising": "Düzenin oturdukça yukarı çıkıyorsun"
+    "standing_rising": "Düzenin oturdukça yukarı çıkıyorsun",
+    "settingsTitle": "Sosyal Ritim"
   },
   "seerah": {
     "title": "Siyer Haritası",
     "allPeriods": "Tüm Dönemler",
-    "details": "Detaylar"
+    "details": "Detaylar",
+    "subtitle": "Peygamberimizin (sav) hayat yolculuğu"
   },
   "huzurMode": {
     "title": "Huzur Modu",
@@ -213,7 +236,13 @@
     "catMusic": "Enstrümantal",
     "catQuran": "Kuran",
     "minutes": "dk",
-    "natureSounds": "Doğa Sesleri"
+    "natureSounds": "Doğa Sesleri",
+    "wake_hint": "Uyandırmak için dokun",
+    "night_mode": "Gece Modu",
+    "categories": "Kategoriler",
+    "sounds": "Sesler",
+    "volume": "Ses Seviyesi",
+    "info_note": "Huzur Modu, rahatlamanıza ve daha kaliteli bir uyku çekmenize yardımcı olacak asude sesler sunar. Zamanlayıcıyı kurarak cihazınızın pilinden tasarruf edebilirsiniz."
   },
   "dailyTasks": {
     "task": "Görev",
@@ -337,21 +366,35 @@
         "title": "Birisi için dua et",
         "desc": "Bir Müslüman kardeşin için dua et"
       }
-    }
+    },
+    "summaryLabel": "Günlük görev özeti",
+    "completedToday": "Bugün tamamlanan görevler",
+    "metricPoints": "Puan",
+    "metricStreak": "Seri",
+    "metricTasks": "Görev",
+    "todaysTasks": "Bugünün görevleri · +{{points}} puan"
   },
   "esma": {
     "title": "Esmaül Hüsna",
     "subtitle": "Allah'ın 99 Güzel İsmi",
     "daily": "Günün Esması",
     "search_placeholder": "İsim ara...",
-    "count_suffix": "isim"
+    "count_suffix": "isim",
+    "eyebrow": "99 güzel isim",
+    "directory": "Fihrist",
+    "directoryTitle": "İsimler ve anlamları",
+    "clearSearch": "Aramayı temizle",
+    "emptyHint": "Arama kelimesini veya favori filtresini değiştirebilirsin.",
+    "aboutTitle": "Esmaül Hüsna hakkında",
+    "info_note": "Esmâü'l-Hüsnâ, Allah Teâlâ'nın en güzel isimleri demektir. Bu isimleri zikretmek, anlamlarını tefekkür etmek ve bu isimlerle Allah'a dua etmek müstehaptır."
   },
   "hadith": {
     "title": "Hadisler",
     "daily": "Günün Hadisi",
     "categories": "Kategoriler",
     "count_suffix": "hadis",
-    "shareDialogTitle": "Hadisi Paylaş"
+    "shareDialogTitle": "Hadisi Paylaş",
+    "info_note": "Hadis-i Şerifler, Peygamber Efendimiz'in (s.a.v.) sözleri, fiilleri ve takrirleridir. İslam dininin Kur'an-ı Kerim'den sonraki ikinci temel kaynağıdır."
   },
   "nav": {
     "home": "Anasayfa",
@@ -426,7 +469,21 @@
     "accentColorDesc": "Uygulama genelindeki buton ve simgelerin rengini değiştirir.",
     "preview": "?nizleme",
     "previewTitle": "Harika Değil mi?",
-    "previewDesc": "Bu renk size çok yakıştı."
+    "previewDesc": "Bu renk size çok yakıştı.",
+    "themeMode": "Görünüm Modu",
+    "lightModeDesc": "Temiz ve enerjik görünüm",
+    "darkModeDesc": "Göz yormayan gece deneyimi",
+    "systemMode": "Sistem",
+    "systemModeDesc": "Cihaz ayarlarına göre değişir",
+    "accentColor": "Vurgu Rengi",
+    "proFeatures": "Premium Özellikler",
+    "subscriptionManagement": "Abonelik Yönetimi",
+    "cancelSubscriptionDesc": "Huzur Pro aboneliğinizi sonlandırın.",
+    "cancelSubscription": "Aboneliği İptal Et",
+    "ambientPulseTitle": "Manevi Kalp Atışı",
+    "ambientPulseDesc": "Namaz vaktinden önce yumuşak titreşim hisset",
+    "appearance": "Görünüm",
+    "adPrivacyOptions": "Reklam gizlilik tercihleri"
   },
   "pro": {
     "title": "Huzur Pro'ya Geçin",
@@ -576,7 +633,13 @@
       "hadith": "Hadis",
       "liturgical": "İbadet / fıkıh formu",
       "general": "Genel dua (kanonik kaynak doğrulanmadı)"
-    }
+    },
+    "fajr": "Sabah Namazı",
+    "dhuhr": "Öğle Namazı",
+    "asr": "İkindi Namazı",
+    "maghrib": "Akşam Namazı",
+    "isha": "Yatsı Namazı",
+    "witr": "Vitir Namazı"
   },
   "assistant": {
     "title": "Huzur Rehberi",
@@ -708,7 +771,10 @@
         "transliteration": "Estağfirullahellezi la ilahe illa hu",
         "meaning": "أستغفر الله الذي لا إله إلا هو"
       }
-    }
+    },
+    "send": "Gönder",
+    "readyAiMode": "Sakin ve kişisel rehber modu",
+    "aiInputPlaceholder": "Bugün neye ihtiyacın olduğunu kısaca yaz"
   },
   "community": {
     "title": "Cemaat",
@@ -726,7 +792,8 @@
       "cancel": "Vazgeç",
       "requestDua": "Dua İste / Not Bırak",
       "share": "Paylaş",
-      "amin": "Amin"
+      "amin": "Amin",
+      "aminDone": "Amin denildi"
     },
     "placeholders": {
       "writeDua": "Duanızı buraya yazın..."
@@ -734,8 +801,20 @@
     "messages": {
       "loading": "Yükleniyor...",
       "noDuas": "Henüz dua isteği yok. İlk isteyen siz olun.",
-      "errorSending": "Dua gönderilirken bir sorun oluştu."
-    }
+      "errorSending": "Dua gönderilirken bir sorun oluştu.",
+      "aminFailed": "Amin gönderilemedi. Lütfen tekrar deneyin."
+    },
+    "anonymous": "İsimsiz",
+    "featuredBadge": "Huzur önerisi",
+    "featuredDuas": "Öne çıkan dualar",
+    "featuredDuasDesc": "Topluluğu bir araya getiren niyetler ve Huzur önerileri",
+    "publicDuas": "Topluluktan dualar",
+    "publicDuasDesc": "Yeni duaları gör, amin de ve birlikte destek ol",
+    "featuredHatims": "Öne çıkan hatimler",
+    "featuredHatimsDesc": "Huzur tarafından önerilen açık topluluk halkaları",
+    "publicHatims": "Topluluktan gerçek hatimler",
+    "publicHatimsDesc": "Katıl, davet et ve birlikte tamamlanan hatimlere eşlik et",
+    "shareCopied": "Paylaşım linki kopyalandı."
   },
   "hatim": {
     "title": "Hatim Takibi",
@@ -788,7 +867,33 @@
       "cuzCompleted": "Bu cüz {{name}} tarafından okunmuş. Allah kabul etsin.",
       "confirmTake": "{{partNum}}. cüzü okumak için almak istiyor musunuz?",
       "partActions": "Bu cüz sizin tarafınızdan alındı.\n\"okudum\" yazarak tamamlayın\n\"iptal\" yazarak bırakın"
-    }
+    },
+    "createForm": {
+      "rateLimit": "Çok fazla hatim oluşturdunuz. Lütfen daha sonra tekrar deneyin.",
+      "authError": "Oturum hazır değil. Lütfen internetinizi kontrol edip tekrar deneyin.",
+      "error": "Hatim oluşturulamadı",
+      "title": "Yeni Hatim Başlat",
+      "subtitle": "Hatim grubuna liderlik et",
+      "nameLabel": "Hatim Adı",
+      "namePlaceholder": "Örn: Ailemiz için Hatim",
+      "descLabel": "Açıklama (İsteğe Bağlı)",
+      "descPlaceholder": "Niyetiniz nedir...",
+      "info": "Hatim 30 cüzden oluşur ve tamamlandığında üyeler ödül kazanır.",
+      "submit": "Oluştur"
+    },
+    "membershipRequired": "Bu hatimin detaylarını görmek için önce katılmalısınız.",
+    "inviteCode": "Davet kodu",
+    "statusGrid": "Cüz Durumları",
+    "gridSubtitle": "Uygun olan cüzü seç, okumayı tamamlayınca durumu güncelle.",
+    "parts": "cüz",
+    "free": "Boş",
+    "mine": "Sizde",
+    "others": "Başkasında",
+    "partShort": "Cüz",
+    "readBy": "Okuyan",
+    "takenBy": "Alan",
+    "lockedDescShort": "Katılmak için davet kodu giriniz:",
+    "noHatims": "Henüz görünen bir hatim yok. İlk açık halkayı sen başlat."
   },
   "deedJournal": {
     "title": "Amel Defteri",
@@ -1010,7 +1115,9 @@
         "name": "Ramazan Orucu",
         "desc": "Ramazan ayı orucu farzdır"
       }
-    }
+    },
+    "status_hint": "Bugünkü durumunuzu güncelleyin",
+    "info_note": "Oruç ibadeti, hem bedensel hem de ruhsal bir arınma vesilesidir. Hicri takvime göre tavsiye edilen günleri takip ederek borçlarınızı eda edebilir veya nafile oruçlarla sevap kazanabilirsiniz."
   },
   "greetingCards": {
     "title": "Tebrik Kartları",
@@ -1029,7 +1136,8 @@
       "sentWith": "Huzur Uygulaması ile gönderildi 💚",
       "downloaded": "Tebrik kartı indirildi. Galerinizden paylaşabilirsiniz.",
       "shareError": "Paylaşım sırasında bir sorun oluştu.",
-      "imageError": "Görüntü oluşturulamadı"
+      "imageError": "Görüntü oluşturulamadı",
+      "shareTitle": "Tebrik Kartını Paylaş"
     },
     "categories": {
       "cuma": {
@@ -1284,7 +1392,10 @@
         "meaning": "Kendisinden başka ilah olmayan Allah'tan bağışlanma dilerim"
       }
     },
-    "confirmReset": "İlerlemeyi sıfırlamak istiyor musunuz?"
+    "confirmReset": "İlerlemeyi sıfırlamak istiyor musunuz?",
+    "title": "Zikir ve Evrad",
+    "dailyProgress": "Günlük İlerleme",
+    "infoNoteReviewed": "Bu listede Kur’an ayetleri ve genel zikirler birlikte yer alır. Her metnin kaynak bilgisini açarak kontrol edin; kişisel takip, dinî hüküm veya kabul ölçüsü değildir."
   },
   "qibla": {
     "title": "Kıble Pusulası",
@@ -1335,7 +1446,17 @@
     "shareFailed": "Paylaşım açılamadı. Lütfen tekrar deneyin.",
     "shareCardCta": "Google Play'den ücretsiz indir",
     "dailyInsight": "Günün İlhamı",
-    "verseOfTheDay": "Günün Ayeti"
+    "verseOfTheDay": "Günün Ayeti",
+    "greetingSalam": "Selamun Aleyküm",
+    "quickAccess": "Hızlı Erişim",
+    "qiblaDesc": "Hassas yön bulucu",
+    "zikirDesc": "Günlük tesbihat takip",
+    "heroLabel": "Namaz vakitleri",
+    "timeLeft": "Kalan süre {{time}}",
+    "todayTimes": "Bugünün namaz vakitleri",
+    "prayed": "kılındı",
+    "prayedCount": "Bugün {{done}}/{{total}} vakit kılındı · işaretlemek için dokun",
+    "radio": "Radyo"
   },
   "homeFeed": {
     "priorityCard": {
@@ -1796,7 +1917,8 @@
         "source": "Kuran-ı Kerim",
         "ref": "Taha Suresi, 114"
       }
-    }
+    },
+    "info_note": "Hikmetname, İslam düşünce dünyasından seçilmiş veciz sözler, hikmetli ifadeler ve ders verici nükteler içermektedir. Ruhunuzu dinlendirecek ve yolunuzu aydınlatacak bilgileri burada bulabilirsiniz."
   },
   "stories": {
     "fridayMessage": "Cuma Mesajı",
@@ -3571,7 +3693,11 @@
       "requestSent": "Your request has been sent. Waiting for admin approval.",
       "errorCreating": "Error creating group.",
       "errorJoining": "Error joining group."
-    }
+    },
+    "discoverySeedLabel": "Huzur topluluğundan önerilen aile",
+    "discoveryRealLabel": "Topluluktan görünen aile",
+    "discoverTitle": "Keşfedilen aileler",
+    "discoverSubtitle": "Topluluğa katılan aileleri gör, ilham al ve kendi aileni oluştur"
   },
   "hatimCoach": {
     "title": "Akıllı Hatim Koçu",
@@ -3609,7 +3735,15 @@
     "trackerTitle": "Kaza Namazı Takibi",
     "recalculate": "Yeniden Hesapla",
     "confirmRecalculate": "Mevcut veriler silinecek. Devam etmek istiyor musunuz?",
-    "note": "Kaza namazı kıldığınızda '-' butonuna basarak sayıyı azaltın."
+    "note": "Kaza namazı kıldığınızda '-' butonuna basarak sayıyı azaltın.",
+    "personalTitle": "Kişisel kaza kaydı",
+    "personalSubtitle": "Yalnızca sizin eklediğiniz namaz kayıtlarını düzenleyin.",
+    "personalNoteTitle": "Kişisel kayıt",
+    "personalNote": "Bu ekran kişisel kayıt içindir; dinî yükümlülük ve takip yöntemi mezhep ve kişisel duruma göre değişebilir. Dinî bir görevliye danışın.",
+    "summaryLabel": "Kişisel kaza kaydı özeti",
+    "totalLogged": "Toplam kayıtlı vakit",
+    "entries": "Vakit kaydı",
+    "byPrayer": "Vakit bazında kayıt"
   },
   "streak": {
     "fajr": "Sabah",
@@ -3659,13 +3793,30 @@
       "28": "Huzur Elçisi",
       "29": "Manevi ?nc?",
       "30": "Huzur Ustas?"
-    }
+    },
+    "level": "Seviye",
+    "share": "İstatistik Kartını Paylaş",
+    "totalXp": "Toplam XP",
+    "progress": "Sonraki Seviye İlerlemesi",
+    "nextLevel": "Seviye",
+    "targetTitle": "Hedefe Çok Yakınsın",
+    "targetDesc": "{{nextTitle}} unvanına ulaşmak için sadece {{remaining}} XP kaldı."
   },
   "journey": {
     "title": "Manevi Yolculuğum"
   },
   "routine": {
-    "title": "Günlük Rutinlerim"
+    "title": "Günlük Rutinlerim",
+    "subtitle": "Adımları sırayla tamamlayarak düzeninizi koruyun.",
+    "newRoutine": "Yeni rutin",
+    "morning": "Sabah",
+    "evening": "Akşam",
+    "addStep": "Adımı ekle",
+    "completePrevious": "Önceki adımı tamamlayın",
+    "newRoutineForm": "Yeni rutin formu",
+    "createBtn": "Kendi Rutinini Oluştur",
+    "namePlaceholder": "Örn: Öğle arası zikirleri",
+    "addTask": "Yeni adım ekle..."
   },
   "quiz": {
     "title": "Günün Testi",
@@ -3886,7 +4037,8 @@
   "weeklyGoal": {
     "title": "Haftalık Hedef",
     "description": "Haftada kaç gün ibadet takibini hedefliyorsun?",
-    "daysValue": "{{count}} gün"
+    "daysValue": "{{count}} gün",
+    "daysLabelShort": "GÜN"
   },
   "zakatCalculator": {
     "title": "Zekat Hesaplayıcı",
@@ -3996,14 +4148,17 @@
     "benefits": {
       "unlimitedAi": "Sınırsız AI sorgu",
       "allSurahs": "Tüm sureler",
-      "noAds": "Reklamsız"
+      "noAds": "Reklamsız",
+      "offline": "Çevrimdışı"
     },
     "features": {
       "nuzul_ai": "Nüzul Sebebi Sorgusu",
       "tajweed_ai": "Tecvid Kontrolü",
       "word_by_word": "Kelime Kelime Anlam",
       "memorize": "Hafızlık Yardımcısı"
-    }
+    },
+    "proOptionSuffix": "kullanın!",
+    "proBenefits": "PRO AVANTAJLARI"
   },
   "weeklyChallenges": {
     "title": "Haftalık Meydan Okumalar",
@@ -4078,7 +4233,11 @@
     "description": "{{category}} serin bir gün kaçırılmış görünüyor. 24 saatlik pencerede telafi ederek serini koruyabilirsin.",
     "deadline": "Son telafi zamanı: {{value}}",
     "recoverAction": "Telafi Et",
-    "laterAction": "Daha Sonra"
+    "laterAction": "Daha Sonra",
+    "rewardedAction": "Reklam İzle ve Ritmi Dengele",
+    "rewardedError": "Ödüllü reklam şu an açılamadı. Lütfen tekrar dene.",
+    "rewardedHint": "Bu dengeleme hakkı reklam tamamlandığında aktif olur.",
+    "loadingAction": "Hazırlanıyor..."
   },
   "streakRecovery": {
     "expired": "Süre doldu",
@@ -4184,7 +4343,11 @@
       "tawhid": "Tevhid",
       "postPrayerDuas": "Namaz Sonrası Dualar",
       "complete": "Tamamla",
-      "completed": "Tamamlandı ✓"
+      "completed": "Tamamlandı ✓",
+      "subtitle": "Namaz sonrası zikir ve dualarınızı takip edin.",
+      "resetLabel": "Tespihat ilerlemesini sıfırla",
+      "toggleTawhid": "Tevhid metnini aç veya kapat",
+      "optionalQuranDuas": "Tevhid ve isteğe bağlı Kur’an duaları"
     }
   },
   "quranMemorize": {
@@ -4383,7 +4546,26 @@
       "startNow": "Başla",
       "stepCounter": "Adım {{current}} / {{total}}",
       "goalTitle": "Huzur'u en çok ne için kullanacaksın?",
-      "goalDescription": "Ana sayfayı buna göre düzenleyelim. Daha sonra ayarlardan değiştirebilirsin."
+      "goalDescription": "Ana sayfayı buna göre düzenleyelim. Daha sonra ayarlardan değiştirebilirsin.",
+      "languageTitleDirect": "Huzur, kendi dilinde başlar",
+      "languageDescriptionDirect": "Huzur'u hangi dilde kullanmak istersin?",
+      "permissionsTitle": "İbadet rutinini kaçırmamak için iki ayar",
+      "permissionsDescriptionNotifications": "Bildirim ve konum, namaz vaktini ve günlük kısa ibadet adımını doğru kurar.",
+      "permissionsDescription": "Sadece namaz vakti ve günlük ibadet hatırlatması için gereken ayarları hazırlayalım.",
+      "startWithTeaser": "Devam et",
+      "languageError": "Dil seçimi uygulanamadı. Varsayılan dille devam ediyoruz.",
+      "permissionsRequired": "Devam etmeden önce iki tercih yap.",
+      "permissionsError": "Bazı izinler şu an uygulanamadı. Yine de devam edebilirsin.",
+      "genericError": "Bu adım tamamlanırken bir sorun oluştu.",
+      "locationTitleShort": "Konum",
+      "locationDescriptionShort": "Namaz vakitlerini bulunduğun yere göre doğru hesaplar.",
+      "allow": "İzin ver",
+      "skipForNow": "Şimdilik geç",
+      "notificationsTitleShort": "Bildirimler",
+      "notificationsDescriptionShort": "Vakitleri ve 2 dakikalık günlük adımı kaçırmamana yardım eder.",
+      "turnOn": "Aç",
+      "premiumTeaserTitle": "Düzenin oturunca daha fazla destek açılabilir",
+      "premiumTeaserDesc": "Önce ilk adımı tamamla; sonra haftalık içgörüler ve rehberlik için Pro önerisi gösterebiliriz."
     },
     "funnel": {
       "title": "Growth Funnel Özeti",
@@ -4511,19 +4693,37 @@
   },
   "churn": {
     "offer": {
-      "helpDesc": "Daha iyi bir deneyim için özel destek ekibimizle görüşmek ister misiniz? Müşteri memnuniyeti bizim için her şeydir."
+      "helpDesc": "Daha iyi bir deneyim için özel destek ekibimizle görüşmek ister misiniz? Müşteri memnuniyeti bizim için her şeydir.",
+      "discountTitle": "Size Özel %30 İndirim!",
+      "discountDesc": "Gitmeyin diye önümüzdeki 3 ay boyunca %30 indirim kazandınız. Huzur’la kalmaya devam edin.",
+      "acceptDiscount": "İndirimi Kabul Et",
+      "pauseTitle": "Aboneliğinizi Dondurun",
+      "pauseDesc": "Tamamen iptal etmek yerine 1 ay boyunca ücretsiz dondurun. Hazır olduğunuzda kaldığınız yerden devam edin.",
+      "acceptPause": "Aboneliği Dondur",
+      "helpTitle": "Yardımcı Olabiliriz",
+      "contactSupport": "Destekle Görüş",
+      "decline": "Hayır, İptal İşlemine Devam Et"
     },
     "survey": {
       "title": "Bizi Neden Bırakıyorsunuz?",
-      "desc": "Deneyiminizi geliştirmek için ayrılma sebebinizi öğrenebilir miyiz?"
+      "desc": "Deneyiminizi geliştirmek için ayrılma sebebinizi öğrenebilir miyiz?",
+      "keepSub": "Aboneliğimi Koru"
     },
     "confirm": {
       "title": "Emin Misiniz?",
-      "canceling": "?ptal Ediliyor..."
+      "canceling": "?ptal Ediliyor...",
+      "desc": "Aboneliğinizi iptal etmeniz durumunda, mevcut döneminizin sonunda Pro özelliklerine erişiminizi kaybedeceksiniz. Tüm reklamsız deneyim ve premium içerikler sonlanacaktır.",
+      "keep": "Vazgeç, Abonelikte Kal",
+      "cancel": "Evet, Aboneliğimi İptal Et"
     }
   },
   "mood": {
-    "ask": "Bugün Nasıl Hissediyorsun?"
+    "ask": "Bugün Nasıl Hissediyorsun?",
+    "title": "Ruh Hali",
+    "subtitle": "Ruh haline şifa ayetleri seçelim",
+    "helperText": "Hissiyatına göre sana özel ayetleri bulalım.",
+    "selectedHeader": "Bu ruh haline özel şifa ayetleri:",
+    "reselect": "Başka Bir Ruh Hali Seç"
   },
   "countries": {
     "turkey": "Türkiye"
@@ -4564,7 +4764,23 @@
     "etiquette": {
       "title": "Dua Adabı",
       "desc": "Dualarınızı ihlasla, düzenli olarak tekrarlayın ve her türlü hayırlı isteğiniz için Rabbimize sığının."
-    }
+    },
+    "tracker_title": "Dua Takipçisi",
+    "tracker_subtitle": "Dualarınızı kaydedin ve takip edin",
+    "create": {
+      "rateLimit": "Çok fazla dua isteği gönderdiniz. Lütfen daha sonra tekrar deneyin.",
+      "authError": "Oturum hazır değil. Lütfen internetinizi kontrol edip tekrar deneyin.",
+      "error": "Dua isteği oluşturulamadı",
+      "title": "Dua İsteği Paylaş",
+      "subtitle": "Halkadan dua isteğinde bulun",
+      "intentLabel": "Niyetiniz",
+      "intentPlaceholder": "Allah rızası için...",
+      "anonymousLabel": "İsimsiz Paylaş",
+      "anonymousActive": "Kimliğiniz gizlenecektir",
+      "anonymousInactive": "Adınız görünecektir",
+      "submit": "Paylaş"
+    },
+    "createRequest": "Dua isteği ekle"
   },
   "levelUp": {
     "congrats": "TEBRİKLER!",
@@ -4597,7 +4813,9 @@
       "fact": "Biliyor muydun?"
     },
     "cardFallbackTitle": "Bugünün keşfini aç",
-    "cardFallbackSource": "Huzur"
+    "cardFallbackSource": "Huzur",
+    "title": "Günlük Keşif",
+    "explored": "Keşfedildi"
   },
   "rate": {
     "title": "Huzur'u seviyor musunuz?",
@@ -4627,7 +4845,12 @@
     }
   },
   "imsakiye": {
-    "locationRequired": "İmsakiye için doğrulanmış konum gerekli."
+    "locationRequired": "İmsakiye için doğrulanmış konum gerekli.",
+    "errorCalculate": "Namaz saatleri hesaplanamadı. Lütfen tekrar deneyin.",
+    "calculatedFor": "Aynı konum için hesaplandı",
+    "prevMonth": "Önceki ay",
+    "nextMonth": "Sonraki ay",
+    "day": "Gün"
   },
   "zikirmatik": {
     "popularChoices": "Zikirler",
@@ -4701,6 +4924,196 @@
     "mevlid": {
       "name": "Mevlid Kandili",
       "desc": "Peygamber Efendimiz'in (s.a.v.) doğum gecesi"
+    }
+  },
+  "duaTracker": {
+    "summaryLabel": "Dua özeti",
+    "prayed": "Dua edildi",
+    "prayedPersonal": "Kişisel kayıtta dua edildi",
+    "totalRecords": "Toplam kayıt",
+    "prayedNote": "“Dua edildi” işareti yalnızca kişisel kayıttır; kabul edildiği anlamına gelmez.",
+    "suggestions": "Önerilenler",
+    "suggestionNote": "Genel dua örneği — Kur’an/hadis alıntısı değildir",
+    "edit": "Duayı düzenle",
+    "delete": "Duayı sil"
+  },
+  "adConsent": {
+    "eyebrow": "Gizlilik tercihi",
+    "title": "Ücretsiz deneyimi nasıl sürdürmek istersin?",
+    "copy": "Reklamlara izin verirsen Huzur'un ücretsiz özelliklerini desteklersin. İlk tercih olarak kişiselleştirilmemiş reklamlar kullanılır; analiz izni bundan ayrıdır.",
+    "allow": "Reklamlarla devam et",
+    "decline": "Şimdilik reklamsız devam et"
+  },
+  "errorBoundary": {
+    "title": "Bir hata oluştu",
+    "description": "Uygulamanın bazı bölümleri düzgün çalışmıyor. Sayfayı yenileyin veya uygulamayı yeniden başlatın."
+  },
+  "fontSettings": {
+    "title": "Yazı Ayarları",
+    "subtitle": "Metin görünümünü kişiselleştir",
+    "preview": "Önizleme",
+    "arabicFamily": "Arapça Yazı Tipi",
+    "arabicSize": "Arapça Boyutu",
+    "turkishSize": "Meal boyutu",
+    "lineHeight": "Satır Aralığı",
+    "reset": "Varsayılana Sıfırla"
+  },
+  "locationConsent": {
+    "title": "Konumunu kullanabilir miyiz?",
+    "description": "Bulunduğun şehre göre doğru namaz vakitlerini ve hava durumunu göstermek için konum izni gerekir. İzin vermezsen İstanbul varsayılan olarak kullanılır.",
+    "allow": "Konumumu kullan",
+    "decline": "İstanbul ile devam et"
+  },
+  "religiousDays": {
+    "title": "Dini Günler",
+    "calendar": "Takvimi",
+    "nextUpcoming": "Sıradaki",
+    "daysLeft": "GÜN KALDI",
+    "completed": "GEÇTİ"
+  },
+  "weeklyReport": {
+    "activeDays": "Aktif Gün",
+    "prayerDays": "Namaz Günü",
+    "quranDays": "Kuran Günü",
+    "routines": "Rutin",
+    "bannerTitle": "Haftalık Özetin Hazır",
+    "bannerDesc": "+{{xp}} XP kazandın, detayları gör",
+    "title": "Haftalık Huzur Özeti",
+    "xp": "Haftalık XP",
+    "motivation": "Küçük ama istikrarlı adımlar en güçlü değişimi oluşturur. Bu haftaki ritmini sakin bir şekilde korumaya devam et.",
+    "continue": "Yeni Haftaya Başla"
+  },
+  "quests": {
+    "dailyTitle": "Günün Görevleri",
+    "claim": "Al",
+    "go": "Git",
+    "claimed": "Ödül alındı"
+  },
+  "library": {
+    "results_found": "{{count}} sonuç bulundu",
+    "no_results": "Sonuç bulunamadı",
+    "subtitle": "İslami bilgi kaynakları ve referanslar",
+    "search_placeholder": "Ara... (örn: namaz, oruç)",
+    "episodes": "Bölüm",
+    "premium_video": "Premium Video Akademi",
+    "episode_list": "Bölüm Listesi",
+    "topics": "İçerik Konuları",
+    "go_to_channel": "YouTube Kanalına Git",
+    "view_playlists": "Oynatma Listelerini Gör",
+    "search_on_youtube": "YouTube'da Ara",
+    "external_notice": "Video içerikler harici kaynaklardan sağlanmaktadır. YouTube uygulamasına yönlendirileceksiniz.",
+    "pronunciation": "Okunuşu",
+    "paywall_desc": "Tüm kütüphane içeriğine ve premium özelliklere sınırsız erişim sağlayın.",
+    "feature_audio": "Ünlü hafızlardan hatim setleri",
+    "feature_video": "İslami Akademi video serileri",
+    "feature_books": "Özel dini kaynaklar ve kitaplar"
+  },
+  "radio": {
+    "selectSurah": "Bir sure seçin"
+  },
+  "comeback": {
+    "claimedTitle": "Bonus Aktif!",
+    "claimedDesc": "24 saat boyunca 2x XP kazanacaksın.",
+    "claimButton": "Kazan",
+    "maybeLater": "Belki Sonra"
+  },
+  "mosqueFinder": {
+    "title": "En Yakın Camiler"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Gizlilik Politikası",
+      "subtitle": "Verilerinizin güvenliği ve gizliliği önceliğimizdir",
+      "intro": "uygulaması olarak, kullanıcılarımızın gizliliğine önem veriyoruz. Bu gizlilik politikası, verilerinizin nasıl toplandığını ve korunduğunu açıklamaktadır.",
+      "s1": {
+        "title": "1. Toplanan Veriler",
+        "desc": "Uygulamamız aşağıdaki verileri toplayabilir:",
+        "item1Label": "Konum Bilgisi:",
+        "item1Desc": "Namaz vakitlerini, hava durumunu, kıble yönünü ve yakın cami özelliklerini çalıştırmak için yaklaşık veya hassas konum kullanılabilir. Konum tercihleriniz cihazınızda saklanır; koordinatlar yalnızca ilgili özelliği çalıştırmak için gerekli olduğunda üçüncü taraf API servislerine gönderilebilir.",
+        "item2Label": "Cihaz Bilgileri:",
+        "item2Desc": "Uygulamanın düzgün çalışması için temel cihaz bilgileri kullanılabilir."
+      },
+      "s2": {
+        "title": "2. Veri Kullanımı",
+        "desc": "Toplanan veriler sadece aşağıdaki amaçlar için kullanılır:",
+        "item1": "Namaz vakitlerini doğru göstermek",
+        "item2": "Hava durumu bilgisi sağlamak",
+        "item3": "Kıble yönünü belirlemek",
+        "item4": "Uygulama performansını iyileştirmek"
+      },
+      "s3": {
+        "title": "3. Veri Paylaşımı",
+        "desc": "Kişisel verileriniz satılmaz. Uygulama, namaz vakitleri için Aladhan API, hava durumu için Open-Meteo API, konum adı çözümleme için BigDataCloud API ve harita/yakın yer özellikleri için harita servisleri kullanabilir. Bu servislerle yalnızca ilgili özelliğin çalışması için gerekli veriler paylaşılır ve bu servislerin kendi gizlilik politikaları geçerlidir."
+      },
+      "s4": {
+        "title": "4. Veri Güvenliği",
+        "desc": "Verileriniz cihazınızda güvenli bir şekilde saklanır. Uygulama, hassas bilgileri şifreleme teknolojileri ile korur."
+      },
+      "s5": {
+        "title": "5. İzinler"
+      },
+      "permission": {
+        "location": "Konum:",
+        "locationDesc": "Namaz vakitleri ve hava durumu için",
+        "notification": "Bildirimler:",
+        "notificationDesc": "Namaz vakitleri hatırlatmaları için",
+        "internet": "İnternet:",
+        "internetDesc": "API verilerini almak için"
+      },
+      "s6": {
+        "title": "6. Reklam ve Analiz",
+        "desc": "Uygulamamız Google AdMob reklam hizmeti ve Google Firebase Analytics kullanır. Bu hizmetler, kişiselleştirilmiş reklamlar sunmak ve uygulama kullanımını analiz etmek için cihaz tanımlayıcılarını (GAID) toplayabilir."
+      },
+      "s7": {
+        "title": "7. Yapay Zeka Asistan",
+        "desc": "Dini sorularınızı yanıtlamak için yapay zeka sağlayıcıları ve Huzur backend servisleri kullanılabilir. Sorularınız cevap üretimi için bu servislere gönderilir. Lütfen asistan mesajlarına hassas kişisel bilgi, kimlik bilgisi veya ödeme bilgisi yazmayın."
+      }
+    },
+    "lastUpdate": "Son Güncelleme",
+    "contact": {
+      "title": "8. İletişim",
+      "desc": "Gizlilik politikamız hakkında sorularınız için:"
+    },
+    "tos": {
+      "title": "Kullanım Koşulları",
+      "subtitle": "Yasal haklarınız ve uygulama kullanım kuralları",
+      "intro": "uygulamasını kullanarak, aşağıdaki kullanım koşullarını kabul etmiş sayılırsınız. Lütfen bu koşulları dikkatle okuyun.",
+      "s1": {
+        "title": "1. Kullanım Lisansı",
+        "desc": "Bu uygulama, kişisel ve ticari olmayan kullanım için ücretsiz olarak sunulmaktadır. Uygulamayı değiştirmek, kopyalamak veya dağıtmak yasaktır."
+      },
+      "s2": {
+        "title": "2. Hizmet Açıklaması",
+        "desc": "Huzur uygulaması, namaz vakitleri, Kuran-ı Kerim, dualar ve dini içerikler sağlayan bir mobil uygulamadır. Uygulama, üçüncü taraf API'ler kullanarak veri sağlar ve bu verilerin doğruluğu garanti edilmez."
+      },
+      "s3": {
+        "title": "3. Kullanıcı Sorumlulukları",
+        "desc": "Kullanıcılar:",
+        "item1": "Uygulamayı yasalara uygun şekilde kullanmalıdır",
+        "item2": "Uygulamanın içeriğini kötüye kullanmamalıdır",
+        "item3": "Uygulamayı başkalarının zararına kullanmamalıdır",
+        "item4": "Uygulamanın güvenliğini tehlikeye atmamalıdır"
+      },
+      "s4": {
+        "title": "4. Sorumluluk Reddi",
+        "desc": "Uygulama \"olduğu gibi\" sunulmaktadır. Namaz vakitleri ve diğer bilgilerin doğruluğu için garanti verilmez. Kullanıcılar, önemli dini uygulamalar için resmi kaynaklara başvurmalıdır."
+      },
+      "s5": {
+        "title": "5. Fikri Mülkiyet",
+        "desc": "Uygulamanın tüm içeriği, tasarımı ve kodları telif hakkı ile korunmaktadır. Kuran-ı Kerim metinleri ve dualar kamu malıdır, ancak uygulamanın kendisi telif hakkı altındadır."
+      },
+      "s6": {
+        "title": "6. Hizmet Değişiklikleri",
+        "desc": "Uygulama, önceden haber vermeksizin değiştirilebilir, güncellenebilir veya durdurulabilir. Kullanıcılar bu değişikliklerden haberdar olmalıdır."
+      },
+      "s7": {
+        "title": "7. İptal ve Fesih",
+        "desc": "Uygulama kullanımı, herhangi bir zamanda ve herhangi bir nedenle iptal edilebilir. Kullanıcılar, uygulama koşullarını ihlal ettiklerinde erişimleri sonlandırılabilir."
+      },
+      "s8": {
+        "title": "8. Değişiklikler",
+        "desc": "Bu kullanım koşulları zaman zaman güncellenebilir. Önemli değişiklikler uygulama içinde bildirilecektir."
+      }
     }
   }
 }

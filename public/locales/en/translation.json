@@ -32,7 +32,22 @@
     "processing": "Processing...",
     "home": "Back to Home",
     "all": "All",
-    "source": "Source"
+    "source": "Source",
+    "edit": "Edit",
+    "saved": "Saved",
+    "badge": "Badge",
+    "days": "Days",
+    "completed": "Completed",
+    "upgrade_pro": "Upgrade to Pro",
+    "later": "Maybe later",
+    "surah": "Surah",
+    "ayah": "verses",
+    "refresh": "Refresh",
+    "people": "people",
+    "copy": "Copy",
+    "minutes": "min",
+    "appName": "Huzur",
+    "ok": "OK"
   },
   "notifications": {
     "prayer": {
@@ -73,7 +88,13 @@
     "catNature": "Nature",
     "catDhikr": "Dhikr",
     "catMusic": "Instrumental",
-    "catQuran": "Quran"
+    "catQuran": "Quran",
+    "wake_hint": "Tap to wake",
+    "night_mode": "Night mode",
+    "categories": "Categories",
+    "sounds": "Sounds",
+    "volume": "Volume",
+    "info_note": "Huzur Mode offers calm sounds to help you relax and sleep better. Set the timer to save your device's battery."
   },
   "dailyTasks": {
     "task": "Task",
@@ -197,21 +218,35 @@
         "title": "Make dua for someone",
         "desc": "Pray for a fellow Muslim"
       }
-    }
+    },
+    "summaryLabel": "Daily task summary",
+    "completedToday": "Tasks completed today",
+    "metricPoints": "Points",
+    "metricStreak": "Streak",
+    "metricTasks": "Tasks",
+    "todaysTasks": "Today's tasks · +{{points}} points"
   },
   "esma": {
     "title": "Asma ul Husna",
     "subtitle": "The 99 Beautiful Names of Allah",
     "daily": "Name of the Day",
     "search_placeholder": "Search names...",
-    "count_suffix": "names"
+    "count_suffix": "names",
+    "eyebrow": "99 beautiful names",
+    "directory": "Index",
+    "directoryTitle": "Names and meanings",
+    "clearSearch": "Clear search",
+    "emptyHint": "Try another search term or turn off the favourites filter.",
+    "aboutTitle": "About Asma ul-Husna",
+    "info_note": "Asma ul-Husna means the most beautiful names of Allah. Remembering these names, reflecting on their meanings and calling upon Allah by them is recommended."
   },
   "hadith": {
     "title": "Hadiths",
     "daily": "Hadith of the Day",
     "categories": "Categories",
     "count_suffix": "hadiths",
-    "shareDialogTitle": "Share Hadith"
+    "shareDialogTitle": "Share Hadith",
+    "info_note": "Hadiths are the sayings, actions and tacit approvals of the Prophet Muhammad (peace be upon him). They are the second primary source of Islam after the Qur'an."
   },
   "nav": {
     "home": "Home",
@@ -219,7 +254,7 @@
     "assistant": "Q&A",
     "community": "Community",
     "menu": "Menu",
-    "mainNavigation": "Ana gezinme"
+    "mainNavigation": "Main navigation"
   },
   "prayer": {
     "fajr": "Fajr",
@@ -300,7 +335,11 @@
       "system": "Settings and support",
       "focus": "Main focus"
     },
-    "specialDays": "Religious Days"
+    "specialDays": "Religious Days",
+    "quran": "Quran",
+    "esma": "Divine Names",
+    "more": "More",
+    "qibla": "Qibla compass"
   },
   "settings": {
     "title": "Settings",
@@ -349,7 +388,21 @@
     "accentColorDesc": "Changes the color of buttons and icons throughout the app.",
     "preview": "Preview",
     "previewTitle": "Looks good, right?",
-    "previewDesc": "This color suits your app well."
+    "previewDesc": "This color suits your app well.",
+    "themeMode": "Appearance mode",
+    "lightModeDesc": "Clean and bright look",
+    "darkModeDesc": "Easy-on-the-eyes night experience",
+    "systemMode": "System",
+    "systemModeDesc": "Follows your device settings",
+    "accentColor": "Accent colour",
+    "proFeatures": "Premium features",
+    "subscriptionManagement": "Subscription management",
+    "cancelSubscriptionDesc": "End your Huzur Pro subscription.",
+    "cancelSubscription": "Cancel subscription",
+    "ambientPulseTitle": "Spiritual heartbeat",
+    "ambientPulseDesc": "Feel a gentle vibration before prayer time",
+    "appearance": "Appearance",
+    "adPrivacyOptions": "Ad privacy options"
   },
   "pro": {
     "title": "Upgrade to Huzur Pro",
@@ -486,7 +539,13 @@
       "hadith": "Hadith",
       "liturgical": "Worship / fiqh form",
       "general": "General supplication (no verified canonical source)"
-    }
+    },
+    "fajr": "Fajr prayer",
+    "dhuhr": "Dhuhr prayer",
+    "asr": "Asr prayer",
+    "maghrib": "Maghrib prayer",
+    "isha": "Isha prayer",
+    "witr": "Witr prayer"
   },
   "assistant": {
     "title": "Huzur Guide",
@@ -618,7 +677,10 @@
         "transliteration": "Estaghfirullahellezi la ilahe illa hu",
         "meaning": "أستغفر الله الذي لا إله إلا هو"
       }
-    }
+    },
+    "send": "Send",
+    "readyAiMode": "Calm, personal guide mode",
+    "aiInputPlaceholder": "Briefly write what you need today"
   },
   "community": {
     "title": "Community",
@@ -636,7 +698,8 @@
       "cancel": "Cancel",
       "requestDua": "Request Dua / Leave Note",
       "share": "Share",
-      "amin": "Ameen"
+      "amin": "Ameen",
+      "aminDone": "Amin said"
     },
     "placeholders": {
       "writeDua": "Write your prayer here..."
@@ -644,8 +707,20 @@
     "messages": {
       "loading": "Loading...",
       "noDuas": "No prayer requests yet. Be the first.",
-      "errorSending": "An issue occurred while sending the prayer."
-    }
+      "errorSending": "An issue occurred while sending the prayer.",
+      "aminFailed": "Amin could not be sent. Please try again."
+    },
+    "anonymous": "Anonymous",
+    "featuredBadge": "Huzur pick",
+    "featuredDuas": "Featured prayers",
+    "featuredDuasDesc": "Intentions that bring the community together, and Huzur picks",
+    "publicDuas": "Prayers from the community",
+    "publicDuasDesc": "See new prayers, say amin and support each other",
+    "featuredHatims": "Featured khatms",
+    "featuredHatimsDesc": "Open community circles recommended by Huzur",
+    "publicHatims": "Khatms from the community",
+    "publicHatimsDesc": "Join, invite and take part in khatms completed together",
+    "shareCopied": "Share link copied."
   },
   "hatim": {
     "title": "Khatm Tracker",
@@ -698,7 +773,33 @@
       "cuzCompleted": "This juz was read by {{name}}. May Allah accept it.",
       "confirmTake": "Do you want to take juz {{partNum}} to read?",
       "partActions": "This juz has been assigned to you.\nType \"read\" to complete it.\nType \"cancel\" to release it."
-    }
+    },
+    "createForm": {
+      "rateLimit": "You have created too many khatms. Please try again later.",
+      "authError": "Sign-in is not ready. Please check your internet connection and try again.",
+      "error": "Could not create the khatm",
+      "title": "Start a new khatm",
+      "subtitle": "Lead a khatm group",
+      "nameLabel": "Khatm name",
+      "namePlaceholder": "E.g. Khatm for our family",
+      "descLabel": "Description (optional)",
+      "descPlaceholder": "What is your intention…",
+      "info": "A khatm has 30 juz, and members earn a reward when it is completed.",
+      "submit": "Create"
+    },
+    "membershipRequired": "You need to join this khatm before you can see its details.",
+    "inviteCode": "Invite code",
+    "statusGrid": "Juz status",
+    "gridSubtitle": "Choose an available juz and update its status when you finish reading.",
+    "parts": "juz",
+    "free": "Free",
+    "mine": "Yours",
+    "others": "Taken",
+    "partShort": "Juz",
+    "readBy": "Read by",
+    "takenBy": "Taken by",
+    "lockedDescShort": "Enter the invite code to join:",
+    "noHatims": "No khatms to show yet. Start the first open circle."
   },
   "deedJournal": {
     "title": "Deed Journal",
@@ -920,7 +1021,9 @@
         "name": "Ramadan Fasting",
         "desc": "Fasting in Ramadan is obligatory"
       }
-    }
+    },
+    "status_hint": "Update today's status",
+    "info_note": "Fasting is a means of both physical and spiritual purification. By following the recommended days in the Hijri calendar, you can make up missed fasts or earn reward with voluntary fasts."
   },
   "greetingCards": {
     "title": "Greeting Cards",
@@ -939,7 +1042,8 @@
       "sentWith": "Sent with Huzur App 💚",
       "downloaded": "Greeting card downloaded. You can share it from your gallery.",
       "shareError": "An issue occurred while sharing.",
-      "imageError": "Could not generate image"
+      "imageError": "Could not generate image",
+      "shareTitle": "Share greeting card"
     },
     "categories": {
       "cuma": {
@@ -1194,7 +1298,10 @@
         "meaning": "I seek forgiveness from Allah, there is no deity but Him"
       }
     },
-    "confirmReset": "Do you want to reset your progress?"
+    "confirmReset": "Do you want to reset your progress?",
+    "title": "Dhikr and daily litanies",
+    "dailyProgress": "Daily progress",
+    "infoNoteReviewed": "This list contains Qur'anic verses together with general dhikr. Open each text's source to check it; personal tracking is not a religious ruling or a measure of acceptance."
   },
   "qibla": {
     "title": "Qibla Compass",
@@ -1245,7 +1352,17 @@
     "shareFailed": "Could not open sharing. Please try again.",
     "shareCardCta": "Free on Google Play",
     "dailyInsight": "Daily Inspiration",
-    "verseOfTheDay": "Verse of the Day"
+    "verseOfTheDay": "Verse of the Day",
+    "greetingSalam": "Assalamu alaikum",
+    "quickAccess": "Quick access",
+    "qiblaDesc": "Accurate direction finder",
+    "zikirDesc": "Track your daily dhikr",
+    "heroLabel": "Prayer times",
+    "timeLeft": "Time left {{time}}",
+    "todayTimes": "Today's prayer times",
+    "prayed": "prayed",
+    "prayedCount": "{{done}}/{{total}} prayers marked today · tap to mark",
+    "radio": "Radio"
   },
   "hikmet": {
     "title": "Wisdom Book",
@@ -1576,7 +1693,8 @@
         "source": "The Holy Quran",
         "ref": "Surah Ta-Ha, 114"
       }
-    }
+    },
+    "info_note": "The Book of Wisdom contains concise sayings, wise expressions and instructive anecdotes selected from the Islamic intellectual tradition."
   },
   "stories": {
     "fridayMessage": "Friday Message",
@@ -3407,7 +3525,11 @@
     "waterDrops": "Water Drops",
     "waterTreeAction": "Water the Tree",
     "watering": "Watering...",
-    "treeTip": "Your tree grows with daily prayer."
+    "treeTip": "Your tree grows with daily prayer.",
+    "discoverySeedLabel": "Family suggested by the Huzur community",
+    "discoveryRealLabel": "Family from the community",
+    "discoverTitle": "Discovered families",
+    "discoverSubtitle": "See families who joined the community, get inspired and create your own family"
   },
   "hatimCoach": {
     "title": "Smart Khatm Coach",
@@ -3540,14 +3662,17 @@
     "benefits": {
       "unlimitedAi": "Unlimited AI queries",
       "allSurahs": "All surahs",
-      "noAds": "Ad-free"
+      "noAds": "Ad-free",
+      "offline": "Offline"
     },
     "features": {
       "nuzul_ai": "Revelation Reason Query",
       "tajweed_ai": "Tajweed Check",
       "word_by_word": "Word by Word Meaning",
       "memorize": "Memorization Assistant"
-    }
+    },
+    "proOptionSuffix": "access!",
+    "proBenefits": "Pro benefits"
   },
   "weeklyChallenges": {
     "title": "Weekly Challenges",
@@ -3622,7 +3747,11 @@
     "description": "It looks like your {{category}} streak missed one day. Recover it within 24 hours to protect your streak.",
     "deadline": "Recovery deadline: {{value}}",
     "recoverAction": "Recover Now",
-    "laterAction": "Later"
+    "laterAction": "Later",
+    "rewardedAction": "Watch an ad to restore your rhythm",
+    "rewardedError": "The rewarded ad couldn't be opened right now. Please try again.",
+    "rewardedHint": "This restore becomes active once the ad is completed.",
+    "loadingAction": "Preparing…"
   },
   "streakRecovery": {
     "expired": "Expired",
@@ -3728,7 +3857,11 @@
       "tawhid": "Tawhid",
       "postPrayerDuas": "Post-Prayer Duas",
       "complete": "Complete",
-      "completed": "Completed ✓"
+      "completed": "Completed ✓",
+      "subtitle": "Follow your dhikr and supplications after the prayer.",
+      "resetLabel": "Reset tasbih progress",
+      "toggleTawhid": "Show or hide the tawhid text",
+      "optionalQuranDuas": "Tawhid and optional Qur'anic supplications"
     }
   },
   "quranMemorize": {
@@ -3921,7 +4054,9 @@
       "health": "Would you make dua for healing for our patient?",
       "exam": "I ask for your duas for success in my exams.",
       "family": "Please make dua for peace in my family."
-    }
+    },
+    "subtitle": "Let's meet in supplication",
+    "askForPrayer": "Ask for prayers"
   },
   "dailyFiqh": {
     "title": "Daily Fiqh Knowledge",
@@ -3977,12 +4112,14 @@
     "encouragement_rising": "Small but steady steps can move you above the league average.",
     "standing_top_quarter": "You are in the top quarter",
     "standing_upper_half": "You are in the upper half of the league",
-    "standing_rising": "Your rhythm is climbing as it settles in"
+    "standing_rising": "Your rhythm is climbing as it settles in",
+    "settingsTitle": "Social rhythm"
   },
   "seerah": {
     "title": "Seerah Map",
     "allPeriods": "All Periods",
-    "details": "Details"
+    "details": "Details",
+    "subtitle": "The life journey of the Prophet (peace be upon him)"
   },
   "licenses": {
     "title": "Licenses & Sources",
@@ -4030,7 +4167,15 @@
     "trackerTitle": "Missed Prayer Tracking",
     "recalculate": "Recalculate",
     "confirmRecalculate": "Existing data will be deleted. Do you want to continue?",
-    "note": "When you make up a missed prayer, press '-' to decrease the count."
+    "note": "When you make up a missed prayer, press '-' to decrease the count.",
+    "personalTitle": "Personal qada log",
+    "personalSubtitle": "Edit only the prayer entries you added yourself.",
+    "personalNoteTitle": "Personal log",
+    "personalNote": "This screen is a personal log; religious obligation and how to make up prayers can vary by school and personal situation. Please consult a religious scholar.",
+    "summaryLabel": "Personal qada summary",
+    "totalLogged": "Total logged prayers",
+    "entries": "Prayer entries",
+    "byPrayer": "By prayer"
   },
   "streak": {
     "fajr": "Fajr",
@@ -4080,7 +4225,14 @@
       "28": "Ambassador of Huzur",
       "29": "Spiritual Pioneer",
       "30": "Master of Huzur"
-    }
+    },
+    "level": "Level",
+    "share": "Share stats card",
+    "totalXp": "Total XP",
+    "progress": "Progress to next level",
+    "nextLevel": "Level",
+    "targetTitle": "You're very close to your goal",
+    "targetDesc": "Only {{remaining}} XP left to reach {{nextTitle}}."
   },
   "streakFeature": {
     "title": "Streak Calendar",
@@ -4111,7 +4263,8 @@
   "weeklyGoal": {
     "title": "Weekly Goal",
     "description": "How many days per week do you want to track your worship?",
-    "daysValue": "{{count}} days"
+    "daysValue": "{{count}} days",
+    "daysLabelShort": "days"
   },
   "zakatCalculator": {
     "title": "Zakat Calculator",
@@ -4127,8 +4280,8 @@
     "assetBusiness": "Business Goods",
     "debtsTitle": "Debts",
     "reset": "Reset",
-    "nisabReached": "✅ Nisab reached",
-    "nisabNotReached": "❌ Nisab not reached",
+    "nisabReached": "Nisab reached",
+    "nisabNotReached": "Nisab not reached",
     "nisabLabel": "Nisab",
     "netWealth": "Net Wealth",
     "zakatLabel": "Zakat",
@@ -4163,7 +4316,26 @@
       "startNow": "Open First Step",
       "stepCounter": "Step {{current}} / {{total}}",
       "goalTitle": "Which worship routine should we start today?",
-      "goalDescription": "We'll arrange your home screen around it. You can change it later in settings."
+      "goalDescription": "We'll arrange your home screen around it. You can change it later in settings.",
+      "languageTitleDirect": "Huzur starts in your language",
+      "languageDescriptionDirect": "Which language would you like to use Huzur in?",
+      "permissionsTitle": "Two settings so you don't miss your worship routine",
+      "permissionsDescriptionNotifications": "Notifications and location set up prayer times and your short daily step correctly.",
+      "permissionsDescription": "Let's set up only what is needed for prayer times and your daily worship reminder.",
+      "startWithTeaser": "Continue",
+      "languageError": "The language could not be applied. Continuing with the default language.",
+      "permissionsRequired": "Make both choices before continuing.",
+      "permissionsError": "Some permissions could not be applied right now. You can still continue.",
+      "genericError": "Something went wrong while completing this step.",
+      "locationTitleShort": "Location",
+      "locationDescriptionShort": "Calculates prayer times accurately for where you are.",
+      "allow": "Allow",
+      "skipForNow": "Skip for now",
+      "notificationsTitleShort": "Notifications",
+      "notificationsDescriptionShort": "Helps you not miss prayer times and your 2-minute daily step.",
+      "turnOn": "Turn on",
+      "premiumTeaserTitle": "More support can open up once your routine settles",
+      "premiumTeaserDesc": "Complete the first step first; then we may suggest Pro for weekly insights and guidance."
     },
     "funnel": {
       "title": "Growth Funnel Summary",
@@ -4195,30 +4367,40 @@
     }
   },
   "invite": {
-    "modalTitle": "Undang Teman",
-    "modalDescription": "Buat dan bagikan tautan undangan. Pantau progres referral Anda di bawah.",
-    "statusTitle": "Status Referral",
-    "inviterReward": "Hadiah pengundang",
-    "inviteeReward": "Hadiah yang diundang",
-    "unlocked": "Terbuka",
-    "pending": "Menunggu",
-    "createLink": "Buat Tautan Undangan",
-    "code": "Kode Undangan",
-    "shareLink": "Bagikan Tautan",
-    "shareText": "Bergabunglah dengan aplikasi Huzur 🌙\n\nKode undangan saya: {{code}}\n{{url}}"
+    "modalTitle": "Invite Friends",
+    "modalDescription": "Create and share an invite link. Track your referral progress below.",
+    "statusTitle": "Referral Status",
+    "inviterReward": "Inviter reward",
+    "inviteeReward": "Invitee reward",
+    "unlocked": "Unlocked",
+    "pending": "Pending",
+    "createLink": "Create Invite Link",
+    "code": "Invite Code",
+    "shareLink": "Share Link",
+    "shareText": "Join the Huzur app\n\nMy invite code: {{code}}\n{{url}}"
   },
   "referral": {
     "inviteButton": {
-      "default": "Undang",
-      "variantB": "Undang Teman",
-      "variantC": "Mari Mulai Bersama"
+      "default": "Invite",
+      "variantB": "Invite Friends",
+      "variantC": "Let's Start Together"
     }
   },
   "journey": {
     "title": "My Spiritual Journey"
   },
   "routine": {
-    "title": "My Daily Routines"
+    "title": "My Daily Routines",
+    "subtitle": "Keep your routine by completing the steps in order.",
+    "newRoutine": "New routine",
+    "morning": "Morning",
+    "evening": "Evening",
+    "addStep": "Add step",
+    "completePrevious": "Complete the previous step first",
+    "newRoutineForm": "New routine form",
+    "createBtn": "Create your own routine",
+    "namePlaceholder": "E.g. midday dhikr",
+    "addTask": "Add a new step…"
   },
   "quiz": {
     "title": "Test of the Day",
@@ -4394,12 +4576,12 @@
   },
   "shareCard": {
     "title": "Statistics Card",
-    "subtitle": "Manevi ritmim",
-    "level": "Seviye",
+    "subtitle": "My spiritual rhythm",
+    "level": "Level",
     "xpCollected": "{{count}} XP collected",
     "activeDays": "active day",
     "weeklyXP": "Weekly XP",
-    "badges": "Rozet",
+    "badges": "Badges",
     "featuredBadges": "Featured badges",
     "noBadges": "No badges have been earned yet.",
     "tagline": "Maintain peace and the rhythm of worship calmly and steadily",
@@ -4407,7 +4589,7 @@
     "shareButton": "Share Card"
   },
   "multimedia": {
-    "title": "Multimedya",
+    "title": "Multimedia",
     "description": "Islamic images, custom prayer cards and shareable spiritual content.",
     "contentLabel": "CONTENTS",
     "favorites": "MY FAVORITES",
@@ -4422,48 +4604,48 @@
   },
   "zikirmatikDhikrs": {
     "free": {
-      "name": "Serbest Zikir",
-      "meaning": "Istediginiz zikri cekin"
+      "name": "Free Dhikr",
+      "meaning": "Say any dhikr you like."
     },
     "subhanallah": {
       "name": "Subhanallah",
-      "meaning": "Allah'i tum eksikliklerden tenzih ederim",
+      "meaning": "I glorify Allah above every imperfection.",
       "source": "Source information has not been verified."
     },
     "elhamdulillah": {
-      "name": "Elhamdulillah",
-      "meaning": "Hamd Allah'a mahsustur",
+      "name": "Alhamdulillah",
+      "meaning": "All praise is due to Allah.",
       "source": "Source information has not been verified."
     },
     "allahuekber": {
-      "name": "Allahu Ekber",
-      "meaning": "Allah en buyuktur",
+      "name": "Allahu Akbar",
+      "meaning": "Allah is the Greatest.",
       "source": "Source information has not been verified."
     },
     "lailaheillallah": {
-      "name": "La ilahe illallah",
-      "meaning": "Allah'tan baska ilah yoktur",
+      "name": "La ilaha illallah",
+      "meaning": "There is no deity except Allah.",
       "source": "Source information has not been verified."
     },
     "estagfirullah": {
-      "name": "Estagfirullah",
-      "meaning": "Allah'tan bagislanma dilerim",
+      "name": "Astaghfirullah",
+      "meaning": "I seek forgiveness from Allah.",
       "source": "Source information has not been verified."
     },
     "lahavle": {
-      "name": "La havle",
+      "name": "La hawla wa la quwwata illa billah",
       "meaning": "Power and strength come only from Allah",
       "source": "Source information has not been verified."
     },
     "salavat": {
-      "name": "Salavat",
-      "meaning": "Allah'im Muhammed'e salat eyle",
+      "name": "Salawat",
+      "meaning": "O Allah, send blessings upon Muhammad.",
       "source": "Source information has not been verified."
     },
     "hasbunallah": {
       "name": "Hasbunallah",
       "reading": "Hasbunallahu wa ni'mal wakeel.",
-      "meaning": "Allah bize yeter, O ne guzel vekildir",
+      "meaning": "Allah is sufficient for us, and He is the best Disposer of affairs.",
       "source": "Qur'an, Ali 'Imran 3:173"
     }
   },
@@ -4511,19 +4693,37 @@
   },
   "churn": {
     "offer": {
-      "helpDesc": "Would you like to speak with our support team for a better experience? Your satisfaction matters to us."
+      "helpDesc": "Would you like to speak with our support team for a better experience? Your satisfaction matters to us.",
+      "discountTitle": "A 30% discount just for you!",
+      "discountDesc": "Stay with us and get 30% off for the next 3 months. Keep going with Huzur.",
+      "acceptDiscount": "Accept discount",
+      "pauseTitle": "Pause your subscription",
+      "pauseDesc": "Instead of cancelling completely, pause for 1 month for free. Pick up where you left off when you're ready.",
+      "acceptPause": "Pause subscription",
+      "helpTitle": "We can help",
+      "contactSupport": "Contact support",
+      "decline": "No, continue cancelling"
     },
     "survey": {
       "title": "Why are you leaving?",
-      "desc": "Can you tell us why you are leaving so we can improve your experience?"
+      "desc": "Can you tell us why you are leaving so we can improve your experience?",
+      "keepSub": "Keep my subscription"
     },
     "confirm": {
       "title": "Are you sure?",
-      "canceling": "Canceling..."
+      "canceling": "Canceling...",
+      "desc": "If you cancel, you will lose access to Pro features at the end of your current period. The ad-free experience and premium content will end.",
+      "keep": "Never mind, keep subscription",
+      "cancel": "Yes, cancel my subscription"
     }
   },
   "mood": {
-    "ask": "How are you feeling today?"
+    "ask": "How are you feeling today?",
+    "title": "Mood",
+    "subtitle": "Let's choose healing verses for your mood",
+    "helperText": "Let's find verses for how you feel.",
+    "selectedHeader": "Healing verses for this mood:",
+    "reselect": "Choose another mood"
   },
   "countries": {
     "turkey": "Turkey"
@@ -4564,7 +4764,23 @@
     "etiquette": {
       "title": "Dua Etiquette",
       "desc": "Repeat your duas sincerely and regularly, and turn to our Lord for every good request."
-    }
+    },
+    "tracker_title": "Supplication tracker",
+    "tracker_subtitle": "Record and track your supplications",
+    "create": {
+      "rateLimit": "You have sent too many prayer requests. Please try again later.",
+      "authError": "Sign-in is not ready. Please check your internet connection and try again.",
+      "error": "Could not create the prayer request",
+      "title": "Share a prayer request",
+      "subtitle": "Ask the circle to pray for you",
+      "intentLabel": "Your intention",
+      "intentPlaceholder": "For the sake of Allah…",
+      "anonymousLabel": "Share anonymously",
+      "anonymousActive": "Your identity will be hidden",
+      "anonymousInactive": "Your name will be visible",
+      "submit": "Share"
+    },
+    "createRequest": "Add a prayer request"
   },
   "levelUp": {
     "congrats": "CONGRATULATIONS!",
@@ -4597,7 +4813,9 @@
       "fact": "Did you know?"
     },
     "cardFallbackTitle": "Open today's discovery",
-    "cardFallbackSource": "Huzur"
+    "cardFallbackSource": "Huzur",
+    "title": "Daily discovery",
+    "explored": "Explored"
   },
   "rate": {
     "title": "Enjoying Huzur?",
@@ -4627,7 +4845,12 @@
     }
   },
   "imsakiye": {
-    "locationRequired": "A verified location is needed for the imsakiye."
+    "locationRequired": "A verified location is needed for the imsakiye.",
+    "errorCalculate": "Prayer times could not be calculated. Please try again.",
+    "calculatedFor": "Calculated for the same location",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "day": "Day"
   },
   "zikirmatik": {
     "popularChoices": "Dhikr",
@@ -4701,6 +4924,196 @@
     "mevlid": {
       "name": "Mawlid",
       "desc": "The night of the Prophet’s (pbuh) birth"
+    }
+  },
+  "duaTracker": {
+    "summaryLabel": "Supplication summary",
+    "prayed": "Prayed",
+    "prayedPersonal": "Marked as prayed",
+    "totalRecords": "Total entries",
+    "prayedNote": "“Prayed” is only a personal note; it does not mean the prayer was accepted.",
+    "suggestions": "Suggestions",
+    "suggestionNote": "General example — not a quotation from the Qur’an or hadith",
+    "edit": "Edit supplication",
+    "delete": "Delete supplication"
+  },
+  "adConsent": {
+    "eyebrow": "Privacy choice",
+    "title": "How would you like to keep using Huzur for free?",
+    "copy": "Allowing ads helps support Huzur’s free features. Non-personalised ads are used by default; analytics consent is separate.",
+    "allow": "Continue with ads",
+    "decline": "Continue without ads for now"
+  },
+  "errorBoundary": {
+    "title": "An error occurred",
+    "description": "Some parts of the application are not working correctly. Please reload the page or restart the app."
+  },
+  "fontSettings": {
+    "title": "Text settings",
+    "subtitle": "Personalise how text looks",
+    "preview": "Preview",
+    "arabicFamily": "Arabic typeface",
+    "arabicSize": "Arabic size",
+    "turkishSize": "Translation size",
+    "lineHeight": "Line spacing",
+    "reset": "Reset to default"
+  },
+  "locationConsent": {
+    "title": "May we use your location?",
+    "description": "Location permission is needed to show accurate prayer times and weather for your city. If you don't allow it, Istanbul is used by default.",
+    "allow": "Use my location",
+    "decline": "Continue with Istanbul"
+  },
+  "religiousDays": {
+    "title": "Religious days",
+    "calendar": "Calendar",
+    "nextUpcoming": "Next",
+    "daysLeft": "days left",
+    "completed": "Passed"
+  },
+  "weeklyReport": {
+    "activeDays": "Active days",
+    "prayerDays": "Prayer days",
+    "quranDays": "Quran days",
+    "routines": "Routines",
+    "bannerTitle": "Your weekly summary is ready",
+    "bannerDesc": "You earned +{{xp}} XP, see details",
+    "title": "Weekly Huzur summary",
+    "xp": "Weekly XP",
+    "motivation": "Small but steady steps create the strongest change. Keep this week's rhythm calmly.",
+    "continue": "Start the new week"
+  },
+  "quests": {
+    "dailyTitle": "Today's quests",
+    "claim": "Claim",
+    "go": "Go",
+    "claimed": "Reward claimed"
+  },
+  "library": {
+    "results_found": "{{count}} results found",
+    "no_results": "No results found",
+    "subtitle": "Islamic knowledge sources and references",
+    "search_placeholder": "Search… (e.g. prayer, fasting)",
+    "episodes": "Episodes",
+    "premium_video": "Premium video academy",
+    "episode_list": "Episode list",
+    "topics": "Topics",
+    "go_to_channel": "Go to YouTube channel",
+    "view_playlists": "View playlists",
+    "search_on_youtube": "Search on YouTube",
+    "external_notice": "Video content comes from external sources. You will be redirected to the YouTube app.",
+    "pronunciation": "Pronunciation",
+    "paywall_desc": "Get unlimited access to the whole library and premium features.",
+    "feature_audio": "Full Qur'an recitations by renowned reciters",
+    "feature_video": "Islamic academy video series",
+    "feature_books": "Selected religious sources and books"
+  },
+  "radio": {
+    "selectSurah": "Select a surah"
+  },
+  "comeback": {
+    "claimedTitle": "Bonus active!",
+    "claimedDesc": "You'll earn 2x XP for 24 hours.",
+    "claimButton": "Claim",
+    "maybeLater": "Maybe later"
+  },
+  "mosqueFinder": {
+    "title": "Nearest mosques"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "subtitle": "The security and privacy of your data is our priority",
+      "intro": "app values the privacy of its users. This privacy policy explains how your data is collected and protected.",
+      "s1": {
+        "title": "1. Data collected",
+        "desc": "Our app may collect the following data:",
+        "item1Label": "Location:",
+        "item1Desc": "Approximate or precise location may be used to run prayer times, weather, qibla direction and nearby mosque features. Your location preferences are stored on your device; coordinates may be sent to third-party API services only when needed to run the relevant feature.",
+        "item2Label": "Device information:",
+        "item2Desc": "Basic device information may be used for the app to work properly."
+      },
+      "s2": {
+        "title": "2. Use of data",
+        "desc": "Collected data is used only for the following purposes:",
+        "item1": "Showing prayer times accurately",
+        "item2": "Providing weather information",
+        "item3": "Determining the qibla direction",
+        "item4": "Improving app performance"
+      },
+      "s3": {
+        "title": "3. Data sharing",
+        "desc": "Your personal data is not sold. The app may use the Aladhan API for prayer times, the Open-Meteo API for weather, the BigDataCloud API for place names, and map services for map and nearby-place features. Only the data needed for the relevant feature is shared with these services, and their own privacy policies apply."
+      },
+      "s4": {
+        "title": "4. Data security",
+        "desc": "Your data is stored securely on your device. The app protects sensitive information with encryption technologies."
+      },
+      "s5": {
+        "title": "5. Permissions"
+      },
+      "permission": {
+        "location": "Location:",
+        "locationDesc": "For prayer times and weather",
+        "notification": "Notifications:",
+        "notificationDesc": "For prayer time reminders",
+        "internet": "Internet:",
+        "internetDesc": "To fetch API data"
+      },
+      "s6": {
+        "title": "6. Advertising and analytics",
+        "desc": "Our app uses Google AdMob for advertising and Google Firebase Analytics. These services may collect device identifiers (GAID) to serve personalised ads and analyse app usage."
+      },
+      "s7": {
+        "title": "7. AI assistant",
+        "desc": "AI providers and Huzur backend services may be used to answer your religious questions. Your questions are sent to these services to generate answers. Please do not write sensitive personal information, identity details or payment information in assistant messages."
+      }
+    },
+    "lastUpdate": "Last updated",
+    "contact": {
+      "title": "8. Contact",
+      "desc": "For questions about our privacy policy:"
+    },
+    "tos": {
+      "title": "Terms of Use",
+      "subtitle": "Your legal rights and the rules for using the app",
+      "intro": "app: by using it, you are deemed to accept the following terms of use. Please read them carefully.",
+      "s1": {
+        "title": "1. Licence to use",
+        "desc": "This app is provided free of charge for personal, non-commercial use. Modifying, copying or distributing the app is prohibited."
+      },
+      "s2": {
+        "title": "2. Description of service",
+        "desc": "Huzur is a mobile app that provides prayer times, the Qur'an, supplications and religious content. The app provides data using third-party APIs, and the accuracy of this data is not guaranteed."
+      },
+      "s3": {
+        "title": "3. User responsibilities",
+        "desc": "Users:",
+        "item1": "must use the app in accordance with the law",
+        "item2": "must not misuse the app's content",
+        "item3": "must not use the app to harm others",
+        "item4": "must not compromise the app's security"
+      },
+      "s4": {
+        "title": "4. Disclaimer",
+        "desc": "The app is provided \"as is\". No guarantee is given for the accuracy of prayer times and other information. Users should consult official sources for important religious practices."
+      },
+      "s5": {
+        "title": "5. Intellectual property",
+        "desc": "All content, design and code of the app are protected by copyright. Qur'anic texts and supplications are in the public domain, but the app itself is copyrighted."
+      },
+      "s6": {
+        "title": "6. Changes to the service",
+        "desc": "The app may be changed, updated or discontinued without prior notice. Users should keep informed of these changes."
+      },
+      "s7": {
+        "title": "7. Cancellation and termination",
+        "desc": "Use of the app may be terminated at any time and for any reason. Users who violate the terms may have their access terminated."
+      },
+      "s8": {
+        "title": "8. Changes",
+        "desc": "These terms of use may be updated from time to time. Significant changes will be announced in the app."
+      }
     }
   }
 }

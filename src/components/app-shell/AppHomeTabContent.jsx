@@ -122,7 +122,7 @@ function AppHomeTabContent({
             />
           </div>
           <div className="home-welcome-block">
-            <span className="home-welcome-subtitle">Selamun Aleyküm</span>
+            <span className="home-welcome-subtitle">{t('home.greetingSalam', 'Selamun Aleyküm')}</span>
             <h1 className="home-header-title-text">Huzur</h1>
           </div>
         </div>

@@ -20,12 +20,12 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
     if (!name.trim()) return;
 
     if (!checkRateLimit('hatim_create', 3, 3600000)) {
-      showToast(t('hatim.create.rateLimit', 'Çok fazla hatim oluşturdunuz. Lütfen daha sonra tekrar deneyin.'), 'error');
+      showToast(t('hatim.createForm.rateLimit', 'Çok fazla hatim oluşturdunuz. Lütfen daha sonra tekrar deneyin.'), 'error');
       return;
     }
 
     if (isAuthBlocked) {
-      showToast(t('hatim.create.authError', 'Firebase kimlik doğrulaması hazır değil. Lütfen internetinizi kontrol edip tekrar deneyin.'), 'error');
+      showToast(t('hatim.createForm.authError', 'Firebase kimlik doğrulaması hazır değil. Lütfen internetinizi kontrol edip tekrar deneyin.'), 'error');
       return;
     }
 
@@ -35,7 +35,7 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
       onSuccess(createdHatim);
     } catch (err) {
       logger.error(err);
-      showToast(t('hatim.create.error', 'Hatim oluşturulamadı'), 'error');
+      showToast(t('hatim.createForm.error', 'Hatim oluşturulamadı'), 'error');
     } finally {
       setLoading(false);
     }
@@ -68,21 +68,21 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
             <BookOpen size={28} />
           </div>
           <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: '950', color: 'var(--nav-text)', letterSpacing: '-0.5px' }}>
-             {t('hatim.create.title', 'Yeni Hatim Başlat')}
+             {t('hatim.createForm.title', 'Yeni Hatim Başlat')}
           </h3>
           <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
-            {t('hatim.create.subtitle', 'Hatim grubuna liderlik et')}
+            {t('hatim.createForm.subtitle', 'Hatim grubuna liderlik et')}
           </p>
         </div>
         
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
             <label style={{ display: 'block', color: 'var(--nav-text)', marginBottom: '8px', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                {t('hatim.create.nameLabel', 'Hatim Adı')}
+                {t('hatim.createForm.nameLabel', 'Hatim Adı')}
             </label>
             <input 
               type="text"
-              placeholder={t('hatim.create.namePlaceholder', 'Örn: Ailemiz için Hatim')} 
+              placeholder={t('hatim.createForm.namePlaceholder', 'Örn: Ailemiz için Hatim')} 
               value={name}
               onChange={e => setName(e.target.value)}
               required
@@ -92,10 +92,10 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
 
           <div>
             <label style={{ display: 'block', color: 'var(--nav-text)', marginBottom: '8px', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                {t('hatim.create.descLabel', 'Açıklama (İsteğe Bağlı)')}
+                {t('hatim.createForm.descLabel', 'Açıklama (İsteğe Bağlı)')}
             </label>
             <textarea 
-              placeholder={t('hatim.create.descPlaceholder', 'Niyetiniz nedir...')} 
+              placeholder={t('hatim.createForm.descPlaceholder', 'Niyetiniz nedir...')} 
               value={desc}
               onChange={e => setDesc(e.target.value)}
               rows={3}
@@ -107,7 +107,7 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
           <div style={{ display: 'flex', gap: '8px', padding: '12px', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '12px', border: '1px dashed var(--nav-accent)' }}>
             <Info size={16} color="var(--nav-accent)" style={{ flexShrink: 0 }} />
             <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>
-              {t('hatim.create.info', 'Hatim 30 cüzden oluşur ve tamamlandığında üyeler ödül kazanır.')}
+              {t('hatim.createForm.info', 'Hatim 30 cüzden oluşur ve tamamlandığında üyeler ödül kazanır.')}
             </p>
           </div>
 
@@ -134,7 +134,7 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
               ) : (
                 <>
                   <Sparkles size={18} style={{ marginRight: '8px' }} />
-                  {t('hatim.create.submit', 'Oluştur')}
+                  {t('hatim.createForm.submit', 'Oluştur')}
                 </>
               )}
             </button>

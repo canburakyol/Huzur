@@ -40,7 +40,7 @@ const ChatInput = ({ t, inputValue, onInputChange, onSend, onKeyDown, assistantV
           disabled={!inputValue.trim()}
           className="assistant-send-btn"
           type="button"
-          aria-label="Gönder"
+          aria-label={t('assistant.send', 'Gönder')}
         >
           <Send size={18} />
         </button>

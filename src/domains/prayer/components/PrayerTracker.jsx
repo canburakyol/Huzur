@@ -37,31 +37,31 @@ const PrayerTracker = ({ onClose }) => {
       <header className="practice-header">
         <IslamicBackButton onClick={onClose} size="medium" />
         <div className="practice-header__copy">
-          <h1 className="practice-title">Kişisel kaza kaydı</h1>
-          <p className="practice-subtitle">Yalnızca sizin eklediğiniz namaz kayıtlarını düzenleyin.</p>
+          <h1 className="practice-title">{t('missedPrayers.personalTitle', 'Kişisel kaza kaydı')}</h1>
+          <p className="practice-subtitle">{t('missedPrayers.personalSubtitle', 'Yalnızca sizin eklediğiniz namaz kayıtlarını düzenleyin.')}</p>
         </div>
       </header>
 
       <div className="practice-info" style={{ marginTop: 0 }}>
         <Info size={18} />
-        <div><strong>Kişisel kayıt</strong>Bu ekran kişisel kayıt içindir; dinî yükümlülük ve takip yöntemi mezhep ve kişisel duruma göre değişebilir. Dinî bir görevliye danışın.</div>
+        <div><strong>{t('missedPrayers.personalNoteTitle', 'Kişisel kayıt')}</strong>{t('missedPrayers.personalNote', 'Bu ekran kişisel kayıt içindir; dinî yükümlülük ve takip yöntemi mezhep ve kişisel duruma göre değişebilir. Dinî bir görevliye danışın.')}</div>
       </div>
 
-      <section className="practice-summary" aria-label="Kişisel kaza kaydı özeti">
+      <section className="practice-summary" aria-label={t('missedPrayers.summaryLabel', 'Kişisel kaza kaydı özeti')}>
         <div className="practice-summary__top">
           <div>
             <div className="practice-summary__value">{totalPrayers}</div>
-            <div className="practice-summary__label">Toplam kayıtlı vakit</div>
+            <div className="practice-summary__label">{t('missedPrayers.totalLogged', 'Toplam kayıtlı vakit')}</div>
           </div>
           <TrendingDown size={23} color="var(--primary)" />
         </div>
         <div className="practice-metrics">
-          <div className="practice-metric"><strong>{totalPrayers}</strong><span>Vakit kaydı</span></div>
+          <div className="practice-metric"><strong>{totalPrayers}</strong><span>{t('missedPrayers.entries', 'Vakit kaydı')}</span></div>
         </div>
       </section>
 
       <section className="practice-section">
-        <h2 className="practice-section-title">VAKİT BAZINDA KAYIT</h2>
+        <h2 className="practice-section-title">{t('missedPrayers.byPrayer', 'Vakit bazında kayıt')}</h2>
         <div className="practice-list">
           {items.map((item) => {
             const count = counts[item.key];

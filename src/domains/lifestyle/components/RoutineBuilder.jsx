@@ -64,7 +64,7 @@ const RoutineBuilder = ({ onClose }) => {
         <IslamicBackButton onClick={onClose} size="medium" />
         <div className="practice-header__copy">
           <h1 className="practice-title">{t('routine.title', 'Günlük Rutinlerim')}</h1>
-          <p className="practice-subtitle">Adımları sırayla tamamlayarak düzeninizi koruyun.</p>
+          <p className="practice-subtitle">{t('routine.subtitle', 'Adımları sırayla tamamlayarak düzeninizi koruyun.')}</p>
         </div>
       </header>
 
@@ -75,12 +75,12 @@ const RoutineBuilder = ({ onClose }) => {
       )}
 
       {isCreating && (
-        <section className="practice-panel" aria-label="Yeni rutin formu">
-          <h2 className="practice-section-title">YENİ RUTİN</h2>
+        <section className="practice-panel" aria-label={t('routine.newRoutineForm', 'Yeni rutin formu')}>
+          <h2 className="practice-section-title">{t('routine.newRoutine', 'Yeni rutin')}</h2>
           <input className="practice-field" value={newRoutineName} onChange={(event) => setNewRoutineName(event.target.value)} placeholder={t('routine.namePlaceholder', 'Örn: Öğle arası zikirleri')} />
           <div className="practice-segments" style={{ marginTop: 10, gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <button type="button" className={`practice-segment ${newRoutineTime === 'morning' ? 'practice-segment--active' : ''}`} onClick={() => setNewRoutineTime('morning')}><Sun size={16} /> Sabah</button>
-            <button type="button" className={`practice-segment ${newRoutineTime === 'evening' ? 'practice-segment--active' : ''}`} onClick={() => setNewRoutineTime('evening')}><Moon size={16} /> Akşam</button>
+            <button type="button" className={`practice-segment ${newRoutineTime === 'morning' ? 'practice-segment--active' : ''}`} onClick={() => setNewRoutineTime('morning')}><Sun size={16} /> {t('routine.morning', 'Sabah')}</button>
+            <button type="button" className={`practice-segment ${newRoutineTime === 'evening' ? 'practice-segment--active' : ''}`} onClick={() => setNewRoutineTime('evening')}><Moon size={16} /> {t('routine.evening', 'Akşam')}</button>
           </div>
           {newTasks.length > 0 && (
             <div className="practice-list" style={{ marginBottom: 10 }}>
@@ -94,11 +94,11 @@ const RoutineBuilder = ({ onClose }) => {
           )}
           <div className="practice-form-row">
             <input className="practice-field" value={newTaskInput} onChange={(event) => setNewTaskInput(event.target.value)} onKeyDown={(event) => event.key === 'Enter' && addCustomTask()} placeholder={t('routine.addTask', 'Yeni adım ekle...')} />
-            <button type="button" className="practice-icon-button" aria-label="Adımı ekle" onClick={addCustomTask}><Plus size={19} /></button>
+            <button type="button" className="practice-icon-button" aria-label={t('routine.addStep', 'Adımı ekle')} onClick={addCustomTask}><Plus size={19} /></button>
           </div>
           <div className="practice-actions">
-            <button type="button" className="practice-secondary-button" onClick={() => setIsCreating(false)}>İptal</button>
-            <button type="button" className="practice-primary-button" disabled={!newRoutineName.trim() || newTasks.length === 0} onClick={saveRoutine}>Kaydet</button>
+            <button type="button" className="practice-secondary-button" onClick={() => setIsCreating(false)}>{t('common.cancel', 'İptal')}</button>
+            <button type="button" className="practice-primary-button" disabled={!newRoutineName.trim() || newTasks.length === 0} onClick={saveRoutine}>{t('common.save', 'Kaydet')}</button>
           </div>
         </section>
       )}
@@ -140,7 +140,7 @@ const RoutineBuilder = ({ onClose }) => {
                       </span>
                       <span className="practice-row__body">
                         <span className="practice-row__title" style={{ textDecoration: isDone ? 'line-through' : 'none' }}>{task.title}</span>
-                        {!isDone && !isNext && <span className="practice-row__text">Önceki adımı tamamlayın</span>}
+                        {!isDone && !isNext && <span className="practice-row__text">{t('routine.completePrevious', 'Önceki adımı tamamlayın')}</span>}
                       </span>
                       {isNext && <ChevronRight size={18} />}
                     </button>

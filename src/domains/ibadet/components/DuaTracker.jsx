@@ -105,19 +105,19 @@ export function DuaTracker({ onClose }) {
         </div>
       </header>
 
-      <section className="practice-summary" aria-label="Dua özeti">
+      <section className="practice-summary" aria-label={t('duaTracker.summaryLabel', 'Dua özeti')}>
         <div className="practice-summary__top">
-          <div><div className="practice-summary__value">{stats.completed}</div><div className="practice-summary__label">Dua edildi</div></div>
+          <div><div className="practice-summary__value">{stats.completed}</div><div className="practice-summary__label">{t('duaTracker.prayed', 'Dua edildi')}</div></div>
           <Heart size={22} color="var(--primary)" />
         </div>
         <div className="practice-metrics">
-          <div className="practice-metric"><strong>{stats.completed}</strong><span>Kişisel kayıtta dua edildi</span></div>
-          <div className="practice-metric"><strong>{stats.total}</strong><span>Toplam kayıt</span></div>
+          <div className="practice-metric"><strong>{stats.completed}</strong><span>{t('duaTracker.prayedPersonal', 'Kişisel kayıtta dua edildi')}</span></div>
+          <div className="practice-metric"><strong>{stats.total}</strong><span>{t('duaTracker.totalRecords', 'Toplam kayıt')}</span></div>
         </div>
       </section>
 
       <div className="practice-info" style={{ marginTop: 14 }}>
-        <Info size={18} /><div>“Dua edildi” işareti yalnızca kişisel kayıttır; kabul edildiği anlamına gelmez.</div>
+        <Info size={18} /><div>{t('duaTracker.prayedNote', '“Dua edildi” işareti yalnızca kişisel kayıttır; kabul edildiği anlamına gelmez.')}</div>
       </div>
 
       <div className="practice-segments" role="tablist" aria-label="Dua filtresi">
@@ -140,8 +140,8 @@ export function DuaTracker({ onClose }) {
               </button>
             ))}
           </div>
-          <p className="practice-section-title" style={{ marginTop: 10 }}>ÖNERİLENLER</p>
-          <p className="practice-row__text">Genel dua örneği — Kur’an/hadis alıntısı değildir</p>
+          <p className="practice-section-title" style={{ marginTop: 10 }}>{t('duaTracker.suggestions', 'Önerilenler')}</p>
+          <p className="practice-row__text">{t('duaTracker.suggestionNote', 'Genel dua örneği — Kur’an/hadis alıntısı değildir')}</p>
           <div className="practice-chip-list">
             {SUGGESTED_DUAS.map((suggestion, index) => (
               <button type="button" className="practice-chip" key={suggestion.text} onClick={() => { setNewDua(t(`dua.suggestions.${suggestion.category}_${index}`, suggestion.text)); setSelectedCategory(suggestion.category); }}>{t(`dua.suggestions.${suggestion.category}_${index}`, suggestion.text)}</button>
@@ -167,7 +167,7 @@ export function DuaTracker({ onClose }) {
                   {editingDua === dua.id ? (
                     <div className="practice-row__body">
                       <textarea className="practice-field" value={editText} onChange={(event) => setEditText(event.target.value)} />
-                      <div className="practice-actions"><button type="button" className="practice-secondary-button" onClick={() => setEditingDua(null)}>İptal</button><button type="button" className="practice-primary-button" onClick={() => updateDua(dua.id)}>Kaydet</button></div>
+                      <div className="practice-actions"><button type="button" className="practice-secondary-button" onClick={() => setEditingDua(null)}>{t('common.cancel', 'İptal')}</button><button type="button" className="practice-primary-button" onClick={() => updateDua(dua.id)}>{t('common.save', 'Kaydet')}</button></div>
                     </div>
                   ) : (
                     <>
@@ -179,8 +179,8 @@ export function DuaTracker({ onClose }) {
                           {dua.completedAt && <span className="practice-pill"><Calendar size={11} /> {new Date(dua.completedAt).toLocaleDateString(dateLocale)}</span>}
                         </div>
                       </div>
-                      <button type="button" className="practice-row-action" aria-label="Duayı düzenle" onClick={() => { setEditingDua(dua.id); setEditText(dua.text); }}><Edit2 size={16} /></button>
-                      <button type="button" className="practice-row-action" aria-label="Duayı sil" onClick={() => deleteDua(dua.id)}><Trash2 size={16} /></button>
+                      <button type="button" className="practice-row-action" aria-label={t('duaTracker.edit', 'Duayı düzenle')} onClick={() => { setEditingDua(dua.id); setEditText(dua.text); }}><Edit2 size={16} /></button>
+                      <button type="button" className="practice-row-action" aria-label={t('duaTracker.delete', 'Duayı sil')} onClick={() => deleteDua(dua.id)}><Trash2 size={16} /></button>
                     </>
                   )}
                 </div>

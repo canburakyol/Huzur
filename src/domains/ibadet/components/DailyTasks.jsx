@@ -59,26 +59,26 @@ const DailyTasks = ({ onClose }) => {
         </div>
       </header>
 
-      <section className="practice-summary" aria-label="Günlük görev özeti">
+      <section className="practice-summary" aria-label={t('dailyTasks.summaryLabel', 'Günlük görev özeti')}>
         <div className="practice-summary__top">
           <div>
             <div className="practice-summary__value">{progress.completed} / {progress.total}</div>
-            <div className="practice-summary__label">Bugün tamamlanan görevler</div>
+            <div className="practice-summary__label">{t('dailyTasks.completedToday', 'Bugün tamamlanan görevler')}</div>
           </div>
           <strong>{progress.percentage}%</strong>
         </div>
         <div className="practice-progress"><span style={{ width: `${progress.percentage}%` }} /></div>
         {stats && (
           <div className="practice-metrics">
-            <div className="practice-metric"><strong>{stats.totalPoints}</strong><span><Trophy size={11} /> Puan</span></div>
-            <div className="practice-metric"><strong>{stats.consecutiveDays}</strong><span><Flame size={11} /> Seri</span></div>
-            <div className="practice-metric"><strong>{stats.totalTasksCompleted}</strong><span><Target size={11} /> Görev</span></div>
+            <div className="practice-metric"><strong>{stats.totalPoints}</strong><span><Trophy size={11} /> {t('dailyTasks.metricPoints', 'Puan')}</span></div>
+            <div className="practice-metric"><strong>{stats.consecutiveDays}</strong><span><Flame size={11} /> {t('dailyTasks.metricStreak', 'Seri')}</span></div>
+            <div className="practice-metric"><strong>{stats.totalTasksCompleted}</strong><span><Target size={11} /> {t('dailyTasks.metricTasks', 'Görev')}</span></div>
           </div>
         )}
       </section>
 
       <section className="practice-section">
-        <h2 className="practice-section-title">BUGÜNÜN GÖREVLERİ · +{progress.points} PUAN</h2>
+        <h2 className="practice-section-title">{t('dailyTasks.todaysTasks', { points: progress.points, defaultValue: 'Bugünün görevleri · +{{points}} puan' })}</h2>
         <div className="practice-list">
           {tasks.map((task) => (
             <button

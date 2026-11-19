@@ -94,7 +94,7 @@ function EsmaUlHusna({ onClose }) {
       <header className="esma-header esma-enter">
         <IslamicBackButton onClick={onClose} size="medium" />
         <div className="esma-header__copy">
-          <span className="esma-eyebrow">99 GÜZEL İSİM</span>
+          <span className="esma-eyebrow">{t('esma.eyebrow', '99 güzel isim')}</span>
           <h1>{t('esma.title', 'Esmaül Hüsna')}</h1>
           <p>{t('esma.subtitle', "Allah'ın 99 Güzel İsmi")}</p>
         </div>
@@ -114,8 +114,8 @@ function EsmaUlHusna({ onClose }) {
       <section className="esma-directory esma-enter esma-enter--later" aria-labelledby="esma-directory-title">
         <div className="esma-section-heading">
           <div>
-            <span className="esma-eyebrow">FİHRİST</span>
-            <h2 id="esma-directory-title">İsimler ve anlamları</h2>
+            <span className="esma-eyebrow">{t('esma.directory', 'Fihrist')}</span>
+            <h2 id="esma-directory-title">{t('esma.directoryTitle', 'İsimler ve anlamları')}</h2>
           </div>
           <span className="esma-result-count" aria-live="polite">{`${filteredNames.length} / ${esmaList.length}`}</span>
         </div>
@@ -131,7 +131,7 @@ function EsmaUlHusna({ onClose }) {
               onChange={(event) => setSearchQuery(event.target.value)}
             />
             {searchQuery && (
-              <button type="button" onClick={() => setSearchQuery('')} aria-label="Aramayı temizle">
+              <button type="button" onClick={() => setSearchQuery('')} aria-label={t('esma.clearSearch', 'Aramayı temizle')}>
                 <X size={17} />
               </button>
             )}
@@ -153,7 +153,7 @@ function EsmaUlHusna({ onClose }) {
           <div className="esma-empty">
             <Search size={28} />
             <strong>{t('common.no_results', 'Sonuç bulunamadı')}</strong>
-            <span>Arama kelimesini veya favori filtresini değiştirebilirsin.</span>
+            <span>{t('esma.emptyHint', 'Arama kelimesini veya favori filtresini değiştirebilirsin.')}</span>
           </div>
         ) : (
           <div className="esma-list">
@@ -209,7 +209,7 @@ function EsmaUlHusna({ onClose }) {
       <aside className="esma-note">
         <BookOpenText size={19} aria-hidden="true" />
         <div>
-          <strong>Esmaül Hüsna hakkında</strong>
+          <strong>{t('esma.aboutTitle', 'Esmaül Hüsna hakkında')}</strong>
           <p>
             {t('esma.info_note', "Esmâü'l-Hüsnâ, Allah Teâlâ'nın en güzel isimleri demektir. Bu isimleri zikretmek, anlamlarını tefekkür etmek ve bu isimlerle Allah'a dua etmek müstehaptır.")}
           </p>
