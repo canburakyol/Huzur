@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Brain, CalendarDays, Share2, Star, Target, TrendingUp, Trophy } from 'lucide-react';
+import PageHeader from '../../../components/shared/PageHeader';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { useGamification } from '../../../hooks/useGamification';
 import { useFamily } from '../../../context/FamilyContext';
@@ -415,7 +416,7 @@ const SpiritualJourney = ({ onClose }) => {
   return (
     <div className="feature-overlay">
       <div className="feature-header blur-header">
-        <IslamicBackButton onClick={onClose} label={t('journey.title', 'Manevi Yolculuğum')} />
+        <PageHeader title={t('journey.title', 'Manevi Yolculuğum')} onBack={onClose} />
       </div>
 
       <div className="feature-content p-20">

@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Heart, Share2, BookOpen, Star, Sparkles, Info } from 'lucide-react';
+import { BookOpen, ChevronLeft, ChevronRight, HandHeart, Heart, Landmark, Leaf, Share2, Star, Sparkles, Info, Users, Wheat } from 'lucide-react';
+
+// Mushaf uses one line-icon set; the emoji in the data file are not rendered.
+const CATEGORY_ICONS = { iman: Heart, ibadet: Landmark, ahlak: Star, aile: Users, ilim: BookOpen, dua: HandHeart, sabir: Leaf, rizik: Wheat, favorites: Heart };
+const CategoryIcon = ({ id, size }) => {
+    const Icon = CATEGORY_ICONS[id] || Sparkles;
+    return <Icon size={size} strokeWidth={1.75} aria-hidden="true" />;
+};
 import { useTranslation } from 'react-i18next';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
+import PageHeader from '../../../components/shared/PageHeader';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { contentService } from '../../../services/contentService';
 import { storageService } from '../../../services/storageService';
@@ -123,7 +131,7 @@ const Hadiths = ({ onClose }) => {
                 <div className="settings-card" style={{ flexDirection: 'column', gap: '24px', padding: '32px', textAlign: 'center', minHeight: '60vh', justifyContent: 'center' }}>
                     {category && (
                         <div className="hadith-category-badge" style={{ background: category.color || 'var(--nav-accent)' }}>
-                            {category.icon} {category.name}
+                            <CategoryIcon id={category.id} size={14} /> {category.name}
                         </div>
                     )}
 
@@ -150,12 +158,7 @@ const Hadiths = ({ onClose }) => {
 
         return (
             <div className="settings-container reveal-stagger">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
-                    <IslamicBackButton onClick={goBack} size="medium" />
-                    <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
-                        {selectedCategory.icon} {selectedCategory.name}
-                    </h2>
-                </div>
+                <PageHeader title={selectedCategory.name} onBack={goBack} />
 
                 <div className="settings-group">
                     {categoryHadiths.map((hadith, index) => (
@@ -184,12 +187,7 @@ const Hadiths = ({ onClose }) => {
     // --- HOME VIEW ---
     return (
         <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
-                <IslamicBackButton onClick={onClose} size="medium" />
-                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <BookOpen size={24} color="var(--nav-accent)" /> {t('hadith.title', 'Hadisler')}
-                </h2>
-            </div>
+            <PageHeader title={t('hadith.title', 'Hadisler')} onBack={onClose} />
 
             {dailyHadith && (
                 <div 
@@ -251,7 +249,7 @@ const Hadiths = ({ onClose }) => {
                                 }}
                                 onClick={() => { setSelectedCategory(category); setView('category'); }}
                             >
-                                <div style={{ fontSize: '2.5rem' }}>{category.icon}</div>
+                                <div style={{ color: 'var(--brand-ink)' }}><CategoryIcon id={category.id} size={32} /></div>
                                 <div>
                                     <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '0.9rem' }}>{category.name}</div>
                                     <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', marginTop: '4px' }}>{count} {t('hadith.count_suffix', 'HADİS')}</div>

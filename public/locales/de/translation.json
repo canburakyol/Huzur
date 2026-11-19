@@ -1411,7 +1411,8 @@
     "confirmReset": "Möchten Sie Ihren Fortschritt zurücksetzen?",
     "title": "Dhikr und tägliche Wirde",
     "dailyProgress": "Täglicher Fortschritt",
-    "infoNoteReviewed": "Diese Liste enthält Koranverse und allgemeinen Dhikr. Prüfe bei jedem Text die Quellenangabe; die persönliche Erfassung ist kein religiöses Urteil und kein Maß für Annahme."
+    "infoNoteReviewed": "Diese Liste enthält Koranverse und allgemeinen Dhikr. Prüfe bei jedem Text die Quellenangabe; die persönliche Erfassung ist kein religiöses Urteil und kein Maß für Annahme.",
+    "reset": "Fortschritt zurücksetzen"
   },
   "qibla": {
     "title": "Qibla-Kompass",

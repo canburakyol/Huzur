@@ -1411,7 +1411,8 @@
     "confirmReset": "Apakah Anda ingin mengatur ulang progres?",
     "title": "Zikir dan wirid",
     "dailyProgress": "Kemajuan harian",
-    "infoNoteReviewed": "Daftar ini berisi ayat Al-Qur'an dan zikir umum. Buka sumber setiap teks untuk memeriksanya; pencatatan pribadi bukan hukum agama atau ukuran diterimanya amal."
+    "infoNoteReviewed": "Daftar ini berisi ayat Al-Qur'an dan zikir umum. Buka sumber setiap teks untuk memeriksanya; pencatatan pribadi bukan hukum agama atau ukuran diterimanya amal.",
+    "reset": "Atur ulang kemajuan"
   },
   "qibla": {
     "title": "Kompas Kiblat",

@@ -1525,7 +1525,8 @@
     "confirmReset": "İlerlemeyi sıfırlamak istiyor musunuz?",
     "title": "Zikir ve Evrad",
     "dailyProgress": "Günlük İlerleme",
-    "infoNoteReviewed": "Bu listede Kur’an ayetleri ve genel zikirler birlikte yer alır. Her metnin kaynak bilgisini açarak kontrol edin; kişisel takip, dinî hüküm veya kabul ölçüsü değildir."
+    "infoNoteReviewed": "Bu listede Kur’an ayetleri ve genel zikirler birlikte yer alır. Her metnin kaynak bilgisini açarak kontrol edin; kişisel takip, dinî hüküm veya kabul ölçüsü değildir.",
+    "reset": "İlerlemeyi sıfırla"
   },
   "qibla": {
     "title": "Kıble Pusulası",

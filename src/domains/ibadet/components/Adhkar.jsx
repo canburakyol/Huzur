@@ -6,6 +6,7 @@ import {
     CheckCircle2, AlertCircle, Info
 } from 'lucide-react';
 import { storageService } from '../../../services/storageService';
+import PageHeader from '../../../components/shared/PageHeader';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import '../../../components/app-shell/Navigation.css';
 
@@ -85,17 +86,15 @@ const Adhkar = ({ onClose }) => {
     return (
         <div className="settings-container reveal-stagger" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
             {/* Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <IslamicBackButton onClick={onClose} size="medium" />
-                    <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
-                        {t('adhkar.title', 'Zikir ve Evrad')}
-                    </h2>
-                </div>
-                <button onClick={resetProgress} style={{ background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '12px', padding: '10px', color: 'var(--nav-text-muted)', cursor: 'pointer' }}>
-                    <RotateCcw size={20} />
-                </button>
-            </div>
+            <PageHeader
+                title={t('adhkar.title', 'Zikir ve Evrad')}
+                onBack={onClose}
+                action={(
+                    <button type="button" className="hz-iconbtn" onClick={resetProgress} aria-label={t('adhkar.reset', 'İlerlemeyi sıfırla')}>
+                        <RotateCcw size={20} strokeWidth={1.75} aria-hidden="true" />
+                    </button>
+                )}
+            />
 
             {/* Tab Switch */}
             <div className="settings-card" style={{ padding: '6px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', marginBottom: '24px' }}>

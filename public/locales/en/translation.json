@@ -1411,7 +1411,8 @@
     "confirmReset": "Do you want to reset your progress?",
     "title": "Dhikr and daily litanies",
     "dailyProgress": "Daily progress",
-    "infoNoteReviewed": "This list contains Qur'anic verses together with general dhikr. Open each text's source to check it; personal tracking is not a religious ruling or a measure of acceptance."
+    "infoNoteReviewed": "This list contains Qur'anic verses together with general dhikr. Open each text's source to check it; personal tracking is not a religious ruling or a measure of acceptance.",
+    "reset": "Reset progress"
   },
   "qibla": {
     "title": "Qibla Compass",

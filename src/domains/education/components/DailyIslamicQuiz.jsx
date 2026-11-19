@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Brain, Trophy, CheckCircle, XCircle } from 'lucide-react';
+import PageHeader from '../../../components/shared/PageHeader';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { useGamification } from '../../../hooks/useGamification';
 import { getDailyQuestions } from '../../../data/dailyQuizData';
@@ -84,7 +85,7 @@ const DailyIslamicQuiz = ({ onClose }) => {
     return (
       <div className="feature-overlay">
         <div className="feature-header blur-header">
-          <IslamicBackButton onClick={onClose} label={t('quiz.title', 'Günün Testi')} />
+          <PageHeader title={t('quiz.title', 'Günün Testi')} onBack={onClose} />
         </div>
         <div className="feature-content" style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <div className="settings-card reveal-stagger" style={{ flexDirection: 'column', padding: '40px 20px', textAlign: 'center', width: '100%', maxWidth: '380px' }}>
@@ -138,7 +139,7 @@ const DailyIslamicQuiz = ({ onClose }) => {
   return (
     <div className="feature-overlay">
       <div className="feature-header blur-header">
-        <IslamicBackButton onClick={onClose} label={t('quiz.title', 'Günün Testi')} />
+        <PageHeader title={t('quiz.title', 'Günün Testi')} onBack={onClose} />
       </div>
 
       <div className="feature-content" style={{ padding: '20px' }}>
