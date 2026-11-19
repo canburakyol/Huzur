@@ -621,7 +621,7 @@ const buildEntry = ({
       dayOfWeek,
       timeOfDay,
       userState
-    }
+    } as SpiritualIntervention['trigger_condition']
   };
 };
 

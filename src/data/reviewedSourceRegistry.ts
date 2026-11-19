@@ -33,7 +33,7 @@ const normalizeConfidence = (value: string | undefined, fallback = 'medium'): st
 export const getCanonicalSourceTemplate = (type = 'content', namespace = 'content'): SourceTemplate => {
   const resolvedType = (TYPE_CATALOG as Record<string, unknown>)[type]
     ? type
-    : ((NAMESPACE_MAP as Record<string, unknown>)[namespace] || 'content');
+    : String((NAMESPACE_MAP as Record<string, unknown>)[namespace] || 'content');
 
   return {
     ...DEFAULT_SOURCE_TEMPLATE,

@@ -102,7 +102,7 @@ Sıra (en çok kullanılan önce):
 
 ## 7. Teknik borç
 
-- `npx tsc --noEmit` 61 hata veriyor (20 Kas: 269→61; interface→type, storage getItem overload, servis tipleri) (derleme denetlemediği için uygulama çalışıyor). Alan alan sıfırla; en sonda CI'a tip kontrolü ekle.
+- `npx tsc --noEmit` 33 hata veriyor (20 Kas: 269→33; kalanlar çoğunlukla AI sağlık paneli ve test mock tipleri; interface→type, storage getItem overload, servis tipleri) (derleme denetlemediği için uygulama çalışıyor). Alan alan sıfırla; en sonda CI'a tip kontrolü ekle.
 - ✅ `scope-files` zaman aşımı ve testlerdeki i18n HTTP istekleri (teardown sonrası AbortError) giderildi.
 - ✅ `reports/*.md` artık yalnızca içerik değişince yeniden yazılıyor.
 - **Bitti sayılır:** `tsc` sıfır hata, test paketi kararlı geçiyor, `git status` temiz kalıyor.

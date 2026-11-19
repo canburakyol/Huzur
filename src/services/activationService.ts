@@ -64,7 +64,7 @@ export const hasCompletedFirstIbadahAction = (): boolean => {
   return storageService.getBoolean(STORAGE_KEYS.FIRST_IBADAH_ACTION_DONE, false);
 };
 
-export const markFirstActivationAction = ({ feature, source = 'feature_open' }: { feature: string; source?: string } = {}): ActivationResult => {
+export const markFirstActivationAction = ({ feature, source = 'feature_open' }: { feature: string; source?: string } = { feature: '' }): ActivationResult => {
   if (!isActivationFeature(feature)) {
     return {
       marked: false,

@@ -19,17 +19,17 @@ export type ReferralAntiAbuseRules = {
 }
 
 export type ReferralAntiAbuseState = {
-  blockedUntil?: string;
+  blockedUntil?: string | null;
 }
 
 export type ReferralState = {
-  invitedByCode?: string;
-  inviteAcceptedAt?: string;
-  onboardingCompletedAt?: string;
-  firstIbadahCompletedAt?: string;
-  ownCode?: string;
-  inviteCreatedAt?: string;
-  inviteeConvertedAt?: string;
+  invitedByCode?: string | null;
+  inviteAcceptedAt?: string | null;
+  onboardingCompletedAt?: string | null;
+  firstIbadahCompletedAt?: string | null;
+  ownCode?: string | null;
+  inviteCreatedAt?: string | null;
+  inviteeConvertedAt?: string | null;
   antiAbuse?: ReferralAntiAbuseState;
 }
 

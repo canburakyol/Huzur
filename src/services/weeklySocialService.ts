@@ -245,15 +245,15 @@ export const buildHatimWeeklySummary = (hatimDetails: HatimDetails | null, ancho
   parts.forEach((part) => {
     if (isDateInCurrentWeek(part?.takenAt, anchor)) {
       takenThisWeek += 1;
-      if (!lastContributionAt || new Date(part.takenAt) > new Date(lastContributionAt)) {
-        lastContributionAt = part.takenAt;
+      if (!lastContributionAt || new Date(part.takenAt as string) > new Date(lastContributionAt)) {
+        lastContributionAt = part.takenAt ?? null;
       }
     }
 
     if (isDateInCurrentWeek(part?.completedAt, anchor)) {
       completedThisWeek += 1;
-      if (!lastContributionAt || new Date(part.completedAt) > new Date(lastContributionAt)) {
-        lastContributionAt = part.completedAt;
+      if (!lastContributionAt || new Date(part.completedAt as string) > new Date(lastContributionAt)) {
+        lastContributionAt = part.completedAt ?? null;
       }
       if (part?.takenBy?.uid) {
         myCompletedThisWeek += 1;

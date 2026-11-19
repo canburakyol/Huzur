@@ -473,7 +473,7 @@ export const captureInviteAcceptanceFromCode = (referralCodeInput: string, { sou
 };
 
 export const captureInviteAcceptanceFromUrl = ({ source = 'deep_link', url }: { source?: string; url?: string | null } = {}): CaptureResult | null => {
-  return captureInviteAcceptanceFromCode(readReferralCodeFromUrl(url), { source });
+  return captureInviteAcceptanceFromCode(readReferralCodeFromUrl(url) ?? '', { source });
 };
 
 export const markOnboardingCompletedForReferral = (): ReferralState => {

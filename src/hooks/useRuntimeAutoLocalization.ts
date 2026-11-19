@@ -156,7 +156,7 @@ const buildDictionary = (activeLanguage: string): Map<string, string> => {
       return;
     }
 
-    dictionary.set(source, targets.values().next().value);
+    dictionary.set(source, targets.values().next().value as string);
   });
 
   return dictionary;

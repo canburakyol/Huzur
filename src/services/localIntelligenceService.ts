@@ -174,7 +174,7 @@ const normalizeState = (value: Partial<LocalIntelligenceState> = {}): LocalIntel
 
 let hasPendingChanges = false;
 let persistTimeout: any = null;
-const isTest = typeof process !== 'undefined' && (process.env.NODE_ENV === 'test' || typeof globalThis.it === 'function');
+const isTest = typeof process !== 'undefined' && (process.env.NODE_ENV === 'test' || typeof (globalThis as unknown as Record<string, unknown>).it === 'function');
 
 const forcePersistState = async (): Promise<void> => {
   if (!hasPendingChanges) return;
@@ -352,7 +352,7 @@ const scoreCandidate = ({ candidateId, context = {}, slot, state, riskBand }: {
   return score;
 };
 
-const buildHeadline = (topModule: string, riskBand: RiskBand): string => {
+const buildHeadline = (topModule: string | null, riskBand: RiskBand): string => {
   if (riskBand === 'comeback') {
     return 'Bugün geri dönüşü kolaylaştıracak modülleri öne aldık';
   }
@@ -370,10 +370,10 @@ const buildHeadline = (topModule: string, riskBand: RiskBand): string => {
     stories: 'Daha sakin ve akıcı bir akışı üstte tuttuk',
   };
 
-  return titles[topModule] || 'Ana ekran cihaz içinde yerel olarak yeniden sıralandı';
+  return titles[topModule ?? ''] || 'Ana ekran cihaz içinde yerel olarak yeniden sıralandı';
 };
 
-const buildExplanation = (topModule: string, context: RankingContext = {}, slot: SlotName): string => {
+const buildExplanation = (topModule: string | null, context: RankingContext = {}, slot: SlotName): string => {
   const streak = Number(context?.streak?.current) || 0;
   const activeDays = Number(context?.weeklySnapshot?.activeDays) || 0;
   const slotCopy: Record<SlotName, string> = {
@@ -392,10 +392,10 @@ const buildExplanation = (topModule: string, context: RankingContext = {}, slot:
     stories: 'Akşam ve gece saatlerinde daha yumuşak tüketim akışları öne çıkıyor.',
   };
 
-  return `${slotCopy[slot] || 'bugünkü'} ile son 7 gündeki ${activeDays} aktif gün ve ${streak} günlük seri birlikte değerlendirildi. ${specificCopy[topModule] || 'Yerel sinyaller bu sıralamayı oluşturdu.'}`;
+  return `${slotCopy[slot] || 'bugünkü'} ile son 7 gündeki ${activeDays} aktif gün ve ${streak} günlük seri birlikte değerlendirildi. ${specificCopy[topModule ?? ''] || 'Yerel sinyaller bu sıralamayı oluşturdu.'}`;
 };
 
-const buildSocialHint = (context: RankingContext = {}, topModule: string): string => {
+const buildSocialHint = (context: RankingContext = {}, topModule: string | null): string => {
   const familyGoal = context?.social?.familyWeeklyGoal;
 
   if (context?.social?.family && familyGoal && topModule !== 'familyMomentum') {

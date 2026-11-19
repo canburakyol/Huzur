@@ -157,7 +157,7 @@ export const FCMService: FCMServiceInstance = {
             }));
         });
 
-        PushNotifications.addListener('registrationError', (error: Error) => {
+        PushNotifications.addListener('registrationError', (error: { error: string }) => {
             logger.error('[FCM] Registration error:', error);
         });
 

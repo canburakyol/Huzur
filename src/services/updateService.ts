@@ -20,7 +20,7 @@ class UpdateService {
 
     try {
       const result = await AppUpdate.getAppUpdateInfo();
-      return result as AppUpdateInfo;
+      return result as unknown as AppUpdateInfo;
     } catch (error) {
       logger.warn('Update check failed (likely dev env):', error);
       return { updateAvailable: false };
@@ -54,7 +54,7 @@ class UpdateService {
     }
   }
 
-  async openAndroidBatteryOptimizationSettings(): Promise<void> {
+  async openAndroidBatteryOptimizationSettings(): ReturnType<typeof openBatteryOptimizationSettings> {
     return openBatteryOptimizationSettings();
   }
 }

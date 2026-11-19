@@ -81,7 +81,7 @@ export const detectAndSetLanguage = async (): Promise<string> => {
     await i18n.changeLanguage(languageCode);
     logger.log('[LanguageService] Language set to:', languageCode);
     
-    if (RTL_LANGUAGE_CODES.includes(languageCode)) {
+    if ((RTL_LANGUAGE_CODES as readonly string[]).includes(languageCode)) {
       document.documentElement.setAttribute('dir', 'rtl');
       document.documentElement.setAttribute('lang', languageCode);
     } else {
@@ -108,7 +108,7 @@ export const changeLanguage = async (languageCode: string): Promise<boolean> => 
     
     await i18n.changeLanguage(languageCode);
     
-    if (RTL_LANGUAGE_CODES.includes(languageCode)) {
+    if ((RTL_LANGUAGE_CODES as readonly string[]).includes(languageCode)) {
       document.documentElement.setAttribute('dir', 'rtl');
       document.documentElement.setAttribute('lang', languageCode);
     } else {

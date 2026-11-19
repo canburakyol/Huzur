@@ -121,6 +121,7 @@ export const createNotificationChannels = async (): Promise<void> => {
     // Re-creating a channel with the same id updates its name, so this follows the app language.
     await Promise.all(CHANNEL_LIST.map((channel) => LocalNotifications.createChannel({
       ...channel,
+      sound: channel.sound ?? undefined,
       name: i18n.t(`notify.channels.${channel.id}.name`, channel.name),
       description: i18n.t(`notify.channels.${channel.id}.description`, channel.description),
     })));

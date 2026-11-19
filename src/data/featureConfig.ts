@@ -7,7 +7,7 @@
 import { allFeatures } from '../features';
 
 type FeatureEntry = {
-  component: React.LazyExoticComponent<() => JSX.Element>;
+  component: (typeof allFeatures)[string]['component'];
   category: string;
   module: string;
   hasUpgrade?: boolean;

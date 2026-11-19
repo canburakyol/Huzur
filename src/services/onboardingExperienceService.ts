@@ -1,5 +1,7 @@
 import { getExperimentVariant } from './experimentService';
-import { DEFAULT_ONBOARDING_CONFIG, normalizeOnboardingConfig, OnboardingConfig } from './onboardingConfigService';
+import { DEFAULT_ONBOARDING_CONFIG, normalizeOnboardingConfig } from './onboardingConfigService';
+
+type OnboardingConfig = ReturnType<typeof normalizeOnboardingConfig>;
 
 type ExperimentContext = {
   onboardingHeadlineVariant: string;

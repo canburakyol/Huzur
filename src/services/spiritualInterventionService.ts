@@ -216,13 +216,14 @@ const sanitizeIntervention = (entry: Record<string, unknown> = {}, index: number
   };
 
   const interventionId = String(entry?.id || `spiritual_intervention_${index + 1}`);
+  const trigger = (entry?.trigger_condition || {}) as Record<string, unknown>;
 
   return {
     id: interventionId,
     trigger_condition: {
-      timeOfDay: String(entry?.trigger_condition?.timeOfDay || 'morning'),
-      dayOfWeek: String(entry?.trigger_condition?.dayOfWeek || 'any'),
-      userState: String(entry?.trigger_condition?.userState || 'steady')
+      timeOfDay: String(trigger.timeOfDay || 'morning'),
+      dayOfWeek: String(trigger.dayOfWeek || 'any'),
+      userState: String(trigger.userState || 'steady')
     },
     content: {
       greeting: String(content.greeting || DEFAULT_CONTENT.greeting),
