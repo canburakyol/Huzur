@@ -86,12 +86,12 @@ Her parça ayrı oturum; her parçada **yanlış atıf, eksik meal, kaynağı ol
 
 ## 6. Mushaf tasarımına taşıma
 
-Bitenler: Kıble, Ana sayfa, Pro, Zikirmatik, Dua Kitabı, İmsakiye, Kur'an okuyucu (20 Kas; ~103 ekran bileşeninin 7'si).
+Bitenler: Kıble, Ana sayfa, Pro, Zikirmatik, Dua Kitabı, İmsakiye, Kur'an okuyucu, Kaza Takibi (20 Kas; ~103 ekran bileşeninin 8'i).
 Her ekranda: `PageHeader` + `hz-*` sınıfları, satır içi stil yerine CSS, emoji ikon alanları → lucide, gündüz/gece telefonda kontrol.
 
 Sıra (en çok kullanılan önce):
 1. ✅ Kur'an okuyucu (`domains/quran`) — 20 Kas; telefonda göz kontrolü kaldı
-2. Kaza Takibi (`PrayerTracker.jsx`)
+2. ✅ Kaza Takibi (`PrayerTracker.jsx`) — 20 Kas
 3. Ayarlar (`domains/settings`)
 4. Soru-Cevap
 5. Tespihat, Esmâü'l-Hüsnâ, Dua Takipçisi
