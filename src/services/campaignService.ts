@@ -1,6 +1,7 @@
 import { STORAGE_KEYS } from '../constants';
 import { storageService } from './storageService';
 import { logger } from '../utils/logger';
+import i18n from '../i18n';
 import { religiousDays, toLocalDateKey } from '../data/religiousDays';
 
 type CampaignId = 'evergreen' | 'friday' | 'ramadan' | 'kandil';
@@ -112,37 +113,39 @@ export const resolveCampaignCopy = ({
 }): CampaignCopy => {
   const currentCampaign = campaign || getActiveCampaign();
 
+  const diaspora = currentCampaign.variant === 'diaspora';
+  const ct = (key: string, fallback: string) => i18n.t(`notify.campaign.${key}`, { defaultValue: fallback });
   const copyMap: Record<string, Record<CopyType, CampaignCopy>> = {
     [CAMPAIGN_IDS.EVERGREEN]: {
       reminder: {
-        title: currentCampaign.variant === 'diaspora' ? '🌍 Vakit Hatırlatması' : '🕌 Vakit Hatırlatması',
-        body: currentCampaign.variant === 'diaspora'
-          ? 'Bulunduğun ülkede vakit yaklaşıyor. Kısa bir mola verip ibadete yönel.'
-          : 'Vakit yaklaşıyor. Kısa bir mola verip ibadete yönel.'
+        title: diaspora ? ct('evergreen.titleDiaspora', '🌍 Vakit hatırlatması') : ct('evergreen.title', '🕌 Vakit hatırlatması'),
+        body: diaspora
+          ? ct('evergreen.bodyDiaspora', 'Bulunduğun ülkede vakit yaklaşıyor. Kısa bir mola verip ibadete yönel.')
+          : ct('evergreen.body', 'Vakit yaklaşıyor. Kısa bir mola verip ibadete yönel.')
       }
     },
     [CAMPAIGN_IDS.FRIDAY]: {
       reminder: {
-        title: '✨ Cuma Bereketi',
-        body: currentCampaign.variant === 'diaspora'
-          ? 'Cuma gününü bulunduğun şehirde bereketle geçir. Duanı ve zikrini ihmal etme.'
-          : 'Cuma gününü bereketle geçir. Duanı ve zikrini ihmal etme.'
+        title: ct('friday.title', '✨ Cuma bereketi'),
+        body: diaspora
+          ? ct('friday.bodyDiaspora', 'Cuma gününü bulunduğun şehirde bereketle geçir. Duanı ve zikrini ihmal etme.')
+          : ct('friday.body', 'Cuma gününü bereketle geçir. Duanı ve zikrini ihmal etme.')
       }
     },
     [CAMPAIGN_IDS.RAMADAN]: {
       reminder: {
-        title: '🌙 Ramazan Hatırlatması',
-        body: currentCampaign.variant === 'diaspora'
-          ? 'Ramazan rutinin için bugünkü ibadet hedefini tamamlamayı unutma.'
-          : 'Ramazan bereketiyle bugünkü ibadet hedefini tamamlamayı unutma.'
+        title: ct('ramadan.title', '🌙 Ramazan hatırlatması'),
+        body: diaspora
+          ? ct('ramadan.bodyDiaspora', 'Ramazan rutinin için bugünkü ibadet hedefini tamamlamayı unutma.')
+          : ct('ramadan.body', 'Ramazan bereketiyle bugünkü ibadet hedefini tamamlamayı unutma.')
       }
     },
     [CAMPAIGN_IDS.KANDIL]: {
       reminder: {
-        title: '🕯️ Kandil Gecesi',
-        body: currentCampaign.variant === 'diaspora'
-          ? 'Kandil gecesi için kısa bir dua ve zikirle kalbini ferahlat.'
-          : 'Kandil gecesinde dua ve zikirle kalbini ferahlat.'
+        title: ct('kandil.title', '🕯️ Kandil gecesi'),
+        body: diaspora
+          ? ct('kandil.bodyDiaspora', 'Kandil gecesi için kısa bir dua ve zikirle kalbini ferahlat.')
+          : ct('kandil.body', 'Kandil gecesinde dua ve zikirle kalbini ferahlat.')
       }
     }
   };

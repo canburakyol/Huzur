@@ -3946,11 +3946,18 @@
       "tawhid": "Tauhid",
       "postPrayerDuas": "Bittgebete nach dem Gebet",
       "complete": "Abschließen",
-      "completed": "Abgeschlossen ✓",
+      "completed": "Abgeschlossen",
       "subtitle": "Verfolge deinen Dhikr und deine Bittgebete nach dem Gebet.",
       "resetLabel": "Tasbih-Fortschritt zurücksetzen",
       "toggleTawhid": "Tauhid-Text ein- oder ausblenden",
-      "optionalQuranDuas": "Tauhid und optionale Bittgebete aus dem Koran"
+      "optionalQuranDuas": "Tauhid und optionale Bittgebete aus dem Koran",
+      "sourceHadith": "Hadith",
+      "sourceQuran": "Koran",
+      "sourceGeneral": "Allgemein / keine Quelle angegeben",
+      "markDone": "Fertig",
+      "markedDone": "Erledigt",
+      "optionalDua": "Optionales Bittgebet aus dem Koran",
+      "counterLabel": "Zähler für {{name}} erhöhen, {{count}}/33"
     }
   },
   "quranMemorize": {
@@ -5408,5 +5415,113 @@
     "quiz_first": "Schließe dein erstes Quiz ab",
     "quiz_master": "Schließe 50 Quizze ab",
     "esma_learner": "Lerne die 99 Namen Allahs"
+  },
+  "notify": {
+    "pre": {
+      "Fajr": {
+        "title": "🌅 Fadschr naht",
+        "body": "Beginne den Tag mit Segen. Die Fadschr-Zeit naht."
+      },
+      "Sunrise": {
+        "title": "☀️ Sonnenaufgang naht",
+        "body": "Die Sonne geht bald auf; die Zeit für Fadschr endet."
+      },
+      "Dhuhr": {
+        "title": "🕌 Dhuhr naht",
+        "body": "Die Dhuhr-Zeit naht. Mach eine kurze Pause für das Gebet."
+      },
+      "Asr": {
+        "title": "🌤️ Asr naht",
+        "body": "Die Asr-Zeit kommt. Unterbrich deine Arbeit für das Gebet."
+      },
+      "Maghrib": {
+        "title": "🌇 Maghrib naht",
+        "body": "Der Sonnenuntergang naht; die Maghrib-Zeit kommt."
+      },
+      "Isha": {
+        "title": "🌙 Ischa naht",
+        "body": "Die Ischa-Zeit kommt. Beschließe den Tag mit dem Gebet."
+      }
+    },
+    "streak": {
+      "evening": {
+        "title": "Heute genügt ein einziger Schritt",
+        "body": "Schau kurz in Huzur vorbei, um deinen {days}-Tage-Rhythmus zu halten."
+      },
+      "late": {
+        "title": "Beende den Tag mit einem ruhigen Schritt",
+        "body": "Schon ein kleiner Schritt heute kann deinen Rhythmus beleben."
+      }
+    },
+    "daily": {
+      "zikir_morning": {
+        "title": "📿 Täglicher Dhikr",
+        "body": "Hast du heute deinen Dhikr gemacht?"
+      },
+      "quran_afternoon": {
+        "title": "📖 Zeit für den Koran",
+        "body": "Ein guter Moment, um dein tägliches Leseziel im Koran zu erreichen."
+      },
+      "tasks_evening": {
+        "title": "✅ Tägliche Aufgaben",
+        "body": "Hast du die heutigen Aufgaben erledigt?"
+      }
+    },
+    "winback": {
+      "d3": {
+        "title": "Frische heute deinen Rhythmus auf",
+        "body": "Es braucht kein großes Ziel. Ein kleiner Schritt in Huzur kann heute genügen."
+      },
+      "d7": {
+        "title": "Komm in Ruhe zurück",
+        "body": "Eine Pause ist normal. Heute kannst du einfach ruhig neu beginnen."
+      },
+      "d14": {
+        "title": "Neu anfangen ist in Ordnung",
+        "body": "Ohne dem alten Rhythmus nachzujagen, kannst du heute einen neuen, leichten Schritt wählen."
+      }
+    },
+    "variant": {
+      "ramadanTitle": "🌙 Die Ramadan-Zeit naht",
+      "fridayBody": "Bereite dich kurz auf den Segen des Freitags vor.",
+      "intentionSuffix": "Jetzt ist ein guter Moment für deine Absicht.",
+      "kandilTitle": "🕯️ Spirituelle Erinnerung",
+      "breakSuffix": "Gönn dir eine kleine Pause für innere Ruhe."
+    },
+    "names": {
+      "Fajr": "Fadschr",
+      "Sunrise": "Sonnenaufgang",
+      "Dhuhr": "Dhuhr",
+      "Asr": "Asr",
+      "Maghrib": "Maghrib",
+      "Isha": "Ischa"
+    },
+    "main": {
+      "titlePrefix": "Gebetszeit",
+      "body": "Die Zeit ist gekommen. Auf zum Gebet!"
+    },
+    "campaign": {
+      "evergreen": {
+        "title": "🕌 Gebetserinnerung",
+        "titleDiaspora": "🌍 Gebetserinnerung",
+        "body": "Die Gebetszeit naht. Mach eine kurze Pause und wende dich dem Gebet zu.",
+        "bodyDiaspora": "An deinem Ort naht die Gebetszeit. Mach eine kurze Pause und wende dich dem Gebet zu."
+      },
+      "friday": {
+        "title": "✨ Segen des Freitags",
+        "body": "Verbringe den Freitag mit Segen. Vernachlässige Bittgebet und Dhikr nicht.",
+        "bodyDiaspora": "Verbringe den Freitag an deinem Ort mit Segen. Vernachlässige Bittgebet und Dhikr nicht."
+      },
+      "ramadan": {
+        "title": "🌙 Ramadan-Erinnerung",
+        "body": "Vergiss im Segen des Ramadan dein heutiges Gebetsziel nicht.",
+        "bodyDiaspora": "Vergiss für deine Ramadan-Routine das heutige Gebetsziel nicht."
+      },
+      "kandil": {
+        "title": "🕯️ Gesegnete Nacht",
+        "body": "Erfrische dein Herz in dieser gesegneten Nacht mit Bittgebet und Dhikr.",
+        "bodyDiaspora": "Erfrische dein Herz mit einem kurzen Bittgebet und Dhikr für diese gesegnete Nacht."
+      }
+    }
   }
 }

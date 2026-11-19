@@ -3945,12 +3945,19 @@
       "tasbih33": "Tasbih 33x",
       "tawhid": "Tauhid",
       "postPrayerDuas": "Doa Setelah Salat",
-      "complete": "Selesai",
-      "completed": "Selesai ✓",
+      "complete": "Selesaikan",
+      "completed": "Selesai",
       "subtitle": "Ikuti zikir dan doa setelah salat.",
       "resetLabel": "Atur ulang kemajuan tasbih",
       "toggleTawhid": "Tampilkan atau sembunyikan teks tauhid",
-      "optionalQuranDuas": "Tauhid dan doa Al-Qur'an opsional"
+      "optionalQuranDuas": "Tauhid dan doa Al-Qur'an opsional",
+      "sourceHadith": "Hadis",
+      "sourceQuran": "Al-Qur'an",
+      "sourceGeneral": "Umum / tanpa sumber",
+      "markDone": "Selesai",
+      "markedDone": "Beres",
+      "optionalDua": "Doa Al-Qur'an opsional",
+      "counterLabel": "Tambah hitungan {{name}}, {{count}}/33"
     }
   },
   "quranMemorize": {
@@ -5408,5 +5415,113 @@
     "quiz_first": "Selesaikan kuis pertamamu",
     "quiz_master": "Selesaikan 50 kuis",
     "esma_learner": "Pelajari 99 Asmaul Husna"
+  },
+  "notify": {
+    "pre": {
+      "Fajr": {
+        "title": "🌅 Subuh segera tiba",
+        "body": "Awali harimu dengan berkah. Waktu Subuh segera tiba."
+      },
+      "Sunrise": {
+        "title": "☀️ Matahari segera terbit",
+        "body": "Matahari hampir terbit; waktu Subuh segera berakhir."
+      },
+      "Dhuhr": {
+        "title": "🕌 Zuhur segera tiba",
+        "body": "Waktu Zuhur segera tiba. Luangkan waktu sejenak untuk salat."
+      },
+      "Asr": {
+        "title": "🌤️ Asar segera tiba",
+        "body": "Waktu Asar segera tiba. Jeda sejenak pekerjaanmu untuk salat."
+      },
+      "Maghrib": {
+        "title": "🌇 Magrib segera tiba",
+        "body": "Matahari hampir terbenam; waktu Magrib segera tiba."
+      },
+      "Isha": {
+        "title": "🌙 Isya segera tiba",
+        "body": "Waktu Isya segera tiba. Tutup harimu dengan salat."
+      }
+    },
+    "streak": {
+      "evening": {
+        "title": "Satu langkah cukup hari ini",
+        "body": "Mampir sebentar ke Huzur untuk menjaga ritme {days} harimu."
+      },
+      "late": {
+        "title": "Tutup hari dengan satu langkah tenang",
+        "body": "Satu langkah kecil hari ini pun bisa menghidupkan kembali ritmemu."
+      }
+    },
+    "daily": {
+      "zikir_morning": {
+        "title": "📿 Zikir harian",
+        "body": "Sudahkah kamu berzikir hari ini?"
+      },
+      "quran_afternoon": {
+        "title": "📖 Waktunya membaca Al-Qur'an",
+        "body": "Saat yang tepat untuk menuntaskan target bacaan Al-Qur'an harianmu."
+      },
+      "tasks_evening": {
+        "title": "✅ Tugas harian",
+        "body": "Sudahkah kamu menyelesaikan tugas ibadah hari ini?"
+      }
+    },
+    "winback": {
+      "d3": {
+        "title": "Segarkan ritmemu hari ini",
+        "body": "Tidak perlu target besar. Satu langkah kecil di Huzur sudah cukup untuk hari ini."
+      },
+      "d7": {
+        "title": "Kembalilah perlahan",
+        "body": "Wajar jika sempat berhenti. Hari ini kamu cukup memulai dengan tenang."
+      },
+      "d14": {
+        "title": "Mulai dari awal itu boleh",
+        "body": "Tanpa mengejar ritme lama, kamu bisa memilih langkah baru yang ringan hari ini."
+      }
+    },
+    "variant": {
+      "ramadanTitle": "🌙 Waktu Ramadan segera tiba",
+      "fridayBody": "Bersiaplah sejenak untuk keberkahan hari Jumat.",
+      "intentionSuffix": "Sekarang saat yang tepat untuk berniat.",
+      "kandilTitle": "🕯️ Pengingat spiritual",
+      "breakSuffix": "Ambil jeda sejenak untuk ketenangan."
+    },
+    "names": {
+      "Fajr": "Subuh",
+      "Sunrise": "Terbit",
+      "Dhuhr": "Zuhur",
+      "Asr": "Asar",
+      "Maghrib": "Magrib",
+      "Isha": "Isya"
+    },
+    "main": {
+      "titlePrefix": "Waktu salat",
+      "body": "Waktu telah tiba. Mari salat!"
+    },
+    "campaign": {
+      "evergreen": {
+        "title": "🕌 Pengingat salat",
+        "titleDiaspora": "🌍 Pengingat salat",
+        "body": "Waktu salat sudah dekat. Ambil jeda sejenak dan beribadahlah.",
+        "bodyDiaspora": "Waktu salat di tempatmu sudah dekat. Ambil jeda sejenak dan beribadahlah."
+      },
+      "friday": {
+        "title": "✨ Berkah Jumat",
+        "body": "Lalui hari Jumat dengan berkah. Jangan lupakan doa dan zikirmu.",
+        "bodyDiaspora": "Lalui hari Jumat dengan berkah di kotamu. Jangan lupakan doa dan zikirmu."
+      },
+      "ramadan": {
+        "title": "🌙 Pengingat Ramadan",
+        "body": "Dengan berkah Ramadan, jangan lupa menuntaskan target ibadah hari ini.",
+        "bodyDiaspora": "Jangan lupa menuntaskan target ibadah hari ini untuk rutinitas Ramadanmu."
+      },
+      "kandil": {
+        "title": "🕯️ Malam istimewa",
+        "body": "Lapangkan hatimu dengan doa dan zikir di malam istimewa ini.",
+        "bodyDiaspora": "Lapangkan hatimu dengan doa dan zikir singkat untuk malam istimewa ini."
+      }
+    }
   }
 }

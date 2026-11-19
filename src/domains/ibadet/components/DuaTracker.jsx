@@ -93,7 +93,7 @@ export function DuaTracker({ onClose }) {
   const filteredDuas = duas.filter((dua) => filter === 'all' || (filter === 'completed' ? dua.completed : !dua.completed));
   const getCategoryInfo = (id) => DUA_CATEGORIES.find((category) => category.id === id) || DUA_CATEGORIES.at(-1);
   const categoryName = (category) => t(`dua.categories.${category.id}`, category.name);
-  const dateLocale = i18n.language === 'tr' ? 'tr-TR' : i18n.language === 'id' ? 'id-ID' : 'en-US';
+  const dateLocale = i18n.language;
 
   return (
     <main className="practice-page">

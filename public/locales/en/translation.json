@@ -3860,11 +3860,18 @@
       "tawhid": "Tawhid",
       "postPrayerDuas": "Post-Prayer Duas",
       "complete": "Complete",
-      "completed": "Completed ✓",
+      "completed": "Completed",
       "subtitle": "Follow your dhikr and supplications after the prayer.",
       "resetLabel": "Reset tasbih progress",
       "toggleTawhid": "Show or hide the tawhid text",
-      "optionalQuranDuas": "Tawhid and optional Qur'anic supplications"
+      "optionalQuranDuas": "Tawhid and optional Qur'anic supplications",
+      "sourceHadith": "Hadith",
+      "sourceQuran": "Quran",
+      "sourceGeneral": "General / no source given",
+      "markDone": "Done",
+      "markedDone": "Done ✓",
+      "optionalDua": "Optional Quranic supplication",
+      "counterLabel": "Increase {{name}} counter, {{count}}/33"
     }
   },
   "quranMemorize": {
@@ -5408,5 +5415,113 @@
     "quiz_first": "Complete your first quiz",
     "quiz_master": "Complete 50 quizzes",
     "esma_learner": "Learn the 99 Names of Allah"
+  },
+  "notify": {
+    "pre": {
+      "Fajr": {
+        "title": "🌅 Fajr is approaching",
+        "body": "Start your day with blessing. Fajr time is approaching."
+      },
+      "Sunrise": {
+        "title": "☀️ Sunrise is near",
+        "body": "The sun is about to rise; the time for Fajr is ending."
+      },
+      "Dhuhr": {
+        "title": "🕌 Dhuhr is approaching",
+        "body": "Dhuhr time is approaching. Take a short break for prayer."
+      },
+      "Asr": {
+        "title": "🌤️ Asr is approaching",
+        "body": "Asr time is coming. Pause your work for prayer."
+      },
+      "Maghrib": {
+        "title": "🌇 Maghrib is approaching",
+        "body": "Sunset is near; Maghrib time is approaching."
+      },
+      "Isha": {
+        "title": "🌙 Isha is approaching",
+        "body": "Isha time is coming. End your day with prayer."
+      }
+    },
+    "streak": {
+      "evening": {
+        "title": "One step is enough today",
+        "body": "Pop back into Huzur briefly to keep your {days}-day rhythm."
+      },
+      "late": {
+        "title": "End the day with a calm step",
+        "body": "Even one small step today can revive your rhythm."
+      }
+    },
+    "daily": {
+      "zikir_morning": {
+        "title": "📿 Daily dhikr",
+        "body": "Have you done your dhikr today?"
+      },
+      "quran_afternoon": {
+        "title": "📖 Quran reading time",
+        "body": "A good moment to complete your daily Quran reading goal."
+      },
+      "tasks_evening": {
+        "title": "✅ Daily tasks",
+        "body": "Have you completed today's worship tasks?"
+      }
+    },
+    "winback": {
+      "d3": {
+        "title": "Refresh your rhythm today",
+        "body": "No big goal needed. One small step in Huzur can be enough for today."
+      },
+      "d7": {
+        "title": "Come back gently",
+        "body": "Taking a break is normal. Today you can simply make a calm start."
+      },
+      "d14": {
+        "title": "Starting fresh is fine",
+        "body": "Without chasing your old rhythm, you can choose a new, light step today."
+      }
+    },
+    "variant": {
+      "ramadanTitle": "🌙 Ramadan time is approaching",
+      "fridayBody": "Prepare briefly for the blessing of Friday.",
+      "intentionSuffix": "Now is a good moment to make your intention.",
+      "kandilTitle": "🕯️ Spiritual reminder",
+      "breakSuffix": "Take a small break for peace."
+    },
+    "names": {
+      "Fajr": "Fajr",
+      "Sunrise": "Sunrise",
+      "Dhuhr": "Dhuhr",
+      "Asr": "Asr",
+      "Maghrib": "Maghrib",
+      "Isha": "Isha"
+    },
+    "main": {
+      "titlePrefix": "Prayer time",
+      "body": "It's time. Come to prayer!"
+    },
+    "campaign": {
+      "evergreen": {
+        "title": "🕌 Prayer reminder",
+        "titleDiaspora": "🌍 Prayer reminder",
+        "body": "Prayer time is near. Take a short break and turn to worship.",
+        "bodyDiaspora": "Prayer time is near where you are. Take a short break and turn to worship."
+      },
+      "friday": {
+        "title": "✨ Friday blessing",
+        "body": "Spend Friday with blessing. Don't neglect your supplication and dhikr.",
+        "bodyDiaspora": "Spend Friday with blessing wherever you are. Don't neglect your supplication and dhikr."
+      },
+      "ramadan": {
+        "title": "🌙 Ramadan reminder",
+        "body": "With the blessing of Ramadan, don't forget today's worship goal.",
+        "bodyDiaspora": "Don't forget today's worship goal for your Ramadan routine."
+      },
+      "kandil": {
+        "title": "🕯️ Blessed night",
+        "body": "Refresh your heart with supplication and dhikr on this blessed night.",
+        "bodyDiaspora": "Refresh your heart with a short supplication and dhikr for this blessed night."
+      }
+    }
   }
 }

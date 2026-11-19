@@ -1,6 +1,7 @@
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import { storageService } from './storageService';
+import i18n from '../i18n';
 import { logger } from '../utils/logger';
 import { analyticsService, ANALYTICS_EVENTS } from './analyticsService';
 import { getExperimentVariant } from './experimentService';
@@ -111,105 +112,68 @@ const NOTIFICATION_HISTORY_KEY = 'huzur_notification_history';
 const NOTIFICATION_PREFS_KEY = 'huzur_notification_prefs';
 const ENABLE_AI_PUSH_HINTS_IN_SCHEDULER = true;
 
+// Copy is read through getters so notifications use the language active at scheduling time.
+const nt = (key: string, fallback: string): string => i18n.t(`notify.${key}`, { defaultValue: fallback });
+
+const prayerPre = (prayer: string, title: string, body: string, minutesBefore: number): PrayerNotificationConfig => ({
+  get title() { return nt(`pre.${prayer}.title`, title); },
+  get body() { return nt(`pre.${prayer}.body`, body); },
+  minutesBefore
+});
+
 const PRAYER_NOTIFICATIONS: Record<string, PrayerNotificationConfig> = {
-  Fajr: {
-    title: '🌅 Fajr Prayer Time',
-    body: 'Start your day with blessing. Fajr time is approaching!',
-    minutesBefore: 15
-  },
-  Sunrise: {
-    title: '☀️ Sunrise',
-    body: 'The sun has risen. Prepare for Ishraq prayer.',
-    minutesBefore: 5
-  },
-  Dhuhr: {
-    title: '🕌 Dhuhr Prayer Time',
-    body: 'Dhuhr prayer time is approaching. Take a short break for prayer.',
-    minutesBefore: 15
-  },
-  Asr: {
-    title: '🌤️ Asr Prayer Time',
-    body: 'Asr prayer time is coming. Pause your daily work for prayer.',
-    minutesBefore: 15
-  },
-  Maghrib: {
-    title: '🌇 Maghrib Prayer Time',
-    body: 'Sunset is near, Maghrib prayer time is approaching.',
-    minutesBefore: 10
-  },
-  Isha: {
-    title: '🌙 Isha Prayer Time',
-    body: 'Isha prayer time is coming. End your day with prayer.',
-    minutesBefore: 15
-  }
+  Fajr: prayerPre('Fajr', '🌅 Sabah namazı yaklaşıyor', 'Güne bereketle başla. Sabah namazı vakti yaklaşıyor.', 15),
+  Sunrise: prayerPre('Sunrise', '☀️ Güneş doğuyor', 'Güneş doğmak üzere; sabah namazının vakti çıkıyor.', 5),
+  Dhuhr: prayerPre('Dhuhr', '🕌 Öğle namazı yaklaşıyor', 'Öğle namazı vakti yaklaşıyor. Namaz için kısa bir mola ver.', 15),
+  Asr: prayerPre('Asr', '🌤️ İkindi namazı yaklaşıyor', 'İkindi vakti geliyor. Günün işine namaz için ara ver.', 15),
+  Maghrib: prayerPre('Maghrib', '🌇 Akşam namazı yaklaşıyor', 'Güneş batmak üzere, akşam namazı vakti yaklaşıyor.', 10),
+  Isha: prayerPre('Isha', '🌙 Yatsı namazı yaklaşıyor', 'Yatsı vakti geliyor. Günü namazla tamamla.', 15)
 };
 
 const STREAK_NOTIFICATIONS: StreakNotificationConfig[] = [
   {
-    title: 'Bugun tek bir adim yeterli',
-    body: '{days} gunluk ritmini korumak icin Huzur\'a kisa bir donus yapabilirsin.',
+    get title() { return nt('streak.evening.title', 'Bugün tek bir adım yeterli'); },
+    get body() { return nt('streak.evening.body', '{days} günlük ritmini korumak için Huzur\'a kısa bir dönüş yapabilirsin.'); },
     hour: 20,
     minute: 0
   },
   {
-    title: 'Gunu sakin bir adimla tamamla',
-    body: 'Bugun tek bir kucuk temas bile ritmi yeniden canlandirabilir.',
+    get title() { return nt('streak.late.title', 'Günü sakin bir adımla tamamla'); },
+    get body() { return nt('streak.late.body', 'Bugün tek bir küçük adım bile ritmi yeniden canlandırabilir.'); },
     hour: 23,
     minute: 0
   }
 ];
 
+const reminder = (id: string, title: string, body: string, slot: DailyReminderConfig['slot'], fallbackHour: number): DailyReminderConfig => ({
+  id,
+  get title() { return nt(`daily.${id}.title`, title); },
+  get body() { return nt(`daily.${id}.body`, body); },
+  slot,
+  fallbackHour,
+  minute: 0,
+});
+
 const DAILY_REMINDERS: DailyReminderConfig[] = [
-  {
-    id: 'zikir_morning',
-    title: '📿 Daily Dhikr Reminder',
-    body: 'Have you completed your dhikr today?',
-    slot: 'morning',
-    fallbackHour: 10,
-    minute: 0,
-  },
-  {
-    id: 'quran_afternoon',
-    title: '📖 Quran Reading Time',
-    body: 'A great time to complete your daily Quran reading goal!',
-    slot: 'afternoon',
-    fallbackHour: 14,
-    minute: 0,
-  },
-  {
-    id: 'tasks_evening',
-    title: '✅ Daily Tasks',
-    body: 'Have you completed today\'s worship tasks?',
-    slot: 'evening',
-    fallbackHour: 18,
-    minute: 0,
-  },
+  reminder('zikir_morning', '📿 Günlük zikir', 'Bugünkü zikrini yaptın mı?', 'morning', 10),
+  reminder('quran_afternoon', "📖 Kur'an okuma vakti", "Günlük Kur'an okuma hedefini tamamlamak için güzel bir an.", 'afternoon', 14),
+  reminder('tasks_evening', '✅ Günlük görevler', 'Bugünkü ibadet görevlerini tamamladın mı?', 'evening', 18),
 ];
 
 const WINBACK_CAMPAIGN_ID = 'winback_reactivation_v1';
 
+const winback = (id: number, delayDays: number, lifecycleStage: string, key: string, title: string, body: string): WinbackNotificationConfig => ({
+  id,
+  delayDays,
+  lifecycleStage,
+  get title() { return nt(`winback.${key}.title`, title); },
+  get body() { return nt(`winback.${key}.body`, body); }
+});
+
 export const WINBACK_NOTIFICATIONS: WinbackNotificationConfig[] = [
-  {
-    id: 3100,
-    delayDays: 3,
-    lifecycleStage: 'cooling_2_4d',
-    title: 'Bugun ritmi tazele',
-    body: 'Buyuk bir hedef gerekmez. Huzurda tek kucuk adim gunun akisina yetebilir.'
-  },
-  {
-    id: 3101,
-    delayDays: 7,
-    lifecycleStage: 'comeback_5_13d',
-    title: 'Yavasca geri don',
-    body: 'Ara vermis olman normal. Bugun sadece sakin bir baslangic yapabilirsin.'
-  },
-  {
-    id: 3102,
-    delayDays: 14,
-    lifecycleStage: 'dormant_14d_plus',
-    title: 'Sifirdan baslamak serbest',
-    body: 'Eski ritmi yakalamaya calismadan, bugun yeni ve hafif bir adim secebilirsin.'
-  }
+  winback(3100, 3, 'cooling_2_4d', 'd3', 'Bugün ritmi tazele', 'Büyük bir hedef gerekmez. Huzur\'da tek küçük adım günün akışına yetebilir.'),
+  winback(3101, 7, 'comeback_5_13d', 'd7', 'Yavaşça geri dön', 'Ara vermiş olman normal. Bugün sadece sakin bir başlangıç yapabilirsin.'),
+  winback(3102, 14, 'dormant_14d_plus', 'd14', 'Sıfırdan başlamak serbest', 'Eski ritmi yakalamaya çalışmadan, bugün yeni ve hafif bir adım seçebilirsin.')
 ];
 
 export const getNotificationPreferences = (): NotificationPreferences => {
@@ -274,14 +238,14 @@ const getPushCopyVariantText = ({ variant, campaign, baseTitle, baseBody }: {
       body: `${baseBody}`
     },
     B: {
-      title: id === 'ramadan' ? '🌙 Ramazan Vakti Yaklaşıyor' : `⏰ ${baseTitle}`,
+      title: id === 'ramadan' ? nt('variant.ramadanTitle', '🌙 Ramazan vakti yaklaşıyor') : `⏰ ${baseTitle}`,
       body: id === 'friday'
-        ? 'Cuma gününün bereketi için kısa bir hazırlık yap.'
-        : `${baseBody} Şimdi niyetlenmek için güzel bir an.`
+        ? nt('variant.fridayBody', 'Cuma gününün bereketi için kısa bir hazırlık yap.')
+        : `${baseBody} ${nt('variant.intentionSuffix', 'Şimdi niyetlenmek için güzel bir an.')}`
     },
     C: {
-      title: id === 'kandil' ? '🕯️ Manevi Hatırlatma' : `✨ ${baseTitle}`,
-      body: `${baseBody} Huzur için küçük bir mola ver.`
+      title: id === 'kandil' ? nt('variant.kandilTitle', '🕯️ Manevi hatırlatma') : `✨ ${baseTitle}`,
+      body: `${baseBody} ${nt('variant.breakSuffix', 'Huzur için küçük bir mola ver.')}`
     }
   };
 
@@ -375,12 +339,12 @@ export const schedulePrayerNotifications = async (prayerTimes: Record<string, st
   const pushVariant = getExperimentVariant('push_copy_v1');
   analyticsService.logExperimentAssigned('push_copy_v1', pushVariant, 'schedule_prayer_notifications');
   const prayerNames: Record<string, string> = {
-    Fajr: 'Sabah',
-    Sunrise: 'Güneş',
-    Dhuhr: 'Öğle',
-    Asr: 'İkindi',
-    Maghrib: 'Akşam',
-    Isha: 'Yatsı'
+    Fajr: nt('names.Fajr', 'Sabah'),
+    Sunrise: nt('names.Sunrise', 'Güneş'),
+    Dhuhr: nt('names.Dhuhr', 'Öğle'),
+    Asr: nt('names.Asr', 'İkindi'),
+    Maghrib: nt('names.Maghrib', 'Akşam'),
+    Isha: nt('names.Isha', 'Yatsı')
   };
 
   for (const [index, [prayer, config]] of Object.entries(PRAYER_NOTIFICATIONS).entries()) {
@@ -398,8 +362,8 @@ export const schedulePrayerNotifications = async (prayerTimes: Record<string, st
       const campaignCopy = resolveCampaignCopy({
         campaign,
         type: 'reminder',
-        fallbackTitle: `Ezan Vakti: ${prayerNames[prayer] || prayer}`,
-        fallbackBody: 'Vakit girdi. Haydi namaza!'
+        fallbackTitle: `${nt('main.titlePrefix', 'Ezan vakti')}: ${prayerNames[prayer] || prayer}`,
+        fallbackBody: nt('main.body', 'Vakit girdi. Haydi namaza!')
       });
       const variantFallback = getPushCopyVariantText({
         variant: pushVariant,

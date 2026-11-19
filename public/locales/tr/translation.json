@@ -4382,11 +4382,18 @@
       "tawhid": "Tevhid",
       "postPrayerDuas": "Namaz Sonrası Dualar",
       "complete": "Tamamla",
-      "completed": "Tamamlandı ✓",
+      "completed": "Tamamlandı",
       "subtitle": "Namaz sonrası zikir ve dualarınızı takip edin.",
       "resetLabel": "Tespihat ilerlemesini sıfırla",
       "toggleTawhid": "Tevhid metnini aç veya kapat",
-      "optionalQuranDuas": "Tevhid ve isteğe bağlı Kur’an duaları"
+      "optionalQuranDuas": "Tevhid ve isteğe bağlı Kur’an duaları",
+      "sourceHadith": "Hadis",
+      "sourceQuran": "Kur’an",
+      "sourceGeneral": "Genel / kaynak belirtilmemiş",
+      "markDone": "Bitti",
+      "markedDone": "Tamam",
+      "optionalDua": "İsteğe bağlı Kur’an duası",
+      "counterLabel": "{{name}} sayacını artır, {{count}}/33"
     }
   },
   "quranMemorize": {
@@ -5408,5 +5415,113 @@
     "quiz_first": "İlk quiz'ini tamamla",
     "quiz_master": "50 quiz tamamla",
     "esma_learner": "99 Esma-ül Hüsna'yı öğren"
+  },
+  "notify": {
+    "pre": {
+      "Fajr": {
+        "title": "🌅 Sabah namazı yaklaşıyor",
+        "body": "Güne bereketle başla. Sabah namazı vakti yaklaşıyor."
+      },
+      "Sunrise": {
+        "title": "☀️ Güneş doğuyor",
+        "body": "Güneş doğmak üzere; sabah namazının vakti çıkıyor."
+      },
+      "Dhuhr": {
+        "title": "🕌 Öğle namazı yaklaşıyor",
+        "body": "Öğle namazı vakti yaklaşıyor. Namaz için kısa bir mola ver."
+      },
+      "Asr": {
+        "title": "🌤️ İkindi namazı yaklaşıyor",
+        "body": "İkindi vakti geliyor. Günün işine namaz için ara ver."
+      },
+      "Maghrib": {
+        "title": "🌇 Akşam namazı yaklaşıyor",
+        "body": "Güneş batmak üzere, akşam namazı vakti yaklaşıyor."
+      },
+      "Isha": {
+        "title": "🌙 Yatsı namazı yaklaşıyor",
+        "body": "Yatsı vakti geliyor. Günü namazla tamamla."
+      }
+    },
+    "streak": {
+      "evening": {
+        "title": "Bugün tek bir adım yeterli",
+        "body": "{days} günlük ritmini korumak için Huzur'a kısa bir dönüş yapabilirsin."
+      },
+      "late": {
+        "title": "Günü sakin bir adımla tamamla",
+        "body": "Bugün tek bir küçük adım bile ritmi yeniden canlandırabilir."
+      }
+    },
+    "daily": {
+      "zikir_morning": {
+        "title": "📿 Günlük zikir",
+        "body": "Bugünkü zikrini yaptın mı?"
+      },
+      "quran_afternoon": {
+        "title": "📖 Kur'an okuma vakti",
+        "body": "Günlük Kur'an okuma hedefini tamamlamak için güzel bir an."
+      },
+      "tasks_evening": {
+        "title": "✅ Günlük görevler",
+        "body": "Bugünkü ibadet görevlerini tamamladın mı?"
+      }
+    },
+    "winback": {
+      "d3": {
+        "title": "Bugün ritmi tazele",
+        "body": "Büyük bir hedef gerekmez. Huzur'da tek küçük adım günün akışına yetebilir."
+      },
+      "d7": {
+        "title": "Yavaşça geri dön",
+        "body": "Ara vermiş olman normal. Bugün sadece sakin bir başlangıç yapabilirsin."
+      },
+      "d14": {
+        "title": "Sıfırdan başlamak serbest",
+        "body": "Eski ritmi yakalamaya çalışmadan, bugün yeni ve hafif bir adım seçebilirsin."
+      }
+    },
+    "variant": {
+      "ramadanTitle": "🌙 Ramazan vakti yaklaşıyor",
+      "fridayBody": "Cuma gününün bereketi için kısa bir hazırlık yap.",
+      "intentionSuffix": "Şimdi niyetlenmek için güzel bir an.",
+      "kandilTitle": "🕯️ Manevi hatırlatma",
+      "breakSuffix": "Huzur için küçük bir mola ver."
+    },
+    "names": {
+      "Fajr": "Sabah",
+      "Sunrise": "Güneş",
+      "Dhuhr": "Öğle",
+      "Asr": "İkindi",
+      "Maghrib": "Akşam",
+      "Isha": "Yatsı"
+    },
+    "main": {
+      "titlePrefix": "Ezan vakti",
+      "body": "Vakit girdi. Haydi namaza!"
+    },
+    "campaign": {
+      "evergreen": {
+        "title": "🕌 Vakit hatırlatması",
+        "titleDiaspora": "🌍 Vakit hatırlatması",
+        "body": "Vakit yaklaşıyor. Kısa bir mola verip ibadete yönel.",
+        "bodyDiaspora": "Bulunduğun ülkede vakit yaklaşıyor. Kısa bir mola verip ibadete yönel."
+      },
+      "friday": {
+        "title": "✨ Cuma bereketi",
+        "body": "Cuma gününü bereketle geçir. Duanı ve zikrini ihmal etme.",
+        "bodyDiaspora": "Cuma gününü bulunduğun şehirde bereketle geçir. Duanı ve zikrini ihmal etme."
+      },
+      "ramadan": {
+        "title": "🌙 Ramazan hatırlatması",
+        "body": "Ramazan bereketiyle bugünkü ibadet hedefini tamamlamayı unutma.",
+        "bodyDiaspora": "Ramazan rutinin için bugünkü ibadet hedefini tamamlamayı unutma."
+      },
+      "kandil": {
+        "title": "🕯️ Kandil gecesi",
+        "body": "Kandil gecesinde dua ve zikirle kalbini ferahlat.",
+        "bodyDiaspora": "Kandil gecesi için kısa bir dua ve zikirle kalbini ferahlat."
+      }
+    }
   }
 }

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 import { Award, BookOpen, ChevronRight, Flame, Sparkles, Target, X } from 'lucide-react';
 import { storageService } from '../../../services/storageService';
 import { buildWeeklyEngagementSnapshot, toLocalDateKey } from '../../../services/engagementSummaryService';
@@ -39,7 +40,7 @@ const getLastCompletedWeek = (today = new Date()) => {
 };
 
 const formatWeeklyRange = (start, end) => (
-  `${start.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })}`
+  `${start.toLocaleDateString(i18n.language, { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString(i18n.language, { day: 'numeric', month: 'short' })}`
 );
 
 const REVIEW_STATUS_LABELS = {

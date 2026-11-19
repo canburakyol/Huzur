@@ -13,7 +13,7 @@ const ReligiousDays = ({ onClose }) => {
 
     const formatDate = (dateStr) => {
         const date = parseLocalDate(dateStr);
-        return date.toLocaleDateString(i18n.language === 'tr' ? 'tr-TR' : 'en-US', { 
+        return date.toLocaleDateString(i18n.language, { 
             day: 'numeric', 
             month: 'long', 
             year: 'numeric' 
@@ -86,7 +86,7 @@ const ReligiousDays = ({ onClose }) => {
                     </div>
                     
                     <h3 style={{ margin: '0 0 8px 0', fontSize: '1.5rem', fontWeight: '950', color: 'var(--on-primary)' }}>
-                        {nextDay.name}
+                        {t(`religiousDayKinds.${nextDay.kind}.name`, nextDay.name)}
                     </h3>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', opacity: 0.9, fontWeight: '700' }}>
                         <Clock size={16} />
@@ -147,7 +147,7 @@ const ReligiousDays = ({ onClose }) => {
                                     color: 'var(--nav-text)',
                                     marginBottom: '4px'
                                 }}>
-                                    {day.name}
+                                    {t(`religiousDayKinds.${day.kind}.name`, day.name)}
                                 </div>
                                 <div style={{ 
                                     fontSize: '0.8rem', 

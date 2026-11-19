@@ -4,7 +4,8 @@ import { BookOpen, Check, CheckCircle2, ChevronDown, ChevronRight, CircleDot, Ha
 // Mushaf uses one line-icon set; the data file's emoji are not rendered.
 const SECTION_ICONS = { istigfar: HandHeart, 'entes-selam': Sparkles, salavat: Moon, subhanallahi: CircleDot, 'ayetel-kursi': BookOpen, tevhid: Star };
 import { useTranslation } from 'react-i18next';
-import { OPTIONAL_QURAN_DUALAR, TESPIHAT_SECTIONS, TESBIHLER, TEVHID } from '../../../data/tespihatData';
+import { OPTIONAL_QURAN_DUALAR as RAW_DUALAR, TESPIHAT_SECTIONS as RAW_SECTIONS, TESBIHLER as RAW_TESBIHLER, TEVHID as RAW_TEVHID } from '../../../data/tespihatData';
+import { localizeTespihat } from '../../../data/tespihatTranslations';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { storageService } from '../../../services/storageService';
 import '../../../styles/PracticePages.css';
@@ -17,7 +18,13 @@ const normalizeCounts = (value) => Object.fromEntries(Object.keys(DEFAULT_TESBIH
 }));
 
 function Tespihat({ onClose }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n?.language || 'tr';
+  const TESPIHAT_SECTIONS = RAW_SECTIONS.map((item) => localizeTespihat(item, lang));
+  const TESBIHLER = RAW_TESBIHLER.map((item) => localizeTespihat(item, lang));
+  const TEVHID = localizeTespihat(RAW_TEVHID, lang);
+  const OPTIONAL_QURAN_DUALAR = RAW_DUALAR.map((item) => localizeTespihat(item, lang));
+  const sourceLabel = (type) => (type === 'hadith' ? t('tespihat.ui.sourceHadith', 'Hadis') : type === 'quran' ? t('tespihat.ui.sourceQuran', 'Kur’an') : t('tespihat.ui.sourceGeneral', 'Genel / kaynak belirtilmemiş'));
   const [activeSection, setActiveSection] = useState(null);
   const [expandedItem, setExpandedItem] = useState(null);
   const [tesbihCounts, setTesbihCounts] = useState(() => normalizeCounts(storageService.getItem(TESPIHAT_PROGRESS_KEY, null)?.counts));
@@ -43,7 +50,7 @@ function Tespihat({ onClose }) {
       <div className="practice-row__text" style={{ color: 'var(--on-surface)' }}>{item.latin}</div>
       <div className="practice-row__text" style={{ marginTop: 7, fontStyle: 'italic' }}>{item.meaning}</div>
       <div className="practice-row__text" data-testid={`source-${item.id}`} style={{ marginTop: 10, fontWeight: 600 }}>
-        {item.sourceType === 'hadith' ? 'Hadis' : item.sourceType === 'quran' ? 'Kur’an' : 'Genel / kaynak belirtilmemiş'}{item.citation ? ` · ${item.citation}` : ''}
+        {sourceLabel(item.sourceType)}{item.citation ? ` · ${item.citation}` : ''}
       </div>
     </div>
   );
@@ -60,8 +67,8 @@ function Tespihat({ onClose }) {
           <div style={{ fontSize: '1.45rem', fontFamily: 'var(--arabic-font)', color: 'var(--on-surface)', textAlign: 'right', direction: 'rtl', lineHeight: 1.75 }}>{activeSection.arabic}</div>
           <p className="practice-row__text" style={{ marginTop: 14, color: 'var(--on-surface)' }}>{activeSection.latin}</p>
           <p className="practice-row__text" style={{ marginTop: 8, fontStyle: 'italic' }}>{activeSection.meaning}</p>
-          <p className="practice-row__text" data-testid={`source-${activeSection.id}`} style={{ marginTop: 10, fontWeight: 600 }}>{activeSection.sourceType === 'hadith' ? 'Hadis' : activeSection.sourceType === 'quran' ? 'Kur’an' : 'Genel / kaynak belirtilmemiş'}{activeSection.citation ? ` · ${activeSection.citation}` : ''}</p>
-          <button type="button" className={`practice-wide ${isComplete ? 'practice-secondary-button' : 'practice-primary-button'}`} style={{ marginTop: 14 }} onClick={() => { toggleComplete(activeSection.id); setActiveSection(null); }}><Check size={18} /> {isComplete ? 'Tamamlandı' : 'Tamamla'}</button>
+          <p className="practice-row__text" data-testid={`source-${activeSection.id}`} style={{ marginTop: 10, fontWeight: 600 }}>{sourceLabel(activeSection.sourceType)}{activeSection.citation ? ` · ${activeSection.citation}` : ''}</p>
+          <button type="button" className={`practice-wide ${isComplete ? 'practice-secondary-button' : 'practice-primary-button'}`} style={{ marginTop: 14 }} onClick={() => { toggleComplete(activeSection.id); setActiveSection(null); }}><Check size={18} /> {isComplete ? t('tespihat.ui.completed', 'Tamamlandı') : t('tespihat.ui.complete', 'Tamamla')}</button>
         </section>
       </main>
     );
@@ -105,7 +112,7 @@ function Tespihat({ onClose }) {
             const count = tesbihCounts[tesbih.id];
             const done = count >= 33;
             return (
-              <button type="button" className={`tesbih-counter ${done ? 'tesbih-counter--done' : ''}`} key={tesbih.id} onClick={() => incrementTesbih(tesbih.id)} aria-label={`${tesbih.latin} sayacını artır, ${count}/33`}>
+              <button type="button" className={`tesbih-counter ${done ? 'tesbih-counter--done' : ''}`} key={tesbih.id} onClick={() => incrementTesbih(tesbih.id)} aria-label={t('tespihat.ui.counterLabel', { name: tesbih.latin, count, defaultValue: '{{name}} sayacını artır, {{count}}/33' })}>
                 <span className="tesbih-counter__arabic">{tesbih.arabic}</span>
                 <strong>{count}<small>/33</small></strong>
                 <span>{tesbih.latin}</span>
@@ -123,7 +130,7 @@ function Tespihat({ onClose }) {
             <div className="practice-row">
               <span className="practice-row__icon"><Sparkles size={17} /></span>
               <button type="button" className="tesbih-accordion-trigger" onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}><span className="practice-row__title">{TEVHID.title}</span></button>
-              <button type="button" className={`practice-pill ${completedSections.includes('tevhid') ? 'practice-chip--active' : ''}`} onClick={() => toggleComplete('tevhid')}>{completedSections.includes('tevhid') ? 'Tamam' : 'Bitti'}</button>
+              <button type="button" className={`practice-pill ${completedSections.includes('tevhid') ? 'practice-chip--active' : ''}`} onClick={() => toggleComplete('tevhid')}>{completedSections.includes('tevhid') ? t('tespihat.ui.markedDone', 'Tamam') : t('tespihat.ui.markDone', 'Bitti')}</button>
               <button type="button" className="tesbih-chevron-button" aria-label={t('tespihat.ui.toggleTawhid', 'Tevhid metnini aç veya kapat')} onClick={() => setExpandedItem(expandedItem === 'tevhid' ? null : 'tevhid')}>{expandedItem === 'tevhid' ? <ChevronDown size={18} /> : <ChevronRight size={18} />}</button>
             </div>
             {expandedItem === 'tevhid' && renderExpandedContent(TEVHID)}
@@ -131,7 +138,7 @@ function Tespihat({ onClose }) {
           {OPTIONAL_QURAN_DUALAR.map((dua) => (
             <div key={dua.id}>
               <button type="button" className="practice-row" onClick={() => setExpandedItem(expandedItem === dua.id ? null : dua.id)}>
-                <span className="practice-row__icon"><BookOpen size={17} /></span><span className="practice-row__body"><span className="practice-row__title">{dua.title}</span><span className="practice-row__text">İsteğe bağlı Kur’an duası · {dua.citation}</span></span>{expandedItem === dua.id ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+                <span className="practice-row__icon"><BookOpen size={17} /></span><span className="practice-row__body"><span className="practice-row__title">{dua.title}</span><span className="practice-row__text">{t('tespihat.ui.optionalDua', 'İsteğe bağlı Kur’an duası')} · {dua.citation}</span></span>{expandedItem === dua.id ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
               </button>
               {expandedItem === dua.id && renderExpandedContent(dua)}
             </div>

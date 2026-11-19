@@ -3,7 +3,7 @@ import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { useTranslation } from 'react-i18next';
 
 function TermsOfService({ onClose }) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     return (
         <div className="legal-overlay">
             <div className="settings-container reveal-stagger" style={{ paddingBottom: '100px' }}>
@@ -28,7 +28,7 @@ function TermsOfService({ onClose }) {
                     <div className="legal-body">
                         <div className="update-badge" style={{ marginBottom: '24px' }}>
                             <Info size={14} />
-                            <span>{t('legal.lastUpdate', 'Son Güncelleme')}: {new Date().toLocaleDateString('tr-TR')}</span>
+                            <span>{t('legal.lastUpdate', 'Son Güncelleme')}: {new Date().toLocaleDateString(i18n.language)}</span>
                         </div>
                         
                         <p className="intro-text">

@@ -57,7 +57,7 @@ const DHIKR_TYPES = [
 ];
 
 function ZikirWorld({ onClose }) {
-    const { t } = useTranslation('zikirWorld');
+    const { t, i18n } = useTranslation('zikirWorld');
     const [personalStats, setPersonalStats] = useState({
         total: 0,
         startDate: null,
@@ -97,10 +97,10 @@ function ZikirWorld({ onClose }) {
         // eslint-disable-next-line
         setPersonalStats({
             total,
-            startDate: new Date(startDate).toLocaleDateString('tr-TR'),
+            startDate: new Date(startDate).toLocaleDateString(i18n.language),
             daysActive
         });
-    }, []);
+    }, [i18n.language]);
 
     // Format large numbers
     const formatNumber = (num) => {

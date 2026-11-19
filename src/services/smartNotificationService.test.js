@@ -237,7 +237,7 @@ describe('smartNotificationService (Unified)', () => {
     const scheduled = localNotificationsMock.schedule.mock.calls[0][0].notifications;
     expect(scheduled).toHaveLength(2);
     expect(scheduled[0]).toMatchObject({
-      title: 'Bugun tek bir adim yeterli',
+      title: 'Bugün tek bir adım yeterli',
       extra: expect.objectContaining({
         risk_band: 'unknown',
         recovery_feature: 'streak',
