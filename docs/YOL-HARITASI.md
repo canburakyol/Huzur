@@ -16,7 +16,7 @@ sonra **görünüm**, en son **iç kalite**. Yanlış dini bilgi, eski görünü
 | 5 | Dini içerik doğrulaması (5 parça) | Ben | 5 oturum | ⬜ |
 | 6 | Mushaf tasarımına taşıma (ekran ekran) | Ben | ~10 oturum | ⬜ |
 | 7 | Teknik borç | Ben | 3–4 oturum | ⬜ |
-| 8 | Almanca / Endonezce çeviri | Ben | 3–4 oturum | ⬜ |
+| 8 | Almanca / Endonezce çeviri | Ben | 3–4 oturum | 🟨 |
 
 ---
 
@@ -108,6 +108,11 @@ Sıra (en çok kullanılan önce):
 Her dilde ~1100 metin İngilizce duruyor (en çok: `content`, `hikmet`, `greetingCards`, `deedJournal`, `menu`).
 Bu dillerden indirme olmadığı için en sonda. Önce arayüz metinleri, sonra içerik; dini metinler Türkçe/Arapça kaynaktan.
 - **Bitti sayılır:** de/id'de İngilizceyle birebir aynı çok kelimeli metin kalmadı (özel adlar hariç).
+- **Durum (19 Kas):** Arayüz, bildirimler, Kur'an (Bubenheim/Kemenag mealleri), günlük içerik, Esma, hadisler,
+  Siyer, Namaz Hocası, Tespihat, kütüphane, fihrist, kelime kelime meal, asistan cevapları ve paylaşım metinleri
+  4 dilde. Tüm ekranlarda tr↔de fark taramasında yalnızca marka/özel adlar kaldı.
+  Kalan: davet penceresi ve referral metinleri (referralGrowthService), lisanslar sayfası, Android bildirim
+  kanal adları, zekâtta para birimi (her dilde ₺), telefonda dil değiştirerek göz kontrolü.
 
 ---
 
