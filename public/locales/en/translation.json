@@ -590,7 +590,19 @@
     "ayahSelectorHint": "When you scroll, the selected verse starts playing immediately.",
     "selectedAyahLabel": "Selected verse",
     "playingAyahLabel": "Playing verse",
-    "totalAyahsLabel": "Total"
+    "totalAyahsLabel": "Total",
+    "simpleMode": "Arabic only",
+    "detailedMode": "Show transliteration and translation",
+    "simpleModeNotice": "Only the Arabic text is shown. Tap the eye icon above for transliteration and translation.",
+    "showDetails": "Show transliteration and translation",
+    "loadError": "The surah could not be loaded. Check your internet connection.",
+    "transliteration": "Transliteration",
+    "bookmarkAyah": "Bookmark",
+    "playAyah": "Listen to this verse",
+    "play": "Play",
+    "pause": "Pause",
+    "prevAyah": "Previous verse",
+    "nextAyah": "Next verse"
   },
   "prayers": {
     "title": "Prayer Book",

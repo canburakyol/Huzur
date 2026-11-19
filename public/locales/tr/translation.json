@@ -704,7 +704,19 @@
     "ayahSelectorHint": "Kaydırınca seçilen ayet hemen çalmaya başlar",
     "selectedAyahLabel": "Seçili Ayet",
     "playingAyahLabel": "Çalan Ayet",
-    "totalAyahsLabel": "Toplam"
+    "totalAyahsLabel": "Toplam",
+    "simpleMode": "Yalnızca Arapça",
+    "detailedMode": "Okunuş ve meali göster",
+    "simpleModeNotice": "Yalnızca Arapça metin gösteriliyor. Okunuş ve meal için üstteki göz simgesine dokunun.",
+    "showDetails": "Okunuş ve meali göster",
+    "loadError": "Sure yüklenemedi. İnternet bağlantınızı kontrol edin.",
+    "transliteration": "Okunuş",
+    "bookmarkAyah": "Yer imi",
+    "playAyah": "Bu ayeti dinle",
+    "play": "Dinle",
+    "pause": "Duraklat",
+    "prevAyah": "Önceki ayet",
+    "nextAyah": "Sonraki ayet"
   },
   "prayers": {
     "title": "Dua Kitabı",

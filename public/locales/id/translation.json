@@ -590,7 +590,19 @@
     "ayahSelectorHint": "Saat digulir, ayat yang dipilih langsung mulai diputar.",
     "selectedAyahLabel": "Ayat terpilih",
     "playingAyahLabel": "Ayat yang diputar",
-    "totalAyahsLabel": "Total"
+    "totalAyahsLabel": "Total",
+    "simpleMode": "Hanya teks Arab",
+    "detailedMode": "Tampilkan transliterasi dan terjemahan",
+    "simpleModeNotice": "Hanya teks Arab yang ditampilkan. Ketuk ikon mata di atas untuk transliterasi dan terjemahan.",
+    "showDetails": "Tampilkan transliterasi dan terjemahan",
+    "loadError": "Surah tidak dapat dimuat. Periksa koneksi internet Anda.",
+    "transliteration": "Transliterasi",
+    "bookmarkAyah": "Penanda",
+    "playAyah": "Dengarkan ayat ini",
+    "play": "Putar",
+    "pause": "Jeda",
+    "prevAyah": "Ayat sebelumnya",
+    "nextAyah": "Ayat berikutnya"
   },
   "prayers": {
     "title": "Buku Doa",

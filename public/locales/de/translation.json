@@ -590,7 +590,19 @@
     "ayahSelectorHint": "Wenn Sie scrollen, wird die ausgewählte Strophe sofort abgespielt.",
     "selectedAyahLabel": "Ausgewählter Vers",
     "playingAyahLabel": "Verse spielen",
-    "totalAyahsLabel": "Gesamt"
+    "totalAyahsLabel": "Gesamt",
+    "simpleMode": "Nur Arabisch",
+    "detailedMode": "Umschrift und Übersetzung anzeigen",
+    "simpleModeNotice": "Nur der arabische Text wird angezeigt. Tippe oben auf das Augensymbol für Umschrift und Übersetzung.",
+    "showDetails": "Umschrift und Übersetzung anzeigen",
+    "loadError": "Die Sure konnte nicht geladen werden. Prüfe deine Internetverbindung.",
+    "transliteration": "Umschrift",
+    "bookmarkAyah": "Lesezeichen",
+    "playAyah": "Diesen Vers anhören",
+    "play": "Abspielen",
+    "pause": "Pause",
+    "prevAyah": "Vorheriger Vers",
+    "nextAyah": "Nächster Vers"
   },
   "prayers": {
     "title": "Gebetbuch",

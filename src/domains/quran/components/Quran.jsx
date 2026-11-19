@@ -148,7 +148,9 @@ function Quran({ onClose }) {
         return fallbackLabels[selectedTranslation] || 'Meal';
     }, [selectedTranslation, translations]);
 
-    const transliterationLabel = selectedTranslation.startsWith('tr') ? 'Türkçe okunuş' : 'Transliteration';
+    const transliterationLabel = selectedTranslation.startsWith('tr')
+        ? t('quran.turkishReading', 'Türkçe okunuş')
+        : t('quran.transliteration', 'Transliteration');
 
     useEffect(() => {
         if (!selectedReciter && reciters.length > 0) {
@@ -282,14 +284,14 @@ function Quran({ onClose }) {
         } catch (error) {
             logger.error('Surah load error:', error);
             if (currentRequestId === latestLoadRequestRef.current) {
-                setSurahLoadError('Sure yuklenemedi');
+                setSurahLoadError(t('quran.loadError', 'Sure yüklenemedi. İnternet bağlantınızı kontrol edin.'));
             }
         } finally {
             if (currentRequestId === latestLoadRequestRef.current) {
                 setIsSurahLoading(false);
             }
         }
-    }, [scrollToAyah, selectedTranslation, surahList]);
+    }, [scrollToAyah, selectedTranslation, surahList, t]);
 
     useEffect(() => {
         if (hasInitializedRef.current || surahList.length === 0) {
@@ -604,11 +606,11 @@ function Quran({ onClose }) {
     const ayahSelectorTitle = t('quran.ayahSelectorTitle', 'Ayet seç');
 
     return (
-        <div className={`quran-container ${showBars ? '' : 'bars-hidden'}`} data-testid="quran-screen">
+        <div className={`quran-container hz-root ${showBars ? '' : 'bars-hidden'} ${simpleMode ? 'is-simple' : ''}`} data-testid="quran-screen">
             <div className={`quran-royal-header ${showBars ? 'visible' : 'hidden'}`}>
                 <div className="header-top-row">
-                    <button onClick={onClose} className="player-action-btn" data-testid="quran-close" aria-label={t('common.close', 'Kapat')}>
-                        <ChevronLeft size={28} />
+                    <button type="button" onClick={onClose} className="player-action-btn" data-testid="quran-close" aria-label={t('common.close', 'Kapat')}>
+                        <ChevronLeft size={22} strokeWidth={1.75} aria-hidden="true" />
                     </button>
 
                     <div className="surah-titles">
@@ -622,11 +624,13 @@ function Quran({ onClose }) {
 
                     <div className="header-actions">
                         <button
+                            type="button"
                             onClick={toggleSimpleMode}
                             className="player-action-btn"
-                            title={simpleMode ? 'Detaylı Mod' : 'Basit Mod'}
+                            aria-pressed={simpleMode}
+                            aria-label={simpleMode ? t('quran.detailedMode', 'Okunuş ve meali göster') : t('quran.simpleMode', 'Yalnızca Arapça')}
                         >
-                            {simpleMode ? <EyeOff size={24} /> : <Eye size={24} />}
+                            {simpleMode ? <EyeOff size={20} strokeWidth={1.75} aria-hidden="true" /> : <Eye size={20} strokeWidth={1.75} aria-hidden="true" />}
                         </button>
                         <button
                             onClick={() => {
@@ -634,8 +638,10 @@ function Quran({ onClose }) {
                                 setShowSideMenu(true);
                             }}
                             className="player-action-btn"
+                            type="button"
+                            aria-label={t('quran.translations', 'Mealler')}
                         >
-                            <Globe size={24} />
+                            <Globe size={20} strokeWidth={1.75} aria-hidden="true" />
                         </button>
                         <button
                             onClick={() => {
@@ -643,10 +649,11 @@ function Quran({ onClose }) {
                                 setShowSideMenu(true);
                             }}
                             className="player-action-btn"
+                            type="button"
                             data-testid="quran-drawer-toggle"
                             aria-label={t('quran.menu', 'Kuran menusu')}
                         >
-                            <Menu size={24} />
+                            <Menu size={20} strokeWidth={1.75} aria-hidden="true" />
                         </button>
                     </div>
                 </div>
@@ -657,26 +664,28 @@ function Quran({ onClose }) {
             <div className={`quran-side-menu-premium ${showSideMenu ? 'open' : ''}`} data-testid="quran-drawer">
                 <div className="side-menu-header">
                     <h3>{t('quran.menu')}</h3>
-                    <button onClick={() => setShowSideMenu(false)} className="player-action-btn" data-testid="quran-drawer-close" aria-label={t('common.close', 'Kapat')}>
-                        <X size={24} />
+                    <button type="button" onClick={() => setShowSideMenu(false)} className="player-action-btn" data-testid="quran-drawer-close" aria-label={t('common.close', 'Kapat')}>
+                        <X size={20} strokeWidth={1.75} aria-hidden="true" />
                     </button>
                 </div>
 
                 <div className="side-menu-tabs-premium">
-                    <button className={`side-tab-btn ${activeMenuTab === 'surahs' ? 'active' : ''}`} onClick={() => setActiveMenuTab('surahs')}>{t('quran.surahs')}</button>
-                    <button className={`side-tab-btn ${activeMenuTab === 'bookmarks' ? 'active' : ''}`} onClick={() => setActiveMenuTab('bookmarks')}>{t('quran.bookmarks')}</button>
-                    <button className={`side-tab-btn ${activeMenuTab === 'translations' ? 'active' : ''}`} onClick={() => setActiveMenuTab('translations')}>{t('quran.translations')}</button>
-                    <button className={`side-tab-btn ${activeMenuTab === 'reciters' ? 'active' : ''}`} onClick={() => setActiveMenuTab('reciters')}>{t('quran.reciters')}</button>
-                    <button className={`side-tab-btn ${activeMenuTab === 'fihrist' ? 'active' : ''}`} onClick={() => setActiveMenuTab('fihrist')}>{t('quran.fihrist')}</button>
+                    <button type="button" className={`side-tab-btn ${activeMenuTab === 'surahs' ? 'active' : ''}`} onClick={() => setActiveMenuTab('surahs')}>{t('quran.surahs')}</button>
+                    <button type="button" className={`side-tab-btn ${activeMenuTab === 'bookmarks' ? 'active' : ''}`} onClick={() => setActiveMenuTab('bookmarks')}>{t('quran.bookmarks')}</button>
+                    <button type="button" className={`side-tab-btn ${activeMenuTab === 'translations' ? 'active' : ''}`} onClick={() => setActiveMenuTab('translations')}>{t('quran.translations')}</button>
+                    <button type="button" className={`side-tab-btn ${activeMenuTab === 'reciters' ? 'active' : ''}`} onClick={() => setActiveMenuTab('reciters')}>{t('quran.reciters')}</button>
+                    <button type="button" className={`side-tab-btn ${activeMenuTab === 'fihrist' ? 'active' : ''}`} onClick={() => setActiveMenuTab('fihrist')}>{t('quran.fihrist')}</button>
                 </div>
 
                 <div className="side-menu-content">
                     {activeMenuTab === 'surahs' && (
                         <div className="list-content">
                             {surahList.map((surah) => (
-                                <div
+                                <button
+                                    type="button"
                                     key={surah.number}
                                     className={`premium-list-item ${activeSurah?.number === surah.number ? 'active' : ''}`}
+                                    aria-current={activeSurah?.number === surah.number ? 'true' : undefined}
                                     onClick={() => loadSurah(surah.number)}
                                     data-testid={`quran-surah-${surah.number}`}
                                 >
@@ -685,8 +694,8 @@ function Quran({ onClose }) {
                                         <div className="item-primary-text">{surah.nameTranslation}</div>
                                         <div className="item-secondary-text">{surah.ayahCount} {t('quran.ayah')}</div>
                                     </div>
-                                    <div className="item-arabic-text">{surah.name}</div>
-                                </div>
+                                    <div className="item-arabic-text" lang="ar">{surah.name}</div>
+                                </button>
                             ))}
                         </div>
                     )}
@@ -697,12 +706,12 @@ function Quran({ onClose }) {
                                 <div className="empty-state">{t('quran.noBookmarks')}</div>
                             ) : (
                                 favorites.map((favorite, index) => (
-                                    <div key={index} className="premium-list-item" onClick={() => loadSurah(favorite.surahId, favorite.ayahId)}>
+                                    <button type="button" key={`${favorite.surahId}-${favorite.ayahId}-${index}`} className="premium-list-item" onClick={() => loadSurah(favorite.surahId, favorite.ayahId)}>
                                         <div className="item-main-info">
-                                            <div className="item-primary-text">{favorite.surahName} - {favorite.ayahId}. {t('quran.ayah')}</div>
-                                            <div className="item-secondary-text">{(favorite.text || '').substring(0, 50)}...</div>
+                                            <div className="item-primary-text">{favorite.surahName} · {favorite.ayahId}. {t('quran.ayah')}</div>
+                                            <div className="item-secondary-text">{(favorite.text || '').length > 60 ? `${favorite.text.substring(0, 60)}…` : favorite.text}</div>
                                         </div>
-                                    </div>
+                                    </button>
                                 ))
                             )}
                         </div>
@@ -711,16 +720,18 @@ function Quran({ onClose }) {
                     {activeMenuTab === 'translations' && (
                         <div className="list-content">
                             {translations.map((translation) => (
-                                <div
+                                <button
+                                    type="button"
                                     key={translation.identifier}
                                     className={`premium-list-item ${selectedTranslation === translation.identifier ? 'active' : ''}`}
+                                    aria-pressed={selectedTranslation === translation.identifier}
                                     onClick={() => handleTranslationChange(translation.identifier)}
                                 >
                                     <div className="item-main-info">
                                         <div className="item-primary-text">{translation.name}</div>
                                         <div className="item-secondary-text">{translation.language.toUpperCase()}</div>
                                     </div>
-                                </div>
+                                </button>
                             ))}
                         </div>
                     )}
@@ -728,15 +739,17 @@ function Quran({ onClose }) {
                     {activeMenuTab === 'reciters' && (
                         <div className="list-content">
                             {reciters.map((reciter) => (
-                                <div
+                                <button
+                                    type="button"
                                     key={reciter.id}
                                     className={`premium-list-item ${selectedReciter?.id === reciter.id ? 'active' : ''}`}
+                                    aria-pressed={selectedReciter?.id === reciter.id}
                                     onClick={() => setSelectedReciter(reciter)}
                                 >
                                     <div className="item-main-info">
                                         <div className="item-primary-text">{reciter.name}</div>
                                     </div>
-                                </div>
+                                </button>
                             ))}
                         </div>
                     )}
@@ -747,8 +760,8 @@ function Quran({ onClose }) {
                                 <div className="empty-state">{t('common.loading', 'Yükleniyor...')}</div>
                             ) : selectedTopic ? (
                                 <div className="topic-detail">
-                                    <button className="back-btn" onClick={() => setSelectedTopic(null)}>
-                                        <ChevronLeft size={16} /> {t('quran.backToTopics')}
+                                    <button type="button" className="back-btn" onClick={() => setSelectedTopic(null)}>
+                                        <ChevronLeft size={16} strokeWidth={1.75} aria-hidden="true" /> {t('quran.backToTopics')}
                                     </button>
 
                                     <h4>{selectedTopic.title}</h4>
@@ -758,7 +771,8 @@ function Quran({ onClose }) {
                                             const surah = surahList.find((item) => item.number === ref.s);
 
                                             return (
-                                                <div
+                                                <button
+                                                    type="button"
                                                     key={`${ref.s}-${ref.a}-${index}`}
                                                     className="premium-list-item"
                                                     onClick={() => loadSurah(ref.s, ref.a)}
@@ -769,7 +783,7 @@ function Quran({ onClose }) {
                                                         </div>
                                                         <div className="item-secondary-text">{t('quran.relatedAyah')}</div>
                                                     </div>
-                                                </div>
+                                                </button>
                                             );
                                         })}
                                     </div>
@@ -778,17 +792,20 @@ function Quran({ onClose }) {
                                 detailedFihrist.map((category, index) => (
                                     <div key={category.category} className="fihrist-category-premium">
                                         <button
+                                            type="button"
                                             className="fihrist-category-btn"
+                                            aria-expanded={expandedCategory === index}
                                             onClick={() => setExpandedCategory(expandedCategory === index ? null : index)}
                                         >
                                             <span>{translateFihristLabel(category.category, i18n.language)}</span>
-                                            <span>{expandedCategory === index ? '-' : '+'}</span>
+                                            <span aria-hidden="true">{expandedCategory === index ? '−' : '+'}</span>
                                         </button>
 
                                         {expandedCategory === index && (
                                             <div className="fihrist-topics">
                                                 {category.topics.map((topic) => (
                                                     <button
+                                                        type="button"
                                                         key={topic.title}
                                                         className="premium-list-item fihrist-topic-item"
                                                         onClick={() => setSelectedTopic(topic)}
@@ -820,7 +837,7 @@ function Quran({ onClose }) {
                 <div className="mushaf-frame">
                     <div className="mushaf-paper">
                         <div className="mushaf-surah-heading">
-                            <div className="mushaf-surah-name-ar">{activeSurah.name}</div>
+                            <div className="mushaf-surah-name-ar" lang="ar">{activeSurah.name}</div>
                             <div className="mushaf-surah-name-tr">{activeSurah.nameTranslation}</div>
                             <div className="surah-meta-strip page-meta">
                                 <span className="surah-meta-pill">{activeSurah.revelationType}</span>
@@ -829,21 +846,16 @@ function Quran({ onClose }) {
                         </div>
 
                         {activeSurah.number !== 1 && activeSurah.number !== 9 && (
-                            <div className="basmala-container-premium">{BASMALA_TEXT}</div>
+                            <div className="basmala-container-premium" lang="ar">{BASMALA_TEXT}</div>
                         )}
 
                         {simpleMode && (
-                            <div style={{
-                                textAlign: 'center', padding: '8px 16px', marginBottom: '16px',
-                                background: 'var(--surface-action-soft)', borderRadius: '20px',
-                                border: '1px solid var(--border-soft)',
-                                fontSize: '0.75rem', fontWeight: '700', color: 'var(--brand-primary)'
-                            }}>
-                                Basit Mod - Meal için Detayları Göster'e tıklayın
-                            </div>
+                            <p className="quran-simple-notice">
+                                {t('quran.simpleModeNotice', 'Yalnızca Arapça metin gösteriliyor. Okunuş ve meal için üstteki göz simgesine dokunun.')}
+                            </p>
                         )}
 
-                        {surahContent.ayahs.map((ayah, index) => {
+                        {surahContent.ayahs.map((ayah) => {
                             const isFavorite = favorites.some(
                                 (favorite) => favorite.surahId === activeSurah.number && favorite.ayahId === ayah.number
                             );
@@ -853,8 +865,7 @@ function Quran({ onClose }) {
                                     key={ayah.number}
                                     id={`ayah-${ayah.number}`}
                                     data-ayah-number={ayah.number}
-                                    className={`mushaf-ayah-block reveal-stagger ${playingAyah === ayah.number ? 'active' : ''} ${activeReadingAyah === ayah.number ? 'is-reading-focus' : 'is-reading-muted'}`}
-                                    style={{ '--delay': `${index * 0.02}s` }}
+                                    className={`mushaf-ayah-block ${playingAyah === ayah.number ? 'active' : ''}`}
                                     onClick={() => {
                                         setActiveReadingAyah(ayah.number);
                                         if (isPlaying) {
@@ -863,11 +874,14 @@ function Quran({ onClose }) {
                                     }}
                                 >
                                     <div className="ayah-meta-row">
-                                        <div className="ayah-id-badge">{ayah.number}</div>
+                                        <div className="ayah-id-badge" aria-label={`${ayah.number}. ${t('quran.ayah', 'Ayet')}`}>{ayah.number}</div>
 
                                         <div className="ayah-actions-premium">
                                             <button
+                                                type="button"
                                                 className="player-action-btn"
+                                                aria-pressed={isFavorite}
+                                                aria-label={t('quran.bookmarkAyah', 'Yer imi')}
                                                 onClick={(event) => {
                                                     event.stopPropagation();
                                                     toggleFavorite(activeSurah, ayah);
@@ -875,12 +889,16 @@ function Quran({ onClose }) {
                                             >
                                                 <Bookmark
                                                     size={20}
-                                                    fill={isFavorite ? 'var(--quran-gold)' : 'none'}
-                                                    color={isFavorite ? 'var(--quran-gold)' : 'var(--quran-text-muted)'}
+                                                    strokeWidth={1.75}
+                                                    aria-hidden="true"
+                                                    fill={isFavorite ? 'var(--gold)' : 'none'}
+                                                    color={isFavorite ? 'var(--gold)' : 'currentColor'}
                                                 />
                                             </button>
                                             <button
+                                                type="button"
                                                 className="player-action-btn"
+                                                aria-label={playingAyah === ayah.number && isPlaying ? t('quran.pause', 'Duraklat') : t('quran.playAyah', 'Bu ayeti dinle')}
                                                 onClick={(event) => {
                                                     event.stopPropagation();
                                                     if (playingAyah === ayah.number) {
@@ -895,12 +913,12 @@ function Quran({ onClose }) {
                                                     }
                                                 }}
                                             >
-                                                {playingAyah === ayah.number && isPlaying ? <Pause size={20} /> : <Play size={20} />}
+                                                {playingAyah === ayah.number && isPlaying ? <Pause size={20} strokeWidth={1.75} aria-hidden="true" /> : <Play size={20} strokeWidth={1.75} aria-hidden="true" />}
                                             </button>
                                         </div>
                                     </div>
 
-                                    <div className="ayah-arabic-display" style={{ fontSize: simpleMode ? '2rem' : '1.5rem' }}>{ayah.arabic}</div>
+                                    <div className="ayah-arabic-display" lang="ar">{ayah.arabic}</div>
 
                                     {!simpleMode && ayah.transliteration && (
                                         <>
@@ -918,20 +936,15 @@ function Quran({ onClose }) {
 
                                     {simpleMode && (
                                         <button
+                                            type="button"
                                             className="show-details-btn"
                                             onClick={(event) => {
                                                 event.stopPropagation();
                                                 setSimpleMode(false);
                                                 storageService.setItem(QURAN_STORAGE_KEYS.SIMPLE_MODE, false);
                                             }}
-                                            style={{
-                                                marginTop: '12px', padding: '8px 16px', borderRadius: '20px',
-                                                background: 'var(--surface-action-hover)', border: '1px solid var(--border-strong)',
-                                                color: 'var(--brand-primary)', fontSize: '0.8rem', fontWeight: '700',
-                                                cursor: 'pointer'
-                                            }}
                                         >
-                                            Detayları Göster
+                                            {t('quran.showDetails', 'Okunuş ve meali göster')}
                                         </button>
                                     )}
                                 </div>
@@ -945,16 +958,16 @@ function Quran({ onClose }) {
                 <audio ref={audioRef} onEnded={handleAyahEnd} />
 
                 <div className="player-main-controls">
-                    <button className="player-action-btn" onClick={handlePrevAyah} disabled={!playingAyah || playingAyah <= 1}>
-                        <SkipBack size={18} />
+                    <button type="button" className="player-action-btn" onClick={handlePrevAyah} disabled={!playingAyah || playingAyah <= 1} aria-label={t('quran.prevAyah', 'Önceki ayet')}>
+                        <SkipBack size={18} strokeWidth={1.75} aria-hidden="true" />
                     </button>
 
-                    <button className="play-pause-btn-premium" onClick={handlePlayPause}>
-                        {isPlaying ? <Pause size={18} /> : <Play size={18} fill="currentColor" style={{ marginLeft: '1px' }} />}
+                    <button type="button" className="play-pause-btn-premium" onClick={handlePlayPause} aria-label={isPlaying ? t('quran.pause', 'Duraklat') : t('quran.play', 'Dinle')}>
+                        {isPlaying ? <Pause size={20} aria-hidden="true" /> : <Play size={20} fill="currentColor" aria-hidden="true" />}
                     </button>
 
-                    <button className="player-action-btn" onClick={handleNextAyah} disabled={!playingAyah || playingAyah >= ayahCount}>
-                        <SkipForward size={18} />
+                    <button type="button" className="player-action-btn" onClick={handleNextAyah} disabled={!playingAyah || playingAyah >= ayahCount} aria-label={t('quran.nextAyah', 'Sonraki ayet')}>
+                        <SkipForward size={18} strokeWidth={1.75} aria-hidden="true" />
                     </button>
                 </div>
 
@@ -971,7 +984,7 @@ function Quran({ onClose }) {
                 </div>
 
                 <div className="player-ayah-indicator">
-                    <strong>{sliderAyah}/{ayahCount}</strong>
+                    <strong>{sliderAyah}</strong>/{ayahCount}
                 </div>
             </div>
         </div>
