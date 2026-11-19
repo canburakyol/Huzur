@@ -85,7 +85,7 @@ export const ASSISTANT_FAQ_ITEMS: FaqItem[] = [
   },
   {
     key: 'assistant.questions.q20',
-    answer: "Sünnet, Peygamberimiz (sav)'in söz, fiil and takrirlerinin (onaylarının) genel adıdır. Hadis ise bu sünneti bizlere aktaran sözlü ve yazılı rivayetlerin her biridir.",
+    answer: "Sünnet, Peygamberimiz (sav)'in söz, fiil ve takrirlerinin (onaylarının) genel adıdır. Hadis ise bu sünneti bizlere aktaran sözlü ve yazılı rivayetlerin her biridir.",
   },
   {
     key: 'assistant.questions.q21',
@@ -177,7 +177,7 @@ export const findAssistantFaqItem = (query: string, t: TFn): FaqItem | null => {
 export const getAssistantFaqAnswer = (query: string, t: TFn): string => {
   const matchedItem = findAssistantFaqItem(query, t);
   if (matchedItem) {
-    return matchedItem.answer;
+    return t(matchedItem.key.replace('.questions.', '.answers.'), matchedItem.answer);
   }
 
   return t(
