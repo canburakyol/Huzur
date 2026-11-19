@@ -11,7 +11,11 @@ vi.mock('../../../services/storageService', () => ({ storageService: storageMock
 vi.mock('../../../components/shared/IslamicBackButton', () => ({ default: ({ onClick }) => <button type="button" onClick={onClick}>Geri</button> }));
 vi.mock('react-i18next', () => ({
   useTranslation: () => ({
-    t: (_key, fallback, options) => options?.count != null ? fallback.replace('{{count}}', options.count) : fallback,
+    t: (_key, fallback, options) => {
+      const opts = typeof fallback === 'object' ? fallback : options || {};
+      const text = typeof fallback === 'object' ? fallback.defaultValue : fallback;
+      return text.replace(/\{\{(\w+)\}\}/g, (_, name) => String(opts[name] ?? ''));
+    },
   }),
 }));
 
