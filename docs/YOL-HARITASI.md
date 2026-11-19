@@ -74,7 +74,7 @@ Her parça ayrı oturum; her parçada **yanlış atıf, eksik meal, kaynağı ol
 |-------|----------|-----|
 | 5a Günün ayeti ✅ 19 Kas | `src/data/discoveryData.ts`, `VerseOfTheDay.jsx` yedek metni | 15 ayet kontrol edildi; Hûd 11:7 yanlış atıf → Hadîd 57:4, İnşirah referansı düzeltildi |
 | 5b Hadisler ✅ 19 Kas | `src/data/hadiths.ts`, `contentService.ts` | 91 hadis 7 koleksiyonla karşılaştırıldı; 4 zayıf/hadis olmayan kaldırıldı, 6 metin/kaynak düzeltildi |
-| 5c Zikir / Tespihat / Nafile | `zikirData.ts`, `tespihatData.ts`, `NafilePrayers.jsx`, `Zikirmatik.jsx` | Zikirmatik'te yalnız Hasbünallah'ın kaynağı var |
+| 5c Zikir / Tespihat / Nafile ✅ 19 Kas | `zikirData.ts`, `tespihatData.ts`, `NafilePrayers.jsx`, `Zikirmatik.jsx` | Tespihat doğru (Ayetel Kürsî Uthmani ile birebir); Nafile'de vitir/duha/işrak/teheccüd açıklamaları düzeltildi; `zikirData.ts` kullanılmıyor (ölü kod) |
 | 5d Hikmetler | `src/data/hikmetData.ts` | Sözlerin kime ait olduğu ayrı ayrı doğrulanmalı |
 | 5e Esmâü'l-Hüsnâ, Namaz Hocası | `esmaUlHusnaData.ts`, `prayerTeacherData.ts` | Fıkhi bilgi: Diyanet ilmihaline göre |
 
