@@ -299,7 +299,8 @@
       "toolsDesc": "Hilfreiche Bildschirme bei Bedarf.",
       "system": "Einstellungen und Hilfe",
       "focus": "Hauptfokus"
-    }
+    },
+    "specialDays": "Religiöse Tage"
   },
   "settings": {
     "title": "Einstellungen",
@@ -4641,5 +4642,65 @@
     "focus": "Fokusmodus",
     "reset": "Zähler zurücksetzen",
     "stats": "Statistik"
+  },
+  "specialDays": {
+    "title": "Religiöse Tage",
+    "subtitle": "Nach dem Diyanet-Kalender",
+    "upcoming": "Demnächst",
+    "today": "Heute",
+    "daysLeft_one": "Noch {{count}} Tag",
+    "daysLeft_other": "Noch {{count}} Tage",
+    "prevMonth": "Vorheriger Monat",
+    "nextMonth": "Nächster Monat"
+  },
+  "religiousDayKinds": {
+    "regaib": {
+      "name": "Regaib-Nacht",
+      "desc": "Erste gesegnete Nacht der drei heiligen Monate"
+    },
+    "mirac": {
+      "name": "Miradsch-Nacht",
+      "desc": "Die Nacht der Himmelfahrt des Propheten (s)"
+    },
+    "berat": {
+      "name": "Berat-Nacht",
+      "desc": "Nacht der Vergebung und Barmherzigkeit"
+    },
+    "ramazan": {
+      "name": "Beginn des Ramadan",
+      "desc": "Erster Tag des Ramadan"
+    },
+    "kadir": {
+      "name": "Nacht der Bestimmung",
+      "desc": "Die Nacht, besser als tausend Monate"
+    },
+    "ramazanArefe": {
+      "name": "Vorabend des Ramadanfests",
+      "desc": "Der Tag vor dem Ramadanfest"
+    },
+    "ramazanBayrami": {
+      "name": "Ramadanfest",
+      "desc": "Erster Festtag"
+    },
+    "kurbanArefe": {
+      "name": "Tag von Arafat",
+      "desc": "Der Tag, an dem die Pilger auf Arafat stehen"
+    },
+    "kurbanBayrami": {
+      "name": "Opferfest",
+      "desc": "Erster Festtag"
+    },
+    "hicriYilbasi": {
+      "name": "Islamisches Neujahr",
+      "desc": "Erster Tag des Muharram"
+    },
+    "asure": {
+      "name": "Aschura-Tag",
+      "desc": "10. Tag des Muharram"
+    },
+    "mevlid": {
+      "name": "Mevlid-Nacht",
+      "desc": "Die Nacht der Geburt des Propheten (s)"
+    }
   }
 }

@@ -299,7 +299,8 @@
       "toolsDesc": "Helpful screens when you need them.",
       "system": "Settings and support",
       "focus": "Main focus"
-    }
+    },
+    "specialDays": "Religious Days"
   },
   "settings": {
     "title": "Settings",
@@ -4641,5 +4642,65 @@
     "focus": "Focus mode",
     "reset": "Reset counter",
     "stats": "Statistics"
+  },
+  "specialDays": {
+    "title": "Religious Days",
+    "subtitle": "Following the Diyanet calendar",
+    "upcoming": "Coming up",
+    "today": "Today",
+    "daysLeft_one": "{{count}} day left",
+    "daysLeft_other": "{{count}} days left",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month"
+  },
+  "religiousDayKinds": {
+    "regaib": {
+      "name": "Raghaib Night",
+      "desc": "First blessed night of the three holy months"
+    },
+    "mirac": {
+      "name": "Miraj Night",
+      "desc": "The night of the Prophet’s (pbuh) ascension"
+    },
+    "berat": {
+      "name": "Barat Night",
+      "desc": "Night of forgiveness and mercy"
+    },
+    "ramazan": {
+      "name": "Start of Ramadan",
+      "desc": "First day of Ramadan"
+    },
+    "kadir": {
+      "name": "Laylat al-Qadr",
+      "desc": "The night better than a thousand months"
+    },
+    "ramazanArefe": {
+      "name": "Eid al-Fitr Eve",
+      "desc": "The day before Eid al-Fitr"
+    },
+    "ramazanBayrami": {
+      "name": "Eid al-Fitr",
+      "desc": "First day of Eid"
+    },
+    "kurbanArefe": {
+      "name": "Day of Arafah",
+      "desc": "The day pilgrims stand at Arafat"
+    },
+    "kurbanBayrami": {
+      "name": "Eid al-Adha",
+      "desc": "First day of Eid"
+    },
+    "hicriYilbasi": {
+      "name": "Islamic New Year",
+      "desc": "First day of Muharram"
+    },
+    "asure": {
+      "name": "Day of Ashura",
+      "desc": "10th day of Muharram"
+    },
+    "mevlid": {
+      "name": "Mawlid",
+      "desc": "The night of the Prophet’s (pbuh) birth"
+    }
   }
 }

@@ -299,7 +299,8 @@
       "toolsDesc": "Layar bantuan saat kamu membutuhkannya.",
       "system": "Pengaturan dan bantuan",
       "focus": "Fokus utama"
-    }
+    },
+    "specialDays": "Hari Besar Islam"
   },
   "settings": {
     "title": "Pengaturan",
@@ -4641,5 +4642,65 @@
     "focus": "Mode fokus",
     "reset": "Atur ulang hitungan",
     "stats": "Statistik"
+  },
+  "specialDays": {
+    "title": "Hari Besar Islam",
+    "subtitle": "Mengikuti kalender Diyanet",
+    "upcoming": "Akan datang",
+    "today": "Hari ini",
+    "daysLeft_one": "{{count}} hari lagi",
+    "daysLeft_other": "{{count}} hari lagi",
+    "prevMonth": "Bulan sebelumnya",
+    "nextMonth": "Bulan berikutnya"
+  },
+  "religiousDayKinds": {
+    "regaib": {
+      "name": "Malam Raghaib",
+      "desc": "Malam mulia pertama dari tiga bulan suci"
+    },
+    "mirac": {
+      "name": "Malam Isra Mikraj",
+      "desc": "Malam naiknya Nabi ﷺ ke langit"
+    },
+    "berat": {
+      "name": "Malam Nisfu Syakban",
+      "desc": "Malam ampunan dan rahmat"
+    },
+    "ramazan": {
+      "name": "Awal Ramadan",
+      "desc": "Hari pertama Ramadan"
+    },
+    "kadir": {
+      "name": "Lailatul Qadar",
+      "desc": "Malam yang lebih baik dari seribu bulan"
+    },
+    "ramazanArefe": {
+      "name": "Malam Takbiran Idulfitri",
+      "desc": "Hari sebelum Idulfitri"
+    },
+    "ramazanBayrami": {
+      "name": "Idulfitri",
+      "desc": "Hari pertama hari raya"
+    },
+    "kurbanArefe": {
+      "name": "Hari Arafah",
+      "desc": "Hari jemaah haji wukuf di Arafah"
+    },
+    "kurbanBayrami": {
+      "name": "Iduladha",
+      "desc": "Hari pertama hari raya"
+    },
+    "hicriYilbasi": {
+      "name": "Tahun Baru Islam",
+      "desc": "Hari pertama bulan Muharam"
+    },
+    "asure": {
+      "name": "Hari Asyura",
+      "desc": "Hari ke-10 bulan Muharam"
+    },
+    "mevlid": {
+      "name": "Maulid Nabi",
+      "desc": "Malam kelahiran Nabi ﷺ"
+    }
   }
 }

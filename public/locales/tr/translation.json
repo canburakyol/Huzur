@@ -120,7 +120,8 @@
       "toolsDesc": "İhtiyaç duyduğunda yardımcı ekranlar.",
       "system": "Ayarlar ve destek",
       "focus": "Ana odak"
-    }
+    },
+    "specialDays": "Dini Günler"
   },
   "prayerCircle": {
     "title": "Dua Kardeşliği",
@@ -4641,5 +4642,65 @@
     "focus": "Odak modu",
     "reset": "Sayacı sıfırla",
     "stats": "İstatistikler"
+  },
+  "specialDays": {
+    "title": "Dini Günler",
+    "subtitle": "Diyanet takvimine göre",
+    "upcoming": "Yaklaşan günler",
+    "today": "Bugün",
+    "daysLeft_one": "{{count}} gün kaldı",
+    "daysLeft_other": "{{count}} gün kaldı",
+    "prevMonth": "Önceki ay",
+    "nextMonth": "Sonraki ay"
+  },
+  "religiousDayKinds": {
+    "regaib": {
+      "name": "Regaib Kandili",
+      "desc": "Üç ayların ilk kandili"
+    },
+    "mirac": {
+      "name": "Miraç Kandili",
+      "desc": "Peygamber Efendimiz'in (s.a.v.) Miraç'a yükseldiği gece"
+    },
+    "berat": {
+      "name": "Berat Kandili",
+      "desc": "Af ve mağfiret gecesi"
+    },
+    "ramazan": {
+      "name": "Ramazan Başlangıcı",
+      "desc": "Ramazan ayının ilk günü"
+    },
+    "kadir": {
+      "name": "Kadir Gecesi",
+      "desc": "Bin aydan hayırlı gece"
+    },
+    "ramazanArefe": {
+      "name": "Ramazan Bayramı Arefesi",
+      "desc": "Ramazan Bayramı'ndan önceki gün"
+    },
+    "ramazanBayrami": {
+      "name": "Ramazan Bayramı",
+      "desc": "Bayramın ilk günü"
+    },
+    "kurbanArefe": {
+      "name": "Kurban Bayramı Arefesi",
+      "desc": "Hacıların Arafat'ta vakfeye durduğu gün"
+    },
+    "kurbanBayrami": {
+      "name": "Kurban Bayramı",
+      "desc": "Bayramın ilk günü"
+    },
+    "hicriYilbasi": {
+      "name": "Hicri Yılbaşı",
+      "desc": "Muharrem ayının ilk günü"
+    },
+    "asure": {
+      "name": "Aşure Günü",
+      "desc": "Muharrem'in 10. günü"
+    },
+    "mevlid": {
+      "name": "Mevlid Kandili",
+      "desc": "Peygamber Efendimiz'in (s.a.v.) doğum gecesi"
+    }
   }
 }

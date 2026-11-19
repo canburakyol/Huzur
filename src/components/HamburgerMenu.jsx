@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   Award,
   BookOpen,
+  CalendarDays,
   CheckCircle2,
   ChevronRight,
   ClipboardList,
@@ -60,6 +61,7 @@ const SUPPORT_MENU_ITEMS = [
   { id: 'quran', icon: <BookOpen size={20} />, labelKey: 'features.quran', component: 'quran' },
   { id: 'qibla', icon: <Compass size={20} />, labelKey: 'features.qibla', component: 'qibla' },
   { id: 'imsakiye', icon: <Moon size={20} />, labelKey: 'menu.imsakiye', component: 'imsakiye' },
+  { id: 'specialDays', icon: <CalendarDays size={20} />, labelKey: 'menu.specialDays', component: 'specialDays' },
   { id: 'adhkar', icon: <Sparkles size={20} />, labelKey: 'features.adhkar', component: 'adhkar' },
   { id: 'tespihat', icon: <Compass size={20} />, labelKey: 'menu.tespihat', component: 'tespihat' },
   { id: 'esmaUlHusna', icon: <Sparkles size={20} />, labelKey: 'menu.esmaUlHusna', component: 'esmaUlHusna' }
