@@ -3532,7 +3532,9 @@
     "discoverySeedLabel": "Family suggested by the Huzur community",
     "discoveryRealLabel": "Family from the community",
     "discoverTitle": "Discovered families",
-    "discoverSubtitle": "See families who joined the community, get inspired and create your own family"
+    "discoverSubtitle": "See families who joined the community, get inspired and create your own family",
+    "createHint": "Create a new family group",
+    "joinHint": "Join a group with an invite code"
   },
   "hatimCoach": {
     "title": "Smart Khatm Coach",
@@ -4318,7 +4320,8 @@
     "title": "Weekly Goal",
     "description": "How many days per week do you want to track your worship?",
     "daysValue": "{{count}} days",
-    "daysLabelShort": "days"
+    "daysLabelShort": "days",
+    "earnMore": "EARN MORE POINTS"
   },
   "zakatCalculator": {
     "title": "Zakat Calculator",
@@ -4441,7 +4444,12 @@
     }
   },
   "journey": {
-    "title": "My Spiritual Journey"
+    "title": "My Spiritual Journey",
+    "quick": {
+      "quiz": "Keep your streak going with a short quiz.",
+      "routine": "Shape your morning and evening rhythm from today.",
+      "share": "Make your progress visible with a motivating card."
+    }
   },
   "routine": {
     "title": "My Daily Routines",
@@ -4454,7 +4462,20 @@
     "newRoutineForm": "New routine form",
     "createBtn": "Create your own routine",
     "namePlaceholder": "E.g. midday dhikr",
-    "addTask": "Add a new step…"
+    "addTask": "Add a new step…",
+    "defaults": {
+      "morning_routine": "Morning routine",
+      "evening_routine": "Evening reflection"
+    },
+    "defaultTasks": {
+      "m1": "Fajr prayer",
+      "m2": "Morning dhikr (adhkar)",
+      "m3": "1 page of Quran",
+      "e1": "Maghrib prayer",
+      "e2": "Fill in the deed journal",
+      "e3": "Daily repentance"
+    },
+    "deleteLabel": "Delete routine {{name}}"
   },
   "quiz": {
     "title": "Test of the Day",
@@ -4904,7 +4925,8 @@
     "calculatedFor": "Calculated for the same location",
     "prevMonth": "Previous month",
     "nextMonth": "Next month",
-    "day": "Day"
+    "day": "Day",
+    "unknownLocation": "Location unknown"
   },
   "zikirmatik": {
     "popularChoices": "Dhikr",
@@ -5010,7 +5032,8 @@
     "arabicSize": "Arabic size",
     "turkishSize": "Translation size",
     "lineHeight": "Line spacing",
-    "reset": "Reset to default"
+    "reset": "Reset to default",
+    "previewMeaning": "In the name of Allah, the Entirely Merciful, the Especially Merciful"
   },
   "locationConsent": {
     "title": "May we use your location?",
@@ -5060,7 +5083,17 @@
     "paywall_desc": "Get unlimited access to the whole library and premium features.",
     "feature_audio": "Full Qur'an recitations by renowned reciters",
     "feature_video": "Islamic academy video series",
-    "feature_books": "Selected religious sources and books"
+    "feature_books": "Selected religious sources and books",
+    "categories": {
+      "books": "Books",
+      "texts": "Religious texts",
+      "education": "Learning",
+      "references": "References",
+      "audio": "Audio library",
+      "video": "Islamic academy",
+      "faq": "Q&A"
+    },
+    "title": "Library"
   },
   "radio": {
     "selectSurah": "Select a surah"
@@ -5566,6 +5599,65 @@
         "name": "Prayer of need",
         "desc": "A prayer offered for a particular need"
       }
+    }
+  },
+  "badgeCategories": {
+    "prayer": "Prayer",
+    "quran": "Quran",
+    "dhikr": "Dhikr",
+    "streak": "Streak",
+    "social": "Social",
+    "special": "Special",
+    "knowledge": "Knowledge"
+  },
+  "weeklySocial": {
+    "band": {
+      "guclu_ritim": {
+        "label": "Strong rhythm",
+        "description": "You kept a solid rhythm this week."
+      },
+      "istikrarli": {
+        "label": "Steady",
+        "description": "Your routine is settling in; keep the same calm pace."
+      },
+      "duzen_kuruluyor": {
+        "label": "Building a routine",
+        "description": "Small but regular steps are strengthening your rhythm."
+      },
+      "baslangic": {
+        "label": "Getting started",
+        "description": "Even one step this week helps you build a new routine."
+      }
+    },
+    "familyGoal": {
+      "title": "Weekly family focus",
+      "description": "Aim for one small step each day this week to support your family."
+    },
+    "encourage": {
+      "many": "Your family's rhythm becomes more visible with your regular contribution.",
+      "first": "Your first regular steps are a good start to growing your family circle."
+    }
+  },
+  "socialSeeds": {
+    "seed-hatim-sabir": {
+      "name": "Huzur community patience khatm",
+      "description": "An open khatm circle with a shared intention for those going through hard times."
+    },
+    "seed-hatim-cuma": {
+      "name": "Friday blessing khatm",
+      "description": "A weekly community khatm for those who want to meet in Friday supplications."
+    },
+    "seed-dua-sehri": {
+      "text": "We pray that every good deed we intend today is accepted and that our hearts are filled with peace."
+    },
+    "seed-dua-rahmet": {
+      "text": "We ask for healing for the sick, relief for troubled hearts and mercy for our families."
+    },
+    "seed-family-dua": {
+      "name": "Huzur supplication circle"
+    },
+    "seed-family-bereket": {
+      "name": "Blessed Table family"
     }
   }
 }

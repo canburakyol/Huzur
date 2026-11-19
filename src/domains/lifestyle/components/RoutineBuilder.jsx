@@ -113,12 +113,12 @@ const RoutineBuilder = ({ onClose }) => {
                 <div style={{ display: 'flex', gap: 10, minWidth: 0, alignItems: 'center' }}>
                   <span className="practice-row__icon">{routine.timeOfDay === 'morning' ? <Sun size={18} /> : <Moon size={18} />}</span>
                   <div style={{ minWidth: 0 }}>
-                    <h2 className="practice-row__title">{routine.name}</h2>
+                    <h2 className="practice-row__title">{t(`routine.defaults.${routine.id}`, routine.name)}</h2>
                     <p className="practice-row__text"><Zap size={12} /> +{routine.bonusXp} XP tamamlama bonusu</p>
                   </div>
                 </div>
                 {routine.id.startsWith('custom_') && (
-                  <button type="button" className="practice-icon-button" aria-label={`${routine.name} rutinini sil`} onClick={() => setRoutines(deleteRoutine(routine.id))}><Trash2 size={17} /></button>
+                  <button type="button" className="practice-icon-button" aria-label={t('routine.deleteLabel', { name: t(`routine.defaults.${routine.id}`, routine.name), defaultValue: '{{name}} rutinini sil' })} onClick={() => setRoutines(deleteRoutine(routine.id))}><Trash2 size={17} /></button>
                 )}
               </div>
               <div className="practice-progress"><span style={{ width: `${pct}%` }} /></div>
@@ -139,7 +139,7 @@ const RoutineBuilder = ({ onClose }) => {
                         {isDone ? <Check size={18} /> : isNext ? <Play size={16} /> : <LockKeyhole size={15} />}
                       </span>
                       <span className="practice-row__body">
-                        <span className="practice-row__title" style={{ textDecoration: isDone ? 'line-through' : 'none' }}>{task.title}</span>
+                        <span className="practice-row__title" style={{ textDecoration: isDone ? 'line-through' : 'none' }}>{t(`routine.defaultTasks.${task.id}`, task.title)}</span>
                         {!isDone && !isNext && <span className="practice-row__text">{t('routine.completePrevious', 'Önceki adımı tamamlayın')}</span>}
                       </span>
                       {isNext && <ChevronRight size={18} />}

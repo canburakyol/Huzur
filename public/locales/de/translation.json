@@ -3532,7 +3532,9 @@
     "discoverySeedLabel": "Von der Huzur-Gemeinschaft empfohlene Familie",
     "discoveryRealLabel": "Familie aus der Gemeinschaft",
     "discoverTitle": "Entdeckte Familien",
-    "discoverSubtitle": "Sieh dir Familien aus der Gemeinschaft an, lass dich inspirieren und gründe deine eigene"
+    "discoverSubtitle": "Sieh dir Familien aus der Gemeinschaft an, lass dich inspirieren und gründe deine eigene",
+    "createHint": "Erstelle eine neue Familiengruppe",
+    "joinHint": "Tritt mit einem Einladungscode einer Gruppe bei"
   },
   "hatimCoach": {
     "title": "Intelligenter Khatm-Coach",
@@ -4364,7 +4366,8 @@
     "title": "Wochenziel",
     "description": "An wie vielen Tagen pro Woche möchtest du deine Gottesdienste verfolgen?",
     "daysValue": "{{count}} Tage",
-    "daysLabelShort": "Tage"
+    "daysLabelShort": "Tage",
+    "earnMore": "MEHR PUNKTE SAMMELN"
   },
   "zakatCalculator": {
     "title": "Zakat-Rechner",
@@ -4441,7 +4444,12 @@
     "settingsTitle": "Sozialer Rhythmus"
   },
   "journey": {
-    "title": "Meine spirituelle Reise"
+    "title": "Meine spirituelle Reise",
+    "quick": {
+      "quiz": "Halte deine Serie mit einem kurzen Quiz am Laufen.",
+      "routine": "Gestalte ab heute deinen Morgen- und Abendrhythmus.",
+      "share": "Mach deinen Fortschritt mit einer motivierenden Karte sichtbar."
+    }
   },
   "routine": {
     "title": "Meine täglichen Routinen",
@@ -4454,7 +4462,20 @@
     "newRoutineForm": "Formular für neue Routine",
     "createBtn": "Eigene Routine erstellen",
     "namePlaceholder": "Z. B. Dhikr in der Mittagspause",
-    "addTask": "Neuen Schritt hinzufügen…"
+    "addTask": "Neuen Schritt hinzufügen…",
+    "defaults": {
+      "morning_routine": "Morgenroutine",
+      "evening_routine": "Abendliche Besinnung"
+    },
+    "defaultTasks": {
+      "m1": "Fadschr-Gebet",
+      "m2": "Morgen-Dhikr (Adhkar)",
+      "m3": "1 Seite Koran",
+      "e1": "Maghrib-Gebet",
+      "e2": "Tatenbuch ausfüllen",
+      "e3": "Tägliche Reue"
+    },
+    "deleteLabel": "Routine {{name}} löschen"
   },
   "quiz": {
     "title": "Test des Tages",
@@ -4904,7 +4925,8 @@
     "calculatedFor": "Für denselben Standort berechnet",
     "prevMonth": "Vorheriger Monat",
     "nextMonth": "Nächster Monat",
-    "day": "Tag"
+    "day": "Tag",
+    "unknownLocation": "Standort unbekannt"
   },
   "zikirmatik": {
     "popularChoices": "Dhikr",
@@ -5010,7 +5032,8 @@
     "arabicSize": "Arabische Schriftgröße",
     "turkishSize": "Größe der Übersetzung",
     "lineHeight": "Zeilenabstand",
-    "reset": "Auf Standard zurücksetzen"
+    "reset": "Auf Standard zurücksetzen",
+    "previewMeaning": "Im Namen Allahs, des Allerbarmers, des Barmherzigen"
   },
   "locationConsent": {
     "title": "Dürfen wir deinen Standort verwenden?",
@@ -5060,7 +5083,17 @@
     "paywall_desc": "Erhalte unbegrenzten Zugang zur gesamten Bibliothek und zu Premium-Funktionen.",
     "feature_audio": "Vollständige Koranrezitationen bekannter Rezitatoren",
     "feature_video": "Videoserien der Islam-Akademie",
-    "feature_books": "Ausgewählte religiöse Quellen und Bücher"
+    "feature_books": "Ausgewählte religiöse Quellen und Bücher",
+    "categories": {
+      "books": "Bücher",
+      "texts": "Religiöse Texte",
+      "education": "Lernen",
+      "references": "Referenzen",
+      "audio": "Audiothek",
+      "video": "Islamische Akademie",
+      "faq": "Fragen & Antworten"
+    },
+    "title": "Bibliothek"
   },
   "radio": {
     "selectSurah": "Sure auswählen"
@@ -5566,6 +5599,65 @@
         "name": "Gebet der Bedürftigkeit",
         "desc": "Ein Gebet für ein bestimmtes Anliegen"
       }
+    }
+  },
+  "badgeCategories": {
+    "prayer": "Gebet",
+    "quran": "Koran",
+    "dhikr": "Dhikr",
+    "streak": "Serie",
+    "social": "Sozial",
+    "special": "Besonders",
+    "knowledge": "Wissen"
+  },
+  "weeklySocial": {
+    "band": {
+      "guclu_ritim": {
+        "label": "Starker Rhythmus",
+        "description": "Du hast deinen Rhythmus diese Woche stabil gehalten."
+      },
+      "istikrarli": {
+        "label": "Beständig",
+        "description": "Deine Routine festigt sich – mach im gleichen ruhigen Tempo weiter."
+      },
+      "duzen_kuruluyor": {
+        "label": "Routine im Aufbau",
+        "description": "Kleine, aber regelmäßige Schritte stärken deinen Rhythmus."
+      },
+      "baslangic": {
+        "label": "Anfang",
+        "description": "Schon ein Schritt diese Woche hilft dir, eine neue Routine aufzubauen."
+      }
+    },
+    "familyGoal": {
+      "title": "Wöchentlicher Familienfokus",
+      "description": "Nimm dir diese Woche jeden Tag einen kleinen Schritt für deine Familie vor."
+    },
+    "encourage": {
+      "many": "Mit deinem regelmäßigen Beitrag wird der Rhythmus deiner Familie sichtbarer.",
+      "first": "Deine ersten regelmäßigen Schritte sind ein guter Anfang, um deinen Familienkreis wachsen zu lassen."
+    }
+  },
+  "socialSeeds": {
+    "seed-hatim-sabir": {
+      "name": "Huzur-Gemeinschafts-Khatm der Geduld",
+      "description": "Ein offener Khatm-Kreis mit gemeinsamer Absicht für alle, die schwere Zeiten durchleben."
+    },
+    "seed-hatim-cuma": {
+      "name": "Freitags-Segens-Khatm",
+      "description": "Ein wöchentliches Gemeinschafts-Khatm für alle, die sich im Freitagsgebet verbinden möchten."
+    },
+    "seed-dua-sehri": {
+      "text": "Wir beten, dass jede gute Tat, die wir heute beabsichtigen, angenommen wird und unsere Herzen Frieden finden."
+    },
+    "seed-dua-rahmet": {
+      "text": "Wir bitten um Heilung für die Kranken, Erleichterung für bedrückte Herzen und Barmherzigkeit für unsere Familien."
+    },
+    "seed-family-dua": {
+      "name": "Huzur-Bittgebetskreis"
+    },
+    "seed-family-bereket": {
+      "name": "Familie Gesegneter Tisch"
     }
   }
 }

@@ -92,10 +92,10 @@ const FastingTracker = ({ onClose }) => {
                     boxShadow: '0 12px 24px rgba(249, 115, 22, 0.2)'
                 }}>
                     <div style={{ fontSize: '0.85rem', fontWeight: '800', opacity: 0.9, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '8px' }}>
-                        {t(`calendar.days.${new Date().getDay() === 0 ? 6 : new Date().getDay() - 1}`)}
+                        {t(`calendar.days.${['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'][new Date().getDay()]}`)}
                     </div>
                     <div style={{ fontSize: '1.75rem', fontWeight: '900' }}>
-                        {hijriDate.day} {t(`calendar.hijriMonths.${hijriDate.month - 1}`)} {hijriDate.year}
+                        {hijriDate.day} {t(`calendar.hijriMonths.${['muharram', 'safar', 'rabi1', 'rabi2', 'jumada1', 'jumada2', 'rajab', 'shaban', 'ramadan', 'shawwal', 'dhul_qada', 'dhul_hijja'][hijriDate.month - 1]}`)} {hijriDate.year}
                     </div>
                     <div className="fasting-decoration">
                         <Moon size={48} style={{ opacity: 0.1, position: 'absolute', right: '20px', bottom: '10px' }} />

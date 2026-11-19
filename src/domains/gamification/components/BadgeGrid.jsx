@@ -78,7 +78,7 @@ const BadgeGrid = ({ earnedBadges = [] }) => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <span style={{ fontSize: '1.2rem' }}>{catInfo.icon}</span>
                   <span style={{ fontWeight: '800', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    {catInfo.label}
+                    {t(`badgeCategories.${catKey}`, catInfo.label)}
                   </span>
                   <span style={{
                     background: catEarnedCount === badges.length ? catInfo.color : 'var(--nav-hover)',

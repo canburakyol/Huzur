@@ -30,7 +30,7 @@ const WeeklyGoalSelector = () => {
             </h4>
             <div style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--success)', display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <Sparkles size={12} />
-                <span>DAHA FAZLA PUAN KAZAN</span>
+                <span>{t('weeklyGoal.earnMore', 'DAHA FAZLA PUAN KAZAN')}</span>
             </div>
         </div>
       </div>

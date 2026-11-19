@@ -16,7 +16,7 @@ const Imsakiye = ({ onClose, locationName, location }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const available = hasCoordinates(location);
-  const city = locationName && !['Konum', 'Konum...'].includes(locationName) ? locationName : 'Konum bilinmiyor';
+  const city = locationName && !['Konum', 'Konum...'].includes(locationName) ? locationName : t('imsakiye.unknownLocation', 'Konum bilinmiyor');
   const country = t('countries.turkey', 'Turkey');
   const monthNames = t('calendar.months', { returnObjects: true, defaultValue: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'] });
 
@@ -54,7 +54,7 @@ const Imsakiye = ({ onClose, locationName, location }) => {
   return <div className="app-container hz-root" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
     <PageHeader
       title={t('menu.imsakiye')}
-      subtitle={<>{city}{available ? `, ${country}` : ''}{source ? <> · <span>{sourceLabel}</span></> : null}</>}
+      subtitle={<>{city}{source ? <> · <span>{sourceLabel}</span></> : null}</>}
       onBack={onClose}
     />
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 var(--space-4) var(--space-3)' }}>

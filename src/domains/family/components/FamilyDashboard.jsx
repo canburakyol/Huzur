@@ -177,7 +177,7 @@ const FamilyDashboard = ({ onClose }) => {
               </div>
               <div className="flex-1 text-left">
                 <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1.1rem' }}>{t('family.createAction')}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>Yeni bir aile grubu olusturun</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{t('family.createHint', 'Yeni bir aile grubu oluşturun')}</div>
               </div>
             </button>
             <button className="settings-card" onClick={() => setMode('join')} style={{ padding: '24px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)' }}>
@@ -186,7 +186,7 @@ const FamilyDashboard = ({ onClose }) => {
               </div>
               <div className="flex-1 text-left">
                 <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1.1rem' }}>{t('family.joinAction')}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>Davet kodu ile bir gruba katilin</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{t('family.joinHint', 'Davet kodu ile bir gruba katılın')}</div>
               </div>
             </button>
 

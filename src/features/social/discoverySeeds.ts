@@ -1,3 +1,4 @@
+import i18n from '../../i18n';
 interface HatimDiscoverySeed {
   id: string;
   name: string;
@@ -35,8 +36,8 @@ interface FamilyDiscoverySeed {
 export const HATIM_DISCOVERY_SEEDS: HatimDiscoverySeed[] = [
   {
     id: 'seed-hatim-sabir',
-    name: 'Huzur Toplulugu Sabir Hatmi',
-    description: 'Zor zamanlardan gecenler icin birlikte niyet edilen acik hatim halkasi.',
+    get name() { return i18n.t('socialSeeds.seed-hatim-sabir.name'); },
+    get description() { return i18n.t('socialSeeds.seed-hatim-sabir.description'); },
     totalParts: 30,
     completedParts: 18,
     progressPercent: 60,
@@ -48,8 +49,8 @@ export const HATIM_DISCOVERY_SEEDS: HatimDiscoverySeed[] = [
   },
   {
     id: 'seed-hatim-cuma',
-    name: 'Cuma Bereket Hatmi',
-    description: 'Cuma gunu dualarinda bulusmak isteyenler icin haftalik topluluk hatmi.',
+    get name() { return i18n.t('socialSeeds.seed-hatim-cuma.name'); },
+    get description() { return i18n.t('socialSeeds.seed-hatim-cuma.description'); },
     totalParts: 30,
     completedParts: 9,
     progressPercent: 30,
@@ -64,7 +65,7 @@ export const HATIM_DISCOVERY_SEEDS: HatimDiscoverySeed[] = [
 export const DUA_DISCOVERY_SEEDS: DuaDiscoverySeed[] = [
   {
     id: 'seed-dua-sehri',
-    text: 'Bugun niyet ettigimiz her hayrin kabul olmasi ve kalplerimize huzur dolmasi icin dua ediyoruz.',
+    get text() { return i18n.t('socialSeeds.seed-dua-sehri.text'); },
     isAnonymous: false,
     authorName: 'Huzur Toplulugu',
     aminCount: 142,
@@ -75,7 +76,7 @@ export const DUA_DISCOVERY_SEEDS: DuaDiscoverySeed[] = [
   },
   {
     id: 'seed-dua-rahmet',
-    text: 'Hasta olanlara sifa, daralan gonullere ferahlama ve ailelerimize rahmet diliyoruz.',
+    get text() { return i18n.t('socialSeeds.seed-dua-rahmet.text'); },
     isAnonymous: false,
     authorName: 'Topluluktan one cikan',
     aminCount: 96,
@@ -89,14 +90,14 @@ export const DUA_DISCOVERY_SEEDS: DuaDiscoverySeed[] = [
 export const FAMILY_DISCOVERY_SEEDS: FamilyDiscoverySeed[] = [
   {
     id: 'seed-family-dua',
-    name: 'Huzur Dua Cemberi',
+    get name() { return i18n.t('socialSeeds.seed-family-dua.name'); },
     isSeed: true,
     seedSource: 'huzur',
     createdAtMs: Date.parse('2026-03-09T09:00:00.000Z'),
   },
   {
     id: 'seed-family-bereket',
-    name: 'Bereket Sofrasi Ailesi',
+    get name() { return i18n.t('socialSeeds.seed-family-bereket.name'); },
     isSeed: true,
     seedSource: 'huzur',
     createdAtMs: Date.parse('2026-03-11T18:30:00.000Z'),

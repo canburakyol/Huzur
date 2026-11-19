@@ -1,3 +1,4 @@
+import i18n from '../i18n';
 import {
   buildWeeklyEngagementSnapshot,
   getCurrentWeekKey,
@@ -108,35 +109,35 @@ const getBandMeta = (score: number): BandMeta => {
   if (score >= 85) {
     return {
       key: 'guclu_ritim',
-      label: 'Guclu ritim',
+      label: i18n.t('weeklySocial.band.guclu_ritim.label'),
       accent: '#10b981',
-      description: 'Bu hafta ritmini saglam sekilde korudun.'
+      description: i18n.t('weeklySocial.band.guclu_ritim.description')
     };
   }
 
   if (score >= 65) {
     return {
       key: 'istikrarli',
-      label: 'Istikrarli',
+      label: i18n.t('weeklySocial.band.istikrarli.label'),
       accent: '#0ea5e9',
-      description: 'Duzenin yerine oturuyor, ayni sakin tempoyla devam et.'
+      description: i18n.t('weeklySocial.band.istikrarli.description')
     };
   }
 
   if (score >= 40) {
     return {
       key: 'duzen_kuruluyor',
-      label: 'Duzen kuruluyor',
+      label: i18n.t('weeklySocial.band.duzen_kuruluyor.label'),
       accent: '#d97706',
-      description: 'Kucuk ama duzenli adimlar ritmini guclendiriyor.'
+      description: i18n.t('weeklySocial.band.duzen_kuruluyor.description')
     };
   }
 
   return {
     key: 'baslangic',
-    label: 'Baslangic',
+    label: i18n.t('weeklySocial.band.baslangic.label'),
     accent: '#6b7280',
-    description: 'Bu hafta tek bir adim bile yeni bir duzen kurmana yardim eder.'
+    description: i18n.t('weeklySocial.band.baslangic.description')
   };
 };
 
@@ -222,15 +223,15 @@ export const buildFamilyWeeklySummary = (family: FamilyData | null, userSummary:
     familyStrength,
     recommendedGoal: {
       type: 'active_days',
-      title: 'Haftalik aile odagi',
-      description: 'Bu hafta ailene duzenli katki icin her gun kucuk bir adim hedefle.',
+      title: i18n.t('weeklySocial.familyGoal.title'),
+      description: i18n.t('weeklySocial.familyGoal.description'),
       targetValue: goalTarget,
       currentValue: contributionValue,
       progressPercent: clamp(progressPercent, 0, 100)
     },
     encouragement: memberCount > 1
-      ? 'Ailenin ritmi, senin duzenli katkinla daha gorunur hale geliyor.'
-      : 'Ilk duzenli adimlarin aile halkani buyutmek icin guzel bir baslangic olur.'
+      ? i18n.t('weeklySocial.encourage.many')
+      : i18n.t('weeklySocial.encourage.first')
   };
 };
 

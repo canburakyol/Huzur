@@ -3532,7 +3532,9 @@
     "discoverySeedLabel": "Keluarga yang disarankan komunitas Huzur",
     "discoveryRealLabel": "Keluarga dari komunitas",
     "discoverTitle": "Keluarga yang ditemukan",
-    "discoverSubtitle": "Lihat keluarga yang bergabung, dapatkan inspirasi, dan buat keluargamu sendiri"
+    "discoverSubtitle": "Lihat keluarga yang bergabung, dapatkan inspirasi, dan buat keluargamu sendiri",
+    "createHint": "Buat grup keluarga baru",
+    "joinHint": "Bergabung ke grup dengan kode undangan"
   },
   "hatimCoach": {
     "title": "Pelatih Khatam Pintar",
@@ -4364,7 +4366,8 @@
     "title": "Target Mingguan",
     "description": "Berapa hari per minggu kamu ingin mencatat ibadahmu?",
     "daysValue": "{{count}} hari",
-    "daysLabelShort": "hari"
+    "daysLabelShort": "hari",
+    "earnMore": "DAPATKAN LEBIH BANYAK POIN"
   },
   "zakatCalculator": {
     "title": "Kalkulator Zakat",
@@ -4441,7 +4444,12 @@
     "settingsTitle": "Ritme sosial"
   },
   "journey": {
-    "title": "Perjalanan Spiritualku"
+    "title": "Perjalanan Spiritualku",
+    "quick": {
+      "quiz": "Jaga rangkaianmu dengan kuis singkat.",
+      "routine": "Bentuk ritme pagi dan petangmu mulai hari ini.",
+      "share": "Tampilkan kemajuanmu dengan kartu yang memotivasi."
+    }
   },
   "routine": {
     "title": "Rutinitas Harianku",
@@ -4454,7 +4462,20 @@
     "newRoutineForm": "Formulir rutinitas baru",
     "createBtn": "Buat rutinitasmu sendiri",
     "namePlaceholder": "Mis. zikir istirahat siang",
-    "addTask": "Tambah langkah baru…"
+    "addTask": "Tambah langkah baru…",
+    "defaults": {
+      "morning_routine": "Rutinitas pagi",
+      "evening_routine": "Renungan petang"
+    },
+    "defaultTasks": {
+      "m1": "Salat Subuh",
+      "m2": "Zikir pagi (azkar)",
+      "m3": "1 halaman Al-Qur'an",
+      "e1": "Salat Magrib",
+      "e2": "Isi jurnal amal",
+      "e3": "Tobat harian"
+    },
+    "deleteLabel": "Hapus rutinitas {{name}}"
   },
   "quiz": {
     "title": "Kuis Hari Ini",
@@ -4904,7 +4925,8 @@
     "calculatedFor": "Dihitung untuk lokasi yang sama",
     "prevMonth": "Bulan sebelumnya",
     "nextMonth": "Bulan berikutnya",
-    "day": "Hari"
+    "day": "Hari",
+    "unknownLocation": "Lokasi tidak diketahui"
   },
   "zikirmatik": {
     "popularChoices": "Zikir",
@@ -5010,7 +5032,8 @@
     "arabicSize": "Ukuran Arab",
     "turkishSize": "Ukuran terjemahan",
     "lineHeight": "Jarak baris",
-    "reset": "Kembalikan ke default"
+    "reset": "Kembalikan ke default",
+    "previewMeaning": "Dengan menyebut nama Allah Yang Maha Pemurah lagi Maha Penyayang"
   },
   "locationConsent": {
     "title": "Bolehkah kami menggunakan lokasimu?",
@@ -5060,7 +5083,17 @@
     "paywall_desc": "Dapatkan akses tanpa batas ke seluruh perpustakaan dan fitur premium.",
     "feature_audio": "Tilawah khatam dari qari ternama",
     "feature_video": "Seri video akademi Islam",
-    "feature_books": "Sumber dan buku agama pilihan"
+    "feature_books": "Sumber dan buku agama pilihan",
+    "categories": {
+      "books": "Buku",
+      "texts": "Teks keagamaan",
+      "education": "Pembelajaran",
+      "references": "Referensi",
+      "audio": "Perpustakaan audio",
+      "video": "Akademi Islam",
+      "faq": "Tanya jawab"
+    },
+    "title": "Perpustakaan"
   },
   "radio": {
     "selectSurah": "Pilih surah"
@@ -5566,6 +5599,65 @@
         "name": "Salat Hajat",
         "desc": "Salat untuk suatu hajat atau kebutuhan"
       }
+    }
+  },
+  "badgeCategories": {
+    "prayer": "Salat",
+    "quran": "Al-Qur'an",
+    "dhikr": "Zikir",
+    "streak": "Rangkaian",
+    "social": "Sosial",
+    "special": "Istimewa",
+    "knowledge": "Ilmu"
+  },
+  "weeklySocial": {
+    "band": {
+      "guclu_ritim": {
+        "label": "Ritme kuat",
+        "description": "Kamu menjaga ritme dengan baik minggu ini."
+      },
+      "istikrarli": {
+        "label": "Stabil",
+        "description": "Rutinitasmu mulai terbentuk; lanjutkan dengan tempo tenang yang sama."
+      },
+      "duzen_kuruluyor": {
+        "label": "Membangun rutinitas",
+        "description": "Langkah kecil yang teratur menguatkan ritmemu."
+      },
+      "baslangic": {
+        "label": "Permulaan",
+        "description": "Satu langkah minggu ini pun membantumu membangun rutinitas baru."
+      }
+    },
+    "familyGoal": {
+      "title": "Fokus keluarga mingguan",
+      "description": "Targetkan satu langkah kecil setiap hari minggu ini untuk keluargamu."
+    },
+    "encourage": {
+      "many": "Ritme keluargamu makin terlihat berkat kontribusimu yang teratur.",
+      "first": "Langkah teratur pertamamu adalah awal yang baik untuk memperluas lingkaran keluarga."
+    }
+  },
+  "socialSeeds": {
+    "seed-hatim-sabir": {
+      "name": "Khatam kesabaran komunitas Huzur",
+      "description": "Lingkaran khatam terbuka dengan niat bersama bagi yang sedang melalui masa sulit."
+    },
+    "seed-hatim-cuma": {
+      "name": "Khatam berkah Jumat",
+      "description": "Khatam komunitas mingguan bagi yang ingin bertemu dalam doa hari Jumat."
+    },
+    "seed-dua-sehri": {
+      "text": "Kami berdoa agar setiap kebaikan yang kami niatkan hari ini diterima dan hati kami dipenuhi ketenangan."
+    },
+    "seed-dua-rahmet": {
+      "text": "Kami memohon kesembuhan bagi yang sakit, kelapangan bagi hati yang sempit, dan rahmat bagi keluarga kami."
+    },
+    "seed-family-dua": {
+      "name": "Lingkaran doa Huzur"
+    },
+    "seed-family-bereket": {
+      "name": "Keluarga Meja Berkah"
     }
   }
 }

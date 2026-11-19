@@ -128,7 +128,7 @@ const FontSettings = ({ onClose }) => {
                 color: 'var(--nav-text-muted)',
                 fontWeight: '600'
             }}>
-                Rahman ve Rahim olan Allah'ın adıyla
+                {t('fontSettings.previewMeaning', "Rahman ve Rahim olan Allah'ın adıyla")}
             </div>
         </div>
       </div>

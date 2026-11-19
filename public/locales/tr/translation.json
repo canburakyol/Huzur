@@ -3700,7 +3700,9 @@
     "discoverySeedLabel": "Huzur topluluğundan önerilen aile",
     "discoveryRealLabel": "Topluluktan görünen aile",
     "discoverTitle": "Keşfedilen aileler",
-    "discoverSubtitle": "Topluluğa katılan aileleri gör, ilham al ve kendi aileni oluştur"
+    "discoverSubtitle": "Topluluğa katılan aileleri gör, ilham al ve kendi aileni oluştur",
+    "createHint": "Yeni bir aile grubu oluşturun",
+    "joinHint": "Davet kodu ile bir gruba katılın"
   },
   "hatimCoach": {
     "title": "Akıllı Hatim Koçu",
@@ -3842,7 +3844,12 @@
     "targetDesc": "{{nextTitle}} unvanına ulaşmak için sadece {{remaining}} XP kaldı."
   },
   "journey": {
-    "title": "Manevi Yolculuğum"
+    "title": "Manevi Yolculuğum",
+    "quick": {
+      "quiz": "Kısa bir bilgi turu ile serini besle.",
+      "routine": "Sabah ve akşam ritmini bugünden şekillendir.",
+      "share": "İlerlemeni görünür kılıp motive edici bir kart oluştur."
+    }
   },
   "routine": {
     "title": "Günlük Rutinlerim",
@@ -3855,7 +3862,20 @@
     "newRoutineForm": "Yeni rutin formu",
     "createBtn": "Kendi Rutinini Oluştur",
     "namePlaceholder": "Örn: Öğle arası zikirleri",
-    "addTask": "Yeni adım ekle..."
+    "addTask": "Yeni adım ekle...",
+    "defaults": {
+      "morning_routine": "Sabah Rutini",
+      "evening_routine": "Akşam Yansımaları"
+    },
+    "defaultTasks": {
+      "m1": "Sabah Namazı",
+      "m2": "Sabah Zikri (Adhkar)",
+      "m3": "1 Sayfa Kur'an",
+      "e1": "Akşam Namazı",
+      "e2": "Amel Defterini Doldur",
+      "e3": "Günlük Tövbe"
+    },
+    "deleteLabel": "{{name}} rutinini sil"
   },
   "quiz": {
     "title": "Günün Testi",
@@ -4077,7 +4097,8 @@
     "title": "Haftalık Hedef",
     "description": "Haftada kaç gün ibadet takibini hedefliyorsun?",
     "daysValue": "{{count}} gün",
-    "daysLabelShort": "GÜN"
+    "daysLabelShort": "GÜN",
+    "earnMore": "DAHA FAZLA PUAN KAZAN"
   },
   "zakatCalculator": {
     "title": "Zekat Hesaplayıcı",
@@ -4904,7 +4925,8 @@
     "calculatedFor": "Aynı konum için hesaplandı",
     "prevMonth": "Önceki ay",
     "nextMonth": "Sonraki ay",
-    "day": "Gün"
+    "day": "Gün",
+    "unknownLocation": "Konum bilinmiyor"
   },
   "zikirmatik": {
     "popularChoices": "Zikirler",
@@ -5010,7 +5032,8 @@
     "arabicSize": "Arapça Boyutu",
     "turkishSize": "Meal boyutu",
     "lineHeight": "Satır Aralığı",
-    "reset": "Varsayılana Sıfırla"
+    "reset": "Varsayılana Sıfırla",
+    "previewMeaning": "Rahman ve Rahim olan Allah'ın adıyla"
   },
   "locationConsent": {
     "title": "Konumunu kullanabilir miyiz?",
@@ -5060,7 +5083,17 @@
     "paywall_desc": "Tüm kütüphane içeriğine ve premium özelliklere sınırsız erişim sağlayın.",
     "feature_audio": "Ünlü hafızlardan hatim setleri",
     "feature_video": "İslami Akademi video serileri",
-    "feature_books": "Özel dini kaynaklar ve kitaplar"
+    "feature_books": "Özel dini kaynaklar ve kitaplar",
+    "categories": {
+      "books": "Kitaplar",
+      "texts": "Dini Metinler",
+      "education": "Eğitim",
+      "references": "Referanslar",
+      "audio": "Sesli Kütüphane",
+      "video": "İslami Akademi",
+      "faq": "Soru-Cevap"
+    },
+    "title": "Kütüphane"
   },
   "radio": {
     "selectSurah": "Bir sure seçin"
@@ -5566,6 +5599,65 @@
         "name": "Hacet Namazı",
         "desc": "Bir ihtiyaç için kılınan namaz"
       }
+    }
+  },
+  "badgeCategories": {
+    "prayer": "Namaz",
+    "quran": "Kuran",
+    "dhikr": "Zikir",
+    "streak": "Seri",
+    "social": "Sosyal",
+    "special": "Özel",
+    "knowledge": "İlim"
+  },
+  "weeklySocial": {
+    "band": {
+      "guclu_ritim": {
+        "label": "Güçlü ritim",
+        "description": "Bu hafta ritmini sağlam şekilde korudun."
+      },
+      "istikrarli": {
+        "label": "İstikrarlı",
+        "description": "Düzenin yerine oturuyor, aynı sakin tempoyla devam et."
+      },
+      "duzen_kuruluyor": {
+        "label": "Düzen kuruluyor",
+        "description": "Küçük ama düzenli adımlar ritmini güçlendiriyor."
+      },
+      "baslangic": {
+        "label": "Başlangıç",
+        "description": "Bu hafta tek bir adım bile yeni bir düzen kurmana yardım eder."
+      }
+    },
+    "familyGoal": {
+      "title": "Haftalık aile odağı",
+      "description": "Bu hafta ailene düzenli katkı için her gün küçük bir adım hedefle."
+    },
+    "encourage": {
+      "many": "Ailenin ritmi, senin düzenli katkınla daha görünür hale geliyor.",
+      "first": "İlk düzenli adımların aile halkanı büyütmek için güzel bir başlangıç olur."
+    }
+  },
+  "socialSeeds": {
+    "seed-hatim-sabir": {
+      "name": "Huzur Topluluğu Sabır Hatmi",
+      "description": "Zor zamanlardan geçenler için birlikte niyet edilen açık hatim halkası."
+    },
+    "seed-hatim-cuma": {
+      "name": "Cuma Bereket Hatmi",
+      "description": "Cuma günü dualarında buluşmak isteyenler için haftalık topluluk hatmi."
+    },
+    "seed-dua-sehri": {
+      "text": "Bugün niyet ettiğimiz her hayrın kabul olması ve kalplerimize huzur dolması için dua ediyoruz."
+    },
+    "seed-dua-rahmet": {
+      "text": "Hasta olanlara şifa, daralan gönüllere ferahlık ve ailelerimize rahmet diliyoruz."
+    },
+    "seed-family-dua": {
+      "name": "Huzur Dua Çemberi"
+    },
+    "seed-family-bereket": {
+      "name": "Bereket Sofrası Ailesi"
     }
   }
 }

@@ -76,15 +76,15 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
     const data = libraryData || EMPTY_LIBRARY_DATA;
 
     return [
-      { id: 'books', title: 'Kitaplar', icon: 'BookOpen', data: data.BOOKS },
-      { id: 'texts', title: 'Dini Metinler', icon: 'ScrollText', data: data.RELIGIOUS_TEXTS },
-      { id: 'education', title: 'Eğitim', icon: 'GraduationCap', data: data.EDUCATION },
-      { id: 'references', title: 'Referanslar', icon: 'ClipboardList', data: data.REFERENCES },
-      { id: 'audio', title: 'Sesli Kütüphane', icon: 'Headphones', data: data.AUDIO, isPro: true },
-      { id: 'video', title: 'İslami Akademi', icon: 'Video', data: data.VIDEO },
-      { id: 'faq', title: 'Soru-Cevap', icon: 'CircleHelp', data: data.FAQ }
+      { id: 'books', title: t('library.categories.books', 'Kitaplar'), icon: 'BookOpen', data: data.BOOKS },
+      { id: 'texts', title: t('library.categories.texts', 'Dini Metinler'), icon: 'ScrollText', data: data.RELIGIOUS_TEXTS },
+      { id: 'education', title: t('library.categories.education', 'Eğitim'), icon: 'GraduationCap', data: data.EDUCATION },
+      { id: 'references', title: t('library.categories.references', 'Referanslar'), icon: 'ClipboardList', data: data.REFERENCES },
+      { id: 'audio', title: t('library.categories.audio', 'Sesli Kütüphane'), icon: 'Headphones', data: data.AUDIO, isPro: true },
+      { id: 'video', title: t('library.categories.video', 'İslami Akademi'), icon: 'Video', data: data.VIDEO },
+      { id: 'faq', title: t('library.categories.faq', 'Soru-Cevap'), icon: 'CircleHelp', data: data.FAQ }
     ];
-  }, [libraryData]);
+  }, [libraryData, t]);
 
   const currentCategoryItems = useMemo(() => {
     if (!selectedCategory) {
@@ -135,14 +135,14 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
           : selectedItem.title;
       }
 
-      return selectedItem.category || 'Kütüphane';
+      return selectedItem.category || t('library.title', 'Kütüphane');
     }
 
     if (selectedCategory) {
       return selectedCategory.title;
     }
 
-    return 'Kütüphane';
+    return t('library.title', 'Kütüphane');
   }, [selectedCategory, selectedItem, selectedReciter, t]);
 
   const handleShowPro = useCallback(() => {

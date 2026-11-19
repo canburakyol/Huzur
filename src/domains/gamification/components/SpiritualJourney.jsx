@@ -83,21 +83,21 @@ const SpiritualJourney = ({ onClose }) => {
       id: 'daily-quiz',
       icon: <Brain size={18} color="var(--tertiary)" />,
       title: t('quiz.title', 'Günün Testi'),
-      description: 'Kisa bir bilgi turu ile serini besle.',
+      description: t('journey.quick.quiz', 'Kısa bir bilgi turu ile serini besle.'),
       onClick: () => navigateFromAction('/daily-quiz')
     },
     {
       id: 'routine-builder',
       icon: <CalendarDays size={18} color="var(--success)" />,
       title: t('routine.title', 'Günlük Rutinlerim'),
-      description: 'Sabah ve aksam ritmini bugunden sekillendir.',
+      description: t('journey.quick.routine', 'Sabah ve akşam ritmini bugünden şekillendir.'),
       onClick: () => navigateFromAction('/routine-builder')
     },
     {
       id: 'share-card',
       icon: <Share2 size={18} color="var(--brand-ink)" />,
       title: t('gamification.share', 'İstatistik Kartini Paylaş'),
-      description: 'Ilerlemeni gorunur kilip motive edici bir kart olustur.',
+      description: t('journey.quick.share', 'İlerlemeni görünür kılıp motive edici bir kart oluştur.'),
       onClick: () => setShowShareCard(true)
     }
   ];
