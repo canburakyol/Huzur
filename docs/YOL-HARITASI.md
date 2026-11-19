@@ -11,7 +11,7 @@ sonra **görünüm**, en son **iç kalite**. Yanlış dini bilgi, eski görünü
 | 0 | 18.4.0'ı Play Store'a yükle | Sen | 15 dk | ✅ 14 Kas |
 | 1 | Faturalandırmayı aç, fonksiyonları deploy et | Sen + ben | 1 oturum | ⬜ |
 | 2 | Gizlilik URL'si ve yayın sonrası izleme | Sen + ben | 30 dk | 🟨 URL ✅ 14 Kas · vitals: ~17 ve ~21 Kas |
-| 3 | Özel Günler takvimini düzelt | Ben | 1 oturum | ⬜ |
+| 3 | Özel Günler takvimini düzelt | Ben | 1 oturum | ✅ 19 Kas |
 | 4 | Satın alma / geri yükleme testi | Sen + ben | 1 oturum | ⬜ |
 | 5 | Dini içerik doğrulaması (5 parça) | Ben | 5 oturum | ⬜ |
 | 6 | Mushaf tasarımına taşıma (ekran ekran) | Ben | ~10 oturum | ⬜ |
@@ -54,6 +54,9 @@ Hicri yılbaşı ve Aşure ~10 gün kaymış). `src/data/religiousDays.ts` de ya
 - İki kaynağı tek veriye indir; yıl bitince boş kalmasın diye en yakın yılın günlerini göster.
 - Bir test: her yıl için liste boş değil, tarihler sıralı, bilinen birkaç tarih Diyanet'le aynı.
 - **Bitti sayılır:** 2027 sonuna kadar bütün kandil/bayram tarihleri Diyanet'le birebir; test geçiyor.
+- **Yapıldı (19 Kas):** Tek kaynak `src/data/religiousDays.ts` (Diyanet 2025–2028). Kampanya/bildirim seçimi (`campaignService`) de bu tabloya bağlandı.
+  Açık kalan: Özel Günler, Dini Günler ve Ajanda ekranlarına uygulamada hiçbir giriş yok (menüden çıkmışlar). Tablo Aralık 2028'de bitiyor; 2028 ortasında 2029–2030 eklenmeli.
+  Ajanda'nın not anahtarı UTC tarihle üretiliyor (Türkiye'de bir gün geri); düzeltmek kayıtlı notları kaydırır, taşıma ile birlikte yapılmalı.
 
 ## 4. Satın alma testi
 

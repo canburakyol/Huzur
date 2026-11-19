@@ -1,4 +1,4 @@
-import { religiousDays } from './religiousDays';
+import { religiousDays, parseLocalDate } from './religiousDays';
 
 const HIJRI_MONTHS: string[] = [
   'calendar.hijriMonths.muharram',
@@ -102,7 +102,7 @@ export const getMonthDays = (year: number, month: number): (null | CalendarDay)[
     const dateStr = date.toISOString().split('T')[0];
 
     const religiousDay = religiousDays.find(d => {
-      const dDate = new Date(d.date);
+      const dDate = parseLocalDate(d.date);
       return dDate.getDate() === i &&
         dDate.getMonth() === month &&
         dDate.getFullYear() === year;

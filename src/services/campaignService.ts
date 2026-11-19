@@ -1,6 +1,7 @@
 import { STORAGE_KEYS } from '../constants';
 import { storageService } from './storageService';
 import { logger } from '../utils/logger';
+import { religiousDays, toLocalDateKey } from '../data/religiousDays';
 
 type CampaignId = 'evergreen' | 'friday' | 'ramadan' | 'kandil';
 type RegionId = 'TR' | 'EU_DIASPORA';
@@ -20,22 +21,21 @@ const REGION_IDS: Record<string, RegionId> = {
 
 const EUROPE_TIMEZONE_PREFIX = 'Europe/';
 
-const isRamadanApprox = (date: Date): boolean => {
-  const month = date.getMonth() + 1;
-  return month === 2 || month === 3 || month === 4;
+// Lunar dates move ~11 days a year, so read them from the Diyanet table instead of fixed months.
+const KANDIL_KINDS = new Set(['regaib', 'mirac', 'berat', 'kadir', 'mevlid']);
+
+export const isRamadan = (date: Date): boolean => {
+  const key = toLocalDateKey(date);
+  const start = [...religiousDays].reverse().find((day) => day.kind === 'ramazan' && day.date <= key);
+  const end = start && religiousDays.find((day) => day.kind === 'ramazanBayrami' && day.date > start.date);
+  return Boolean(start && end && key < end.date);
 };
 
 const isFriday = (date: Date): boolean => date.getDay() === 5;
 
-const isApproxKandilWindow = (date: Date): boolean => {
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  return (
-    (month === 1 && day >= 10 && day <= 20) ||
-    (month === 2 && day >= 20 && day <= 28) ||
-    (month === 3 && day >= 1 && day <= 12) ||
-    (month === 10 && day >= 10 && day <= 22)
-  );
+export const isKandilDay = (date: Date): boolean => {
+  const key = toLocalDateKey(date);
+  return religiousDays.some((day) => day.date === key && KANDIL_KINDS.has(day.kind));
 };
 
 type ActiveCampaign = {
@@ -64,9 +64,9 @@ export const getCampaignRegion = (): RegionId => {
 };
 
 const getCampaignByDate = (date = new Date()): CampaignId => {
-  if (isRamadanApprox(date)) return CAMPAIGN_IDS.RAMADAN;
+  if (isRamadan(date)) return CAMPAIGN_IDS.RAMADAN;
   if (isFriday(date)) return CAMPAIGN_IDS.FRIDAY;
-  if (isApproxKandilWindow(date)) return CAMPAIGN_IDS.KANDIL;
+  if (isKandilDay(date)) return CAMPAIGN_IDS.KANDIL;
   return CAMPAIGN_IDS.EVERGREEN;
 };
 

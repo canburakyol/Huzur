@@ -1,15 +1,18 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Calendar, Info, Clock } from 'lucide-react';
-import { religiousDays } from '../../../data/religiousDays';
+import { religiousDays as allReligiousDays, parseLocalDate, upcomingReligiousDays } from '../../../data/religiousDays';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 
 const ReligiousDays = ({ onClose }) => {
     const { t, i18n } = useTranslation();
     const isRTL = i18n.dir() === 'rtl';
+    const year = new Date().getFullYear();
+    // This year and next: the shared table spans several years.
+    const religiousDays = allReligiousDays.filter((day) => day.date.startsWith(String(year)) || day.date.startsWith(String(year + 1)));
 
     const formatDate = (dateStr) => {
-        const date = new Date(dateStr);
+        const date = parseLocalDate(dateStr);
         return date.toLocaleDateString(i18n.language === 'tr' ? 'tr-TR' : 'en-US', { 
             day: 'numeric', 
             month: 'long', 
@@ -20,20 +23,21 @@ const ReligiousDays = ({ onClose }) => {
     const isPast = (dateStr) => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        return new Date(dateStr) < today;
+        return parseLocalDate(dateStr) < today;
     };
 
     const getDaysRemaining = (dateStr) => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        const target = new Date(dateStr);
+        const target = parseLocalDate(dateStr);
         const diffTime = target - today;
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        // round, not ceil: a DST day is 23 or 25 hours long
+        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
         return diffDays;
     };
 
     const nextDay = useMemo(() => {
-        return religiousDays.find(day => !isPast(day.date));
+        return upcomingReligiousDays()[0];
     }, []);
 
     return (
@@ -46,7 +50,7 @@ const ReligiousDays = ({ onClose }) => {
                         {t('religiousDays.title', 'Dini Günler')}
                     </h2>
                     <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
-                        2025 {t('religiousDays.calendar', 'Takvimi')}
+                        {year}–{year + 1} {t('religiousDays.calendar', 'Takvimi')}
                     </p>
                 </div>
             </div>

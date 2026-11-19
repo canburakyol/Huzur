@@ -12,33 +12,25 @@ import {
 } from 'lucide-react';
 import './SpecialDaysCalendar.css';
 import { storageService } from '../../../services/storageService';
+import { religiousDays, toLocalDateKey } from '../../../data/religiousDays';
 
-// Özel günler veritabanı (2025-2026)
-const SPECIAL_DAYS = [
-  // 2025
-  { id: 'regaib-2025', name: 'Regaib Gecesi', date: '2025-01-02', type: 'kandil', icon: '✨', color: 'var(--accent-gold-light)', description: 'Üç ayların başlangıcı ve Regaib Gecesi' },
-  { id: 'mevlid-2025', name: 'Mevlid Kandili', date: '2025-01-26', type: 'kandil', icon: '🌙', color: 'var(--surface-container)', description: 'Peygamber Efendimiz\'in (s.a.v) doğum gecesi' },
-  { id: 'berat-2025', name: 'Berat Kandili', date: '2025-02-13', type: 'kandil', icon: '⭐', color: 'var(--secondary-container)', description: 'Aff ve mağfiret gecesi' },
-  { id: 'ramazan-2025', name: 'Ramazan Başlangıcı', date: '2025-03-01', type: 'ramazan', icon: '🌙', color: 'var(--accent-gold-light)', description: 'Oruç ayının başlangıcı' },
-  { id: 'kadir-2025', name: 'Kadir Gecesi', date: '2025-03-26', type: 'kandil', icon: '👑', color: 'var(--accent-gold-light)', description: 'Bin aydan hayırlı gece' },
-  { id: 'bayram-2025', name: 'Ramazan Bayramı', date: '2025-03-30', type: 'bayram', icon: '🎉', color: 'var(--secondary-container)', description: 'Ramazan Bayramı 1. gün' },
-  { id: 'arefe-2025', name: 'Arefe Günü', date: '2025-06-05', type: 'hac', icon: '🕋', color: 'var(--accent-gold)', description: 'Hacı adaylarının Arafat\'ta toplandığı gün' },
-  { id: 'kurban-2025', name: 'Kurban Bayramı', date: '2025-06-06', type: 'bayram', icon: '🐑', color: 'var(--accent-gold-shimmer)', description: 'Kurban Bayramı 1. gün' },
-  { id: 'hicri-2025', name: 'Hicri Yılbaşı', date: '2025-07-06', type: 'hicri', icon: '📅', color: 'var(--primary-container)', description: 'Muharrem ayının başlangıcı' },
-  { id: 'asure-2025', name: 'Aşure Günü', date: '2025-07-15', type: 'hicri', icon: '🥣', color: 'var(--accent-gold-light)', description: 'Muharrem\'in 10. günü' },
-  
-  // 2026
-  { id: 'regaib-2026', name: 'Regaib Gecesi', date: '2026-12-22', type: 'kandil', icon: '✨', color: 'var(--accent-gold-light)', description: 'Üç ayların başlangıcı' },
-  { id: 'mevlid-2026', name: 'Mevlid Kandili', date: '2026-01-15', type: 'kandil', icon: '🌙', color: 'var(--surface-container)', description: 'Peygamber Efendimiz\'in (s.a.v) doğum gecesi' },
-  { id: 'berat-2026', name: 'Berat Kandili', date: '2026-02-03', type: 'kandil', icon: '⭐', color: 'var(--secondary-container)', description: 'Aff ve mağfiret gecesi' },
-  { id: 'ramazan-2026', name: 'Ramazan Başlangıcı', date: '2026-02-18', type: 'ramazan', icon: '🌙', color: 'var(--accent-gold-light)', description: 'Oruç ayının başlangıcı' },
-  { id: 'kadir-2026', name: 'Kadir Gecesi', date: '2026-03-15', type: 'kandil', icon: '👑', color: 'var(--accent-gold-light)', description: 'Bin aydan hayırlı gece' },
-  { id: 'bayram-2026', name: 'Ramazan Bayramı', date: '2026-03-19', type: 'bayram', icon: '🎉', color: 'var(--secondary-container)', description: 'Ramazan Bayramı 1. gün' },
-  { id: 'arefe-2026', name: 'Arefe Günü', date: '2026-05-26', type: 'hac', icon: '🕋', color: 'var(--accent-gold)', description: 'Hacı adaylarının Arafat\'ta toplandığı gün' },
-  { id: 'kurban-2026', name: 'Kurban Bayramı', date: '2026-05-27', type: 'bayram', icon: '🐑', color: 'var(--accent-gold-shimmer)', description: 'Kurban Bayramı 1. gün' },
-  { id: 'hicri-2026', name: 'Hicri Yılbaşı', date: '2026-06-26', type: 'hicri', icon: '📅', color: 'var(--primary-container)', description: 'Muharrem ayının başlangıcı' },
-  { id: 'asure-2026', name: 'Aşure Günü', date: '2026-07-05', type: 'hicri', icon: '🥣', color: 'var(--accent-gold-light)', description: 'Muharrem\'in 10. günü' },
-];
+// Presentation for each kind; dates come from the shared Diyanet table in data/religiousDays.
+const KIND_META = {
+  regaib: { type: 'kandil', icon: '✨', description: 'Üç ayların ilk kandili' },
+  mirac: { type: 'kandil', icon: '🌙', description: "Peygamber Efendimiz'in (s.a.v.) Miraç'a yükseldiği gece" },
+  berat: { type: 'kandil', icon: '⭐', description: 'Af ve mağfiret gecesi' },
+  ramazan: { type: 'ramazan', icon: '🌙', description: 'Ramazan ayının ilk günü' },
+  kadir: { type: 'kandil', icon: '👑', description: 'Bin aydan hayırlı gece' },
+  ramazanArefe: { type: 'ramazan', icon: '🌙', description: "Ramazan Bayramı'ndan önceki gün" },
+  ramazanBayrami: { type: 'bayram', icon: '🎉', description: 'Ramazan Bayramı 1. gün' },
+  kurbanArefe: { type: 'hac', icon: '🕋', description: "Hacıların Arafat'ta vakfeye durduğu gün" },
+  kurbanBayrami: { type: 'bayram', icon: '🐑', description: 'Kurban Bayramı 1. gün' },
+  hicriYilbasi: { type: 'hicri', icon: '📅', description: 'Muharrem ayının ilk günü' },
+  asure: { type: 'hicri', icon: '🥣', description: "Muharrem'in 10. günü" },
+  mevlid: { type: 'kandil', icon: '🌙', description: "Peygamber Efendimiz'in (s.a.v.) doğum gecesi" },
+};
+
+const SPECIAL_DAYS = religiousDays.map((day) => ({ id: `${day.kind}-${day.date}`, ...day, ...KIND_META[day.kind] }));
 
 // Kategori renkleri
 const CATEGORY_COLORS = {
@@ -103,7 +95,7 @@ export function SpecialDaysCalendar({ onClose }) {
 
   // Get upcoming special days
   const getUpcomingDays = () => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = toLocalDateKey(new Date());
     return SPECIAL_DAYS
       .filter(day => day.date >= today)
       .sort((a, b) => new Date(a.date) - new Date(b.date))
