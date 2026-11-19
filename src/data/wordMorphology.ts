@@ -1,6 +1,6 @@
 // Word morphology from the Quranic Arabic Corpus v0.4 (Kais Dukes, GNU GPL, corpus.quran.com).
 // Its terms allow use in any application if the source is named and linked; the panel does both.
-// Generated per surah; regenerate with the extract script when more surahs get word meanings.
+// Generated per surah; regenerate with scripts/build-word-morphology.mjs when more surahs get word meanings.
 import data from './wordMorphology.json';
 
 export interface WordMorphology {
