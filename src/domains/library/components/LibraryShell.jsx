@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { logger } from '../../../utils/logger';
 
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
-import { surahList } from '../../../data/surahList';
+import { getLocalizedSurahList } from '../../../data/surahList';
 import { isPro } from '../../../services/proService';
 import { getAudioUrlSync, getReciters } from '../../../services/quranService';
 import './Library.css';
@@ -52,7 +52,8 @@ const getResolvedLibraryData = (dataModule) => ({
 });
 
 function LibraryShell({ onClose, onShowPro, onUpgrade }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const surahList = useMemo(() => getLocalizedSurahList(i18n.language), [i18n.language]);
   const [showPaywall, setShowPaywall] = useState(false);
   const [libraryData, setLibraryData] = useState(null);
   const [isLibraryDataLoading, setIsLibraryDataLoading] = useState(false);

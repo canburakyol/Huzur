@@ -1,33 +1,27 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Check, BookOpen, Award, Trash2, ChevronDown, ChevronUp, Star, Crown, Clock, RefreshCw, Lock, CheckCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { getMemorizationData, startMemorizing, markAyahMemorized, reviewSurah, getDueReviews, getMemorizationStats } from '../../../services/memorizationService';
 import { canAccessMemorize, isPro } from '../../../services/proService';
-import { surahList } from '../../../data/surahList';
+import { getLocalizedSurahList } from '../../../data/surahList';
 import LimitReachedModal from '../../onboarding/components/LimitReachedModal';
 import '../../education/components/Education.css';
 
-// Zorluk seviyeleri
+// Difficulty by surah length; labels come from memorize.difficulty.*
 const getDifficulty = (ayahCount) => {
-    if (ayahCount <= 10) return 'Kolay';
-    if (ayahCount <= 30) return 'Orta';
-    if (ayahCount <= 80) return 'Zor';
-    return 'Çok Zor';
+    if (ayahCount <= 10) return 'easy';
+    if (ayahCount <= 30) return 'medium';
+    if (ayahCount <= 80) return 'hard';
+    return 'veryHard';
 };
 
-const getDifficultyColor = (difficulty) => {
-    switch (difficulty) {
-        case 'Kolay': return 'var(--success)';
-        case 'Orta': return '#f39c12';
-        case 'Zor': return '#e67e22';
-        case 'Çok Zor': return 'var(--danger)';
-        default: return 'var(--text-color-muted)';
-    }
-};
+const DIFFICULTY_COLORS = { easy: 'var(--success)', medium: '#f39c12', hard: '#e67e22', veryHard: 'var(--danger)' };
+const DIFFICULTY_FALLBACK = { easy: 'Kolay', medium: 'Orta', hard: 'Zor', veryHard: 'Çok Zor' };
 
 function QuranMemorize({ onClose, onUpgrade }) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const surahList = useMemo(() => getLocalizedSurahList(i18n.language), [i18n.language]);
     const [activeTab, setActiveTab] = useState('list'); // list, reviews
     const [expandedSurah, setExpandedSurah] = useState(null);
     const [memorizationData, setMemorizationData] = useState(getMemorizationData());
@@ -155,7 +149,7 @@ function QuranMemorize({ onClose, onUpgrade }) {
                                         <div className="item-name">{surah.nameTranslation}</div>
                                         <div className="item-sub">
                                             {t('quranMemorize.ayahCount', { count: surah.ayahCount })} • 
-                                            <span style={{ color: getDifficultyColor(difficulty) }}> {difficulty}</span>
+                                            <span style={{ color: DIFFICULTY_COLORS[difficulty] }}> {t(`memorize.difficulty.${difficulty}`, DIFFICULTY_FALLBACK[difficulty])}</span>
                                         </div>
                                     </div>
                                     

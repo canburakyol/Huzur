@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getSurahComplete, getAyahAudioUrl, getAvailableTranslations } from '../../../services/quranService';
 import { ChevronLeft, Play, Pause, Menu, X, SkipBack, SkipForward, Bookmark, Globe, Eye, EyeOff } from 'lucide-react';
 import { storageService } from '../../../services/storageService';
-import { surahList as staticSurahList, reciters as staticReciters } from '../../../data/surahList';
+import { getLocalizedSurahList, reciters as staticReciters } from '../../../data/surahList';
 import { logger } from '../../../utils/logger';
 import './Quran.css';
 
@@ -19,6 +19,8 @@ const EMPTY_ARRAY = [];
 const DEFAULT_TRANSLATIONS = [
     { identifier: 'tr.vakfi', name: 'Diyanet Vakfi (Turkce)', language: 'tr', type: 'translation' },
     { identifier: 'en.sahih', name: 'Sahih International (English)', language: 'en', type: 'translation' },
+    { identifier: 'de.bubenheim', name: 'Bubenheim & Elyas (Deutsch)', language: 'de', type: 'translation' },
+    { identifier: 'id.indonesian', name: 'Kemenag RI (Bahasa Indonesia)', language: 'id', type: 'translation' },
     { identifier: 'ar.jalalayn', name: 'Tafsir Al-Jalalayn (العربية)', language: 'ar', type: 'tafsir' }
 ];
 const normalizeTranslationId = (translationId) => (translationId === 'tr.diyanet' ? 'tr.vakfi' : translationId);
@@ -82,11 +84,13 @@ function Quran({ onClose }) {
     const lastLangRef = useRef(i18n.language);
     const isProgrammaticScrollRef = useRef(false);
 
-    const surahList = useMemo(() => staticSurahList || EMPTY_ARRAY, []);
+    const surahList = useMemo(() => getLocalizedSurahList(i18n.language) || EMPTY_ARRAY, [i18n.language]);
     const reciters = useMemo(() => staticReciters || EMPTY_ARRAY, []);
 
     const getInitialTranslation = useCallback(() => {
         if (i18n.language === 'en') return 'en.sahih';
+        if (i18n.language === 'de') return 'de.bubenheim';
+        if (i18n.language === 'id') return 'id.indonesian';
         if (i18n.language === 'ar') return 'ar.jalalayn';
         return 'tr.vakfi';
     }, [i18n.language]);
@@ -135,6 +139,8 @@ function Quran({ onClose }) {
         const fallbackLabels = {
             'tr.vakfi': 'Diyanet Vakfı (Türkçe)',
             'en.sahih': 'Sahih International (English)',
+            'de.bubenheim': 'Bubenheim & Elyas (Deutsch)',
+            'id.indonesian': 'Kemenag RI (Bahasa Indonesia)',
             'ar.jalalayn': 'Tafsir Al-Jalalayn (العربية)'
         };
 
@@ -542,7 +548,7 @@ function Quran({ onClose }) {
         }
 
         navigator.mediaSession.metadata = new MediaMetadata({
-            title: `${activeSurah.nameTranslation} - ${playingAyah}. Ayet`,
+            title: `${activeSurah.nameTranslation} ${playingAyah}`,
             artist: selectedReciter.name,
             album: "Huzur - Kur'an-ı Kerim",
             artwork: [

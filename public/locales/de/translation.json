@@ -5115,5 +5115,13 @@
         "desc": "Diese Nutzungsbedingungen können gelegentlich aktualisiert werden. Wesentliche Änderungen werden in der App mitgeteilt."
       }
     }
+  },
+  "memorize": {
+    "difficulty": {
+      "easy": "Leicht",
+      "medium": "Mittel",
+      "hard": "Schwer",
+      "veryHard": "Sehr schwer"
+    }
   }
 }

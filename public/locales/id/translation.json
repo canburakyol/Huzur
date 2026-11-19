@@ -5115,5 +5115,13 @@
         "desc": "Ketentuan penggunaan ini dapat diperbarui dari waktu ke waktu. Perubahan penting akan diberitahukan di dalam aplikasi."
       }
     }
+  },
+  "memorize": {
+    "difficulty": {
+      "easy": "Mudah",
+      "medium": "Sedang",
+      "hard": "Sulit",
+      "veryHard": "Sangat sulit"
+    }
   }
 }

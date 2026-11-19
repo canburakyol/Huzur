@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { surahList, reciters } from '../../../data/surahList';
+import { getLocalizedSurahList, reciters } from '../../../data/surahList';
 import { Play, Pause, SkipForward, SkipBack, List, X, Music, Disc, Loader2, Volume2, Globe } from 'lucide-react';
 import '../../education/components/Education.css';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { logger } from '../../../utils/logger';
 
 const QuranRadio = ({ onClose }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const surahList = useMemo(() => getLocalizedSurahList(i18n.language), [i18n.language]);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [currentReciter, setCurrentReciter] = useState(reciters[1]); // Default: Abdulbasit Murattal
@@ -117,7 +118,7 @@ const QuranRadio = ({ onClose }) => {
         setIsPlaying(true);
     };
 
-    const activeSurah = useMemo(() => surahList[currentSurahIndex], [currentSurahIndex]);
+    const activeSurah = useMemo(() => surahList[currentSurahIndex], [surahList, currentSurahIndex]);
 
     const waveHeights = [45, 62, 38, 55, 70, 42, 58, 35, 65, 48, 52, 40];
 

@@ -477,6 +477,18 @@ export const getAvailableTranslations = async (): Promise<TranslationEdition[]> 
                 type: 'translation'
             },
             {
+                identifier: 'de.bubenheim',
+                name: 'Bubenheim & Elyas (Deutsch)',
+                language: 'de',
+                type: 'translation'
+            },
+            {
+                identifier: 'id.indonesian',
+                name: 'Kemenag RI (Bahasa Indonesia)',
+                language: 'id',
+                type: 'translation'
+            },
+            {
                 identifier: 'ar.jalalayn',
                 name: 'Tafsir Al-Jalalayn (العربية)',
                 language: 'ar',
@@ -484,7 +496,7 @@ export const getAvailableTranslations = async (): Promise<TranslationEdition[]> 
             }
         ];
 
-        const priorityIds = [DEFAULT_TURKISH_TRANSLATION_ID, 'en.sahih', 'ar.jalalayn'];
+        const priorityIds = [DEFAULT_TURKISH_TRANSLATION_ID, 'en.sahih', 'de.bubenheim', 'id.indonesian', 'ar.jalalayn'];
         const merged = [...translations, ...extraTranslations];
         const unique = merged.filter((item, index, self) =>
             self.findIndex((t) => t.identifier === item.identifier) === index

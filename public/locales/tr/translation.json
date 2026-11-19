@@ -5115,5 +5115,13 @@
         "desc": "Bu kullanım koşulları zaman zaman güncellenebilir. Önemli değişiklikler uygulama içinde bildirilecektir."
       }
     }
+  },
+  "memorize": {
+    "difficulty": {
+      "easy": "Kolay",
+      "medium": "Orta",
+      "hard": "Zor",
+      "veryHard": "Çok zor"
+    }
   }
 }
