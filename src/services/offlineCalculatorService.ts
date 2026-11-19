@@ -16,6 +16,19 @@ type CalculatedPrayerTimes = {
 
 type MonthlyPrayerData = Record<string, CalculatedPrayerTimes | null>;
 
+/**
+ * Indonesia, Malaysia, Singapore and Brunei publish times with Fajr 20° / Isha 18°
+ * (Kemenag, JAKIM, MUIS); Diyanet's 18°/17° puts Fajr there ~10 min late.
+ * shortcut: a lat/lon box (also catches southern Thailand/Philippines and Timor),
+ * upgrade to real country lookup if more regional methods are added.
+ * Mirrored in PrayerDataSyncWorker.kt.
+ */
+export const usesSoutheastAsiaMethod = (latitude: number, longitude: number): boolean =>
+  latitude >= -11.5 && latitude <= 7.5 && longitude >= 94.5 && longitude <= 141.5;
+
+export const getCalculationMethodName = (latitude: number, longitude: number): string =>
+  usesSoutheastAsiaMethod(latitude, longitude) ? 'Kemenag' : 'Diyanet';
+
 class OfflineCalculatorService {
   formatTimeSafely(time: Date): string | null {
     if (!(time instanceof Date) || Number.isNaN(time.getTime())) {
@@ -30,7 +43,12 @@ class OfflineCalculatorService {
       const coordinates = new Coordinates(latitude, longitude);
 
       const params = CalculationMethod.Turkey();
-      // Diyanet's calendar ikindi is asr-ı evvel (shadow = 1 length). Hanafi here gave asr-ı sani, ~40 min late.
+      if (usesSoutheastAsiaMethod(latitude, longitude)) {
+        params.fajrAngle = 20;
+        params.ishaAngle = 18;
+        params.methodAdjustments = { fajr: 0, sunrise: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 };
+      }
+      // Diyanet's calendar ikindi is asr-ı evvel (shadow = 1 length), also the Shafi asr used in Southeast Asia.
       params.madhab = Madhab.Shafi;
 
       const prayerTimes = new PrayerTimes(coordinates, date, params);

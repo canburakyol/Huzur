@@ -37,7 +37,13 @@ class PrayerDataSyncWorker(
         private const val KEY_LATITUDE = "latitude"
         private const val KEY_LONGITUDE = "longitude"
         private const val KEY_HAS_USER_COORDS = "has_user_coordinates"
+        // Aladhan methods: 13 = Diyanet, 20 = Kemenag (Fajr 20°, Isha 18°).
         private const val CALCULATION_METHOD = 13
+        private const val SOUTHEAST_ASIA_METHOD = 20
+
+        // Same lat/lon box as usesSoutheastAsiaMethod in offlineCalculatorService.ts.
+        fun calculationMethodFor(latitude: Double, longitude: Double): Int =
+            if (latitude in -11.5..7.5 && longitude in 94.5..141.5) SOUTHEAST_ASIA_METHOD else CALCULATION_METHOD
         private const val API_TIMEOUT_MS = 15_000
         private const val DEFAULT_LAT = 41.0082
         private const val DEFAULT_LON = 28.9784
@@ -223,7 +229,7 @@ class PrayerDataSyncWorker(
         val year = targetMonth.get(Calendar.YEAR)
         val month = targetMonth.get(Calendar.MONTH) + 1
         val apiUrl = "https://api.aladhan.com/v1/calendar/$year/$month" +
-            "?latitude=$latitude&longitude=$longitude&method=$CALCULATION_METHOD"
+            "?latitude=$latitude&longitude=$longitude&method=${calculationMethodFor(latitude, longitude)}"
 
         val response = fetchFromApi(apiUrl) ?: return false
         val jsonResponse = JSONObject(response)

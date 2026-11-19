@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { storageService } from './storageService';
 import { logger } from '../utils/logger';
-import { offlineCalculatorService } from './offlineCalculatorService';
+import { offlineCalculatorService, getCalculationMethodName } from './offlineCalculatorService';
 import { sanitizePrayerTimings, PRAYER_KEYS_ALL } from '../constants/prayerTimes';
 import { getTodayDiyanetTimes, fetchMonthlyDiyanetTimes, mapDiyanetToInternalTimings } from './diyanetApiService';
 import { findDistrictByName, getSelectedDistrictId } from './diyanetLocationService';
@@ -160,7 +160,7 @@ export const fetchMonthlyPrayerTimes = async (
       timingsArray.push({
         timings: calculatedTimings as unknown as PrayerTimings,
         date: { readable: format(date, 'dd MMM yyyy') },
-        meta: { method: { name: 'Diyanet (Offline)' } }
+        meta: { method: { name: `${getCalculationMethodName(lat, lon)} (Offline)` } }
       });
     }
 
@@ -245,7 +245,7 @@ export const getPrayerTimes = async (
       const result = normalizePrayerPayload({
         timings: calculatedTimes,
         date: { readable: format(now, 'dd MMM yyyy') },
-        meta: { method: { name: 'Diyanet (Offline)' } },
+        meta: { method: { name: `${getCalculationMethodName(lat, lon)} (Offline)` } },
       });
 
       if (!result) {
