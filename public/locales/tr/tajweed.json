@@ -4,7 +4,7 @@
     "subtitle": "Kur'an okuyuşunuzu güzelleştirin",
     "academy": "Huzur Akademi",
     "mainSubtitle": "Tecvid kurallarını sade ve anlaşılır adımlarla öğrenin.",
-    "module": "Modulu",
+    "module": "Modülü",
     "availableLessons": "Mevcut Dersler",
     "quiz": "Quiz",
     "quizTitle": "Tecvid Quiz",
@@ -69,7 +69,7 @@
     "rules": {
       "med_tabii": {
         "title": "Med-i Tabii",
-        "desc": "Asli ve temel uzatma",
+        "desc": "Aslî ve temel uzatma",
         "rule": "Harf-i medden sonra sebeb-i med gelmezse harf bir elif miktarı uzatılır.",
         "examples": {
           "0": {
@@ -82,7 +82,7 @@
       },
       "idgam_meal_gunne": {
         "title": "İdgam Mealgunne",
-        "desc": "Gunne ile kaynastirma",
+        "desc": "Gunne ile kaynaştırma",
         "rule": "Sakin Nun veya tenvin, Yemnu harflerinden birine gelirse harfler gunneli şekilde kaynaştırılır.",
         "examples": {
           "0": {
@@ -95,7 +95,7 @@
       },
       "idgam-bila-gunne": {
         "title": "İdgam Bilagunne",
-        "desc": "Gunnesiz kaynastirma",
+        "desc": "Gunnesiz kaynaştırma",
         "rule": "Sakin Nun veya tenvin, Lam ya da Ra harfine gelirse gunnesiz şekilde kaynaştırılır.",
         "examples": {
           "0": {
@@ -134,7 +134,7 @@
       },
       "iklab": {
         "title": "İklab",
-        "desc": "Donusturmek",
+        "desc": "Dönüştürmek",
         "rule": "Sakin Nun veya tenvin, Be harfine gelirse Nun sesi Mim sesine dönüştürülür ve gunne yapılır.",
         "examples": {
           "0": {
@@ -151,7 +151,7 @@
         "rule": "Kutbu Ced harfleri sakin olduğunda mahrecleri sarsılarak kuvvetli bir sesle okunur.",
         "examples": {
           "0": {
-            "explanation": "Kaf harfi sakin olduğu için kalkale yapılır."
+            "explanation": "Durakta (vakıf) Kaf harfi sakin okunduğu için kalkale yapılır."
           },
           "1": {
             "explanation": "Dal harfi sakin olduğu için kalkale yapılır."
@@ -160,7 +160,7 @@
       },
       "ra_hukmu": {
         "title": "Hükmü'r-Ra",
-        "desc": "Ra harfinin okunusu",
+        "desc": "Ra harfinin okunuşu",
         "rule": "Ra harfi üstün ve ötrede kalın, esrede ince okunur. Cezimli durumda önceki harfin harekesine bakılır.",
         "examples": {
           "0": {
@@ -170,7 +170,7 @@
       },
       "med_muttasil": {
         "title": "Med-i Muttasıl",
-        "desc": "Bitisik uzatma",
+        "desc": "Bitişik uzatma",
         "rule": "Harf-i medden sonra aynı kelime içinde hemze gelirse Med-i Muttasıl olur ve daha uzun okunur.",
         "examples": {
           "0": {

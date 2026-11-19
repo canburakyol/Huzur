@@ -16,9 +16,9 @@ export const nuzulData: NuzulEntry[] = [
 **Temel Nedenler:**
 1. **Dua ve İbadet Rehberliği:** Müslümanlara dua ve ibadetlerinde bir rehberlik sağlamak, Allah'a kulluğun en güzel örneklerini sunmak amacıyla indirilmiştir.
 2. **Tevhidin Vurgulanması:** Allah'ın birliğini, yüceliğini, rahmetini ve hidayetini vurgulamaktadır.
-3. **Namazın Temeli:** Her rekatta okunması farz olan bir sure olup, müminin Rabbiyle konuşurcasına O'na yaklaşmasını sağlamak hedeflenmiştir.
+3. **Namazın Temeli:** Her rekâtta okunur (Hanefîlere göre vacip, Şâfiîlere göre farz); müminin Rabbiyle konuşurcasına O'na yaklaşmasını sağlamak hedeflenmiştir.
 
-Bazı kaynaklarda, Cebrail (a.s)'ın Hz. Peygamber'e görünmesi ve Peygamberimizin endişelenmesi üzerine, onu teselli etmek ve namazı öğretmek üzere indirildiği de rivayet edilir.`,
+Bazı kaynaklarda, Cebrail (a.s)'ın Hz. Peygamber'e görünmesi ve Peygamberimizin endişelenmesi üzerine, onu teselli etmek ve namazı öğretmek üzere indirildiği de rivayet edilir; bu rivayetin senedi zayıftır.`,
     source: 'Diyanet Tefsiri / İslam Ansiklopedisi'
   },
   {
@@ -32,7 +32,7 @@ Bazı kaynaklarda, Cebrail (a.s)'ın Hz. Peygamber'e görünmesi ve Peygamberimi
 * O'nun kürsüsünün (hakimiyetinin) gökleri ve yeri kuşattığını bildirir.
 * Müşriklerin şefaat anlayışını reddederek, izni olmadan kimsenin şefaat edemeyeceğini vurgular.
 
-Efendimiz (s.a.v), bu ayetin Kur'an'ın en büyük ayeti olduğunu belirtmiştir. İniş sebebi, müminlere Allah'ın azametini ve kâinat üzerindeki mutlak hakimiyetini öğretmektir.`,
+Efendimiz (s.a.v), Übey b. Ka'b'a bu ayetin Kur'an'ın en büyük ayeti olduğunu teyit etmiştir (Müslim, Salâtü'l-müsâfirîn). İniş sebebi, müminlere Allah'ın azametini ve kâinat üzerindeki mutlak hakimiyetini öğretmektir.`,
     source: 'Kütüb-i Sitte / Diyanet'
   },
   {
@@ -56,13 +56,13 @@ Bu sure, Peygamberimizin manevi soyunun (ümmetinin) kıyamete kadar devam edece
     id: 'maide_3',
     keywords: ['maide 3', 'maide suresi 3', 'dini tamamladım', 'veda haccı'],
     title: 'Maide Suresi 3. Ayet',
-    content: `Maide Suresi'nin 3. ayeti ("Bugün sizin için dininizi kemale erdirdim..."), Veda Haccı sırasında, Arafat'ta Cuma günü ikindi vaktinde nazil olmuştur.
+    content: `Maide Suresi'nin 3. ayeti ("Bugün sizin için dininizi kemale erdirdim..."), Veda Haccı sırasında, Arafat'ta, Cuma günü nazil olmuştur.
 
 **Önemi:**
-Bu ayet, İslam dininin hükümlerinin tamamlandığını ve Allah'ın müminler üzerindeki nimetini tamamladığını ilan eder. Yahudilerden birisi Hz. Ömer'e: "Eğer bu ayet bize inseydi, o günü bayram ilan ederdik" demiştir. Hz. Ömer de: "Ben bu ayetin nerede ve ne zaman indiğini biliyorum. O gün zaten bizim için iki bayramdı (Cuma ve Arafat)" cevabını vermiştir.
+Bu ayet, İslam dininin hükümlerinin tamamlandığını ve Allah'ın müminler üzerindeki nimetini tamamladığını ilan eder. Yahudilerden birisi Hz. Ömer'e: "Eğer bu ayet bize inseydi, o günü bayram ilan ederdik" demiştir. Hz. Ömer de: "Biz o günü ve ayetin Peygamber'e nerede indiğini biliyoruz: Cuma günü Arafat'ta duruyordu" cevabını vermiştir (Buhârî, Îmân; Müslim, Tefsîr).
 
-Bu ayet indiğinde Peygamber Efendimiz devesinin üzerindeydi ve vahyin ağırlığından deve çöküp kalmıştır.`,
-    source: 'Buhari / Müslim'
+İbn Abbas da bu ayetin iki bayramın bir araya geldiği gün, Cuma ve Arefe gününde indiğini söylemiştir (Tirmizî, Tefsîr, Mâide).`,
+    source: 'Buhari / Müslim / Tirmizi'
   },
   {
     id: 'alak_ilk',
@@ -85,7 +85,7 @@ Bu olay, 610 yılı Ramazan ayında, Kadir Gecesi'nde gerçekleşmiş ve İslam'
     content: `İhlas Suresi, Mekkeli müşriklerin Hz. Peygamber'e gelerek Allah'ı tarif etmesini istemeleri üzerine inmiştir.
 
 **Soru:**
-Müşrikler: "Ey Muhammed! Bize Rabbini anlat, nesebi nedir? Altından mıdır, gümüşten midir?" diye sormuşlardır.
+Müşrikler: "Ey Muhammed! Bize Rabbinin nesebini anlat" demişlerdir (Tirmizî, Tefsîr, İhlâs). Başka rivayetlerde "Altından mıdır, gümüşten midir?" diye sordukları da geçer.
 
 **Cevap:**
 Allah Teala, Kendisini en güzel ve özlü şekilde anlatan bu sureyi indirmiştir:
@@ -98,10 +98,10 @@ Bu sure, Allah'ın birliğini (Tevhid) ve hiçbir şeye benzemediğini en net ş
     id: 'duha',
     keywords: ['duha', 'duha suresi', 'kuşluk', 'rabbin seni terk etmedi'],
     title: 'Duha Suresi',
-    content: `Duha Suresi, vahyin bir süre kesilmesi (fetret-i vahiy) üzerine inmiştir.
+    content: `Duha Suresi, vahyin bir süre gelmemesi üzerine inmiştir.
 
 **Olay:**
-İlk vahiylerden sonra bir süre (rivayete göre 15 gün veya daha fazla) vahiy gelmemiştir. Bunun üzerine müşrikler, "Muhammed'in Rabbi onu terk etti, ona darıldı" diyerek alay etmeye başlamışlardır. Peygamberimiz bu duruma çok üzülmüştür.
+Cündüb b. Süfyân'ın anlattığına göre Hz. Peygamber rahatsızlanmış ve iki üç gece (gece namazına) kalkamamıştı. Bir kadın gelip "Ey Muhammed, şeytanın seni terk etmiş olmalı" demiştir (Buhârî, Tefsîr, Duhâ; Müslim, Cihâd). Diğer rivayetlerde vahyin daha uzun süre (15 gün veya daha fazla) kesildiği ve müşriklerin "Rabbi onu terk etti" diye alay ettikleri de nakledilir.
 
 **Teselli:**
 Yüce Allah, kuşluk vaktine ve geceye yemin ederek söze başlamış ve: "Rabbin seni terk etmedi ve sana darılmadı" buyurarak Peygamberini teselli etmiştir. Ayrıca ahiretin dünyadan daha hayırlı olduğunu ve Allah'ın ona hoşnut olacağı nimetler vereceğini müjdelemiştir.`,
@@ -114,7 +114,7 @@ Yüce Allah, kuşluk vaktine ve geceye yemin ederek söze başlamış ve: "Rabbi
     content: `Tebbet Suresi, Peygamberimizin amcası Ebu Leheb hakkında inmiştir.
 
 **Olay:**
-Hz. Peygamber, "Yakın akrabanı uyar" emri üzerine Safa tepesine çıkarak Kureyşlileri İslam'a davet etmiştir. Herkes dinlerken, Ebu Leheb öne çıkıp: "Yuh sana! Bizi bunun için mi topladın?" diyerek hakaret etmiş ve Peygamberimize taş atmaya kalkışmıştır.
+Hz. Peygamber, "Yakın akrabanı uyar" emri üzerine Safa tepesine çıkarak Kureyşlileri İslam'a davet etmiştir. Herkes dinlerken, Ebu Leheb öne çıkıp: "Kahrolasıca! Bizi bunun için mi topladın?" diyerek hakaret etmiştir (Buhârî, Tefsîr, Tebbet).
 
 **Cevap:**
 Bunun üzerine Allah Teala, Ebu Leheb'in helak olacağını, malının ve kazandıklarının ona fayda vermeyeceğini bildiren bu sureyi indirmiştir. Ebu Leheb'in karısı da Peygamberimizin yoluna dikenler döktüğü için "odun hamalı" olarak zikredilmiştir.`,
@@ -130,7 +130,7 @@ Bunun üzerine Allah Teala, Ebu Leheb'in helak olacağını, malının ve kazand
 Yemen Valisi Ebrehe, insanları Kabe'den vazgeçirip kendi yaptırdığı kiliseye yöneltmek için büyük bir ordu ve fillerle Mekke'ye saldırmıştır. Kabe'yi yıkmak istemiştir.
 
 **Sonuç:**
-Allah Teala, Ebabil kuşlarını göndererek Ebrehe'nin ordusunu "yenilmiş ekin yaprağı" gibi darmadağın etmiştir. Bu sure, Kabe'nin sahibinin Allah olduğunu ve O'nun evini koruduğunu hatırlatmak için indirilmiştir.`,
+Allah Teala, sürü sürü kuşlar (ebâbîl) göndererek Ebrehe'nin ordusunu "yenilmiş ekin yaprağı" gibi darmadağın etmiştir. Bu sure, Kabe'nin sahibinin Allah olduğunu ve O'nun evini koruduğunu hatırlatmak için indirilmiştir.`,
     source: 'İbn Hişam / Taberi'
   }
 ];

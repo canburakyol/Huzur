@@ -62,7 +62,7 @@ export const tajweedData: TajweedRule[] = [
     makhrajImage: '/assets/tajweed/makhraj_nasal.png',
     examples: [
       { text: "مَن يَقُولُ", transliteration: "Meyyekûlü", explanation: "tajweed.rules.idgam_meal_gunne.examples.0.explanation", surah: 2, ayah: 8 },
-      { text: "مِن مَالٍ", transliteration: "Mimmâlin", explanation: "tajweed.rules.idgam_meal_gunne.examples.1.explanation", surah: 111, ayah: 2 }
+      { text: "مِن مَالٍ", transliteration: "Mimmâlin", explanation: "tajweed.rules.idgam_meal_gunne.examples.1.explanation", surah: 23, ayah: 55 }
     ]
   },
   {
@@ -115,7 +115,7 @@ export const tajweedData: TajweedRule[] = [
     rule: 'tajweed.rules.kalkale.rule',
     letters: ['ق', 'ط', 'ب', 'ج', 'د'],
     examples: [
-      { text: "قُلْ أَعُوذُ", transliteration: "Kul eûzü", explanation: "tajweed.rules.kalkale.examples.0.explanation", surah: 113, ayah: 1 },
+      { text: "الْفَلَقِ", transliteration: "Felak", explanation: "tajweed.rules.kalkale.examples.0.explanation", surah: 113, ayah: 1 },
       { text: "لَمْ يَلِدْ", transliteration: "Lem yelid", explanation: "tajweed.rules.kalkale.examples.1.explanation", surah: 112, ayah: 3 }
     ]
   },

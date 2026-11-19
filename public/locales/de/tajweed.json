@@ -85,10 +85,10 @@
         "rule": "When Qalqalah letters (ق ط ب ج د) are Sakin (have Sukoon), they are pronounced with an echoing sound.",
         "examples": {
           "0": {
-            "explanation": "Qaf is Sakin, so Qalqalah occurs."
+            "explanation": "Beim Anhalten wird Qaf mit Sukun gelesen, daher entsteht Qalqala."
           },
           "1": {
-            "explanation": "Dal is Sakin, so Qalqalah occurs."
+            "explanation": "Dal hat Sukun, daher entsteht Qalqala."
           }
         }
       },

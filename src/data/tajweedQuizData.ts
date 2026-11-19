@@ -10,7 +10,7 @@ export interface TajweedQuizQuestion {
 export const tajweedQuizData: TajweedQuizQuestion[] = [
   {
     id: 1,
-    question: "Aşağıdaki ayette 'ن' harfinden sonra 'و' harfi gelmiştir. Hangi tecvid kuralı uygulanır?",
+    question: "Aşağıdaki ayette 'ن' harfinden sonra 'ي' harfi gelmiştir. Hangi tecvid kuralı uygulanır?",
     ayah: "مَن يَقُولُ",
     options: ["İzhar", "İdgam Meal Gunne", "İhfa", "İklab"],
     correctAnswer: 1,
@@ -27,7 +27,7 @@ export const tajweedQuizData: TajweedQuizQuestion[] = [
   {
     id: 3,
     question: "Kalkale harfleri (Kutbu Cedin) hangileridir?",
-    options: ["ق ط ب ج d", "ي م ن و", "ل ر", "أ ه ع ح غ خ"],
+    options: ["ق ط ب ج د", "ي م ن و", "ل ر", "أ ه ع ح غ خ"],
     correctAnswer: 0,
     explanation: "Kalkale harfleri Kaf, Ta, Be, Cim ve Dal harfleridir."
   },

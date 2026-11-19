@@ -78,6 +78,8 @@ Her parça ayrı oturum; her parçada **yanlış atıf, eksik meal, kaynağı ol
 | 5c Zikir / Tespihat / Nafile ✅ 19 Kas | `zikirData.ts`, `tespihatData.ts`, `NafilePrayers.jsx`, `Zikirmatik.jsx` | Tespihat doğru (Ayetel Kürsî Uthmani ile birebir); Nafile'de vitir/duha/işrak/teheccüd açıklamaları düzeltildi; `zikirData.ts` kullanılmıyor (ölü kod) |
 | 5d Hikmetler ✅ 19 Kas | `src/data/hikmetData.ts` | 6 zayıf/hadis olmayan kaldırıldı, 5 lafız/atıf düzeltildi; âlim sözlerinin çoğu kaynaksız (ekran gizli) |
 | 5e Esmâü'l-Hüsnâ, Namaz Hocası ✅ 19 Kas | `esmaUlHusnaData.ts`, `prayerTeacherData.ts` | 99 isim Tirmizî 3507 sırasıyla birebir; rekât tablosu doğru; selamı almak vaciptir düzeltmesi |
+| 5f Yarışma, Duygu ayetleri, Tecvid, Nüzul, Fihrist ✅ 19 Kas | `dailyQuizData.ts`, `moodData.ts`, `tajweed*.ts`, `nuzulData.ts`, `detailedFihrist.ts` | Zamm-ı sure "her rekâtta" yanlışı, kıble 16-17 ay; kalkale örneği (قُلْ → الْفَلَقِ), Mü'minûn 23:55; Nüzul'de Duha/Tebbet/Mâide rivayetleri Buhârî'ye göre; fihristin ~280 ayeti konusuyla uyumlu. tr çeviride "?" olmuş 30 harf düzeltildi, testle korunuyor |
+| 5g Siyer ⬜ | `seerahData.ts` | Siyer Haritası ve Nüzul ekranları menüde yok (gizli); açılacaksa önce doğrulanmalı |
 
 - **Bitti sayılır:** Her parçada doğrulanamayan madde ya düzeltildi ya "kaynak doğrulanmadı" diye işaretlendi; regresyon testi var.
 

@@ -470,7 +470,7 @@
     "historyClearConfirm": "Tüm bildirim geçmişini silmek istediğinize emin misiniz?",
     "historyEmpty": "Henüz bildirim yok.",
     "accentColorDesc": "Uygulama genelindeki buton ve simgelerin rengini değiştirir.",
-    "preview": "?nizleme",
+    "preview": "Önizleme",
     "previewTitle": "Harika Değil mi?",
     "previewDesc": "Bu renk size çok yakıştı.",
     "themeMode": "Görünüm Modu",
@@ -672,15 +672,15 @@
     "subtitle": "Ayetlerin iniş sebeplerini öğrenin",
     "explorerTitle": "Nüzul Sebebi Gezgini",
     "explorerDesc": "Ayetlerin hangi olay üzerine indirildiğini öğrenmek için soru sorun.",
-    "exampleQuestions": "?rnek Sorular:",
+    "exampleQuestions": "Örnek Sorular:",
     "noResult": "Bu ayet/sure hakkında veritabanımızda henüz detaylı nüzul bilgisi bulunamadı. Lütfen \"Alaq Suresi\", \"Fatiha\" veya \"Ayetel Kürsi\" gibi daha genel başlıkları denemeyi unutma.",
     "suggestedQuestions": [
       "Fatiha suresinin nüzul sebebi nedir?",
       "Ayetel Kürsi (Bakara 255) neden indi?",
-      "Kevser suresi hangi olay ?zerine indi?",
+      "Kevser suresi hangi olay üzerine indi?",
       "Maide 3. ayet ne zaman indi?",
-      "?lk inen ayetler (Alak Suresi)",
-      "?hlas suresi neden indirildi?"
+      "İlk inen ayetler (Alak Suresi)",
+      "İhlas suresi neden indirildi?"
     ],
     "searching": "Araştırılıyor...",
     "placeholder": "Bir ayet veya sure hakkında sorun..."
@@ -3194,7 +3194,7 @@
     },
     "months": [
       "Ocak",
-      "?ubat",
+      "Şubat",
       "Mart",
       "Nisan",
       "Mayıs",
@@ -4018,12 +4018,12 @@
         "explanation": "Hz. Muhammed (s.a.v), Fil Vakası'ndan yaklaşık 50 gün sonra, Miladi 571 yılında Mekke'de dünyaya gelmiştir."
       },
       "q2": {
-        "question": "Kur'an-? Kerim'in en uzun suresi hangisidir?",
+        "question": "Kur'an-ı Kerim'in en uzun suresi hangisidir?",
         "options": [
           "Yasin",
           "Mülk",
           "Bakara",
-          "Al-i ?mran"
+          "Al-i İmran"
         ],
         "explanation": "Bakara Suresi 286 ayetten oluşur ve Kuran'ın en uzun suresidir. Medine'de inmiştir."
       },
@@ -4043,7 +4043,7 @@
           "Buhari",
           "Tirmizi",
           "Ebu Davud",
-          "?bn Mace"
+          "İbn Mace"
         ],
         "explanation": "Bu hadis-i şerif, Hz. Ömer (r.a.)'den rivayet edilmiş ve Sahih-i Buhari'nin ilk hadisidir. \"Ameller niyetlere göredir\" anlamına gelir."
       },
@@ -4071,11 +4071,11 @@
         "question": "Namazda Fatiha suresinden sonra okunan sureye ne ad verilir?",
         "options": [
           "Besmele",
-          "Zamm-? Sure",
+          "Zamm-ı Sure",
           "Sübhaneke",
           "Tahiyyat"
         ],
-        "explanation": "Fatiha'dan sonra okunan kısa sureye \"Zamm-ı Sure\" denir. Namazın vaciplerinden biridir ve her rekatta okunur."
+        "explanation": "Fatiha'dan sonra okunan sureye \"Zamm-ı Sure\" denir. Okunması vaciptir: farz namazların ilk iki rekâtında, vitir ile sünnet ve nafile namazların ise her rekâtında okunur."
       },
       "q8": {
         "question": "Hz. Muhammed'in (s.a.v) süt annesinin adı nedir?",
@@ -4095,13 +4095,13 @@
           "Yasin",
           "Mülk"
         ],
-        "explanation": "Tevbe (Berat) Suresi, besmele ile başlamayan tek suredir. Bunun sebebi, bu surenin müşriklere karşı sert uyarılar içermesidir."
+        "explanation": "Tevbe (Berâe) Suresi besmele ile başlamayan tek suredir. Âlimlerin açıklamalarından birine göre bunun sebebi, surenin ahdini bozan müşriklere karşı bir ilanla başlamasıdır."
       },
       "q10": {
         "question": "\"Cennet annelerin ayakları altındadır.\" sözü kime aittir?",
         "options": [
           "Hz. Ebubekir",
-          "Hz. ?mer",
+          "Hz. Ömer",
           "Hz. Muhammed (s.a.v)",
           "Hz. Ali"
         ],
@@ -4135,7 +4135,7 @@
           "Kuba Mescidi",
           "Mescid-i Nebevi"
         ],
-        "explanation": "Müslümanların ilk kıblesi Mescid-i Aksa (Kudüs) idi. 17 ay sonra kıble Kabe'ye (Mekke) çevrilmiştir."
+        "explanation": "Müslümanların ilk kıblesi Mescid-i Aksa (Kudüs) idi. Hicretten 16-17 ay sonra kıble Kâbe'ye (Mekke) çevrildi."
       },
       "q14": {
         "question": "Hangi durumda teyemmüm yapılır?",
@@ -4444,10 +4444,10 @@
       "1": {
         "question": "Aşağıdaki ayette 'ن' harfinden sonra 'ي' harfi gelmiştir. Hangi tecvid kuralı uygulanır?",
         "options": [
-          "?zhar",
-          "?dgam Meal Gunne",
-          "?hfa",
-          "?klab"
+          "İzhar",
+          "İdgam Meal Gunne",
+          "İhfa",
+          "İklab"
         ],
         "explanation": "Sakin Nun'dan sonra Yemnu harflerinden 'Ye' geldiği için İdgam Meal Gunne olur."
       },
@@ -4457,7 +4457,7 @@
           "Med-i Muttasıl",
           "Med-i Tabii",
           "Med-i Lazım",
-          "?hfa"
+          "İhfa"
         ],
         "explanation": "Harf-i medden sonra sebeb-i med gelmediği için asli uzatma olan Med-i Tabii olur."
       },
@@ -4472,24 +4472,24 @@
         "explanation": "Kalkale harfleri Kaf, Ta, Be, Cim ve Dal harfleridir."
       },
       "4": {
-        "question": "Sakin Nun veya Tenvin'den sonra '?' harfi gelirse ne olur?",
+        "question": "Sakin Nun veya Tenvin'den sonra 'ب' harfi gelirse ne olur?",
         "options": [
-          "?hfa",
-          "?zhar",
-          "?klab",
+          "İhfa",
+          "İzhar",
+          "İklab",
           "Kalkale"
         ],
         "explanation": "Be harfi İklab harfidir, Nun sesi Mim'e dönüşür."
       },
       "5": {
-        "question": "?hfa harfleri ka? tanedir?",
+        "question": "İhfa harfleri kaç tanedir?",
         "options": [
           "6",
           "15",
           "4",
           "2"
         ],
-        "explanation": "?hfa harfleri toplam 15 tanedir."
+        "explanation": "İhfa harfleri toplam 15 tanedir."
       },
       "6": {
         "question": "Hangi durumda 'Ra' harfi ince okunur?",
@@ -4586,7 +4586,7 @@
           "question": "Namaza başlarken söylenen tekbirin adı nedir?",
           "options": [
             "Sena",
-            "?ftitah Tekbiri",
+            "İftitah Tekbiri",
             "Selamün Aleyküm",
             "Tekbir-i Teşrik"
           ]
@@ -4601,7 +4601,7 @@
           ]
         },
         "3": {
-          "question": "Sabah namaz? toplam ka? rekattir?",
+          "question": "Sabah namazı toplam kaç rekattir?",
           "options": [
             "2",
             "4",
@@ -4664,9 +4664,9 @@
           ]
         },
         "10": {
-          "question": "Namazda ettehiyyat? ne zaman okunur?",
+          "question": "Namazda ettehiyyatü ne zaman okunur?",
           "options": [
-            "?lk rekatta",
+            "İlk rekatta",
             "Rükûda",
             "Son oturuşta",
             "Secdede"
@@ -5091,7 +5091,7 @@
     },
     "confirm": {
       "title": "Emin Misiniz?",
-      "canceling": "?ptal Ediliyor...",
+      "canceling": "İptal Ediliyor...",
       "desc": "Aboneliğinizi iptal etmeniz durumunda, mevcut döneminizin sonunda Pro özelliklerine erişiminizi kaybedeceksiniz. Tüm reklamsız deneyim ve premium içerikler sonlanacaktır.",
       "keep": "Vazgeç, Abonelikte Kal",
       "cancel": "Evet, Aboneliğimi İptal Et"

@@ -115,10 +115,10 @@
         "rule": "When the letters of Qalqalah are calm, they are pronounced with an echoing vibration.",
         "examples": {
           "0": {
-            "explanation": "Qaf is calm, so Qalqalah occurs."
+            "explanation": "When stopping, Qaf is read with sukun, so qalqalah occurs."
           },
           "1": {
-            "explanation": "Dal is calm, so Qalqalah occurs."
+            "explanation": "Dal has sukun, so qalqalah occurs."
           }
         }
       },
