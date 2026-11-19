@@ -93,7 +93,7 @@ const DailyTasks = ({ onClose }) => {
               </span>
               <span className="practice-row__body">
                 <span className="practice-row__title" style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
-                  <span aria-hidden="true">{task.icon} </span>{t(task.title)}
+                  {t(task.title)}
                 </span>
                 <span className="practice-row__text">{t(task.description)}</span>
                 <span className="practice-row__meta">
@@ -111,7 +111,7 @@ const DailyTasks = ({ onClose }) => {
           <h2 className="practice-section-title"><Gift size={14} /> {t('dailyTasks.earnedBadges', 'KAZANILAN ROZETLER')}</h2>
           <div className="practice-chip-list">
             {getEarnedBadges().map((badge) => (
-              <span className="practice-chip" key={badge.id}>{badge.emoji} {t(badge.title)}</span>
+              <span className="practice-chip" key={badge.id}><Trophy size={12} strokeWidth={1.75} aria-hidden="true" /> {t(badge.title)}</span>
             ))}
           </div>
         </section>
@@ -120,7 +120,7 @@ const DailyTasks = ({ onClose }) => {
       {showBadgeModal && (
         <div className="practice-modal" role="dialog" aria-modal="true" onClick={() => setShowBadgeModal(null)}>
           <div className="practice-modal__card" onClick={(event) => event.stopPropagation()}>
-            <div style={{ fontSize: '3rem' }}>{showBadgeModal.emoji}</div>
+            <Trophy size={40} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--gold-ink)' }} />
             <h2 className="practice-title">{t('dailyTasks.newBadge', 'Yeni Rozet')}</h2>
             <p className="practice-row__text">{t(showBadgeModal.title)} · {t(showBadgeModal.requirement)}</p>
             <button type="button" className="practice-primary-button practice-wide" onClick={() => setShowBadgeModal(null)}>{t('home.awesome', 'Harika')}</button>
@@ -131,7 +131,7 @@ const DailyTasks = ({ onClose }) => {
       {showAllComplete && (
         <div className="practice-modal" role="dialog" aria-modal="true" onClick={() => setShowAllComplete(false)}>
           <div className="practice-modal__card">
-            <div style={{ fontSize: '3rem' }}>🎉</div>
+            <Star size={40} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--gold-ink)' }} />
             <h2 className="practice-title">{t('dailyTasks.congrats', 'Tebrikler')}</h2>
             <p className="practice-row__text">{t('dailyTasks.allTasksCompleted', 'Bugünün tüm görevlerini tamamladınız.')}</p>
             <button type="button" className="practice-primary-button practice-wide" onClick={() => setShowAllComplete(false)}>{t('home.awesome', 'Harika')}</button>

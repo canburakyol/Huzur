@@ -5341,7 +5341,11 @@
     "suggestions": "Vorschläge",
     "suggestionNote": "Allgemeines Beispiel – kein Zitat aus Koran oder Hadith",
     "edit": "Bittgebet bearbeiten",
-    "delete": "Bittgebet löschen"
+    "delete": "Bittgebet löschen",
+    "newDuaForm": "Neues Bittgebet",
+    "markNotPrayed": "Als noch nicht gebetet markieren",
+    "markPrayed": "Als gebetet markieren",
+    "filterLabel": "Gebetsfilter"
   },
   "adConsent": {
     "eyebrow": "Datenschutz-Einstellung",

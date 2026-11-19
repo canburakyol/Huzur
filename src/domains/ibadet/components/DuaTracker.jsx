@@ -1,20 +1,20 @@
 import { useState } from 'react';
-import { Calendar, Check, Circle, Edit2, Heart, Info, Plus, Trash2 } from 'lucide-react';
+import { Baby, Briefcase, Calendar, Check, Circle, Edit2, GraduationCap, HandHeart, Heart, HeartPulse, Info, Plane, Plus, Sparkles, Trash2, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { storageService } from '../../../services/storageService';
 import '../../../styles/PracticePages.css';
 
 const DUA_CATEGORIES = [
-  { id: 'health', name: 'Sağlık', icon: '💚' },
-  { id: 'exam', name: 'Sınav', icon: '📚' },
-  { id: 'work', name: 'İş', icon: '💼' },
-  { id: 'family', name: 'Aile', icon: '👨‍👩‍👧' },
-  { id: 'marriage', name: 'Evlilik', icon: '💍' },
-  { id: 'children', name: 'Çocuk', icon: '👶' },
-  { id: 'travel', name: 'Seyahat', icon: '✈️' },
-  { id: 'forgiveness', name: 'Af', icon: '🙏' },
-  { id: 'general', name: 'Genel', icon: '🤲' },
+  { id: 'health', name: 'Sağlık', Icon: HeartPulse },
+  { id: 'exam', name: 'Sınav', Icon: GraduationCap },
+  { id: 'work', name: 'İş', Icon: Briefcase },
+  { id: 'family', name: 'Aile', Icon: Users },
+  { id: 'marriage', name: 'Evlilik', Icon: Heart },
+  { id: 'children', name: 'Çocuk', Icon: Baby },
+  { id: 'travel', name: 'Seyahat', Icon: Plane },
+  { id: 'forgiveness', name: 'Af', Icon: HandHeart },
+  { id: 'general', name: 'Genel', Icon: Sparkles },
 ];
 
 const SUGGESTED_DUAS = [
@@ -120,7 +120,7 @@ export function DuaTracker({ onClose }) {
         <Info size={18} /><div>{t('duaTracker.prayedNote', '“Dua edildi” işareti yalnızca kişisel kayıttır; kabul edildiği anlamına gelmez.')}</div>
       </div>
 
-      <div className="practice-segments" role="tablist" aria-label="Dua filtresi">
+      <div className="practice-segments" role="tablist" aria-label={t('duaTracker.filterLabel', 'Dua filtresi')}>
         {[['all', t('common.all', 'Tümü')], ['pending', t('dua.filters.pending', 'Henüz dua edilmedi')], ['completed', t('dua.filters.accepted', 'Dua edildi')]].map(([id, label]) => (
           <button type="button" role="tab" aria-selected={filter === id} className={`practice-segment ${filter === id ? 'practice-segment--active' : ''}`} key={id} onClick={() => setFilter(id)}>{label}</button>
         ))}
@@ -131,12 +131,12 @@ export function DuaTracker({ onClose }) {
       </button>
 
       {showAddForm && (
-        <section className="practice-panel" aria-label="Yeni dua formu">
+        <section className="practice-panel" aria-label={t('duaTracker.newDuaForm', 'Yeni dua formu')}>
           <textarea className="practice-field" value={newDua} onChange={(event) => setNewDua(event.target.value)} placeholder={t('dua.placeholder', 'Duanızı yazın...')} />
           <div className="practice-chip-list" style={{ marginTop: 10 }}>
             {DUA_CATEGORIES.map((category) => (
               <button type="button" className={`practice-chip ${selectedCategory === category.id ? 'practice-chip--active' : ''}`} key={category.id} onClick={() => setSelectedCategory(category.id)}>
-                {category.icon} {categoryName(category)}
+                <category.Icon size={13} strokeWidth={1.75} aria-hidden="true" /> {categoryName(category)}
               </button>
             ))}
           </div>
@@ -171,11 +171,11 @@ export function DuaTracker({ onClose }) {
                     </div>
                   ) : (
                     <>
-                      <button type="button" className={`practice-check ${dua.completed ? 'practice-check--done' : ''}`} aria-label={dua.completed ? 'Duayı henüz dua edilmedi olarak işaretle' : 'Dua edildi olarak işaretle'} onClick={() => toggleDua(dua.id)}>{dua.completed ? <Check size={19} /> : <Circle size={18} />}</button>
+                      <button type="button" className={`practice-check ${dua.completed ? 'practice-check--done' : ''}`} aria-label={dua.completed ? t('duaTracker.markNotPrayed', 'Henüz dua edilmedi olarak işaretle') : t('duaTracker.markPrayed', 'Dua edildi olarak işaretle')} onClick={() => toggleDua(dua.id)}>{dua.completed ? <Check size={19} /> : <Circle size={18} />}</button>
                       <div className="practice-row__body">
                         <p className="practice-row__title" style={{ textDecoration: dua.completed ? 'line-through' : 'none' }}>{dua.text}</p>
                         <div className="practice-row__meta">
-                          <span className="practice-pill">{category.icon} {categoryName(category)}</span>
+                          <span className="practice-pill"><category.Icon size={11} strokeWidth={1.75} aria-hidden="true" /> {categoryName(category)}</span>
                           {dua.completedAt && <span className="practice-pill"><Calendar size={11} /> {new Date(dua.completedAt).toLocaleDateString(dateLocale)}</span>}
                         </div>
                       </div>

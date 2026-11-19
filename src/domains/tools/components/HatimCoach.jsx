@@ -5,7 +5,7 @@ import {
     RefreshCw, CheckCircle, Clock, TrendingUp, Edit3 
 } from 'lucide-react';
 import { calculateHatimTarget, TOTAL_PAGES, getSuggestedDates } from '../../../utils/hatimCalculator';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import PageHeader from '../../../components/shared/PageHeader';
 import { storageService } from '../../../services/storageService';
 
 const STORAGE_KEY = 'hatim_coach_data';
@@ -337,20 +337,7 @@ const HatimCoach = ({ onClose }) => {
     return (
         <div className="settings-container reveal-stagger">
             {/* Header - Velocity Style */}
-            <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '16px', 
-                marginBottom: '32px'
-            }}>
-                <IslamicBackButton onClick={onClose} size="medium" />
-                <h2 style={{ 
-                    margin: 0, 
-                    fontSize: '1.75rem', 
-                    color: 'var(--nav-text)',
-                    fontWeight: '950'
-                }}>{t('hatimCoach.title')}</h2>
-            </div>
+            <PageHeader title={t('hatimCoach.title')} onBack={onClose} />
 
             <div style={{ padding: 0 }}>
                 {!data ? renderWizard() : renderDashboard()}

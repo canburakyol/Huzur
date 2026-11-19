@@ -5341,7 +5341,11 @@
     "suggestions": "Önerilenler",
     "suggestionNote": "Genel dua örneği — Kur’an/hadis alıntısı değildir",
     "edit": "Duayı düzenle",
-    "delete": "Duayı sil"
+    "delete": "Duayı sil",
+    "newDuaForm": "Yeni dua formu",
+    "markNotPrayed": "Henüz dua edilmedi olarak işaretle",
+    "markPrayed": "Dua edildi olarak işaretle",
+    "filterLabel": "Dua filtresi"
   },
   "adConsent": {
     "eyebrow": "Gizlilik tercihi",

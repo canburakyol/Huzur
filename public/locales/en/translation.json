@@ -5341,7 +5341,11 @@
     "suggestions": "Suggestions",
     "suggestionNote": "General example — not a quotation from the Qur’an or hadith",
     "edit": "Edit supplication",
-    "delete": "Delete supplication"
+    "delete": "Delete supplication",
+    "newDuaForm": "New prayer form",
+    "markNotPrayed": "Mark as not prayed yet",
+    "markPrayed": "Mark as prayed",
+    "filterLabel": "Prayer filter"
   },
   "adConsent": {
     "eyebrow": "Privacy choice",

@@ -1,5 +1,5 @@
-import { ChevronLeft, ShieldCheck, Info, Eye, Lock, Mail, Server, Sparkles } from 'lucide-react';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import { Info, Eye, Lock, Mail, Server, Sparkles } from 'lucide-react';
+import PageHeader from '../../../components/shared/PageHeader';
 import { useTranslation } from 'react-i18next';
 
 function PrivacyPolicy({ onClose }) {
@@ -8,20 +8,7 @@ function PrivacyPolicy({ onClose }) {
         <div className="legal-overlay">
             <div className="settings-container reveal-stagger pb-100">
                 {/* Header */}
-                <div className="legal-page-header">
-                    <IslamicBackButton onClick={onClose} size="medium" />
-                    <div className="flex-1">
-                        <h2 className="page-title">
-                            {t('legal.privacy.title', 'Gizlilik Politikası')}
-                        </h2>
-                        <p className="nav-section-title">
-                            {t('legal.privacy.subtitle', 'Verilerinizin güvenliği ve gizliliği önceliğimizdir')}
-                        </p>
-                    </div>
-                    <div className="settings-icon-box privacy-shield-icon">
-                        <ShieldCheck size={20} />
-                    </div>
-                </div>
+                <PageHeader title={t('legal.privacy.title', 'Gizlilik Politikası')} subtitle={t('legal.privacy.subtitle', 'Verilerinizin güvenliği ve gizliliği önceliğimizdir')} onBack={onClose} />
 
                 {/* Content */}
                 <div className="settings-card legal-content-card">

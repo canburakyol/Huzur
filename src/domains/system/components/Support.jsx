@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Send, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import PageHeader from '../../../components/shared/PageHeader';
 import { logger } from '../../../utils/logger';
 
 function Support({ onClose }) {
@@ -139,22 +139,8 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
     return (
         <div className="app-container" style={{ minHeight: '100vh', paddingBottom: '100px', paddingInline: 'var(--space-4)', boxSizing: 'border-box' }}>
             {/* Header */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '20px',
-                paddingTop: '20px'
-            }}>
-                <IslamicBackButton onClick={onClose} size="medium" />
-                <h1 style={{
-                    margin: 0,
-                    fontSize: '22px',
-                    color: 'var(--primary)',
-                    fontWeight: '700'
-                }}>
-                    {t('support.title', 'Support')}
-                </h1>
+            <div style={{ marginInline: 'calc(-1 * var(--space-4))' }}>
+                <PageHeader title={t('support.title', 'Destek')} onBack={onClose} />
             </div>
 
             <p style={{ color: 'var(--text-color-muted)', fontSize: '14px', marginBottom: '20px' }}>

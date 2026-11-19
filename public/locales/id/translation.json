@@ -5341,7 +5341,11 @@
     "suggestions": "Saran",
     "suggestionNote": "Contoh doa umum — bukan kutipan Al-Qur’an atau hadis",
     "edit": "Edit doa",
-    "delete": "Hapus doa"
+    "delete": "Hapus doa",
+    "newDuaForm": "Formulir doa baru",
+    "markNotPrayed": "Tandai belum didoakan",
+    "markPrayed": "Tandai sudah didoakan",
+    "filterLabel": "Filter doa"
   },
   "adConsent": {
     "eyebrow": "Pilihan privasi",

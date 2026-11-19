@@ -1,5 +1,5 @@
-import { ExternalLink, Music, Book, Globe, Code, Heart, Info, AlertTriangle, Sparkles } from 'lucide-react';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import { ExternalLink, Music, Book, Globe, Code, Heart, AlertTriangle } from 'lucide-react';
+import PageHeader from '../../../components/shared/PageHeader';
 import { useTranslation } from 'react-i18next';
 
 const LicensesCredits = ({ onClose }) => {
@@ -108,20 +108,7 @@ const LicensesCredits = ({ onClose }) => {
     return (
         <div className="settings-container reveal-stagger" style={{ paddingBottom: '100px' }}>
             {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
-                <IslamicBackButton onClick={onClose} size="medium" />
-                <div style={{ flex: 1 }}>
-                    <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
-                        {t('licenses.title', 'Lisanslar & Kaynaklar')}
-                    </h2>
-                    <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
-                        {t('licenses.subtitle')}
-                    </p>
-                </div>
-                <div className="settings-icon-box" style={{ background: 'rgba(79, 70, 229, 0.1)', color: 'var(--nav-accent)' }}>
-                    <Info size={20} />
-                </div>
-            </div>
+            <PageHeader title={t('licenses.title', 'Lisanslar & Kaynaklar')} subtitle={t('licenses.subtitle')} onBack={onClose} />
 
             {/* Intro */}
             <div className="settings-card thanks-banner" style={{ marginBottom: '32px', padding: '24px', gap: '16px' }}>
