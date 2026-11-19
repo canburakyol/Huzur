@@ -55,7 +55,8 @@ Hicri yılbaşı ve Aşure ~10 gün kaymış). `src/data/religiousDays.ts` de ya
 - Bir test: her yıl için liste boş değil, tarihler sıralı, bilinen birkaç tarih Diyanet'le aynı.
 - **Bitti sayılır:** 2027 sonuna kadar bütün kandil/bayram tarihleri Diyanet'le birebir; test geçiyor.
 - **Yapıldı (19 Kas):** Tek kaynak `src/data/religiousDays.ts` (Diyanet 2025–2028). Kampanya/bildirim seçimi (`campaignService`) de bu tabloya bağlandı.
-  Açık kalan: Özel Günler, Dini Günler ve Ajanda ekranlarına uygulamada hiçbir giriş yok (menüden çıkmışlar). Tablo Aralık 2028'de bitiyor; 2028 ortasında 2029–2030 eklenmeli.
+  Özel Günler menüde (Diğer araçlar); Hadisler 5b doğrulamasından sonra menüye geri eklendi. Dini Günler listesi (Özel Günler'in kopyası),
+  Hikmetler (âlim sözleri kaynaksız), Ajanda ve Tebrik Kartları bilinçli olarak gizli. Tablo Aralık 2028'de bitiyor; 2028 ortasında 2029–2030 eklenmeli.
   Ajanda'nın not anahtarı UTC tarihle üretiliyor (Türkiye'de bir gün geri); düzeltmek kayıtlı notları kaydırır, taşıma ile birlikte yapılmalı.
 
 ## 4. Satın alma testi

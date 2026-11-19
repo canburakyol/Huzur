@@ -64,7 +64,8 @@ const SUPPORT_MENU_ITEMS = [
   { id: 'specialDays', icon: <CalendarDays size={20} />, labelKey: 'menu.specialDays', component: 'specialDays' },
   { id: 'adhkar', icon: <Sparkles size={20} />, labelKey: 'features.adhkar', component: 'adhkar' },
   { id: 'tespihat', icon: <Compass size={20} />, labelKey: 'menu.tespihat', component: 'tespihat' },
-  { id: 'esmaUlHusna', icon: <Sparkles size={20} />, labelKey: 'menu.esmaUlHusna', component: 'esmaUlHusna' }
+  { id: 'esmaUlHusna', icon: <Sparkles size={20} />, labelKey: 'menu.esmaUlHusna', component: 'esmaUlHusna' },
+  { id: 'hadiths', icon: <BookOpen size={20} />, labelKey: 'features.hadiths', component: 'hadiths' }
 ];
 
 const SYSTEM_MENU_ITEMS = [
