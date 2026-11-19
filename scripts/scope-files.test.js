@@ -18,7 +18,11 @@ async function loadConfig() {
   return JSON.parse(raw);
 }
 
-describe('scope-files', () => {
+// Building the index scans the whole repo; once per file instead of once per test.
+let indexPromise = null;
+const getIndex = (config) => (indexPromise ||= buildScopeIndex(config));
+
+describe('scope-files', { timeout: 30_000 }, () => {
   it('collects family scope files from feature imports', async () => {
     const files = await collectFeatureScope('family');
 
@@ -36,7 +40,7 @@ describe('scope-files', () => {
 
   it('resolves explicit scope requests deterministically', async () => {
     const config = await loadConfig();
-    const index = await buildScopeIndex(config);
+    const index = await getIndex(config);
     const result = await resolveTaskScope('scope:family davet akisi bozuk', config, index);
 
     expect(result.status).toBe('resolved');
@@ -46,7 +50,7 @@ describe('scope-files', () => {
 
   it('resolves assistant tasks to ai scope', async () => {
     const config = await loadConfig();
-    const index = await buildScopeIndex(config);
+    const index = await getIndex(config);
     const result = await resolveTaskScope('assistant ekraninda cevap tonu sorunlu', config, index);
 
     expect(result.status).toBe('resolved');
@@ -55,7 +59,7 @@ describe('scope-files', () => {
 
   it('resolves monetization aliases to monetization scope', async () => {
     const config = await loadConfig();
-    const index = await buildScopeIndex(config);
+    const index = await getIndex(config);
     const result = await resolveTaskScope('premium abonelik restore sorunu', config, index);
 
     expect(result.status).toBe('resolved');
@@ -64,7 +68,7 @@ describe('scope-files', () => {
 
   it('resolves notification aliases to notifications scope', async () => {
     const config = await loadConfig();
-    const index = await buildScopeIndex(config);
+    const index = await getIndex(config);
     const result = await resolveTaskScope('bildirim izni ve push ayari bozuk', config, index);
 
     expect(result.status).toBe('resolved');
@@ -73,7 +77,7 @@ describe('scope-files', () => {
 
   it('reports ambiguous generic dua requests instead of forcing a scope', async () => {
     const config = await loadConfig();
-    const index = await buildScopeIndex(config);
+    const index = await getIndex(config);
     const result = await resolveTaskScope('dua bozuk', config, index);
 
     expect(result.status).toBe('ambiguous');
@@ -90,7 +94,7 @@ describe('scope-files', () => {
 
   it('resolves app shell aliases to the app-shell scope', async () => {
     const config = await loadConfig();
-    const index = await buildScopeIndex(config);
+    const index = await getIndex(config);
     const result = await resolveTaskScope('app shell tab router takiliyor', config, index);
 
     expect(result.status).toBe('resolved');
@@ -99,7 +103,7 @@ describe('scope-files', () => {
 
   it('resolves home aliases to the home scope', async () => {
     const config = await loadConfig();
-    const index = await buildScopeIndex(config);
+    const index = await getIndex(config);
     const result = await resolveTaskScope('ana sayfa home hero karti bozuk', config, index);
 
     expect(result.status).toBe('resolved');
