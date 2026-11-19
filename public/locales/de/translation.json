@@ -4503,7 +4503,8 @@
       "e2": "Tatenbuch ausfüllen",
       "e3": "Tägliche Reue"
     },
-    "deleteLabel": "Routine {{name}} löschen"
+    "deleteLabel": "Routine {{name}} löschen",
+    "bonusXp": "+{{xp}} XP Abschlussbonus"
   },
   "quiz": {
     "title": "Test des Tages",

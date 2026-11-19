@@ -114,7 +114,7 @@ const RoutineBuilder = ({ onClose }) => {
                   <span className="practice-row__icon">{routine.timeOfDay === 'morning' ? <Sun size={18} /> : <Moon size={18} />}</span>
                   <div style={{ minWidth: 0 }}>
                     <h2 className="practice-row__title">{t(`routine.defaults.${routine.id}`, routine.name)}</h2>
-                    <p className="practice-row__text"><Zap size={12} /> +{routine.bonusXp} XP tamamlama bonusu</p>
+                    <p className="practice-row__text"><Zap size={12} /> {t('routine.bonusXp', { xp: routine.bonusXp, defaultValue: '+{{xp}} XP tamamlama bonusu' })}</p>
                   </div>
                 </div>
                 {routine.id.startsWith('custom_') && (

@@ -436,7 +436,7 @@ const SpiritualJourney = ({ onClose }) => {
           </div>
           <div className="nav-card">
             <div className="text-2xl font-black text-nav">{earnedBadges.length}</div>
-            <div className="text-sm font-extrabold uppercase text-nav-muted">Rozet</div>
+            <div className="text-sm font-extrabold uppercase text-nav-muted">{t('common.badge', 'Rozet')}</div>
           </div>
         </div>
 

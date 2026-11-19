@@ -4503,7 +4503,8 @@
       "e2": "Isi jurnal amal",
       "e3": "Tobat harian"
     },
-    "deleteLabel": "Hapus rutinitas {{name}}"
+    "deleteLabel": "Hapus rutinitas {{name}}",
+    "bonusXp": "+{{xp}} XP bonus penyelesaian"
   },
   "quiz": {
     "title": "Kuis Hari Ini",

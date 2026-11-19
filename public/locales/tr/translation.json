@@ -3903,7 +3903,8 @@
       "e2": "Amel Defterini Doldur",
       "e3": "Günlük Tövbe"
     },
-    "deleteLabel": "{{name}} rutinini sil"
+    "deleteLabel": "{{name}} rutinini sil",
+    "bonusXp": "+{{xp}} XP tamamlama bonusu"
   },
   "quiz": {
     "title": "Günün Testi",

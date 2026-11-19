@@ -4503,7 +4503,8 @@
       "e2": "Fill in the deed journal",
       "e3": "Daily repentance"
     },
-    "deleteLabel": "Delete routine {{name}}"
+    "deleteLabel": "Delete routine {{name}}",
+    "bonusXp": "+{{xp}} XP completion bonus"
   },
   "quiz": {
     "title": "Test of the Day",
