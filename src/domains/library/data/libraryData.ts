@@ -346,7 +346,7 @@ Hilafeti döneminde (644-656) Kuran nüshalarını çoğaltarak tüm vilayetlere
 
 İlk Müslüman olan çocuktur (10 yaşında). Hicret gecesi Hz. Muhammed'in yatağına yatarak onu korudu. Hz. Fatıma ile evlendi, Hasan ve Hüseyin'in babasıdır. Cesareti ve kahramanlığıyla tanınır. Hayber'de kale kapısını söküp kalkan olarak kullandı.
 
-İlmi çok derindir. "Ben ilmin şehriyim, Ali de kapısıdır" hadisi meşhurdur. Hilafeti döneminde (656-661) Cemel Vakası ve Sıffin Savaşı gibi iç karışıklıklar yaşandı. Hilafet merkezini Kufe'ye taşıdı. 661'de namaza giderken Hariciler tarafından şehit edildi.` },
+İlmi çok derindir. "Ben ilmin şehriyim, Ali de kapısıdır" rivayeti meşhurdur; ancak hadis âlimleri bu rivayetin sıhhatini tartışmıştır. Hilafeti döneminde (656-661) Cemel Vakası ve Sıffin Savaşı gibi iç karışıklıklar yaşandı. Hilafet merkezini Kufe'ye taşıdı. 661'de namaza giderken Hariciler tarafından şehit edildi.` },
             {
                 title: 'Hz. Talha (r.a.)', content: `Aşere-i Mübeşşere'den (cennetle müjdelenen on sahabe) biridir. "Talha'tül-Hayr" (hayırlı Talha) ve "Talha'tül-Cûd" (cömert Talha) lakaplarıyla anılır.
 
@@ -424,7 +424,7 @@ export const RELIGIOUS_TEXTS: ReligiousText[] = [
         icon: '📜',
         description: 'İmam Nevevi\'nin derlediği 40 önemli hadis',
         items: [
-            { number: 1, arabic: 'إنَّمَا الأَعْمَالُ بِالنِّيَّاتِ', text: 'Ameller niyetlere göredir.', explanation: 'Her iş yapılırken niyet çok önemlidir. Allah, yapılan işin dış görünüşünden ziyade kalpteki niyete bakar. Müminin niyeti, amelinden hayırlıdır.' },
+            { number: 1, arabic: 'إنَّمَا الأَعْمَالُ بِالنِّيَّاتِ', text: 'Ameller niyetlere göredir.', explanation: 'Her iş yapılırken niyet çok önemlidir. Allah, yapılan işin dış görünüşünden ziyade kalpteki niyete bakar.' },
             { number: 2, arabic: 'بُنِيَ الإِسْلَامُ عَلَى خَمْسٍ', text: 'İslam beş temel üzerine kurulmuştur.', explanation: 'İslam; Allah\'tan başka ilah olmadığına ve Muhammed\'in O\'nun elçisi olduğuna şehadet etmek, namaz kılmak, zekat vermek, hacca gitmek ve Ramazan orucunu tutmak üzerine bina edilmiştir.' },
             { number: 3, arabic: 'الإِيمَانُ بِضْعٌ وَسَبْعُونَ شُعْبَةً', text: 'İman yetmiş küsur şubedir.', explanation: 'İman yetmiş küsur derecedir. En üstünü "La ilahe illallah" demek, en aşağısı ise yoldaki eziyet veren bir şeyi kaldırmaktır. Haya da imandan bir şubedir.' },
             { number: 4, arabic: 'لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ', text: 'Biriniz kendisi için istediğini kardeşi için istemedikçe tam iman etmiş olmaz.', explanation: 'Gerçek mümin, kendisine layık gördüğü güzellikleri din kardeşi için de ister. Bencillik imanın kemaline engeldir.' },
@@ -561,7 +561,7 @@ export const RELIGIOUS_TEXTS: ReligiousText[] = [
             { number: 12, name: 'Takva', meaning: 'Allah\'tan korkup günahlardan kaçınmak', explanation: 'Haramlardan sakınıp helallere yönelmek.' },
             { number: 13, name: 'Tevekkül', meaning: 'Allah\'a güvenip ona bağlanmak', explanation: 'Sebeplere sarılıp sonucu Allah\'a bırakmak.' },
             { number: 14, name: 'İhsan', meaning: 'Allah\'ı görür gibi ibadet etmek', explanation: 'Sen Allah\'ı görmesen de O seni görüyor.' },
-            { number: 15, name: 'Şirk', meaning: 'Allah\'a ortak koşmak', explanation: 'En büyük günah, affedilmez.' }
+            { number: 15, name: 'Şirk', meaning: 'Allah\'a ortak koşmak', explanation: 'En büyük günahtır; tövbe edilmeden ölünürse affedilmez.' }
         ]
     }
 ];

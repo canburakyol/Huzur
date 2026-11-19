@@ -5,6 +5,7 @@ import { logger } from '../../../utils/logger';
 
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import { getLocalizedSurahList } from '../../../data/surahList';
+import { localizeLibraryData } from '../data/i18n/applyLibraryOverlay';
 import { isPro } from '../../../services/proService';
 import { getAudioUrlSync, getReciters } from '../../../services/quranService';
 import './Library.css';
@@ -109,13 +110,18 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
 
     try {
       const dataModule = await import('../data/libraryData');
-      setLibraryData(getResolvedLibraryData(dataModule));
+      setLibraryData(await localizeLibraryData(getResolvedLibraryData(dataModule), i18n.language || 'tr'));
     } catch (error) {
       logger.error('[Library] Veri yükleme hatası:', error);
     } finally {
       setIsLibraryDataLoading(false);
     }
-  }, [isLibraryDataLoading, libraryData]);
+  }, [i18n.language, isLibraryDataLoading, libraryData]);
+
+  // Reload content in the new language when the user switches language.
+  useEffect(() => {
+    setLibraryData(null);
+  }, [i18n.language]);
 
   useEffect(() => {
     if ((selectedCategory || query.length >= 2) && !libraryData && !isLibraryDataLoading) {
@@ -224,7 +230,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
           </h1>
           {breadcrumbs.length > 1 ? (
             <div style={{ marginTop: '6px', fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
-              {breadcrumbs.map((crumb) => crumb.label).join(' / ')}
+              {breadcrumbs.map((crumb) => (crumb.id === 'root' ? t('library.title', crumb.label) : crumb.label)).join(' / ')}
             </div>
           ) : null}
         </div>

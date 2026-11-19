@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Sparkles, Heart, X, Play, Pause, Music, HeartHandshake } from 'lucide-react';
 import { MOODS } from '../../../data/moodData';
+import { localizeMoodAyah } from '../../../data/moodTranslations';
 import { getAudioUrlSync } from '../../../services/quranService';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 
 const MoodSelector = ({ onClose }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [selectedMood, setSelectedMood] = useState(null);
   const [playingUrl, setPlayingUrl] = useState(null);
   const [audioPlayer, setAudioPlayer] = useState(null);
@@ -111,7 +112,8 @@ const MoodSelector = ({ onClose }) => {
           </div>
 
           <div className="reveal-stagger" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {selectedMood.ayahs.map((item, index) => {
+            {selectedMood.ayahs.map((rawItem, index) => {
+              const item = localizeMoodAyah(rawItem, i18n?.language || 'tr');
               const audioUrl = getAudioUrlSync(item.surahNumber, item.ayah);
               const isPlaying = playingUrl === audioUrl;
 
