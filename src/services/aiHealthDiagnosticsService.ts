@@ -1,9 +1,9 @@
 type AiHealthSnapshot = {
-  trustScore?: number;
+  trustScore?: number | null;
   sourceCount?: number;
   reviewStatus?: string;
   provider?: string;
-  updatedAtIso?: string;
+  updatedAtIso?: string | null;
 }
 
 type AiHealthSurface = {
@@ -28,11 +28,11 @@ type AiHealthSummary = {
 }
 
 type HealthData = {
-  latestAssistantSnapshot?: AiHealthSnapshot;
-  latestHomeRankingSnapshot?: AiHealthSnapshot;
-  latestWeeklyInsightSnapshot?: AiHealthSnapshot;
-  latestPushHintSnapshot?: AiHealthSnapshot;
-  latestAiHealthAt?: string;
+  latestAssistantSnapshot?: AiHealthSnapshot | null;
+  latestHomeRankingSnapshot?: AiHealthSnapshot | null;
+  latestWeeklyInsightSnapshot?: AiHealthSnapshot | null;
+  latestPushHintSnapshot?: AiHealthSnapshot | null;
+  latestAiHealthAt?: string | null;
 }
 
 const SURFACE_LABELS: Record<string, string> = {
@@ -106,9 +106,9 @@ export const buildAiHealthSummary = (health: HealthData = {}): AiHealthSummary =
     buildAiHealthSurface('latestPushHintSnapshot', health.latestPushHintSnapshot),
   ];
 
-  const overallStatus = surfaces.reduce((current, item) => (
+  const overallStatus = surfaces.reduce<AiHealthSummary['overallStatus']>((current, item) => (
     STATUS_ORDER[item.status] > STATUS_ORDER[current] ? item.status : current
-  ), 'healthy') as 'healthy' | 'watch' | 'action';
+  ), 'healthy');
 
   const actionCount = surfaces.filter((item) => item.status === 'action').length;
   const watchCount = surfaces.filter((item) => item.status === 'watch').length;

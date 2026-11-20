@@ -1,5 +1,5 @@
 import { Capacitor } from '@capacitor/core';
-import { LocalNotifications } from '@capacitor/local-notifications';
+import { LocalNotifications, type Importance, type Visibility } from '@capacitor/local-notifications';
 import { logger } from '../utils/logger';
 import i18n from '../i18n';
 
@@ -7,8 +7,8 @@ type NotificationChannel = {
   id: string;
   name: string;
   description: string;
-  importance: number;
-  visibility: number;
+  importance: Importance;
+  visibility: Visibility;
   sound: string | null;
   vibration: boolean;
   lights: boolean;

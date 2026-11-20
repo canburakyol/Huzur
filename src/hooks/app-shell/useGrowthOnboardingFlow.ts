@@ -27,9 +27,9 @@ type GrowthOnboardingOptions = {
 }
 
 type ReferralProgress = {
-  invitedByCode?: string;
-  firstIbadahCompletedAt?: string;
-  rewards?: { inviteeUnlockedAt?: string };
+  invitedByCode?: string | null;
+  firstIbadahCompletedAt?: string | null;
+  rewards?: { inviteeUnlockedAt?: string | null } | null;
   [key: string]: unknown;
 }
 

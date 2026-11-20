@@ -71,8 +71,10 @@ export const ensureAuthenticated = async (): Promise<string | null> => {
     if (!authInitialized) {
       void initAuthListener();
       await authReadyPromise;
-      if (currentUser) {
-        return currentUser.uid;
+      // The auth listener may have set currentUser during the await; TS keeps the stale narrowing.
+      const readyUser = currentUser as User | null;
+      if (readyUser) {
+        return readyUser.uid;
       }
     }
 

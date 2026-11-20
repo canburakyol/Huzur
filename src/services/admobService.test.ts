@@ -20,7 +20,7 @@ const adMobMock = vi.hoisted(() => ({
     privacyOptionsRequirementStatus: "REQUIRED",
   })),
   showPrivacyOptionsForm: vi.fn(async () => undefined),
-  addListener: vi.fn(async () => ({ remove: vi.fn(async () => undefined) })),
+  addListener: vi.fn(async (_eventName: string, _callback: (info: { height?: number }) => void): Promise<{ remove: () => Promise<undefined> } | undefined> => ({ remove: vi.fn(async () => undefined) })),
   hideBanner: vi.fn(async () => undefined),
   removeBanner: vi.fn(async () => undefined),
   showBanner: vi.fn(async () => undefined),

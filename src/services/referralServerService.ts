@@ -44,9 +44,9 @@ type SyncOptions = {
 }
 
 type ReferralProgress = {
-  ownCode?: string;
+  ownCode?: string | null;
   inviteCreatedAt?: string | null;
-  invitedByCode?: string;
+  invitedByCode?: string | null;
   inviteAcceptedAt?: string | null;
   onboardingCompletedAt?: string | null;
   firstIbadahCompletedAt?: string | null;

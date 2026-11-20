@@ -111,7 +111,7 @@ describe("privacyConsentStore", () => {
     });
 
     dispose();
-    resolveTask?.(cleanup);
+    (resolveTask as ((cleanup: () => void) => void) | null)?.(cleanup);
     await Promise.resolve();
 
     expect(task).toHaveBeenCalledTimes(1);

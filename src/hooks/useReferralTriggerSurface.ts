@@ -46,7 +46,7 @@ export function useReferralTriggerSurface({
     return buildReferralTriggerSurfacePlan({
       surface,
       localProgress,
-      serverSnapshot,
+      serverSnapshot: serverSnapshot ?? undefined,
       weeklyStats: weeklyStats ?? undefined,
       assistantMeta: assistantMeta ?? undefined,
     });

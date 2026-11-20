@@ -215,7 +215,7 @@ export const getReferralGrowthPlan = ({
   const progress = mergeReferralProgress(localProgress, serverSnapshot);
   const resolvedShareVariant = resolveShareVariant(shareVariant);
   const shareLabels = getShareLabels(resolvedShareVariant);
-  const blocked = isBlocked((progress as Record<string, unknown>)?.antiAbuse && ((progress as Record<string, unknown>).antiAbuse as Record<string, unknown>)?.blockedUntil as string);
+  const blocked = isBlocked(((progress as Record<string, unknown>)?.antiAbuse as { blockedUntil?: string } | undefined)?.blockedUntil);
   const acceptedCount = progress?.server?.inviterSummary?.acceptedCount || 0;
   const convertedCount = progress?.server?.inviterSummary?.convertedCount || 0;
   const waitingCount = Math.max(acceptedCount - convertedCount, 0);
@@ -322,7 +322,7 @@ export const getReferralGrowthPlan = ({
     inviteeRewardReady,
     inviterRewardReady,
     cameFromInvite,
-    blockedUntil: sanitizeIso((progress as Record<string, unknown>)?.antiAbuse && ((progress as Record<string, unknown>).antiAbuse as Record<string, unknown>)?.blockedUntil as string),
+    blockedUntil: sanitizeIso(((progress as Record<string, unknown>)?.antiAbuse as { blockedUntil?: string } | undefined)?.blockedUntil),
     supportingNote: getCampaignSupportingCopy(campaign),
     syncIssue: progress?.server?.inviteeSummary?.syncIssue || '',
     signature: [

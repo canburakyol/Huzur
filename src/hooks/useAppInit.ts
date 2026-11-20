@@ -45,14 +45,7 @@ type Theme = {
   bodyGradient?: string;
 }
 
-type PrayerTimings = {
-  Fajr: string;
-  Dhuhr: string;
-  Asr: string;
-  Maghrib: string;
-  Isha: string;
-  [key: string]: string;
-}
+type PrayerTimings = Record<string, string>;
 
 type UseAppInitResult = {
   streakData: StreakDisplay;
@@ -74,7 +67,7 @@ const resolveAccent = (accentId: string): AccentColor => {
   return ACCENT_COLORS.find((accent) => accent.id === normalized) || ACCENT_COLORS[0];
 };
 
-const applyAccent = (accent: AccentColor | undefined): void => {
+const applyAccent = (accent: Omit<AccentColor, 'id'> | undefined): void => {
   if (!accent) return;
   const root = document.documentElement;
   root.style.setProperty("--nav-accent", accent.color);
@@ -141,7 +134,7 @@ export const useAppInit = (
   const [{ streakData, newBadge: initialBadge }] = useState(() => {
     const result = checkAndUpdateStreak();
     return {
-      streakData: result.streakData ? getStreakDisplay() : { current: 0, isMilestone: false, emoji: "✨" },
+      streakData: result.streakData ? getStreakDisplay() : { current: 0, longest: 0, total: 0, isMilestone: false, emoji: "✨" },
       newBadge: result.newBadge || null,
     };
   });

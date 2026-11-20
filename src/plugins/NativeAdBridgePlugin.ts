@@ -9,7 +9,7 @@ export type NativeAdResult = {
 
 export type NativeAdBridgePlugin = {
   initialize(): Promise<NativeAdResult>;
-  loadAd(options?: { adUnitId?: string }): Promise<NativeAdResult>;
+  loadAd(options?: { adUnitId?: string }): Promise<NativeAdResult & { adId?: string }>;
   showAd(options: {
     adId: string;
     x: number;

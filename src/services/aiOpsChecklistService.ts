@@ -61,7 +61,7 @@ type BuildChecklistOptions = {
   rolloutGate?: RolloutGate | null;
   releaseReadiness?: ReleaseReadiness | null;
   incidentSummary?: IncidentSummary | null;
-  flags?: Record<string, boolean>;
+  flags?: Record<string, unknown>;
 }
 
 const SURFACE_TO_SMOKE_CHECK: Record<string, SmokeCheckTemplate> = {

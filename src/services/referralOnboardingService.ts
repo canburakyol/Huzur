@@ -57,8 +57,8 @@ export const buildReferralOnboardingPlan = ({
 
   const onboardingDone = Boolean(progress?.onboardingCompletedAt);
   const firstIbadahDone = Boolean(progress?.firstIbadahCompletedAt);
-  const rewardReady = Boolean((progress as Record<string, unknown>)?.rewards && (progress as Record<string, unknown>).rewards?.inviteeUnlockedAt);
-  const syncIssue = (progress as Record<string, unknown>)?.server && ((progress as Record<string, unknown>).server as Record<string, unknown>)?.inviteeSummary && (((progress as Record<string, unknown>).server as Record<string, unknown>).inviteeSummary as Record<string, unknown>)?.syncIssue || '';
+  const rewardReady = Boolean(((progress as Record<string, unknown>)?.rewards as { inviteeUnlockedAt?: string } | undefined)?.inviteeUnlockedAt);
+  const syncIssue = String(((progress as Record<string, unknown>)?.server as { inviteeSummary?: { syncIssue?: string } } | undefined)?.inviteeSummary?.syncIssue || '');
 
   const steps = [
     buildStep(

@@ -1,9 +1,9 @@
 type Surface = {
-  updatedAtIso?: string;
+  updatedAtIso?: string | null;
 }
 
 type HealthSummary = {
-  latestAiHealthAt?: string;
+  latestAiHealthAt?: string | null;
   surfaces?: Surface[];
   actionCount?: number;
   watchCount?: number;
@@ -38,7 +38,7 @@ type BuildReadinessOptions = {
   healthSummary?: HealthSummary | null;
   rolloutGate?: RolloutGate | null;
   incidentSummary?: IncidentSummary | null;
-  flags?: Record<string, boolean>;
+  flags?: Record<string, unknown>;
   nowMs?: number;
 }
 

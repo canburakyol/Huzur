@@ -20,7 +20,7 @@ type GlobalStatus = {
 }
 
 type IncidentSummary = {
-  latestIncident?: { kind: string; stage: string };
+  latestIncident?: { kind: string; stage: string } | null;
   last24hCount?: number;
 }
 
@@ -53,7 +53,7 @@ type BuildBriefOptions = {
   opsChecklist?: OpsChecklist | null;
   incidentSummary?: IncidentSummary | null;
   globalStatus?: GlobalStatus | null;
-  flags?: Record<string, boolean>;
+  flags?: Record<string, unknown>;
 }
 
 const mapDecision = (releaseReadiness: ReleaseReadiness | null, rolloutGate: RolloutGate | null, globalStatus: GlobalStatus | null): Decision => {

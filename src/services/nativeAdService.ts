@@ -114,10 +114,11 @@ export const nativeAdService: NativeAdServiceType = {
         try {
           const result = await NativeAdBridge.loadAd({ adUnitId });
 
-          if (result && (result as AdData).adId) {
-            nativeAdService.adData = result as AdData;
-            currentAdId = (result as AdData).adId;
-            return result as AdData;
+          if (result?.adId) {
+            const adData: AdData = { ...result, adId: result.adId };
+            nativeAdService.adData = adData;
+            currentAdId = adData.adId;
+            return adData;
           }
         } catch (error) {
           logger.warn(`[NativeAd] Load attempt ${attempt + 1} failed`, error);

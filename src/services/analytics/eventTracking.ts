@@ -3,7 +3,6 @@ import type { AnalyticsService } from "./core";
 
 type EventTrackingThis = AnalyticsService & {
   logEvent: (name: string, params?: Record<string, unknown>) => void;
-  stubEvent: (name: string, params?: Record<string, unknown>) => null;
   enabled: boolean;
   consentGiven: boolean;
   incrementSessionCount: () => number;

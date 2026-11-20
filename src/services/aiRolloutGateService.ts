@@ -17,10 +17,10 @@ type RolloutGateResult = {
 
 type BuildGateOptions = {
   healthSummary?: HealthSummary | null;
-  flags?: Record<string, boolean>;
+  flags?: Record<string, unknown>;
 }
 
-const countEnabledFlags = (flags: Record<string, boolean> = {}): number => (
+const countEnabledFlags = (flags: Record<string, unknown> = {}): number => (
   Object.values(flags).filter((value) => value === true).length
 );
 
