@@ -87,6 +87,9 @@ Her parça ayrı oturum; her parçada **yanlış atıf, eksik meal, kaynağı ol
 ## 6. Mushaf tasarımına taşıma
 
 Bitenler: Kıble, Ana sayfa, Pro, Zikirmatik, Dua Kitabı, İmsakiye, Kur'an okuyucu, Kaza Takibi, Ayarlar (20 Kas; ~103 ekran bileşeninin 9'u).
+21 Kas: Tecvid, Kelime Kelime, Topluluk (Hatim/Dua) taşındı; Esmâü'l-Hüsnâ zaten uyumluydu.
+Menüden hiç açılamayan 13 ekran (taşınmadı, önce aç/sil kararı): spiritualCoach, weeklySermon, radio, liveBroadcast,
+quranMemorize, nuzulExplorer, seerahMap, deedJournal, nafilePrayers, islamicMeditation, calendar, zakat, agenda.
 Her ekranda: `PageHeader` + `hz-*` sınıfları, satır içi stil yerine CSS, emoji ikon alanları → lucide, gündüz/gece telefonda kontrol.
 
 Sıra (en çok kullanılan önce):
@@ -102,7 +105,7 @@ Sıra (en çok kullanılan önce):
 
 ## 7. Teknik borç
 
-- `npx tsc --noEmit` 33 hata veriyor (20 Kas: 269→33; kalanlar çoğunlukla AI sağlık paneli ve test mock tipleri; interface→type, storage getItem overload, servis tipleri) (derleme denetlemediği için uygulama çalışıyor). Alan alan sıfırla; en sonda CI'a tip kontrolü ekle.
+- ✅ `npx tsc --noEmit` sıfır hata (21 Kas). Sırada: CI'a tip kontrolü eklemek.
 - ✅ `scope-files` zaman aşımı ve testlerdeki i18n HTTP istekleri (teardown sonrası AbortError) giderildi.
 - ✅ `reports/*.md` artık yalnızca içerik değişince yeniden yazılıyor.
 - **Bitti sayılır:** `tsc` sıfır hata, test paketi kararlı geçiyor, `git status` temiz kalıyor.
