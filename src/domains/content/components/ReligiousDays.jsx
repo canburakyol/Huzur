@@ -46,10 +46,10 @@ const ReligiousDays = ({ onClose }) => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
                 <div>
-                    <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+                    <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--ink)', fontWeight: '950', letterSpacing: '-0.5px' }}>
                         {t('religiousDays.title', 'Dini Günler')}
                     </h2>
-                    <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
                         {year}–{year + 1} {t('religiousDays.calendar', 'Takvimi')}
                     </p>
                 </div>
@@ -60,11 +60,11 @@ const ReligiousDays = ({ onClose }) => {
                 <div className="settings-card reveal-stagger" style={{ 
                     padding: '32px 24px', 
                     marginBottom: '32px',
-                    background: 'linear-gradient(135deg, var(--nav-accent) 0%, #818cf8 100%)',
+                    background: 'var(--brand-ink)',
                     color: 'var(--on-primary)',
                     border: 'none',
                     borderRadius: '28px',
-                    boxShadow: '0 15px 40px rgba(79, 70, 229, 0.25)',
+                    boxShadow: 'var(--elevation-2)',
                     flexDirection: 'column',
                     alignItems: 'stretch'
                 }}>
@@ -123,17 +123,17 @@ const ReligiousDays = ({ onClose }) => {
                             className="settings-card"
                             style={{
                                 padding: '16px 20px',
-                                background: past ? 'rgba(255,255,255,0.01)' : 'var(--nav-hover)',
+                                background: past ? 'rgba(255,255,255,0.01)' : 'var(--paper-sunken)',
                                 opacity: past ? 0.5 : 1,
-                                border: past ? '1px dashed var(--nav-border)' : '1px solid var(--nav-border)',
+                                border: past ? '1px dashed var(--line)' : '1px solid var(--line)',
                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                 cursor: 'default',
                                 '--delay': `${index * 0.05}s`
                             }}
                         >
                             <div className="settings-icon-box" style={{ 
-                                background: past ? 'var(--nav-bg)' : 'rgba(79, 70, 229, 0.1)', 
-                                color: past ? 'var(--nav-text-muted)' : 'var(--nav-accent)',
+                                background: past ? 'var(--paper)' : 'color-mix(in srgb, var(--brand-ink) 10%, transparent)', 
+                                color: past ? 'var(--ink-muted)' : 'var(--brand-ink)',
                                 marginRight: isRTL ? '0' : '16px',
                                 marginLeft: isRTL ? '16px' : '0'
                             }}>
@@ -144,14 +144,14 @@ const ReligiousDays = ({ onClose }) => {
                                 <div style={{ 
                                     fontSize: '1rem', 
                                     fontWeight: '800', 
-                                    color: 'var(--nav-text)',
+                                    color: 'var(--ink)',
                                     marginBottom: '4px'
                                 }}>
                                     {t(`religiousDayKinds.${day.kind}.name`, day.name)}
                                 </div>
                                 <div style={{ 
                                     fontSize: '0.8rem', 
-                                    color: 'var(--nav-text-muted)',
+                                    color: 'var(--ink-muted)',
                                     fontWeight: '600'
                                 }}>
                                     {formatDate(day.date)}
@@ -162,8 +162,8 @@ const ReligiousDays = ({ onClose }) => {
                                 <div style={{ 
                                     fontSize: '0.65rem', 
                                     fontWeight: '950', 
-                                    color: 'var(--nav-text-muted)',
-                                    background: 'var(--nav-hover)',
+                                    color: 'var(--ink-muted)',
+                                    background: 'var(--paper-sunken)',
                                     padding: '4px 10px',
                                     borderRadius: '8px',
                                     textTransform: 'uppercase'

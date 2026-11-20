@@ -74,7 +74,7 @@ const FastingTracker = ({ onClose }) => {
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
-                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--ink)' }}>
                     {t('fasting.title', 'Oruç Takipçisi')}
                 </h2>
             </div>
@@ -83,13 +83,13 @@ const FastingTracker = ({ onClose }) => {
             {hijriDate && (
                 <div className="settings-card premium-glass hover-lift" style={{ 
                     flexDirection: 'column', 
-                    background: 'linear-gradient(135deg, var(--nav-accent), #f97316)', 
+                    background: 'var(--brand-ink)', 
                     border: 'none', 
                     padding: '32px', 
                     textAlign: 'center', 
                     color: 'var(--on-primary)',
                     marginBottom: '32px',
-                    boxShadow: '0 12px 24px rgba(249, 115, 22, 0.2)'
+                    boxShadow: 'var(--elevation-2)'
                 }}>
                     <div style={{ fontSize: '0.85rem', fontWeight: '800', opacity: 0.9, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '8px' }}>
                         {t(`calendar.days.${['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'][new Date().getDay()]}`)}
@@ -106,14 +106,14 @@ const FastingTracker = ({ onClose }) => {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '32px' }}>
                 <div className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', padding: '24px', textAlign: 'center', gap: '12px' }}>
-                    <div style={{ color: 'var(--nav-accent)' }}><TrendingUp size={24} /></div>
-                    <div style={{ fontSize: '1.5rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.thisMonth}</div>
-                    <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('fasting.thisMonth', 'BU AY')}</div>
+                    <div style={{ color: 'var(--brand-ink)' }}><TrendingUp size={24} /></div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: '900', color: 'var(--ink)' }}>{stats.thisMonth}</div>
+                    <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>{t('fasting.thisMonth', 'BU AY')}</div>
                 </div>
                 <div className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', padding: '24px', textAlign: 'center', gap: '12px' }}>
                     <div style={{ color: 'var(--success)' }}><Sparkles size={24} /></div>
-                    <div style={{ fontSize: '1.5rem', fontWeight: '900', color: 'var(--nav-text)' }}>{stats.total}</div>
-                    <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('fasting.total', 'TOPLAM')}</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: '900', color: 'var(--ink)' }}>{stats.total}</div>
+                    <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>{t('fasting.total', 'TOPLAM')}</div>
                 </div>
             </div>
 
@@ -125,15 +125,15 @@ const FastingTracker = ({ onClose }) => {
                     style={{ 
                         padding: '24px', 
                         justifyContent: 'space-between',
-                        border: isFastedToday ? '1px solid var(--success)' : '1px solid var(--nav-border)'
+                        border: isFastedToday ? '1px solid var(--success)' : '1px solid var(--line)'
                     }}
                 >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                        <div className="settings-icon-box" style={{ background: isFastedToday ? 'rgba(16, 185, 129, 0.1)' : 'var(--nav-hover)', color: isFastedToday ? 'var(--success)' : 'var(--nav-text-muted)' }}>
+                        <div className="settings-icon-box" style={{ background: isFastedToday ? 'color-mix(in srgb, var(--success) 10%, transparent)' : 'var(--paper-sunken)', color: isFastedToday ? 'var(--success)' : 'var(--ink-muted)' }}>
                             <Moon size={24} />
                         </div>
                         <div>
-                            <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '1.1rem' }}>
+                            <div style={{ fontWeight: '800', color: 'var(--ink)', fontSize: '1.1rem' }}>
                                 {isFastedToday ? t('fasting.fasted', 'Oruçlu') : t('fasting.notFasted', 'Oruç Tutulmadı')}
                             </div>
                             <p className="settings-desc" style={{ margin: '4px 0 0 0' }}>{t('fasting.status_hint', 'Bugünkü durumunuzu güncelleyin')}</p>
@@ -147,7 +147,7 @@ const FastingTracker = ({ onClose }) => {
                             height: '56px',
                             borderRadius: '16px',
                             border: 'none',
-                            background: isFastedToday ? 'var(--success)' : 'var(--nav-accent)',
+                            background: isFastedToday ? 'var(--success)' : 'var(--brand-ink)',
                             color: 'var(--on-primary)',
                             cursor: 'pointer',
                             display: 'flex',
@@ -173,37 +173,37 @@ const FastingTracker = ({ onClose }) => {
                         {todayFasting.map((f, idx) => (
                             <div key={idx} className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', gap: '12px', padding: '20px', alignItems: 'flex-start' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                                    <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '1.05rem' }}>{t(f.nameKey, f.nameParams)}</div>
+                                    <div style={{ fontWeight: '800', color: 'var(--ink)', fontSize: '1.05rem' }}>{t(f.nameKey, f.nameParams)}</div>
                                     <span style={{ 
                                         padding: '4px 10px', 
                                         borderRadius: '8px', 
                                         fontSize: '0.65rem', 
                                         fontWeight: '900', 
                                         textTransform: 'uppercase',
-                                        background: f.type === 'farz' ? '#fee2e2' : f.type === 'sunnah' ? 'rgba(245, 158, 11, 0.1)' : 'var(--nav-hover)',
-                                        color: f.type === 'farz' ? 'var(--danger)' : f.type === 'sunnah' ? 'var(--nav-accent)' : 'var(--nav-text-muted)'
+                                        background: f.type === 'farz' ? 'color-mix(in srgb, var(--danger) 12%, transparent)' : f.type === 'sunnah' ? 'color-mix(in srgb, var(--gold) 10%, transparent)' : 'var(--paper-sunken)',
+                                        color: f.type === 'farz' ? 'var(--danger)' : f.type === 'sunnah' ? 'var(--brand-ink)' : 'var(--ink-muted)'
                                     }}>
                                         {t(`fasting.types.${f.type}`, f.type)}
                                     </span>
                                 </div>
-                                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>{t(f.descKey)}</p>
+                                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--ink-muted)', lineHeight: '1.5' }}>{t(f.descKey)}</p>
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <div className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', padding: '48px 24px', textAlign: 'center', gap: '16px', background: 'transparent', border: '2px dashed var(--nav-border)' }}>
+                    <div className="settings-card premium-glass hover-lift" style={{ flexDirection: 'column', padding: '48px 24px', textAlign: 'center', gap: '16px', background: 'transparent', border: '2px dashed var(--line)' }}>
                         <Sun size={48} style={{ opacity: 0.1 }} />
-                        <div style={{ fontWeight: '700', color: 'var(--nav-text-muted)' }}>{t('fasting.noRecommendations', 'Bugün için özel bir oruç tavsiyesi bulunmuyor.')}</div>
-                        <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', opacity: 0.8 }}>{t('fasting.alwaysNafile', 'Ancak her zaman nafile oruç tutabilirsiniz.')}</p>
+                        <div style={{ fontWeight: '700', color: 'var(--ink-muted)' }}>{t('fasting.noRecommendations', 'Bugün için özel bir oruç tavsiyesi bulunmuyor.')}</div>
+                        <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--ink-muted)', opacity: 0.8 }}>{t('fasting.alwaysNafile', 'Ancak her zaman nafile oruç tutabilirsiniz.')}</p>
                     </div>
                 )}
             </div>
 
             {/* Bilgi Kutusu */}
-            <div className="settings-card premium-glass hover-lift" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+            <div className="settings-card premium-glass hover-lift" style={{ background: 'var(--paper-sunken)', border: 'none', marginTop: '32px' }}>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                    <Info size={18} color="var(--nav-accent)" />
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                    <Info size={18} color="var(--brand-ink)" />
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--ink-muted)', lineHeight: '1.5' }}>
                         {t('fasting.info_note', 'Oruç ibadeti, hem bedensel hem de ruhsal bir arınma vesilesidir. Hicri takvime göre tavsiye edilen günleri takip ederek borçlarınızı eda edebilir veya nafile oruçlarla sevap kazanabilirsiniz.')}
                     </p>
                 </div>

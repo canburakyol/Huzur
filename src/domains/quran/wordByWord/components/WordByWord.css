@@ -21,7 +21,7 @@
 
 .word-modal-content {
   font-size: 14px;
-  color: var(--text-primary);
+  color: var(--ink);
   line-height: 1.6;
 }
 

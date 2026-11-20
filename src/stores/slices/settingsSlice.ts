@@ -12,7 +12,6 @@ export const createSettingsSlice: StateCreator<
   settings: {
     language: storageService.getString(STORAGE_KEYS.APP_LANGUAGE) || "tr",
     theme: storageService.getString(STORAGE_KEYS.THEME) || "light",
-    accentColor: storageService.getString("app_accent_color") || "amber",
     notifications: true,
     stickyNotification: storageService.getBoolean(STORAGE_KEYS.STICKY_NOTIFICATION) || false,
   },
@@ -27,12 +26,6 @@ export const createSettingsSlice: StateCreator<
     set((state) => {
       storageService.setString(STORAGE_KEYS.THEME, theme);
       return { settings: { ...state.settings, theme } };
-    }),
-
-  setAccentColor: (accentId: string) =>
-    set((state) => {
-      storageService.setString("app_accent_color", accentId);
-      return { settings: { ...state.settings, accentColor: accentId } };
     }),
 
   setNotifications: (enabled: boolean) =>

@@ -51,7 +51,7 @@ const ShareableStatCard = ({ onClose }) => {
       const canvas = await html2canvas(cardRef.current, {
         scale: 3,
         useCORS: true,
-        backgroundColor: 'var(--primary)'
+        backgroundColor: 'var(--brand-ink)'
       });
 
       const shareText = 'Huzur ile manevi ritmimi takip ediyorum.';
@@ -109,7 +109,7 @@ const ShareableStatCard = ({ onClose }) => {
       </div>
 
       <div className="feature-content" style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <p style={{ textAlign: 'center', color: 'var(--nav-text-muted)', marginBottom: '24px', fontSize: '0.9rem' }}>
+        <p style={{ textAlign: 'center', color: 'var(--ink-muted)', marginBottom: '24px', fontSize: '0.9rem' }}>
           {t('shareCard.subtitle', 'Bu kartı hikayede veya durumunda paylasip istikrarini görünür hale getirebilirsin.')}
         </p>
 
@@ -119,7 +119,7 @@ const ShareableStatCard = ({ onClose }) => {
             width: '100%',
             maxWidth: '360px',
             aspectRatio: '9 / 16',
-            background: 'linear-gradient(180deg, var(--primary-container) 0%, var(--inverse-surface) 60%, var(--primary) 100%)',
+            background: 'linear-gradient(180deg, var(--brand-soft) 0%, var(--inverse-surface) 60%, var(--brand-ink) 100%)',
             borderRadius: '28px',
             position: 'relative',
             overflow: 'hidden',
@@ -135,7 +135,7 @@ const ShareableStatCard = ({ onClose }) => {
           <div style={{ position: 'absolute', inset: '16px', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '22px' }} />
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 1 }}>
-            <h1 style={{ fontSize: '1.45rem', fontWeight: '950', color: 'var(--tertiary)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '8px' }}>HUZUR</h1>
+            <h1 style={{ fontSize: '1.45rem', fontWeight: '950', color: 'var(--gold-ink)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '8px' }}>HUZUR</h1>
             <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.72)', margin: '0 0 26px', textTransform: 'uppercase', letterSpacing: '1px' }}>{t('shareCard.subtitle', 'Manevi ritmim')}</p>
 
             <div style={{
@@ -152,9 +152,9 @@ const ShareableStatCard = ({ onClose }) => {
               backdropFilter: 'blur(10px)',
               boxShadow: '0 0 30px rgba(245, 158, 11, 0.22)'
             }}>
-              <Trophy size={40} color="var(--tertiary)" />
+              <Trophy size={40} color="var(--gold-ink)" />
               <div style={{ fontSize: '0.78rem', fontWeight: '800', marginTop: '8px', color: 'rgba(255,255,255,0.86)', textTransform: 'uppercase' }}>{t('shareCard.level', 'Seviye')}</div>
-              <div style={{ fontSize: '2rem', fontWeight: '950', lineHeight: '1', color: 'var(--tertiary)' }}>{levelInfo.level}</div>
+              <div style={{ fontSize: '2rem', fontWeight: '950', lineHeight: '1', color: 'var(--gold-ink)' }}>{levelInfo.level}</div>
             </div>
 
             <h2 style={{ fontSize: '1.5rem', fontWeight: '800', margin: '0 0 10px', textAlign: 'center' }}>
@@ -162,18 +162,18 @@ const ShareableStatCard = ({ onClose }) => {
             </h2>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,0,0,0.26)', padding: '8px 16px', borderRadius: '999px', marginBottom: '22px' }}>
-              <Star size={16} color="var(--tertiary)" />
+              <Star size={16} color="var(--gold-ink)" />
               <span style={{ fontWeight: '800' }}>{t('shareCard.xpCollected', { count: points.toLocaleString(), defaultValue: '{{count}} XP toplandi' })}</span>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', width: '100%', marginBottom: '18px' }}>
               <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px', padding: '14px 8px', textAlign: 'center' }}>
-                <CalendarDays size={18} color="var(--secondary)" style={{ marginBottom: '8px' }} />
+                <CalendarDays size={18} color="var(--brand-ink)" style={{ marginBottom: '8px' }} />
                 <div style={{ fontSize: '1.05rem', fontWeight: '900' }}>{weeklyStats.activeDays}</div>
                 <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>{t('shareCard.activeDays', 'Aktif gün')}</div>
               </div>
               <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px', padding: '14px 8px', textAlign: 'center' }}>
-                <Sparkles size={18} color="var(--tertiary)" style={{ marginBottom: '8px' }} />
+                <Sparkles size={18} color="var(--gold-ink)" style={{ marginBottom: '8px' }} />
                 <div style={{ fontSize: '1.05rem', fontWeight: '900' }}>+{weeklyStats.xpEarned}</div>
                 <div style={{ fontSize: '0.65rem', fontWeight: '700', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>{t('shareCard.weeklyXP', 'Haftalık XP')}</div>
               </div>
@@ -222,7 +222,7 @@ const ShareableStatCard = ({ onClose }) => {
             width: '100%',
             maxWidth: '360px',
             padding: '16px',
-            background: 'linear-gradient(135deg, var(--primary), var(--tertiary))',
+            background: 'linear-gradient(135deg, var(--brand-ink), var(--gold-ink))',
             color: 'var(--on-primary)',
             border: 'none',
             borderRadius: '18px',

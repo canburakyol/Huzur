@@ -44,8 +44,8 @@ const LimitReachedModal = ({
             position: 'absolute',
             top: '16px',
             right: '16px',
-            background: 'var(--nav-hover)',
-            border: '1px solid var(--nav-border)',
+            background: 'var(--paper-sunken)',
+            border: '1px solid var(--line)',
             borderRadius: '50%',
             width: '32px',
             height: '32px',
@@ -53,7 +53,7 @@ const LimitReachedModal = ({
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            color: 'var(--nav-text-muted)',
+            color: 'var(--ink-muted)',
             zIndex: 10
           }}
         >
@@ -63,12 +63,12 @@ const LimitReachedModal = ({
         {/* Hero Section */}
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div className="crown-glow">
-            <Crown size={48} color="var(--tertiary)" fill="var(--tertiary)" />
+            <Crown size={48} color="var(--gold-ink)" fill="var(--gold-ink)" />
           </div>
-          <h2 style={{ margin: '16px 0 8px 0', fontSize: '1.5rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+          <h2 style={{ margin: '16px 0 8px 0', fontSize: '1.5rem', color: 'var(--ink)', fontWeight: '950', letterSpacing: '-0.5px' }}>
             {t('limitModal.title', 'Günlük Limit Doldu')}
           </h2>
-          <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+          <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
             {t('limitModal.usagePrefix', 'Bugünkü')} <strong>{maxCount}</strong> {t('limitModal.usageSuffix', 'ücretsiz kullanım hakkınızı bitirdiniz.')}
           </p>
         </div>
@@ -80,23 +80,23 @@ const LimitReachedModal = ({
           justifyContent: 'center',
           gap: '8px',
           padding: '8px 16px',
-          background: 'var(--nav-hover)',
+          background: 'var(--paper-sunken)',
           borderRadius: '12px',
           marginBottom: '24px',
           alignSelf: 'center'
         }}>
           <span style={{ fontSize: '1.2rem' }}>{featureIcons[feature]}</span>
-          <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--nav-text)' }}>{featureNames[feature]}</span>
+          <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--ink)' }}>{featureNames[feature]}</span>
         </div>
 
         {/* Options */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '32px' }}>
           <div className="limit-option-card">
-            <div className="option-icon-box" style={{ background: 'rgba(79, 70, 229, 0.1)', color: 'var(--nav-accent)' }}>
+            <div className="option-icon-box" style={{ background: 'color-mix(in srgb, var(--brand-ink) 10%, transparent)', color: 'var(--brand-ink)' }}>
               <Calendar size={18} />
             </div>
             <div style={{ flex: 1 }}>
-              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text)', fontWeight: '700' }}>
+              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--ink)', fontWeight: '700' }}>
                 {t('limitModal.tomorrowOption', 'Yarın 2 yeni kullanım hakkınız olacak')}
               </p>
             </div>
@@ -104,17 +104,17 @@ const LimitReachedModal = ({
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '4px 0' }}>
             <div style={{ flex: 1, height: '1px', background: 'var(--nav-border-muted)' }}></div>
-            <span style={{ fontSize: '0.7rem', fontWeight: '900', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('limitModal.or', 'veya')}</span>
+            <span style={{ fontSize: '0.7rem', fontWeight: '900', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>{t('limitModal.or', 'veya')}</span>
             <div style={{ flex: 1, height: '1px', background: 'var(--nav-border-muted)' }}></div>
           </div>
 
           <div className="limit-option-card pro-card">
-            <div className="option-icon-box" style={{ background: 'color-mix(in srgb, var(--tertiary) 10%, transparent)', color: 'var(--tertiary)' }}>
-              <Zap size={18} fill="var(--tertiary)" />
+            <div className="option-icon-box" style={{ background: 'color-mix(in srgb, var(--gold-ink) 10%, transparent)', color: 'var(--gold-ink)' }}>
+              <Zap size={18} fill="var(--gold-ink)" />
             </div>
             <div style={{ flex: 1 }}>
-              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text)', fontWeight: '700' }}>
-                {t('limitModal.proOptionPrefix', 'Pro\'ya geçin ve')} <span style={{ color: 'var(--tertiary)' }}>{t('limitModal.unlimited', 'sınırsız')}</span> {t('limitModal.proOptionSuffix', 'kullanın!')}
+              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--ink)', fontWeight: '700' }}>
+                {t('limitModal.proOptionPrefix', 'Pro\'ya geçin ve')} <span style={{ color: 'var(--gold-ink)' }}>{t('limitModal.unlimited', 'sınırsız')}</span> {t('limitModal.proOptionSuffix', 'kullanın!')}
               </p>
             </div>
           </div>
@@ -122,31 +122,31 @@ const LimitReachedModal = ({
 
         {/* Benefits List */}
         <div style={{ 
-          background: 'var(--nav-hover)', 
+          background: 'var(--paper-sunken)', 
           borderRadius: '20px', 
           padding: '20px', 
           marginBottom: '32px',
-          border: '1px solid var(--nav-border)'
+          border: '1px solid var(--line)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-            <Sparkles size={16} color="var(--tertiary)" />
-            <span style={{ fontSize: '0.75rem', fontWeight: '950', color: 'var(--nav-text)', textTransform: 'uppercase' }}>{t('limitModal.proBenefits', 'PRO AVANTAJLARI')}</span>
+            <Sparkles size={16} color="var(--gold-ink)" />
+            <span style={{ fontSize: '0.75rem', fontWeight: '950', color: 'var(--ink)', textTransform: 'uppercase' }}>{t('limitModal.proBenefits', 'PRO AVANTAJLARI')}</span>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
             <div className="benefit-item">
-              <CheckCircle2 size={14} color="var(--secondary)" />
+              <CheckCircle2 size={14} color="var(--brand-ink)" />
               <span>{t('limitModal.benefits.unlimitedAi', 'Sınırsız AI')}</span>
             </div>
             <div className="benefit-item">
-              <CheckCircle2 size={14} color="var(--secondary)" />
+              <CheckCircle2 size={14} color="var(--brand-ink)" />
               <span>{t('limitModal.benefits.allSurahs', 'Tüm Sureler')}</span>
             </div>
             <div className="benefit-item">
-              <CheckCircle2 size={14} color="var(--secondary)" />
+              <CheckCircle2 size={14} color="var(--brand-ink)" />
               <span>{t('limitModal.benefits.noAds', 'Reklamsız')}</span>
             </div>
             <div className="benefit-item">
-              <CheckCircle2 size={14} color="var(--secondary)" />
+              <CheckCircle2 size={14} color="var(--brand-ink)" />
               <span>{t('limitModal.benefits.offline', 'Çevrimdışı')}</span>
             </div>
           </div>
@@ -181,7 +181,7 @@ const LimitReachedModal = ({
           width: 80px; height: 80px;
           margin: 0 auto;
           display: flex; align-items: center; justify-content: center;
-          background: rgba(251, 191, 36, 0.1);
+          background: color-mix(in srgb, var(--gold) 10%, transparent);
           border-radius: 24px;
           position: relative;
         }
@@ -190,7 +190,7 @@ const LimitReachedModal = ({
           content: '';
           position: absolute;
           inset: -10px;
-          background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
+          background: radial-gradient(circle, color-mix(in srgb, var(--gold) 20%, transparent) 0%, transparent 70%);
           border-radius: inherit;
           animation: pulseCrown 2s infinite;
         }
@@ -206,15 +206,15 @@ const LimitReachedModal = ({
           align-items: center;
           gap: 16px;
           padding: 16px;
-          background: var(--nav-hover);
-          border: 1px solid var(--nav-border);
+          background: var(--paper-sunken);
+          border: 1px solid var(--line);
           border-radius: 16px;
           transition: all 0.3s ease;
         }
 
         .pro-card {
-          border-color: rgba(251, 191, 36, 0.3);
-          background: rgba(251, 191, 36, 0.02);
+          border-color: color-mix(in srgb, var(--gold) 30%, transparent);
+          background: color-mix(in srgb, var(--gold) 2%, transparent);
         }
 
         .option-icon-box {
@@ -233,11 +233,11 @@ const LimitReachedModal = ({
         .benefit-item span {
           font-size: 0.75rem;
           font-weight: 700;
-          color: var(--nav-text-muted);
+          color: var(--ink-muted);
         }
 
         .upgrade-btn {
-          background: linear-gradient(135deg, var(--tertiary), var(--on-tertiary-fixed-variant));
+          background: linear-gradient(135deg, var(--gold-ink), var(--on-tertiary-fixed-variant));
           color: var(--on-tertiary);
           border: none;
           padding: 16px;
@@ -247,20 +247,20 @@ const LimitReachedModal = ({
           align-items: center;
           justify-content: center;
           gap: 10px;
-          box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+          box-shadow: 0 4px 15px color-mix(in srgb, var(--gold) 30%, transparent);
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .upgrade-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
+          box-shadow: 0 6px 20px color-mix(in srgb, var(--gold) 40%, transparent);
         }
 
         .secondary-btn {
-          background: var(--nav-hover);
-          border: 1px solid var(--nav-border);
-          color: var(--nav-text);
+          background: var(--paper-sunken);
+          border: 1px solid var(--line);
+          color: var(--ink);
           cursor: pointer;
         }
 

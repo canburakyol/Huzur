@@ -92,16 +92,16 @@ const DailyIslamicQuiz = ({ onClose }) => {
               width: '80px', height: '80px', borderRadius: '50%', 
               background: 'linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold))',
               display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px',
-              boxShadow: '0 10px 25px rgba(245, 158, 11, 0.4)'
+              boxShadow: '0 10px 25px color-mix(in srgb, var(--gold) 40%, transparent)'
             }}>
               <Trophy size={40} color='var(--on-primary)' />
             </div>
             
-            <h2 style={{ fontSize: '1.8rem', fontWeight: '950', color: 'var(--nav-text)', margin: '0 0 10px' }}>
+            <h2 style={{ fontSize: '1.8rem', fontWeight: '950', color: 'var(--ink)', margin: '0 0 10px' }}>
               {score === 5 ? t('quiz.perfect') : score >= 3 ? t('quiz.congrats') : t('quiz.goodTry')}
             </h2>
             
-            <p style={{ fontSize: '1rem', color: 'var(--nav-text-muted)', marginBottom: '24px' }}>
+            <p style={{ fontSize: '1rem', color: 'var(--ink-muted)', marginBottom: '24px' }}>
               {hasPlayedToday 
                 ? t('quiz.alreadyPlayed')
                 : t('quiz.completed')}
@@ -110,18 +110,18 @@ const DailyIslamicQuiz = ({ onClose }) => {
             <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '30px' }}>
               <div>
                 <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--accent-gold)' }}>{score}/5</div>
-                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('quiz.correct')}</div>
+                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>{t('quiz.correct')}</div>
               </div>
-              <div style={{ width: '1px', background: 'var(--nav-border)' }} />
+              <div style={{ width: '1px', background: 'var(--line)' }} />
               <div>
                 <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--success)' }}>+{score * 15}</div>
-                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>{t('quiz.xpEarned')}</div>
+                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>{t('quiz.xpEarned')}</div>
               </div>
             </div>
 
             <button onClick={onClose} style={{ 
-              width: '100%', padding: '16px', borderRadius: '16px', border: 'none', background: 'var(--nav-hover)', 
-              color: 'var(--nav-text)', fontSize: '1.05rem', fontWeight: '800' 
+              width: '100%', padding: '16px', borderRadius: '16px', border: 'none', background: 'var(--paper-sunken)', 
+              color: 'var(--ink)', fontSize: '1.05rem', fontWeight: '800' 
             }}>
               {t('common.home', 'Ana Ekrana Dön')}
             </button>
@@ -143,20 +143,20 @@ const DailyIslamicQuiz = ({ onClose }) => {
 
       <div className="feature-content" style={{ padding: '20px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-          <div style={{ background: 'rgba(59, 130, 246, 0.15)', color: 'var(--brand-ink)', padding: '6px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '800' }}>
+          <div style={{ background: 'color-mix(in srgb, var(--brand-ink) 15%, transparent)', color: 'var(--brand-ink)', padding: '6px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '800' }}>
             {t(`quiz.categories.${currentQ.category}`, currentQ.category)}
           </div>
-          <div style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--nav-text-muted)' }}>
+          <div style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--ink-muted)' }}>
             {t('quiz.questionProgress', 'Soru {{current}}/{{total}}', { current: currentIndex + 1, total: 5 })}
           </div>
         </div>
 
         {/* Question Card */}
-        <div className="settings-card reveal-stagger" style={{ flexDirection: 'column', padding: '30px 24px', marginBottom: '24px', border: '1px solid var(--nav-border)' }}>
+        <div className="settings-card reveal-stagger" style={{ flexDirection: 'column', padding: '30px 24px', marginBottom: '24px', border: '1px solid var(--line)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
             <Brain size={24} color="var(--accent-gold)" />
           </div>
-          <h3 style={{ fontSize: '1.4rem', fontWeight: '900', color: 'var(--nav-text)', lineHeight: '1.4', margin: '0' }}>
+          <h3 style={{ fontSize: '1.4rem', fontWeight: '900', color: 'var(--ink)', lineHeight: '1.4', margin: '0' }}>
             {t(`quiz.questions.${currentQ.id}.question`, currentQ.question)}
           </h3>
         </div>
@@ -167,19 +167,19 @@ const DailyIslamicQuiz = ({ onClose }) => {
             const isSelected = selectedOption === idx;
             const isCorrect = currentQ.answer === idx;
             
-            let bgStyle = 'var(--nav-hover)';
-            let colorStyle = 'var(--nav-text)';
-            let borderStyle = '1px solid var(--nav-border)';
+            let bgStyle = 'var(--paper-sunken)';
+            let colorStyle = 'var(--ink)';
+            let borderStyle = '1px solid var(--line)';
             let icon = null;
 
             if (selectedOption !== null) {
               if (isCorrect) {
-                bgStyle = 'rgba(16, 185, 129, 0.15)';
+                bgStyle = 'color-mix(in srgb, var(--success) 15%, transparent)';
                 colorStyle = 'var(--success)';
                 borderStyle = '1px solid var(--success)';
                 icon = <CheckCircle size={20} color="var(--success)" />;
               } else if (isSelected) {
-                bgStyle = 'rgba(239, 68, 68, 0.15)';
+                bgStyle = 'color-mix(in srgb, var(--danger) 15%, transparent)';
                 colorStyle = 'var(--danger)';
                 borderStyle = '1px solid var(--danger)';
                 icon = <XCircle size={20} color="var(--danger)" />;
@@ -211,21 +211,21 @@ const DailyIslamicQuiz = ({ onClose }) => {
         {showExplanation && currentQ.explanation && (
           <div className="reveal-stagger" style={{ 
             marginTop: '24px', padding: '20px', borderRadius: '16px',
-            background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)',
+            background: 'color-mix(in srgb, var(--brand-ink) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--brand-ink) 30%, transparent)',
             animation: 'fadeIn 0.3s ease'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
               <Brain size={18} color="var(--brand-ink)" />
               <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--brand-ink)', textTransform: 'uppercase' }}>{t('quiz.info', 'Bilgi')}</span>
             </div>
-            <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--nav-text)', lineHeight: '1.6', fontWeight: '600' }}>
+            <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--ink)', lineHeight: '1.6', fontWeight: '600' }}>
               {t(`quiz.questions.${currentQ.id}.explanation`, currentQ.explanation)}
             </p>
             <button
               onClick={handleNext}
               style={{
                 marginTop: '16px', width: '100%', padding: '14px', borderRadius: '12px',
-                background: 'linear-gradient(135deg, var(--tertiary), var(--tertiary-fixed-dim))',
+                background: 'linear-gradient(135deg, var(--gold-ink), var(--tertiary-fixed-dim))',
                 color: 'var(--on-primary)', border: 'none', fontSize: '1rem', fontWeight: '800',
                 cursor: 'pointer'
               }}

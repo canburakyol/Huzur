@@ -36,8 +36,8 @@ const DuaList = () => {
   if (loading && duas.length === 0) {
     return (
       <div className="settings-card reveal-stagger" style={{ justifyContent: 'center', padding: '40px' }}>
-        <div className="spin"><RefreshCw size={32} color="var(--nav-accent)" /></div>
-        <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{t('common.loading')}</p>
+        <div className="spin"><RefreshCw size={32} color="var(--brand-ink)" /></div>
+        <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--ink-muted)', fontWeight: '600' }}>{t('common.loading')}</p>
       </div>
     );
   }
@@ -46,7 +46,7 @@ const DuaList = () => {
     return (
       <div className="settings-card reveal-stagger" style={{ borderColor: 'var(--danger)', flexDirection: 'column', gap: '8px' }}>
         <p style={{ margin: 0, fontSize: '1rem', fontWeight: '800', color: 'var(--danger)' }}>{t('common.error')}</p>
-        <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{error}</p>
+        <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600' }}>{error}</p>
       </div>
     );
   }
@@ -105,7 +105,7 @@ const DuaList = () => {
         {duas.length === 0 && !loading && (
           <div className="settings-card reveal-stagger sanctuary-empty" style={{ flexDirection: 'column', alignItems: 'center', padding: '60px 20px', gap: '16px' }}>
             <Heart size={48} color="var(--hb-accent)" />
-            <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--nav-text-muted)', fontWeight: '700', textAlign: 'center' }}>
+            <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--ink-muted)', fontWeight: '700', textAlign: 'center' }}>
               {t('community.messages.noDuas')}
             </p>
           </div>

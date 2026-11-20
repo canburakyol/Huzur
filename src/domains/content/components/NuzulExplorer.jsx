@@ -194,12 +194,12 @@ const NuzulExplorer = ({ onClose }) => {
         .header-content h1 {
           font-size: 1.4rem;
           margin: 0;
-          color: var(--text-primary);
+          color: var(--ink);
         }
 
         .subtitle {
           font-size: 0.8rem;
-          color: var(--text-secondary);
+          color: var(--ink-muted);
           margin: 2px 0 0 0;
         }
 
@@ -222,12 +222,12 @@ const NuzulExplorer = ({ onClose }) => {
 
         .nuzul-welcome h2 {
           font-size: 1.3rem;
-          color: var(--text-primary);
+          color: var(--ink);
           margin: 0 0 8px 0;
         }
 
         .nuzul-welcome > p {
-          color: var(--text-secondary);
+          color: var(--ink-muted);
           font-size: 14px;
           margin: 0 0 24px 0;
         }
@@ -242,7 +242,7 @@ const NuzulExplorer = ({ onClose }) => {
 
         .suggested-questions h4 {
           font-size: 12px;
-          color: var(--text-secondary);
+          color: var(--ink-muted);
           margin: 0 0 12px 0;
           text-transform: uppercase;
           letter-spacing: 0.5px;
@@ -257,7 +257,7 @@ const NuzulExplorer = ({ onClose }) => {
           background: rgba(255,255,255,0.05);
           border: 1px solid rgba(255,255,255,0.1);
           border-radius: 10px;
-          color: var(--text-primary);
+          color: var(--ink);
           font-size: 13px;
           cursor: pointer;
           margin-bottom: 8px;
@@ -293,7 +293,7 @@ const NuzulExplorer = ({ onClose }) => {
         }
 
         .message.user .message-avatar {
-          background: var(--primary);
+          background: var(--brand-ink);
         }
 
         .message-content {
@@ -310,19 +310,19 @@ const NuzulExplorer = ({ onClose }) => {
         .result-title {
           margin: 0 0 8px 0;
           font-size: 1.1rem;
-          color: var(--primary);
+          color: var(--brand-ink);
         }
 
         .message-content p {
           margin: 0 0 8px 0;
           font-size: 14px;
           line-height: 1.6;
-          color: var(--text-primary);
+          color: var(--ink);
         }
 
         .source-tag {
           font-size: 11px;
-          color: var(--text-secondary);
+          color: var(--ink-muted);
           margin-top: 12px;
           padding-top: 8px;
           border-top: 1px solid rgba(255,255,255,0.1);
@@ -372,20 +372,20 @@ const NuzulExplorer = ({ onClose }) => {
           background: rgba(255,255,255,0.1);
           border: 1px solid rgba(255,255,255,0.2);
           border-radius: 25px;
-          color: var(--text-primary);
+          color: var(--ink);
           font-size: 15px;
           outline: none;
         }
 
         .input-wrapper input::placeholder {
-          color: var(--text-secondary);
+          color: var(--ink-muted);
         }
 
         .send-btn {
           width: 50px;
           height: 50px;
           border-radius: 50%;
-          background: var(--primary);
+          background: var(--brand-ink);
           color: white;
           border: none;
           display: flex;
@@ -410,7 +410,7 @@ const NuzulExplorer = ({ onClose }) => {
           border-radius: 20px;
           font-size: 14px;
           font-weight: 600;
-          color: var(--text-primary);
+          color: var(--ink);
         }
 
         .limit-badge.empty {
@@ -423,7 +423,7 @@ const NuzulExplorer = ({ onClose }) => {
         }
 
         .pro-badge-mini {
-          color: var(--primary);
+          color: var(--brand-ink);
         }
 
         .nuzul-messages {
@@ -445,12 +445,12 @@ const NuzulExplorer = ({ onClose }) => {
 
         .nuzul-welcome h2 {
           font-size: 1.3rem;
-          color: var(--text-primary);
+          color: var(--ink);
           margin: 0 0 8px 0;
         }
 
         .nuzul-welcome > p {
-          color: var(--text-secondary);
+          color: var(--ink-muted);
           font-size: 14px;
           margin: 0 0 24px 0;
         }
@@ -465,7 +465,7 @@ const NuzulExplorer = ({ onClose }) => {
 
         .suggested-questions h4 {
           font-size: 12px;
-          color: var(--text-secondary);
+          color: var(--ink-muted);
           margin: 0 0 12px 0;
           text-transform: uppercase;
           letter-spacing: 0.5px;
@@ -480,7 +480,7 @@ const NuzulExplorer = ({ onClose }) => {
           background: rgba(255,255,255,0.05);
           border: 1px solid rgba(255,255,255,0.1);
           border-radius: 10px;
-          color: var(--text-primary);
+          color: var(--ink);
           font-size: 13px;
           cursor: pointer;
           margin-bottom: 8px;
@@ -510,7 +510,7 @@ const NuzulExplorer = ({ onClose }) => {
           border: 1px solid rgba(212, 175, 55, 0.3);
           border-radius: 10px;
           font-size: 12px;
-          color: var(--primary);
+          color: var(--brand-ink);
         }
 
         .message {
@@ -533,7 +533,7 @@ const NuzulExplorer = ({ onClose }) => {
         }
 
         .message.user .message-avatar {
-          background: var(--primary);
+          background: var(--brand-ink);
         }
 
         .message-content {
@@ -550,14 +550,14 @@ const NuzulExplorer = ({ onClose }) => {
         .result-title {
           margin: 0 0 8px 0;
           font-size: 1.1rem;
-          color: var(--primary);
+          color: var(--brand-ink);
         }
 
         .message-content p {
           margin: 0 0 8px 0;
           font-size: 14px;
           line-height: 1.6;
-          color: var(--text-primary);
+          color: var(--ink);
         }
 
         .message-content p:last-child {
@@ -566,7 +566,7 @@ const NuzulExplorer = ({ onClose }) => {
 
         .source-tag {
           font-size: 11px;
-          color: var(--text-secondary);
+          color: var(--ink-muted);
           margin-top: 12px;
           padding-top: 8px;
           border-top: 1px solid rgba(255,255,255,0.1);
@@ -577,7 +577,7 @@ const NuzulExplorer = ({ onClose }) => {
           display: flex;
           align-items: center;
           gap: 10px;
-          color: var(--text-secondary);
+          color: var(--ink-muted);
         }
 
         .spin {
@@ -634,24 +634,24 @@ const NuzulExplorer = ({ onClose }) => {
           background: rgba(255,255,255,0.1);
           border: 1px solid rgba(255,255,255,0.2);
           border-radius: 25px;
-          color: var(--text-primary);
+          color: var(--ink);
           font-size: 15px;
           outline: none;
         }
 
         .input-wrapper input::placeholder {
-          color: var(--text-secondary);
+          color: var(--ink-muted);
         }
 
         .input-wrapper input:focus {
-          border-color: var(--primary);
+          border-color: var(--brand-ink);
         }
 
         .send-btn {
           width: 50px;
           height: 50px;
           border-radius: 50%;
-          background: var(--primary);
+          background: var(--brand-ink);
           color: white;
           border: none;
           display: flex;
@@ -673,7 +673,7 @@ const NuzulExplorer = ({ onClose }) => {
         .remaining-hint {
           text-align: center;
           font-size: 11px;
-          color: var(--text-secondary);
+          color: var(--ink-muted);
           margin-top: 8px;
         }
 

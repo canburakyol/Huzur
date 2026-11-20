@@ -23,7 +23,7 @@ const MemberCard = ({ member, isChild = false, onClick, style }) => {
         alignItems: 'center',
         cursor: onClick ? 'pointer' : 'default',
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        borderLeft: `4px solid ${isChild ? 'var(--secondary)' : 'var(--nav-accent)'}`,
+        borderLeft: `4px solid ${isChild ? 'var(--brand-ink)' : 'var(--brand-ink)'}`,
         ...style
       }}
     >
@@ -32,7 +32,7 @@ const MemberCard = ({ member, isChild = false, onClick, style }) => {
         width: '56px', 
         height: '56px', 
         fontSize: '1.75rem',
-        background: 'var(--nav-hover)',
+        background: 'var(--paper-sunken)',
         borderRadius: '16px'
       }}>
         {isChild ? <Baby size={26} strokeWidth={1.75} aria-hidden="true" /> : <User size={26} strokeWidth={1.75} aria-hidden="true" />}
@@ -41,7 +41,7 @@ const MemberCard = ({ member, isChild = false, onClick, style }) => {
       <div style={{ flex: 1 }}>
         <h4 style={{ 
             margin: '0 0 6px 0', 
-            color: 'var(--nav-text)', 
+            color: 'var(--ink)', 
             fontWeight: '900',
             fontSize: '1.05rem',
             display: 'flex',
@@ -52,8 +52,8 @@ const MemberCard = ({ member, isChild = false, onClick, style }) => {
           {isChild && (
             <span style={{ 
                 fontSize: '0.7rem', 
-                color: 'var(--secondary)',
-                background: 'color-mix(in srgb, var(--secondary) 10%, transparent)',
+                color: 'var(--brand-ink)',
+                background: 'color-mix(in srgb, var(--brand-ink) 10%, transparent)',
                 padding: '2px 8px', 
                 borderRadius: '6px',
                 fontWeight: '800',
@@ -64,24 +64,24 @@ const MemberCard = ({ member, isChild = false, onClick, style }) => {
           )}
         </h4>
         
-        <div style={{ display: 'flex', gap: '16px', fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+        <div style={{ display: 'flex', gap: '16px', fontSize: '0.8rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Flame size={14} color="var(--tertiary)" fill="var(--tertiary)" />
+            <Flame size={14} color="var(--gold-ink)" fill="var(--gold-ink)" />
             <span>{fajrStreak}</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <BookOpen size={14} color="var(--nav-accent)" />
+            <BookOpen size={14} color="var(--brand-ink)" />
             <span>{quranStreak}</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Trophy size={14} color="var(--tertiary)" />
+            <Trophy size={14} color="var(--gold-ink)" />
             <span>{badgeCount}</span>
           </div>
         </div>
       </div>
 
       {onClick && (
-        <div style={{ color: 'var(--nav-accent)', opacity: 0.5 }}>
+        <div style={{ color: 'var(--brand-ink)', opacity: 0.5 }}>
             <ChevronRight size={20} />
         </div>
       )}

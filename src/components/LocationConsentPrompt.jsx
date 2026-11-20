@@ -30,7 +30,7 @@ function LocationConsentPrompt({ onDecision }) {
         justifyContent: 'center',
         padding: 'max(14px, env(safe-area-inset-top, 0px)) max(14px, env(safe-area-inset-right, 0px)) max(14px, env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px))',
         background:
-          'linear-gradient(180deg, color-mix(in srgb, var(--surface-page) 96%, var(--primary) 4%), var(--surface-page))',
+          'linear-gradient(180deg, color-mix(in srgb, var(--paper) 96%, var(--brand-ink) 4%), var(--paper))',
       }}
     >
       <div
@@ -40,10 +40,10 @@ function LocationConsentPrompt({ onDecision }) {
           boxSizing: 'border-box',
           padding: 18,
           borderRadius: 18,
-          background: 'var(--surface-container-lowest)',
-          border: '1px solid var(--outline-variant)',
+          background: 'var(--paper-raised)',
+          border: '1px solid var(--line)',
           boxShadow: 'var(--elevation-medium)',
-          color: 'var(--on-surface)',
+          color: 'var(--ink)',
         }}
       >
         <div
@@ -55,17 +55,17 @@ function LocationConsentPrompt({ onDecision }) {
             justifyContent: 'center',
             marginBottom: 14,
             borderRadius: 14,
-            background: 'var(--primary-container)',
+            background: 'var(--brand-soft)',
             color: 'var(--on-primary-container)',
           }}
         >
           <MapPin size={22} />
         </div>
 
-        <h2 id="location-consent-title" style={{ margin: '0 0 8px', fontSize: 20, color: 'var(--primary)' }}>
+        <h2 id="location-consent-title" style={{ margin: '0 0 8px', fontSize: 20, color: 'var(--brand-ink)' }}>
           {t('locationConsent.title', 'Konumunu kullanabilir miyiz?')}
         </h2>
-        <p style={{ margin: '0 0 16px', lineHeight: 1.5, fontSize: 14, color: 'var(--on-surface-variant)' }}>
+        <p style={{ margin: '0 0 16px', lineHeight: 1.5, fontSize: 14, color: 'var(--ink-muted)' }}>
           {t(
             'locationConsent.description',
             'Bulunduğun şehre göre doğru namaz vakitlerini ve hava durumunu göstermek için konum izni gerekir. İzin vermezsen İstanbul varsayılan olarak kullanılır.'
@@ -81,7 +81,7 @@ function LocationConsentPrompt({ onDecision }) {
               minHeight: 44,
               border: 'none',
               borderRadius: 12,
-              background: 'var(--primary)',
+              background: 'var(--brand-ink)',
               color: 'var(--on-primary)',
               fontWeight: 800,
               opacity: loading ? 0.7 : 1,
@@ -96,9 +96,9 @@ function LocationConsentPrompt({ onDecision }) {
             style={{
               minHeight: 42,
               borderRadius: 12,
-              border: '1px solid var(--outline-variant)',
-              background: 'var(--surface-container-low)',
-              color: 'var(--on-surface)',
+              border: '1px solid var(--line)',
+              background: 'var(--paper)',
+              color: 'var(--ink)',
               fontWeight: 700,
             }}
           >

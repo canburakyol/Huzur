@@ -57,8 +57,8 @@ const Streak24hRecoveryModal = ({
         maxWidth: '420px',
         width: '90%',
         position: 'relative',
-        border: '1px solid color-mix(in srgb, var(--tertiary) 30%, transparent)',
-        boxShadow: '0 20px 40px color-mix(in srgb, var(--surface-dim) 40%, transparent), 0 0 20px color-mix(in srgb, var(--tertiary) 10%, transparent)'
+        border: '1px solid color-mix(in srgb, var(--gold-ink) 30%, transparent)',
+        boxShadow: '0 20px 40px color-mix(in srgb, var(--paper-sunken) 40%, transparent), 0 0 20px color-mix(in srgb, var(--gold-ink) 10%, transparent)'
       }}>
         <button
           onClick={onClose}
@@ -67,9 +67,9 @@ const Streak24hRecoveryModal = ({
             position: 'absolute',
             top: '16px',
             right: '16px',
-            background: 'var(--nav-hover)',
+            background: 'var(--paper-sunken)',
             border: 'none',
-            color: 'var(--nav-text-muted)',
+            color: 'var(--ink-muted)',
             width: '32px',
             height: '32px',
             borderRadius: '50%',
@@ -86,8 +86,8 @@ const Streak24hRecoveryModal = ({
           <div className="settings-icon-box" style={{
             width: '70px',
             height: '70px',
-            background: 'color-mix(in srgb, var(--tertiary) 15%, transparent)',
-            color: 'var(--tertiary)',
+            background: 'color-mix(in srgb, var(--gold-ink) 15%, transparent)',
+            color: 'var(--gold-ink)',
             borderRadius: '20px',
             margin: '0 auto 24px'
           }}>
@@ -98,7 +98,7 @@ const Streak24hRecoveryModal = ({
             margin: '0 0 12px 0',
             fontSize: '1.5rem',
             fontWeight: '950',
-            color: 'var(--nav-text)',
+            color: 'var(--ink)',
             letterSpacing: '-0.5px'
           }}>
             {t('streak24h.title', 'Manevi Ritim Telafisi')}
@@ -107,7 +107,7 @@ const Streak24hRecoveryModal = ({
           <p style={{
             margin: '0 0 20px 0',
             fontSize: '0.9rem',
-            color: 'var(--nav-text-muted)',
+            color: 'var(--ink-muted)',
             fontWeight: '600',
             lineHeight: '1.6'
           }}>
@@ -121,7 +121,7 @@ const Streak24hRecoveryModal = ({
             <p style={{
               margin: '0 0 20px 0',
               fontSize: '0.82rem',
-              color: 'var(--nav-accent)',
+              color: 'var(--brand-ink)',
               fontWeight: '700',
               lineHeight: '1.5'
             }}>
@@ -138,13 +138,13 @@ const Streak24hRecoveryModal = ({
             justifyContent: 'center',
             gap: '8px',
             padding: '12px',
-            background: 'var(--nav-hover)',
+            background: 'var(--paper-sunken)',
             borderRadius: '12px',
             marginBottom: '32px',
-            border: '1px solid var(--nav-border)'
+            border: '1px solid var(--line)'
           }}>
-            <Clock size={16} color="var(--nav-accent)" />
-            <span style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+            <Clock size={16} color="var(--brand-ink)" />
+            <span style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--ink)' }}>
               {t('streak24h.deadline', {
                 value: deadline ? new Date(deadline).toLocaleTimeString() : '-',
                 defaultValue: 'Kalan dengeleme süresi: {{value}}'
@@ -160,7 +160,7 @@ const Streak24hRecoveryModal = ({
               style={{
                 flex: 1,
                 padding: '16px',
-                background: 'var(--tertiary)',
+                background: 'var(--gold-ink)',
                 opacity: isSubmitting ? 0.7 : 1,
                 cursor: isSubmitting ? 'wait' : 'pointer'
               }}
@@ -176,9 +176,9 @@ const Streak24hRecoveryModal = ({
               disabled={isSubmitting}
               style={{
                 flex: 1,
-                border: '1px solid var(--nav-border)',
+                border: '1px solid var(--line)',
                 background: 'transparent',
-                color: 'var(--nav-text-muted)',
+                color: 'var(--ink-muted)',
                 borderRadius: '16px',
                 padding: '16px',
                 fontWeight: '800',
@@ -195,9 +195,9 @@ const Streak24hRecoveryModal = ({
               marginTop: '14px',
               padding: '12px 14px',
               borderRadius: '12px',
-              background: 'rgba(185, 28, 28, 0.14)',
-              border: '1px solid rgba(248, 113, 113, 0.24)',
-              color: '#fecaca',
+              background: 'color-mix(in srgb, var(--danger) 14%, transparent)',
+              border: '1px solid color-mix(in srgb, var(--danger) 24%, transparent)',
+              color: 'var(--danger)',
               fontSize: '0.82rem',
               fontWeight: '700'
             }}>
@@ -227,7 +227,7 @@ const Streak24hRecoveryModal = ({
         }
 
         .velocity-btn-primary {
-            background: var(--nav-accent);
+            background: var(--brand-ink);
             color: white;
             border: none;
             border-radius: 16px;

@@ -148,15 +148,15 @@ const MosqueFinder = ({ onClose }) => {
             {/* Header */}
             <div style={{
                 padding: '24px 20px',
-                background: 'linear-gradient(135deg, var(--nav-bg), var(--nav-hover))',
-                borderBottom: '1px solid var(--nav-border)',
+                background: 'linear-gradient(135deg, var(--paper), var(--paper-sunken))',
+                borderBottom: '1px solid var(--line)',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <IslamicBackButton onClick={onClose} size="medium" />
-                    <h2 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--nav-text)', fontWeight: '900' }}>
+                    <h2 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--ink)', fontWeight: '900' }}>
                         {t('mosqueFinder.title', 'En Yakın Camiler')}
                     </h2>
                 </div>
@@ -164,8 +164,8 @@ const MosqueFinder = ({ onClose }) => {
                     <button 
                         onClick={getLocation} 
                         style={{ 
-                            background: 'var(--nav-hover)', 
-                            border: '1px solid var(--nav-border)', 
+                            background: 'var(--paper-sunken)', 
+                            border: '1px solid var(--line)', 
                             borderRadius: '12px', 
                             width: '44px', 
                             height: '44px', 
@@ -173,7 +173,7 @@ const MosqueFinder = ({ onClose }) => {
                             display: 'flex', 
                             alignItems: 'center', 
                             justifyContent: 'center',
-                            color: 'var(--nav-accent)'
+                            color: 'var(--brand-ink)'
                         }}
                     >
                         <RefreshCw size={20} />
@@ -198,13 +198,13 @@ const MosqueFinder = ({ onClose }) => {
                         <div className="settings-icon-box spin" style={{ 
                             width: '80px', 
                             height: '80px', 
-                            background: 'var(--nav-hover)',
-                            color: 'var(--nav-accent)',
+                            background: 'var(--paper-sunken)',
+                            color: 'var(--brand-ink)',
                             animation: 'spin 2s linear infinite'
                         }}>
                             <Loader size={32} />
                         </div>
-                        <div style={{ marginTop: '24px', color: 'var(--nav-text)', fontWeight: '800', fontSize: '1.1rem' }}>
+                        <div style={{ marginTop: '24px', color: 'var(--ink)', fontWeight: '800', fontSize: '1.1rem' }}>
                             {t('mosqueFinder.locating', 'Konumunuz Hesaplanıyor...')}
                         </div>
                     </div>
@@ -220,12 +220,12 @@ const MosqueFinder = ({ onClose }) => {
                         justifyContent: 'center',
                         padding: '40px',
                         textAlign: 'center',
-                        background: 'var(--nav-bg)'
+                        background: 'var(--paper)'
                     }}>
                         <div style={{ 
                             color: 'var(--brand-ink)',
                             marginBottom: '24px',
-                            background: 'var(--nav-hover)',
+                            background: 'var(--paper-sunken)',
                             width: '120px',
                             height: '120px',
                             display: 'flex',
@@ -233,10 +233,10 @@ const MosqueFinder = ({ onClose }) => {
                             justifyContent: 'center',
                             borderRadius: '32px'
                         }}><MapPin size={48} strokeWidth={1.5} aria-hidden="true" /></div>
-                        <div style={{ fontSize: '1.5rem', color: 'var(--nav-text)', marginBottom: '16px', fontWeight: '900' }}>
+                        <div style={{ fontSize: '1.5rem', color: 'var(--ink)', marginBottom: '16px', fontWeight: '900' }}>
                             {t('mosqueFinder.permissionTitle', 'Konum İzni Gerekli')}
                         </div>
-                        <div style={{ fontSize: '1rem', color: 'var(--nav-text-muted)', marginBottom: '32px', maxWidth: '300px', fontWeight: '600', lineHeight: '1.6' }}>
+                        <div style={{ fontSize: '1rem', color: 'var(--ink-muted)', marginBottom: '32px', maxWidth: '300px', fontWeight: '600', lineHeight: '1.6' }}>
                             {error}
                         </div>
                         <button
@@ -244,7 +244,7 @@ const MosqueFinder = ({ onClose }) => {
                             className="velocity-target-btn"
                             style={{
                                 padding: '20px 40px',
-                                background: 'var(--nav-accent)',
+                                background: 'var(--brand-ink)',
                                 color: 'var(--on-primary)',
                                 borderRadius: '20px',
                                 fontSize: '1.1rem',
@@ -265,8 +265,8 @@ const MosqueFinder = ({ onClose }) => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                background: 'var(--nav-bg)',
-                                color: 'var(--nav-text)',
+                                background: 'var(--paper)',
+                                color: 'var(--ink)',
                                 fontWeight: 800
                             }}>
                                 <Loader size={24} className="spin" />
@@ -287,12 +287,12 @@ const MosqueFinder = ({ onClose }) => {
             <div style={{
                 maxHeight: '40%',
                 overflowY: 'auto',
-                background: 'var(--nav-bg)',
-                borderTop: '1px solid var(--nav-border)',
+                background: 'var(--paper)',
+                borderTop: '1px solid var(--line)',
                 padding: '8px 0'
             }}>
                 {mosques.length === 0 && !loading && (
-                    <div style={{ padding: '32px', textAlign: 'center', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                    <div style={{ padding: '32px', textAlign: 'center', color: 'var(--ink-muted)', fontWeight: '700' }}>
                         {t('mosqueFinder.noneFound', 'Yakınınızda cami bulunamadı.')}
                     </div>
                 )}
@@ -305,8 +305,8 @@ const MosqueFinder = ({ onClose }) => {
                             margin: '8px 12px',
                             padding: '16px',
                             cursor: 'pointer',
-                            background: selectedMosque?.id === mosque.id ? 'var(--nav-hover)' : 'var(--nav-bg)',
-                            border: selectedMosque?.id === mosque.id ? '1px solid var(--nav-accent)' : '1px solid var(--nav-border)',
+                            background: selectedMosque?.id === mosque.id ? 'var(--paper-sunken)' : 'var(--paper)',
+                            border: selectedMosque?.id === mosque.id ? '1px solid var(--brand-ink)' : '1px solid var(--line)',
                             borderRadius: '16px'
                         }}
                     >
@@ -314,7 +314,7 @@ const MosqueFinder = ({ onClose }) => {
                             <div className="settings-icon-box" style={{ 
                                 width: '44px', 
                                 height: '44px', 
-                                background: 'var(--nav-hover)',
+                                background: 'var(--paper-sunken)',
                                 fontSize: '1.25rem'
                             }}>
                                 <Landmark size={20} strokeWidth={1.75} aria-hidden="true" />
@@ -334,7 +334,7 @@ const MosqueFinder = ({ onClose }) => {
                             style={{
                                 width: 'auto',
                                 padding: '8px 16px',
-                                background: 'var(--nav-accent)',
+                                background: 'var(--brand-ink)',
                                 color: 'var(--on-primary)',
                                 borderRadius: '12px',
                                 fontSize: '0.85rem',

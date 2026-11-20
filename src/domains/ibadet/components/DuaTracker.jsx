@@ -108,7 +108,7 @@ export function DuaTracker({ onClose }) {
       <section className="practice-summary" aria-label={t('duaTracker.summaryLabel', 'Dua özeti')}>
         <div className="practice-summary__top">
           <div><div className="practice-summary__value">{stats.completed}</div><div className="practice-summary__label">{t('duaTracker.prayed', 'Dua edildi')}</div></div>
-          <Heart size={22} color="var(--primary)" />
+          <Heart size={22} color="var(--brand-ink)" />
         </div>
         <div className="practice-metrics">
           <div className="practice-metric"><strong>{stats.completed}</strong><span>{t('duaTracker.prayedPersonal', 'Kişisel kayıtta dua edildi')}</span></div>

@@ -6,7 +6,7 @@ const StreakDetail = ({ streaks = {} }) => {
   const { t } = useTranslation();
 
   const streakItems = [
-    { key: 'fajr', icon: <Flame size={20} />, label: t('streak.fajr', 'Sabah Namazı'), color: 'var(--secondary)' },
+    { key: 'fajr', icon: <Flame size={20} />, label: t('streak.fajr', 'Sabah Namazı'), color: 'var(--brand-ink)' },
     { key: 'quran', icon: <BookOpen size={20} />, label: t('streak.quran', 'Kuran Okuma'), color: 'var(--success)' },
     { key: 'dhikr', icon: <Heart size={20} />, label: t('streak.dhikr', 'Zikir'), color: 'var(--brand-ink)' }
   ];
@@ -14,8 +14,8 @@ const StreakDetail = ({ streaks = {} }) => {
   return (
     <div className="reveal-stagger" style={{ marginTop: '32px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', padding: '0 8px' }}>
-          <div style={{ width: '4px', height: '16px', background: 'var(--nav-accent)', borderRadius: '2px' }}></div>
-          <h3 style={{ margin: 0, fontSize: '0.9rem', fontWeight: '900', color: 'var(--nav-text)', textTransform: 'uppercase' }}>
+          <div style={{ width: '4px', height: '16px', background: 'var(--brand-ink)', borderRadius: '2px' }}></div>
+          <h3 style={{ margin: 0, fontSize: '0.9rem', fontWeight: '900', color: 'var(--ink)', textTransform: 'uppercase' }}>
               {t('gamification.streakTitle', 'Zincir Durumu')}
           </h3>
       </div>
@@ -40,13 +40,13 @@ const StreakDetail = ({ streaks = {} }) => {
               
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'flex-end' }}>
-                  <span style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--nav-text)' }}>{item.label}</span>
+                  <span style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--ink)' }}>{item.label}</span>
                   <span style={{ fontWeight: '950', color: item.color, fontSize: '1.1rem' }}>
                     {count} <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>{t('common.days', 'Gün')}</span>
                   </span>
                 </div>
                 
-                <div style={{ width: '100%', background: 'var(--nav-hover)', height: '6px', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', background: 'var(--paper-sunken)', height: '6px', borderRadius: '3px', overflow: 'hidden' }}>
                    <div style={{ 
                       width: `${progress}%`, 
                       background: item.color, 
@@ -64,14 +64,14 @@ const StreakDetail = ({ streaks = {} }) => {
 
       <div className="settings-card" style={{ 
           marginTop: '20px', padding: '16px', 
-          background: 'rgba(245, 158, 11, 0.05)', 
-          border: '1px dashed rgba(245, 158, 11, 0.3)',
+          background: 'color-mix(in srgb, var(--gold) 5%, transparent)', 
+          border: '1px dashed color-mix(in srgb, var(--gold) 30%, transparent)',
           gap: '12px'
       }}>
-        <div className="settings-icon-box" style={{ width: '32px', height: '32px', background: 'transparent', color: 'var(--secondary)' }}>
+        <div className="settings-icon-box" style={{ width: '32px', height: '32px', background: 'transparent', color: 'var(--brand-ink)' }}>
             <Info size={16} />
         </div>
-        <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>
+        <div style={{ fontSize: '0.8rem', color: 'var(--ink-muted)', fontWeight: '600', lineHeight: '1.4' }}>
             {t('gamification.streakTip', 'Zincirini korumak için her gün ibadetlerini aksatma!')}
         </div>
       </div>

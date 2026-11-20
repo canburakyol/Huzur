@@ -45,14 +45,14 @@ const CreateDuaModal = ({ onClose }) => {
     <div className="velocity-modal-overlay">
       <div className="settings-card reveal-stagger" style={{ 
           flexDirection: 'column', padding: '32px', maxWidth: '420px', width: '90%',
-          position: 'relative', border: '1px solid var(--nav-accent)',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(79, 70, 229, 0.1)'
+          position: 'relative', border: '1px solid var(--brand-ink)',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 20px color-mix(in srgb, var(--brand-ink) 10%, transparent)'
       }}>
         <button 
             onClick={onClose}
             style={{ 
                 position: 'absolute', top: '16px', right: '16px', 
-                background: 'var(--nav-hover)', border: 'none', color: 'var(--nav-text-muted)',
+                background: 'var(--paper-sunken)', border: 'none', color: 'var(--ink-muted)',
                 width: '32px', height: '32px', borderRadius: '50%', display: 'flex',
                 alignItems: 'center', justifyContent: 'center', cursor: 'pointer'
             }}
@@ -62,22 +62,22 @@ const CreateDuaModal = ({ onClose }) => {
 
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div className="settings-icon-box" style={{ 
-              width: '64px', height: '64px', background: 'rgba(79, 70, 229, 0.15)', 
-              color: 'var(--nav-accent)', borderRadius: '20px', margin: '0 auto 16px' 
+              width: '64px', height: '64px', background: 'color-mix(in srgb, var(--brand-ink) 15%, transparent)', 
+              color: 'var(--brand-ink)', borderRadius: '20px', margin: '0 auto 16px' 
           }}>
             <Heart size={28} />
           </div>
-          <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: '950', color: 'var(--nav-text)', letterSpacing: '-0.5px' }}>
+          <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: '950', color: 'var(--ink)', letterSpacing: '-0.5px' }}>
              {t('dua.create.title', 'Dua İsteği Paylaş')}
           </h3>
-          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
             {t('dua.create.subtitle', 'Halkadan dua isteğinde bulun')}
           </p>
         </div>
         
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
-            <label style={{ display: 'block', color: 'var(--nav-text)', marginBottom: '8px', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            <label style={{ display: 'block', color: 'var(--ink)', marginBottom: '8px', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 {t('dua.create.intentLabel', 'Niyetiniz')}
             </label>
             <textarea 
@@ -95,19 +95,19 @@ const CreateDuaModal = ({ onClose }) => {
             onClick={() => setIsAnonymous(!isAnonymous)}
             style={{ 
                 display: 'flex', alignItems: 'center', gap: '12px', padding: '12px', 
-                background: isAnonymous ? 'rgba(79, 70, 229, 0.1)' : 'var(--nav-hover)', 
+                background: isAnonymous ? 'color-mix(in srgb, var(--brand-ink) 10%, transparent)' : 'var(--paper-sunken)', 
                 borderRadius: '12px', cursor: 'pointer', transition: 'all 0.3s',
-                border: isAnonymous ? '1px solid var(--nav-accent)' : '1px solid var(--nav-border)'
+                border: isAnonymous ? '1px solid var(--brand-ink)' : '1px solid var(--line)'
             }}
           >
-            <div style={{ color: isAnonymous ? 'var(--nav-accent)' : 'var(--nav-text-muted)' }}>
+            <div style={{ color: isAnonymous ? 'var(--brand-ink)' : 'var(--ink-muted)' }}>
                 {isAnonymous ? <ShieldCheck size={20} /> : <ShieldOff size={20} />}
             </div>
             <div style={{ flex: 1 }}>
-                <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: '800', color: 'var(--ink)' }}>
                     {t('dua.create.anonymousLabel', 'İsimsiz Paylaş')}
                 </p>
-                <p style={{ margin: 0, fontSize: '0.7rem', fontWeight: '600', color: 'var(--nav-text-muted)' }}>
+                <p style={{ margin: 0, fontSize: '0.7rem', fontWeight: '600', color: 'var(--ink-muted)' }}>
                     {isAnonymous ? t('dua.create.anonymousActive', 'Kimliğiniz gizlenecektir') : t('dua.create.anonymousInactive', 'Adınız görünecektir')}
                 </p>
             </div>
@@ -115,7 +115,7 @@ const CreateDuaModal = ({ onClose }) => {
               type="checkbox" 
               checked={isAnonymous}
               onChange={() => {}} // Controlled via parent div click
-              style={{ width: '18px', height: '18px', accentColor: 'var(--nav-accent)', opacity: 0 }}
+              style={{ width: '18px', height: '18px', accentColor: 'var(--brand-ink)', opacity: 0 }}
             />
           </div>
 
@@ -124,8 +124,8 @@ const CreateDuaModal = ({ onClose }) => {
               type="button" 
               onClick={onClose}
               style={{ 
-                  flex: 1, background: 'transparent', border: '1px solid var(--nav-border)', 
-                  color: 'var(--nav-text-muted)', padding: '14px', borderRadius: '14px',
+                  flex: 1, background: 'transparent', border: '1px solid var(--line)', 
+                  color: 'var(--ink-muted)', padding: '14px', borderRadius: '14px',
                   fontSize: '0.9rem', fontWeight: '800', cursor: 'pointer' 
               }}
             >
@@ -151,7 +151,7 @@ const CreateDuaModal = ({ onClose }) => {
           {isAuthBlocked && (
             <div style={{ 
                 display: 'flex', alignItems: 'center', gap: '8px', 
-                padding: '10px', background: 'rgba(239, 68, 68, 0.1)', 
+                padding: '10px', background: 'color-mix(in srgb, var(--danger) 10%, transparent)', 
                 borderRadius: '10px', color: 'var(--danger)' 
             }}>
               <AlertCircle size={14} />
@@ -179,10 +179,10 @@ const CreateDuaModal = ({ onClose }) => {
         .velocity-input {
             width: 100%;
             padding: 14px 16px;
-            background: var(--nav-hover);
-            border: 1px solid var(--nav-border);
+            background: var(--paper-sunken);
+            border: 1px solid var(--line);
             border-radius: 12px;
-            color: var(--nav-text);
+            color: var(--ink);
             font-size: 0.9rem;
             font-weight: 600;
             outline: none;
@@ -190,13 +190,13 @@ const CreateDuaModal = ({ onClose }) => {
         }
 
         .velocity-input:focus {
-            border-color: var(--nav-accent);
-            background: var(--nav-bg);
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+            border-color: var(--brand-ink);
+            background: var(--paper);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-ink) 10%, transparent);
         }
 
         .velocity-btn-primary {
-            background: var(--nav-accent);
+            background: var(--brand-ink);
             color: white;
             border: none;
             border-radius: 14px;
@@ -207,7 +207,7 @@ const CreateDuaModal = ({ onClose }) => {
             align-items: center;
             justify-content: center;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.2);
+            box-shadow: 0 8px 16px color-mix(in srgb, var(--brand-ink) 20%, transparent);
         }
 
         .velocity-btn-primary:active { transform: scale(0.97); }

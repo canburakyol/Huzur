@@ -96,39 +96,39 @@ const Adhkar = ({ onClose }) => {
             />
 
             {/* Tab Switch */}
-            <div className="settings-card" style={{ padding: '6px', background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', marginBottom: '24px' }}>
+            <div className="settings-card" style={{ padding: '6px', background: 'var(--paper-sunken)', border: '1px solid var(--line)', marginBottom: '24px' }}>
                 <button
                     onClick={() => setActiveTab('morning')}
                     style={{
                         flex: 1, padding: '12px', borderRadius: '12px', border: 'none',
-                        background: activeTab === 'morning' ? 'var(--nav-bg)' : 'transparent',
-                        color: activeTab === 'morning' ? 'var(--nav-text)' : 'var(--nav-text-muted)',
+                        background: activeTab === 'morning' ? 'var(--paper)' : 'transparent',
+                        color: activeTab === 'morning' ? 'var(--ink)' : 'var(--ink-muted)',
                         fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                         boxShadow: activeTab === 'morning' ? '0 4px 12px rgba(0,0,0,0.05)' : 'none',
                         transition: 'all 0.2s'
                     }}
                 >
-                    <Sunrise size={18} color={activeTab === 'morning' ? 'var(--primary)' : 'currentColor'} />
+                    <Sunrise size={18} color={activeTab === 'morning' ? 'var(--brand-ink)' : 'currentColor'} />
                     {t('adhkar.morning', 'Sabah')}
                 </button>
                 <button
                     onClick={() => setActiveTab('evening')}
                     style={{
                         flex: 1, padding: '12px', borderRadius: '12px', border: 'none',
-                        background: activeTab === 'evening' ? 'var(--nav-bg)' : 'transparent',
-                        color: activeTab === 'evening' ? 'var(--nav-text)' : 'var(--nav-text-muted)',
+                        background: activeTab === 'evening' ? 'var(--paper)' : 'transparent',
+                        color: activeTab === 'evening' ? 'var(--ink)' : 'var(--ink-muted)',
                         fontWeight: '800', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                         boxShadow: activeTab === 'evening' ? '0 4px 12px rgba(0,0,0,0.05)' : 'none',
                         transition: 'all 0.2s'
                     }}
                 >
-                    <Moon size={18} color={activeTab === 'evening' ? 'var(--surface-container)' : 'currentColor'} />
+                    <Moon size={18} color={activeTab === 'evening' ? 'var(--paper-sunken)' : 'currentColor'} />
                     {t('adhkar.evening', 'Akşam')}
                 </button>
             </div>
 
             {/* Overall Progress Card */}
-            <div className="settings-card" style={{ background: activeTab === 'morning' ? 'linear-gradient(135deg, var(--primary), var(--primary))' : 'linear-gradient(135deg, var(--surface-container), var(--primary-container))', color: 'var(--on-primary)', border: 'none', padding: '24px', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
+            <div className="settings-card" style={{ background: activeTab === 'morning' ? 'linear-gradient(135deg, var(--brand-ink), var(--brand-ink))' : 'linear-gradient(135deg, var(--paper-sunken), var(--brand-soft))', color: 'var(--on-primary)', border: 'none', padding: '24px', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                     <div>
                         <div style={{ fontSize: '0.85rem', fontWeight: '700', opacity: 0.9 }}>{t('adhkar.dailyProgress', 'Günlük İlerleme')}</div>
@@ -137,7 +137,7 @@ const Adhkar = ({ onClose }) => {
                     <Zap size={32} />
                 </div>
                 <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.2)', borderRadius: '10px', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${overallProgress}%`, background: 'var(--surface-card)', transition: 'width 0.4s ease' }} />
+                    <div style={{ height: '100%', width: `${overallProgress}%`, background: 'var(--paper-raised)', transition: 'width 0.4s ease' }} />
                 </div>
             </div>
 
@@ -157,26 +157,26 @@ const Adhkar = ({ onClose }) => {
                                     onClick={() => setExpanded(isExpanded ? null : adhkar.id)}
                                     style={{ 
                                         padding: '16px', 
-                                        background: isComplete ? 'rgba(16, 185, 129, 0.05)' : 'var(--nav-bg)',
-                                        border: isComplete ? '1px solid rgba(16, 185, 129, 0.2)' : '1px solid var(--nav-border)'
+                                        background: isComplete ? 'color-mix(in srgb, var(--success) 5%, transparent)' : 'var(--paper)',
+                                        border: isComplete ? '1px solid color-mix(in srgb, var(--success) 20%, transparent)' : '1px solid var(--line)'
                                     }}
                                 >
                                     <div className="settings-card-left">
                                         <div className="settings-icon-box" style={{ 
-                                            background: isComplete ? 'var(--surface-container)' : 'var(--nav-hover)',
-                                            color: isComplete ? 'var(--on-primary)' : 'var(--nav-text)'
+                                            background: isComplete ? 'var(--paper-sunken)' : 'var(--paper-sunken)',
+                                            color: isComplete ? 'var(--on-primary)' : 'var(--ink)'
                                         }}>
                                             {isComplete ? <Check size={18} /> : <span>{current}</span>}
                                         </div>
                                         <div>
-                                            <div className="settings-label" style={{ color: isComplete ? 'var(--secondary-container)' : 'var(--nav-text)' }}>
+                                            <div className="settings-label" style={{ color: isComplete ? 'var(--secondary-container)' : 'var(--ink)' }}>
                                                 {t(`adhkar.items.${adhkar.key}.title`)}
                                             </div>
                                             <div className="settings-desc">{current} / {adhkar.count} {t('adhkar.times', 'kere')}</div>
                                         </div>
                                     </div>
                                     <ChevronRight size={18} style={{ 
-                                        color: 'var(--nav-border)', 
+                                        color: 'var(--line)', 
                                         transform: isExpanded ? 'rotate(90deg)' : 'none',
                                         transition: 'transform 0.2s'
                                     }} />
@@ -186,31 +186,31 @@ const Adhkar = ({ onClose }) => {
                                     <div className="settings-card reveal-stagger" style={{ 
                                         flexDirection: 'column', gap: '20px', padding: '24px', 
                                         marginTop: '-12px', borderTopLeftRadius: 0, borderTopRightRadius: 0,
-                                        borderTop: 'none', background: 'var(--nav-hover)'
+                                        borderTop: 'none', background: 'var(--paper-sunken)'
                                     }}>
                                         <div style={{ 
-                                            fontFamily: "'Amiri', serif", fontSize: '1.6rem', color: 'var(--nav-text)', 
+                                            fontFamily: "'Amiri', serif", fontSize: '1.6rem', color: 'var(--ink)', 
                                             direction: 'rtl', textAlign: 'center', lineHeight: '1.8' 
                                         }}>
                                             {t(`adhkar.items.${adhkar.key}.arabic`)}
                                         </div>
                                         
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                            <div style={{ fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontStyle: 'italic', background: 'rgba(0,0,0,0.03)', padding: '12px', borderRadius: '12px' }}>
+                                            <div style={{ fontSize: '0.9rem', color: 'var(--ink-muted)', fontStyle: 'italic', background: 'rgba(0,0,0,0.03)', padding: '12px', borderRadius: '12px' }}>
                                                 {t(`adhkar.items.${adhkar.key}.transliteration`)}
                                             </div>
-                                            <div style={{ fontSize: '0.95rem', color: 'var(--nav-text)', lineHeight: '1.5' }}>
+                                            <div style={{ fontSize: '0.95rem', color: 'var(--ink)', lineHeight: '1.5' }}>
                                                 {t(`adhkar.items.${adhkar.key}.meaning`)}
                                             </div>
                                             {adhkar.sourceType && (
-                                                <div data-testid={`source-${adhkar.key}`} style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                                                <div data-testid={`source-${adhkar.key}`} style={{ fontSize: '0.8rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                                                     {adhkar.sourceType === 'quran' ? t('prayers.sourceTypes.quran', 'Kur’an') : t('adhkar.sourceGeneral', 'Genel / kaynak belirtilmemiş')} · {adhkar.citation}
                                                 </div>
                                             )}
                                         </div>
 
-                                        <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', background: 'rgba(15, 118, 110, 0.08)', padding: '12px', borderRadius: '12px' }}>
-                                            <CheckCircle2 size={16} color="var(--surface-container)" style={{ marginTop: '2px' }} />
+                                        <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', background: 'color-mix(in srgb, var(--brand-ink) 8%, transparent)', padding: '12px', borderRadius: '12px' }}>
+                                            <CheckCircle2 size={16} color="var(--paper-sunken)" style={{ marginTop: '2px' }} />
                                             <div style={{ fontSize: '0.85rem', color: 'var(--secondary-container)', fontWeight: '600' }}>{t(adhkar.benefitKey)}</div>
                                         </div>
 
@@ -219,7 +219,7 @@ const Adhkar = ({ onClose }) => {
                                             disabled={isComplete}
                                             style={{
                                                 width: '100%', padding: '18px', borderRadius: '16px', border: 'none',
-                                                background: isComplete ? 'var(--surface-container)' : (activeTab === 'morning' ? 'var(--primary)' : 'var(--surface-container)'),
+                                                background: isComplete ? 'var(--paper-sunken)' : (activeTab === 'morning' ? 'var(--brand-ink)' : 'var(--paper-sunken)'),
                                                 color: 'var(--on-primary)', fontWeight: '800', fontSize: '1.1rem', cursor: isComplete ? 'default' : 'pointer',
                                                 boxShadow: isComplete ? 'none' : '0 4px 12px rgba(0,0,0,0.1)',
                                                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px'
@@ -236,10 +236,10 @@ const Adhkar = ({ onClose }) => {
                 </div>
             </div>
 
-            <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+            <div className="settings-card" style={{ background: 'var(--paper-sunken)', border: 'none', marginTop: '32px' }}>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                    <Info size={18} color="var(--nav-text-muted)" />
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                    <Info size={18} color="var(--ink-muted)" />
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--ink-muted)', lineHeight: '1.5' }}>
                         {t('adhkar.infoNoteReviewed', 'Bu listede Kur’an ayetleri ve genel zikirler birlikte yer alır. Her metnin kaynak bilgisini açarak kontrol edin; kişisel takip, dinî hüküm veya kabul ölçüsü değildir.')}
                     </p>
                 </div>

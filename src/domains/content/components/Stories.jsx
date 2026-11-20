@@ -239,7 +239,7 @@ const Stories = memo(() => {
                                 />
                             </div>
                         </div>
-                        <span style={{ fontSize: '11px', marginTop: '5px', fontWeight: '600', color: 'var(--text-color)' }}>{t(story.titleKey)}</span>
+                        <span style={{ fontSize: '11px', marginTop: '5px', fontWeight: '600', color: 'var(--ink)' }}>{t(story.titleKey)}</span>
                     </div>
                 ))}
             </div>
@@ -253,7 +253,7 @@ const Stories = memo(() => {
                     width: '100%',
                     height: '100%',
                     zIndex: 1100,
-                    background: 'var(--text-body)',
+                    background: 'var(--ink)',
                     display: 'flex',
                     flexDirection: 'column'
                 }}>

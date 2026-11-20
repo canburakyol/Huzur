@@ -113,13 +113,13 @@ const LicensesCredits = ({ onClose }) => {
             {/* Intro */}
             <div className="settings-card thanks-banner" style={{ marginBottom: '32px', padding: '24px', gap: '16px' }}>
                 <div className="heart-box">
-                    <Heart size={24} fill="var(--error)" color="var(--error)" />
+                    <Heart size={24} fill="var(--danger)" color="var(--danger)" />
                 </div>
                 <div style={{ flex: 1 }}>
-                    <h4 style={{ margin: '0 0 4px 0', fontSize: '1rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '1rem', fontWeight: '900', color: 'var(--ink)' }}>
                         {t('licenses.thanks', 'Teşekkürler')}
                     </h4>
-                    <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.5' }}>
+                    <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600', lineHeight: '1.5' }}>
                         {t('licenses.thanksDesc', 'Bu uygulamanın geliştirilmesine katkıda bulunan tüm açık kaynak projelerine ve veri sağlayıcılarına teşekkür ederiz.')}
                     </p>
                 </div>
@@ -164,17 +164,17 @@ const LicensesCredits = ({ onClose }) => {
 
             {/* Disclaimer */}
             <div className="settings-card disclaimer-banner" style={{ marginTop: '32px' }}>
-                <AlertTriangle size={20} color="var(--tertiary)" style={{ flexShrink: 0 }} />
-                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '700', lineHeight: '1.6' }}>
-                    <span style={{ color: 'var(--tertiary)', marginRight: '6px' }}>{t('licenses.disclaimer', 'UYARI:')}</span>
+                <AlertTriangle size={20} color="var(--gold-ink)" style={{ flexShrink: 0 }} />
+                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--ink-muted)', fontWeight: '700', lineHeight: '1.6' }}>
+                    <span style={{ color: 'var(--gold-ink)', marginRight: '6px' }}>{t('licenses.disclaimer', 'UYARI:')}</span>
                     {t('licenses.disclaimerDesc', 'Uygulama üzerinden sağlanan veriler bilgilendirme amaçlıdır. Önemli dini tercihleriniz için resmi kurumların verilerini teyit etmenizi öneririz.')}
                 </p>
             </div>
 
             <style>{`
                 .thanks-banner {
-                    background: rgba(239, 68, 68, 0.03);
-                    border: 1px dashed rgba(239, 68, 68, 0.2);
+                    background: color-mix(in srgb, var(--danger) 3%, transparent);
+                    border: 1px dashed color-mix(in srgb, var(--danger) 20%, transparent);
                     display: flex;
                     align-items: center;
                 }
@@ -182,7 +182,7 @@ const LicensesCredits = ({ onClose }) => {
                 .heart-box {
                     width: 48px; height: 48px;
                     display: flex; align-items: center; justify-content: center;
-                    background: rgba(239, 68, 68, 0.1);
+                    background: color-mix(in srgb, var(--danger) 10%, transparent);
                     border-radius: 14px;
                 }
 
@@ -206,19 +206,19 @@ const LicensesCredits = ({ onClose }) => {
                     gap: 12px;
                     margin-bottom: 20px;
                     padding-bottom: 16px;
-                    border-bottom: 1px solid var(--nav-border);
+                    border-bottom: 1px solid var(--line);
                     width: 100%;
                 }
 
                 .category-icon-box {
-                    color: var(--nav-accent);
+                    color: var(--brand-ink);
                     opacity: 0.8;
                 }
 
                 .category-title {
                     font-size: 0.75rem;
                     font-weight: 950;
-                    color: var(--nav-accent);
+                    color: var(--brand-ink);
                     text-transform: uppercase;
                     letter-spacing: 1px;
                 }
@@ -246,14 +246,14 @@ const LicensesCredits = ({ onClose }) => {
                     margin: 0 0 4px 0;
                     font-size: 0.95rem;
                     font-weight: 800;
-                    color: var(--nav-text);
+                    color: var(--ink);
                 }
 
                 .item-desc {
                     margin: 0;
                     font-size: 0.75rem;
                     font-weight: 600;
-                    color: var(--nav-text-muted);
+                    color: var(--ink-muted);
                 }
 
                 .item-actions {
@@ -264,12 +264,12 @@ const LicensesCredits = ({ onClose }) => {
 
                 .license-chip {
                     padding: 4px 10px;
-                    background: var(--nav-hover);
-                    border: 1px solid var(--nav-border);
+                    background: var(--paper-sunken);
+                    border: 1px solid var(--line);
                     border-radius: 10px;
                     font-size: 0.65rem;
                     font-weight: 800;
-                    color: var(--nav-text-muted);
+                    color: var(--ink-muted);
                     white-space: nowrap;
                 }
 
@@ -280,23 +280,23 @@ const LicensesCredits = ({ onClose }) => {
                     align-items: center;
                     justify-content: center;
                     background: transparent;
-                    border: 1px solid var(--nav-border);
+                    border: 1px solid var(--line);
                     border-radius: 8px;
-                    color: var(--nav-text-muted);
+                    color: var(--ink-muted);
                     cursor: pointer;
                     transition: all 0.2s;
                 }
 
                 .link-btn:hover {
-                    color: var(--nav-accent);
-                    border-color: var(--nav-accent);
-                    background: var(--nav-hover);
+                    color: var(--brand-ink);
+                    border-color: var(--brand-ink);
+                    background: var(--paper-sunken);
                 }
 
                 .disclaimer-banner {
                     padding: 20px;
-                    background: rgba(245, 158, 11, 0.03);
-                    border: 1px solid rgba(245, 158, 11, 0.2);
+                    background: color-mix(in srgb, var(--gold) 3%, transparent);
+                    border: 1px solid color-mix(in srgb, var(--gold) 20%, transparent);
                     display: flex;
                     align-items: center;
                     gap: 16px;

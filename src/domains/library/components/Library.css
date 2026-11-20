@@ -3,7 +3,7 @@
 .library-container {
     padding: 24px;
     min-height: 100vh;
-    color: var(--text-primary);
+    color: var(--ink);
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -34,9 +34,9 @@
     width: 100%;
     padding: 16px 16px 16px 48px;
     background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--line);
     border-radius: 18px;
-    color: var(--text-primary);
+    color: var(--ink);
     font-size: 15px;
     transition: var(--transition-quick);
 }
@@ -45,7 +45,7 @@
     outline: none;
     border-color: var(--accent-gold-light);
     background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 15px rgba(180, 83, 9, 0.1);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--gold) 10%, transparent);
 }
 
 .search-icon-library {
@@ -65,7 +65,7 @@
 
 .category-tile {
     background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--line);
     border-radius: 24px;
     padding: 24px;
     display: flex;
@@ -93,7 +93,7 @@
     width: 56px;
     height: 56px;
     border-radius: 18px;
-    background: rgba(180, 83, 9, 0.1);
+    background: color-mix(in srgb, var(--gold) 10%, transparent);
     color: var(--accent-gold-shimmer);
     display: flex;
     align-items: center;
@@ -103,7 +103,7 @@
 .category-label {
     font-size: 15px;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--ink);
     text-align: center;
 }
 
@@ -116,7 +116,7 @@
 
 .content-item-card {
     background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--line);
     border-radius: 20px;
     padding: 16px;
     display: flex;
@@ -134,7 +134,7 @@
     width: 52px;
     height: 52px;
     border-radius: 14px;
-    background: var(--primary);
+    background: var(--brand-ink);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -149,13 +149,13 @@
 .item-title-library {
     font-size: 15px;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--ink);
     margin-bottom: 2px;
 }
 
 .item-desc-library {
     font-size: 13px;
-    color: var(--text-secondary);
+    color: var(--ink-muted);
     line-height: 1.4;
 }
 
@@ -163,7 +163,7 @@
 .section-title-library {
     font-size: 18px;
     font-weight: 800;
-    color: var(--text-primary);
+    color: var(--ink);
     margin-bottom: 4px;
     padding-left: 4px;
 }

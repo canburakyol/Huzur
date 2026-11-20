@@ -29,7 +29,7 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
             width: 46,
             height: 46,
             borderRadius: 14,
-            background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
+            background: 'color-mix(in srgb, var(--brand-ink) 12%, transparent)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -38,10 +38,10 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
             <Users size={18} color="var(--accent-gold)" />
           </div>
           <div>
-            <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-primary)', marginBottom: 4 }}>
+            <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--ink)', marginBottom: 4 }}>
               {t('homeFeed.family.noFamilyTitle')}
             </div>
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.45' }}>
+            <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-main)', lineHeight: '1.45' }}>
               {t('homeFeed.family.noFamilyDesc')}
             </div>
           </div>
@@ -50,10 +50,10 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
           onClick={() => onSelectFeature('family')}
           className="hover-lift"
           style={{
-            border: '1px solid color-mix(in srgb, var(--secondary) 20%, transparent)',
+            border: '1px solid color-mix(in srgb, var(--brand-ink) 20%, transparent)',
             borderRadius: '16px',
-            background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
-            color: 'var(--primary)',
+            background: 'color-mix(in srgb, var(--brand-ink) 12%, transparent)',
+            color: 'var(--brand-ink)',
             padding: '14px 16px',
             fontFamily: 'var(--font-main)',
             fontWeight: '700',
@@ -79,34 +79,34 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 14, marginBottom: 14 }}>
         <div>
-          <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 6 }}>
+          <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--ink-muted)', fontFamily: 'var(--font-main)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 6 }}>
             {t('homeFeed.family.eyebrow')}
           </div>
-          <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>
+          <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--ink)' }}>
             {family.name || 'Ailen'}
           </div>
-          <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.45', marginTop: 4 }}>
+          <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-main)', lineHeight: '1.45', marginTop: 4 }}>
             {weeklyGoal?.title || t('homeFeed.family.defaultGoal')}
           </div>
         </div>
         <div style={{
           minWidth: 64,
           borderRadius: 16,
-          background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
+          background: 'color-mix(in srgb, var(--brand-ink) 12%, transparent)',
           padding: '10px 12px',
           textAlign: 'center',
-          border: '1px solid color-mix(in srgb, var(--secondary) 20%, transparent)'
+          border: '1px solid color-mix(in srgb, var(--brand-ink) 20%, transparent)'
         }}>
-          <div style={{ fontSize: '1.1rem', fontWeight: '900', color: 'var(--primary)', fontFamily: 'var(--font-main)' }}>
+          <div style={{ fontSize: '1.1rem', fontWeight: '900', color: 'var(--brand-ink)', fontFamily: 'var(--font-main)' }}>
             {weeklyGoalLoading ? '...' : `${progressPercent}%`}
           </div>
-          <div style={{ fontSize: '0.64rem', fontWeight: '800', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', textTransform: 'uppercase' }}>
+          <div style={{ fontSize: '0.64rem', fontWeight: '800', color: 'var(--ink-muted)', fontFamily: 'var(--font-main)', textTransform: 'uppercase' }}>
             {t('homeFeed.family.progressLabel')}
           </div>
         </div>
       </div>
 
-      <div style={{ height: 8, borderRadius: 10, background: 'color-mix(in srgb, var(--secondary) 12%, transparent)', overflow: 'hidden', marginBottom: 14 }}>
+      <div style={{ height: 8, borderRadius: 10, background: 'color-mix(in srgb, var(--brand-ink) 12%, transparent)', overflow: 'hidden', marginBottom: 14 }}>
         <div
           style={{
             width: `${progressPercent}%`,
@@ -118,7 +118,7 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-        <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.45' }}>
+        <div style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-main)', lineHeight: '1.45' }}>
           {weeklyGoal
             ? t('homeFeed.family.hasGoalDesc', { current: weeklyGoal.currentValue || 0, target: weeklyGoal.targetValue || 0 })
             : t('homeFeed.family.noGoalDesc')}
@@ -127,10 +127,10 @@ const FamilyMomentumCard = memo(function FamilyMomentumCard({ onSelectFeature })
           onClick={() => onSelectFeature('family')}
           className="hover-lift"
           style={{
-            border: '1px solid color-mix(in srgb, var(--secondary) 20%, transparent)',
+            border: '1px solid color-mix(in srgb, var(--brand-ink) 20%, transparent)',
             borderRadius: '16px',
-            background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
-            color: 'var(--primary)',
+            background: 'color-mix(in srgb, var(--brand-ink) 12%, transparent)',
+            color: 'var(--brand-ink)',
             padding: '10px 14px',
             fontFamily: 'var(--font-main)',
             fontWeight: '700',

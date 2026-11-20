@@ -40,19 +40,19 @@ function ReferralTriggerCard({ plan, onOpenInvite }) {
           <AccentIcon size={18} color="var(--accent-gold)" />
         </div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 8 }}>
+          <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--ink-muted)', fontFamily: 'var(--font-main)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 8 }}>
             {plan.badge}
           </div>
-          <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-primary)', marginBottom: 6 }}>
+          <div style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--ink)', marginBottom: 6 }}>
             {plan.headline}
           </div>
-          <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.55', fontWeight: '600' }}>
+          <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-main)', lineHeight: '1.55', fontWeight: '600' }}>
             {plan.description}
           </div>
         </div>
       </div>
 
-      <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', lineHeight: '1.5', fontWeight: '600', marginBottom: 14 }}>
+      <div style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-main)', lineHeight: '1.5', fontWeight: '600', marginBottom: 14 }}>
         {plan.supportLabel}
       </div>
 
@@ -64,7 +64,7 @@ function ReferralTriggerCard({ plan, onOpenInvite }) {
           border: '1px solid rgba(224, 169, 150, 0.2)',
           borderRadius: '16px',
           background: 'rgba(224, 169, 150, 0.12)',
-          color: 'var(--text-primary)',
+          color: 'var(--ink)',
           padding: '14px 16px',
           fontFamily: 'var(--font-main)',
           fontWeight: '700',

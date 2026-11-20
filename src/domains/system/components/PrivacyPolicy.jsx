@@ -86,7 +86,7 @@ function PrivacyPolicy({ onClose }) {
 
                         <section className="legal-section highlight-box">
                             <div className="section-header">
-                                <Sparkles size={18} color="var(--nav-accent)" />
+                                <Sparkles size={18} color="var(--brand-ink)" />
                                 <h3>{t('legal.privacy.s7.title', '7. Yapay Zeka Asistan')}</h3>
                             </div>
                             <p>
@@ -96,7 +96,7 @@ function PrivacyPolicy({ onClose }) {
 
                         <section className="legal-section">
                             <div className="contact-box">
-                                <Mail size={20} color="var(--nav-accent)" />
+                                <Mail size={20} color="var(--brand-ink)" />
                                 <div>
                                     <h3>{t('legal.contact.title', '8. İletişim')}</h3>
                                     <p>{t('legal.contact.desc', 'Gizlilik politikamız hakkında sorularınız için:')}</p>
@@ -112,7 +112,7 @@ function PrivacyPolicy({ onClose }) {
                 .legal-overlay {
                     position: fixed;
                     top: 0; left: 0; right: 0; bottom: 0;
-                    background: var(--nav-bg);
+                    background: var(--paper);
                     z-index: 1000;
                     overflow-y: auto;
                     animation: fadeIn 0.3s ease;
@@ -126,7 +126,7 @@ function PrivacyPolicy({ onClose }) {
                 }
 
                 .privacy-shield-icon {
-                    background: rgba(16, 185, 129, 0.1);
+                    background: color-mix(in srgb, var(--success) 10%, transparent);
                     color: var(--success);
                 }
 
@@ -138,14 +138,14 @@ function PrivacyPolicy({ onClose }) {
                 .legal-content-card {
                     flex-direction: column;
                     padding: 32px;
-                    background: var(--nav-bg);
-                    border: 1px solid var(--nav-border);
+                    background: var(--paper);
+                    border: 1px solid var(--line);
                     border-radius: 24px;
                 }
 
                 .legal-body {
                     line-height: 1.8;
-                    color: var(--nav-text);
+                    color: var(--ink);
                 }
 
                 .update-badge {
@@ -153,19 +153,19 @@ function PrivacyPolicy({ onClose }) {
                     align-items: center;
                     gap: 8px;
                     padding: 6px 14px;
-                    background: var(--nav-hover);
+                    background: var(--paper-sunken);
                     border-radius: 12px;
                     font-size: 0.75rem;
                     font-weight: 800;
-                    color: var(--nav-accent);
-                    border: 1px solid var(--nav-border);
+                    color: var(--brand-ink);
+                    border: 1px solid var(--line);
                 }
 
                 .intro-text {
                     font-size: 1.1rem;
                     font-weight: 600;
                     margin-bottom: 32px;
-                    color: var(--nav-text);
+                    color: var(--ink);
                 }
 
                 .legal-section {
@@ -184,14 +184,14 @@ function PrivacyPolicy({ onClose }) {
                     align-items: center;
                     gap: 10px;
                     margin-bottom: 12px;
-                    color: var(--nav-accent);
+                    color: var(--brand-ink);
                 }
 
                 .legal-section h3 {
                     margin: 0;
                     font-size: 1.1rem;
                     font-weight: 900;
-                    color: var(--nav-accent);
+                    color: var(--brand-ink);
                     text-transform: uppercase;
                     letter-spacing: 0.5px;
                 }
@@ -200,13 +200,13 @@ function PrivacyPolicy({ onClose }) {
                     margin: 0;
                     font-size: 0.95rem;
                     font-weight: 600;
-                    color: var(--nav-text-muted);
+                    color: var(--ink-muted);
                 }
 
                 .legal-list {
                     padding-left: 20px;
                     margin: 12px 0 0 0;
-                    color: var(--nav-text-muted);
+                    color: var(--ink-muted);
                     font-weight: 600;
                 }
 
@@ -214,24 +214,24 @@ function PrivacyPolicy({ onClose }) {
 
                 .highlight-box {
                     padding: 24px;
-                    background: var(--nav-hover);
+                    background: var(--paper-sunken);
                     border-radius: 20px;
-                    border: 1px solid var(--nav-border);
+                    border: 1px solid var(--line);
                 }
 
                 .contact-box {
                     display: flex;
                     gap: 16px;
                     padding: 24px;
-                    background: var(--nav-hover);
+                    background: var(--paper-sunken);
                     border-radius: 20px;
-                    border: 2px dashed var(--nav-accent);
+                    border: 2px dashed var(--brand-ink);
                 }
 
-                .contact-box h3 { margin-bottom: 4px; color: var(--nav-text); }
+                .contact-box h3 { margin-bottom: 4px; color: var(--ink); }
 
                 .legal-contact-email {
-                    color: var(--nav-accent);
+                    color: var(--brand-ink);
                     font-size: 0.9rem;
                 }
             `}</style>

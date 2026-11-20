@@ -53,8 +53,8 @@ const HatimList = ({ onSelectHatim }) => {
   if (loading && activeHatims.length === 0) {
     return (
       <div className="settings-card reveal-stagger" style={{ justifyContent: 'center', padding: '40px' }}>
-        <div className="spin"><RefreshCw size={32} color="var(--nav-accent)" /></div>
-        <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{t('common.loading')}</p>
+        <div className="spin"><RefreshCw size={32} color="var(--brand-ink)" /></div>
+        <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--ink-muted)', fontWeight: '600' }}>{t('common.loading')}</p>
       </div>
     );
   }
@@ -63,7 +63,7 @@ const HatimList = ({ onSelectHatim }) => {
     return (
       <div className="settings-card reveal-stagger" style={{ borderColor: 'var(--danger)', flexDirection: 'column', gap: '12px' }}>
         <p style={{ margin: 0, fontSize: '1rem', fontWeight: '800', color: 'var(--danger)' }}>{t('common.error')}</p>
-        <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>{error}</p>
+        <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600' }}>{error}</p>
         <button className="velocity-btn-primary" onClick={fetchAllPublicHatims} style={{ width: '100%', padding: '12px', background: 'transparent', border: '1px solid var(--danger)', color: 'var(--danger)', boxShadow: 'none' }}>
           {t('common.retry')}
         </button>
@@ -152,8 +152,8 @@ const HatimList = ({ onSelectHatim }) => {
 
         {activeHatims.length === 0 && !loading && (
           <div className="settings-card reveal-stagger" style={{ flexDirection: 'column', alignItems: 'center', padding: '60px 20px', gap: '16px' }}>
-            <Users size={48} color="rgba(79, 70, 229, 0.4)" />
-            <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--nav-text-muted)', fontWeight: '700', textAlign: 'center' }}>
+            <Users size={48} color="color-mix(in srgb, var(--brand-ink) 40%, transparent)" />
+            <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--ink-muted)', fontWeight: '700', textAlign: 'center' }}>
               {t('hatim.noHatims', 'Henüz gorunen bir hatim yok. İlk açık halkayi sen baslat.')}
             </p>
           </div>

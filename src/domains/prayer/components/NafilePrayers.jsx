@@ -38,7 +38,7 @@ const NAFILE_PRAYERS = [
     description: 'Güneş iyice yükseldikten sonra öğleye kadar kılınan kuşluk namazı (2-12 rekat)',
     icon: '☀️',
     rekat: 12,
-    color: 'var(--primary)',
+    color: 'var(--brand-ink)',
     category: 'daily',
     time: 'morning'
   },
@@ -71,7 +71,7 @@ const NAFILE_PRAYERS = [
     description: 'Yatsıdan sonra kılınan 3 rekatlık namaz; Hanefî mezhebine göre vaciptir',
     icon: '✨',
     rekat: 3,
-    color: 'var(--surface-container)',
+    color: 'var(--paper-sunken)',
     category: 'daily',
     time: 'yatsi_after'
   },
@@ -82,7 +82,7 @@ const NAFILE_PRAYERS = [
     description: 'Bir işe başlamadan önce danışma namazı',
     icon: '🤲',
     rekat: 2,
-    color: 'var(--primary-container)',
+    color: 'var(--brand-soft)',
     category: 'special',
     time: 'any'
   },
@@ -104,7 +104,7 @@ const NAFILE_PRAYERS = [
     description: 'Bir ihtiyaç için kılınan namaz',
     icon: '💫',
     rekat: 2,
-    color: 'var(--primary)',
+    color: 'var(--brand-ink)',
     category: 'special',
     time: 'any'
   }
@@ -277,7 +277,7 @@ export function NafilePrayers({ onClose }) {
       {/* Stats Overview */}
       <div className="nafile-stats reveal-stagger" style={{ '--delay': '0.1s' }}>
         <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(15, 118, 110, 0.1)', color: 'var(--surface-container)' }}>
+          <div className="stat-icon" style={{ background: 'rgba(15, 118, 110, 0.1)', color: 'var(--paper-sunken)' }}>
             <CheckCircle2 size={24} />
           </div>
           <div className="stat-info">
@@ -371,7 +371,7 @@ export function NafilePrayers({ onClose }) {
                     className="progress-bar"
                     style={{ 
                       width: `${progress.percentage}%`,
-                      backgroundColor: progress.completed ? 'var(--surface-container)' : prayer.color
+                      backgroundColor: progress.completed ? 'var(--paper-sunken)' : prayer.color
                     }}
                   />
                 </div>

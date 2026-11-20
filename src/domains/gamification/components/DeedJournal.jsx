@@ -145,8 +145,8 @@ function DeedJournal({ onClose }) {
                 marginBottom: '16px',
                 textAlign: 'center',
                 fontStyle: 'italic',
-                background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.05)',
-                border: '1px dashed var(--nav-accent)'
+                background: 'color-mix(in srgb, var(--brand-ink) 5%, transparent)',
+                border: '1px dashed var(--brand-ink)'
             }}>
                 "{t(motivation)}"
             </div>
@@ -158,18 +158,18 @@ function DeedJournal({ onClose }) {
                 flexDirection: 'column',
                 gap: '4px'
             }}>
-                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--ink-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>
                     {t('deedJournal.today.score')}
                 </div>
                 <div style={{
                     fontSize: '3.5rem',
                     fontWeight: '900',
-                    color: calculateTodayPoints() >= 0 ? 'var(--nav-accent)' : 'var(--danger)',
+                    color: calculateTodayPoints() >= 0 ? 'var(--brand-ink)' : 'var(--danger)',
                     lineHeight: '1'
                 }}>
                     {calculateTodayPoints()}
                 </div>
-                <div className="hamburger-level-badge" style={{ marginTop: '12px', background: 'var(--nav-accent)', color: 'var(--on-primary)' }}>
+                <div className="hamburger-level-badge" style={{ marginTop: '12px', background: 'var(--brand-ink)', color: 'var(--on-primary)' }}>
                     {allTimeStats.currentStreak} {t('deedJournal.today.streak')}
                 </div>
             </div>
@@ -222,11 +222,11 @@ function DeedJournal({ onClose }) {
                             style={{
                                 padding: '16px',
                                 cursor: 'pointer',
-                                borderLeft: todayDeeds[deed.id] ? '4px solid var(--nav-accent)' : '1px solid var(--nav-border)'
+                                borderLeft: todayDeeds[deed.id] ? '4px solid var(--brand-ink)' : '1px solid var(--line)'
                             }}
                         >
                             <div className="settings-card-left">
-                                <div className="settings-icon-box" style={{ background: todayDeeds[deed.id] ? 'var(--nav-accent)' : '', color: todayDeeds[deed.id] ? 'var(--on-primary)' : 'var(--nav-accent)' }}>
+                                <div className="settings-icon-box" style={{ background: todayDeeds[deed.id] ? 'var(--brand-ink)' : '', color: todayDeeds[deed.id] ? 'var(--on-primary)' : 'var(--brand-ink)' }}>
                                     <span style={{ fontSize: '1.2rem' }}>{deed.icon}</span>
                                 </div>
                                 <div className="settings-user-info">
@@ -236,7 +236,7 @@ function DeedJournal({ onClose }) {
                             </div>
                             <div style={{
                                 fontSize: '0.9rem',
-                                color: 'var(--nav-accent)',
+                                color: 'var(--brand-ink)',
                                 fontWeight: '800'
                             }}>
                                 +{deed.points}
@@ -261,21 +261,21 @@ function DeedJournal({ onClose }) {
                                 cursor: 'pointer',
                                 flexDirection: 'column',
                                 gap: '8px',
-                                border: todayDeeds[deed.id] ? '1px solid var(--nav-accent)' : '1px solid var(--nav-border)',
-                                background: todayDeeds[deed.id] ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.03)' : ''
+                                border: todayDeeds[deed.id] ? '1px solid var(--brand-ink)' : '1px solid var(--line)',
+                                background: todayDeeds[deed.id] ? 'color-mix(in srgb, var(--brand-ink) 3%, transparent)' : ''
                             }}
                         >
                             <span style={{ fontSize: '1.5rem' }}>{deed.icon}</span>
                             <div style={{
                                 fontSize: '0.85rem',
                                 fontWeight: '700',
-                                color: 'var(--nav-text)'
+                                color: 'var(--ink)'
                             }}>
                                 {t(deed.title)}
                             </div>
                             <div style={{
                                 fontSize: '0.75rem',
-                                color: 'var(--nav-accent)',
+                                color: 'var(--brand-ink)',
                                 fontWeight: '800'
                             }}>
                                 +{deed.points}
@@ -293,7 +293,7 @@ function DeedJournal({ onClose }) {
             {/* Things to Avoid */}
             <div className="settings-group" style={{ marginTop: '24px' }}>
                 <div className="settings-group-title" style={{ color: 'var(--danger)' }}>{t('deedJournal.today.avoid')}</div>
-                <p style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', marginBottom: '16px', paddingLeft: '8px' }}>
+                <p style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', marginBottom: '16px', paddingLeft: '8px' }}>
                     {t('deedJournal.today.avoidDesc')}
                 </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -305,9 +305,9 @@ function DeedJournal({ onClose }) {
                             style={{
                                 padding: '10px 16px',
                                 borderRadius: '24px',
-                                border: todayDeeds[deed.id] ? '1px solid var(--danger)' : '1px solid var(--nav-border)',
-                                background: todayDeeds[deed.id] ? 'rgba(239, 68, 68, 0.1)' : 'var(--nav-hover)',
-                                color: todayDeeds[deed.id] ? 'var(--danger)' : 'var(--nav-text)',
+                                border: todayDeeds[deed.id] ? '1px solid var(--danger)' : '1px solid var(--line)',
+                                background: todayDeeds[deed.id] ? 'rgba(239, 68, 68, 0.1)' : 'var(--paper-sunken)',
+                                color: todayDeeds[deed.id] ? 'var(--danger)' : 'var(--ink)',
                                 fontSize: '0.8rem',
                                 fontWeight: '700'
                             }}
@@ -326,8 +326,8 @@ function DeedJournal({ onClose }) {
                     marginTop: '32px',
                     width: '100%',
                     justifyContent: 'center',
-                    background: 'var(--nav-hover)',
-                    color: 'var(--nav-text-muted)',
+                    background: 'var(--paper-sunken)',
+                    color: 'var(--ink-muted)',
                     borderColor: 'transparent'
                 }}
             >
@@ -345,26 +345,26 @@ function DeedJournal({ onClose }) {
                 <div className="settings-card" style={{ padding: '24px' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', width: '100%' }}>
                         <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--nav-accent)' }}>
+                            <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--brand-ink)' }}>
                                 {allTimeStats.totalPoints}
                             </div>
-                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>
                                 {t('deedJournal.stats.totalPoints')}
                             </div>
                         </div>
                         <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--nav-accent)' }}>
+                            <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--brand-ink)' }}>
                                 {allTimeStats.totalDays}
                             </div>
-                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>
                                 {t('deedJournal.stats.totalDays')}
                             </div>
                         </div>
                         <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--secondary)' }}>
+                            <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--brand-ink)' }}>
                                 {allTimeStats.currentStreak}
                             </div>
-                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>
                                 {t('deedJournal.stats.currentStreak')}
                             </div>
                         </div>
@@ -372,7 +372,7 @@ function DeedJournal({ onClose }) {
                             <div style={{ fontSize: '2rem', fontWeight: '900', color: '#9d174d' }}>
                                 {allTimeStats.longestStreak}
                             </div>
-                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+                            <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>
                                 {t('deedJournal.stats.longestStreak')}
                             </div>
                         </div>
@@ -387,13 +387,13 @@ function DeedJournal({ onClose }) {
                     {/* Prayer Progress */}
                     <div style={{ width: '100%' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--nav-text)' }}>{t('deedJournal.stats.prayers')}</span>
-                            <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--nav-accent)' }}>{countCompletedPrayers()}/5</span>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--ink)' }}>{t('deedJournal.stats.prayers')}</span>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--brand-ink)' }}>{countCompletedPrayers()}/5</span>
                         </div>
-                        <div style={{ height: '10px', borderRadius: '5px', background: 'var(--nav-hover)', overflow: 'hidden' }}>
+                        <div style={{ height: '10px', borderRadius: '5px', background: 'var(--paper-sunken)', overflow: 'hidden' }}>
                             <div style={{
                                 height: '100%',
-                                background: 'var(--nav-accent)',
+                                background: 'var(--brand-ink)',
                                 width: `${(countCompletedPrayers() / 5) * 100}%`,
                                 transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
                             }} />
@@ -403,12 +403,12 @@ function DeedJournal({ onClose }) {
                     {/* Sunnah Progress */}
                     <div style={{ width: '100%' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--nav-text)' }}>{t('deedJournal.stats.sunnahs')}</span>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--ink)' }}>{t('deedJournal.stats.sunnahs')}</span>
                             <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--success)' }}>
                                 {SUNNAH_DEEDS.filter(d => todayDeeds[d.id]).length}/{SUNNAH_DEEDS.length}
                             </span>
                         </div>
-                        <div style={{ height: '10px', borderRadius: '5px', background: 'var(--nav-hover)', overflow: 'hidden' }}>
+                        <div style={{ height: '10px', borderRadius: '5px', background: 'var(--paper-sunken)', overflow: 'hidden' }}>
                             <div style={{
                                 height: '100%',
                                 background: 'var(--success)',
@@ -421,12 +421,12 @@ function DeedJournal({ onClose }) {
                     {/* Good Deeds Progress */}
                     <div style={{ width: '100%' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--nav-text)' }}>{t('deedJournal.stats.goodDeeds')}</span>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--ink)' }}>{t('deedJournal.stats.goodDeeds')}</span>
                             <span style={{ fontSize: '0.85rem', fontWeight: '800', color: 'var(--brand-ink)' }}>
                                 {GOOD_DEEDS.filter(d => todayDeeds[d.id]).length}/{GOOD_DEEDS.length}
                             </span>
                         </div>
-                        <div style={{ height: '10px', borderRadius: '5px', background: 'var(--nav-hover)', overflow: 'hidden' }}>
+                        <div style={{ height: '10px', borderRadius: '5px', background: 'var(--paper-sunken)', overflow: 'hidden' }}>
                             <div style={{
                                 height: '100%',
                                 background: 'var(--brand-ink)',
@@ -443,7 +443,7 @@ function DeedJournal({ onClose }) {
     // Render Achievements tab
     const renderAchievements = () => (
         <div className="reveal-stagger">
-            <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', paddingLeft: '8px', fontWeight: '600' }}>
+            <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '20px', paddingLeft: '8px', fontWeight: '600' }}>
                 {t('deedJournal.achievements.title')}
             </p>
 
@@ -457,21 +457,21 @@ function DeedJournal({ onClose }) {
                             style={{
                                 padding: '16px',
                                 opacity: unlocked ? 1 : 0.6,
-                                border: unlocked ? '1px solid var(--nav-accent)' : '1px solid var(--nav-border)',
-                                background: unlocked ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.03)' : ''
+                                border: unlocked ? '1px solid var(--brand-ink)' : '1px solid var(--line)',
+                                background: unlocked ? 'color-mix(in srgb, var(--brand-ink) 3%, transparent)' : ''
                             }}
                         >
                             <div className="settings-card-left">
                                 <div className="settings-icon-box" style={{ 
-                                    background: unlocked ? 'var(--nav-accent)' : 'var(--nav-hover)', 
-                                    color: unlocked ? 'var(--on-primary)' : 'var(--nav-text-muted)',
+                                    background: unlocked ? 'var(--brand-ink)' : 'var(--paper-sunken)', 
+                                    color: unlocked ? 'var(--on-primary)' : 'var(--ink-muted)',
                                     width: '48px',
                                     height: '48px'
                                 }}>
                                     {unlocked ? achievement.icon : '🔒'}
                                 </div>
                                 <div className="settings-user-info">
-                                    <div className="settings-label" style={{ color: unlocked ? 'var(--nav-accent)' : 'var(--nav-text)' }}>
+                                    <div className="settings-label" style={{ color: unlocked ? 'var(--brand-ink)' : 'var(--ink)' }}>
                                         {t(achievement.title)}
                                     </div>
                                     <div className="settings-desc">
@@ -504,7 +504,7 @@ function DeedJournal({ onClose }) {
                 <h2 style={{
                     margin: 0,
                     fontSize: '1.5rem',
-                    color: 'var(--nav-text)',
+                    color: 'var(--ink)',
                     fontWeight: '800'
                 }}>
                     {t('deedJournal.title')}
@@ -516,7 +516,7 @@ function DeedJournal({ onClose }) {
                 display: 'flex',
                 gap: '12px',
                 marginBottom: '32px',
-                background: 'var(--nav-hover)',
+                background: 'var(--paper-sunken)',
                 padding: '8px',
                 borderRadius: '24px'
             }}>
@@ -534,7 +534,7 @@ function DeedJournal({ onClose }) {
                             background: activeTab === tab.id ? 'var(--on-primary)' : 'transparent',
                             border: 'none',
                             borderRadius: '16px',
-                            color: activeTab === tab.id ? 'var(--nav-accent)' : 'var(--nav-text-muted)',
+                            color: activeTab === tab.id ? 'var(--brand-ink)' : 'var(--ink-muted)',
                             fontSize: '0.75rem',
                             fontWeight: '800',
                             cursor: 'pointer',

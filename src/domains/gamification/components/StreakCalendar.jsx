@@ -61,14 +61,14 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
           {/* Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '24px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div className="settings-icon-box" style={{ background: 'rgba(245, 158, 11, 0.15)', color: 'var(--primary)' }}>
+                <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--gold) 15%, transparent)', color: 'var(--brand-ink)' }}>
                     <Flame size={20} />
                 </div>
                 <div>
-                   <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                   <h3 style={{ margin: 0, fontSize: '1rem', fontWeight: '900', color: 'var(--ink)' }}>
                       {t('streakCalendar.seriesTitle', '{{category}} Serisi', { category: categoryName })}
                    </h3>
-                   <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+                   <div style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
                       {format(today, 'MMMM yyyy', { locale: resolvedLocale })}
                    </div>
                 </div>
@@ -79,7 +79,7 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
                     <span className="stat-label">{t('streakCalendar.days', 'Gün')}</span>
                     <span className="stat-value">{categoryData?.count || 0}</span>
                 </div>
-                <div className="stat-badge" style={{ borderColor: 'rgba(59, 130, 246, 0.3)' }}>
+                <div className="stat-badge" style={{ borderColor: 'color-mix(in srgb, var(--brand-ink) 30%, transparent)' }}>
                     < Snowflake size={12} color="var(--accent)" />
                     <span className="stat-value" style={{ color: 'var(--accent)' }}>{categoryData?.freezeTokens || 0}</span>
                 </div>
@@ -115,10 +115,10 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
           {/* Legend */}
           <div style={{ 
               marginTop: '24px', display: 'flex', justifyContent: 'center', gap: '16px', 
-              paddingTop: '16px', borderTop: '1px solid var(--nav-border)', width: '100%' 
+              paddingTop: '16px', borderTop: '1px solid var(--line)', width: '100%' 
           }}>
             <div className="legend-item">
-              <div className="legend-dot" style={{ background: 'var(--surface-container)' }} />
+              <div className="legend-dot" style={{ background: 'var(--paper-sunken)' }} />
               <span>{t('streakCalendar.legend.completed', 'Tamamlandı')}</span>
             </div>
             <div className="legend-item">
@@ -126,7 +126,7 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
               <span>{t('streakCalendar.legend.frozen', 'Donduruldu')}</span>
             </div>
             <div className="legend-item">
-              <div className="legend-dot" style={{ background: 'var(--nav-border)' }} />
+              <div className="legend-dot" style={{ background: 'var(--line)' }} />
               <span>{t('streakCalendar.legend.missed', 'Kaçırıldı')}</span>
             </div>
           </div>
@@ -138,22 +138,22 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
             align-items: center;
             gap: 6px;
             padding: 6px 12px;
-            background: var(--nav-hover);
-            border: 1px solid var(--nav-border);
+            background: var(--paper-sunken);
+            border: 1px solid var(--line);
             border-radius: 12px;
         }
 
         .stat-label {
             font-size: 0.65rem;
             font-weight: 800;
-            color: var(--nav-text-muted);
+            color: var(--ink-muted);
             text-transform: uppercase;
         }
 
         .stat-value {
             font-size: 0.95rem;
             font-weight: 950;
-            color: var(--nav-accent);
+            color: var(--brand-ink);
         }
 
         .calendar-grid {
@@ -166,7 +166,7 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
         .weekday-label {
             font-size: 0.65rem;
             font-weight: 900;
-            color: var(--nav-text-muted);
+            color: var(--ink-muted);
             text-align: center;
             padding: 8px 0;
             text-transform: uppercase;
@@ -179,13 +179,13 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: var(--nav-hover);
+            background: var(--paper-sunken);
             border: 1px solid transparent;
             border-radius: 10px;
             position: relative;
             font-size: 0.85rem;
             font-weight: 700;
-            color: var(--nav-text-muted);
+            color: var(--ink-muted);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             animation: reveal 0.5s ease backwards;
             animation-delay: var(--delay);
@@ -197,8 +197,8 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
         }
 
         .calendar-day.is-today {
-            border-color: var(--nav-accent);
-            color: var(--nav-text);
+            border-color: var(--brand-ink);
+            color: var(--ink);
         }
 
         .today-indicator {
@@ -207,7 +207,7 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
             right: 4px;
             width: 4px;
             height: 4px;
-            background: var(--nav-accent);
+            background: var(--brand-ink);
             border-radius: 50%;
         }
 
@@ -217,20 +217,20 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
         }
 
         .calendar-day.activity {
-            background: color-mix(in srgb, var(--secondary) 15%, transparent);
-            border: 1px solid color-mix(in srgb, var(--secondary) 30%, transparent);
-            color: var(--surface-container);
+            background: color-mix(in srgb, var(--brand-ink) 15%, transparent);
+            border: 1px solid color-mix(in srgb, var(--brand-ink) 30%, transparent);
+            color: var(--paper-sunken);
         }
 
         .calendar-day.frozen {
-            background: rgba(59, 130, 246, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: color-mix(in srgb, var(--brand-ink) 15%, transparent);
+            border: 1px solid color-mix(in srgb, var(--brand-ink) 30%, transparent);
             color: var(--accent);
         }
 
         .calendar-day.missed {
             background: rgba(255, 255, 255, 0.02);
-            color: var(--nav-text-muted);
+            color: var(--ink-muted);
             opacity: 0.4;
         }
 
@@ -244,9 +244,9 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
             bottom: 6px;
             width: 4px;
             height: 4px;
-            background: var(--surface-container);
+            background: var(--paper-sunken);
             border-radius: 50%;
-            box-shadow: 0 0 8px color-mix(in srgb, var(--secondary) 50%, transparent);
+            box-shadow: 0 0 8px color-mix(in srgb, var(--brand-ink) 50%, transparent);
         }
 
         .status-icon.frozen {
@@ -260,7 +260,7 @@ const StreakCalendar = ({ categoryData, categoryName = 'General' }) => {
             gap: 6px;
             font-size: 0.7rem;
             font-weight: 700;
-            color: var(--nav-text-muted);
+            color: var(--ink-muted);
         }
 
         .legend-dot {

@@ -52,8 +52,8 @@ const HatimDetail = ({ hatimId, onBack }) => {
   if (loading && !hatimDetails) {
     return (
       <div className="settings-card reveal-stagger" style={{ justifyContent: 'center', padding: '40px' }}>
-        <div className="spin"><RefreshCw size={32} color="var(--nav-accent)" /></div>
-        <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+        <div className="spin"><RefreshCw size={32} color="var(--brand-ink)" /></div>
+        <p style={{ margin: '16px 0 0', fontSize: '0.9rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
           {t('common.loading')}
         </p>
       </div>

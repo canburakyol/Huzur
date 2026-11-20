@@ -13,11 +13,11 @@ const priceInputStyle = {
     width: '100%',
     padding: '16px',
     borderRadius: '16px',
-    background: 'var(--nav-hover)',
-    border: '1px solid var(--nav-border)',
+    background: 'var(--paper-sunken)',
+    border: '1px solid var(--line)',
     fontSize: '1.25rem',
     fontWeight: '900',
-    color: 'var(--nav-accent)',
+    color: 'var(--brand-ink)',
     outline: 'none'
 };
 
@@ -91,7 +91,7 @@ const ZakatCalculator = ({ onClose }) => {
                 <h1 style={{
                     margin: 0,
                     fontSize: '1.5rem',
-                    color: 'var(--nav-text)',
+                    color: 'var(--ink)',
                     fontWeight: '900'
                 }}>
                     {t('zakatCalculator.title', 'Zekat Hesapla')}
@@ -100,10 +100,10 @@ const ZakatCalculator = ({ onClose }) => {
                 <button
                     onClick={() => setShowInfo(!showInfo)}
                     style={{
-                        background: 'var(--nav-hover)',
+                        background: 'var(--paper-sunken)',
                         border: 'none',
                         cursor: 'pointer',
-                        color: 'var(--nav-accent)',
+                        color: 'var(--brand-ink)',
                         padding: '10px',
                         borderRadius: '12px'
                     }}
@@ -115,13 +115,13 @@ const ZakatCalculator = ({ onClose }) => {
             {/* Info Box */}
             {showInfo && (
                 <div className="settings-card" style={{
-                    background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1)',
+                    background: 'color-mix(in srgb, var(--brand-ink) 10%, transparent)',
                     borderRadius: '24px',
                     padding: '20px',
                     marginBottom: '24px',
                     fontSize: '0.9rem',
-                    color: 'var(--nav-accent)',
-                    border: '1px solid var(--nav-accent)',
+                    color: 'var(--brand-ink)',
+                    border: '1px solid var(--brand-ink)',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     gap: '8px'
@@ -129,7 +129,7 @@ const ZakatCalculator = ({ onClose }) => {
                     <strong style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1rem' }}>
                         <Calculator size={18} /> {t('zakatCalculator.whatIsZakatTitle', 'Zekat Nedir?')}
                     </strong>
-                    <p style={{ margin: 0, lineHeight: '1.6', color: 'var(--nav-text)', fontWeight: '600' }}>
+                    <p style={{ margin: 0, lineHeight: '1.6', color: 'var(--ink)', fontWeight: '600' }}>
                         {t('zakatCalculator.whatIsZakatBody', 'Zekat, nisap miktarına ulaşan ve üzerinden bir hicri yıl geçen malın %2.5\'inin verilmesidir. Nisap, 80.18 gram altın veya karşılığıdır.')}
                     </p>
                 </div>
@@ -138,7 +138,7 @@ const ZakatCalculator = ({ onClose }) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {/* Gold Price Card */}
                 <div className="settings-card" style={{ padding: '20px', flexDirection: 'column', alignItems: 'stretch' }}>
-                    <label style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', marginBottom: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                    <label style={{ fontSize: '0.85rem', color: 'var(--ink-muted)', marginBottom: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
                         {t('zakatCalculator.goldPriceLabel', 'Güncel Altın Fiyatı (TL/gr)')}
                     </label>
                     <input
@@ -149,7 +149,7 @@ const ZakatCalculator = ({ onClose }) => {
                         onChange={(e) => setGoldPrice(parseFloat(e.target.value) || 0)}
                         style={priceInputStyle}
                     />
-                    <label style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', margin: '16px 0 12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                    <label style={{ fontSize: '0.85rem', color: 'var(--ink-muted)', margin: '16px 0 12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
                         {t('zakatCalculator.silverPriceLabel', 'Gümüş Fiyatı (TL/gram)')}
                     </label>
                     <input
@@ -177,7 +177,7 @@ const ZakatCalculator = ({ onClose }) => {
                             { key: 'business', label: t('zakatCalculator.assetBusiness', 'Ticari Mal (TL)'), icon: '🏪' },
                         ].map(item => (
                             <div key={item.key} className="settings-card" style={{ padding: '16px', flexDirection: 'column', alignItems: 'stretch' }}>
-                                <label style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', marginBottom: '8px', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <label style={{ fontSize: '0.8rem', color: 'var(--ink-muted)', marginBottom: '8px', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '6px' }}>
                                     {item.icon} {item.label}
                                 </label>
                                 <input
@@ -190,10 +190,10 @@ const ZakatCalculator = ({ onClose }) => {
                                         padding: '12px',
                                         borderRadius: '12px',
                                         background: 'transparent',
-                                        border: '1px solid var(--nav-border)',
+                                        border: '1px solid var(--line)',
                                         fontSize: '1.1rem',
                                         fontWeight: '800',
-                                        color: 'var(--nav-text)',
+                                        color: 'var(--ink)',
                                         outline: 'none'
                                     }}
                                 />
@@ -216,7 +216,7 @@ const ZakatCalculator = ({ onClose }) => {
                             width: '100%',
                             padding: '16px',
                             borderRadius: '16px',
-                            background: 'var(--surface-card)',
+                            background: 'var(--paper-raised)',
                             border: '1px solid var(--error-color)',
                             fontSize: '1.25rem',
                             fontWeight: '900',
@@ -232,8 +232,8 @@ const ZakatCalculator = ({ onClose }) => {
                     className="velocity-target-btn"
                     style={{
                         padding: '16px',
-                        background: 'var(--nav-hover)',
-                        color: 'var(--nav-text-muted)',
+                        background: 'var(--paper-sunken)',
+                        color: 'var(--ink-muted)',
                         justifyContent: 'center',
                         fontWeight: '900',
                         marginTop: '12px'
@@ -252,16 +252,16 @@ const ZakatCalculator = ({ onClose }) => {
                 textAlign: 'center',
                 gap: '20px',
                 background: isNisabReached 
-                    ? 'linear-gradient(135deg, var(--surface-container), var(--primary-container))'
-                    : 'var(--nav-hover)',
-                border: isNisabReached ? 'none' : '1px solid var(--nav-border)',
+                    ? 'linear-gradient(135deg, var(--paper-sunken), var(--brand-soft))'
+                    : 'var(--paper-sunken)',
+                border: isNisabReached ? 'none' : '1px solid var(--line)',
                 borderRadius: '32px',
-                color: isNisabReached ? 'var(--on-primary)' : 'var(--nav-text)',
+                color: isNisabReached ? 'var(--on-primary)' : 'var(--ink)',
                 boxShadow: isNisabReached ? '0 20px 40px rgba(15, 118, 110, 0.3)' : 'none'
             }}>
                 <div className="hamburger-level-badge" style={{ 
                     background: isNisabReached ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.05)', 
-                    color: isNisabReached ? 'var(--on-primary)' : 'var(--nav-text-muted)',
+                    color: isNisabReached ? 'var(--on-primary)' : 'var(--ink-muted)',
                     border: 'none',
                     fontWeight: '900'
                 }}>
@@ -281,7 +281,7 @@ const ZakatCalculator = ({ onClose }) => {
                     </div>
                 </div>
 
-                <hr style={{ width: '60%', border: 'none', borderTop: isNisabReached ? '1px solid rgba(255,255,255,0.3)' : '1px solid var(--nav-border)' }} />
+                <hr style={{ width: '60%', border: 'none', borderTop: isNisabReached ? '1px solid rgba(255,255,255,0.3)' : '1px solid var(--line)' }} />
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <div style={{ 

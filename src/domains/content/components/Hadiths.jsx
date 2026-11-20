@@ -130,22 +130,22 @@ const Hadiths = ({ onClose }) => {
 
                 <div className="settings-card" style={{ flexDirection: 'column', gap: '24px', padding: '32px', textAlign: 'center', minHeight: '60vh', justifyContent: 'center' }}>
                     {category && (
-                        <div className="hadith-category-badge" style={{ background: category.color || 'var(--nav-accent)' }}>
+                        <div className="hadith-category-badge" style={{ background: category.color || 'var(--brand-ink)' }}>
                             <CategoryIcon id={category.id} size={14} /> {category.name}
                         </div>
                     )}
 
-                    <div style={{ fontFamily: 'var(--arabic-font)', fontSize: '2rem', color: 'var(--nav-text)', lineHeight: '1.8', direction: 'rtl' }}>
+                    <div style={{ fontFamily: 'var(--arabic-font)', fontSize: '2rem', color: 'var(--ink)', lineHeight: '1.8', direction: 'rtl' }}>
                         {selectedHadith.arabic}
                     </div>
 
-                    <div style={{ fontSize: '1.25rem', color: 'var(--nav-text)', lineHeight: '1.7', fontStyle: 'italic', padding: '0 10px' }}>
+                    <div style={{ fontSize: '1.25rem', color: 'var(--ink)', lineHeight: '1.7', fontStyle: 'italic', padding: '0 10px' }}>
                         "{selectedHadith.text}"
                     </div>
 
                     <div style={{ marginTop: '20px' }}>
-                        <div style={{ fontWeight: '800', color: 'var(--nav-accent)', fontSize: '1.1rem' }}>{selectedHadith.narrator}</div>
-                        <div style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginTop: '4px' }}>({selectedHadith.source})</div>
+                        <div style={{ fontWeight: '800', color: 'var(--brand-ink)', fontSize: '1.1rem' }}>{selectedHadith.narrator}</div>
+                        <div style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginTop: '4px' }}>({selectedHadith.source})</div>
                     </div>
                 </div>
             </div>
@@ -169,14 +169,14 @@ const Hadiths = ({ onClose }) => {
                             onClick={() => { setSelectedHadith(hadith); setView('detail'); }}
                         >
                             <div style={{ flex: 1 }}>
-                                <div style={{ fontSize: '1rem', color: 'var(--nav-text)', lineHeight: '1.6', fontStyle: 'italic' }}>
+                                <div style={{ fontSize: '1rem', color: 'var(--ink)', lineHeight: '1.6', fontStyle: 'italic' }}>
                                     "{hadith.text.substring(0, 100)}{hadith.text.length > 100 ? '...' : ''}"
                                 </div>
-                                <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', marginTop: '8px', fontWeight: '800' }}>
+                                <div style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', marginTop: '8px', fontWeight: '800' }}>
                                     {hadith.source}
                                 </div>
                             </div>
-                            <ChevronRight size={20} color="var(--nav-border)" />
+                            <ChevronRight size={20} color="var(--line)" />
                         </div>
                     ))}
                 </div>
@@ -194,13 +194,13 @@ const Hadiths = ({ onClose }) => {
                     className="settings-card reveal-stagger" 
                     style={{ 
                         flexDirection: 'column', 
-                        background: 'linear-gradient(135deg, var(--nav-accent), #f97316)', 
+                        background: 'var(--brand-ink)', 
                         border: 'none', 
                         padding: '32px', 
                         color: 'var(--on-primary)',
                         marginBottom: '32px',
                         cursor: 'pointer',
-                        boxShadow: '0 12px 24px rgba(249, 115, 22, 0.2)'
+                        boxShadow: 'var(--elevation-2)'
                     }}
                     onClick={() => { setSelectedHadith(dailyHadith); setView('detail'); }}
                 >
@@ -251,8 +251,8 @@ const Hadiths = ({ onClose }) => {
                             >
                                 <div style={{ color: 'var(--brand-ink)' }}><CategoryIcon id={category.id} size={32} /></div>
                                 <div>
-                                    <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '0.9rem' }}>{category.name}</div>
-                                    <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--nav-text-muted)', marginTop: '4px' }}>{count} {t('hadith.count_suffix', 'HADİS')}</div>
+                                    <div style={{ fontWeight: '800', color: 'var(--ink)', fontSize: '0.9rem' }}>{category.name}</div>
+                                    <div style={{ fontSize: '0.65rem', fontWeight: '800', color: 'var(--ink-muted)', marginTop: '4px' }}>{count} {t('hadith.count_suffix', 'HADİS')}</div>
                                 </div>
                             </div>
                         );
@@ -260,10 +260,10 @@ const Hadiths = ({ onClose }) => {
                 </div>
             </div>
 
-            <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+            <div className="settings-card" style={{ background: 'var(--paper-sunken)', border: 'none', marginTop: '32px' }}>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                    <Info size={18} color="var(--nav-accent)" />
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                    <Info size={18} color="var(--brand-ink)" />
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--ink-muted)', lineHeight: '1.5' }}>
                         {t('hadith.info_note', "Hadis-i Şerifler, Peygamber Efendimiz'in (s.a.v.) sözleri, fiilleri ve takrirleridir. İslam dininin Kur'an-ı Kerim'den sonraki ikinci temel kaynağıdır.")}
                     </p>
                 </div>

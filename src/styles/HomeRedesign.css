@@ -1,12 +1,12 @@
 /* HomeRedesign.css for Mobile App Design System (Huzur) */
 .home-redesign-container {
-  background-color: var(--surface-page);
+  background-color: var(--paper);
   min-height: 100dvh;
   width: 100%;
   overflow-x: hidden;
   padding-bottom: 120px;
   font-family: var(--font-main);
-  color: var(--text-primary);
+  color: var(--ink);
   display: flex;
   flex-direction: column;
 }
@@ -37,7 +37,7 @@
   height: 40px;
   border-radius: 12px;
   overflow: hidden;
-  background-color: var(--surface-card);
+  background-color: var(--paper-raised);
   padding: 4px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
@@ -53,7 +53,7 @@
   font-weight: 800;
   font-family: var(--font-main);
   letter-spacing: -0.02em;
-  color: var(--primary);
+  color: var(--brand-ink);
   margin: 0;
 }
 
@@ -64,8 +64,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: var(--surface-card);
-  color: var(--primary);
+  background-color: var(--paper-raised);
+  color: var(--brand-ink);
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.03), inset 0 1px 1px rgba(255,255,255,0.8);
@@ -86,7 +86,7 @@
 }
 
 .skeuo-card {
-  background: var(--surface-card);
+  background: var(--paper-raised);
   border: 1px solid rgba(73, 100, 89, 0.08);
   box-shadow: 0 10px 30px -10px rgba(73, 100, 89, 0.12), 0 4px 6px -2px rgba(73, 100, 89, 0.05);
   border-radius: 28px; /* premium */
@@ -99,7 +99,7 @@
   flex-direction: column;
   position: relative;
   border-radius: 28px;
-  background: var(--hero-card-bg, var(--surface-card));
+  background: var(--hero-card-bg, var(--paper-raised));
   border: var(--hero-card-border, 1px solid rgba(73, 100, 89, 0.08));
   color: var(--on-primary);
   transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease;
@@ -347,7 +347,7 @@
 }
 
 .prayer-strip-item.active .prayer-strip-time {
-  color: var(--tertiary, #aa8343);
+  color: var(--gold-ink, #aa8343);
 }
 
 .active-dot {
@@ -358,7 +358,7 @@
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: var(--tertiary, #aa8343);
+  background: var(--gold-ink, #aa8343);
 }
 
 .completed-check {
@@ -366,12 +366,12 @@
   bottom: -1px;
   left: 50%;
   transform: translateX(-50%);
-  color: var(--tertiary, #aa8343);
+  color: var(--gold-ink, #aa8343);
 }
 
 /* Verse of the Day */
 .verse-section {
-  background-color: var(--surface-card);
+  background-color: var(--paper-raised);
   border-radius: 24px;
   padding: 24px;
   border: 1px solid rgba(73, 100, 89, 0.08);
@@ -385,7 +385,7 @@
   right: 16px;
   opacity: 0.03;
   font-size: 100px;
-  color: var(--primary);
+  color: var(--brand-ink);
   pointer-events: none;
 }
 
@@ -411,7 +411,7 @@
   font-family: 'Amiri', serif;
   font-size: 24px;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--brand-ink);
   margin-bottom: 12px;
   line-height: 1.45;
   text-align: right;
@@ -420,7 +420,7 @@
 
 .verse-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--tertiary), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold-ink), transparent);
   margin: 12px 0;
   opacity: 0.3;
 }
@@ -429,7 +429,7 @@
   font-size: 14px;
   font-weight: 550;
   line-height: 1.6;
-  color: var(--on-surface-variant);
+  color: var(--ink-muted);
   font-family: var(--font-main);
   margin-bottom: 14px;
   text-align: left;
@@ -439,7 +439,7 @@
   display: block;
   font-size: 11px;
   font-weight: 700;
-  color: var(--tertiary);
+  color: var(--gold-ink);
   text-align: right;
   margin-bottom: 14px;
   letter-spacing: 0.3px;
@@ -458,15 +458,15 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: var(--surface-container-lowest);
-  border: 1px solid var(--outline-variant);
-  color: var(--primary);
+  background-color: var(--paper-raised);
+  border: 1px solid var(--line);
+  color: var(--brand-ink);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .verse-actions button:hover {
-  background-color: var(--surface-container-low);
+  background-color: var(--paper);
   transform: scale(1.05);
 }
 
@@ -478,14 +478,14 @@
   border-radius: var(--radius-control);
   gap: 8px;
   color: var(--on-primary);
-  background: var(--primary);
+  background: var(--brand-ink);
   font-family: var(--font-main);
   font-size: 0.82rem;
   font-weight: 800;
 }
 
 .verse-actions .verse-share-button:hover {
-  background: var(--primary);
+  background: var(--brand-ink);
   transform: translateY(-1px);
 }
 
@@ -618,7 +618,7 @@
   font-size: 16px;
   font-weight: 800;
   font-family: var(--font-main);
-  color: var(--primary);
+  color: var(--brand-ink);
   margin: 0;
 }
 
@@ -637,11 +637,11 @@
 }
 
 .quick-access-actions button:first-child {
-  color: var(--tertiary);
+  color: var(--gold-ink);
 }
 
 .quick-access-actions button:last-child {
-  color: var(--text-secondary);
+  color: var(--ink-muted);
   opacity: 0.7;
 }
 
@@ -663,7 +663,7 @@
 }
 
 .quick-access-large-card {
-  background: var(--surface-card);
+  background: var(--paper-raised);
   border: 1px solid rgba(73, 100, 89, 0.08);
   border-radius: 18px;
   padding: 12px 10px;
@@ -682,7 +682,7 @@
 .quick-access-large-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(73, 100, 89, 0.06);
-  border-color: var(--tertiary);
+  border-color: var(--gold-ink);
 }
 
 .quick-access-large-card:active {
@@ -702,11 +702,11 @@
 }
 
 .qibla-icon-bg {
-  background: linear-gradient(135deg, var(--tertiary) 0%, var(--tertiary-fixed-dim) 100%);
+  background: linear-gradient(135deg, var(--gold-ink) 0%, var(--tertiary-fixed-dim) 100%);
 }
 
 .dhikr-icon-bg {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, var(--brand-ink) 0%, var(--brand-ink) 100%);
 }
 
 .quick-access-large-info {
@@ -720,7 +720,7 @@
 .quick-access-large-title {
   font-size: 12px;
   font-weight: 800;
-  color: var(--text-heading);
+  color: var(--ink);
   margin: 0 0 1px 0;
   white-space: nowrap;
   overflow: hidden;
@@ -729,7 +729,7 @@
 
 .quick-access-large-desc {
   font-size: 9px;
-  color: var(--text-secondary);
+  color: var(--ink-muted);
   margin: 0;
   font-weight: 600;
   white-space: nowrap;
@@ -755,7 +755,7 @@
 }
 
 .quick-access-square-card {
-  background: var(--surface-card);
+  background: var(--paper-raised);
   border: 1px solid rgba(73, 100, 89, 0.05);
   border-radius: 18px;
   padding: 10px 3px;
@@ -789,21 +789,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary);
-  background-color: var(--surface-container-low);
+  color: var(--brand-ink);
+  background-color: var(--paper);
   transition: all 0.2s ease;
   flex-shrink: 0;
 }
 
 .quick-access-square-card:hover .quick-access-square-icon-container {
-  background-color: var(--primary-container);
+  background-color: var(--brand-soft);
   color: var(--on-primary-container);
 }
 
 .quick-access-square-label {
   font-size: 10px;
   font-weight: 700;
-  color: var(--text-secondary);
+  color: var(--ink-muted);
   text-align: center;
   letter-spacing: -0.1px;
   white-space: nowrap;
@@ -818,7 +818,7 @@
 }
 
 .daily-insight-card {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--inverse-surface) 100%);
+  background: linear-gradient(135deg, var(--brand-ink) 0%, var(--inverse-surface) 100%);
   border-radius: 24px;
   padding: 20px;
   color: var(--on-primary);
@@ -848,7 +848,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--tertiary);
+  color: var(--gold-ink);
 }
 
 .daily-insight-title {
@@ -878,7 +878,7 @@
 .home-welcome-subtitle {
   font-size: 10px;
   font-weight: 800;
-  color: var(--text-secondary);
+  color: var(--ink-muted);
   text-transform: uppercase;
   letter-spacing: 0.6px;
 }
@@ -903,7 +903,7 @@
 }
 
 [data-theme='dark'] .daily-insight-card {
-  background: linear-gradient(135deg, var(--surface-container-lowest) 0%, var(--surface-container-low) 100%);
+  background: linear-gradient(135deg, var(--paper-raised) 0%, var(--paper) 100%);
   border-color: rgba(255, 255, 255, 0.05);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }

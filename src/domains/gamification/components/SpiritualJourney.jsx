@@ -81,7 +81,7 @@ const SpiritualJourney = ({ onClose }) => {
   const quickActions = [
     {
       id: 'daily-quiz',
-      icon: <Brain size={18} color="var(--tertiary)" />,
+      icon: <Brain size={18} color="var(--gold-ink)" />,
       title: t('quiz.title', 'Günün Testi'),
       description: t('journey.quick.quiz', 'Kısa bir bilgi turu ile serini besle.'),
       onClick: () => navigateFromAction('/daily-quiz')
@@ -108,7 +108,7 @@ const SpiritualJourney = ({ onClose }) => {
 
   const renderLevelProgress = () => (
     <div className="settings-card reveal-stagger flex-col p-24 mb-16" style={{
-      background: 'linear-gradient(145deg, var(--nav-bg), var(--nav-hover))',
+      background: 'linear-gradient(145deg, var(--paper), var(--paper-sunken))',
       border: `1px solid ${tierConfig.primary}40`,
       position: 'relative',
       overflow: 'hidden'
@@ -176,7 +176,7 @@ const SpiritualJourney = ({ onClose }) => {
             background: 'rgba(0,0,0,0.2)',
             borderRadius: '10px',
             overflow: 'hidden',
-            border: '1px solid var(--nav-border)'
+            border: '1px solid var(--line)'
           }}>
             <div style={{
               height: '100%',
@@ -220,7 +220,7 @@ const SpiritualJourney = ({ onClose }) => {
           width: '48px',
           height: '48px',
           borderRadius: '14px',
-          background: 'rgba(59, 130, 246, 0.15)',
+          background: 'color-mix(in srgb, var(--brand-ink) 15%, transparent)',
           color: 'var(--brand-ink)',
           display: 'flex',
           alignItems: 'center',
@@ -246,8 +246,8 @@ const SpiritualJourney = ({ onClose }) => {
 
   const renderWeeklyRhythm = () => (
     <div className="settings-card reveal-stagger flex-col p-22 mb-20" style={{
-      background: 'linear-gradient(145deg, color-mix(in srgb, var(--secondary) 12%, transparent), color-mix(in srgb, var(--tertiary) 8%, transparent))',
-      border: '1px solid color-mix(in srgb, var(--secondary) 18%, transparent)'
+      background: 'linear-gradient(145deg, color-mix(in srgb, var(--brand-ink) 12%, transparent), color-mix(in srgb, var(--gold-ink) 8%, transparent))',
+      border: '1px solid color-mix(in srgb, var(--brand-ink) 18%, transparent)'
     }}>
       <div className="flex-between-center items-start gap-12 mb-16">
         <div>
@@ -295,10 +295,10 @@ const SpiritualJourney = ({ onClose }) => {
 
     return (
       <div className="settings-card reveal-stagger flex-col p-22 mb-24" style={{
-        background: 'linear-gradient(145deg, rgba(249, 115, 22, 0.10), rgba(16, 185, 129, 0.08))',
-        border: '1px solid rgba(249, 115, 22, 0.18)'
+        background: 'color-mix(in srgb, var(--gold) 10%, var(--paper-raised))',
+        border: '1px solid var(--line)'
       }}>
-        <div className="text-sm font-black uppercase mb-6" style={{ color: 'var(--nav-accent)', letterSpacing: '1px' }}>
+        <div className="text-sm font-black uppercase mb-6" style={{ color: 'var(--brand-ink)', letterSpacing: '1px' }}>
           {t('socialRetention.weeklyGroup', 'Bu hafta grubun')}
         </div>
         <h3 className="m-0 text-nav text-xl font-black">
@@ -328,7 +328,7 @@ const SpiritualJourney = ({ onClose }) => {
             <span className="text-base font-extrabold text-nav">
               {familySummary.recommendedGoal.title}
             </span>
-            <span className="text-base font-black" style={{ color: 'var(--nav-accent)' }}>
+            <span className="text-base font-black" style={{ color: 'var(--brand-ink)' }}>
               %{familySummary.recommendedGoal.progressPercent}
             </span>
           </div>
@@ -336,7 +336,7 @@ const SpiritualJourney = ({ onClose }) => {
             <div style={{
               width: `${familySummary.recommendedGoal.progressPercent}%`,
               height: '100%',
-              background: 'linear-gradient(90deg, var(--tertiary), var(--secondary))'
+              background: 'linear-gradient(90deg, var(--gold-ink), var(--brand-ink))'
             }} />
           </div>
           <p className="m-0 text-nav-muted text-sm font-semibold leading-relaxed">
@@ -349,8 +349,8 @@ const SpiritualJourney = ({ onClose }) => {
 
   const renderMiniLeague = () => (
     <div className="settings-card reveal-stagger flex-col p-22 mb-24" style={{
-      background: 'linear-gradient(145deg, rgba(59, 130, 246, 0.10), rgba(14, 165, 233, 0.06))',
-      border: '1px solid rgba(59, 130, 246, 0.18)'
+      background: 'color-mix(in srgb, var(--brand-ink) 8%, var(--paper-raised))',
+      border: '1px solid var(--line)'
     }}>
       <div className="flex-between-center items-start gap-12 mb-14">
         <div>
@@ -368,7 +368,7 @@ const SpiritualJourney = ({ onClose }) => {
               : t(miniLeagueSummary.descriptionKey, 'İstersen anonim mini lige katılıp sadece istikrar bandını görebilirsin.')}
           </p>
         </div>
-        <div className="w-48 h-48 rounded-16 flex-center" style={{ background: 'rgba(59, 130, 246, 0.14)', color: 'var(--brand-ink)' }}>
+        <div className="w-48 h-48 rounded-16 flex-center" style={{ background: 'color-mix(in srgb, var(--brand-ink) 14%, transparent)', color: 'var(--brand-ink)' }}>
           <Trophy size={22} />
         </div>
       </div>
@@ -404,7 +404,7 @@ const SpiritualJourney = ({ onClose }) => {
             useAppStore.getState().setActiveFeature('settings');
           }}
           className="rounded-full px-14 py-10 font-extrabold border-none cursor-pointer"
-          style={{ background: 'rgba(59, 130, 246, 0.16)', color: 'var(--brand-ink)' }}
+          style={{ background: 'color-mix(in srgb, var(--brand-ink) 16%, transparent)', color: 'var(--brand-ink)' }}
         >
           {t(miniLeagueSummary.ctaKey, 'Gorunurlugu duzenle')}
         </button>
@@ -455,7 +455,7 @@ const SpiritualJourney = ({ onClose }) => {
                 onClick={item.onClick}
                 className="hover-lift w-full p-16 rounded-18 border-glass text-left cursor-pointer"
                 style={{
-                  background: 'linear-gradient(145deg, var(--nav-bg), var(--nav-hover))',
+                  background: 'linear-gradient(145deg, var(--paper), var(--paper-sunken))',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '14px'
@@ -472,7 +472,7 @@ const SpiritualJourney = ({ onClose }) => {
                     {item.description}
                   </div>
                 </div>
-                <TrendingUp size={18} color="var(--nav-text-muted)" />
+                <TrendingUp size={18} color="var(--ink-muted)" />
               </button>
             ))}
           </div>

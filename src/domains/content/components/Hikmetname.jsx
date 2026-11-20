@@ -113,18 +113,18 @@ function Hikmetname({ onClose }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {HIKMET_CATEGORIES.map(category => (
                         <div key={category.id} className="settings-card" onClick={() => setActiveCategory(category.id)} style={{ padding: '20px', cursor: 'pointer' }}>
-                            <div className="settings-icon-box" style={{ background: 'var(--nav-hover)', fontSize: '1.5rem' }}>
+                            <div className="settings-icon-box" style={{ background: 'var(--paper-sunken)', fontSize: '1.5rem' }}>
                                 {category.icon}
                             </div>
                             <div style={{ flex: 1 }}>
-                                <div style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '1rem' }}>{t(category.title)}</div>
+                                <div style={{ fontWeight: '800', color: 'var(--ink)', fontSize: '1rem' }}>{t(category.title)}</div>
                                 <div className="settings-desc">{t(category.description)}</div>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <span style={{ fontSize: '0.7rem', fontWeight: '900', color: 'var(--nav-text-muted)', background: 'var(--nav-hover)', padding: '4px 10px', borderRadius: '10px' }}>
+                                <span style={{ fontSize: '0.7rem', fontWeight: '900', color: 'var(--ink-muted)', background: 'var(--paper-sunken)', padding: '4px 10px', borderRadius: '10px' }}>
                                     {getHikmetByCategory(category.id).length}
                                 </span>
-                                <ChevronRight size={18} color="var(--nav-text-muted)" />
+                                <ChevronRight size={18} color="var(--ink-muted)" />
                             </div>
                         </div>
                     ))}
@@ -140,8 +140,8 @@ function Hikmetname({ onClose }) {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {HIKMETLER.filter(h => favorites.includes(h.id)).slice(0, 2).map(hikmet => (
                             <div key={hikmet.id} className="settings-card" style={{ padding: '16px', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}>
-                                <div style={{ fontSize: '0.9rem', color: 'var(--nav-text)', fontStyle: 'italic', lineHeight: '1.5' }}>"{t(hikmet.text)}"</div>
-                                <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-accent)' }}>— {t(hikmet.source)}</div>
+                                <div style={{ fontSize: '0.9rem', color: 'var(--ink)', fontStyle: 'italic', lineHeight: '1.5' }}>"{t(hikmet.text)}"</div>
+                                <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--brand-ink)' }}>— {t(hikmet.source)}</div>
                             </div>
                         ))}
                     </div>
@@ -160,17 +160,17 @@ function Hikmetname({ onClose }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {hikmetler.map(hikmet => (
                         <div key={hikmet.id} className="settings-card" style={{ flexDirection: 'column', gap: '16px', padding: '24px' }}>
-                            <div style={{ fontSize: '1.05rem', color: 'var(--nav-text)', lineHeight: '1.7', fontStyle: 'italic' }}>
+                            <div style={{ fontSize: '1.05rem', color: 'var(--ink)', lineHeight: '1.7', fontStyle: 'italic' }}>
                                 "{t(hikmet.text)}"
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                                 <div>
-                                    <div style={{ fontWeight: '800', color: 'var(--nav-accent)', fontSize: '0.9rem' }}>— {t(hikmet.source)}</div>
-                                    {hikmet.reference && <div style={{ fontSize: '0.7rem', color: 'var(--nav-text-muted)', marginTop: '2px' }}>{t(hikmet.reference)}</div>}
+                                    <div style={{ fontWeight: '800', color: 'var(--brand-ink)', fontSize: '0.9rem' }}>— {t(hikmet.source)}</div>
+                                    {hikmet.reference && <div style={{ fontSize: '0.7rem', color: 'var(--ink-muted)', marginTop: '2px' }}>{t(hikmet.reference)}</div>}
                                 </div>
                                 <div style={{ display: 'flex', gap: '8px' }}>
                                     <button className="icon-btn-small" onClick={() => toggleFavorite(hikmet.id)}>
-                                        <Heart size={16} fill={favorites.includes(hikmet.id) ? 'var(--danger)' : 'transparent'} color={favorites.includes(hikmet.id) ? 'var(--danger)' : 'var(--nav-text-muted)'} />
+                                        <Heart size={16} fill={favorites.includes(hikmet.id) ? 'var(--danger)' : 'transparent'} color={favorites.includes(hikmet.id) ? 'var(--danger)' : 'var(--ink-muted)'} />
                                     </button>
                                     <button className="icon-btn-small" onClick={() => shareHikmet(hikmet)}>
                                         <Share2 size={16} />
@@ -189,17 +189,17 @@ function Hikmetname({ onClose }) {
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
                 <IslamicBackButton onClick={goBack} size="medium" />
-                <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--ink)' }}>
                     {activeCategory ? t(HIKMET_CATEGORIES.find(c => c.id === activeCategory)?.title) : t('hikmet.title')}
                 </h1>
             </div>
 
             {activeCategory ? renderCategoryView() : renderMainView()}
 
-            <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+            <div className="settings-card" style={{ background: 'var(--paper-sunken)', border: 'none', marginTop: '32px' }}>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                    <Info size={18} color="var(--nav-accent)" />
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                    <Info size={18} color="var(--brand-ink)" />
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--ink-muted)', lineHeight: '1.5' }}>
                         {t('hikmet.info_note', "Hikmetname, İslam düşünce dünyasından seçilmiş veciz sözler, hikmetli ifadeler ve ders verici nükteler içermektedir. Ruhunuzu dinlendirecek ve yolunuzu aydınlatacak bilgileri burada bulabilirsiniz.")}
                     </p>
                 </div>

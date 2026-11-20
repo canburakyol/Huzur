@@ -102,7 +102,7 @@ const Agenda = ({ onClose }) => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
                 <IslamicBackButton onClick={onClose} size="medium" />
                 <div style={{ flex: 1 }}>
-                    <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                    <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '800', color: 'var(--ink)' }}>
                         {t(getMonthName(currentDate.getMonth()))} {currentDate.getFullYear()}
                     </h2>
                     <p className="settings-desc">
@@ -110,10 +110,10 @@ const Agenda = ({ onClose }) => {
                     </p>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
-                    <button onClick={handlePrevMonth} style={{ background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '12px', padding: '10px', color: 'var(--nav-text)', cursor: 'pointer' }}>
+                    <button onClick={handlePrevMonth} style={{ background: 'var(--paper-sunken)', border: '1px solid var(--line)', borderRadius: '12px', padding: '10px', color: 'var(--ink)', cursor: 'pointer' }}>
                         <ChevronLeft size={20} />
                     </button>
-                    <button onClick={handleNextMonth} style={{ background: 'var(--nav-hover)', border: '1px solid var(--nav-border)', borderRadius: '12px', padding: '10px', color: 'var(--nav-text)', cursor: 'pointer' }}>
+                    <button onClick={handleNextMonth} style={{ background: 'var(--paper-sunken)', border: '1px solid var(--line)', borderRadius: '12px', padding: '10px', color: 'var(--ink)', cursor: 'pointer' }}>
                         <ChevronRight size={20} />
                     </button>
                 </div>
@@ -124,7 +124,7 @@ const Agenda = ({ onClose }) => {
                 {/* Weekday Headers */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', textAlign: 'center' }}>
                     {weekDays.map(day => (
-                        <div key={day} style={{ fontSize: '11px', fontWeight: '800', color: 'var(--nav-text-muted)', textTransform: 'uppercase' }}>
+                        <div key={day} style={{ fontSize: '11px', fontWeight: '800', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>
                             {day}
                         </div>
                     ))}
@@ -146,17 +146,17 @@ const Agenda = ({ onClose }) => {
                                 style={{
                                     aspectRatio: '1',
                                     background: day.isToday
-                                        ? 'var(--nav-accent)'
+                                        ? 'var(--brand-ink)'
                                         : isReligious
                                             ? 'rgba(239, 68, 68, 0.05)'
-                                            : 'var(--nav-hover)',
+                                            : 'var(--paper-sunken)',
                                     borderRadius: '16px',
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     cursor: 'pointer',
-                                    border: day.isToday ? 'none' : isReligious ? '1px solid rgba(239, 68, 68, 0.2)' : '1px solid var(--nav-border)',
+                                    border: day.isToday ? 'none' : isReligious ? '1px solid rgba(239, 68, 68, 0.2)' : '1px solid var(--line)',
                                     position: 'relative',
                                     transition: 'all 0.2s',
                                     boxShadow: day.isToday ? '0 4px 12px rgba(249, 115, 22, 0.3)' : 'none'
@@ -165,7 +165,7 @@ const Agenda = ({ onClose }) => {
                                 <span style={{
                                     fontSize: '1rem',
                                     fontWeight: '800',
-                                    color: day.isToday ? 'var(--on-primary)' : 'var(--nav-text)'
+                                    color: day.isToday ? 'var(--on-primary)' : 'var(--ink)'
                                 }}>
                                     {day.day}
                                 </span>
@@ -173,7 +173,7 @@ const Agenda = ({ onClose }) => {
                                 <span style={{
                                     fontSize: '9px',
                                     fontWeight: '700',
-                                    color: day.isToday ? 'rgba(255,255,255,0.8)' : 'var(--nav-text-muted)',
+                                    color: day.isToday ? 'rgba(255,255,255,0.8)' : 'var(--ink-muted)',
                                     marginBottom: '-12px'
                                 }}>
                                     {day.hijri.day}
@@ -205,24 +205,24 @@ const Agenda = ({ onClose }) => {
                         className="modal-content reveal-stagger"
                         style={{
                             width: '100%', maxWidth: '500px', maxHeight: '90vh',
-                            background: 'var(--nav-bg)', borderTopLeftRadius: '32px', borderTopRightRadius: '32px',
-                            padding: '32px', overflowY: 'auto', border: '1px solid var(--nav-border)'
+                            background: 'var(--paper)', borderTopLeftRadius: '32px', borderTopRightRadius: '32px',
+                            padding: '32px', overflowY: 'auto', border: '1px solid var(--line)'
                         }}
                         onClick={e => e.stopPropagation()}
                     >
-                        <div style={{ width: '40px', height: '4px', background: 'var(--nav-border)', borderRadius: '2px', margin: '-16px auto 24px' }}></div>
+                        <div style={{ width: '40px', height: '4px', background: 'var(--line)', borderRadius: '2px', margin: '-16px auto 24px' }}></div>
                         
                         {/* Modal Header */}
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px' }}>
                             <div>
-                                <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                                <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: '800', color: 'var(--ink)' }}>
                                     {selectedDate.day} {t(getMonthName(selectedDate.date.getMonth()))} {selectedDate.date.getFullYear()}
                                 </h3>
                                 <p className="settings-desc">
                                     {selectedDate.hijri.day} {t(selectedDate.hijri.monthName)} {selectedDate.hijri.year}
                                 </p>
                             </div>
-                            <button onClick={() => setShowEventModal(false)} style={{ background: 'var(--nav-hover)', border: 'none', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--nav-text-muted)', cursor: 'pointer' }}>
+                            <button onClick={() => setShowEventModal(false)} style={{ background: 'var(--paper-sunken)', border: 'none', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink-muted)', cursor: 'pointer' }}>
                                 <X size={20} />
                             </button>
                         </div>
@@ -252,15 +252,15 @@ const Agenda = ({ onClose }) => {
                                     events[selectedDate.dateStr].map(event => (
                                         <div key={event.id} className="settings-card" style={{ padding: '16px' }}>
                                             <div style={{ flex: 1 }}>
-                                                <div style={{ fontWeight: '800', color: 'var(--nav-text)' }}>{event.title}</div>
+                                                <div style={{ fontWeight: '800', color: 'var(--ink)' }}>{event.title}</div>
                                                 <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
                                                     {event.time && (
-                                                        <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--nav-accent)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                                        <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--brand-ink)', display: 'flex', alignItems: 'center', gap: '4px' }}>
                                                             <Clock size={12} /> {event.time}
                                                         </div>
                                                     )}
                                                     {event.desc && (
-                                                        <div style={{ fontSize: '11px', fontWeight: '600', color: 'var(--nav-text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                                        <div style={{ fontSize: '11px', fontWeight: '600', color: 'var(--ink-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
                                                             <Tag size={12} /> {event.desc}
                                                         </div>
                                                     )}
@@ -287,7 +287,7 @@ const Agenda = ({ onClose }) => {
                                     placeholder={t('agenda.titlePlaceholder', 'Başlık (örn: İftar Daveti)')}
                                     value={newEventTitle}
                                     onChange={e => setNewEventTitle(e.target.value)}
-                                    style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--nav-border)', background: 'var(--nav-hover)', color: 'var(--nav-text)', outline: 'none' }}
+                                    style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'var(--paper-sunken)', color: 'var(--ink)', outline: 'none' }}
                                 />
                                 <div style={{ display: 'flex', gap: '12px' }}>
                                     <div style={{ flex: 1, position: 'relative', display: 'flex', alignItems: 'center' }}>
@@ -295,20 +295,20 @@ const Agenda = ({ onClose }) => {
                                             type="time"
                                             value={newEventTime}
                                             onChange={e => setNewEventTime(e.target.value)}
-                                            style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--nav-border)', background: 'var(--nav-hover)', color: 'var(--nav-text)', outline: 'none' }}
+                                            style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'var(--paper-sunken)', color: 'var(--ink)', outline: 'none' }}
                                         />
-                                        <Clock size={16} style={{ position: 'absolute', right: '14px', pointerEvents: 'none', color: 'var(--nav-text-muted)' }} />
+                                        <Clock size={16} style={{ position: 'absolute', right: '14px', pointerEvents: 'none', color: 'var(--ink-muted)' }} />
                                     </div>
                                 </div>
                                 <textarea
                                     placeholder={t('agenda.notesPlaceholder', 'Not ekleyin...')}
                                     value={newEventDesc}
                                     onChange={e => setNewEventDesc(e.target.value)}
-                                    style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--nav-border)', background: 'var(--nav-hover)', color: 'var(--nav-text)', outline: 'none', resize: 'none', height: '100px' }}
+                                    style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'var(--paper-sunken)', color: 'var(--ink)', outline: 'none', resize: 'none', height: '100px' }}
                                 />
                                 <button
                                     type="submit"
-                                    style={{ width: '100%', padding: '16px', borderRadius: '16px', background: 'var(--nav-accent)', color: 'var(--on-primary)', fontWeight: '800', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', boxShadow: '0 4px 12px rgba(249, 115, 22, 0.2)' }}
+                                    style={{ width: '100%', padding: '16px', borderRadius: '16px', background: 'var(--brand-ink)', color: 'var(--on-primary)', fontWeight: '800', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', boxShadow: '0 4px 12px rgba(249, 115, 22, 0.2)' }}
                                     disabled={!newEventTitle.trim()}
                                 >
                                     <Plus size={20} />

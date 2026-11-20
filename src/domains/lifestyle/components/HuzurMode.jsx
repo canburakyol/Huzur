@@ -150,7 +150,7 @@ const HuzurMode = ({ onClose }) => {
                             className={`huzur-play-btn ${isPlaying ? 'playing' : ''} ${isPlaying ? 'sota-liquid-pulse' : ''}`}
                             style={{ 
                                 transition: 'all 0.4s cubic-bezier(0.25, 1.5, 0.5, 1)',
-                                boxShadow: isPlaying ? 'none' : '0 12px 30px rgba(245, 158, 11, 0.3)'
+                                boxShadow: isPlaying ? 'none' : '0 12px 30px color-mix(in srgb, var(--gold) 30%, transparent)'
                             }}
                         >
                             {isPlaying ? <Pause size={40} /> : <Play size={40} style={{ marginLeft: '6px' }} />}
@@ -209,7 +209,7 @@ const HuzurMode = ({ onClose }) => {
                                     <div className="huzur-sound-icon">
                                         <Icon size={24} />
                                     </div>
-                                    <span style={{ fontSize: '0.65rem', fontWeight: '800', textAlign: 'center', color: isActive ? 'var(--nav-text)' : 'var(--nav-text-muted)' }}>
+                                    <span style={{ fontSize: '0.65rem', fontWeight: '800', textAlign: 'center', color: isActive ? 'var(--ink)' : 'var(--ink-muted)' }}>
                                         {t(sound.nameKey)}
                                     </span>
                                 </div>
@@ -222,11 +222,11 @@ const HuzurMode = ({ onClose }) => {
                 {activeSound && (
                     <div className="settings-card" style={{ marginTop: '32px', padding: '24px', flexDirection: 'column', gap: '16px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--nav-text)' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--ink)' }}>
                                 <Volume2 size={20} />
                                 <span style={{ fontWeight: '800', fontSize: '0.9rem' }}>{t('huzurMode.volume', 'Ses Seviyesi')}</span>
                             </div>
-                            <span style={{ fontWeight: '900', color: 'var(--nav-accent)' }}>{Math.round(volume * 100)}%</span>
+                            <span style={{ fontWeight: '900', color: 'var(--brand-ink)' }}>{Math.round(volume * 100)}%</span>
                         </div>
                         <input
                             type="range"
@@ -240,10 +240,10 @@ const HuzurMode = ({ onClose }) => {
                     </div>
                 )}
 
-                <div className="settings-card" style={{ background: 'var(--nav-hover)', border: 'none', marginTop: '32px' }}>
+                <div className="settings-card" style={{ background: 'var(--paper-sunken)', border: 'none', marginTop: '32px' }}>
                     <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                        <Sparkles size={18} color="var(--nav-accent)" />
-                        <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                        <Sparkles size={18} color="var(--brand-ink)" />
+                        <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--ink-muted)', lineHeight: '1.5' }}>
                             {t('huzurMode.info_note', 'Huzur Modu, rahatlamanıza ve daha kaliteli bir uyku çekmenize yardımcı olacak asude sesler sunar. Zamanlayıcıyı kurarak cihazınızın pilinden tasarruf edebilirsiniz.')}
                         </p>
                     </div>

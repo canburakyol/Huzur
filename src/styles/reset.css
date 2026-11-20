@@ -22,11 +22,11 @@ body {
   font-family: var(--font-main);
   background-color: var(--bg-gradient-start);
   background-image:
-    radial-gradient(at 0% 0%, var(--ambient-teal, rgba(15, 118, 110, 0.15)) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, var(--ambient-gold, rgba(180, 83, 9, 0.1)) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, var(--ambient-teal, color-mix(in srgb, var(--brand-ink) 15%, transparent)) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, var(--ambient-gold, color-mix(in srgb, var(--gold) 10%, transparent)) 0px, transparent 50%),
     linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   background-attachment: fixed;
-  color: var(--text-primary);
+  color: var(--ink);
   font-size: 1.1rem;
   line-height: 1.65;
   min-height: 100dvh;

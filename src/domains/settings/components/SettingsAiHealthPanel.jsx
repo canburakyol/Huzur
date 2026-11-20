@@ -20,7 +20,7 @@ const renderBadge = (theme, label) => (
 const renderBulletList = (items = []) => (
   <div style={{ display: 'grid', gap: '6px' }}>
     {items.map((item) => (
-      <div key={item} style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', lineHeight: '1.45' }}>
+      <div key={item} style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', lineHeight: '1.45' }}>
         - {item}
       </div>
     ))}
@@ -54,7 +54,7 @@ function SettingsAiHealthPanel() {
           alignItems: 'stretch',
           gap: '14px',
           border: `1px solid ${overallHealthTheme.border}`,
-          background: `linear-gradient(145deg, ${overallHealthTheme.bg}, rgba(15, 118, 110, 0.06))`
+          background: `linear-gradient(145deg, ${overallHealthTheme.bg}, color-mix(in srgb, var(--brand-ink) 6%, transparent))`
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
@@ -86,24 +86,24 @@ function SettingsAiHealthPanel() {
                   <div style={{ fontSize: '0.82rem', fontWeight: '900', color: globalReleaseTheme.color, textTransform: 'uppercase' }}>
                     Global release health
                   </div>
-                  <div style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--ink)' }}>
                     {globalReleaseTheme.label}
                   </div>
                 </div>
-                <div style={{ fontSize: '0.76rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                <div style={{ fontSize: '0.76rem', color: 'var(--ink-muted)', lineHeight: '1.5' }}>
                   {aiGlobalReleaseStatus.recommendedAction}
                 </div>
                 <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                     Fallback: %{Math.round((aiGlobalReleaseStatus.fallbackRate || 0) * 100)}
                   </div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                     Low trust: %{Math.round((aiGlobalReleaseStatus.lowTrustRate || 0) * 100)}
                   </div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                     Stale yuzey: {aiGlobalReleaseStatus.staleSurfaceCount || 0}
                   </div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                     Weekly cron: {aiGlobalReleaseStatus.weeklyCronHealthy ? 'Saglam' : 'Sorunlu'}
                   </div>
                 </div>
@@ -125,11 +125,11 @@ function SettingsAiHealthPanel() {
                   <div style={{ fontSize: '0.82rem', fontWeight: '900', color: rolloutGateTheme.color, textTransform: 'uppercase' }}>
                     Rollout onerisi
                   </div>
-                  <div style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--ink)' }}>
                     {rolloutGate.label}
                   </div>
                 </div>
-                <div style={{ fontSize: '0.76rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                <div style={{ fontSize: '0.76rem', color: 'var(--ink-muted)', lineHeight: '1.5' }}>
                   {rolloutGate.enabledFlagCount}/{rolloutGate.totalFlagCount} AI flag aktif.
                 </div>
                 {renderBulletList(rolloutGate.actions)}
@@ -151,17 +151,17 @@ function SettingsAiHealthPanel() {
                   <div style={{ fontSize: '0.82rem', fontWeight: '900', color: releaseReadinessTheme.color, textTransform: 'uppercase' }}>
                     Release readiness
                   </div>
-                  <div style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--ink)' }}>
                     {releaseReadinessTheme.label}
                   </div>
                 </div>
                 <div style={{ display: 'grid', gap: '6px' }}>
                   {releaseReadiness.checks.map((check) => (
                     <div key={check.key} style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', alignItems: 'center' }}>
-                      <div style={{ fontSize: '0.76rem', color: 'var(--nav-text)', fontWeight: '700' }}>
+                      <div style={{ fontSize: '0.76rem', color: 'var(--ink)', fontWeight: '700' }}>
                         {check.label}
                       </div>
-                      <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)' }}>
+                      <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)' }}>
                         {check.detail}
                       </div>
                     </div>
@@ -185,21 +185,21 @@ function SettingsAiHealthPanel() {
                   <div style={{ fontSize: '0.82rem', fontWeight: '900', color: releaseBriefTheme.color, textTransform: 'uppercase' }}>
                     Yayin briefi
                   </div>
-                  <div style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--ink)' }}>
                     {aiReleaseBrief.label}
                   </div>
                 </div>
-                <div style={{ fontSize: '0.76rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+                <div style={{ fontSize: '0.76rem', color: 'var(--ink-muted)', lineHeight: '1.5' }}>
                   {aiReleaseBrief.summary}
                 </div>
                 <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                     Flag: {aiReleaseBrief.enabledFlagCount}/{aiReleaseBrief.totalFlagCount}
                   </div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                     Incident 24s: {aiReleaseBrief.incident24hCount}
                   </div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                     Watch/Dikkat: {aiReleaseBrief.watchCount}/{aiReleaseBrief.actionCount}
                   </div>
                 </div>
@@ -213,17 +213,17 @@ function SettingsAiHealthPanel() {
                 style={{
                   padding: '12px 14px',
                   borderRadius: '16px',
-                  background: 'rgba(15, 118, 110, 0.08)',
-                  border: '1px solid rgba(15, 118, 110, 0.14)',
+                  background: 'color-mix(in srgb, var(--brand-ink) 8%, transparent)',
+                  border: '1px solid color-mix(in srgb, var(--brand-ink) 14%, transparent)',
                   display: 'grid',
                   gap: '12px'
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '0.82rem', fontWeight: '900', color: 'var(--nav-text)', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '0.82rem', fontWeight: '900', color: 'var(--ink)', textTransform: 'uppercase' }}>
                     Operator aksiyonlari
                   </div>
-                  <div style={{ fontSize: '0.76rem', color: 'var(--nav-text-muted)', marginTop: '6px', lineHeight: '1.5' }}>
+                  <div style={{ fontSize: '0.76rem', color: 'var(--ink-muted)', marginTop: '6px', lineHeight: '1.5' }}>
                     {aiOpsChecklist.headline}
                   </div>
                 </div>
@@ -231,7 +231,7 @@ function SettingsAiHealthPanel() {
                 {renderBulletList(aiOpsChecklist.operatorActions)}
 
                 <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '0.78rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '900', color: 'var(--ink)' }}>
                     Cekirdek smoke seti
                   </div>
                   {aiOpsChecklist.smokeChecks.map((check) => (
@@ -240,17 +240,17 @@ function SettingsAiHealthPanel() {
                       style={{
                         padding: '10px 12px',
                         borderRadius: '14px',
-                        background: 'var(--nav-hover)',
-                        border: '1px solid var(--nav-border)'
+                        background: 'var(--paper-sunken)',
+                        border: '1px solid var(--line)'
                       }}
                     >
-                      <div style={{ fontSize: '0.76rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                      <div style={{ fontSize: '0.76rem', fontWeight: '800', color: 'var(--ink)' }}>
                         {check.label}
                       </div>
-                      <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', marginTop: '4px', lineHeight: '1.45' }}>
+                      <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', marginTop: '4px', lineHeight: '1.45' }}>
                         {check.detail}
                       </div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--nav-text-muted)', marginTop: '4px', lineHeight: '1.4' }}>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--ink-muted)', marginTop: '4px', lineHeight: '1.4' }}>
                         Beklenen sinyal: {check.expectedSignal}
                       </div>
                     </div>
@@ -258,23 +258,23 @@ function SettingsAiHealthPanel() {
                 </div>
 
                 <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '0.78rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '900', color: 'var(--ink)' }}>
                     Manuel konsol kontrolleri
                   </div>
                   {aiOpsChecklist.manualConsoleChecks.map((check) => (
-                    <div key={check.key} style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', lineHeight: '1.45' }}>
-                      - <span style={{ color: 'var(--nav-text)', fontWeight: '700' }}>{check.label}:</span> {check.detail}
+                    <div key={check.key} style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', lineHeight: '1.45' }}>
+                      - <span style={{ color: 'var(--ink)', fontWeight: '700' }}>{check.label}:</span> {check.detail}
                     </div>
                   ))}
                 </div>
 
                 <div style={{ display: 'grid', gap: '8px' }}>
-                  <div style={{ fontSize: '0.78rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '900', color: 'var(--ink)' }}>
                     Hizli runbook
                   </div>
                   {aiOpsChecklist.incidentRunbooks.map((runbook) => (
-                    <div key={runbook.key} style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', lineHeight: '1.45' }}>
-                      - <span style={{ color: 'var(--nav-text)', fontWeight: '700' }}>{runbook.label}:</span> {runbook.trigger} Ilk adim: {runbook.firstStep}
+                    <div key={runbook.key} style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', lineHeight: '1.45' }}>
+                      - <span style={{ color: 'var(--ink)', fontWeight: '700' }}>{runbook.label}:</span> {runbook.trigger} Ilk adim: {runbook.firstStep}
                     </div>
                   ))}
                 </div>
@@ -282,16 +282,16 @@ function SettingsAiHealthPanel() {
             ) : null}
 
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              <div style={{ fontSize: '0.78rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                 Dikkat: {aiHealthSummary.actionCount}
               </div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                 Izleme: {aiHealthSummary.watchCount}
               </div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                 Incident 24s: {aiIncidentSummary?.last24hCount || 0}
               </div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                 Guncelleme: {aiHealthSummary.latestAiHealthAt ? new Date(aiHealthSummary.latestAiHealthAt).toLocaleString('tr-TR') : 'yok'}
               </div>
             </div>
@@ -301,19 +301,19 @@ function SettingsAiHealthPanel() {
                 style={{
                   padding: '12px 14px',
                   borderRadius: '16px',
-                  background: 'rgba(249, 115, 22, 0.10)',
-                  border: '1px solid rgba(249, 115, 22, 0.16)',
+                  background: 'color-mix(in srgb, var(--gold) 10%, transparent)',
+                  border: '1px solid color-mix(in srgb, var(--gold) 16%, transparent)',
                   display: 'grid',
                   gap: '6px'
                 }}
               >
-                <div style={{ fontSize: '0.78rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: '900', color: 'var(--ink)' }}>
                   Son AI incident
                 </div>
-                <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', lineHeight: '1.45' }}>
+                <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', lineHeight: '1.45' }}>
                   {aiIncidentSummary.latestIncident.kind} / {aiIncidentSummary.latestIncident.stage} - {aiIncidentSummary.latestIncident.message || 'Mesaj yok'}
                 </div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--nav-text-muted)' }}>
+                <div style={{ fontSize: '0.72rem', color: 'var(--ink-muted)' }}>
                   {new Date(aiIncidentSummary.latestIncident.at).toLocaleString('tr-TR')}
                 </div>
               </div>
@@ -329,8 +329,8 @@ function SettingsAiHealthPanel() {
                     style={{
                       padding: '12px 14px',
                       borderRadius: '16px',
-                      background: 'var(--nav-hover)',
-                      border: '1px solid var(--nav-border)',
+                      background: 'var(--paper-sunken)',
+                      border: '1px solid var(--line)',
                       display: 'flex',
                       justifyContent: 'space-between',
                       gap: '12px',
@@ -338,10 +338,10 @@ function SettingsAiHealthPanel() {
                     }}
                   >
                     <div>
-                      <div style={{ fontSize: '0.86rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+                      <div style={{ fontSize: '0.86rem', fontWeight: '800', color: 'var(--ink)' }}>
                         {surface.label}
                       </div>
-                      <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', marginTop: '4px', lineHeight: '1.45' }}>
+                      <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', marginTop: '4px', lineHeight: '1.45' }}>
                         {surface.warning || `${surface.sourceCount} kaynak sinyali mevcut`}
                       </div>
                     </div>
@@ -349,7 +349,7 @@ function SettingsAiHealthPanel() {
                       <div style={{ fontSize: '0.72rem', fontWeight: '900', color: surfaceTheme.color, textTransform: 'uppercase' }}>
                         {surfaceTheme.label}
                       </div>
-                      <div style={{ fontSize: '0.74rem', color: 'var(--nav-text-muted)', marginTop: '4px' }}>
+                      <div style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', marginTop: '4px' }}>
                         {Number.isFinite(surface.trustScore) ? `%${Math.round(surface.trustScore * 100)}` : 'Trust yok'}
                       </div>
                     </div>

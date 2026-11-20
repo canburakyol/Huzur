@@ -46,10 +46,10 @@ const MoodSelector = ({ onClose }) => {
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
         <IslamicBackButton onClick={onClose} size="medium" />
         <div>
-          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--ink)', fontWeight: '950', letterSpacing: '-0.5px' }}>
             {t('mood.title', 'Ruh Hali')}
           </h2>
-          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
             {t('mood.subtitle', 'Ruh haline şifa ayetleri seçelim')}
           </p>
         </div>
@@ -61,14 +61,14 @@ const MoodSelector = ({ onClose }) => {
               padding: '32px 24px', marginBottom: '24px', textAlign: 'center', flexDirection: 'column', alignItems: 'center' 
           }}>
             <div className="settings-icon-box" style={{ 
-                width: '72px', height: '72px', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--danger)', marginBottom: '20px' 
+                width: '72px', height: '72px', background: 'color-mix(in srgb, var(--danger) 10%, transparent)', color: 'var(--danger)', marginBottom: '20px' 
             }}>
               <HeartHandshake size={32} />
             </div>
-            <h3 style={{ margin: '0 0 8px 0', fontSize: '1.25rem', fontWeight: '950', color: 'var(--nav-text)' }}>
+            <h3 style={{ margin: '0 0 8px 0', fontSize: '1.25rem', fontWeight: '950', color: 'var(--ink)' }}>
                 {t('mood.ask', 'Bugün Nasıl Hissediyorsun?')}
             </h3>
-            <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+            <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
                 {t('mood.helperText', 'Hissiyatına göre sana özel ayetleri bulalım.')}
             </p>
           </div>
@@ -81,13 +81,13 @@ const MoodSelector = ({ onClose }) => {
                 onClick={() => handleMoodSelect(mood)}
                 style={{ 
                     flexDirection: 'column', padding: '24px 16px', gap: '12px',
-                    background: 'var(--nav-hover)', border: '1px solid var(--nav-border)',
+                    background: 'var(--paper-sunken)', border: '1px solid var(--line)',
                     '--delay': `${index * 0.05}s`
                 }}
               >
                 <span style={{ fontSize: '2.5rem' }}>{mood.emoji}</span>
                 <span style={{ 
-                    fontSize: '0.85rem', fontWeight: '900', color: 'var(--nav-text)',
+                    fontSize: '0.85rem', fontWeight: '900', color: 'var(--ink)',
                     textTransform: 'uppercase', letterSpacing: '0.5px'
                 }}>{t(`mood.labels.${mood.id}`, mood.label)}</span>
               </button>
@@ -102,10 +102,10 @@ const MoodSelector = ({ onClose }) => {
           }}>
             <span style={{ fontSize: '2.5rem' }}>{selectedMood.emoji}</span>
             <div>
-                <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '950', color: 'var(--nav-text)' }}>
+                <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '950', color: 'var(--ink)' }}>
                     {t(`mood.labels.${selectedMood.id}`, selectedMood.label)}
                 </h3>
-                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                     {t('mood.selectedHeader', 'Bu ruh haline özel şifa ayetleri:')}
                 </p>
             </div>
@@ -124,8 +124,8 @@ const MoodSelector = ({ onClose }) => {
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                     <div style={{ 
-                        background: 'var(--nav-hover)', padding: '6px 14px', borderRadius: '10px',
-                        fontSize: '0.8rem', fontWeight: '900', color: 'var(--nav-accent)'
+                        background: 'var(--paper-sunken)', padding: '6px 14px', borderRadius: '10px',
+                        fontSize: '0.8rem', fontWeight: '900', color: 'var(--brand-ink)'
                     }}>
                         {item.surah}, {item.ayah}
                     </div>
@@ -134,8 +134,8 @@ const MoodSelector = ({ onClose }) => {
                       onClick={() => toggleAudio(audioUrl)}
                       style={{ 
                           width: '40px', height: '40px',
-                          background: isPlaying ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                          color: isPlaying ? 'var(--on-primary)' : 'var(--nav-text)',
+                          background: isPlaying ? 'var(--brand-ink)' : 'var(--paper-sunken)',
+                          color: isPlaying ? 'var(--on-primary)' : 'var(--ink)',
                           border: 'none', cursor: 'pointer', transition: 'all 0.3s'
                       }}
                     >
@@ -145,12 +145,12 @@ const MoodSelector = ({ onClose }) => {
                   
                   <div style={{ 
                       fontFamily: 'var(--arabic-font)', fontSize: '1.75rem', 
-                      color: 'var(--nav-text)', textAlign: 'right', marginBottom: '20px',
+                      color: 'var(--ink)', textAlign: 'right', marginBottom: '20px',
                       lineHeight: '1.8', fontWeight: '400'
                   }}>{item.text}</div>
                   
                   <div style={{ 
-                      fontSize: '1rem', fontStyle: 'italic', color: 'var(--nav-text)',
+                      fontSize: '1rem', fontStyle: 'italic', color: 'var(--ink)',
                       lineHeight: '1.6', fontWeight: '600', paddingLeft: '12px',
                       borderLeft: `3px solid ${selectedMood.color}80`
                   }}>"{item.translation}"</div>
@@ -179,8 +179,8 @@ const MoodSelector = ({ onClose }) => {
         }
         @keyframes moodPulse {
           0% { transform: scale(1); box-shadow: 0 0 0 0 var(--nav-accent-alpha); }
-          70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
-          100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+          70% { transform: scale(1.1); box-shadow: 0 0 0 10px color-mix(in srgb, var(--brand-ink) 0%, transparent); }
+          100% { transform: scale(1); box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-ink) 0%, transparent); }
         }
       `}</style>
     </div>

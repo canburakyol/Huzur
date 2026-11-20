@@ -16,7 +16,7 @@ const WordDetailPanel = ({ t, selectedWord, wordAnalysis, onDismiss }) => {
       <div
         className="reveal-stagger"
         style={{
-          background: 'var(--nav-bg)',
+          background: 'var(--paper)',
           borderRadius: '32px',
           padding: '32px 24px',
           maxWidth: '400px',
@@ -24,7 +24,7 @@ const WordDetailPanel = ({ t, selectedWord, wordAnalysis, onDismiss }) => {
           maxHeight: '80vh',
           overflowY: 'auto',
           boxShadow: '0 30px 60px rgba(0,0,0,0.2)',
-          border: '1px solid var(--nav-border)',
+          border: '1px solid var(--line)',
           animation: 'fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
@@ -34,7 +34,7 @@ const WordDetailPanel = ({ t, selectedWord, wordAnalysis, onDismiss }) => {
             textAlign: 'center',
             marginBottom: '24px',
             paddingBottom: '20px',
-            borderBottom: '1px solid var(--nav-border)',
+            borderBottom: '1px solid var(--line)',
           }}
         >
           <span
@@ -48,7 +48,7 @@ const WordDetailPanel = ({ t, selectedWord, wordAnalysis, onDismiss }) => {
           >
             {selectedWord.arabic}
           </span>
-          <span style={{ fontSize: '1.1rem', color: 'var(--nav-text)', fontWeight: '900' }}>
+          <span style={{ fontSize: '1.1rem', color: 'var(--ink)', fontWeight: '900' }}>
             {selectedWord.meaning}
           </span>
         </div>
@@ -94,7 +94,7 @@ const WordDetailPanel = ({ t, selectedWord, wordAnalysis, onDismiss }) => {
                   href={MORPHOLOGY_SOURCE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}
+                  style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', fontWeight: '700' }}
                 >
                   {t('wordByWord.morphSource', 'Kaynak: Quranic Arabic Corpus')} (corpus.quran.com)
                 </a>
@@ -118,7 +118,7 @@ const WordDetailPanel = ({ t, selectedWord, wordAnalysis, onDismiss }) => {
 };
 
 const Muted = ({ children }) => (
-  <span style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>{children}</span>
+  <span style={{ fontSize: '0.8rem', color: 'var(--ink-muted)', fontWeight: '700' }}>{children}</span>
 );
 
 /** Small helper row for analysis fields */
@@ -127,7 +127,7 @@ const AnalysisRow = ({ label, children }) => (
     <span
       style={{
         fontSize: '0.75rem',
-        color: 'var(--nav-text-muted)',
+        color: 'var(--ink-muted)',
         fontWeight: '900',
         textTransform: 'uppercase',
       }}
@@ -136,7 +136,7 @@ const AnalysisRow = ({ label, children }) => (
     </span>
     <div
       className="settings-card"
-      style={{ padding: '12px 16px', background: 'var(--nav-hover)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', fontSize: '1rem', color: 'var(--nav-text)', fontWeight: '700' }}
+      style={{ padding: '12px 16px', background: 'var(--paper-sunken)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', fontSize: '1rem', color: 'var(--ink)', fontWeight: '700' }}
     >
       {children}
     </div>

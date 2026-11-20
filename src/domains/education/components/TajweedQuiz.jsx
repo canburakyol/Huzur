@@ -51,17 +51,17 @@ const TajweedQuiz = ({ onBack }) => {
           <div style={{ position: 'relative', width: '100px', height: '100px', margin: '0 auto 24px' }}>
               <div className="trophy-pulse" />
               <div className="settings-icon-box" style={{ 
-                  width: '100px', height: '100px', background: 'color-mix(in srgb, var(--tertiary) 15%, transparent)',
-                  color: 'var(--tertiary)', borderRadius: '30px'
+                  width: '100px', height: '100px', background: 'color-mix(in srgb, var(--gold-ink) 15%, transparent)',
+                  color: 'var(--gold-ink)', borderRadius: '30px'
               }}>
                 <Trophy size={48} />
               </div>
           </div>
 
-          <h2 style={{ margin: '0 0 8px 0', fontSize: '1.75rem', fontWeight: '950', color: 'var(--nav-text)' }}>
+          <h2 style={{ margin: '0 0 8px 0', fontSize: '1.75rem', fontWeight: '950', color: 'var(--ink)' }}>
             {t('tajweedQuiz.resultTitle', 'Tebrikler!')}
           </h2>
-          <p style={{ margin: '0 0 32px 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+          <p style={{ margin: '0 0 32px 0', fontSize: '0.9rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
             {t('tajweedQuiz.resultSubtitle', "Tecvid Quiz'ini başarıyla tamamladınız.")}
           </p>
 
@@ -73,7 +73,7 @@ const TajweedQuiz = ({ onBack }) => {
             <div className="score-label">{t('tajweed.quiz.correctAnswers', 'DOĞRU CEVAP')}</div>
           </div>
 
-          <p style={{ margin: '0 0 32px 0', fontSize: '1rem', color: 'var(--nav-text)', fontWeight: '700', lineHeight: '1.6' }}>
+          <p style={{ margin: '0 0 32px 0', fontSize: '1rem', color: 'var(--ink)', fontWeight: '700', lineHeight: '1.6' }}>
             {score === shuffledQuestions.length
               ? t('tajweedQuiz.feedback.excellent', 'Harika! Tecvid kurallarına hakimsin.')
               : score >= 3
@@ -89,8 +89,8 @@ const TajweedQuiz = ({ onBack }) => {
             <button 
               onClick={onBack}
               style={{ 
-                  background: 'transparent', border: '1px solid var(--nav-border)', 
-                  color: 'var(--nav-text-muted)', padding: '14px', borderRadius: '16px',
+                  background: 'transparent', border: '1px solid var(--line)', 
+                  color: 'var(--ink-muted)', padding: '14px', borderRadius: '16px',
                   fontSize: '0.9rem', fontWeight: '800', cursor: 'pointer'
               }}
             >
@@ -123,10 +123,10 @@ const TajweedQuiz = ({ onBack }) => {
 
       <div className="settings-card" style={{ flexDirection: 'column', padding: '28px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-          <div className="settings-icon-box" style={{ width: '40px', height: '40px', background: 'rgba(79, 70, 229, 0.1)', color: 'var(--nav-accent)' }}>
+          <div className="settings-icon-box" style={{ width: '40px', height: '40px', background: 'color-mix(in srgb, var(--brand-ink) 10%, transparent)', color: 'var(--brand-ink)' }}>
             <HelpCircle size={20} />
           </div>
-          <h3 style={{ margin: 0, fontSize: '0.8rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+          <h3 style={{ margin: 0, fontSize: '0.8rem', fontWeight: '900', color: 'var(--brand-ink)', textTransform: 'uppercase', letterSpacing: '1px' }}>
             {t('tajweedQuiz.questionLabel', {
               number: currentQuestion + 1,
               defaultValue: 'SORU {{number}}'
@@ -134,7 +134,7 @@ const TajweedQuiz = ({ onBack }) => {
           </h3>
         </div>
         
-        <p style={{ margin: '0 0 24px 0', fontSize: '1.25rem', fontWeight: '800', color: 'var(--nav-text)', lineHeight: '1.5' }}>
+        <p style={{ margin: '0 0 24px 0', fontSize: '1.25rem', fontWeight: '800', color: 'var(--ink)', lineHeight: '1.5' }}>
             {t(`tajweedQuiz.questions.${question.id}.question`, question.question)}
         </p>
         
@@ -172,12 +172,12 @@ const TajweedQuiz = ({ onBack }) => {
           <div className="explanation-area reveal-stagger">
             <div className="explanation-card">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                    <Info size={16} color="var(--nav-accent)" />
-                    <span style={{ fontSize: '0.75rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase' }}>
+                    <Info size={16} color="var(--brand-ink)" />
+                    <span style={{ fontSize: '0.75rem', fontWeight: '900', color: 'var(--brand-ink)', textTransform: 'uppercase' }}>
                         {t('tajweedQuiz.explanation', 'Açıklama')}
                     </span>
                 </div>
-                <p style={{ margin: '0 0 20px 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.5' }}>
+                <p style={{ margin: '0 0 20px 0', fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600', lineHeight: '1.5' }}>
                     {t(`tajweedQuiz.questions.${question.id}.explanation`, question.explanation)}
                 </p>
                 <button className="velocity-btn-primary" onClick={nextQuestion} style={{ width: '100%', padding: '14px' }}>
@@ -198,7 +198,7 @@ const TajweedQuiz = ({ onBack }) => {
         
         .velocity-progress-track {
             height: 6px;
-            background: var(--nav-hover);
+            background: var(--paper-sunken);
             border-radius: 3px;
             overflow: hidden;
             margin-bottom: 8px;
@@ -206,8 +206,8 @@ const TajweedQuiz = ({ onBack }) => {
 
         .velocity-progress-fill {
             height: 100%;
-            background: var(--nav-accent);
-            box-shadow: 0 0 10px rgba(79, 70, 229, 0.4);
+            background: var(--brand-ink);
+            box-shadow: 0 0 10px color-mix(in srgb, var(--brand-ink) 40%, transparent);
             transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -217,16 +217,16 @@ const TajweedQuiz = ({ onBack }) => {
             align-items: center;
         }
 
-        .question-count { font-size: 0.8rem; font-weight: 950; color: var(--nav-text); }
-        .quiz-label { font-size: 0.7rem; font-weight: 800; color: var(--nav-text-muted); letter-spacing: 1px; }
+        .question-count { font-size: 0.8rem; font-weight: 950; color: var(--ink); }
+        .quiz-label { font-size: 0.7rem; font-weight: 800; color: var(--ink-muted); letter-spacing: 1px; }
 
         .ayah-display {
             font-family: var(--font-arabic);
             font-size: 2.25rem;
             text-align: center;
             padding: 24px;
-            background: var(--nav-hover);
-            border: 1px solid var(--nav-border);
+            background: var(--paper-sunken);
+            border: 1px solid var(--line);
             border-radius: 16px;
             margin-bottom: 24px;
             color: var(--ink);
@@ -240,8 +240,8 @@ const TajweedQuiz = ({ onBack }) => {
             align-items: center;
             gap: 16px;
             padding: 16px;
-            background: var(--nav-bg);
-            border: 1px solid var(--nav-border);
+            background: var(--paper);
+            border: 1px solid var(--line);
             border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -249,15 +249,15 @@ const TajweedQuiz = ({ onBack }) => {
         }
 
         .velocity-option-btn:hover:not(:disabled) {
-            border-color: var(--nav-accent);
-            background: var(--nav-hover);
+            border-color: var(--brand-ink);
+            background: var(--paper-sunken);
             transform: translateX(4px);
         }
 
         .velocity-option-btn.selected {
             border-width: 2px;
-            border-color: var(--nav-accent);
-            background: rgba(79, 70, 229, 0.05);
+            border-color: var(--brand-ink);
+            background: color-mix(in srgb, var(--brand-ink) 5%, transparent);
         }
 
         .option-index {
@@ -266,17 +266,17 @@ const TajweedQuiz = ({ onBack }) => {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--nav-hover);
+            background: var(--paper-sunken);
             border-radius: 8px;
             font-weight: 950;
-            color: var(--nav-text);
+            color: var(--ink);
             font-size: 0.85rem;
         }
 
-        .option-text { flex: 1; font-size: 0.95rem; font-weight: 700; color: var(--nav-text); }
+        .option-text { flex: 1; font-size: 0.95rem; font-weight: 700; color: var(--ink); }
 
-        .velocity-option-btn.correct { background: rgba(16, 185, 129, 0.1); border-color: var(--success); }
-        .velocity-option-btn.wrong { background: rgba(239, 68, 68, 0.1); border-color: var(--danger); }
+        .velocity-option-btn.correct { background: color-mix(in srgb, var(--success) 10%, transparent); border-color: var(--success); }
+        .velocity-option-btn.wrong { background: color-mix(in srgb, var(--danger) 10%, transparent); border-color: var(--danger); }
         
         .status-indicator { margin-left: auto; }
         .velocity-option-btn.correct .status-indicator { color: var(--success); }
@@ -286,9 +286,9 @@ const TajweedQuiz = ({ onBack }) => {
         
         .explanation-card {
             padding: 20px;
-            background: var(--nav-hover);
+            background: var(--paper-sunken);
             border-radius: 16px;
-            border: 1px solid var(--nav-border);
+            border: 1px solid var(--line);
         }
 
         /* Results */
@@ -297,7 +297,7 @@ const TajweedQuiz = ({ onBack }) => {
         .trophy-pulse {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: color-mix(in srgb, var(--tertiary) 20%, transparent);
+            background: color-mix(in srgb, var(--gold-ink) 20%, transparent);
             border-radius: 30px;
             animation: pulse 2s infinite;
         }
@@ -310,18 +310,18 @@ const TajweedQuiz = ({ onBack }) => {
         .score-container {
             margin-bottom: 32px;
             padding: 24px;
-            background: var(--nav-hover);
+            background: var(--paper-sunken);
             border-radius: 20px;
-            border: 1px solid var(--nav-border);
+            border: 1px solid var(--line);
         }
 
         .score-main { display: flex; align-items: baseline; justify-content: center; gap: 4px; }
-        .score-value { font-size: 4rem; font-weight: 950; color: var(--nav-accent); }
-        .score-total { font-size: 1.5rem; font-weight: 800; color: var(--nav-text-muted); }
-        .score-label { font-size: 0.7rem; font-weight: 950; color: var(--nav-text-muted); letter-spacing: 1px; }
+        .score-value { font-size: 4rem; font-weight: 950; color: var(--brand-ink); }
+        .score-total { font-size: 1.5rem; font-weight: 800; color: var(--ink-muted); }
+        .score-label { font-size: 0.7rem; font-weight: 950; color: var(--ink-muted); letter-spacing: 1px; }
 
         .velocity-btn-primary {
-            background: var(--nav-accent);
+            background: var(--brand-ink);
             color: white;
             border: none;
             border-radius: 16px;

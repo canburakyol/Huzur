@@ -356,3 +356,53 @@
     --transition-smooth: none;
   }
 }
+
+/* Legacy aliases → Huzur Mushaf, both themes.
+   Screens not yet rebuilt on hz-* components still read these names; pointing them at the Mushaf tokens gives the
+   whole app one palette. Kept after the theme blocks so they win; the Mushaf tokens themselves switch per theme.
+   Fill-or-text tokens (--primary, --nav-accent, --tertiary) map to the *-ink tones, which read as text on paper
+   and, with --on-primary, as a filled button in both themes. */
+:root {
+  --nav-bg: var(--paper);
+  --nav-text: var(--ink);
+  --nav-text-muted: var(--ink-muted);
+  --nav-accent: var(--brand-ink);
+  --nav-hover: var(--paper-sunken);
+  --nav-border: var(--line);
+
+  --primary: var(--brand-ink);
+  --on-primary: var(--on-brand);
+  --primary-container: var(--brand-soft);
+  --secondary: var(--brand-ink);
+  --tertiary: var(--gold-ink);
+  --accent: var(--gold-ink);
+  --error: var(--danger);
+
+  --surface-page: var(--paper);
+  --surface-dim: var(--paper-sunken);
+  --surface-container-lowest: var(--paper-raised);
+  --surface-container-low: var(--paper);
+  --surface-container: var(--paper-sunken);
+  --surface-container-high: var(--paper-sunken);
+  --surface-card: var(--paper-raised);
+  --surface-card-strong: var(--paper-raised);
+  --surface-action-soft: var(--brand-soft);
+
+  --on-surface: var(--ink);
+  --on-surface-variant: var(--ink-muted);
+  --text-heading: var(--ink);
+  --text-body: var(--ink);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-muted);
+  --text-subtle: var(--ink-muted);
+
+  --outline-variant: var(--line);
+  --border-soft: var(--line);
+  --glass-border: var(--line);
+  --card-border: var(--line);
+}
+
+/* In the dark Mushaf the ink tones are light, so text on a filled accent must be dark. */
+:root[data-theme='dark'] {
+  --on-primary: var(--paper);
+}

@@ -32,7 +32,7 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
         description: t('churn.offer.discountDesc', 'Gitmeyin diye önümüzdeki 3 ay boyunca %30 indirim kazandınız. Huzur’la kalmaya devam edin.'),
         actionType: 'apply_discount',
         actionLabel: t('churn.offer.acceptDiscount', 'İndirimi Kabul Et'),
-        icon: <ShieldCheck size={40} color="var(--secondary)" />
+        icon: <ShieldCheck size={40} color="var(--brand-ink)" />
       };
     } else if (selectedReason === 'not_using') {
       return {
@@ -40,7 +40,7 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
         description: t('churn.offer.pauseDesc', 'Tamamen iptal etmek yerine 1 ay boyunca ücretsiz dondurun. Hazır olduğunuzda kaldığınız yerden devam edin.'),
         actionType: 'pause',
         actionLabel: t('churn.offer.acceptPause', 'Aboneliği Dondur'),
-        icon: <Heart size={40} color="var(--tertiary)" />
+        icon: <Heart size={40} color="var(--gold-ink)" />
       };
     } else {
       // Default fallback offer / Feature showcase
@@ -49,7 +49,7 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
         description: t('churn.offer.helpDesc', 'Daha iyi bir deneyim için özel destek ekibimizle görüşmek ister misiniz? Müşteri memnuniyeti bizim için her şeydir.'),
         actionType: 'support',
         actionLabel: t('churn.offer.contactSupport', 'Destekle Görüş'),
-        icon: <Heart size={40} color="var(--primary)" />
+        icon: <Heart size={40} color="var(--brand-ink)" />
       };
     }
   };
@@ -86,7 +86,7 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
         
         {/* Close Button top right */}
         <button onClick={onClose} style={closeBtnStyle} disabled={isProcessing}>
-          <X size={20} color="var(--on-surface-variant)" />
+          <X size={20} color="var(--ink-muted)" />
         </button>
 
         {step === 1 && (
@@ -141,9 +141,9 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
         {step === 3 && (
           <div className="step-confirm" style={contentStyle}>
              <div style={{ marginBottom: 20, display: 'flex', justifyContent: 'center' }}>
-              <AlertTriangle size={40} color="var(--error)" />
+              <AlertTriangle size={40} color="var(--danger)" />
             </div>
-            <h2 style={{...titleStyle, color: 'var(--error)'}}>{t('churn.confirm.title', 'Emin Misiniz?')}</h2>
+            <h2 style={{...titleStyle, color: 'var(--danger)'}}>{t('churn.confirm.title', 'Emin Misiniz?')}</h2>
             <p style={descStyle}>
               {t('churn.confirm.desc', 'Aboneliğinizi iptal etmeniz durumunda, mevcut döneminizin sonunda Pro özelliklerine erişiminizi kaybedeceksiniz. Tüm reklamsız deneyim ve premium içerikler sonlanacaktır.')}
             </p>
@@ -178,7 +178,7 @@ const overlayStyle = {
 };
 
 const modalStyle = {
-  backgroundColor: 'var(--surface-container-lowest)',
+  backgroundColor: 'var(--paper-raised)',
   borderRadius: 24,
   width: '100%',
   maxWidth: 400,
@@ -212,7 +212,7 @@ const titleStyle = {
 };
 
 const descStyle = {
-  color: 'var(--on-surface-variant)',
+  color: 'var(--ink-muted)',
   fontSize: 15,
   lineHeight: 1.5,
   marginBottom: 24
@@ -247,7 +247,7 @@ const footerStyle = {
 const primaryBtnStyle = {
   width: '100%',
   padding: '16px',
-  backgroundColor: 'var(--tertiary)',
+  backgroundColor: 'var(--gold-ink)',
   color: 'var(--on-tertiary)',
   border: 'none',
   borderRadius: 12,
@@ -260,7 +260,7 @@ const ghostBtnStyle = {
   width: '100%',
   padding: '14px',
   backgroundColor: 'transparent',
-  color: 'var(--on-surface-variant)',
+  color: 'var(--ink-muted)',
   border: 'none',
   fontSize: 15,
   fontWeight: '500',
@@ -270,9 +270,9 @@ const ghostBtnStyle = {
 const destructiveBtnStyle = {
   width: '100%',
   padding: '14px',
-  backgroundColor: 'rgba(239, 68, 68, 0.1)',
-  color: 'var(--error)',
-  border: '1px solid rgba(239, 68, 68, 0.2)',
+  backgroundColor: 'color-mix(in srgb, var(--danger) 10%, transparent)',
+  color: 'var(--danger)',
+  border: '1px solid color-mix(in srgb, var(--danger) 20%, transparent)',
   borderRadius: 12,
   fontSize: 15,
   fontWeight: '600',

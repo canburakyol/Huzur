@@ -36,9 +36,9 @@ const choiceButtonStyle = (selected = false) => ({
   gap: 10,
   textAlign: 'left',
   width: '100%',
-  background: selected ? 'var(--tertiary-container)' : 'var(--surface-container-lowest)',
-  color: selected ? 'var(--on-tertiary-container)' : 'var(--on-surface)',
-  border: selected ? '1px solid var(--tertiary)' : '1px solid var(--outline-variant)',
+  background: selected ? 'var(--tertiary-container)' : 'var(--paper-raised)',
+  color: selected ? 'var(--on-tertiary-container)' : 'var(--ink)',
+  border: selected ? '1px solid var(--gold-ink)' : '1px solid var(--line)',
   boxShadow: selected ? '0 10px 24px rgba(71, 53, 22, 0.12)' : 'none',
   transition: 'all 0.2s ease'
 });
@@ -47,12 +47,12 @@ const permissionButtonStyle = (selected = false, primary = false) => ({
   ...baseButton,
   padding: '7px 10px',
   background: selected
-    ? (primary ? 'var(--primary)' : 'var(--surface-container-high)')
-    : 'var(--surface-container-lowest)',
-  color: selected && primary ? 'var(--on-primary)' : 'var(--on-surface)',
+    ? (primary ? 'var(--brand-ink)' : 'var(--paper-sunken)')
+    : 'var(--paper-raised)',
+  color: selected && primary ? 'var(--on-primary)' : 'var(--ink)',
   border: selected
-    ? `1px solid ${primary ? 'var(--primary)' : 'var(--outline)'}`
-    : '1px solid var(--outline-variant)',
+    ? `1px solid ${primary ? 'var(--brand-ink)' : 'var(--outline)'}`
+    : '1px solid var(--line)',
   minWidth: 96
 });
 
@@ -368,7 +368,7 @@ function GrowthOnboarding({
         position: 'fixed',
         inset: 0,
         zIndex: 10001,
-        background: 'linear-gradient(180deg, color-mix(in srgb, var(--surface-page) 96%, var(--primary) 4%), var(--surface-page))',
+        background: 'linear-gradient(180deg, color-mix(in srgb, var(--paper) 96%, var(--brand-ink) 4%), var(--paper))',
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'center',
@@ -387,19 +387,19 @@ function GrowthOnboarding({
           boxSizing: 'border-box',
           margin: 'auto 0',
           borderRadius: 18,
-          background: 'var(--surface-container-lowest)',
-          border: '1px solid var(--outline-variant)',
+          background: 'var(--paper-raised)',
+          border: '1px solid var(--line)',
           padding: 'clamp(12px, 3.5vw, 16px)',
-          color: 'var(--on-surface)',
+          color: 'var(--ink)',
           boxShadow: 'var(--elevation-medium)'
         }}
       >
-        <div style={{ marginBottom: 10, fontSize: 12, color: 'var(--on-surface-variant)' }}>
+        <div style={{ marginBottom: 10, fontSize: 12, color: 'var(--ink-muted)' }}>
           {t('growth.onboarding.stepCounter', 'Adım {{current}} / {{total}}', { current: normalizedStep + 1, total: totalSteps })}
         </div>
 
-        <h2 id="growth-onboarding-title" style={{ margin: '0 0 6px', fontSize: 20, color: 'var(--primary)' }}>{currentStep.title}</h2>
-        <p style={{ margin: '0 0 14px', lineHeight: 1.5, fontSize: 14, color: 'var(--on-surface-variant)' }}>{currentStep.description}</p>
+        <h2 id="growth-onboarding-title" style={{ margin: '0 0 6px', fontSize: 20, color: 'var(--brand-ink)' }}>{currentStep.title}</h2>
+        <p style={{ margin: '0 0 14px', lineHeight: 1.5, fontSize: 14, color: 'var(--ink-muted)' }}>{currentStep.description}</p>
 
         {referralPlan && (
           <div
@@ -408,11 +408,11 @@ function GrowthOnboarding({
               padding: 16,
               borderRadius: 16,
               border: referralPlan.rewardReady
-                ? '1px solid color-mix(in srgb, var(--secondary) 28%, transparent)'
-                : '1px solid color-mix(in srgb, var(--tertiary) 24%, transparent)',
+                ? '1px solid color-mix(in srgb, var(--brand-ink) 28%, transparent)'
+                : '1px solid color-mix(in srgb, var(--gold-ink) 24%, transparent)',
               background: referralPlan.rewardReady
-                ? 'color-mix(in srgb, var(--secondary) 10%, transparent)'
-                : 'color-mix(in srgb, var(--tertiary) 10%, transparent)',
+                ? 'color-mix(in srgb, var(--brand-ink) 10%, transparent)'
+                : 'color-mix(in srgb, var(--gold-ink) 10%, transparent)',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 8, alignItems: 'center' }}>
@@ -422,7 +422,7 @@ function GrowthOnboarding({
                 gap: 8,
                 borderRadius: 999,
                 padding: '6px 10px',
-                background: 'var(--surface-container-low)',
+                background: 'var(--paper)',
                 fontSize: 12,
                 fontWeight: 900,
                 color: referralPlan.rewardReady ? 'var(--on-secondary-container)' : 'var(--on-tertiary-container)',
@@ -430,15 +430,15 @@ function GrowthOnboarding({
                 <Sparkles size={14} />
                 {referralPlan.badge}
               </span>
-              <span style={{ fontSize: 12, fontWeight: 800, color: 'var(--on-surface-variant)' }}>
+              <span style={{ fontSize: 12, fontWeight: 800, color: 'var(--ink-muted)' }}>
                 {referralPlan.completedCount}/{referralPlan.totalCount}
               </span>
             </div>
 
-            <div style={{ fontSize: 16, fontWeight: 900, color: 'var(--on-surface)', marginBottom: 6 }}>
+            <div style={{ fontSize: 16, fontWeight: 900, color: 'var(--ink)', marginBottom: 6 }}>
               {referralPlan.headline}
             </div>
-            <div style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--on-surface-variant)', marginBottom: 12 }}>
+            <div style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--ink-muted)', marginBottom: 12 }}>
               {referralPlan.description}
             </div>
 
@@ -449,28 +449,28 @@ function GrowthOnboarding({
                   style={{
                     borderRadius: 12,
                     padding: '10px 12px',
-                    border: '1px solid var(--outline-variant)',
+                    border: '1px solid var(--line)',
                     background: step.status === 'done'
-                      ? 'color-mix(in srgb, var(--secondary) 12%, transparent)'
+                      ? 'color-mix(in srgb, var(--brand-ink) 12%, transparent)'
                       : step.status === 'active'
-                        ? 'color-mix(in srgb, var(--tertiary) 10%, transparent)'
-                        : 'var(--surface-container-low)',
+                        ? 'color-mix(in srgb, var(--gold-ink) 10%, transparent)'
+                        : 'var(--paper)',
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginBottom: 4 }}>
-                    <strong style={{ fontSize: 13, color: 'var(--on-surface)' }}>{step.label}</strong>
-                    <span style={{ fontSize: 11, fontWeight: 900, color: step.status === 'done' ? 'var(--secondary)' : 'var(--on-tertiary-container)' }}>
+                    <strong style={{ fontSize: 13, color: 'var(--ink)' }}>{step.label}</strong>
+                    <span style={{ fontSize: 11, fontWeight: 900, color: step.status === 'done' ? 'var(--brand-ink)' : 'var(--on-tertiary-container)' }}>
                       {step.status === 'done' ? t('growth.referralStep.done', 'Hazır') : step.status === 'active' ? t('growth.referralStep.active', 'Sıradaki') : t('growth.referralStep.pending', 'Bekliyor')}
                     </span>
                   </div>
-                  <div style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--on-surface-variant)' }}>
+                  <div style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--ink-muted)' }}>
                     {step.description}
                   </div>
                 </div>
               ))}
             </div>
 
-            <div style={{ fontSize: 12, lineHeight: 1.55, color: 'var(--on-surface-variant)' }}>
+            <div style={{ fontSize: 12, lineHeight: 1.55, color: 'var(--ink-muted)' }}>
               {referralPlan.supportNote}
             </div>
           </div>
@@ -482,7 +482,7 @@ function GrowthOnboarding({
               marginBottom: 16,
               padding: '12px 14px',
               borderRadius: 14,
-              border: '1px solid color-mix(in srgb, var(--error) 35%, transparent)',
+              border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)',
               background: 'color-mix(in srgb, var(--error-container) 28%, transparent)',
               color: 'var(--on-error-container)',
               fontSize: 13,
@@ -519,8 +519,8 @@ function GrowthOnboarding({
           <div style={{ display: 'grid', gap: 12, marginBottom: 20 }}>
             <div style={{
               borderRadius: 16,
-              border: '1px solid var(--outline-variant)',
-              background: 'var(--surface-container-low)',
+              border: '1px solid var(--line)',
+              background: 'var(--paper)',
               padding: 16
             }}>
               <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
@@ -528,11 +528,11 @@ function GrowthOnboarding({
                   width: 40,
                   height: 40,
                   borderRadius: 12,
-                  background: 'color-mix(in srgb, var(--tertiary) 14%, transparent)',
+                  background: 'color-mix(in srgb, var(--gold-ink) 14%, transparent)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: 'var(--tertiary)',
+                  color: 'var(--gold-ink)',
                   flexShrink: 0
                 }}>
                   <MapPinned size={18} />
@@ -564,8 +564,8 @@ function GrowthOnboarding({
 
             <div style={{
               borderRadius: 16,
-              border: '1px solid var(--outline-variant)',
-              background: 'var(--surface-container-low)',
+              border: '1px solid var(--line)',
+              background: 'var(--paper)',
               padding: 16
             }}>
               <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
@@ -573,11 +573,11 @@ function GrowthOnboarding({
                   width: 40,
                   height: 40,
                   borderRadius: 12,
-                  background: 'color-mix(in srgb, var(--secondary) 14%, transparent)',
+                  background: 'color-mix(in srgb, var(--brand-ink) 14%, transparent)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: 'var(--secondary)',
+                  color: 'var(--brand-ink)',
                   flexShrink: 0
                 }}>
                   <Bell size={18} />
@@ -625,7 +625,7 @@ function GrowthOnboarding({
                     width: 34,
                     height: 34,
                     borderRadius: 12,
-                    background: selected ? 'var(--tertiary-container)' : 'var(--surface-container-low)',
+                    background: selected ? 'var(--tertiary-container)' : 'var(--paper)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -646,8 +646,8 @@ function GrowthOnboarding({
               <div style={{
                 borderRadius: 16,
                 padding: '12px 14px',
-                background: 'color-mix(in srgb, var(--tertiary) 12%, transparent)',
-                border: '1px solid color-mix(in srgb, var(--tertiary) 22%, transparent)',
+                background: 'color-mix(in srgb, var(--gold-ink) 12%, transparent)',
+                border: '1px solid color-mix(in srgb, var(--gold-ink) 22%, transparent)',
                 display: 'flex',
                 gap: 12,
                 alignItems: 'flex-start'
@@ -656,20 +656,20 @@ function GrowthOnboarding({
                   width: 34,
                   height: 34,
                   borderRadius: 12,
-                  background: 'color-mix(in srgb, var(--tertiary) 18%, transparent)',
+                  background: 'color-mix(in srgb, var(--gold-ink) 18%, transparent)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: 'var(--tertiary)',
+                  color: 'var(--gold-ink)',
                   flexShrink: 0
                 }}>
                   <Sparkles size={18} />
                 </div>
                 <div>
-                  <div style={{ fontWeight: 900, color: 'var(--on-surface)', marginBottom: 4 }}>
+                  <div style={{ fontWeight: 900, color: 'var(--ink)', marginBottom: 4 }}>
                     {t('growth.onboarding.premiumTeaserTitle', 'Düzenin oturunca daha fazla destek açılabilir')}
                   </div>
-                  <div style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--on-surface-variant)' }}>
+                  <div style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--ink-muted)' }}>
                     {t('growth.onboarding.premiumTeaserDesc', 'Önce ilk adımı tamamla; sonra haftalık içgörüler ve rehberlik için Pro önerisi gösterebiliriz.')}
                   </div>
                 </div>
@@ -683,7 +683,7 @@ function GrowthOnboarding({
           bottom: 0,
           paddingTop: 12,
           paddingBottom: 2,
-          background: 'var(--surface-container-lowest)'
+          background: 'var(--paper-raised)'
         }}>
           <button
             onClick={handleContinue}
@@ -691,7 +691,7 @@ function GrowthOnboarding({
             style={{
               ...baseButton,
               width: '100%',
-              background: 'var(--tertiary)',
+              background: 'var(--gold-ink)',
               color: 'var(--on-tertiary)',
               opacity: isBusy ? 0.7 : 1
             }}

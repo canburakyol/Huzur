@@ -41,7 +41,7 @@ const ToastNotification = ({ message, type = 'error', onClose, duration = 5000 }
       <div style={{ color: colors[type] }}>
         {icons[type]}
       </div>
-      <div style={{ flex: 1, color: 'var(--text-primary)', fontSize: '14px' }}>
+      <div style={{ flex: 1, color: 'var(--ink)', fontSize: '14px' }}>
         {message}
       </div>
       <button

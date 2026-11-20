@@ -95,7 +95,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     width: '80px',
                     height: '80px',
                     borderRadius: '50%',
-                    background: 'rgba(46, 204, 113, 0.2)',
+                    background: 'color-mix(in srgb, var(--success) 20%, transparent)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -104,7 +104,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     <CheckCircle size={40} color="var(--success)" />
                 </div>
                 <h2 style={{
-                    color: 'var(--primary)',
+                    color: 'var(--brand-ink)',
                     marginBottom: '12px',
                     fontSize: '22px'
                 }}>
@@ -122,7 +122,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     onClick={onClose}
                     style={{
                         padding: '14px 32px',
-                        background: 'var(--primary)',
+                        background: 'var(--brand-ink)',
                         border: 'none',
                         borderRadius: '12px',
                         color: 'var(--on-primary)',
@@ -154,7 +154,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     <label style={{
                         display: 'block',
                         marginBottom: '8px',
-                        color: 'var(--text-color)',
+                        color: 'var(--ink)',
                         fontSize: '14px',
                         fontWeight: '600'
                     }}>
@@ -173,10 +173,10 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                                 style={{
                                     flex: 1,
                                     padding: '12px',
-                                    background: formData.type === type.id ? 'var(--primary)' : 'var(--glass-bg)',
-                                    border: '1px solid var(--glass-border)',
+                                    background: formData.type === type.id ? 'var(--brand-ink)' : 'var(--glass-bg)',
+                                    border: '1px solid var(--line)',
                                     borderRadius: '10px',
-                                    color: formData.type === type.id ? 'var(--on-primary)' : 'var(--text-color)',
+                                    color: formData.type === type.id ? 'var(--on-primary)' : 'var(--ink)',
                                     fontSize: '13px',
                                     cursor: 'pointer'
                                 }}
@@ -192,7 +192,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     <label style={{
                         display: 'block',
                         marginBottom: '8px',
-                        color: 'var(--text-color)',
+                        color: 'var(--ink)',
                         fontSize: '14px',
                         fontWeight: '600'
                     }}>
@@ -207,9 +207,9 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                             width: '100%',
                             padding: '14px',
                             background: 'var(--glass-bg)',
-                            border: '1px solid var(--glass-border)',
+                            border: '1px solid var(--line)',
                             borderRadius: '12px',
-                            color: 'var(--text-color)',
+                            color: 'var(--ink)',
                             fontSize: '14px',
                             outline: 'none'
                         }}
@@ -224,7 +224,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     <label style={{
                         display: 'block',
                         marginBottom: '8px',
-                        color: 'var(--text-color)',
+                        color: 'var(--ink)',
                         fontSize: '14px',
                         fontWeight: '600'
                     }}>
@@ -239,9 +239,9 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                             width: '100%',
                             padding: '14px',
                             background: 'var(--glass-bg)',
-                            border: '1px solid var(--glass-border)',
+                            border: '1px solid var(--line)',
                             borderRadius: '12px',
-                            color: 'var(--text-color)',
+                            color: 'var(--ink)',
                             fontSize: '14px',
                             outline: 'none',
                             resize: 'vertical',
@@ -254,7 +254,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                 {error && (
                     <div style={{
                         padding: '12px',
-                        background: 'rgba(231, 76, 60, 0.1)',
+                        background: 'color-mix(in srgb, var(--danger) 10%, transparent)',
                         borderRadius: '8px',
                         marginBottom: '20px',
                         display: 'flex',
@@ -275,7 +275,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                     style={{
                         width: '100%',
                         padding: '16px',
-                        background: isSubmitting ? 'rgba(155, 89, 182, 0.5)' : 'var(--primary)',
+                        background: isSubmitting ? 'color-mix(in srgb, var(--brand-ink) 50%, transparent)' : 'var(--brand-ink)',
                         border: 'none',
                         borderRadius: '12px',
                         color: 'var(--on-primary)',
@@ -301,7 +301,7 @@ ${t('support.mail.deviceLabel', 'Device')}: ${navigator.userAgent}
                 padding: '16px',
                 background: 'var(--glass-bg)',
                 borderRadius: '12px',
-                border: '1px solid var(--glass-border)',
+                border: '1px solid var(--line)',
                 textAlign: 'center'
             }}>
                 <MessageSquare size={20} color="var(--text-color-muted)" style={{ margin: '0 auto 8px' }} />

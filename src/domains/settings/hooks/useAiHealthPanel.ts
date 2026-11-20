@@ -15,50 +15,50 @@ const HEALTH_PALETTE: Record<string, { bg: string; border: string; color: string
   healthy: {
     bg: 'rgba(16, 185, 129, 0.1)',
     border: 'rgba(16, 185, 129, 0.18)',
-    color: 'var(--secondary)',
+    color: 'var(--brand-ink)',
     label: 'Saglam'
   },
   watch: {
     bg: 'rgba(212, 175, 55, 0.12)',
     border: 'rgba(212, 175, 55, 0.22)',
-    color: 'var(--tertiary)',
+    color: 'var(--gold-ink)',
     label: 'Izle'
   },
   action: {
     bg: 'rgba(249, 115, 22, 0.12)',
     border: 'rgba(249, 115, 22, 0.22)',
-    color: 'var(--error)',
+    color: 'var(--danger)',
     label: 'Dikkat'
   }
 };
 
 const ROLLOUT_THEME: Record<string, { bg: string; color: string; label: string }> = {
-  go: { bg: 'color-mix(in srgb, var(--secondary) 10%, transparent)', color: 'var(--secondary)', label: 'Devam et' },
-  cautious: { bg: 'color-mix(in srgb, var(--tertiary) 12%, transparent)', color: 'var(--tertiary)', label: 'Izleyerek devam et' },
-  hold: { bg: 'color-mix(in srgb, var(--error) 12%, transparent)', color: 'var(--error)', label: 'Yavaslat' }
+  go: { bg: 'color-mix(in srgb, var(--brand-ink) 10%, transparent)', color: 'var(--brand-ink)', label: 'Devam et' },
+  cautious: { bg: 'color-mix(in srgb, var(--gold-ink) 12%, transparent)', color: 'var(--gold-ink)', label: 'Izleyerek devam et' },
+  hold: { bg: 'color-mix(in srgb, var(--danger) 12%, transparent)', color: 'var(--danger)', label: 'Yavaslat' }
 };
 
 const RELEASE_READINESS_THEME: Record<string, { bg: string; color: string; label: string }> = {
-  ready: { bg: 'color-mix(in srgb, var(--secondary) 10%, transparent)', color: 'var(--secondary)', label: 'Hazir' },
-  monitor: { bg: 'color-mix(in srgb, var(--tertiary) 12%, transparent)', color: 'var(--tertiary)', label: 'Izlenmeli' },
-  blocked: { bg: 'color-mix(in srgb, var(--error) 12%, transparent)', color: 'var(--error)', label: 'Beklet' }
+  ready: { bg: 'color-mix(in srgb, var(--brand-ink) 10%, transparent)', color: 'var(--brand-ink)', label: 'Hazir' },
+  monitor: { bg: 'color-mix(in srgb, var(--gold-ink) 12%, transparent)', color: 'var(--gold-ink)', label: 'Izlenmeli' },
+  blocked: { bg: 'color-mix(in srgb, var(--danger) 12%, transparent)', color: 'var(--danger)', label: 'Beklet' }
 };
 
 const RELEASE_BRIEF_THEME: Record<string, { bg: string; border: string; color: string }> = {
   healthy: {
     bg: 'rgba(16, 185, 129, 0.1)',
     border: 'rgba(16, 185, 129, 0.16)',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   watch: {
     bg: 'rgba(212, 175, 55, 0.12)',
     border: 'rgba(212, 175, 55, 0.18)',
-    color: 'var(--tertiary)'
+    color: 'var(--gold-ink)'
   },
   critical: {
     bg: 'rgba(249, 115, 22, 0.1)',
     border: 'rgba(249, 115, 22, 0.16)',
-    color: 'var(--error)'
+    color: 'var(--danger)'
   }
 };
 

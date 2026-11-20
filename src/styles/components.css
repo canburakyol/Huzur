@@ -39,7 +39,7 @@
 
 .hover-lift:hover {
   transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(245, 158, 11, 0.15);
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.3), 0 0 20px color-mix(in srgb, var(--gold) 15%, transparent);
   z-index: 10;
 }
 
@@ -67,7 +67,7 @@
   backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturate));
   -webkit-backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturate));
   border-radius: 20px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--line);
   box-shadow: var(--glass-shadow);
   padding: 24px;
   margin-bottom: 20px;
@@ -83,7 +83,7 @@ body.android-webview .glass-card {
 
 .glass-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(211, 84, 0, 0.1);
+  box-shadow: 0 12px 40px color-mix(in srgb, var(--gold) 10%, transparent);
 }
 
 /* Buttons */
@@ -100,23 +100,23 @@ body.android-webview .glass-card {
   border: none;
   width: 100%;
   transition: var(--transition-smooth);
-  background: var(--nav-hover);
-  color: var(--text-color);
-  border: 1px solid var(--glass-border);
+  background: var(--paper-sunken);
+  color: var(--ink);
+  border: 1px solid var(--line);
   box-shadow: var(--elevation-soft);
 }
 
 .btn:active { transform: scale(0.95); }
 
 .btn-primary {
-  background-color: var(--primary);
+  background-color: var(--brand-ink);
   color: var(--on-primary);
-  box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--gold) 30%, transparent);
 }
 
 .btn-primary:hover {
-  background-color: var(--primary);
-  box-shadow: 0 6px 20px rgba(211, 84, 0, 0.4);
+  background-color: var(--brand-ink);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--gold) 40%, transparent);
 }
 
 /* Compact Daily Content */
@@ -131,7 +131,7 @@ body.android-webview .glass-card {
   margin-bottom: 0;
   animation: fadeIn 0.5s ease-out backwards;
   background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--line);
   border-radius: 10px;
   backdrop-filter: blur(10px);
 }
@@ -165,13 +165,13 @@ body.android-webview .glass-card {
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
-  color: var(--text-color);
+  color: var(--ink);
 }
 
 .prayer-time-card.active {
-  background: var(--primary);
+  background: var(--brand-ink);
   color: var(--on-primary);
-  box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--gold) 30%, transparent);
   transform: scale(1.05);
   border: none;
 }
@@ -196,7 +196,7 @@ body.android-webview .glass-card {
   min-height: 48px;
   background: var(--glass-bg);
   border-radius: 16px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--line);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -223,13 +223,13 @@ body.android-webview .glass-card {
 
 .feature-icon { font-size: 1.5rem; margin-bottom: 8px; transition: transform 0.2s; }
 .feature-btn:hover .feature-icon { transform: scale(1.1); }
-.feature-label { font-size: 0.75rem; font-weight: 600; color: var(--text-color); margin-top: 8px; }
+.feature-label { font-size: 0.75rem; font-weight: 600; color: var(--ink); margin-top: 8px; }
 
 /* Bottom Navigation */
 .app-container {
   width: 100%;
   min-height: 100dvh;
-  background: var(--surface-page);
+  background: var(--paper);
   overflow-x: hidden;
 }
 
@@ -239,11 +239,11 @@ body.android-webview .glass-card {
   height: var(--bottom-nav-height);
   inset-inline-start: 0;
   inset-inline-end: 0;
-  background: var(--surface-card-strong);
+  background: var(--paper-raised);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border: 0;
-  border-top: 1px solid var(--border-soft);
+  border-top: 1px solid var(--line);
   border-radius: 0;
   box-shadow: none;
   display: flex;
@@ -298,7 +298,7 @@ body.android-webview .glass-card {
   padding: 8px 10px;
   cursor: pointer;
   transition: var(--transition-smooth);
-  color: var(--text-body, var(--text-primary));
+  color: var(--ink, var(--ink));
   border-radius: 18px;
   min-width: 58px;
   opacity: 1 !important;
@@ -315,10 +315,10 @@ body.android-webview .glass-card {
 
 html.android-webview .bottom-nav,
 body.android-webview .bottom-nav {
-  background: var(--surface-card-strong, var(--nav-surface-strong));
+  background: var(--paper-raised, var(--nav-surface-strong));
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border: 1px solid var(--border-soft, var(--glass-border));
+  border: 1px solid var(--line, var(--line));
 }
 
 .nav-item span {
@@ -351,8 +351,8 @@ body.android-webview .bottom-nav {
 }
 
 .nav-item:hover:not(.active) {
-  color: var(--primary);
-  background: var(--surface-action-soft, rgba(255, 255, 255, 0.06));
+  color: var(--brand-ink);
+  background: var(--brand-soft, rgba(255, 255, 255, 0.06));
 }
 
 .assistant-icon-wrapper { position: relative; }
@@ -383,7 +383,7 @@ body.android-webview .bottom-nav {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary));
+  background: linear-gradient(135deg, var(--brand-ink), var(--brand-ink));
   color: var(--on-primary);
   border: none;
   cursor: pointer;
@@ -417,7 +417,7 @@ body.android-webview .bottom-nav {
   max-height: 85vh;
   background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
   border-radius: 24px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--line);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   display: flex;
@@ -434,11 +434,11 @@ body.android-webview .bottom-nav {
   padding: 24px 20px;
   text-align: center;
   background: rgba(212, 175, 55, 0.1);
-  border-bottom: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--line);
 }
 
 .hamburger-logo { font-size: 3rem; margin-bottom: 8px; }
-.hamburger-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin: 0 0 4px 0; }
+.hamburger-title { font-size: 1.5rem; font-weight: 700; color: var(--brand-ink); margin: 0 0 4px 0; }
 .hamburger-subtitle { font-size: 0.75rem; color: var(--text-color-muted); margin: 0; }
 
 .hamburger-grid {
@@ -453,7 +453,7 @@ body.android-webview .bottom-nav {
 
 .hamburger-grid::-webkit-scrollbar { width: 4px; }
 .hamburger-grid::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.1); border-radius: 2px; }
-.hamburger-grid::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
+.hamburger-grid::-webkit-scrollbar-thumb { background: var(--brand-ink); border-radius: 2px; }
 
 .hamburger-item {
   display: flex;
@@ -462,7 +462,7 @@ body.android-webview .bottom-nav {
   justify-content: center;
   padding: 16px 8px;
   background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--line);
   border-radius: 16px;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -476,7 +476,7 @@ body.android-webview .bottom-nav {
 }
 
 .hamburger-item:active { transform: scale(0.95); }
-.hamburger-item.active { background: var(--primary); border-color: var(--primary); }
+.hamburger-item.active { background: var(--brand-ink); border-color: var(--brand-ink); }
 .hamburger-item.active .hamburger-item-label { color: var(--on-primary); }
 
 .hamburger-item-icon { font-size: 1.75rem; margin-bottom: 8px; transition: transform 0.2s; }
@@ -485,7 +485,7 @@ body.android-webview .bottom-nav {
 .hamburger-item-label {
   font-size: 0.6875rem;
   font-weight: 600;
-  color: var(--text-color);
+  color: var(--ink);
   text-align: center;
   line-height: 1.2;
 }
@@ -495,7 +495,7 @@ body.android-webview .bottom-nav {
   text-align: center;
   font-size: 0.6875rem;
   color: var(--text-color-muted);
-  border-top: 1px solid var(--glass-border);
+  border-top: 1px solid var(--line);
   background: rgba(0, 0, 0, 0.1);
 }
 
@@ -514,13 +514,13 @@ body.android-webview .bottom-nav {
   color: var(--text-color-muted);
   transition: color 0.2s;
 }
-.close-button:hover { color: var(--primary); }
-.religious-days-title { color: var(--primary); margin-bottom: 20px; }
+.close-button:hover { color: var(--brand-ink); }
+.religious-days-title { color: var(--brand-ink); margin-bottom: 20px; }
 .days-list { text-align: start; }
-.day-item { padding: 15px; border-bottom: 1px solid var(--glass-border); transition: background-color 0.2s; }
+.day-item { padding: 15px; border-bottom: 1px solid var(--line); transition: background-color 0.2s; }
 .day-item.past { opacity: 0.5; background: rgba(255, 255, 255, 0.03); }
-.day-name { font-weight: bold; color: var(--text-primary); font-size: 1.125rem; }
-.day-date { color: var(--primary); font-size: 1rem; }
+.day-name { font-weight: bold; color: var(--ink); font-size: 1.125rem; }
+.day-date { color: var(--brand-ink); font-size: 1rem; }
 
 /* Streak Badge */
 .streak-badge {
@@ -529,20 +529,20 @@ body.android-webview .bottom-nav {
   gap: 6px;
   padding: 6px 12px;
   background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--line);
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--text-color);
+  color: var(--ink);
   transition: all 0.3s ease;
 }
 
 .streak-badge .streak-emoji { font-size: 1rem; }
-.streak-badge .streak-count { color: var(--primary); font-weight: 700; }
+.streak-badge .streak-count { color: var(--brand-ink); font-weight: 700; }
 
 .streak-badge.milestone {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(255, 193, 7, 0.2));
-  border-color: var(--primary);
+  border-color: var(--brand-ink);
   box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
   animation: streakGlow 2s ease-in-out infinite alternate;
 }
@@ -573,7 +573,7 @@ body.android-webview .bottom-nav {
   text-align: center;
   max-width: 340px;
   width: 90%;
-  border: 2px solid var(--primary);
+  border: 2px solid var(--brand-ink);
   box-shadow: 0 20px 60px rgba(212, 175, 55, 0.4);
   animation: celebrationPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -594,11 +594,11 @@ body.android-webview .bottom-nav {
   50% { transform: scale(1.2); }
 }
 
-.badge-celebration .badge-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
-.badge-celebration .badge-message { font-size: 1rem; color: var(--text-color); margin-bottom: 24px; line-height: 1.5; }
+.badge-celebration .badge-title { font-size: 1.5rem; font-weight: 700; color: var(--brand-ink); margin-bottom: 12px; }
+.badge-celebration .badge-message { font-size: 1rem; color: var(--ink); margin-bottom: 24px; line-height: 1.5; }
 
 .badge-celebration .badge-close-btn {
-  background: var(--primary);
+  background: var(--brand-ink);
   color: var(--on-primary);
   border: none;
   padding: 14px 40px;
@@ -610,7 +610,7 @@ body.android-webview .bottom-nav {
   transition: all 0.2s ease;
 }
 
-.badge-celebration .badge-close-btn:hover { background: var(--primary); transform: translateY(-2px); }
+.badge-celebration .badge-close-btn:hover { background: var(--brand-ink); transform: translateY(-2px); }
 .badge-celebration .badge-close-btn:active { transform: scale(0.95); }
 
 /* RTL Support */
@@ -652,9 +652,9 @@ body.android-webview .bottom-nav {
 
 /* SOTA Premium Effects */
 @keyframes breathingGlow {
-  0% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.1); }
-  50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.3); }
-  100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.1); }
+  0% { box-shadow: 0 0 20px color-mix(in srgb, var(--gold) 10%, transparent); }
+  50% { box-shadow: 0 0 40px color-mix(in srgb, var(--gold) 30%, transparent); }
+  100% { box-shadow: 0 0 20px color-mix(in srgb, var(--gold) 10%, transparent); }
 }
 
 .sota-glow { animation: breathingGlow 4s ease-in-out infinite; }
@@ -671,9 +671,9 @@ body.android-webview .bottom-nav {
 .sota-stagger-5 { animation: sotaFadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 1.3s both; }
 
 @keyframes sotaLiquidPulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.5); }
-  70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(245, 158, 11, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 color-mix(in srgb, var(--gold) 50%, transparent); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 20px color-mix(in srgb, var(--gold) 0%, transparent); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 color-mix(in srgb, var(--gold) 0%, transparent); }
 }
 
 .sota-liquid-pulse { animation: sotaLiquidPulse 2.5s infinite cubic-bezier(0.25, 1, 0.5, 1); }
@@ -694,14 +694,14 @@ body.android-webview .bottom-nav {
 
 /* Modern Sage & Linen Theme Classes */
 .bg-huzur-linen-100 {
-  background-color: var(--surface-card) !important;
+  background-color: var(--paper-raised) !important;
 }
 [data-theme='dark'] .bg-huzur-linen-100 {
   background-color: var(--bg-gradient-start) !important;
 }
 
 .bg-white {
-  background-color: var(--surface-card) !important;
+  background-color: var(--paper-raised) !important;
 }
 [data-theme='dark'] .bg-white {
   background-color: var(--glass-bg) !important;
@@ -719,7 +719,7 @@ body.android-webview .bottom-nav {
   border: 1px solid rgba(141, 170, 157, 0.2) !important;
 }
 [data-theme='dark'] .border-huzur-sage-100 {
-  border: 1px solid var(--glass-border) !important;
+  border: 1px solid var(--line) !important;
 }
 
 .shadow-huzur-soft {

@@ -13,7 +13,7 @@
   padding: 18px 10px;
   background: var(--glass-bg);
   border-radius: 20px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--line);
   transition: var(--transition-smooth);
   cursor: pointer;
 }
@@ -46,7 +46,7 @@
 .bento-label {
   font-size: 11.5px;
   font-weight: 700;
-  color: var(--text-color);
+  color: var(--ink);
   text-align: center;
 }
 

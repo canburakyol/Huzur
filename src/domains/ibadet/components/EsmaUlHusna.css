@@ -3,8 +3,8 @@
   padding: 20px 18px 36px;
   background:
     radial-gradient(circle at 88% 4%, var(--ambient-gold), transparent 25%),
-    var(--surface-page);
-  color: var(--on-surface);
+    var(--paper);
+  color: var(--ink);
   font-family: var(--font-main);
 }
 
@@ -28,7 +28,7 @@
 
 .esma-eyebrow {
   display: block;
-  color: var(--tertiary);
+  color: var(--gold-ink);
   font-size: 0.65rem;
   font-weight: 850;
   letter-spacing: 0.13em;
@@ -38,7 +38,7 @@
 .esma-header h1,
 .esma-section-heading h2 {
   margin: 2px 0 0;
-  color: var(--primary);
+  color: var(--brand-ink);
   font-family: var(--font-display);
   font-weight: 650;
 }
@@ -50,7 +50,7 @@
 
 .esma-header p {
   margin: 3px 0 0;
-  color: var(--on-surface-variant);
+  color: var(--ink-muted);
   font-size: 0.78rem;
 }
 
@@ -61,9 +61,9 @@
   overflow: hidden;
   margin: 0 auto 28px;
   padding: 20px 22px 24px;
-  border: 1px solid color-mix(in srgb, var(--tertiary) 32%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gold-ink) 32%, transparent);
   border-radius: var(--radius-xl);
-  background: var(--primary);
+  background: var(--brand-ink);
   color: var(--on-primary);
   box-shadow: var(--shadow-card);
 }
@@ -73,7 +73,7 @@
   content: '';
   position: absolute;
   z-index: -1;
-  border: 1px solid color-mix(in srgb, var(--tertiary) 34%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gold-ink) 34%, transparent);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -96,7 +96,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: color-mix(in srgb, var(--on-primary) 78%, var(--tertiary));
+  color: color-mix(in srgb, var(--on-primary) 78%, var(--gold-ink));
   font-size: 0.66rem;
   font-weight: 850;
   letter-spacing: 0.12em;
@@ -126,7 +126,7 @@
 
 .esma-daily h2 {
   margin: 0;
-  color: color-mix(in srgb, var(--tertiary) 82%, white);
+  color: color-mix(in srgb, var(--gold-ink) 82%, white);
   font-family: var(--font-display);
   font-size: 1.45rem;
   font-weight: 650;
@@ -177,7 +177,7 @@
 }
 
 .esma-result-count {
-  color: var(--on-surface-variant);
+  color: var(--ink-muted);
   font-size: 0.72rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
@@ -197,16 +197,16 @@
   align-items: center;
   gap: 9px;
   padding: 0 12px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--line);
   border-radius: var(--radius-control);
-  background: var(--surface-card-strong);
-  color: var(--on-surface-variant);
+  background: var(--paper-raised);
+  color: var(--ink-muted);
   transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
 .esma-search:focus-within {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+  border-color: var(--brand-ink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-ink) 12%, transparent);
 }
 
 .esma-search input {
@@ -215,13 +215,13 @@
   border: 0;
   outline: 0;
   background: transparent;
-  color: var(--on-surface);
+  color: var(--ink);
   font: inherit;
   font-size: 0.85rem;
 }
 
 .esma-search input::placeholder {
-  color: var(--on-surface-variant);
+  color: var(--ink-muted);
 }
 
 .esma-search input::-webkit-search-cancel-button {
@@ -236,8 +236,8 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: var(--surface-container-low);
-  color: var(--on-surface-variant);
+  background: var(--paper);
+  color: var(--ink-muted);
 }
 
 .esma-favorites-filter {
@@ -247,17 +247,17 @@
   justify-content: center;
   gap: 7px;
   padding: 0 13px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--line);
   border-radius: var(--radius-control);
-  background: var(--surface-card-strong);
-  color: var(--on-surface-variant);
+  background: var(--paper-raised);
+  color: var(--ink-muted);
   font: inherit;
   font-size: 0.76rem;
   font-weight: 800;
 }
 
 .esma-favorites-filter.is-active {
-  border-color: color-mix(in srgb, var(--tertiary) 55%, var(--border-soft));
+  border-color: color-mix(in srgb, var(--gold-ink) 55%, var(--line));
   background: var(--tertiary-container);
   color: var(--on-tertiary-container);
 }
@@ -266,23 +266,23 @@
   min-width: 19px;
   padding: 2px 5px;
   border-radius: 999px;
-  background: var(--surface-container-low);
+  background: var(--paper);
   font-size: 0.62rem;
   font-variant-numeric: tabular-nums;
 }
 
 .esma-list {
   overflow: hidden;
-  border-top: 1px solid var(--border-soft);
+  border-top: 1px solid var(--line);
 }
 
 .esma-row {
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--line);
   transition: background-color 180ms ease;
 }
 
 .esma-row.is-expanded {
-  background: var(--surface-action-soft);
+  background: var(--brand-soft);
 }
 
 .esma-row__trigger {
@@ -300,7 +300,7 @@
 }
 
 .esma-row__number {
-  color: var(--tertiary);
+  color: var(--gold-ink);
   font-size: 0.7rem;
   font-weight: 850;
   font-variant-numeric: tabular-nums;
@@ -315,7 +315,7 @@
 
 .esma-row__copy strong {
   overflow: hidden;
-  color: var(--on-surface);
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 0.98rem;
   font-weight: 650;
@@ -326,7 +326,7 @@
 
 .esma-row__copy small {
   overflow: hidden;
-  color: var(--on-surface-variant);
+  color: var(--ink-muted);
   font-size: 0.7rem;
   line-height: 1.35;
   text-overflow: ellipsis;
@@ -335,7 +335,7 @@
 
 .esma-row__arabic {
   max-width: 116px;
-  color: var(--primary);
+  color: var(--brand-ink);
   font-family: var(--font-arabic);
   font-size: 1.45rem;
   line-height: 1.2;
@@ -344,7 +344,7 @@
 }
 
 .esma-row__chevron {
-  color: var(--on-surface-variant);
+  color: var(--ink-muted);
   transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -359,7 +359,7 @@
 
 .esma-row__detail p {
   margin: 0;
-  color: var(--on-surface-variant);
+  color: var(--ink-muted);
   font-size: 0.78rem;
   line-height: 1.55;
 }
@@ -377,17 +377,17 @@
   justify-content: center;
   gap: 7px;
   padding: 8px 12px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--line);
   border-radius: 11px;
-  background: var(--surface-card-strong);
-  color: var(--on-surface);
+  background: var(--paper-raised);
+  color: var(--ink);
   font: inherit;
   font-size: 0.72rem;
   font-weight: 800;
 }
 
 .esma-row__actions button.is-favorite {
-  border-color: color-mix(in srgb, var(--tertiary) 52%, var(--border-soft));
+  border-color: color-mix(in srgb, var(--gold-ink) 52%, var(--line));
   color: var(--on-tertiary-container);
   background: var(--tertiary-container);
 }
@@ -399,16 +399,16 @@
   align-items: center;
   justify-content: center;
   gap: 7px;
-  color: var(--on-surface-variant);
+  color: var(--ink-muted);
   text-align: center;
 }
 
 .esma-empty svg {
-  color: var(--tertiary);
+  color: var(--gold-ink);
 }
 
 .esma-empty strong {
-  color: var(--on-surface);
+  color: var(--ink);
   font-size: 0.9rem;
 }
 
@@ -426,12 +426,12 @@
   align-items: start;
   margin: 24px auto 0;
   padding: 14px 0;
-  border-top: 1px solid var(--border-soft);
-  color: var(--on-surface-variant);
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted);
 }
 
 .esma-note > svg:first-child {
-  color: var(--tertiary);
+  color: var(--gold-ink);
 }
 
 .esma-note > svg:last-child {
@@ -441,7 +441,7 @@
 .esma-note strong {
   display: block;
   margin-bottom: 3px;
-  color: var(--on-surface);
+  color: var(--ink);
   font-size: 0.76rem;
 }
 

@@ -92,7 +92,7 @@ function PrayerTeacher({ onClose }) {
                 <h2 style={{
                     margin: 0,
                     fontSize: '1.75rem',
-                    color: 'var(--nav-text)',
+                    color: 'var(--ink)',
                     fontWeight: '950'
                 }}>
                     {t('prayerTeacher.title', 'Namaz Hocası')}
@@ -108,9 +108,9 @@ function PrayerTeacher({ onClose }) {
                         className="settings-card premium-glass hover-lift flex-col items-center gap-6 rounded-16 cursor-pointer"
                         style={{
                             padding: '12px 16px',
-                            background: activeTab === tab.id ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                            color: activeTab === tab.id ? 'var(--on-primary)' : 'var(--nav-text)',
-                            border: '1px solid var(--nav-border)',
+                            background: activeTab === tab.id ? 'var(--brand-ink)' : 'var(--paper-sunken)',
+                            color: activeTab === tab.id ? 'var(--on-primary)' : 'var(--ink)',
+                            border: '1px solid var(--line)',
                             minWidth: '85px',
                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                             flex: '0 0 auto'
@@ -128,7 +128,7 @@ function PrayerTeacher({ onClose }) {
                 {/* STEPS TAB */}
                 {activeTab === 'steps' && (
                     <div className="reveal-stagger">
-                        <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600', padding: '0 4px' }}>
+                        <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600', padding: '0 4px' }}>
                             {t('prayerTeacher.stepsDescription', 'Namazın adımlarını öğrenmek için aşağıdaki kartlara tıklayın.')}
                         </p>
                         {PRAYER_STEPS.map((step, index) => (
@@ -139,18 +139,18 @@ function PrayerTeacher({ onClose }) {
                                 onClick={() => setExpandedStep(expandedStep === step.id ? null : step.id)}
                             >
                                 <div className="flex items-center gap-16">
-                                    <div className="settings-icon-box" style={{ width: '48px', height: '48px', background: 'var(--nav-hover)', borderRadius: '14px', fontSize: '1.5rem' }}>
+                                    <div className="settings-icon-box" style={{ width: '48px', height: '48px', background: 'var(--paper-sunken)', borderRadius: '14px', fontSize: '1.5rem' }}>
                                         {step.id}
                                     </div>
                                     <div className="flex-1">
-                                        <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1.05rem' }}>
+                                        <div style={{ fontWeight: '900', color: 'var(--ink)', fontSize: '1.05rem' }}>
                                             {step.name}
                                         </div>
-                                        <div style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+                                        <div style={{ fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
                                             {step.description}
                                         </div>
                                     </div>
-                                    <div style={{ color: expandedStep === step.id ? 'var(--nav-accent)' : 'var(--nav-text-muted)' }}>
+                                    <div style={{ color: expandedStep === step.id ? 'var(--brand-ink)' : 'var(--ink-muted)' }}>
                                         {expandedStep === step.id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
                                     </div>
                                 </div>
@@ -158,13 +158,13 @@ function PrayerTeacher({ onClose }) {
                                     <div className="reveal-stagger" style={{
                                         marginTop: '16px',
                                         padding: '16px',
-                                        background: 'var(--nav-hover)',
+                                        background: 'var(--paper-sunken)',
                                         borderRadius: '12px',
                                         fontSize: '0.95rem',
                                         lineHeight: '1.6',
-                                        color: 'var(--nav-text)',
+                                        color: 'var(--ink)',
                                         fontWeight: '500',
-                                        borderLeft: '4px solid var(--nav-accent)'
+                                        borderLeft: '4px solid var(--brand-ink)'
                                     }}>
                                         {step.detail}
                                     </div>
@@ -177,7 +177,7 @@ function PrayerTeacher({ onClose }) {
                 {/* RECITATIONS TAB */}
                 {activeTab === 'recitations' && (
                     <div className="reveal-stagger">
-                        <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
+                        <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                             {t('prayerTeacher.recitationsDescription', 'Namazda okunan dualar ve sureler.')}
                         </p>
                         {RECITATIONS.map((rec, index) => (
@@ -188,10 +188,10 @@ function PrayerTeacher({ onClose }) {
                                 onClick={() => setExpandedRecitation(expandedRecitation === rec.id ? null : rec.id)}
                             >
                                 <div className="flex-between-center">
-                                    <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1.05rem' }}>
+                                    <div style={{ fontWeight: '900', color: 'var(--ink)', fontSize: '1.05rem' }}>
                                         {rec.name}
                                     </div>
-                                    <div style={{ color: expandedRecitation === rec.id ? 'var(--nav-accent)' : 'var(--nav-text-muted)' }}>
+                                    <div style={{ color: expandedRecitation === rec.id ? 'var(--brand-ink)' : 'var(--ink-muted)' }}>
                                         {expandedRecitation === rec.id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
                                     </div>
                                 </div>
@@ -203,29 +203,29 @@ function PrayerTeacher({ onClose }) {
                                             textAlign: 'right',
                                             direction: 'rtl',
                                             lineHeight: '2',
-                                            color: 'var(--nav-accent)',
-                                            background: 'var(--nav-hover)',
+                                            color: 'var(--brand-ink)',
+                                            background: 'var(--paper-sunken)',
                                             boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)'
                                         }}>
                                             {rec.arabic}
                                         </div>
                                         <div className="rounded-12 mb-10" style={{
                                             fontSize: '0.95rem',
-                                            color: 'var(--nav-text)',
+                                            color: 'var(--ink)',
                                             padding: '12px 16px',
-                                            background: 'var(--nav-hover)',
+                                            background: 'var(--paper-sunken)',
                                             fontWeight: '600'
                                         }}>
-                                            <strong style={{ color: 'var(--nav-accent)', marginRight: '8px' }}>{t('prayerTeacher.labels.pronunciation', 'Okunuşu')}:</strong> {rec.latin}
+                                            <strong style={{ color: 'var(--brand-ink)', marginRight: '8px' }}>{t('prayerTeacher.labels.pronunciation', 'Okunuşu')}:</strong> {rec.latin}
                                         </div>
                                         <div style={{
                                             fontSize: '0.9rem',
-                                            color: 'var(--nav-text-muted)',
+                                            color: 'var(--ink-muted)',
                                             lineHeight: '1.6',
                                             padding: '12px 16px',
                                             fontWeight: '500'
                                         }}>
-                                            <strong style={{ color: 'var(--nav-text)', marginRight: '8px' }}>{t('prayerTeacher.labels.meaning', 'Anlamı')}:</strong> {rec.meaning}
+                                            <strong style={{ color: 'var(--ink)', marginRight: '8px' }}>{t('prayerTeacher.labels.meaning', 'Anlamı')}:</strong> {rec.meaning}
                                         </div>
                                     </div>
                                 )}
@@ -237,7 +237,7 @@ function PrayerTeacher({ onClose }) {
                 {/* PRAYER TYPES TAB */}
                 {activeTab === 'types' && (
                     <div className="reveal-stagger">
-                        <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
+                        <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                             {t('prayerTeacher.typesDescription', '5 vakit namazın rekat sayıları ve detayları.')}
                         </p>
                         {PRAYER_TYPES.map((prayer, index) => (
@@ -248,21 +248,21 @@ function PrayerTeacher({ onClose }) {
                                 onClick={() => setExpandedPrayer(expandedPrayer === prayer.id ? null : prayer.id)}
                             >
                                 <div className="flex items-center gap-16">
-                                    <div className="settings-icon-box" style={{ width: '48px', height: '48px', background: 'var(--nav-hover)', fontSize: '1.5rem', borderRadius: '14px' }}>
+                                    <div className="settings-icon-box" style={{ width: '48px', height: '48px', background: 'var(--paper-sunken)', fontSize: '1.5rem', borderRadius: '14px' }}>
                                         <LineIcon icon={PRAYER_TIME_ICONS[prayer.id] || Star} />
                                     </div>
                                     <div className="flex-1">
-                                        <div style={{ fontWeight: '950', color: 'var(--nav-text)', fontSize: '1.1rem' }}>
+                                        <div style={{ fontWeight: '950', color: 'var(--ink)', fontSize: '1.1rem' }}>
                                             {prayer.name}
                                         </div>
-                                        <div className="hamburger-level-badge mt-4" style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)', fontSize: '0.7rem' }}>
+                                        <div className="hamburger-level-badge mt-4" style={{ background: 'var(--brand-ink)', color: 'var(--on-primary)', fontSize: '0.7rem' }}>
                                             {t('prayerTeacher.totalRakat', {
                                                 count: prayer.totalRakat,
                                                 defaultValue: 'Toplam: {{count}} rekat'
                                             })}
                                         </div>
                                     </div>
-                                    <div style={{ color: expandedPrayer === prayer.id ? 'var(--nav-accent)' : 'var(--nav-text-muted)' }}>
+                                    <div style={{ color: expandedPrayer === prayer.id ? 'var(--brand-ink)' : 'var(--ink-muted)' }}>
                                         {expandedPrayer === prayer.id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
                                     </div>
                                 </div>
@@ -274,8 +274,8 @@ function PrayerTeacher({ onClose }) {
                                                 className="settings-card premium-glass hover-lift justify-between rounded-12"
                                                 style={{
                                                     padding: '14px 18px',
-                                                    background: detail.type === 'Farz' ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.08)' : 'var(--nav-hover)',
-                                                    border: detail.type === 'Farz' ? '1px solid var(--nav-accent)' : '1px solid var(--nav-border)',
+                                                    background: detail.type === 'Farz' ? 'color-mix(in srgb, var(--brand-ink) 8%, transparent)' : 'var(--paper-sunken)',
+                                                    border: detail.type === 'Farz' ? '1px solid var(--brand-ink)' : '1px solid var(--line)',
                                                     marginBottom: '8px'
                                                 }}
                                             >
@@ -283,17 +283,17 @@ function PrayerTeacher({ onClose }) {
                                                     <span style={{
                                                         fontWeight: '900',
                                                         fontSize: '0.95rem',
-                                                        color: detail.type === 'Farz' ? 'var(--nav-accent)' : 'var(--nav-text)'
+                                                        color: detail.type === 'Farz' ? 'var(--brand-ink)' : 'var(--ink)'
                                                     }}>
                                                         {detail.type}
                                                     </span>
-                                                    <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+                                                    <div style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
                                                         {detail.description}
                                                     </div>
                                                 </div>
                                                 <div className="settings-icon-box rounded-10" style={{
                                                     width: '36px', height: '36px',
-                                                    background: detail.type === 'Farz' ? 'var(--nav-accent)' : 'var(--nav-text-muted)',
+                                                    background: detail.type === 'Farz' ? 'var(--brand-ink)' : 'var(--ink-muted)',
                                                     color: 'var(--on-primary)',
                                                     fontWeight: '950',
                                                     fontSize: '1.1rem'
@@ -303,12 +303,12 @@ function PrayerTeacher({ onClose }) {
                                             </div>
                                         ))}
                                         <div className="settings-card premium-glass hover-lift mt-12 p-16 rounded-12 border-none flex gap-12 items-start" style={{
-                                            background: 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.05)',
+                                            background: 'color-mix(in srgb, var(--brand-ink) 5%, transparent)',
                                             fontSize: '0.85rem',
-                                            color: 'var(--nav-text-muted)',
+                                            color: 'var(--ink-muted)',
                                             fontWeight: '700'
                                         }}>
-                                            <Award size={18} style={{ color: 'var(--nav-accent)', marginTop: '2px', flexShrink: 0 }} />
+                                            <Award size={18} style={{ color: 'var(--brand-ink)', marginTop: '2px', flexShrink: 0 }} />
                                             <span>{prayer.note}</span>
                                         </div>
                                     </div>
@@ -321,7 +321,7 @@ function PrayerTeacher({ onClose }) {
                 {/* RELIGIOUS TERMS TAB */}
                 {activeTab === 'terms' && (
                     <div className="reveal-stagger">
-                        <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
+                        <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                             {t('prayerTeacher.termsDescription', 'Dini hükümler ve anlamları.')}
                         </p>
                         {RELIGIOUS_TERMS.map((term, index) => (
@@ -332,29 +332,29 @@ function PrayerTeacher({ onClose }) {
                                 onClick={() => setExpandedTerm(expandedTerm === term.id ? null : term.id)}
                             >
                                 <div className="flex items-center gap-16">
-                                    <div className="settings-icon-box rounded-12" style={{ width: '44px', height: '44px', background: 'var(--nav-hover)', fontSize: '1.25rem' }}>
+                                    <div className="settings-icon-box rounded-12" style={{ width: '44px', height: '44px', background: 'var(--paper-sunken)', fontSize: '1.25rem' }}>
                                         <LineIcon icon={BookOpen} size={20} />
                                     </div>
                                     <div className="flex-1">
-                                        <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1.05rem' }}>
+                                        <div style={{ fontWeight: '900', color: 'var(--ink)', fontSize: '1.05rem' }}>
                                             {term.name}
                                         </div>
                                     </div>
-                                    <div style={{ color: expandedTerm === term.id ? 'var(--nav-accent)' : 'var(--nav-text-muted)' }}>
+                                    <div style={{ color: expandedTerm === term.id ? 'var(--brand-ink)' : 'var(--ink-muted)' }}>
                                         {expandedTerm === term.id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
                                     </div>
                                 </div>
                                 {expandedTerm === term.id && (
                                     <div className="reveal-stagger mt-16">
-                                        <p className="rounded-12 p-16" style={{ fontSize: '0.95rem', color: 'var(--nav-text)', lineHeight: '1.6', marginBottom: '16px', background: 'var(--nav-hover)', fontWeight: '500' }}>
+                                        <p className="rounded-12 p-16" style={{ fontSize: '0.95rem', color: 'var(--ink)', lineHeight: '1.6', marginBottom: '16px', background: 'var(--paper-sunken)', fontWeight: '500' }}>
                                             {term.description}
                                         </p>
-                                        <div style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', padding: '0 8px' }}>
-                                            <strong className="uppercase" style={{ color: 'var(--nav-text)', fontSize: '0.75rem', letterSpacing: '1px' }}>{t('prayerTeacher.labels.examples', 'Örnekler')}:</strong>
+                                        <div style={{ fontSize: '0.85rem', color: 'var(--ink-muted)', padding: '0 8px' }}>
+                                            <strong className="uppercase" style={{ color: 'var(--ink)', fontSize: '0.75rem', letterSpacing: '1px' }}>{t('prayerTeacher.labels.examples', 'Örnekler')}:</strong>
                                             <ul style={{ paddingLeft: '12px', marginTop: '12px', listStyleType: 'none' }}>
                                                 {term.examples.map((ex, i) => (
                                                     <li key={i} className="mb-8 flex items-center gap-10 font-semibold">
-                                                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--nav-accent)' }} />
+                                                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--brand-ink)' }} />
                                                         {ex}
                                                     </li>
                                                 ))}
@@ -370,7 +370,7 @@ function PrayerTeacher({ onClose }) {
                 {/* INVALIDATORS TAB */}
                 {activeTab === 'invalidators' && (
                     <div className="reveal-stagger">
-                        <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
+                        <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                             {t('prayerTeacher.invalidatorsDescription', 'Namazı bozan durumlar listesi.')}
                         </p>
                         <div className="settings-card reveal-stagger premium-glass hover-lift p-8 flex-col items-stretch">
@@ -379,14 +379,14 @@ function PrayerTeacher({ onClose }) {
                                     key={item.id}
                                     className="flex items-center gap-16 p-16 rounded-12 reveal-stagger"
                                     style={{
-                                        background: i % 2 === 0 ? 'var(--nav-hover)' : 'transparent',
+                                        background: i % 2 === 0 ? 'var(--paper-sunken)' : 'transparent',
                                         '--delay': `${i * 0.03}s`
                                     }}
                                 >
-                                    <div className="settings-icon-box rounded-10" style={{ width: '36px', height: '36px', background: i % 2 === 0 ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1)' : 'var(--nav-hover)', fontSize: '1.2rem' }}>
+                                    <div className="settings-icon-box rounded-10" style={{ width: '36px', height: '36px', background: i % 2 === 0 ? 'color-mix(in srgb, var(--brand-ink) 10%, transparent)' : 'var(--paper-sunken)', fontSize: '1.2rem' }}>
                                         {i + 1}
                                     </div>
-                                    <span style={{ fontSize: '0.9rem', color: 'var(--nav-text)', fontWeight: '600' }}>{item.text}</span>
+                                    <span style={{ fontSize: '0.9rem', color: 'var(--ink)', fontWeight: '600' }}>{item.text}</span>
                                 </div>
                             ))}
                         </div>
@@ -398,9 +398,9 @@ function PrayerTeacher({ onClose }) {
                     <div className="reveal-stagger">
                         {!quizStarted ? (
                             <div className="settings-card premium-glass hover-lift text-center p-24 flex-col gap-20" style={{ padding: '60px 24px' }}>
-                                <div className="settings-icon-box pulse" style={{ width: '100px', height: '100px', background: 'var(--nav-hover)', color: 'var(--nav-accent)', margin: '0 auto', borderRadius: '30px' }}><LineIcon icon={GraduationCap} size={48} /></div>
-                                <h2 className="mb-8" style={{ color: 'var(--nav-text)', fontSize: '1.5rem', fontWeight: '950' }}>{t('prayerTeacher.quiz.title', 'Namaz Bilgi Yarışması')}</h2>
-                                <p className="mb-32" style={{ color: 'var(--nav-text-muted)', fontSize: '0.95rem', fontWeight: '600' }}>
+                                <div className="settings-icon-box pulse" style={{ width: '100px', height: '100px', background: 'var(--paper-sunken)', color: 'var(--brand-ink)', margin: '0 auto', borderRadius: '30px' }}><LineIcon icon={GraduationCap} size={48} /></div>
+                                <h2 className="mb-8" style={{ color: 'var(--ink)', fontSize: '1.5rem', fontWeight: '950' }}>{t('prayerTeacher.quiz.title', 'Namaz Bilgi Yarışması')}</h2>
+                                <p className="mb-32" style={{ color: 'var(--ink-muted)', fontSize: '0.95rem', fontWeight: '600' }}>
                                     {t('prayerTeacher.quiz.intro', {
                                         count: QUIZ_QUESTIONS.length,
                                         defaultValue: '{{count}} soru ile bilginizi test edin!'
@@ -409,7 +409,7 @@ function PrayerTeacher({ onClose }) {
                                 <button
                                     className="velocity-target-btn w-full justify-center"
                                     onClick={() => setQuizStarted(true)}
-                                    style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)' }}
+                                    style={{ background: 'var(--brand-ink)', color: 'var(--on-primary)' }}
                                 >
                                     {t('prayerTeacher.quiz.start', 'Başla')}
                                 </button>
@@ -419,15 +419,15 @@ function PrayerTeacher({ onClose }) {
                                 <div style={{ marginBottom: '8px', color: 'var(--gold-ink)' }}>
                                     <LineIcon icon={score >= QUIZ_QUESTIONS.length * 0.7 ? Trophy : score >= QUIZ_QUESTIONS.length * 0.5 ? ThumbsUp : BookOpen} size={64} />
                                 </div>
-                                <h2 className="mb-8" style={{ color: 'var(--nav-text)', fontSize: '1.5rem', fontWeight: '950' }}>{t('prayerTeacher.quiz.finished', 'Quiz Tamamlandı!')}</h2>
+                                <h2 className="mb-8" style={{ color: 'var(--ink)', fontSize: '1.5rem', fontWeight: '950' }}>{t('prayerTeacher.quiz.finished', 'Quiz Tamamlandı!')}</h2>
                                 <div className="settings-icon-box rounded-20" style={{
                                     width: 'fit-content', padding: '12px 32px',
-                                    background: 'var(--nav-accent)', color: 'var(--on-primary)',
+                                    background: 'var(--brand-ink)', color: 'var(--on-primary)',
                                     margin: '0 auto 16px', fontWeight: '950', fontSize: '2.5rem'
                                 }}>
                                     {score} / {QUIZ_QUESTIONS.length}
                                 </div>
-                                <p className="mb-32" style={{ color: 'var(--nav-text-muted)', fontSize: '1rem', fontWeight: '600' }}>
+                                <p className="mb-32" style={{ color: 'var(--ink-muted)', fontSize: '1rem', fontWeight: '600' }}>
                                     {score >= QUIZ_QUESTIONS.length * 0.7
                                         ? t('prayerTeacher.quiz.feedback.excellent', 'Harika! Çok iyi biliyorsunuz!')
                                         : score >= QUIZ_QUESTIONS.length * 0.5
@@ -437,7 +437,7 @@ function PrayerTeacher({ onClose }) {
                                 <button
                                     className="velocity-target-btn w-full justify-center"
                                     onClick={resetQuiz}
-                                    style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)' }}
+                                    style={{ background: 'var(--brand-ink)', color: 'var(--on-primary)' }}
                                 >
                                     {t('prayerTeacher.quiz.retry', 'Tekrar Dene')}
                                 </button>
@@ -445,21 +445,21 @@ function PrayerTeacher({ onClose }) {
                         ) : (
                             <div key={currentQuestion} className="settings-card premium-glass hover-lift p-24 flex-col items-stretch" style={{ padding: '32px 24px' }}>
                                 <div className="flex-between-center mb-24">
-                                    <div className="hamburger-level-badge" style={{ background: 'var(--nav-hover)', color: 'var(--nav-text-muted)' }}>
+                                    <div className="hamburger-level-badge" style={{ background: 'var(--paper-sunken)', color: 'var(--ink-muted)' }}>
                                         {t('prayerTeacher.quiz.questionCounter', {
                                             current: currentQuestion + 1,
                                             total: QUIZ_QUESTIONS.length,
                                             defaultValue: 'Soru {{current}}/{{total}}'
                                         })}
                                     </div>
-                                    <div className="hamburger-level-badge" style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)' }}>
+                                    <div className="hamburger-level-badge" style={{ background: 'var(--brand-ink)', color: 'var(--on-primary)' }}>
                                         {t('prayerTeacher.quiz.score', {
                                             score,
                                             defaultValue: 'Puan: {{score}}'
                                         })}
                                     </div>
                                 </div>
-                                <h3 className="mb-32" style={{ color: 'var(--nav-text)', fontSize: '1.15rem', fontWeight: '950', lineHeight: '1.5' }}>
+                                <h3 className="mb-32" style={{ color: 'var(--ink)', fontSize: '1.15rem', fontWeight: '950', lineHeight: '1.5' }}>
                                     {t(`prayerTeacher.quiz.questions.${currentQuizItem.id}.question`, currentQuizItem.question)}
                                 </h3>
                                 <div className="flex flex-col gap-12">
@@ -479,20 +479,20 @@ function PrayerTeacher({ onClose }) {
                                                 padding: '18px 20px',
                                                 background: showResult
                                                     ? i === currentQuizItem.correctAnswer
-                                                        ? 'rgba(34, 197, 94, 0.1)'
+                                                        ? 'color-mix(in srgb, var(--success) 10%, transparent)'
                                                         : i === selectedAnswer
-                                                            ? 'rgba(239, 68, 68, 0.1)'
-                                                            : 'var(--nav-hover)'
-                                                    : 'var(--nav-hover)',
+                                                            ? 'color-mix(in srgb, var(--danger) 10%, transparent)'
+                                                            : 'var(--paper-sunken)'
+                                                    : 'var(--paper-sunken)',
                                                 border: showResult
                                                     ? i === currentQuizItem.correctAnswer
                                                         ? '2px solid var(--success)'
                                                         : i === selectedAnswer
                                                             ? '2px solid var(--danger)'
-                                                            : '1px solid var(--nav-border)'
-                                                    : '1px solid var(--nav-border)',
+                                                            : '1px solid var(--line)'
+                                                    : '1px solid var(--line)',
                                                 cursor: showResult ? 'default' : 'pointer',
-                                                color: 'var(--nav-text)',
+                                                color: 'var(--ink)',
                                                 fontSize: '0.95rem',
                                                 fontWeight: '800'
                                             }}
@@ -516,7 +516,7 @@ function PrayerTeacher({ onClose }) {
                                         type="button"
                                         className="velocity-target-btn pulse w-full justify-center mt-32"
                                         onClick={nextQuestion}
-                                        style={{ background: 'var(--nav-accent)', color: 'var(--on-primary)' }}
+                                        style={{ background: 'var(--brand-ink)', color: 'var(--on-primary)' }}
                                     >
                                         {currentQuestion < QUIZ_QUESTIONS.length - 1
                                             ? t('prayerTeacher.quiz.nextQuestion', 'Sonraki Soru')

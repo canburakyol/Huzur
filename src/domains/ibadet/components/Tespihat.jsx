@@ -46,8 +46,8 @@ function Tespihat({ onClose }) {
 
   const renderExpandedContent = (item) => (
     <div className="practice-panel" style={{ marginTop: 8 }}>
-      <div style={{ fontSize: '1.3rem', fontFamily: 'var(--arabic-font)', color: 'var(--on-surface)', marginBottom: 10, textAlign: 'right', direction: 'rtl', lineHeight: 1.7 }}>{item.arabic}</div>
-      <div className="practice-row__text" style={{ color: 'var(--on-surface)' }}>{item.latin}</div>
+      <div style={{ fontSize: '1.3rem', fontFamily: 'var(--arabic-font)', color: 'var(--ink)', marginBottom: 10, textAlign: 'right', direction: 'rtl', lineHeight: 1.7 }}>{item.arabic}</div>
+      <div className="practice-row__text" style={{ color: 'var(--ink)' }}>{item.latin}</div>
       <div className="practice-row__text" style={{ marginTop: 7, fontStyle: 'italic' }}>{item.meaning}</div>
       <div className="practice-row__text" data-testid={`source-${item.id}`} style={{ marginTop: 10, fontWeight: 600 }}>
         {sourceLabel(item.sourceType)}{item.citation ? ` · ${item.citation}` : ''}
@@ -64,8 +64,8 @@ function Tespihat({ onClose }) {
           <div className="practice-header__copy"><h1 className="practice-title">{activeSection.title}</h1><p className="practice-subtitle">{activeSection.subtitle}</p></div>
         </header>
         <section className="practice-panel" style={{ marginTop: 0 }}>
-          <div style={{ fontSize: '1.45rem', fontFamily: 'var(--arabic-font)', color: 'var(--on-surface)', textAlign: 'right', direction: 'rtl', lineHeight: 1.75 }}>{activeSection.arabic}</div>
-          <p className="practice-row__text" style={{ marginTop: 14, color: 'var(--on-surface)' }}>{activeSection.latin}</p>
+          <div style={{ fontSize: '1.45rem', fontFamily: 'var(--arabic-font)', color: 'var(--ink)', textAlign: 'right', direction: 'rtl', lineHeight: 1.75 }}>{activeSection.arabic}</div>
+          <p className="practice-row__text" style={{ marginTop: 14, color: 'var(--ink)' }}>{activeSection.latin}</p>
           <p className="practice-row__text" style={{ marginTop: 8, fontStyle: 'italic' }}>{activeSection.meaning}</p>
           <p className="practice-row__text" data-testid={`source-${activeSection.id}`} style={{ marginTop: 10, fontWeight: 600 }}>{sourceLabel(activeSection.sourceType)}{activeSection.citation ? ` · ${activeSection.citation}` : ''}</p>
           <button type="button" className={`practice-wide ${isComplete ? 'practice-secondary-button' : 'practice-primary-button'}`} style={{ marginTop: 14 }} onClick={() => { toggleComplete(activeSection.id); setActiveSection(null); }}><Check size={18} /> {isComplete ? t('tespihat.ui.completed', 'Tamamlandı') : t('tespihat.ui.complete', 'Tamamla')}</button>
@@ -98,7 +98,7 @@ function Tespihat({ onClose }) {
               <button type="button" className={`practice-row ${done ? 'practice-row--done' : ''}`} key={section.id} onClick={() => setActiveSection(section)}>
                 <span className="practice-row__icon">{(() => { const Icon = SECTION_ICONS[section.id] || CircleDot; return <Icon size={17} aria-hidden="true" />; })()}</span>
                 <span className="practice-row__body"><span className="practice-row__title">{section.title}</span><span className="practice-row__text">{section.subtitle}</span></span>
-                {done ? <CheckCircle2 size={20} color="var(--primary)" /> : <ChevronRight size={19} />}
+                {done ? <CheckCircle2 size={20} color="var(--brand-ink)" /> : <ChevronRight size={19} />}
               </button>
             );
           })}

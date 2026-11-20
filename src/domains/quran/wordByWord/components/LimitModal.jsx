@@ -9,14 +9,14 @@ const LimitModal = ({ t, onUpgrade, onDismiss }) => (
     <div
       className="reveal-stagger"
       style={{
-        background: 'var(--nav-bg)',
+        background: 'var(--paper)',
         borderRadius: '32px',
         padding: '40px 24px',
         maxWidth: '360px',
         width: '85%',
         textAlign: 'center',
         boxShadow: '0 30px 60px rgba(0,0,0,0.2)',
-        border: '1px solid var(--nav-border)',
+        border: '1px solid var(--line)',
       }}
     >
       <div
@@ -25,19 +25,19 @@ const LimitModal = ({ t, onUpgrade, onDismiss }) => (
           width: '80px',
           height: '80px',
           margin: '0 auto 24px',
-          background: 'var(--primary)',
+          background: 'var(--brand-ink)',
           color: 'var(--on-primary)',
-          boxShadow: '0 12px 24px rgba(var(--nav-accent-rgb, 249, 115, 22), 0.4)',
+          boxShadow: '0 12px 24px color-mix(in srgb, var(--brand-ink) 40%, transparent)',
         }}
       >
         <Crown size={40} />
       </div>
-      <h3 style={{ margin: '0 0 12px', fontSize: '1.5rem', fontWeight: '950', color: 'var(--nav-text)' }}>
+      <h3 style={{ margin: '0 0 12px', fontSize: '1.5rem', fontWeight: '950', color: 'var(--ink)' }}>
         {t('wordByWord.limitTitle')}
       </h3>
       <p
         style={{
-          color: 'var(--nav-text-muted)',
+          color: 'var(--ink-muted)',
           fontWeight: '600',
           fontSize: '0.95rem',
           lineHeight: '1.6',
@@ -52,7 +52,7 @@ const LimitModal = ({ t, onUpgrade, onDismiss }) => (
           style={{
             width: '100%',
             justifyContent: 'center',
-            background: 'var(--nav-accent)',
+            background: 'var(--brand-ink)',
             color: 'var(--on-primary)',
           }}
           onClick={() => {
@@ -67,8 +67,8 @@ const LimitModal = ({ t, onUpgrade, onDismiss }) => (
           style={{
             width: '100%',
             justifyContent: 'center',
-            background: 'var(--nav-hover)',
-            color: 'var(--nav-text)',
+            background: 'var(--paper-sunken)',
+            color: 'var(--ink)',
           }}
           onClick={onDismiss}
         >

@@ -45,14 +45,14 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
     <div className="velocity-modal-overlay">
       <div className="settings-card reveal-stagger" style={{ 
           flexDirection: 'column', padding: '32px', maxWidth: '420px', width: '90%',
-          position: 'relative', border: '1px solid var(--nav-accent)',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(79, 70, 229, 0.1)'
+          position: 'relative', border: '1px solid var(--brand-ink)',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 20px color-mix(in srgb, var(--brand-ink) 10%, transparent)'
       }}>
         <button 
             onClick={onClose}
             style={{ 
                 position: 'absolute', top: '16px', right: '16px', 
-                background: 'var(--nav-hover)', border: 'none', color: 'var(--nav-text-muted)',
+                background: 'var(--paper-sunken)', border: 'none', color: 'var(--ink-muted)',
                 width: '32px', height: '32px', borderRadius: '50%', display: 'flex',
                 alignItems: 'center', justifyContent: 'center', cursor: 'pointer'
             }}
@@ -62,22 +62,22 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
 
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div className="settings-icon-box" style={{ 
-              width: '64px', height: '64px', background: 'rgba(79, 70, 229, 0.15)', 
-              color: 'var(--nav-accent)', borderRadius: '20px', margin: '0 auto 16px' 
+              width: '64px', height: '64px', background: 'color-mix(in srgb, var(--brand-ink) 15%, transparent)', 
+              color: 'var(--brand-ink)', borderRadius: '20px', margin: '0 auto 16px' 
           }}>
             <BookOpen size={28} />
           </div>
-          <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: '950', color: 'var(--nav-text)', letterSpacing: '-0.5px' }}>
+          <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: '950', color: 'var(--ink)', letterSpacing: '-0.5px' }}>
              {t('hatim.createForm.title', 'Yeni Hatim Başlat')}
           </h3>
-          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
             {t('hatim.createForm.subtitle', 'Hatim grubuna liderlik et')}
           </p>
         </div>
         
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
-            <label style={{ display: 'block', color: 'var(--nav-text)', marginBottom: '8px', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            <label style={{ display: 'block', color: 'var(--ink)', marginBottom: '8px', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 {t('hatim.createForm.nameLabel', 'Hatim Adı')}
             </label>
             <input 
@@ -91,7 +91,7 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
           </div>
 
           <div>
-            <label style={{ display: 'block', color: 'var(--nav-text)', marginBottom: '8px', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            <label style={{ display: 'block', color: 'var(--ink)', marginBottom: '8px', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 {t('hatim.createForm.descLabel', 'Açıklama (İsteğe Bağlı)')}
             </label>
             <textarea 
@@ -104,9 +104,9 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
             />
           </div>
 
-          <div style={{ display: 'flex', gap: '8px', padding: '12px', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '12px', border: '1px dashed var(--nav-accent)' }}>
-            <Info size={16} color="var(--nav-accent)" style={{ flexShrink: 0 }} />
-            <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>
+          <div style={{ display: 'flex', gap: '8px', padding: '12px', background: 'color-mix(in srgb, var(--brand-ink) 5%, transparent)', borderRadius: '12px', border: '1px dashed var(--brand-ink)' }}>
+            <Info size={16} color="var(--brand-ink)" style={{ flexShrink: 0 }} />
+            <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--ink-muted)', fontWeight: '600', lineHeight: '1.4' }}>
               {t('hatim.createForm.info', 'Hatim 30 cüzden oluşur ve tamamlandığında üyeler ödül kazanır.')}
             </p>
           </div>
@@ -116,8 +116,8 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
               type="button" 
               onClick={onClose}
               style={{ 
-                  flex: 1, background: 'transparent', border: '1px solid var(--nav-border)', 
-                  color: 'var(--nav-text-muted)', padding: '14px', borderRadius: '14px',
+                  flex: 1, background: 'transparent', border: '1px solid var(--line)', 
+                  color: 'var(--ink-muted)', padding: '14px', borderRadius: '14px',
                   fontSize: '0.9rem', fontWeight: '800', cursor: 'pointer' 
               }}
             >
@@ -143,7 +143,7 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
           {isAuthBlocked && (
             <div style={{ 
                 display: 'flex', alignItems: 'center', gap: '8px', 
-                padding: '10px', background: 'rgba(239, 68, 68, 0.1)', 
+                padding: '10px', background: 'color-mix(in srgb, var(--danger) 10%, transparent)', 
                 borderRadius: '10px', color: 'var(--danger)' 
             }}>
               <AlertCircle size={14} />
@@ -170,10 +170,10 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
         .velocity-input {
             width: 100%;
             padding: 14px 16px;
-            background: var(--nav-hover);
-            border: 1px solid var(--nav-border);
+            background: var(--paper-sunken);
+            border: 1px solid var(--line);
             border-radius: 12px;
-            color: var(--nav-text);
+            color: var(--ink);
             font-size: 0.9rem;
             font-weight: 600;
             outline: none;
@@ -181,13 +181,13 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
         }
 
         .velocity-input:focus {
-            border-color: var(--nav-accent);
-            background: var(--nav-bg);
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+            border-color: var(--brand-ink);
+            background: var(--paper);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-ink) 10%, transparent);
         }
 
         .velocity-btn-primary {
-            background: var(--nav-accent);
+            background: var(--brand-ink);
             color: white;
             border: none;
             border-radius: 14px;
@@ -198,7 +198,7 @@ const CreateHatimModal = ({ onClose, onSuccess }) => {
             align-items: center;
             justify-content: center;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.2);
+            box-shadow: 0 8px 16px color-mix(in srgb, var(--brand-ink) 20%, transparent);
         }
 
         .velocity-btn-primary:active { transform: scale(0.97); }

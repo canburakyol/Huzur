@@ -111,11 +111,11 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
   const renderSection = (title, subtitle, items, offset = 0) => (
     <div style={{ marginBottom: '22px' }}>
       <div style={{ padding: '0 6px 10px' }}>
-        <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
+        <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--brand-ink)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
           {title}
         </div>
         {subtitle ? (
-          <div style={{ fontSize: '0.76rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.45' }}>
+          <div style={{ fontSize: '0.76rem', color: 'var(--ink-muted)', fontWeight: '600', lineHeight: '1.45' }}>
             {subtitle}
           </div>
         ) : null}
@@ -159,7 +159,7 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
             <div className="hamburger-header">
               <button
                 onClick={handleClose}
-                style={{ position: 'absolute', top: '16px', right: '16px', background: 'var(--surface-action-soft)', border: '1px solid var(--menu-border)', color: 'var(--menu-text)', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}
+                style={{ position: 'absolute', top: '16px', right: '16px', background: 'var(--brand-soft)', border: '1px solid var(--menu-border)', color: 'var(--menu-text)', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}
               >
                 <X size={18} />
               </button>
@@ -180,7 +180,7 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
                 <div className="hamburger-user-info">
                   <div className="hamburger-username">{currentTitle}</div>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <span className="hamburger-level-badge" style={{ background: 'var(--surface-action-soft)', color: 'var(--primary)' }}>
+                    <span className="hamburger-level-badge" style={{ background: 'var(--brand-soft)', color: 'var(--brand-ink)' }}>
                       {t('gamification.level', 'Seviye')} {currentLevel}
                     </span>
                     <div style={{ fontSize: '0.75rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--brand-warm)' }}>
@@ -189,13 +189,13 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
                   </div>
                 </div>
                 {isPro ? (
-                  <div style={{ background: 'var(--surface-warm-soft)', padding: '8px', borderRadius: '12px', border: '1px solid var(--border-soft)' }}>
+                  <div style={{ background: 'var(--surface-warm-soft)', padding: '8px', borderRadius: '12px', border: '1px solid var(--line)' }}>
                     <Crown size={20} color="var(--brand-warm)" fill="var(--brand-warm)" />
                   </div>
                 ) : null}
               </div>
 
-              <div style={{ marginTop: '12px', padding: '12px 14px', background: 'var(--surface-card)', borderRadius: '16px', border: '1px solid var(--menu-border)' }}>
+              <div style={{ marginTop: '12px', padding: '12px 14px', background: 'var(--paper-raised)', borderRadius: '16px', border: '1px solid var(--menu-border)' }}>
                 <div style={{ fontSize: '0.68rem', fontWeight: '900', color: 'var(--brand-primary)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
                   {t('menu.sections.focus', 'Ana odak')}
                 </div>
@@ -206,7 +206,7 @@ function HamburgerMenu({ onSelectFeature, currentFeature, externalOpen, onClose,
 
               <div style={{ display: 'flex', gap: '8px', marginTop: '16px', flexWrap: 'wrap' }}>
                 {topBadges.map((badge, index) => (
-                  <div key={index} style={{ background: 'var(--surface-action-soft)', color: 'var(--menu-text)', padding: '4px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: '800', border: '1px solid var(--menu-border)' }}>
+                  <div key={index} style={{ background: 'var(--brand-soft)', color: 'var(--menu-text)', padding: '4px 8px', borderRadius: '20px', fontSize: '0.65rem', fontWeight: '800', border: '1px solid var(--menu-border)' }}>
                     {badge?.icon || 'B'} {badge?.id ? t(`badges.${badge.id}`, badge.name || badge.id) : t('common.badge', 'Rozet')}
                   </div>
                 ))}

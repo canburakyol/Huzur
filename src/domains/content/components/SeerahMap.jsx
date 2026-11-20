@@ -27,10 +27,10 @@ const SeerahMap = ({ onClose }) => {
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
         <IslamicBackButton onClick={onClose} size="medium" />
         <div style={{ flex: 1 }}>
-          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--ink)', fontWeight: '950', letterSpacing: '-0.5px' }}>
             {t('seerah.title', 'Siyer Haritası')}
           </h2>
-          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
             {t('seerah.subtitle', 'Peygamberimizin (sav) hayat yolculuğu')}
           </p>
         </div>
@@ -41,7 +41,7 @@ const SeerahMap = ({ onClose }) => {
         <button
           onClick={() => setSelectedPeriod(null)}
           className={`period-chip ${!selectedPeriod ? 'active' : ''}`}
-          style={{ '--period-color': 'var(--nav-accent)' }}
+          style={{ '--period-color': 'var(--brand-ink)' }}
         >
           {t('seerah.allPeriods', 'Tümü')}
         </button>
@@ -87,7 +87,7 @@ const SeerahMap = ({ onClose }) => {
                       {event.icon}
                     </div>
                     <div>
-                        <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+                        <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: '900', color: 'var(--ink)' }}>
                             {event.title}
                         </h4>
                         <div className="event-meta">
@@ -105,12 +105,12 @@ const SeerahMap = ({ onClose }) => {
                 <div className={`event-details ${isSelected ? 'expanded' : ''}`}>
                     <div className="details-content">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                            <BookOpen size={14} color="var(--nav-accent)" />
-                            <span style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--nav-accent)', textTransform: 'uppercase' }}>
+                            <BookOpen size={14} color="var(--brand-ink)" />
+                            <span style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--brand-ink)', textTransform: 'uppercase' }}>
                                 {t('seerah.details', 'Ayrıntılar')}
                             </span>
                         </div>
-                        <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--nav-text)', fontWeight: '600', lineHeight: '1.6' }}>
+                        <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--ink)', fontWeight: '600', lineHeight: '1.6' }}>
                             {event.description}
                         </p>
                     </div>
@@ -137,9 +137,9 @@ const SeerahMap = ({ onClose }) => {
         .period-chip {
             padding: 10px 18px;
             border-radius: 12px;
-            border: 1px solid var(--nav-border);
-            background: var(--nav-hover);
-            color: var(--nav-text-muted);
+            border: 1px solid var(--line);
+            background: var(--paper-sunken);
+            color: var(--ink-muted);
             font-size: 0.75rem;
             font-weight: 800;
             white-space: nowrap;
@@ -168,11 +168,11 @@ const SeerahMap = ({ onClose }) => {
             bottom: 20px;
             width: 2px;
             background: linear-gradient(to bottom, 
-                var(--nav-accent), 
-                var(--secondary),
-                var(--tertiary),
-                var(--error),
-                var(--nav-accent)
+                var(--brand-ink), 
+                var(--brand-ink),
+                var(--gold-ink),
+                var(--danger),
+                var(--brand-ink)
             );
             opacity: 0.3;
             border-radius: 1px;
@@ -196,7 +196,7 @@ const SeerahMap = ({ onClose }) => {
             top: 24px;
             width: 14px;
             height: 14px;
-            background: var(--nav-bg);
+            background: var(--paper);
             border: 2.5px solid var(--entry-color);
             border-radius: 50%;
             z-index: 2;
@@ -227,12 +227,12 @@ const SeerahMap = ({ onClose }) => {
             padding: 20px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid var(--nav-border);
+            border: 1px solid var(--line);
         }
 
         .timeline-entry.is-selected .timeline-card {
             border-color: var(--entry-color);
-            background: var(--nav-hover);
+            background: var(--paper-sunken);
         }
 
         .event-icon-box {
@@ -242,9 +242,9 @@ const SeerahMap = ({ onClose }) => {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--nav-bg);
+            background: var(--paper);
             border-radius: 12px;
-            border: 1px solid var(--nav-border);
+            border: 1px solid var(--line);
         }
 
         .event-meta {
@@ -252,20 +252,20 @@ const SeerahMap = ({ onClose }) => {
             gap: 12px;
             margin-top: 6px;
             font-size: 0.75rem;
-            color: var(--nav-text-muted);
+            color: var(--ink-muted);
             font-weight: 700;
         }
 
         .event-meta span { display: flex; align-items: center; gap: 4px; }
 
         .chevron-box {
-            color: var(--nav-text-muted);
+            color: var(--ink-muted);
             transition: all 0.3s;
         }
 
         .chevron-box.active {
             transform: rotate(90deg);
-            color: var(--nav-accent);
+            color: var(--brand-ink);
         }
 
         .event-details {
@@ -283,9 +283,9 @@ const SeerahMap = ({ onClose }) => {
 
         .details-content {
             padding: 16px;
-            background: var(--nav-bg);
+            background: var(--paper);
             border-radius: 14px;
-            border: 1px solid var(--nav-border);
+            border: 1px solid var(--line);
         }
       `}</style>
     </div>

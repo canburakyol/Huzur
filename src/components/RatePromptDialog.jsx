@@ -66,17 +66,17 @@ function RatePromptDialog() {
         style={{
           width: '100%',
           maxWidth: '420px',
-          background: 'var(--surface-container-lowest, #fff)',
+          background: 'var(--paper-raised, #fff)',
           borderRadius: '20px',
           padding: '22px',
-          border: '1px solid var(--outline-variant, #e5e7eb)',
+          border: '1px solid var(--line, #e5e7eb)',
           boxShadow: '0 12px 40px rgba(0,0,0,0.25)',
         }}
       >
-        <h2 style={{ margin: '0 0 8px', fontSize: '18px', color: 'var(--text-primary)' }}>
+        <h2 style={{ margin: '0 0 8px', fontSize: '18px', color: 'var(--ink)' }}>
           {t('rate.title', 'Huzur’u seviyor musunuz?')}
         </h2>
-        <p style={{ margin: '0 0 18px', fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+        <p style={{ margin: '0 0 18px', fontSize: '14px', color: 'var(--ink-muted)', lineHeight: 1.6 }}>
           {t('rate.subtitle', 'Bir dakikanızı ayırıp Play Store’da puan verirseniz çok seviniriz. Desteğinizle daha da gelişeceğiz.')}
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -86,7 +86,7 @@ function RatePromptDialog() {
               padding: '13px',
               borderRadius: '14px',
               border: 'none',
-              background: 'var(--primary)',
+              background: 'var(--brand-ink)',
               color: 'var(--on-primary, #fff)',
               fontWeight: 800,
               fontSize: '15px',
@@ -102,9 +102,9 @@ function RatePromptDialog() {
                 flex: 1,
                 padding: '11px',
                 borderRadius: '12px',
-                border: '1px solid var(--outline-variant, #e5e7eb)',
+                border: '1px solid var(--line, #e5e7eb)',
                 background: 'transparent',
-                color: 'var(--text-primary)',
+                color: 'var(--ink)',
                 fontWeight: 700,
                 cursor: 'pointer',
               }}
@@ -119,7 +119,7 @@ function RatePromptDialog() {
                 borderRadius: '12px',
                 border: '1px solid transparent',
                 background: 'transparent',
-                color: 'var(--text-secondary)',
+                color: 'var(--ink-muted)',
                 fontWeight: 600,
                 cursor: 'pointer',
               }}

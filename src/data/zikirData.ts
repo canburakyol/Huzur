@@ -22,12 +22,12 @@ export type DhikrCategoryWithCount = DhikrCategory & {
 }
 
 export const DHIKR_CATEGORIES: DhikrCategory[] = [
-  { id: 'daily', title: 'Günlük Zikirler', icon: '📿', color: 'var(--primary)' },
-  { id: 'morning', title: 'Sabah Adhkarları', icon: '🌅', color: 'var(--tertiary)' },
-  { id: 'evening', title: 'Akşam Adhkarları', icon: '🌙', color: 'var(--secondary)' },
-  { id: 'protection', title: 'Koruma Duaları', icon: '🛡️', color: 'var(--primary)' },
-  { id: 'postPrayer', title: 'Namaz Sonrası', icon: '🤲', color: 'var(--error)' },
-  { id: 'sleep', title: 'Uyku Öncesi', icon: '😴', color: 'var(--primary)' }
+  { id: 'daily', title: 'Günlük Zikirler', icon: '📿', color: 'var(--brand-ink)' },
+  { id: 'morning', title: 'Sabah Adhkarları', icon: '🌅', color: 'var(--gold-ink)' },
+  { id: 'evening', title: 'Akşam Adhkarları', icon: '🌙', color: 'var(--brand-ink)' },
+  { id: 'protection', title: 'Koruma Duaları', icon: '🛡️', color: 'var(--brand-ink)' },
+  { id: 'postPrayer', title: 'Namaz Sonrası', icon: '🤲', color: 'var(--danger)' },
+  { id: 'sleep', title: 'Uyku Öncesi', icon: '😴', color: 'var(--brand-ink)' }
 ];
 
 export const DHIKR_LIST: Dhikr[] = [
@@ -40,7 +40,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Bir ağaç cennete dikilir',
     count: 33,
     icon: '🌳',
-    color: 'var(--primary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 2,
@@ -51,7 +51,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Mizanı doldurur',
     count: 33,
     icon: '⚖️',
-    color: 'var(--tertiary)'
+    color: 'var(--gold-ink)'
   },
   {
     id: 3,
@@ -62,7 +62,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Yerle gök arası sevap kazandırır',
     count: 33,
     icon: '🌟',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 4,
@@ -73,7 +73,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: '100 köle azat etmiş gibi sevap',
     count: 100,
     icon: '💎',
-    color: 'var(--primary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 5,
@@ -84,7 +84,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Günahlar bağışlanır, rızık genişler',
     count: 100,
     icon: '💧',
-    color: 'var(--primary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 6,
@@ -95,7 +95,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: '10 kat sevap, 10 günah silinir, 10 derece yükselir',
     count: 100,
     icon: '🌹',
-    color: 'var(--error)'
+    color: 'var(--danger)'
   },
   {
     id: 7,
@@ -106,7 +106,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Deniz köpükleri kadar günahlar bağışlanır',
     count: 100,
     icon: '🌊',
-    color: 'var(--primary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 8,
@@ -117,7 +117,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Dile hafif, mizanda ağır iki kelime',
     count: 100,
     icon: '⚡',
-    color: 'var(--tertiary)'
+    color: 'var(--gold-ink)'
   },
   {
     id: 9,
@@ -128,7 +128,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Cennet hazinelerinden bir hazine',
     count: 100,
     icon: '💪',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 10,
@@ -139,7 +139,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Sabahın ilk zikridir',
     count: 1,
     icon: '☀️',
-    color: 'var(--tertiary)'
+    color: 'var(--gold-ink)'
   },
   {
     id: 11,
@@ -150,7 +150,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Günü Allah\'a emanet etmek',
     count: 1,
     icon: '🌄',
-    color: 'var(--tertiary)'
+    color: 'var(--gold-ink)'
   },
   {
     id: 12,
@@ -161,7 +161,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Akşam ölünce veya sabah ölünce cennet garantisi',
     count: 1,
     icon: '👑',
-    color: 'var(--tertiary)'
+    color: 'var(--gold-ink)'
   },
   {
     id: 13,
@@ -172,7 +172,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Cennet vacip olur',
     count: 3,
     icon: '✨',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 14,
@@ -183,7 +183,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'O gün hiçbir şey zarar veremez',
     count: 3,
     icon: '🛡️',
-    color: 'var(--primary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 15,
@@ -194,7 +194,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Dünya ve ahiret işlerinde Allah yeter',
     count: 7,
     icon: '🏛️',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 16,
@@ -205,7 +205,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Akşamın ilk zikridir',
     count: 1,
     icon: '🌆',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 17,
@@ -216,7 +216,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Geceyi Allah\'a emanet etmek',
     count: 1,
     icon: '🌙',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 18,
@@ -227,7 +227,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'O gece hiçbir şey zarar veremez',
     count: 3,
     icon: '🌠',
-    color: 'var(--primary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 19,
@@ -238,7 +238,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Nazar ve sihirden korunma',
     count: 3,
     icon: '👁️',
-    color: 'var(--on-surface-variant)'
+    color: 'var(--ink-muted)'
   },
   {
     id: 20,
@@ -249,7 +249,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Beden sağlığı için',
     count: 3,
     icon: '💪',
-    color: 'var(--primary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 21,
@@ -260,7 +260,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Küfür, fakirlik ve kabir azabından korunma',
     count: 3,
     icon: '🏰',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 22,
@@ -271,7 +271,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Her türlü zorluktan kurtulmak için',
     count: 3,
     icon: '🆘',
-    color: 'var(--error)'
+    color: 'var(--danger)'
   },
   {
     id: 23,
@@ -282,7 +282,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Her yönden korunma',
     count: 1,
     icon: '⬜',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 24,
@@ -293,7 +293,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Namaz sonrası günahların bağışlanması',
     count: 3,
     icon: '🔄',
-    color: 'var(--primary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 25,
@@ -304,7 +304,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Namazı tamamlama duası',
     count: 1,
     icon: '✅',
-    color: 'var(--primary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 26,
@@ -315,7 +315,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Her namazdan sonra okuyan cennete girer',
     count: 1,
     icon: '📖',
-    color: 'var(--tertiary)'
+    color: 'var(--gold-ink)'
   },
   {
     id: 27,
@@ -326,7 +326,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Uyku duası',
     count: 1,
     icon: '🌙',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 28,
@@ -337,7 +337,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Azaptan korunma duası',
     count: 3,
     icon: '🛏️',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   },
   {
     id: 29,
@@ -348,7 +348,7 @@ export const DHIKR_LIST: Dhikr[] = [
     virtue: 'Hizmetçiden hayırlıdır',
     count: 1,
     icon: '📿',
-    color: 'var(--secondary)'
+    color: 'var(--brand-ink)'
   }
 ];
 

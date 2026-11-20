@@ -10,7 +10,7 @@ const HomePersonalizationHint = memo(function HomePersonalizationHint() {
       padding: '16px 18px',
       borderRadius: '20px',
       background: 'color-mix(in srgb, var(--surface-bright) 3%, transparent)',
-      border: '1px solid var(--nav-border)',
+      border: '1px solid var(--line)',
       display: 'flex',
       alignItems: 'flex-start',
       gap: '12px'
@@ -19,19 +19,19 @@ const HomePersonalizationHint = memo(function HomePersonalizationHint() {
         width: 40,
         height: 40,
         borderRadius: 14,
-        background: 'color-mix(in srgb, var(--secondary) 12%, transparent)',
+        background: 'color-mix(in srgb, var(--brand-ink) 12%, transparent)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0
       }}>
-        <TrendingUp size={18} color="var(--surface-container)" />
+        <TrendingUp size={18} color="var(--paper-sunken)" />
       </div>
       <div>
-        <div style={{ fontSize: '0.84rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: 4 }}>
+        <div style={{ fontSize: '0.84rem', fontWeight: '900', color: 'var(--ink)', marginBottom: 4 }}>
           {t('homeFeed.personalization.title')}
         </div>
-        <div style={{ fontSize: '0.76rem', color: 'var(--nav-text-muted)', lineHeight: '1.5' }}>
+        <div style={{ fontSize: '0.76rem', color: 'var(--ink-muted)', lineHeight: '1.5' }}>
           {t('homeFeed.personalization.description')}
         </div>
       </div>

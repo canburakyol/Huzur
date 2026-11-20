@@ -34,12 +34,7 @@
 /* ---- Light theme: legacy tokens and surfaces follow the Avlu palette ---- */
 
 :root:not([data-theme='dark']) {
-  /* interactive accent is brand green as in Mushaf; gold stays for ornament via --tertiary */
-  --nav-accent: var(--brand);
-  --nav-hover: var(--paper-sunken);
-  --nav-border: var(--line);
-  --glass-border: var(--line);
-  --card-border: var(--line);
+  /* token aliases moved to variables.css (both themes) */
 }
 
 :root:not([data-theme='dark']) .settings-container {

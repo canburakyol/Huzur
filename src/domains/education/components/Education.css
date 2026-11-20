@@ -2,31 +2,31 @@
 
 /* ── Zorluk Renk Sabitleri ─────────────────────────────────── */
 :root {
-    --edu-emerald:       var(--primary-container);
-    --edu-emerald-dark:  var(--surface-dim);
-    --edu-emerald-light: var(--surface-container);
+    --edu-emerald:       var(--brand-soft);
+    --edu-emerald-dark:  var(--paper-sunken);
+    --edu-emerald-light: var(--paper-sunken);
     --edu-gold:          var(--tertiary-fixed-dim);
-    --edu-gold-pale:     color-mix(in srgb, var(--tertiary) 15%, transparent);
-    --edu-parchment:     var(--surface-page);
-    --edu-parchment-dark: var(--surface-container-high);
-    --edu-text:          var(--text-body);
-    --edu-text-muted:    var(--text-subtle);
-    --edu-glass:         var(--surface-card);
-    --edu-glass-dark:    var(--surface-container-lowest);
+    --edu-gold-pale:     color-mix(in srgb, var(--gold-ink) 15%, transparent);
+    --edu-parchment:     var(--paper);
+    --edu-parchment-dark: var(--paper-sunken);
+    --edu-text:          var(--ink);
+    --edu-text-muted:    var(--ink-muted);
+    --edu-glass:         var(--paper-raised);
+    --edu-glass-dark:    var(--paper-raised);
     --edu-shadow:        var(--shadow-card);
-    --edu-border:        1px solid var(--outline-variant);
+    --edu-border:        1px solid var(--line);
     /* Zorluk renk sabitleri */
     --edu-difficulty-hard:   var(--danger);
-    --edu-difficulty-medium: var(--tertiary);
-    --edu-difficulty-easy:   var(--secondary);
+    --edu-difficulty-medium: var(--gold-ink);
+    --edu-difficulty-easy:   var(--brand-ink);
 }
 
 /* Base Container */
 .education-container {
     min-height: 100vh;
-    background: linear-gradient(180deg, var(--surface-page) 0%, var(--surface-dim) 100%);
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-sunken) 100%);
     background-image: 
-        radial-gradient(circle at 2px 2px, rgba(180, 83, 9, 0.06) 1px, transparent 0);
+        radial-gradient(circle at 2px 2px, color-mix(in srgb, var(--gold) 6%, transparent) 1px, transparent 0);
     background-size: 24px 24px;
     color: var(--edu-text);
     font-family: var(--font-main);
@@ -123,9 +123,9 @@
     align-items: center;
     padding: 8px 14px;
     border-radius: 999px;
-    background: rgba(251, 191, 36, 0.16);
+    background: color-mix(in srgb, var(--gold) 16%, transparent);
     color: var(--edu-gold);
-    border: 1px solid rgba(251, 191, 36, 0.28);
+    border: 1px solid color-mix(in srgb, var(--gold) 28%, transparent);
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.06em;
@@ -208,14 +208,14 @@
 
 /* --- Atmospheric Ethereal (Radio) --- */
 .ethereal-radio {
-    background: linear-gradient(135deg, var(--surface-dim) 0%, var(--edu-emerald-dark) 50%, var(--surface-container-low) 100%);
+    background: linear-gradient(135deg, var(--paper-sunken) 0%, var(--edu-emerald-dark) 50%, var(--paper) 100%);
     color: var(--on-primary);
 }
 
 .radio-glass-header {
-    background: color-mix(in srgb, var(--primary) 40%, transparent) !important;
+    background: color-mix(in srgb, var(--brand-ink) 40%, transparent) !important;
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid color-mix(in srgb, var(--tertiary) 10%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--gold-ink) 10%, transparent);
 }
 
 .live-indicator {
@@ -224,7 +224,7 @@
     gap: 6px;
     font-size: 0.7rem;
     font-weight: 800;
-    color: var(--error);
+    color: var(--danger);
     margin-bottom: 8px;
     letter-spacing: 1px;
 }
@@ -251,7 +251,7 @@
 .ethereal-chip.active {
     background: var(--edu-gold);
     color: var(--edu-emerald-dark);
-    box-shadow: 0 0 20px color-mix(in srgb, var(--tertiary) 30%, transparent);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--gold-ink) 30%, transparent);
     border-color: var(--edu-gold);
 }
 
@@ -334,7 +334,7 @@
     font-size: 3.5rem;
     color: var(--edu-gold-pale);
     margin-bottom: 10px;
-    text-shadow: 0 0 30px color-mix(in srgb, var(--tertiary) 20%, transparent);
+    text-shadow: 0 0 30px color-mix(in srgb, var(--gold-ink) 20%, transparent);
 }
 
 .surah-details-row {
@@ -344,7 +344,7 @@
 }
 
 .detail-tag {
-    background: color-mix(in srgb, var(--tertiary) 10%, transparent);
+    background: color-mix(in srgb, var(--gold-ink) 10%, transparent);
     color: var(--edu-gold);
     padding: 4px 12px;
     border-radius: 6px;
@@ -371,8 +371,8 @@
 }
 
 .ethereal-list-item.active {
-    background: color-mix(in srgb, var(--tertiary) 10%, transparent);
-    border-color: color-mix(in srgb, var(--tertiary) 30%, transparent);
+    background: color-mix(in srgb, var(--gold-ink) 10%, transparent);
+    border-color: color-mix(in srgb, var(--gold-ink) 30%, transparent);
 }
 
 .item-index {
@@ -405,7 +405,7 @@
     left: 0;
     width: 100%;
     padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
-    background: linear-gradient(0deg, color-mix(in srgb, var(--surface-dim) 95%, transparent) 0%, transparent 100%);
+    background: linear-gradient(0deg, color-mix(in srgb, var(--paper-sunken) 95%, transparent) 0%, transparent 100%);
     backdrop-filter: blur(10px);
 }
 
@@ -426,7 +426,7 @@
     align-items: center;
     justify-content: center;
     border: none;
-    box-shadow: 0 0 30px color-mix(in srgb, var(--tertiary) 40%, transparent);
+    box-shadow: 0 0 30px color-mix(in srgb, var(--gold-ink) 40%, transparent);
     transition: transform 0.2s ease;
 }
 
@@ -446,7 +446,7 @@
 
 /* --- Geometric Progression (Memorize) --- */
 .geometric-memorize {
-    background: linear-gradient(180deg, var(--surface-page) 0%, var(--surface-dim) 100%);
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-sunken) 100%);
 }
 
 .geometric-stats-row {

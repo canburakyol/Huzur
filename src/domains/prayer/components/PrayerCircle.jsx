@@ -60,10 +60,10 @@ const PrayerCircle = ({ onClose }) => {
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
         <IslamicBackButton onClick={onClose} size="medium" />
         <div style={{ flex: 1 }}>
-          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--nav-text)', fontWeight: '950', letterSpacing: '-0.5px' }}>
+          <h2 style={{ margin: 0, fontSize: '1.75rem', color: 'var(--ink)', fontWeight: '950', letterSpacing: '-0.5px' }}>
             {t('prayerCircle.title', 'Dua Halkası')}
           </h2>
-          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+          <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
             {t('prayerCircle.subtitle', 'Dualarda buluşalım')}
           </p>
         </div>
@@ -77,13 +77,13 @@ const PrayerCircle = ({ onClose }) => {
 
       {/* Intro Info */}
       <div className="settings-card" style={{ 
-          marginBottom: '24px', padding: '16px', background: 'rgba(79, 70, 229, 0.05)', 
-          border: '1px dashed var(--nav-accent)', gap: '12px' 
+          marginBottom: '24px', padding: '16px', background: 'color-mix(in srgb, var(--brand-ink) 5%, transparent)', 
+          border: '1px dashed var(--brand-ink)', gap: '12px' 
       }}>
-        <div className="settings-icon-box" style={{ width: '32px', height: '32px', background: 'transparent', color: 'var(--nav-accent)' }}>
+        <div className="settings-icon-box" style={{ width: '32px', height: '32px', background: 'transparent', color: 'var(--brand-ink)' }}>
             <Users size={18} />
         </div>
-        <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>
+        <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--ink-muted)', fontWeight: '600', lineHeight: '1.4' }}>
           {t('prayerCircle.intro', 'Birbirimize dua ederek manevi bağımızı güçlendiriyoruz.')}
         </p>
       </div>
@@ -92,9 +92,9 @@ const PrayerCircle = ({ onClose }) => {
       {showForm && (
         <form onSubmit={handleSubmit} className="settings-card reveal-stagger" style={{ 
             flexDirection: 'column', padding: '24px', marginBottom: '24px', 
-            background: 'var(--nav-hover)', border: '1px solid var(--nav-accent)' 
+            background: 'var(--paper-sunken)', border: '1px solid var(--brand-ink)' 
         }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: '1rem', fontWeight: '900', color: 'var(--nav-text)' }}>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: '1rem', fontWeight: '900', color: 'var(--ink)' }}>
             {t('prayerCircle.askForPrayer', 'Dua İste')}
           </h3>
           <textarea
@@ -123,21 +123,21 @@ const PrayerCircle = ({ onClose }) => {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: req.isMine ? 'var(--nav-accent)' : 'var(--success)' }}></div>
-                <span style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: req.isMine ? 'var(--brand-ink)' : 'var(--success)' }}></div>
+                <span style={{ fontWeight: '900', color: 'var(--ink)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
                   {req.user}
                 </span>
                 {req.isMine && (
                   <span className="me-badge">{t('prayerCircle.me', 'BEN')}</span>
                 )}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--nav-accent)', fontWeight: '950', fontSize: '0.9rem' }}>
-                <Heart size={14} fill={req.count > 0 ? "var(--nav-accent)" : "transparent"} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--brand-ink)', fontWeight: '950', fontSize: '0.9rem' }}>
+                <Heart size={14} fill={req.count > 0 ? "var(--brand-ink)" : "transparent"} />
                 {req.count}
               </div>
             </div>
             
-            <p style={{ margin: '0 0 16px 0', fontSize: '0.95rem', color: 'var(--nav-text)', fontWeight: '600', lineHeight: '1.6' }}>
+            <p style={{ margin: '0 0 16px 0', fontSize: '0.95rem', color: 'var(--ink)', fontWeight: '600', lineHeight: '1.6' }}>
               {req.textKey ? t(req.textKey, req.text) : req.text}
             </p>
 
@@ -160,14 +160,14 @@ const PrayerCircle = ({ onClose }) => {
             width: 44px;
             height: 44px;
             border-radius: 14px;
-            background: var(--nav-accent);
+            background: var(--brand-ink);
             color: white;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 8px 16px color-mix(in srgb, var(--brand-ink) 30%, transparent);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -177,10 +177,10 @@ const PrayerCircle = ({ onClose }) => {
             width: 100%;
             min-height: 100px;
             padding: 16px;
-            background: var(--nav-bg);
-            border: 1px solid var(--nav-border);
+            background: var(--paper);
+            border: 1px solid var(--line);
             border-radius: 14px;
-            color: var(--nav-text);
+            color: var(--ink);
             font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: 20px;
@@ -189,10 +189,10 @@ const PrayerCircle = ({ onClose }) => {
             transition: border-color 0.3s;
         }
 
-        .velocity-textarea:focus { border-color: var(--nav-accent); }
+        .velocity-textarea:focus { border-color: var(--brand-ink); }
 
         .velocity-btn-primary {
-            background: var(--nav-accent);
+            background: var(--brand-ink);
             color: white;
             border: none;
             border-radius: 14px;
@@ -207,7 +207,7 @@ const PrayerCircle = ({ onClose }) => {
 
         .me-badge {
             font-size: 0.65rem;
-            background: var(--nav-accent);
+            background: var(--brand-ink);
             color: white;
             padding: 2px 8px;
             border-radius: 10px;
@@ -224,19 +224,19 @@ const PrayerCircle = ({ onClose }) => {
             font-weight: 900;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: var(--nav-hover);
-            color: var(--nav-accent);
-            border: 1px solid var(--nav-accent);
+            background: var(--paper-sunken);
+            color: var(--brand-ink);
+            border: 1px solid var(--brand-ink);
         }
 
         .pray-button.prayed {
             background: var(--success);
             color: white;
             border-color: var(--success);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--success) 20%, transparent);
         }
 
-        .pray-button:not(.prayed):active { transform: scale(0.95); background: var(--nav-accent); color: white; }
+        .pray-button:not(.prayed):active { transform: scale(0.95); background: var(--brand-ink); color: white; }
       `}</style>
     </div>
   );

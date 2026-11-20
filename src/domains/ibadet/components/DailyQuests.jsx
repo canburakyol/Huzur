@@ -40,7 +40,7 @@ const DailyQuests = memo(() => {
                     }}>
                         <RefreshCw size={16} />
                     </div>
-                    <span style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>
+                    <span style={{ fontSize: '1.1rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--ink)' }}>
                         {t('quests.dailyTitle', 'Günün Görevleri')}
                     </span>
                     {claimableCount > 0 && (
@@ -63,7 +63,7 @@ const DailyQuests = memo(() => {
                             background: isClaimed ? 'rgba(255, 255, 255, 0.02)' : 'rgba(141, 170, 157, 0.05)',
                             borderRadius: '16px',
                             padding: '16px',
-                            border: isClaimed ? '1px dashed var(--glass-border)' : '1px solid var(--glass-border)',
+                            border: isClaimed ? '1px dashed var(--line)' : '1px solid var(--line)',
                             position: 'relative',
                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                             opacity: isClaimed ? 0.6 : 1,
@@ -73,7 +73,7 @@ const DailyQuests = memo(() => {
                                 <div style={{ 
                                     fontSize: '0.95rem', 
                                     fontWeight: '800', 
-                                    color: 'var(--text-primary)',
+                                    color: 'var(--ink)',
                                     fontFamily: 'var(--font-main)',
                                     textDecoration: isClaimed ? 'line-through' : 'none',
                                     flex: 1,
@@ -85,7 +85,7 @@ const DailyQuests = memo(() => {
                                 <div style={{ 
                                     fontSize: '0.75rem', 
                                     fontWeight: '900', 
-                                    color: isClaimed ? 'var(--text-muted)' : 'var(--text-secondary)',
+                                    color: isClaimed ? 'var(--text-muted)' : 'var(--ink-muted)',
                                     fontFamily: 'var(--font-main)',
                                     background: isClaimed ? 'transparent' : 'rgba(141, 170, 157, 0.1)',
                                     padding: '4px 8px',
@@ -102,14 +102,14 @@ const DailyQuests = memo(() => {
                                             height: '100%', 
                                             width: `${progressPercent}%`, 
                                             background: isCompleted 
-                                                ? 'linear-gradient(90deg, var(--accent-gold), var(--primary))'
+                                                ? 'linear-gradient(90deg, var(--accent-gold), var(--brand-ink))'
                                                 : 'linear-gradient(90deg, var(--accent-gold-light), var(--accent-gold))',
                                             transition: 'width 1s cubic-bezier(0.34, 1.56, 0.64, 1)',
                                             boxShadow: isCompleted ? '0 0 10px rgba(141, 170, 157, 0.3)' : 'none',
                                             borderRadius: '10px'
                                         }}></div>
                                     </div>
-                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', minWidth: '45px', textAlign: 'right', fontWeight: '900' }}>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-main)', minWidth: '45px', textAlign: 'right', fontWeight: '900' }}>
                                         {quest.progress}/{quest.target}
                                     </div>
                                     
@@ -135,7 +135,7 @@ const DailyQuests = memo(() => {
                                                 style={{
                                                     padding: '8px 16px', fontSize: '0.75rem', fontWeight: '700',
                                                     borderRadius: '12px', border: '1px solid rgba(141, 170, 157, 0.2)',
-                                                    color: 'var(--primary)', background: 'rgba(141, 170, 157, 0.12)',
+                                                    color: 'var(--brand-ink)', background: 'rgba(141, 170, 157, 0.12)',
                                                     cursor: 'pointer'
                                                 }}
                                             >
@@ -145,7 +145,7 @@ const DailyQuests = memo(() => {
                                     )}
                                 </div>
                             ) : (
-                                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-main)', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '900' }}>
+                                <div style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', fontFamily: 'var(--font-main)', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '900' }}>
                                     <Check size={14} /> {t('quests.claimed', 'Ödül alındı')}
                                 </div>
                             )}

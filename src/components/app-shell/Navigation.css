@@ -1,41 +1,35 @@
 /* --- Lifestyle & Velocity Navigation System --- */
 :root {
-    /* Global Navigation Variables */
-    --nav-bg:           var(--surface-page);
+    /* --nav-* now live in styles/variables.css (legacy aliases), so they exist before this lazy file loads. */
     --nav-bg-rgb:       4, 47, 46;
-    --nav-text:         var(--text-body);
-    --nav-text-muted:   var(--text-subtle);
-    --nav-accent:       var(--tertiary);
-    --nav-hover:        color-mix(in srgb, var(--secondary) 20%, transparent);
-    --nav-border:       color-mix(in srgb, var(--tertiary) 25%, transparent);
 
     /* Hamburger Menu Specific */
     --hb-bg:            var(--menu-surface);
     --hb-text:          var(--menu-text);
     --hb-text-muted:    var(--menu-muted);
     --hb-accent:        var(--brand-primary);
-    --hb-hover:         var(--surface-action-soft);
+    --hb-hover:         var(--brand-soft);
     --hb-border:        var(--menu-border);
 }
 
 /* Shared premium-light navigation surface. */
 .bottom-nav {
-    border-top: 1px solid var(--border-soft);
-    background: color-mix(in srgb, var(--surface-card-strong) 96%, transparent);
+    border-top: 1px solid var(--line);
+    background: color-mix(in srgb, var(--paper-raised) 96%, transparent);
     box-shadow: 0 -8px 24px rgba(35, 55, 43, 0.06);
     backdrop-filter: blur(18px);
 }
 
 .bottom-nav .nav-item {
-    color: var(--text-subtle);
+    color: var(--ink-muted);
 }
 
 .bottom-nav .nav-item.active {
-    color: var(--primary);
+    color: var(--brand-ink);
 }
 
 .bottom-nav .nav-item.active::before {
-    background: var(--tertiary);
+    background: var(--gold-ink);
 }
 
 .hamburger-overlay {
@@ -44,7 +38,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: color-mix(in srgb, var(--on-surface) 18%, transparent);
+    background: color-mix(in srgb, var(--ink) 18%, transparent);
     backdrop-filter: blur(10px);
     z-index: 2000;
     display: flex;
@@ -119,7 +113,7 @@
     width: 60px;
     height: 60px;
     border-radius: 22px; /* Premium Squircle */
-    background: var(--surface-action-soft);
+    background: var(--brand-soft);
     backdrop-filter: blur(12px);
     box-shadow: none;
     display: flex;
@@ -142,7 +136,7 @@
 .hamburger-level-badge {
     font-size: 0.7rem;
     font-weight: 800;
-    background: var(--surface-action-soft);
+    background: var(--brand-soft);
     padding: 2px 8px;
     border-radius: 6px;
     text-transform: uppercase;
@@ -164,8 +158,8 @@
 }
 
 .hamburger-pro-badge {
-    background: var(--surface-action-soft);
-    color: var(--primary);
+    background: var(--brand-soft);
+    color: var(--brand-ink);
     padding: 6px 14px;
     border-radius: 12px;
     font-size: 0.75rem;
@@ -231,7 +225,7 @@
 .hamburger-menu .nav-icon-box {
     width: 44px;
     height: 44px;
-    background: var(--surface-action-soft);
+    background: var(--brand-soft);
     border-radius: 14px;
     display: flex;
     align-items: center;
@@ -242,12 +236,12 @@
 
 .hamburger-menu .nav-item:hover .nav-icon-box {
     background: var(--hb-accent);
-    color: var(--surface-card-strong);
+    color: var(--paper-raised);
 }
 
 .hamburger-menu .nav-item.active .nav-icon-box {
     background: var(--hb-accent);
-    color: var(--surface-card-strong);
+    color: var(--paper-raised);
 }
 
 .hamburger-menu .nav-label {
@@ -292,7 +286,7 @@
     --hb-text: var(--menu-text);
     --hb-text-muted: var(--menu-muted);
     --hb-border: var(--menu-border);
-    --hb-hover: var(--surface-action-soft);
+    --hb-hover: var(--brand-soft);
 }
 
 [data-theme='dark'] .hamburger-header {
@@ -312,13 +306,13 @@
 /* --- Settings & Controls --- */
 .settings-container {
     padding: var(--content-gutter);
-    background-color: var(--bg-gradient-start, var(--surface-page));
+    background-color: var(--bg-gradient-start, var(--paper));
     background-image:
-      radial-gradient(at 0% 0%, var(--ambient-teal, rgba(15, 118, 110, 0.15)) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, var(--ambient-gold, rgba(180, 83, 9, 0.1)) 0px, transparent 50%),
-      linear-gradient(135deg, var(--bg-gradient-start, var(--surface-page)) 0%, var(--bg-gradient-end, var(--surface-page)) 100%);
+      radial-gradient(at 0% 0%, var(--ambient-teal, color-mix(in srgb, var(--brand-ink) 15%, transparent)) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, var(--ambient-gold, color-mix(in srgb, var(--gold) 10%, transparent)) 0px, transparent 50%),
+      linear-gradient(135deg, var(--bg-gradient-start, var(--paper)) 0%, var(--bg-gradient-end, var(--paper)) 100%);
     background-attachment: fixed;
-    color: var(--text-body);
+    color: var(--ink);
     font-family: var(--font-main);
 }
 
@@ -328,7 +322,7 @@
 .settings-container h4,
 .settings-container h5,
 .settings-container h6 {
-    color: var(--text-heading);
+    color: var(--ink);
     font-family: var(--font-display);
 }
 
@@ -339,7 +333,7 @@
 .settings-group-title {
     font-size: 0.75rem;
     font-weight: 800;
-    color: var(--nav-text-muted);
+    color: var(--ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 12px;
@@ -347,10 +341,10 @@
 }
 
 .settings-card {
-    background: var(--surface-card-strong);
+    background: var(--paper-raised);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    border: 1px solid var(--border-soft);
+    border: 1px solid var(--line);
     border-radius: var(--radius-card);
     padding: var(--card-padding);
     display: flex;
@@ -371,23 +365,23 @@
 .settings-icon-box {
     width: 44px;
     height: 44px;
-    background: var(--nav-hover);
+    background: var(--paper-sunken);
     border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--nav-accent);
+    color: var(--brand-ink);
 }
 
 .settings-label {
     font-size: 1rem;
     font-weight: 700;
-    color: var(--text-heading);
+    color: var(--ink);
 }
 
 .settings-desc {
     font-size: 0.8rem;
-    color: var(--text-subtle);
+    color: var(--ink-muted);
     margin-top: 2px;
 }
 
@@ -404,13 +398,13 @@
 }
 
 .velocity-switch.active {
-    background: var(--nav-accent);
+    background: var(--brand-ink);
 }
 
 .velocity-knob {
     width: 20px;
     height: 20px;
-    background: var(--surface-card);
+    background: var(--paper-raised);
     border-radius: 50%;
     position: absolute;
     top: 3px;
@@ -425,6 +419,6 @@
 
 /* Dark Settings Overrides */
 [data-theme='dark'] .settings-card {
-    background: var(--surface-card);
+    background: var(--paper-raised);
     border-color: var(--hb-border);
 }

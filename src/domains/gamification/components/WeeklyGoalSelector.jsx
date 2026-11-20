@@ -21,11 +21,11 @@ const WeeklyGoalSelector = () => {
   return (
     <div className="settings-card reveal-stagger" style={{ flexDirection: 'column', padding: '24px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-        <div className="settings-icon-box" style={{ background: 'rgba(79, 70, 229, 0.1)', color: 'var(--nav-accent)' }}>
+        <div className="settings-icon-box" style={{ background: 'color-mix(in srgb, var(--brand-ink) 10%, transparent)', color: 'var(--brand-ink)' }}>
             <Target size={20} />
         </div>
         <div>
-            <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: '950', color: 'var(--nav-text)' }}>
+            <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: '950', color: 'var(--ink)' }}>
                 {t('weeklyGoal.title', 'Haftalık Hedef')}
             </h4>
             <div style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--success)', display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -35,7 +35,7 @@ const WeeklyGoalSelector = () => {
         </div>
       </div>
 
-      <p style={{ margin: '0 0 20px 0', fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.5' }}>
+      <p style={{ margin: '0 0 20px 0', fontSize: '0.85rem', color: 'var(--ink-muted)', fontWeight: '600', lineHeight: '1.5' }}>
         {t('weeklyGoal.description', 'Haftada kaç gün ibadet takibi yapmak istersiniz?')}
       </p>
 
@@ -70,8 +70,8 @@ const WeeklyGoalSelector = () => {
         .goal-chip {
             position: relative;
             padding: 16px 12px;
-            background: var(--nav-hover);
-            border: 1px solid var(--nav-border);
+            background: var(--paper-sunken);
+            border: 1px solid var(--line);
             border-radius: 16px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -89,14 +89,14 @@ const WeeklyGoalSelector = () => {
         }
 
         .goal-chip:hover:not(.active) {
-            border-color: var(--nav-accent);
-            background: rgba(79, 70, 229, 0.05);
+            border-color: var(--brand-ink);
+            background: color-mix(in srgb, var(--brand-ink) 5%, transparent);
         }
 
         .goal-chip.active {
-            background: var(--nav-accent);
-            border-color: var(--nav-accent);
-            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+            background: var(--brand-ink);
+            border-color: var(--brand-ink);
+            box-shadow: 0 10px 20px color-mix(in srgb, var(--brand-ink) 30%, transparent);
             transform: translateY(-4px);
         }
 
@@ -109,7 +109,7 @@ const WeeklyGoalSelector = () => {
         .chip-value {
             font-size: 1.5rem;
             font-weight: 950;
-            color: var(--nav-text);
+            color: var(--ink);
             transition: color 0.3s;
         }
 
@@ -118,7 +118,7 @@ const WeeklyGoalSelector = () => {
         .chip-label {
             font-size: 0.65rem;
             font-weight: 800;
-            color: var(--nav-text-muted);
+            color: var(--ink-muted);
             letter-spacing: 1px;
             transition: color 0.3s;
         }
@@ -137,7 +137,7 @@ const WeeklyGoalSelector = () => {
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 3px solid var(--nav-bg);
+            border: 3px solid var(--paper);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
       `}</style>

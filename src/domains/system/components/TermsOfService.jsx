@@ -84,7 +84,7 @@ function TermsOfService({ onClose }) {
 
                         <section className="legal-section">
                             <div className="contact-box">
-                                <HelpCircle size={20} color="var(--nav-accent)" />
+                                <HelpCircle size={20} color="var(--brand-ink)" />
                                 <div>
                                     <h3>{t('legal.contact.title', '9. İletişim')}</h3>
                                     <p>{t('legal.contact.desc', 'Kullanım koşulları hakkında sorularınız için lütfen bizimle iletişime geçin.')}</p>
@@ -99,7 +99,7 @@ function TermsOfService({ onClose }) {
                 .legal-overlay {
                     position: fixed;
                     top: 0; left: 0; right: 0; bottom: 0;
-                    background: var(--nav-bg);
+                    background: var(--paper);
                     z-index: 1000;
                     overflow-y: auto;
                     animation: fadeIn 0.3s ease;
@@ -113,14 +113,14 @@ function TermsOfService({ onClose }) {
                 .legal-content-card {
                     flex-direction: column;
                     padding: 32px;
-                    background: var(--nav-bg);
-                    border: 1px solid var(--nav-border);
+                    background: var(--paper);
+                    border: 1px solid var(--line);
                     border-radius: 24px;
                 }
 
                 .legal-body {
                     line-height: 1.8;
-                    color: var(--nav-text);
+                    color: var(--ink);
                 }
 
                 .update-badge {
@@ -128,19 +128,19 @@ function TermsOfService({ onClose }) {
                     align-items: center;
                     gap: 8px;
                     padding: 6px 14px;
-                    background: var(--nav-hover);
+                    background: var(--paper-sunken);
                     border-radius: 12px;
                     font-size: 0.75rem;
                     font-weight: 800;
-                    color: var(--nav-accent);
-                    border: 1px solid var(--nav-border);
+                    color: var(--brand-ink);
+                    border: 1px solid var(--line);
                 }
 
                 .intro-text {
                     font-size: 1.1rem;
                     font-weight: 600;
                     margin-bottom: 32px;
-                    color: var(--nav-text);
+                    color: var(--ink);
                 }
 
                 .legal-section {
@@ -158,7 +158,7 @@ function TermsOfService({ onClose }) {
                     margin: 0 0 12px 0;
                     font-size: 1.1rem;
                     font-weight: 900;
-                    color: var(--nav-accent);
+                    color: var(--brand-ink);
                     text-transform: uppercase;
                     letter-spacing: 0.5px;
                 }
@@ -167,13 +167,13 @@ function TermsOfService({ onClose }) {
                     margin: 0;
                     font-size: 0.95rem;
                     font-weight: 600;
-                    color: var(--nav-text-muted);
+                    color: var(--ink-muted);
                 }
 
                 .legal-list {
                     padding-left: 20px;
                     margin: 12px 0 0 0;
-                    color: var(--nav-text-muted);
+                    color: var(--ink-muted);
                     font-weight: 600;
                 }
 
@@ -183,12 +183,12 @@ function TermsOfService({ onClose }) {
                     display: flex;
                     gap: 16px;
                     padding: 24px;
-                    background: var(--nav-hover);
+                    background: var(--paper-sunken);
                     border-radius: 20px;
-                    border: 1px solid var(--nav-border);
+                    border: 1px solid var(--line);
                 }
 
-                .contact-box h3 { margin-bottom: 4px; color: var(--nav-text); }
+                .contact-box h3 { margin-bottom: 4px; color: var(--ink); }
             `}</style>
         </div>
     );

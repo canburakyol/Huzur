@@ -28,7 +28,6 @@ export type InviteModalContext = {
 export type Settings = {
   language: string;
   theme: string;
-  accentColor: string;
   notifications: boolean;
   stickyNotification: boolean;
 }
@@ -57,7 +56,6 @@ export type SettingsSlice = {
   settings: Settings;
   setLanguage: (lang: string) => void;
   setTheme: (theme: string) => void;
-  setAccentColor: (accentId: string) => void;
   setNotifications: (enabled: boolean) => void;
   setStickyNotification: (enabled: boolean) => void;
 }

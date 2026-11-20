@@ -39,17 +39,17 @@ const SettingsAmbientPulseToggle = () => {
       <div
         className="settings-icon-box"
         style={{
-          background: enabled ? 'rgba(239, 68, 68, 0.15)' : 'var(--nav-hover)',
-          color: enabled ? 'var(--danger)' : 'var(--nav-text-muted)'
+          background: enabled ? 'color-mix(in srgb, var(--danger) 15%, transparent)' : 'var(--paper-sunken)',
+          color: enabled ? 'var(--danger)' : 'var(--ink-muted)'
         }}
       >
         <Heart size={20} fill={enabled ? 'var(--danger)' : 'none'} />
       </div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+        <div style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--ink)' }}>
           {t('settings.ambientPulseTitle', 'Manevi Kalp Atışı')}
         </div>
-        <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '600', marginTop: '2px' }}>
+        <div style={{ fontSize: '0.8rem', color: 'var(--ink-muted)', fontWeight: '600', marginTop: '2px' }}>
           {t('settings.ambientPulseDesc', 'Namaz vaktinden önce yumuşak titreşim hisset')}
         </div>
       </div>
@@ -58,8 +58,8 @@ const SettingsAmbientPulseToggle = () => {
           width: '44px',
           height: '24px',
           borderRadius: '12px',
-          background: enabled ? 'var(--nav-accent)' : 'var(--nav-hover)',
-          border: `1px solid ${enabled ? 'var(--nav-accent)' : 'var(--nav-border)'}`,
+          background: enabled ? 'var(--brand-ink)' : 'var(--paper-sunken)',
+          border: `1px solid ${enabled ? 'var(--brand-ink)' : 'var(--line)'}`,
           position: 'relative',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           flexShrink: 0
@@ -70,7 +70,7 @@ const SettingsAmbientPulseToggle = () => {
             width: '18px',
             height: '18px',
             borderRadius: '50%',
-            background: enabled ? 'var(--on-primary)' : 'var(--nav-text-muted)',
+            background: enabled ? 'var(--on-primary)' : 'var(--ink-muted)',
             position: 'absolute',
             top: '2px',
             left: enabled ? '22px' : '2px',

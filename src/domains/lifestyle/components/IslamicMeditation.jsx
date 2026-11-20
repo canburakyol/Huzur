@@ -116,7 +116,7 @@ const IslamicMeditation = ({ onClose }) => {
       <div className="app-container" style={{ minHeight: '100vh', padding: '20px', background: 'var(--bg-color)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '25px' }}>
           <IslamicBackButton onClick={onClose} />
-          <h2 style={{ margin: 0, fontSize: '22px', color: 'var(--primary)' }}>
+          <h2 style={{ margin: 0, fontSize: '22px', color: 'var(--brand-ink)' }}>
             {t('meditation.title')}
           </h2>
         </div>
@@ -239,7 +239,7 @@ const IslamicMeditation = ({ onClose }) => {
           onClick={togglePlay}
           style={{
             width: '70px', height: '70px', borderRadius: '50%',
-            background: 'var(--surface-card)', border: 'none',
+            background: 'var(--paper-raised)', border: 'none',
             color: selectedSession.color, cursor: 'pointer', display: 'flex',
             alignItems: 'center', justifyContent: 'center'
           }}

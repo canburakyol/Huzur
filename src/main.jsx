@@ -81,7 +81,7 @@ const mountStartupDebugOverlay = (label, errorLike) => {
     pre.style.overflow = 'auto'
     pre.style.whiteSpace = 'pre-wrap'
     pre.style.wordBreak = 'break-word'
-    pre.style.background = 'var(--surface-dim)'
+    pre.style.background = 'var(--paper-sunken)'
     pre.style.color = 'var(--on-error-container)'
     pre.style.fontSize = '12px'
     document.body?.appendChild(pre)
@@ -108,7 +108,7 @@ applyFontSettings(loadFontSettings());
 try {
   createRoot(document.getElementById('root')).render(
     <StrictMode>
-      <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'linear-gradient(135deg, var(--primary-container), var(--surface-page))', color: 'var(--on-tertiary-container)', fontWeight: 700 }}>{getLoadingLabel()}</div>}>
+      <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'linear-gradient(135deg, var(--brand-soft), var(--paper))', color: 'var(--on-tertiary-container)', fontWeight: 700 }}>{getLoadingLabel()}</div>}>
         <AppProviders />
       </Suspense>
     </StrictMode>,

@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { checkAndUpdateStreak, getStreakDisplay } from "../services/streakService";
 import { getProStateSnapshot, isPro as checkIsPro, verifyProStatus } from "../services/proService";
 import { detectAndSetLanguage } from "../services/languageService";
-import { VAKIT_THEMES } from "../data/vakitThemes";
-import { THEMES, ACCENT_COLORS } from "../data/themes";
 import { ONBOARDING_COMPLETED_EVENT, TIMING, STORAGE_KEYS } from "../constants";
 import { storageService } from "../services/storageService";
 import { isInAdGracePeriod } from "../services/adGracePeriod";
@@ -29,23 +27,6 @@ type Badge = {
   message: string;
 }
 
-type AccentColor = {
-  id: string;
-  color: string;
-  dark?: string;
-  rgb?: string;
-}
-
-type ThemeColors = {
-  [key: string]: string;
-}
-
-type Theme = {
-  id: string;
-  colors?: ThemeColors;
-  bodyGradient?: string;
-}
-
 type PrayerTimings = Record<string, string>;
 
 type UseAppInitResult = {
@@ -57,78 +38,10 @@ type UseAppInitResult = {
   bannerEnabled: boolean;
 }
 
-const LEGACY_ACCENT_MAP: Record<string, string> = {
-  orange: "amber",
-  gold: "antique-gold",
-  blue: "deep-emerald",
-  purple: "olive-gold",
-};
-
-const resolveAccent = (accentId: string): AccentColor => {
-  const normalized = LEGACY_ACCENT_MAP[accentId] || accentId;
-  return ACCENT_COLORS.find((accent) => accent.id === normalized) || ACCENT_COLORS[0];
-};
-
-const applyAccent = (accent: Omit<AccentColor, 'id'> | undefined): void => {
-  if (!accent) return;
-  const root = document.documentElement;
-  root.style.setProperty("--nav-accent", accent.color);
-  root.style.setProperty("--primary-color", accent.color);
-  root.style.setProperty("--accent-color", accent.color);
-  root.style.setProperty("--accent-vibrant", accent.color);
-  root.style.setProperty("--accent-gold-light", accent.color);
-
-  if (accent.dark) {
-    root.style.setProperty("--primary-dark", accent.dark);
-    root.style.setProperty("--accent-gold", accent.dark);
-  }
-  if (accent.rgb) {
-    root.style.setProperty("--nav-accent-rgb", accent.rgb);
-  }
-};
-
-const applyThemeColors = (theme: Theme | undefined): void => {
-  if (!theme) return;
-  const root = document.documentElement;
-  if (theme.colors) {
-    Object.entries(theme.colors).forEach(([property, value]) => {
-      root.style.setProperty(property, value);
-    });
-  }
-  if (theme.bodyGradient) {
-    document.body.style.background = theme.bodyGradient;
-    document.body.style.backgroundAttachment = "fixed";
-  }
-};
-
-const getVakitTheme = (timings: PrayerTimings | undefined): Theme => {
-  if (!timings) return VAKIT_THEMES.DAY;
-
-  const now = new Date();
-  const timeStr = now.getHours() * 60 + now.getMinutes();
-
-  const getMinutes = (t: string): number => {
-    const [h, m] = t.split(":").map(Number);
-    return h * 60 + m;
-  };
-
-  const fajr = getMinutes(timings.Fajr);
-  const dhuhr = getMinutes(timings.Dhuhr);
-  const asr = getMinutes(timings.Asr);
-  const maghrib = getMinutes(timings.Maghrib);
-  const isha = getMinutes(timings.Isha);
-
-  if (timeStr >= fajr && timeStr < dhuhr) return VAKIT_THEMES.FAJR;
-  if (timeStr >= dhuhr && timeStr < asr) return VAKIT_THEMES.DAY;
-  if (timeStr >= asr && timeStr < maghrib) return VAKIT_THEMES.DAY;
-  if (timeStr >= maghrib && timeStr < isha) return VAKIT_THEMES.MAGHRIB;
-  if (timeStr >= isha || timeStr < fajr) return VAKIT_THEMES.ISHA;
-
-  return VAKIT_THEMES.NIGHT;
-};
 
 export const useAppInit = (
-  timings?: PrayerTimings | null,
+  // Unused since the per-prayer-time colour themes were removed; kept so callers' argument order stays.
+  _timings?: PrayerTimings | null,
   activeTab = "home",
   activeFeature: string | null = null,
   isLocationConsentVisible = false,
@@ -220,8 +133,6 @@ export const useAppInit = (
       }
     });
 
-    const savedAccent = storageService.getString("app_accent_color") || "amber";
-    applyAccent(resolveAccent(savedAccent));
     initializeThemeMode();
 
     if (!storageService.hasKey("APP_INSTALL_DATE")) {
@@ -236,53 +147,6 @@ export const useAppInit = (
     };
   }, []);
 
-  useEffect(() => {
-    const handleThemeChange = (e: Event): void => {
-      const { themeId } = (e as CustomEvent).detail;
-      if (themeId === "auto-vakit") {
-        if (timings) applyThemeColors(getVakitTheme(timings));
-      } else {
-        const theme = THEMES.find((t) => t.id === themeId);
-        if (theme) applyThemeColors(theme);
-      }
-    };
-
-    const handleThemeModeChange = (e: Event): void => {
-      const { mode } = (e as CustomEvent).detail;
-      let targetTheme = mode;
-      if (mode === "system") {
-        targetTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      }
-      document.documentElement.setAttribute("data-theme", targetTheme);
-    };
-
-    const handleAccentChange = (e: Event): void => {
-      const { accentId, color, dark, rgb } = (e as CustomEvent).detail;
-      if (accentId) {
-        applyAccent(resolveAccent(accentId));
-        return;
-      }
-
-      applyAccent({ color, dark, rgb });
-    };
-
-    window.addEventListener("appThemeChanged", handleThemeChange);
-    window.addEventListener("themeModeChanged", handleThemeModeChange);
-    window.addEventListener("accentColorChanged", handleAccentChange);
-
-    return () => {
-      window.removeEventListener("appThemeChanged", handleThemeChange);
-      window.removeEventListener("themeModeChanged", handleThemeModeChange);
-      window.removeEventListener("accentColorChanged", handleAccentChange);
-    };
-  }, [timings]);
-
-  useEffect(() => {
-    const savedTheme = storageService.getString(STORAGE_KEYS.APP_THEME);
-    if (savedTheme === "auto-vakit" && timings) {
-      applyThemeColors(getVakitTheme(timings));
-    }
-  }, [timings]);
 
   useEffect(() => {
     let isCancelled = false;

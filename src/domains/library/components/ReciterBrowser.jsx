@@ -31,8 +31,8 @@ function ReciterBrowser({
                   style={{
                     padding: '12px 16px',
                     cursor: 'pointer',
-                    background: isPlaying ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.05)' : '',
-                    borderColor: isPlaying ? 'var(--nav-accent)' : ''
+                    background: isPlaying ? 'color-mix(in srgb, var(--brand-ink) 5%, transparent)' : '',
+                    borderColor: isPlaying ? 'var(--brand-ink)' : ''
                   }}
                   onClick={(event) => onPlaySurah?.(audioUrl, index, event)}
                 >
@@ -40,8 +40,8 @@ function ReciterBrowser({
                     <div
                       className="settings-icon-box"
                       style={{
-                        background: isPlaying ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                        color: isPlaying ? 'var(--on-primary)' : 'var(--nav-accent)',
+                        background: isPlaying ? 'var(--brand-ink)' : 'var(--paper-sunken)',
+                        color: isPlaying ? 'var(--on-primary)' : 'var(--brand-ink)',
                         width: '44px',
                         height: '44px',
                         borderRadius: '50%'
@@ -50,7 +50,7 @@ function ReciterBrowser({
                       {isPlaying ? <Pause size={20} /> : <Play size={20} />}
                     </div>
                     <div className="settings-user-info">
-                      <div className="settings-label" style={{ color: isPlaying ? 'var(--nav-accent)' : '' }}>
+                      <div className="settings-label" style={{ color: isPlaying ? 'var(--brand-ink)' : '' }}>
                         {surah.number}. {surah.name}
                       </div>
                       <div className="settings-desc">
@@ -74,7 +74,7 @@ function ReciterBrowser({
 
   return (
     <div className="reveal-stagger">
-      <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
+      <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
         {activeItem.description}
       </p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -92,8 +92,8 @@ function ReciterBrowser({
                   width: '48px',
                   height: '48px',
                   borderRadius: '50%',
-                  background: 'var(--nav-hover)',
-                  color: 'var(--nav-accent)'
+                  background: 'var(--paper-sunken)',
+                  color: 'var(--brand-ink)'
                 }}
               >
                 <Mic size={20} />
@@ -103,7 +103,7 @@ function ReciterBrowser({
                 <div className="settings-desc">{reciter.country}</div>
               </div>
             </div>
-            <ChevronRight size={18} color="var(--nav-text-muted)" />
+            <ChevronRight size={18} color="var(--ink-muted)" />
           </div>
         ))}
       </div>

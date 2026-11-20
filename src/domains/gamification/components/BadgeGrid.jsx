@@ -33,16 +33,16 @@ const BadgeGrid = ({ earnedBadges = [] }) => {
       {/* Header with total progress */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', padding: '0 8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div style={{ width: '4px', height: '16px', background: 'var(--nav-accent)', borderRadius: '2px' }}></div>
-          <h3 style={{ margin: 0, fontSize: '0.9rem', fontWeight: '900', color: 'var(--nav-text)', textTransform: 'uppercase' }}>
+          <div style={{ width: '4px', height: '16px', background: 'var(--brand-ink)', borderRadius: '2px' }}></div>
+          <h3 style={{ margin: 0, fontSize: '0.9rem', fontWeight: '900', color: 'var(--ink)', textTransform: 'uppercase' }}>
             {t('gamification.badgesTitle', 'Rozetlerim')}
           </h3>
         </div>
         <div style={{
           display: 'flex', alignItems: 'center', gap: '6px',
-          background: 'var(--nav-hover)', padding: '4px 10px',
+          background: 'var(--paper-sunken)', padding: '4px 10px',
           borderRadius: '12px', fontSize: '0.75rem', fontWeight: '900',
-          color: 'var(--nav-accent)'
+          color: 'var(--brand-ink)'
         }}>
           <Trophy size={12} />
           {earnedCount}/{totalBadges}
@@ -60,8 +60,8 @@ const BadgeGrid = ({ earnedBadges = [] }) => {
 
           return (
             <div key={catKey} className="reveal-stagger" style={{
-              background: 'var(--nav-bg)',
-              border: '1px solid var(--nav-border)',
+              background: 'var(--paper)',
+              border: '1px solid var(--line)',
               borderRadius: '16px',
               overflow: 'hidden'
             }}>
@@ -72,7 +72,7 @@ const BadgeGrid = ({ earnedBadges = [] }) => {
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                   width: '100%', padding: '14px 16px',
                   background: 'transparent', border: 'none', cursor: 'pointer',
-                  color: 'var(--nav-text)'
+                  color: 'var(--ink)'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -81,15 +81,15 @@ const BadgeGrid = ({ earnedBadges = [] }) => {
                     {t(`badgeCategories.${catKey}`, catInfo.label)}
                   </span>
                   <span style={{
-                    background: catEarnedCount === badges.length ? catInfo.color : 'var(--nav-hover)',
-                    color: catEarnedCount === badges.length ? 'var(--on-primary)' : 'var(--nav-text-muted)',
+                    background: catEarnedCount === badges.length ? catInfo.color : 'var(--paper-sunken)',
+                    color: catEarnedCount === badges.length ? 'var(--on-primary)' : 'var(--ink-muted)',
                     padding: '2px 8px', borderRadius: '8px',
                     fontSize: '0.7rem', fontWeight: '900'
                   }}>
                     {catEarnedCount}/{badges.length}
                   </span>
                 </div>
-                {isExpanded ? <ChevronUp size={16} color="var(--nav-text-muted)" /> : <ChevronDown size={16} color="var(--nav-text-muted)" />}
+                {isExpanded ? <ChevronUp size={16} color="var(--ink-muted)" /> : <ChevronDown size={16} color="var(--ink-muted)" />}
               </button>
 
               {/* Expanded badges grid */}
@@ -107,8 +107,8 @@ const BadgeGrid = ({ earnedBadges = [] }) => {
                         style={{
                           display: 'flex', flexDirection: 'column', alignItems: 'center',
                           padding: '12px 6px', textAlign: 'center',
-                          background: earned ? 'var(--nav-hover)' : 'rgba(255,255,255,0.02)',
-                          border: earned ? `1.5px solid ${catInfo.color}` : '1px solid var(--nav-border)',
+                          background: earned ? 'var(--paper-sunken)' : 'rgba(255,255,255,0.02)',
+                          border: earned ? `1.5px solid ${catInfo.color}` : '1px solid var(--line)',
                           borderRadius: '12px',
                           opacity: earned ? 1 : 0.5,
                           position: 'relative',
@@ -116,7 +116,7 @@ const BadgeGrid = ({ earnedBadges = [] }) => {
                         }}
                       >
                         {!earned && (
-                          <div style={{ position: 'absolute', top: '6px', right: '6px', color: 'var(--nav-text-muted)', opacity: 0.4 }}>
+                          <div style={{ position: 'absolute', top: '6px', right: '6px', color: 'var(--ink-muted)', opacity: 0.4 }}>
                             <Lock size={10} />
                           </div>
                         )}
@@ -130,14 +130,14 @@ const BadgeGrid = ({ earnedBadges = [] }) => {
 
                         <div style={{
                           fontWeight: '800', fontSize: '0.65rem',
-                          color: 'var(--nav-text)', lineHeight: '1.3',
+                          color: 'var(--ink)', lineHeight: '1.3',
                           textTransform: 'uppercase', letterSpacing: '0.3px'
                         }}>
                           {t(`badges.${badge.id}`, badge.name)}
                         </div>
 
                         <div style={{
-                          fontSize: '0.6rem', color: 'var(--nav-text-muted)',
+                          fontSize: '0.6rem', color: 'var(--ink-muted)',
                           lineHeight: '1.3', marginTop: '4px', fontWeight: '600'
                         }}>
                           {t(`badge_desc.${badge.id}`, badge.description)}

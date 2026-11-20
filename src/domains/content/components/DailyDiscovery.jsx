@@ -51,10 +51,10 @@ const DailyDiscovery = ({ onNavigate }) => {
         marginBottom: '14px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Sparkles size={16} color="var(--nav-accent)" />
+          <Sparkles size={16} color="var(--brand-ink)" />
           <h3 style={{
             margin: 0, fontSize: '0.9rem', fontWeight: '900',
-            color: 'var(--nav-text)', textTransform: 'uppercase',
+            color: 'var(--ink)', textTransform: 'uppercase',
             letterSpacing: '0.5px'
           }}>
             {t('discovery.title', 'Günlük Keşif')}
@@ -62,7 +62,7 @@ const DailyDiscovery = ({ onNavigate }) => {
         </div>
         <span style={{
           fontSize: '0.7rem', fontWeight: '800',
-          color: 'var(--nav-text-muted)', textTransform: 'uppercase'
+          color: 'var(--ink-muted)', textTransform: 'uppercase'
         }}>
           {viewedCards.viewed.length}/{cards.length} {t('discovery.explored', 'Keşfedildi')}
         </span>

@@ -222,14 +222,14 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
             style={{
               fontSize: '1.5rem',
               fontWeight: '900',
-              color: 'var(--nav-text)',
+              color: 'var(--ink)',
               margin: 0
             }}
           >
             {currentTitle}
           </h1>
           {breadcrumbs.length > 1 ? (
-            <div style={{ marginTop: '6px', fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+            <div style={{ marginTop: '6px', fontSize: '0.75rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
               {breadcrumbs.map((crumb) => (crumb.id === 'root' ? t('library.title', crumb.label) : crumb.label)).join(' / ')}
             </div>
           ) : null}
@@ -239,9 +239,9 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
           <div
             className="hamburger-level-badge"
             style={{
-              background: 'color-mix(in srgb, var(--nav-accent) 10%, transparent)',
-              color: 'var(--nav-accent)',
-              borderColor: 'var(--nav-accent)',
+              background: 'color-mix(in srgb, var(--brand-ink) 10%, transparent)',
+              color: 'var(--brand-ink)',
+              borderColor: 'var(--brand-ink)',
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
@@ -249,15 +249,15 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
               borderRadius: '12px'
             }}
           >
-            <Crown size={14} fill="var(--nav-accent)" />
+            <Crown size={14} fill="var(--brand-ink)" />
             <span style={{ fontSize: '11px', fontWeight: '900' }}>PRO</span>
           </div>
         ) : (
           <div
             onClick={() => setShowPaywall(true)}
             style={{
-              background: 'var(--nav-hover)',
-              color: 'var(--nav-text-muted)',
+              background: 'var(--paper-sunken)',
+              color: 'var(--ink-muted)',
               padding: '8px',
               borderRadius: '12px',
               cursor: 'pointer'
@@ -331,7 +331,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'color-mix(in srgb, var(--surface-dim) 80%, transparent)',
+            background: 'color-mix(in srgb, var(--paper-sunken) 80%, transparent)',
             backdropFilter: 'blur(20px)',
             display: 'flex',
             alignItems: 'center',
@@ -350,9 +350,9 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
               alignItems: 'center',
               textAlign: 'center',
               gap: '24px',
-              background: 'var(--nav-bg)',
-              border: '1px solid var(--nav-accent)',
-              boxShadow: '0 24px 48px color-mix(in srgb, var(--surface-dim) 50%, transparent)',
+              background: 'var(--paper)',
+              border: '1px solid var(--brand-ink)',
+              boxShadow: '0 24px 48px color-mix(in srgb, var(--paper-sunken) 50%, transparent)',
               borderRadius: '40px',
               animation: 'modalOpen 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
             }}
@@ -362,22 +362,22 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
               style={{
                 width: '80px',
                 height: '80px',
-                background: 'linear-gradient(135deg, var(--nav-accent) 0%, var(--tertiary) 100%)',
+                background: 'linear-gradient(135deg, var(--brand-ink) 0%, var(--gold-ink) 100%)',
                 borderRadius: '30px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 12px 24px color-mix(in srgb, var(--nav-accent) 40%, transparent)'
+                boxShadow: '0 12px 24px color-mix(in srgb, var(--brand-ink) 40%, transparent)'
               }}
             >
               <Crown size={40} color='var(--on-primary)' fill='var(--on-primary)' />
             </div>
 
             <div>
-              <h2 style={{ fontSize: '1.75rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: '8px' }}>
+              <h2 style={{ fontSize: '1.75rem', fontWeight: '900', color: 'var(--ink)', marginBottom: '8px' }}>
                 Huzur Pro
               </h2>
-              <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.95rem', fontWeight: '600', lineHeight: '1.5' }}>
+              <p style={{ color: 'var(--ink-muted)', fontSize: '0.95rem', fontWeight: '600', lineHeight: '1.5' }}>
                 {t('library.paywall_desc', 'Tüm kütüphane içeriğine ve premium özelliklere sınırsız erişim sağlayın.')}
               </p>
             </div>
@@ -388,11 +388,11 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
                 { icon: 'Video', text: t('library.feature_video', 'İslami Akademi video serileri') },
                 { icon: 'BookOpen', text: t('library.feature_books', 'Özel dini kaynaklar ve kitaplar') }
               ].map((feature, index) => (
-                <div key={`${feature.text}-${index}`} className="settings-card" style={{ padding: '12px 16px', background: 'var(--nav-hover)', border: 'none', justifyContent: 'flex-start', gap: '12px' }}>
-                  <span style={{ color: 'var(--nav-accent)' }}>
+                <div key={`${feature.text}-${index}`} className="settings-card" style={{ padding: '12px 16px', background: 'var(--paper-sunken)', border: 'none', justifyContent: 'flex-start', gap: '12px' }}>
+                  <span style={{ color: 'var(--brand-ink)' }}>
                     <IconMapper iconName={feature.icon} size={20} />
                   </span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--nav-text)', fontWeight: '700', textAlign: 'left' }}>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--ink)', fontWeight: '700', textAlign: 'left' }}>
                     {feature.text}
                   </span>
                 </div>
@@ -404,7 +404,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
                 className="velocity-target-btn"
                 style={{
                   width: '100%',
-                  background: 'var(--nav-accent)',
+                  background: 'var(--brand-ink)',
                   color: 'var(--on-primary)',
                   borderColor: 'transparent',
                   height: '64px',
@@ -419,7 +419,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
 
               <button
                 onClick={() => setShowPaywall(false)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--nav-text-muted)', fontSize: '0.9rem', cursor: 'pointer', fontWeight: '800' }}
+                style={{ background: 'transparent', border: 'none', color: 'var(--ink-muted)', fontSize: '0.9rem', cursor: 'pointer', fontWeight: '800' }}
               >
                 {t('common.later', 'Belki Daha Sonra')}
               </button>

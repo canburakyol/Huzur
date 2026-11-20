@@ -66,7 +66,7 @@ const MosqueFinderMap = ({ location, mosques, onSelectMosque, onOpenInMaps }) =>
                             style={{
                                 marginTop: '8px',
                                 padding: '6px 12px',
-                                background: 'var(--primary)',
+                                background: 'var(--brand-ink)',
                                 color: 'var(--on-primary)',
                                 border: 'none',
                                 borderRadius: '6px',

@@ -279,7 +279,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
     {
       label: t('weeklyReport.prayerDays', 'Namaz Günü'),
       value: weeklyStats.prayerDays,
-      icon: <Sparkles size={18} color="var(--tertiary)" />
+      icon: <Sparkles size={18} color="var(--gold-ink)" />
     },
     {
       label: t('weeklyReport.quranDays', 'Kuran Günü'),
@@ -289,7 +289,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
     {
       label: t('weeklyReport.routines', 'Rutin'),
       value: weeklyStats.routinesCompleted,
-      icon: <Flame size={18} color="var(--secondary)" />
+      icon: <Flame size={18} color="var(--brand-ink)" />
     }
   ];
 
@@ -303,13 +303,13 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
           left: '16px',
           right: '16px',
           zIndex: 998,
-          background: 'linear-gradient(135deg, var(--primary-container), var(--secondary-container))',
+          background: 'linear-gradient(135deg, var(--brand-soft), var(--secondary-container))',
           borderRadius: '16px',
           padding: '12px 16px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          boxShadow: '0 8px 24px color-mix(in srgb, var(--secondary) 25%, transparent)',
+          boxShadow: '0 8px 24px color-mix(in srgb, var(--brand-ink) 25%, transparent)',
           cursor: 'pointer',
           animation: 'reportFadeIn 0.5s ease'
         }}
@@ -370,12 +370,12 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
-        border: '1px solid color-mix(in srgb, var(--secondary) 28%, transparent)',
-        boxShadow: '0 24px 52px color-mix(in srgb, var(--surface-dim) 50%, transparent), 0 0 40px color-mix(in srgb, var(--secondary) 12%, transparent)',
+        border: '1px solid color-mix(in srgb, var(--brand-ink) 28%, transparent)',
+        boxShadow: '0 24px 52px color-mix(in srgb, var(--paper-sunken) 50%, transparent), 0 0 40px color-mix(in srgb, var(--brand-ink) 12%, transparent)',
         textAlign: 'center'
       }}>
         <div style={{
-          background: 'linear-gradient(135deg, var(--primary-container), var(--secondary-container) 60%, var(--tertiary))',
+          background: 'linear-gradient(135deg, var(--brand-soft), var(--secondary-container) 60%, var(--gold-ink))',
           padding: '38px 22px 30px',
           position: 'relative'
         }}>
@@ -444,23 +444,23 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
               <div
                 key={item.label}
                 style={{
-                  background: 'var(--nav-hover)',
+                  background: 'var(--paper-sunken)',
                   padding: '16px 12px',
                   borderRadius: '16px',
-                  border: '1px solid var(--nav-border)'
+                  border: '1px solid var(--line)'
                 }}
               >
                 <div style={{ marginBottom: '8px' }}>{item.icon}</div>
                 <div style={{
                   fontSize: '1.4rem',
                   fontWeight: '950',
-                  color: 'var(--nav-text)'
+                  color: 'var(--ink)'
                 }}>
                   {item.value}
                 </div>
                 <div style={{
                   fontSize: '0.7rem',
-                  color: 'var(--nav-text-muted)',
+                  color: 'var(--ink-muted)',
                   fontWeight: '800',
                   textTransform: 'uppercase'
                 }}>
@@ -471,8 +471,8 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
           </div>
 
           <div style={{
-            background: 'rgba(16, 185, 129, 0.08)',
-            border: '1px solid rgba(16, 185, 129, 0.18)',
+            background: 'color-mix(in srgb, var(--success) 8%, transparent)',
+            border: '1px solid color-mix(in srgb, var(--success) 18%, transparent)',
             borderRadius: '18px',
             padding: '16px',
             marginBottom: '18px'
@@ -489,7 +489,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
             <div style={{
               fontSize: '1.6rem',
               fontWeight: '950',
-              color: 'var(--nav-text)'
+              color: 'var(--ink)'
             }}>
               +{weeklyStats.xpEarned}
             </div>
@@ -497,7 +497,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
               marginTop: '10px',
               fontSize: '0.82rem',
               lineHeight: '1.6',
-              color: 'var(--nav-text-muted)',
+              color: 'var(--ink-muted)',
               fontWeight: '600'
             }}>
               {t(
@@ -509,7 +509,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
 
           <p style={{
             fontSize: '0.85rem',
-            color: 'var(--nav-text-muted)',
+            color: 'var(--ink-muted)',
             lineHeight: '1.65',
             fontWeight: '600',
             marginBottom: '20px'
@@ -526,20 +526,20 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
 
           {premiumMoment?.showUpgrade ? (
             <div style={{
-              background: 'color-mix(in srgb, var(--tertiary) 10%, transparent)',
-              border: '1px solid color-mix(in srgb, var(--tertiary) 18%, transparent)',
+              background: 'color-mix(in srgb, var(--gold-ink) 10%, transparent)',
+              border: '1px solid color-mix(in srgb, var(--gold-ink) 18%, transparent)',
               borderRadius: '18px',
               padding: '16px',
               marginBottom: '18px',
               textAlign: 'left'
             }}>
-              <div style={{ fontSize: '0.74rem', color: 'var(--tertiary)', fontWeight: '900', textTransform: 'uppercase', marginBottom: '6px' }}>
+              <div style={{ fontSize: '0.74rem', color: 'var(--gold-ink)', fontWeight: '900', textTransform: 'uppercase', marginBottom: '6px' }}>
                 Daha derin haftalik destek
               </div>
-              <div style={{ fontSize: '0.92rem', fontWeight: '900', color: 'var(--nav-text)', marginBottom: '6px' }}>
+              <div style={{ fontSize: '0.92rem', fontWeight: '900', color: 'var(--ink)', marginBottom: '6px' }}>
                 {premiumMoment.headline}
               </div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', lineHeight: '1.55', fontWeight: '600', marginBottom: '12px' }}>
+              <div style={{ fontSize: '0.8rem', color: 'var(--ink-muted)', lineHeight: '1.55', fontWeight: '600', marginBottom: '12px' }}>
                 {premiumMoment.description}
               </div>
               <button
@@ -551,7 +551,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
                 style={{
                   border: 'none',
                   borderRadius: '14px',
-                  background: 'linear-gradient(135deg, var(--nav-accent), var(--accent-gold))',
+                  background: 'linear-gradient(135deg, var(--brand-ink), var(--accent-gold))',
                   color: 'var(--on-primary)',
                   padding: '12px 14px',
                   fontWeight: '900',
@@ -569,7 +569,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
             style={{
               width: '100%',
               padding: '16px',
-              background: 'linear-gradient(135deg, var(--nav-accent), var(--accent-gold))',
+              background: 'linear-gradient(135deg, var(--brand-ink), var(--accent-gold))',
               color: 'var(--on-primary)',
               border: 'none',
               borderRadius: '16px',
@@ -580,7 +580,7 @@ const WeeklyReportModal = ({ onOpenInvite }) => {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              boxShadow: '0 10px 24px rgba(79, 70, 229, 0.18)'
+              boxShadow: '0 10px 24px color-mix(in srgb, var(--brand-ink) 18%, transparent)'
             }}
           >
             {t('weeklyReport.continue', 'Yeni Haftaya Başla')}

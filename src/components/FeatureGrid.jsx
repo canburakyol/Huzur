@@ -65,10 +65,10 @@ const FeatureGrid = memo(({ onSelectFeature }) => {
   return (
     <div style={{ marginBottom: '20px' }}>
       <div style={{ padding: '0 8px', marginBottom: '12px' }}>
-        <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--nav-accent)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
+        <div style={{ fontSize: '0.72rem', fontWeight: '900', color: 'var(--brand-ink)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
           {t('features.quickAccess', 'Hedefe göre hızlı erişim')}
         </div>
-        <div style={{ fontSize: '0.82rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+        <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
           {goalLabel}
         </div>
       </div>

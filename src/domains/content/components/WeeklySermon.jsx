@@ -94,14 +94,14 @@ function WeeklySermon({ onClose }) {
                 <h1 style={{
                     margin: 0,
                     fontSize: '1.5rem',
-                    color: 'var(--nav-text)',
+                    color: 'var(--ink)',
                     fontWeight: '900'
                 }}>
                     {t('weeklySermon.title', 'Haftalık Hutbe')}
                 </h1>
             </div>
 
-            <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600', padding: '0 4px' }}>
+            <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600', padding: '0 4px' }}>
                 {t('weeklySermon.description', 'Diyanet İşleri Başkanlığı tarafından yayınlanan güncel hutbe kaynakları.')}
             </p>
 
@@ -113,22 +113,22 @@ function WeeklySermon({ onClose }) {
                 flexDirection: 'column',
                 alignItems: 'center',
                 textAlign: 'center',
-                background: 'linear-gradient(135deg, rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1) 0%, rgba(39, 174, 96, 0.05) 100%)',
-                border: '1px solid var(--nav-accent)',
+                background: 'linear-gradient(135deg, color-mix(in srgb, var(--brand-ink) 10%, transparent) 0%, rgba(39, 174, 96, 0.05) 100%)',
+                border: '1px solid var(--brand-ink)',
                 borderRadius: '32px'
             }}>
                 <div className="settings-icon-box" style={{ 
                     width: '64px', 
                     height: '64px', 
-                    background: 'var(--nav-hover)', 
-                    color: 'var(--nav-accent)',
+                    background: 'var(--paper-sunken)', 
+                    color: 'var(--brand-ink)',
                     marginBottom: '20px'
                 }}>
                     <Calendar size={28} />
                 </div>
                 <div style={{
                     fontSize: '1rem',
-                    color: 'var(--nav-text-muted)',
+                    color: 'var(--ink-muted)',
                     marginBottom: '8px',
                     fontWeight: '700',
                     textTransform: 'uppercase',
@@ -138,7 +138,7 @@ function WeeklySermon({ onClose }) {
                 </div>
                 <div style={{
                     fontSize: '1.75rem',
-                    color: 'var(--nav-text)',
+                    color: 'var(--ink)',
                     fontWeight: '950',
                     letterSpacing: '-0.5px'
                 }}>
@@ -187,7 +187,7 @@ function WeeklySermon({ onClose }) {
                                     </div>
                                 </div>
                             </div>
-                            <ExternalLink size={18} color="var(--nav-text-muted)" />
+                            <ExternalLink size={18} color="var(--ink-muted)" />
                         </div>
                     ))}
                 </div>
@@ -199,9 +199,9 @@ function WeeklySermon({ onClose }) {
                 style={{
                     '--delay': '0.7s',
                     padding: '20px',
-                    background: 'var(--nav-hover)',
+                    background: 'var(--paper-sunken)',
                     borderRadius: '20px',
-                    border: '1px dashed var(--nav-border)',
+                    border: '1px dashed var(--line)',
                     gap: '12px',
                     alignItems: 'flex-start'
                 }}
@@ -209,7 +209,7 @@ function WeeklySermon({ onClose }) {
                 <div style={{ fontSize: '1.5rem' }}>💡</div>
                 <div style={{
                     fontSize: '0.85rem',
-                    color: 'var(--nav-text-muted)',
+                    color: 'var(--ink-muted)',
                     lineHeight: '1.6',
                     fontWeight: '600'
                 }}>

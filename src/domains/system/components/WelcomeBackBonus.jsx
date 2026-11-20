@@ -166,11 +166,11 @@ const WelcomeBackBonus = () => {
         background: 'rgba(20, 20, 20, 0.95)',
         backdropFilter: 'blur(12px)',
         border: claimed
-          ? '2px solid rgba(34, 197, 94, 0.5)'
-          : '1px solid color-mix(in srgb, var(--tertiary) 30%, transparent)',
+          ? '2px solid color-mix(in srgb, var(--success) 50%, transparent)'
+          : '1px solid color-mix(in srgb, var(--gold-ink) 30%, transparent)',
         boxShadow: claimed
-          ? '0 8px 32px rgba(34, 197, 94, 0.2)'
-          : '0 12px 40px color-mix(in srgb, var(--surface-dim) 50%, transparent), 0 0 20px color-mix(in srgb, var(--tertiary) 15%, transparent)',
+          ? '0 8px 32px color-mix(in srgb, var(--success) 20%, transparent)'
+          : '0 12px 40px color-mix(in srgb, var(--paper-sunken) 50%, transparent), 0 0 20px color-mix(in srgb, var(--gold-ink) 15%, transparent)',
         textAlign: 'left',
         gap: '16px',
         transition: 'all 0.4s ease',
@@ -180,14 +180,14 @@ const WelcomeBackBonus = () => {
           flexShrink: 0,
           width: '56px',
           height: '56px',
-          background: claimed ? 'rgba(34, 197, 94, 0.15)' : 'color-mix(in srgb, var(--tertiary) 12%, transparent)',
+          background: claimed ? 'color-mix(in srgb, var(--success) 15%, transparent)' : 'color-mix(in srgb, var(--gold-ink) 12%, transparent)',
           borderRadius: '16px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           animation: claimed ? 'comebackPop 0.5s ease' : 'comebackFloat 2s ease-in-out infinite'
         }}>
-          {claimed ? <span style={{ fontSize: '1.5rem', color: 'var(--success)', fontWeight: 'bold' }}>✓</span> : <Gift size={28} color="var(--tertiary)" />}
+          {claimed ? <span style={{ fontSize: '1.5rem', color: 'var(--success)', fontWeight: 'bold' }}>✓</span> : <Gift size={28} color="var(--gold-ink)" />}
         </div>
 
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -220,14 +220,14 @@ const WelcomeBackBonus = () => {
               onClick={handleClaim}
               style={{
                 padding: '8px 16px',
-                background: 'linear-gradient(135deg, var(--tertiary), var(--tertiary-fixed-dim))',
+                background: 'linear-gradient(135deg, var(--gold-ink), var(--tertiary-fixed-dim))',
                 color: 'var(--on-primary)',
                 border: 'none',
                 borderRadius: '12px',
                 fontSize: '0.85rem',
                 fontWeight: '800',
                 cursor: 'pointer',
-                boxShadow: '0 4px 12px color-mix(in srgb, var(--tertiary) 30%, transparent)'
+                boxShadow: '0 4px 12px color-mix(in srgb, var(--gold-ink) 30%, transparent)'
               }}
             >
               {t('comeback.claimButton', 'Kazan')}

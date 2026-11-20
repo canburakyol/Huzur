@@ -99,7 +99,7 @@ const AssistantShell = ({
               style={{
                 fontSize: '0.75rem',
                 fontWeight: '800',
-                color: 'var(--text-subtle)',
+                color: 'var(--ink-muted)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px',
               }}
@@ -113,8 +113,8 @@ const AssistantShell = ({
                 key={suggestion.id}
                 style={{
                   flexShrink: 0,
-                  background: 'var(--surface-card)',
-                  border: '1px solid var(--border-soft)',
+                  background: 'var(--paper-raised)',
+                  border: '1px solid var(--line)',
                   borderRadius: '16px',
                   padding: '12px 16px',
                   display: 'flex',
@@ -127,10 +127,10 @@ const AssistantShell = ({
               >
                 <span style={{ fontSize: '1.5rem' }}>{suggestion.icon}</span>
                 <div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--text-heading)', lineHeight: 1.2 }}>
+                  <div style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--ink)', lineHeight: 1.2 }}>
                     {suggestion.title}
                   </div>
-                  <div style={{ fontSize: '0.7rem', color: 'var(--text-body)', marginTop: '2px', lineHeight: 1.3 }}>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--ink)', marginTop: '2px', lineHeight: 1.3 }}>
                     {suggestion.body}
                   </div>
                 </div>

@@ -129,7 +129,7 @@ function GreetingCards({ onClose }) {
     // Render categories
     const renderCategories = () => (
         <div className="reveal-stagger">
-            <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600', padding: '0 4px' }}>
+            <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600', padding: '0 4px' }}>
                 {t('greetingCards.ui.subtitle')}
             </p>
 
@@ -156,7 +156,7 @@ function GreetingCards({ onClose }) {
                     >
                         <div className="settings-icon-box" style={{ 
                             width: '64px', height: '64px', 
-                            background: 'var(--nav-hover)',
+                            background: 'var(--paper-sunken)',
                             fontSize: '2.5rem',
                             borderRadius: '20px'
                         }}>
@@ -165,13 +165,13 @@ function GreetingCards({ onClose }) {
                         <div>
                             <div style={{
                                 fontWeight: '950',
-                                color: 'var(--nav-text)',
+                                color: 'var(--ink)',
                                 fontSize: '1rem',
                                 marginBottom: '4px'
                             }}>
                                 {t(category.titleKey)}
                             </div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '600', lineHeight: '1.4' }}>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', fontWeight: '600', lineHeight: '1.4' }}>
                                 {t(category.descKey)}
                             </div>
                         </div>
@@ -190,7 +190,7 @@ function GreetingCards({ onClose }) {
 
         return (
             <div>
-                <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600', padding: '0 4px' }}>
+                <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600', padding: '0 4px' }}>
                     {t(category?.descKey)}
                 </p>
 
@@ -382,7 +382,7 @@ function GreetingCards({ onClose }) {
                 <div className="settings-card" style={{ padding: '20px', marginBottom: '12px', flexDirection: 'column', alignItems: 'stretch' }}>
                     <label style={{
                         fontSize: '0.75rem',
-                        color: 'var(--nav-text-muted)',
+                        color: 'var(--ink-muted)',
                         display: 'block',
                         marginBottom: '10px',
                         fontWeight: '800',
@@ -399,17 +399,17 @@ function GreetingCards({ onClose }) {
                         style={{
                             width: '100%',
                             padding: '14px 18px',
-                            background: 'var(--nav-hover)',
-                            border: '1px solid var(--nav-border)',
+                            background: 'var(--paper-sunken)',
+                            border: '1px solid var(--line)',
                             borderRadius: '14px',
-                            color: 'var(--nav-text)',
+                            color: 'var(--ink)',
                             fontSize: '1rem',
                             outline: 'none',
                             fontWeight: '600',
                             transition: 'border-color 0.2s'
                         }}
-                        onFocus={(e) => e.target.style.borderColor = 'var(--nav-accent)'}
-                        onBlur={(e) => e.target.style.borderColor = 'var(--nav-border)'}
+                        onFocus={(e) => e.target.style.borderColor = 'var(--brand-ink)'}
+                        onBlur={(e) => e.target.style.borderColor = 'var(--line)'}
                     />
                 </div>
 
@@ -421,7 +421,7 @@ function GreetingCards({ onClose }) {
                         alignItems: 'center',
                         marginBottom: editMode ? '16px' : '0'
                     }}>
-                        <span style={{ fontSize: '0.9rem', color: 'var(--nav-text)', fontWeight: '800' }}>
+                        <span style={{ fontSize: '0.9rem', color: 'var(--ink)', fontWeight: '800' }}>
                             {t('greetingCards.ui.editMessage')}
                         </span>
                         <button
@@ -429,8 +429,8 @@ function GreetingCards({ onClose }) {
                             className="velocity-target-btn"
                             style={{
                                 padding: '8px 16px',
-                                background: editMode ? 'var(--nav-accent)' : 'var(--nav-hover)',
-                                color: editMode ? 'var(--on-primary)' : 'var(--nav-text)',
+                                background: editMode ? 'var(--brand-ink)' : 'var(--paper-sunken)',
+                                color: editMode ? 'var(--on-primary)' : 'var(--ink)',
                                 borderRadius: '12px',
                                 fontSize: '0.8rem'
                             }}
@@ -448,10 +448,10 @@ function GreetingCards({ onClose }) {
                             style={{
                                 width: '100%',
                                 padding: '16px',
-                                background: 'var(--nav-hover)',
-                                border: '1px solid var(--nav-border)',
+                                background: 'var(--paper-sunken)',
+                                border: '1px solid var(--line)',
                                 borderRadius: '14px',
-                                color: 'var(--nav-text)',
+                                color: 'var(--ink)',
                                 fontSize: '0.95rem',
                                 outline: 'none',
                                 resize: 'none',
@@ -459,8 +459,8 @@ function GreetingCards({ onClose }) {
                                 fontWeight: '500',
                                 transition: 'border-color 0.2s'
                             }}
-                            onFocus={(e) => e.target.style.borderColor = 'var(--nav-accent)'}
-                            onBlur={(e) => e.target.style.borderColor = 'var(--nav-border)'}
+                            onFocus={(e) => e.target.style.borderColor = 'var(--brand-ink)'}
+                            onBlur={(e) => e.target.style.borderColor = 'var(--line)'}
                         />
                     )}
                 </div>
@@ -475,19 +475,19 @@ function GreetingCards({ onClose }) {
                             padding: '16px',
                             background: favorites.includes(selectedCard.id)
                                 ? 'rgba(255,107,107,0.1)'
-                                : 'var(--nav-hover)',
+                                : 'var(--paper-sunken)',
                             border: favorites.includes(selectedCard.id)
                                 ? '1px solid var(--danger)'
-                                : '1px solid var(--nav-border)',
+                                : '1px solid var(--line)',
                             borderRadius: '16px',
-                            color: favorites.includes(selectedCard.id) ? 'var(--danger)' : 'var(--nav-text)',
+                            color: favorites.includes(selectedCard.id) ? 'var(--danger)' : 'var(--ink)',
                             justifyContent: 'center'
                         }}
                     >
                         <Heart
                             size={20}
                             fill={favorites.includes(selectedCard.id) ? 'var(--danger)' : 'transparent'}
-                            color={favorites.includes(selectedCard.id) ? 'var(--danger)' : 'var(--nav-text)'}
+                            color={favorites.includes(selectedCard.id) ? 'var(--danger)' : 'var(--ink)'}
                         />
                     </button>
                     <button
@@ -497,7 +497,7 @@ function GreetingCards({ onClose }) {
                         style={{
                             flex: 3,
                             padding: '16px',
-                            background: isSharing ? 'var(--nav-text-muted)' : 'var(--nav-accent)',
+                            background: isSharing ? 'var(--ink-muted)' : 'var(--brand-ink)',
                             color: 'var(--on-primary)',
                             justifyContent: 'center',
                             fontSize: '1rem'
@@ -540,7 +540,7 @@ function GreetingCards({ onClose }) {
                 <h2 style={{
                     margin: 0,
                     fontSize: '1.75rem',
-                    color: 'var(--nav-text)',
+                    color: 'var(--ink)',
                     fontWeight: '950'
                 }}>
                     {getTitle()}

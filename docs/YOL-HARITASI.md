@@ -91,6 +91,11 @@ Bitenler: Kıble, Ana sayfa, Pro, Zikirmatik, Dua Kitabı, İmsakiye, Kur'an oku
 Menüden hiç açılamayan 13 ekran (taşınmadı, önce aç/sil kararı): spiritualCoach, weeklySermon, radio, liveBroadcast,
 quranMemorize, nuzulExplorer, seerahMap, deedJournal, nafilePrayers, islamicMeditation, calendar, zakat, agenda.
 Her ekranda: `PageHeader` + `hz-*` sınıfları, satır içi stil yerine CSS, emoji ikon alanları → lucide, gündüz/gece telefonda kontrol.
+20 Kas renk birliği: vurgu rengi seçici kaldırıldı (Tema = açık/koyu/sistem). Eski token'lar `variables.css` sonundaki
+takma ad bloğuyla iki temada Mushaf'a bağlı; 101 dosyada 2000 kullanım Mushaf adlarına çevrildi; paletin dışındaki 161 sabit
+renk (indigo, mavi, turuncu, amber) Mushaf karşılığına. Kontrast taraması (<3:1) iki temada 32 ekran + 4 sekmede temiz.
+Kalan: `--on-primary` (dolgu üstü yazı, bilerek), modül takma adları (`--fam-*`, `--edu-*`, `--soc-*`), gizli ekranlar,
+düzen/bileşen düzeyinde taşıma (PageHeader, satır içi stiller) ekran ekran sürüyor.
 
 Sıra (en çok kullanılan önce):
 1. ✅ Kur'an okuyucu (`domains/quran`) — 20 Kas; telefonda göz kontrolü kaldı

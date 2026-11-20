@@ -3,20 +3,20 @@
 /* ── Yerel Sabitler ─────────────────────────────────────────── */
 :root {
     --fam-blue-replaced:    var(--secondary-container);
-    --fam-blue-dark:        var(--primary-container);
-    --fam-green-accent:     var(--tertiary);
-    --fam-pink-replaced:    var(--tertiary);
-    --fam-card-bg:          var(--surface-card);
-    --fam-card-border:      var(--outline-variant);
-    --fam-text-dark:        var(--text-body);
-    --fam-text-muted:       var(--text-subtle);
-    --fam-surface:          var(--surface-container);
-    --fam-surface-light:    var(--surface-container-high);
+    --fam-blue-dark:        var(--brand-soft);
+    --fam-green-accent:     var(--gold-ink);
+    --fam-pink-replaced:    var(--gold-ink);
+    --fam-card-bg:          var(--paper-raised);
+    --fam-card-border:      var(--line);
+    --fam-text-dark:        var(--ink);
+    --fam-text-muted:       var(--ink-muted);
+    --fam-surface:          var(--paper-sunken);
+    --fam-surface-light:    var(--paper-sunken);
 }
 
 .family-mode-container {
     min-height: 100vh;
-    background: linear-gradient(180deg, var(--surface-page) 0%, var(--surface-dim) 100%);
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-sunken) 100%);
     padding-bottom: 100px;
 }
 
@@ -158,7 +158,7 @@
     gap: 8px;
     font-size: 16px;
     font-weight: 700;
-    color: var(--text-gold, #fde68a);
+    color: var(--gold-ink);
     margin-bottom: 16px;
 }
 
@@ -197,11 +197,11 @@
 }
 
 .member-card.parent {
-    border: 2px solid var(--tertiary);
+    border: 2px solid var(--gold-ink);
 }
 
 .member-card.child {
-    border: 2px solid var(--secondary);
+    border: 2px solid var(--brand-ink);
 }
 
 .member-avatar-large {
@@ -219,7 +219,7 @@
 .member-name {
     font-weight: 600;
     font-size: 13px;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
     margin-bottom: 2px;
 }
 
@@ -232,7 +232,7 @@
     position: absolute;
     top: -4px;
     right: -4px;
-    background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+    background: linear-gradient(135deg, var(--brand-ink) 0%, var(--gold-ink) 100%);
     color: var(--on-primary);
     padding: 4px 8px;
     border-radius: 12px;
@@ -241,7 +241,7 @@
     display: flex;
     align-items: center;
     gap: 2px;
-    box-shadow: 0 2px 8px rgba(180, 83, 9, 0.4);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--gold) 40%, transparent);
 }
 
 .add-member-card {
@@ -263,8 +263,8 @@
 }
 
 .add-member-card:hover {
-    border-color: var(--tertiary);
-    color: var(--secondary);
+    border-color: var(--gold-ink);
+    color: var(--brand-ink);
     background: var(--fam-surface-light);
 }
 
@@ -312,17 +312,17 @@
 
 .activity-user {
     font-weight: 600;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .activity-action {
-    color: var(--text-secondary, #d1d5db);
+    color: var(--ink-muted, #d1d5db);
     margin-left: 4px;
 }
 
 .activity-detail {
     font-size: 12px;
-    color: var(--secondary);
+    color: var(--brand-ink);
     font-weight: 500;
 }
 
@@ -361,7 +361,7 @@
 .goal-info h4 {
     margin: 0 0 8px 0;
     font-size: 16px;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .goal-participants {
@@ -402,7 +402,7 @@
 }
 
 .progress-value {
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
     font-weight: 600;
 }
 
@@ -453,7 +453,7 @@
 }
 
 .child-profile-card.selected {
-    border-color: var(--tertiary);
+    border-color: var(--gold-ink);
     background: var(--fam-surface-light);
 }
 
@@ -466,7 +466,7 @@
 .child-avatar {
     width: 56px;
     height: 56px;
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(180, 83, 9, 0.2) 100%);
+    background: color-mix(in srgb, var(--gold) 16%, transparent);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -478,7 +478,7 @@
     position: absolute;
     bottom: -4px;
     right: -4px;
-    background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
+    background: linear-gradient(135deg, var(--brand-ink) 0%, var(--gold-ink) 100%);
     color: var(--on-primary);
     padding: 4px 8px;
     border-radius: 12px;
@@ -487,13 +487,13 @@
     display: flex;
     align-items: center;
     gap: 2px;
-    box-shadow: 0 2px 8px rgba(180, 83, 9, 0.4);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--gold) 40%, transparent);
 }
 
 .child-name {
     font-weight: 600;
     font-size: 14px;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
     margin-bottom: 2px;
 }
 
@@ -518,7 +518,7 @@
 }
 
 .stat-icon {
-    color: var(--secondary);
+    color: var(--brand-ink);
 }
 
 .selected-indicator {
@@ -527,7 +527,7 @@
     right: 8px;
     width: 20px;
     height: 20px;
-    background: var(--tertiary);
+    background: var(--gold-ink);
     color: var(--on-primary);
     border-radius: 50%;
     display: flex;
@@ -604,28 +604,28 @@
 
 .stat-card.prayer .stat-icon-wrapper {
     background: rgba(6, 78, 59, 0.4);
-    color: var(--secondary);
+    color: var(--brand-ink);
 }
 
 .stat-card.quran .stat-icon-wrapper {
-    background: rgba(15, 118, 110, 0.3);
+    background: color-mix(in srgb, var(--brand-ink) 30%, transparent);
     color: var(--tertiary-fixed-dim);
 }
 
 .stat-card.zikir .stat-icon-wrapper {
-    background: rgba(180, 83, 9, 0.2);
-    color: var(--secondary);
+    background: color-mix(in srgb, var(--gold) 20%, transparent);
+    color: var(--brand-ink);
 }
 
 .stat-card.tasks .stat-icon-wrapper {
-    background: rgba(251, 191, 36, 0.15);
+    background: color-mix(in srgb, var(--gold) 15%, transparent);
     color: var(--tertiary-fixed-dim);
 }
 
 .stat-value {
     font-size: 24px;
     font-weight: 700;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .stat-label {
@@ -641,11 +641,11 @@
 }
 
 .streak-card {
-    background: linear-gradient(135deg, rgba(180, 83, 9, 0.25) 0%, rgba(120, 53, 15, 0.3) 100%);
+    background: color-mix(in srgb, var(--gold) 22%, transparent);
     border: 1px solid var(--fam-card-border);
     border-radius: 16px;
     padding: 20px;
-    color: var(--text-gold, #fde68a);
+    color: var(--gold-ink);
 }
 
 .streak-header {
@@ -657,7 +657,7 @@
 }
 
 .streak-icon {
-    color: var(--secondary);
+    color: var(--brand-ink);
 }
 
 .streak-value {
@@ -684,7 +684,7 @@
 .badges-preview h4 {
     margin: 0 0 12px 0;
     font-size: 14px;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .badges-row {
@@ -695,7 +695,7 @@
 .badge-item {
     width: 40px;
     height: 40px;
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(180, 83, 9, 0.2) 100%);
+    background: color-mix(in srgb, var(--gold) 16%, transparent);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -718,7 +718,7 @@
 .weekly-chart h4 {
     margin: 0 0 16px 0;
     font-size: 14px;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .chart-bars {
@@ -764,7 +764,7 @@
 .goals-section h4 {
     margin: 0 0 16px 0;
     font-size: 14px;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 /* Appreciation Section */
@@ -782,7 +782,7 @@
 .appreciation-section h4 {
     margin: 0 0 16px 0;
     font-size: 14px;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .appreciation-templates {
@@ -799,15 +799,15 @@
     border-radius: 12px;
     background: var(--fam-surface);
     font-size: 13px;
-    color: var(--text-secondary, #d1d5db);
+    color: var(--ink-muted, #d1d5db);
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .template-btn:hover {
-    border-color: var(--tertiary);
+    border-color: var(--gold-ink);
     background: var(--fam-surface-light);
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .appreciation-input {
@@ -819,12 +819,12 @@
     resize: none;
     margin-bottom: 12px;
     background: var(--fam-surface);
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .appreciation-input:focus {
     outline: none;
-    border-color: var(--tertiary);
+    border-color: var(--gold-ink);
 }
 
 .send-appreciation-btn {
@@ -855,7 +855,7 @@
 
 /* Appreciation Card */
 .appreciation-card {
-    background: linear-gradient(135deg, rgba(6, 78, 59, 0.3) 0%, rgba(4, 47, 46, 0.4) 100%);
+    background: color-mix(in srgb, var(--brand) 30%, transparent);
     border: 1px solid var(--fam-card-border);
     border-radius: 16px;
     padding: 16px;
@@ -886,7 +886,7 @@
 
 .appreciation-from {
     font-weight: 600;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .appreciation-time {
@@ -898,13 +898,13 @@
     display: flex;
     align-items: flex-start;
     gap: 8px;
-    color: var(--text-gold, #fde68a);
+    color: var(--gold-ink);
     font-size: 14px;
     margin-bottom: 12px;
 }
 
 .message-icon {
-    color: var(--secondary);
+    color: var(--brand-ink);
     flex-shrink: 0;
 }
 
@@ -921,12 +921,12 @@
     font-size: 13px;
     cursor: pointer;
     transition: all 0.2s;
-    color: var(--text-secondary, #d1d5db);
+    color: var(--ink-muted, #d1d5db);
 }
 
 .appreciation-react:hover {
     background: var(--fam-surface-light);
-    border-color: var(--tertiary);
+    border-color: var(--gold-ink);
 }
 
 /* Family Challenges */
@@ -987,7 +987,7 @@
 .challenge-title-section h4 {
     margin: 0 0 4px 0;
     font-size: 16px;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .challenge-title-section p {
@@ -1082,7 +1082,7 @@
 
 .period-btn.active {
     background: var(--fam-surface-light);
-    color: var(--secondary);
+    color: var(--brand-ink);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
@@ -1093,7 +1093,7 @@
     gap: 16px;
     margin-bottom: 24px;
     padding: 20px;
-    background: linear-gradient(180deg, rgba(180, 83, 9, 0.15) 0%, rgba(6, 78, 59, 0.2) 100%);
+    background: color-mix(in srgb, var(--gold) 12%, transparent);
     border: 1px solid var(--fam-card-border);
     border-radius: 20px;
 }
@@ -1121,7 +1121,7 @@
 .podium-name {
     font-weight: 600;
     font-size: 14px;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
     margin-bottom: 2px;
 }
 
@@ -1161,7 +1161,7 @@
 }
 
 .leaderboard-item.active {
-    border: 2px solid var(--tertiary);
+    border: 2px solid var(--gold-ink);
     background: var(--fam-surface-light);
 }
 
@@ -1180,7 +1180,7 @@
 .leaderboard-item .avatar {
     width: 44px;
     height: 44px;
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(180, 83, 9, 0.2) 100%);
+    background: color-mix(in srgb, var(--gold) 16%, transparent);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1194,7 +1194,7 @@
 
 .leaderboard-item .name {
     font-weight: 600;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .leaderboard-item .role {
@@ -1214,7 +1214,7 @@
     gap: 4px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--secondary);
+    color: var(--brand-ink);
 }
 
 /* Groups */
@@ -1246,12 +1246,12 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 16px;
-    color: var(--secondary);
+    color: var(--brand-ink);
 }
 
 .group-header h2 {
     margin: 0 0 8px 0;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .group-code {
@@ -1266,7 +1266,7 @@
 }
 
 .group-code strong {
-    color: var(--secondary);
+    color: var(--brand-ink);
     letter-spacing: 2px;
 }
 
@@ -1274,7 +1274,7 @@
 .pending-members h4 {
     margin: 0 0 16px 0;
     font-size: 14px;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .group-member-item,
@@ -1295,7 +1295,7 @@
 
 .member-info .member-name {
     font-weight: 600;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .member-info .member-role {
@@ -1331,7 +1331,7 @@
 }
 
 .reject-btn {
-    background: var(--error);
+    background: var(--danger);
     color: var(--on-primary);
 }
 
@@ -1350,12 +1350,12 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 24px;
-    color: var(--secondary);
+    color: var(--brand-ink);
 }
 
 .no-group h3 {
     margin: 0 0 8px 0;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .no-group p {
@@ -1382,7 +1382,7 @@
 
 .action-card h4 {
     margin: 0 0 4px 0;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .action-card p {
@@ -1399,12 +1399,12 @@
     margin-bottom: 12px;
     font-size: 14px;
     background: var(--fam-surface);
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .action-card input:focus {
     outline: none;
-    border-color: var(--tertiary);
+    border-color: var(--gold-ink);
 }
 
 .btn-primary {
@@ -1441,14 +1441,14 @@
 
 .success-message {
     background: rgba(6, 95, 70, 0.3);
-    color: var(--secondary);
+    color: var(--brand-ink);
     border: 1px solid rgba(6, 95, 70, 0.4);
 }
 
 .error-message {
-    background: rgba(239, 68, 68, 0.15);
+    background: color-mix(in srgb, var(--danger) 15%, transparent);
     color: #fca5a5;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
 }
 
 /* Create Profile Modal */
@@ -1458,7 +1458,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: color-mix(in srgb, var(--surface-dim) 70%, transparent);
+    background: color-mix(in srgb, var(--paper-sunken) 70%, transparent);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     display: flex;
@@ -1469,7 +1469,7 @@
 }
 
 .modal-content {
-    background: linear-gradient(135deg, var(--primary-container) 0%, var(--surface-dim) 100%);
+    background: linear-gradient(135deg, var(--brand-soft) 0%, var(--paper-sunken) 100%);
     border: 1px solid var(--fam-card-border);
     border-radius: 24px;
     padding: 32px;
@@ -1481,7 +1481,7 @@
 
 .modal-content h3 {
     margin: 16px 0 8px 0;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .modal-content p {
@@ -1498,12 +1498,12 @@
     margin-bottom: 20px;
     text-align: center;
     background: var(--fam-surface);
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .name-input:focus {
     outline: none;
-    border-color: var(--tertiary);
+    border-color: var(--gold-ink);
 }
 
 .role-selection {
@@ -1527,7 +1527,7 @@
 }
 
 .role-btn.selected {
-    border-color: var(--tertiary);
+    border-color: var(--gold-ink);
     background: var(--fam-surface-light);
 }
 
@@ -1537,7 +1537,7 @@
 
 .role-label {
     font-weight: 600;
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 .modal-actions {
@@ -1559,7 +1559,7 @@
 
 .btn-secondary:hover {
     background: var(--fam-surface-light);
-    color: var(--text-primary, #f8fafc);
+    color: var(--ink, #f8fafc);
 }
 
 /* Animations */

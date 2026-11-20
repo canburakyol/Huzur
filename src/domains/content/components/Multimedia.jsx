@@ -109,7 +109,7 @@ function Multimedia({ onClose }) {
     // Render categories
     const renderCategories = () => (
         <div className="reveal-stagger">
-            <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600' }}>
+            <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600' }}>
                 {t('multimedia.description', 'İslami görseller, özel tasarım dua kartları ve paylasabilir manevi içerikler.')}
             </p>
 
@@ -122,14 +122,14 @@ function Multimedia({ onClose }) {
                         style={{ '--delay': `${index * 0.1}s` }}
                         onClick={() => setActiveCategory(category.id)}
                     >
-                        <div className="settings-icon-box w-48 h-48" style={{ background: 'var(--nav-hover)', fontSize: '2rem' }}>
+                        <div className="settings-icon-box w-48 h-48" style={{ background: 'var(--paper-sunken)', fontSize: '2rem' }}>
                             {category.icon}
                         </div>
                         <div>
-                            <div className="mb-4" style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1rem' }}>
+                            <div className="mb-4" style={{ fontWeight: '900', color: 'var(--ink)', fontSize: '1rem' }}>
                                 {category.title}
                             </div>
-                            <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', fontWeight: '700' }}>
                                 {category.count} {t('multimedia.contentLabel', 'İÇERİK')}
                             </div>
                         </div>
@@ -141,7 +141,7 @@ function Multimedia({ onClose }) {
             {favorites.length > 0 && (
                 <div className="settings-group reveal-stagger mt-32" style={{ '--delay': '0.5s' }}>
                     <div className="settings-group-title flex-center-gap-8">
-                        <Heart size={18} fill="var(--nav-accent)" color="var(--nav-accent)" />
+                        <Heart size={18} fill="var(--brand-ink)" color="var(--brand-ink)" />
                         {t('multimedia.favorites', 'FAVORİLERİM')} ({favorites.length})
                     </div>
                 </div>
@@ -158,7 +158,7 @@ function Multimedia({ onClose }) {
         if (activeCategory === 'dualar') {
             return (
                 <div className="reveal-stagger">
-                    <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
+                    <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                         {t('multimedia.duaCardsDesc', 'Sevdiklerinizle paylaşabileceğiniz özel tasarım dua kartları.')}
                     </p>
                     <div className="grid-2 gap-16">
@@ -213,7 +213,7 @@ function Multimedia({ onClose }) {
 
         return (
             <div className="reveal-stagger">
-                <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
+                <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '20px', fontWeight: '600' }}>
                     {category?.description}
                 </p>
                 <div className="grid-2 gap-16">
@@ -224,7 +224,7 @@ function Multimedia({ onClose }) {
                             style={{ '--delay': `${index * 0.05}s` }}
                             onClick={() => setSelectedImage({ ...image, type: 'image' })}
                         >
-                            <div className="w-full flex-center relative overflow-hidden" style={{ height: '140px', background: 'var(--nav-hover)' }}>
+                            <div className="w-full flex-center relative overflow-hidden" style={{ height: '140px', background: 'var(--paper-sunken)' }}>
                                 <img
                                     src={image.thumbnail || image.url}
                                     alt={image.title}
@@ -237,7 +237,7 @@ function Multimedia({ onClose }) {
                                 {/* Fallback icon */}
                                 <ImageIcon
                                     size={32}
-                                    color="var(--nav-text-muted)"
+                                    color="var(--ink-muted)"
                                     className="absolute"
                                     style={{ opacity: 0.2 }}
                                 />
@@ -256,16 +256,16 @@ function Multimedia({ onClose }) {
                                 >
                                     <Heart
                                         size={16}
-                                        color={favorites.includes(image.id) ? 'var(--error-color)' : 'var(--nav-text-muted)'}
+                                        color={favorites.includes(image.id) ? 'var(--error-color)' : 'var(--ink-muted)'}
                                         fill={favorites.includes(image.id) ? 'var(--error-color)' : 'transparent'}
                                     />
                                 </button>
                             </div>
                             <div className="p-16">
-                                <div className="mb-4" style={{ fontWeight: '800', color: 'var(--nav-text)', fontSize: '0.9rem' }}>
+                                <div className="mb-4" style={{ fontWeight: '800', color: 'var(--ink)', fontSize: '0.9rem' }}>
                                     {image.title}
                                 </div>
-                                <div style={{ fontSize: '0.75rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
+                                <div style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', fontWeight: '600' }}>
                                     {image.location || image.description}
                                 </div>
                             </div>
@@ -284,9 +284,9 @@ function Multimedia({ onClose }) {
         return (
             <div className="reveal-stagger fixed inset-0 flex flex-col z-200" style={{ background: 'rgba(var(--nav-bg-rgb, 4, 47, 46), 0.98)', backdropFilter: 'blur(20px)' }}>
                 {/* Modal Header */}
-                <div className="flex-between-center px-20 py-24" style={{ borderBottom: '1px solid var(--nav-border)' }}>
+                <div className="flex-between-center px-20 py-24" style={{ borderBottom: '1px solid var(--line)' }}>
                     <IslamicBackButton onClick={() => setSelectedImage(null)} size="medium" />
-                    <div style={{ color: 'var(--nav-text)', fontWeight: '950', fontSize: '1.25rem' }}>
+                    <div style={{ color: 'var(--ink)', fontWeight: '950', fontSize: '1.25rem' }}>
                         {selectedImage.title}
                     </div>
                     <div className="w-48" />
@@ -322,14 +322,14 @@ function Multimedia({ onClose }) {
                 </div>
 
                 {/* Footer Actions - Velocity Style */}
-                <div className="flex gap-16 px-20 py-32" style={{ background: 'var(--nav-bg)', borderTop: '1px solid var(--nav-border)', borderRadius: '40px 40px 0 0', boxShadow: '0 -10px 30px rgba(0,0,0,0.03)' }}>
+                <div className="flex gap-16 px-20 py-32" style={{ background: 'var(--paper)', borderTop: '1px solid var(--line)', borderRadius: '40px 40px 0 0', boxShadow: '0 -10px 30px rgba(0,0,0,0.03)' }}>
                     <button
                         onClick={() => toggleFavorite(selectedImage.id)}
                         className="settings-card flex-1 justify-center p-16 rounded-20 font-black"
                         style={{
-                            background: favorites.includes(selectedImage.id) ? 'rgba(239, 68, 68, 0.12)' : 'var(--nav-hover)',
-                            border: favorites.includes(selectedImage.id) ? '1px solid rgba(239, 68, 68, 0.28)' : '1px solid var(--nav-border)',
-                            color: favorites.includes(selectedImage.id) ? 'var(--error-color)' : 'var(--nav-text)',
+                            background: favorites.includes(selectedImage.id) ? 'color-mix(in srgb, var(--danger) 12%, transparent)' : 'var(--paper-sunken)',
+                            border: favorites.includes(selectedImage.id) ? '1px solid color-mix(in srgb, var(--danger) 28%, transparent)' : '1px solid var(--line)',
+                            color: favorites.includes(selectedImage.id) ? 'var(--error-color)' : 'var(--ink)',
                             fontSize: '0.95rem',
                             gap: '10px'
                         }}
@@ -345,9 +345,9 @@ function Multimedia({ onClose }) {
                             onClick={() => downloadImage(selectedImage)}
                             className="settings-card flex-1 justify-center p-16 rounded-20 font-black"
                             style={{
-                                background: 'var(--nav-hover)',
-                                border: '1px solid var(--nav-border)',
-                                color: 'var(--nav-text)',
+                                background: 'var(--paper-sunken)',
+                                border: '1px solid var(--line)',
+                                color: 'var(--ink)',
                                 fontSize: '0.95rem',
                                 gap: '10px'
                             }}
@@ -362,12 +362,12 @@ function Multimedia({ onClose }) {
                         style={{
                             flex: 1.5,
                             padding: '16px',
-                            background: 'var(--nav-accent)',
+                            background: 'var(--brand-ink)',
                             color: 'var(--on-primary)',
                             fontSize: '0.95rem',
                             gap: '10px',
                             width: 'auto',
-                            boxShadow: '0 8px 16px rgba(var(--nav-accent-rgb, 249, 115, 22), 0.3)'
+                            boxShadow: '0 8px 16px color-mix(in srgb, var(--brand-ink) 30%, transparent)'
                         }}
                     >
                         <Share2 size={20} />
@@ -381,9 +381,9 @@ function Multimedia({ onClose }) {
     return (
         <div className="settings-container reveal-stagger" style={{ padding: 0 }}>
             {/* Header - Velocity Style */}
-            <div className="flex items-center gap-12 mb-24 px-20 py-24" style={{ background: 'linear-gradient(135deg, var(--nav-bg), var(--nav-hover))', borderBottom: '1px solid var(--nav-border)' }}>
+            <div className="flex items-center gap-12 mb-24 px-20 py-24" style={{ background: 'linear-gradient(135deg, var(--paper), var(--paper-sunken))', borderBottom: '1px solid var(--line)' }}>
                 <IslamicBackButton onClick={goBack} size="medium" />
-                <h1 className="m-0" style={{ fontSize: '1.5rem', color: 'var(--nav-text)', fontWeight: '900' }}>
+                <h1 className="m-0" style={{ fontSize: '1.5rem', color: 'var(--ink)', fontWeight: '900' }}>
                     {activeCategory
                         ? MULTIMEDIA_CATEGORIES.find(c => c.id === activeCategory)?.title
                         : t('multimedia.title', 'Multimedya')}

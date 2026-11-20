@@ -13,14 +13,14 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
     <div className="streak-protection-overlay">
       <div className="settings-card reveal-stagger" style={{ 
           flexDirection: 'column', padding: '32px', maxWidth: '400px', width: '90%',
-          position: 'relative', border: '1px solid rgba(245, 158, 11, 0.3)',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(245, 158, 11, 0.1)'
+          position: 'relative', border: '1px solid color-mix(in srgb, var(--gold) 30%, transparent)',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 20px color-mix(in srgb, var(--gold) 10%, transparent)'
       }}>
         <button 
             onClick={onClose}
             style={{ 
                 position: 'absolute', top: '16px', right: '16px', 
-                background: 'var(--nav-hover)', border: 'none', color: 'var(--nav-text-muted)',
+                background: 'var(--paper-sunken)', border: 'none', color: 'var(--ink-muted)',
                 width: '32px', height: '32px', borderRadius: '50%', display: 'flex',
                 alignItems: 'center', justifyContent: 'center', cursor: 'pointer'
             }}
@@ -30,17 +30,17 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
 
         <div style={{ textAlign: 'center' }}>
           <div style={{ position: 'relative', width: '80px', height: '80px', margin: '0 auto 24px' }}>
-            <div className="pulse-aura" style={{ background: 'rgba(245, 158, 11, 0.2)' }}></div>
+            <div className="pulse-aura" style={{ background: 'color-mix(in srgb, var(--gold) 20%, transparent)' }}></div>
             <div className="settings-icon-box" style={{ 
-                width: '80px', height: '80px', background: 'rgba(245, 158, 11, 0.15)', 
-                color: 'var(--secondary)', borderRadius: '24px'
+                width: '80px', height: '80px', background: 'color-mix(in srgb, var(--gold) 15%, transparent)', 
+                color: 'var(--brand-ink)', borderRadius: '24px'
             }}>
               <Flame size={40} />
             </div>
             <div style={{ 
                 position: 'absolute', bottom: '-4px', right: '-4px',
-                width: '32px', height: '32px', background: 'var(--nav-bg)',
-                borderRadius: '10px', border: '2px solid var(--nav-border)',
+                width: '32px', height: '32px', background: 'var(--paper)',
+                borderRadius: '10px', border: '2px solid var(--line)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: 'var(--brand-ink)'
             }}>
@@ -50,13 +50,13 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
 
           <h2 style={{ 
               margin: '0 0 12px 0', fontSize: '1.5rem', fontWeight: '950', 
-              color: 'var(--nav-text)', letterSpacing: '-0.5px' 
+              color: 'var(--ink)', letterSpacing: '-0.5px' 
           }}>
             {t('streakProtection.title', 'Manevi Ritim Dengesi')}
           </h2>
           
           <p style={{ 
-              margin: '0 0 24px 0', fontSize: '0.9rem', color: 'var(--nav-text-muted)', 
+              margin: '0 0 24px 0', fontSize: '0.9rem', color: 'var(--ink-muted)', 
               fontWeight: '600', lineHeight: '1.5' 
           }}>
             {t('streakProtection.description', {
@@ -67,18 +67,18 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
           </p>
 
           <div className="settings-card" style={{ 
-              padding: '16px', background: 'rgba(16, 185, 129, 0.05)', 
-              border: '1px solid rgba(16, 185, 129, 0.2)', marginBottom: '32px',
+              padding: '16px', background: 'color-mix(in srgb, var(--success) 5%, transparent)', 
+              border: '1px solid color-mix(in srgb, var(--success) 20%, transparent)', marginBottom: '32px',
               gap: '16px'
           }}>
             <div className="settings-icon-box" style={{ 
-                width: '40px', height: '40px', background: 'rgba(16, 185, 129, 0.1)', 
+                width: '40px', height: '40px', background: 'color-mix(in srgb, var(--success) 10%, transparent)', 
                 color: 'var(--success)' 
             }}>
               <ShieldCheck size={20} />
             </div>
             <div style={{ textAlign: 'left' }}>
-              <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: '800', color: 'var(--nav-text)' }}>
+              <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: '800', color: 'var(--ink)' }}>
                 {t('streakProtection.useTokenLabel', 'Dondurma Hakkı Kullan')}
               </p>
               <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: '600', color: 'var(--success)' }}>
@@ -101,8 +101,8 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
             <button 
               onClick={onClose}
               style={{ 
-                  background: 'transparent', border: '1px solid var(--nav-border)', 
-                  color: 'var(--nav-text-muted)', padding: '14px', borderRadius: '16px',
+                  background: 'transparent', border: '1px solid var(--line)', 
+                  color: 'var(--ink-muted)', padding: '14px', borderRadius: '16px',
                   fontSize: '0.85rem', fontWeight: '800', cursor: 'pointer'
               }}
             >
@@ -149,7 +149,7 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
         }
 
         .velocity-btn-primary {
-            background: var(--nav-accent);
+            background: var(--brand-ink);
             color: white;
             border: none;
             border-radius: 16px;
@@ -160,7 +160,7 @@ const StreakProtectionModal = ({ isOpen, onClose, onUseToken, categoryData, cate
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.2);
+            box-shadow: 0 8px 16px color-mix(in srgb, var(--brand-ink) 20%, transparent);
         }
 
         .velocity-btn-primary:active { transform: scale(0.97); }

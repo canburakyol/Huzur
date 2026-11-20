@@ -4,7 +4,7 @@
   box-sizing: border-box;
   background:
     radial-gradient(circle at top right, rgba(var(--brand-warm-rgb), 0.12), transparent 32%),
-    linear-gradient(180deg, var(--surface-page) 0%, var(--surface-page-alt) 100%);
+    linear-gradient(180deg, var(--paper) 0%, var(--surface-page-alt) 100%);
 }
 
 .home-header {
@@ -18,7 +18,7 @@
 
 .home-greeting {
   margin: 0;
-  color: var(--text-heading);
+  color: var(--ink);
   font-family: var(--font-main);
   font-size: 1.18rem;
   font-weight: 650;
@@ -35,9 +35,9 @@
 .home-weather-pill {
   width: 42px;
   height: 42px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--line);
   border-radius: var(--radius-pill);
-  background: var(--surface-card);
+  background: var(--paper-raised);
   color: var(--brand-warm);
   display: inline-flex;
   align-items: center;
@@ -48,9 +48,9 @@
 .home-icon-button {
   width: 42px;
   height: 42px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--line);
   border-radius: var(--radius-pill);
-  background: var(--surface-card);
+  background: var(--paper-raised);
   color: var(--brand-primary);
   display: inline-flex;
   align-items: center;
@@ -62,7 +62,7 @@
 
 .home-icon-button:hover,
 .home-icon-button:focus-visible {
-  background: var(--surface-action-soft);
+  background: var(--brand-soft);
   border-color: var(--border-strong);
   outline: none;
 }
@@ -85,15 +85,15 @@
   padding: 22px 18px 18px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 24px;
-  background: var(--primary);
+  background: var(--brand-ink);
   box-shadow: var(--shadow-card);
 }
 
 /* Current PremiumHomeHero renders the legacy hero-card contract. */
 .home-main-content .hero-card {
-  border: var(--hero-card-border, 1px solid var(--card-border));
-  background: var(--hero-card-bg, var(--surface-card-strong));
-  color: var(--text-primary, var(--on-surface));
+  border: var(--hero-card-border, 1px solid var(--line));
+  background: var(--hero-card-bg, var(--paper-raised));
+  color: var(--ink, var(--ink));
   box-shadow: 0 12px 30px rgba(var(--brand-primary-rgb), 0.12);
 }
 
@@ -104,36 +104,36 @@
 .home-main-content .hero-card .huzur-mode-hero-btn,
 .home-main-content .hero-card .prayer-strip-name,
 .home-main-content .hero-card .prayer-strip-time {
-  color: var(--text-primary, var(--on-surface));
+  color: var(--ink, var(--ink));
 }
 
 .home-main-content .hero-card .hero-greeting-text,
 .home-main-content .hero-card .hero-hijri-text,
 .home-main-content .hero-card .unit-label,
 .home-main-content .hero-card .countdown-separator {
-  color: var(--text-muted, var(--on-surface-variant));
+  color: var(--text-muted, var(--ink-muted));
 }
 
 .home-main-content .hero-card .hero-streak-badge,
 .home-main-content .hero-card .huzur-mode-hero-btn,
 .home-main-content .hero-card .prayer-strip-container {
-  border-color: color-mix(in srgb, var(--text-primary, var(--on-surface)) 12%, transparent);
-  background: color-mix(in srgb, var(--text-primary, var(--on-surface)) 8%, transparent);
+  border-color: color-mix(in srgb, var(--ink, var(--ink)) 12%, transparent);
+  background: color-mix(in srgb, var(--ink, var(--ink)) 8%, transparent);
 }
 
 .home-main-content .hero-card .prayer-strip-item.active {
-  border-color: color-mix(in srgb, var(--hero-countdown-color, var(--tertiary)) 42%, transparent);
-  background: color-mix(in srgb, var(--hero-countdown-color, var(--tertiary)) 14%, transparent);
+  border-color: color-mix(in srgb, var(--hero-countdown-color, var(--gold-ink)) 42%, transparent);
+  background: color-mix(in srgb, var(--hero-countdown-color, var(--gold-ink)) 14%, transparent);
 }
 
 .home-main-content .hero-card .prayer-strip-item.active .prayer-strip-time {
-  color: var(--hero-countdown-color, var(--tertiary));
+  color: var(--hero-countdown-color, var(--gold-ink));
 }
 
 [data-theme='dark'] .home-main-content .hero-card {
-  border: 1px solid var(--card-border);
-  background: linear-gradient(145deg, var(--surface-container-high), var(--surface-container-lowest));
-  color: var(--on-surface);
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, var(--paper-sunken), var(--paper-raised));
+  color: var(--ink);
   box-shadow: none;
 }
 
@@ -143,14 +143,14 @@
 [data-theme='dark'] .home-main-content .hero-card .huzur-mode-hero-btn,
 [data-theme='dark'] .home-main-content .hero-card .prayer-strip-name,
 [data-theme='dark'] .home-main-content .hero-card .prayer-strip-time {
-  color: var(--on-surface);
+  color: var(--ink);
 }
 
 [data-theme='dark'] .home-main-content .hero-card .hero-greeting-text,
 [data-theme='dark'] .home-main-content .hero-card .hero-hijri-text,
 [data-theme='dark'] .home-main-content .hero-card .unit-label,
 [data-theme='dark'] .home-main-content .hero-card .countdown-separator {
-  color: var(--on-surface-variant);
+  color: var(--ink-muted);
 }
 
 .premium-home-hero::before {
@@ -168,7 +168,7 @@
   top: -18px;
   inset-inline-end: -12px;
   z-index: 0;
-  color: var(--text-subtle);
+  color: var(--ink-muted);
   opacity: 0.035;
   font-family: var(--font-arabic);
   font-size: 5rem;
@@ -299,7 +299,7 @@
   align-items: baseline;
   gap: 3px;
   margin-top: 7px;
-  color: var(--tertiary);
+  color: var(--gold-ink);
   font-family: var(--font-main);
   font-size: clamp(1.8rem, 8vw, 2.45rem);
   font-weight: 850;
@@ -486,7 +486,7 @@
 }
 
 .home-prayer-strip__item.is-active .home-prayer-strip__time {
-  color: var(--tertiary);
+  color: var(--gold-ink);
 }
 
 .home-prayer-strip__item.is-active .home-prayer-strip__icon {
@@ -495,7 +495,7 @@
 
 .home-prayer-strip__item.is-completed .home-prayer-strip__icon,
 .home-prayer-strip__item.is-completed .home-prayer-strip__time {
-  color: var(--hero-mosque-accent, var(--primary));
+  color: var(--hero-mosque-accent, var(--brand-ink));
 }
 
 .home-quick-access-strip {
@@ -511,7 +511,7 @@
   --quick-bg: rgba(var(--brand-primary-rgb), 0.13);
   --quick-bg-hover: rgba(var(--brand-primary-rgb), 0.18);
   --quick-icon-bg: rgba(var(--brand-primary-rgb), 0.16);
-  --quick-color: var(--primary);
+  --quick-color: var(--brand-ink);
   min-width: 0;
   min-height: 92px;
   padding: 12px 6px 11px;
@@ -556,7 +556,7 @@
 
 .home-quick-access-label {
   overflow-wrap: anywhere;
-  color: var(--text-heading);
+  color: var(--ink);
   font-family: var(--font-main);
   font-size: 0.66rem;
   font-weight: 800;
@@ -590,7 +590,7 @@
   --quick-bg: rgba(200, 218, 210, 0.35);
   --quick-bg-hover: rgba(200, 218, 210, 0.48);
   --quick-icon-bg: rgba(141, 170, 157, 0.22);
-  --quick-color: var(--secondary);
+  --quick-color: var(--brand-ink);
 }
 
 .first-activation-card {
@@ -598,13 +598,13 @@
   overflow: hidden;
   margin: 0 0 16px;
   padding: 20px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--line);
   border-radius: 24px;
   background:
     radial-gradient(circle at top right, rgba(var(--brand-primary-rgb), 0.1), transparent 34%),
-    linear-gradient(135deg, var(--surface-card-strong), var(--surface-card));
+    linear-gradient(135deg, var(--paper-raised), var(--paper-raised));
   box-shadow: 0 12px 30px rgba(83, 110, 98, 0.08);
-  color: var(--text-heading);
+  color: var(--ink);
 }
 
 .first-activation-card__header {
@@ -624,12 +624,12 @@
   justify-content: center;
   flex: 0 0 auto;
   color: var(--brand-primary);
-  background: var(--surface-action-soft);
+  background: var(--brand-soft);
 }
 
 .first-activation-card__eyebrow {
   min-width: 0;
-  color: var(--text-body);
+  color: var(--ink);
   font-family: var(--font-main);
   font-size: 0.72rem;
   font-weight: 900;
@@ -653,7 +653,7 @@
 
 .first-activation-card__body h2 {
   margin: 0 0 8px;
-  color: var(--text-heading);
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 1.18rem;
   font-weight: 700;
@@ -663,7 +663,7 @@
 
 .first-activation-card__body p {
   margin: 0;
-  color: var(--text-body);
+  color: var(--ink);
   font-family: var(--font-main);
   font-size: 0.88rem;
   font-weight: 650;
@@ -678,8 +678,8 @@
   margin-top: 18px;
   border: 1px solid rgba(var(--brand-primary-rgb), 0.22);
   border-radius: var(--radius-control);
-  background: var(--surface-action-soft);
-  color: var(--primary);
+  background: var(--brand-soft);
+  color: var(--brand-ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -708,11 +708,11 @@
   overflow: hidden;
   margin: 0;
   padding: 18px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--line);
   border-radius: 24px;
   background:
     radial-gradient(circle at top right, rgba(var(--brand-warm-rgb), 0.1), transparent 32%),
-    linear-gradient(135deg, var(--surface-card-strong), var(--surface-card));
+    linear-gradient(135deg, var(--paper-raised), var(--paper-raised));
   box-shadow: 0 12px 30px rgba(83, 110, 98, 0.08);
 }
 
@@ -728,7 +728,7 @@
   height: 38px;
   flex: 0 0 auto;
   border-radius: 15px;
-  background: var(--surface-action-soft);
+  background: var(--brand-soft);
   color: var(--brand-primary);
   display: inline-flex;
   align-items: center;
@@ -736,7 +736,7 @@
 }
 
 .home-daily-verse-card__eyebrow {
-  color: var(--text-heading);
+  color: var(--ink);
   font-family: var(--font-main);
   font-size: 0.76rem;
   font-weight: 900;
@@ -749,10 +749,10 @@
   max-width: 42%;
   overflow: hidden;
   padding: 6px 10px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--line);
   border-radius: var(--radius-pill);
   background: rgba(var(--surface-card-rgb), 0.66);
-  color: var(--text-body);
+  color: var(--ink);
   font-family: var(--font-main);
   font-size: 0.68rem;
   font-weight: 850;
@@ -771,7 +771,7 @@
 .home-daily-verse-card__arabic {
   direction: rtl;
   margin: 0;
-  color: var(--text-heading);
+  color: var(--ink);
   font-family: var(--font-arabic);
   font-size: 1.42rem;
   font-weight: 600;
@@ -796,7 +796,7 @@
 
 .home-daily-verse-card__text {
   margin: 0;
-  color: var(--text-heading);
+  color: var(--ink);
   font-family: var(--font-main);
   font-size: 1.08rem;
   font-weight: 650;
@@ -814,7 +814,7 @@
   --quick-bg: rgba(217, 160, 91, 0.13);
   --quick-bg-hover: rgba(217, 160, 91, 0.2);
   --quick-icon-bg: rgba(243, 192, 107, 0.16);
-  --quick-color: var(--tertiary);
+  --quick-color: var(--gold-ink);
 }
 
 [data-theme='dark'] .home-quick-access-item--warm,
@@ -822,21 +822,21 @@
   --quick-bg: rgba(142, 154, 166, 0.1);
   --quick-bg-hover: rgba(142, 154, 166, 0.16);
   --quick-icon-bg: rgba(142, 154, 166, 0.16);
-  --quick-color: var(--tertiary);
+  --quick-color: var(--gold-ink);
 }
 
 .home-priority-card {
   margin: 0;
   padding: 20px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--line);
   border-radius: var(--radius-card);
-  background: var(--surface-card);
+  background: var(--paper-raised);
   box-shadow: var(--shadow-card);
 }
 
 .home-priority-card__eyebrow {
   margin-bottom: 10px;
-  color: var(--text-body);
+  color: var(--ink);
   font-family: var(--font-main);
   font-size: 0.72rem;
   font-weight: 900;
@@ -855,7 +855,7 @@
   height: 46px;
   flex: 0 0 auto;
   border-radius: 16px;
-  background: var(--surface-action-soft);
+  background: var(--brand-soft);
   color: var(--brand-primary);
   display: inline-flex;
   align-items: center;
@@ -864,7 +864,7 @@
 
 .home-priority-card__title {
   margin: 0 0 6px;
-  color: var(--text-heading);
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 1.08rem;
   font-weight: 700;
@@ -874,7 +874,7 @@
 .home-priority-card__description,
 .home-priority-card__support {
   margin: 0;
-  color: var(--text-body);
+  color: var(--ink);
   font-family: var(--font-main);
   font-size: 0.82rem;
   font-weight: 650;
@@ -890,10 +890,10 @@
   width: 100%;
   min-height: 48px;
   margin-top: 16px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--line);
   border-radius: var(--radius-control);
-  background: var(--surface-action-soft);
-  color: var(--primary);
+  background: var(--brand-soft);
+  color: var(--brand-ink);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1009,23 +1009,23 @@
 
 /* Imagegen premium-light implementation layer. */
 .home-redesign-container {
-  background: var(--surface-page);
+  background: var(--paper);
 }
 
 .home-header {
-  border-bottom: 1px solid color-mix(in srgb, var(--primary) 8%, transparent);
-  background: color-mix(in srgb, var(--surface-page) 94%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-ink) 8%, transparent);
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
   backdrop-filter: blur(18px);
 }
 
 .home-header-logo-container {
   border-radius: 14px;
-  background: var(--primary);
+  background: var(--brand-ink);
   box-shadow: 0 8px 20px rgba(22, 59, 43, 0.16);
 }
 
 .home-welcome-subtitle {
-  color: var(--text-subtle);
+  color: var(--ink-muted);
   letter-spacing: 0.025em;
 }
 
@@ -1055,7 +1055,7 @@
 
 .home-daily-verse-card {
   border-color: rgba(181, 138, 71, 0.22);
-  background: var(--surface-card-strong);
+  background: var(--paper-raised);
   box-shadow: var(--shadow-card);
 }
 
@@ -1065,11 +1065,11 @@
 }
 
 .home-quick-access-item {
-  --quick-bg: var(--surface-container-low);
-  --quick-bg-hover: var(--primary-container);
-  --quick-icon-bg: var(--surface-card-strong);
-  --quick-color: var(--primary);
-  border-color: var(--card-border);
+  --quick-bg: var(--paper);
+  --quick-bg-hover: var(--brand-soft);
+  --quick-icon-bg: var(--paper-raised);
+  --quick-color: var(--brand-ink);
+  border-color: var(--line);
   border-radius: 20px;
   box-shadow: none;
 }
@@ -1078,10 +1078,10 @@
 .home-quick-access-item--warm,
 .home-quick-access-item--clay,
 .home-quick-access-item--moss {
-  --quick-bg: var(--surface-container-low);
-  --quick-bg-hover: var(--primary-container);
-  --quick-icon-bg: var(--surface-card-strong);
-  --quick-color: var(--primary);
+  --quick-bg: var(--paper);
+  --quick-bg-hover: var(--brand-soft);
+  --quick-icon-bg: var(--paper-raised);
+  --quick-color: var(--brand-ink);
 }
 
 .home-quick-access-item:hover,
@@ -1091,15 +1091,15 @@
 }
 
 /* Supplied home reference: warm paper, editorial typography, quiet green accents. */
-.home-header { min-height: 78px; padding: 18px 20px 10px; border: 0; background: var(--surface-page); backdrop-filter: none; }
+.home-header { min-height: 78px; padding: 18px 20px 10px; border: 0; background: var(--paper); backdrop-filter: none; }
 .home-header-logo-container, .home-welcome-subtitle { display: none; }
-.home-header-title-text { color: var(--primary); font: 600 2.45rem/1 var(--font-display); letter-spacing: -0.035em; }
+.home-header-title-text { color: var(--brand-ink); font: 600 2.45rem/1 var(--font-display); letter-spacing: -0.035em; }
 .home-header-actions { display: none; }
 .home-main-content { gap: 16px; padding-top: 8px; }
-.premium-home-hero { border-color: color-mix(in srgb, var(--outline-variant) 62%, transparent); background: linear-gradient(145deg, var(--surface-bright), var(--surface-container-low)); box-shadow: 0 9px 26px rgba(23, 60, 42, 0.08); }
-.premium-home-hero::before { background: radial-gradient(circle at 82% 22%, color-mix(in srgb, var(--tertiary) 12%, transparent), transparent 35%); }
-.home-quick-access-strip::before { content: 'Hızlı erişim'; grid-column: 1 / -1; color: var(--on-surface); font: 650 1.22rem/1.2 var(--font-display); }
-.home-quick-access-item, .home-quick-access-item--sage, .home-quick-access-item--warm, .home-quick-access-item--clay, .home-quick-access-item--moss { --quick-bg: var(--surface-card-strong); --quick-bg-hover: var(--primary-container); --quick-icon-bg: transparent; --quick-color: var(--primary); min-height: 104px; border-color: color-mix(in srgb, var(--outline-variant) 58%, transparent); border-radius: 15px; box-shadow: 0 5px 16px rgba(23, 60, 42, 0.06); }
+.premium-home-hero { border-color: color-mix(in srgb, var(--line) 62%, transparent); background: linear-gradient(145deg, var(--surface-bright), var(--paper)); box-shadow: 0 9px 26px rgba(23, 60, 42, 0.08); }
+.premium-home-hero::before { background: radial-gradient(circle at 82% 22%, color-mix(in srgb, var(--gold-ink) 12%, transparent), transparent 35%); }
+.home-quick-access-strip::before { content: 'Hızlı erişim'; grid-column: 1 / -1; color: var(--ink); font: 650 1.22rem/1.2 var(--font-display); }
+.home-quick-access-item, .home-quick-access-item--sage, .home-quick-access-item--warm, .home-quick-access-item--clay, .home-quick-access-item--moss { --quick-bg: var(--paper-raised); --quick-bg-hover: var(--brand-soft); --quick-icon-bg: transparent; --quick-color: var(--brand-ink); min-height: 104px; border-color: color-mix(in srgb, var(--line) 58%, transparent); border-radius: 15px; box-shadow: 0 5px 16px rgba(23, 60, 42, 0.06); }
 .home-quick-access-icon { width: 46px; height: 46px; border-radius: 0; box-shadow: none; }
-.home-quick-access-label { color: var(--on-surface); font-size: 0.75rem; }
-.home-daily-verse-card { border-radius: 15px; background: var(--surface-card-strong); box-shadow: 0 5px 16px rgba(23, 60, 42, 0.06); }
+.home-quick-access-label { color: var(--ink); font-size: 0.75rem; }
+.home-daily-verse-card { border-radius: 15px; background: var(--paper-raised); box-shadow: 0 5px 16px rgba(23, 60, 42, 0.06); }

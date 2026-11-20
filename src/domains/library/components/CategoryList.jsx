@@ -68,7 +68,7 @@ function CategoryList({
               style={{
                 padding: '16px',
                 cursor: 'pointer',
-                border: item.isPro && !userIsPro ? '1px dashed var(--nav-border)' : ''
+                border: item.isPro && !userIsPro ? '1px dashed var(--line)' : ''
               }}
               onClick={() => {
                 if (item.isPro && !userIsPro) {
@@ -83,8 +83,8 @@ function CategoryList({
                 <div
                   className="settings-icon-box"
                   style={{
-                    background: 'var(--nav-hover)',
-                    color: 'var(--nav-accent)',
+                    background: 'var(--paper-sunken)',
+                    color: 'var(--brand-ink)',
                     width: '52px',
                     height: '52px',
                     borderRadius: '16px'
@@ -98,8 +98,8 @@ function CategoryList({
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                {item.isPro ? <Crown size={14} color="var(--tertiary)" fill="var(--tertiary)" /> : null}
-                <ChevronRight size={18} color="var(--nav-text-muted)" />
+                {item.isPro ? <Crown size={14} color="var(--gold-ink)" fill="var(--gold-ink)" /> : null}
+                <ChevronRight size={18} color="var(--ink-muted)" />
               </div>
             </div>
           ))}
@@ -116,22 +116,22 @@ function CategoryList({
 
   return (
     <div className="reveal-stagger">
-      <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600' }}>
+      <p style={{ color: 'var(--ink-muted)', fontSize: '0.9rem', marginBottom: '24px', fontWeight: '600' }}>
         {t('library.subtitle', 'İslami bilgi kaynakları ve referanslar')}
       </p>
 
       <div className="library-search-section" style={{ marginBottom: '32px' }}>
-        <Search size={20} className="search-icon-library" style={{ color: 'var(--nav-accent)' }} />
+        <Search size={20} className="search-icon-library" style={{ color: 'var(--brand-ink)' }} />
         <input
           type="text"
           className="library-search-input"
           style={{
-            background: 'var(--nav-hover)',
-            border: '1px solid var(--nav-border)',
+            background: 'var(--paper-sunken)',
+            border: '1px solid var(--line)',
             borderRadius: '20px',
             padding: '16px 16px 16px 48px',
             fontSize: '1rem',
-            color: 'var(--nav-text)'
+            color: 'var(--ink)'
           }}
           placeholder={t('library.search_placeholder', 'Ara... (örn: namaz, oruç)')}
           value={query}
@@ -150,14 +150,14 @@ function CategoryList({
               cursor: 'pointer'
             }}
           >
-            <X size={18} color="var(--nav-text-muted)" />
+            <X size={18} color="var(--ink-muted)" />
           </button>
         ) : null}
       </div>
 
       {query.length >= 2 ? (
         <div style={{ marginBottom: '32px' }} className="reveal-stagger">
-          <p style={{ color: 'var(--nav-text-muted)', fontSize: '0.8rem', marginBottom: '12px', fontWeight: '800', textTransform: 'uppercase' }}>
+          <p style={{ color: 'var(--ink-muted)', fontSize: '0.8rem', marginBottom: '12px', fontWeight: '800', textTransform: 'uppercase' }}>
             {resultsLabel}
           </p>
           {searchResults.map((result, index) => (
@@ -168,7 +168,7 @@ function CategoryList({
               onClick={() => onSearchResultClick?.(result)}
             >
               <div className="settings-card-left">
-                <div className="settings-icon-box" style={{ background: 'var(--nav-hover)', color: 'var(--nav-accent)' }}>
+                <div className="settings-icon-box" style={{ background: 'var(--paper-sunken)', color: 'var(--brand-ink)' }}>
                   {renderIcon(result.icon)}
                 </div>
                 <div className="settings-user-info">
@@ -177,8 +177,8 @@ function CategoryList({
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                {result.requiresPro && !userIsPro ? <Crown size={14} color="var(--tertiary)" fill="var(--tertiary)" /> : null}
-                <ChevronRight size={18} color="var(--nav-text-muted)" />
+                {result.requiresPro && !userIsPro ? <Crown size={14} color="var(--gold-ink)" fill="var(--gold-ink)" /> : null}
+                <ChevronRight size={18} color="var(--ink-muted)" />
               </div>
             </div>
           ))}
@@ -214,8 +214,8 @@ function CategoryList({
                 style={{
                   width: '64px',
                   height: '64px',
-                  background: 'var(--nav-hover)',
-                  color: 'var(--nav-accent)',
+                  background: 'var(--paper-sunken)',
+                  color: 'var(--brand-ink)',
                   borderRadius: '20px'
                 }}
               >
@@ -226,7 +226,7 @@ function CategoryList({
               </div>
               {category.isPro ? (
                 <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
-                  <Crown size={14} color="var(--tertiary)" fill="var(--tertiary)" />
+                  <Crown size={14} color="var(--gold-ink)" fill="var(--gold-ink)" />
                 </div>
               ) : null}
             </div>
