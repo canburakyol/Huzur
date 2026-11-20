@@ -33,7 +33,7 @@ const Imsakiye = ({ onClose, locationName, location }) => {
         if (!monthly?.timings?.length) throw new Error('Monthly prayer times unavailable');
         if (cancelled) return;
         setDays(monthly.timings.map((entry, index) => ({ gregorian: String(index + 1), times: entry.timings })));
-        setSource(monthly.timings[0]?.meta?.method?.name || 'Hesaplandı');
+        setSource(monthly.timings[0]?.meta?.method?.name || t('imsakiye.calculated', 'Hesaplandı'));
       } catch (err) {
         logger.error('Imsakiye calculation error:', err);
         if (!cancelled) setError(t('imsakiye.errorCalculate', 'Namaz saatleri hesaplanamadı. Lütfen tekrar deneyin.'));
@@ -48,7 +48,7 @@ const Imsakiye = ({ onClose, locationName, location }) => {
 
   const today = new Date();
   const todayIndex = today.getMonth() === currentMonth && today.getFullYear() === currentYear ? String(today.getDate()) : null;
-  const sourceLabel = source === 'Diyanet' ? 'Kaynak: Diyanet' : `${t('imsakiye.calculatedFor', 'Aynı konum için hesaplandı')} (${source})`;
+  const sourceLabel = source === 'Diyanet' ? t('imsakiye.sourceDiyanet', 'Kaynak: Diyanet') : `${t('imsakiye.calculatedFor', 'Aynı konum için hesaplandı')} (${source})`;
   const cell = { padding: '8px 4px', textAlign: 'center', fontVariantNumeric: 'tabular-nums' };
 
   return <div className="app-container hz-root" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>

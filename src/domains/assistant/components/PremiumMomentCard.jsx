@@ -1,9 +1,11 @@
 import { Sparkles } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Premium moment upgrade card shown after successful AI interactions.
  */
 const PremiumMomentCard = ({ premiumMoment, onAction }) => {
+  const { t } = useTranslation();
   if (!premiumMoment?.showUpgrade) return null;
 
   return (
@@ -25,7 +27,7 @@ const PremiumMomentCard = ({ premiumMoment, onAction }) => {
           className="premium-moment-action-btn"
         >
           <Sparkles size={15} />
-          Daha derin desteği gör
+          {t('premiumMoment.cta', 'Daha derin desteği gör')}
         </button>
       </div>
     </div>

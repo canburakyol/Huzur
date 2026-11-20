@@ -204,7 +204,7 @@ const Adhkar = ({ onClose }) => {
                                             </div>
                                             {adhkar.sourceType && (
                                                 <div data-testid={`source-${adhkar.key}`} style={{ fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '700' }}>
-                                                    {adhkar.sourceType === 'quran' ? 'Kur’an' : 'Genel / kaynak belirtilmemiş'} · {adhkar.citation}
+                                                    {adhkar.sourceType === 'quran' ? t('prayers.sourceTypes.quran', 'Kur’an') : t('adhkar.sourceGeneral', 'Genel / kaynak belirtilmemiş')} · {adhkar.citation}
                                                 </div>
                                             )}
                                         </div>

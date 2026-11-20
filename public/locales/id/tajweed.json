@@ -1,88 +1,88 @@
 {
   "tajweed": {
-    "title": "Tajweed Tutor",
-    "subtitle": "Improve your Quran recitation",
-    "rule": "Rule",
-    "letters": "Letters",
-    "examples": "Examples",
-    "understood": "Understood, Practice",
-    "audioNotReady": "Audio file not ready.",
-    "audioError": "Error playing audio: {{error}}",
+    "title": "Akademi Tajwid",
+    "subtitle": "Perindah bacaan Al-Qur'anmu",
+    "rule": "Hukum",
+    "letters": "Huruf",
+    "examples": "Contoh",
+    "understood": "Paham, lanjut",
+    "audioNotReady": "File audio belum tersedia.",
+    "audioError": "Terjadi kesalahan saat memutar audio: {{error}}",
     "aiCheck": {
-      "title": "AI Pronunciation Check",
-      "desc": "Analyze your recitation with AI and get instant feedback.",
-      "comingSoon": "Coming Soon"
+      "title": "Cek Pelafalan dengan AI",
+      "desc": "Periksa bacaanmu dengan AI dan dapatkan masukan langsung.",
+      "comingSoon": "Segera hadir"
     },
     "rules": {
       "idgam_meal_gunne": {
-        "title": "Idgham Ma'al Ghunnah",
-        "desc": "Merging with Nasalization",
-        "rule": "Jika Sakin Noon atau Tanween diikuti oleh salah satu huruf (ي م ن و), keduanya digabungkan dengan bunyi sengau.",
+        "title": "Idgham Bighunnah",
+        "desc": "Melebur dengan dengung",
+        "rule": "Jika nun sukun atau tanwin bertemu salah satu huruf ي ن م و, bunyinya dileburkan dengan dengung.",
         "examples": {
           "0": {
-            "explanation": "Noon meets Ya, so Idgham occurs."
+            "explanation": "Nun bertemu ya, maka terjadi idgham."
           },
           "1": {
-            "explanation": "Noon meets Meem, so Idgham occurs."
+            "explanation": "Nun bertemu mim, maka terjadi idgham."
           }
         }
       },
       "idgam-bila-gunne": {
-        "title": "Idgham Bila Ghunnah",
-        "desc": "Merging without Nasalization",
-        "rule": "Jika Sakin Siang atau Tanween diikuti oleh Lam (ل) atau Ra (ر), keduanya digabungkan tanpa bunyi sengau.",
+        "title": "Idgham Bilaghunnah",
+        "desc": "Melebur tanpa dengung",
+        "rule": "Jika nun sukun atau tanwin bertemu lam (ل) atau ra (ر), bunyinya dileburkan tanpa dengung.",
         "examples": {
           "0": {
-            "explanation": "Noon meets Ra, so Idgham without Ghunnah occurs."
+            "explanation": "Nun bertemu ra, maka terjadi idgham tanpa dengung."
           },
           "1": {
-            "explanation": "Tanween meets Lam, so Idgham without Ghunnah occurs."
+            "explanation": "Tanwin bertemu lam, maka terjadi idgham tanpa dengung."
           }
         }
       },
       "ihfa": {
         "title": "Ikhfa",
-        "desc": "Concealment",
-        "rule": "Jika Sakin Siang atau Tanween diikuti dengan huruf Ikhfa, maka bunyi Siangnya disembunyikan dengan bunyi sengau.",
+        "desc": "Menyamarkan",
+        "rule": "Jika nun sukun atau tanwin bertemu salah satu huruf ikhfa, bunyi nun disamarkan dengan dengung.",
         "examples": {
           "0": {
-            "explanation": "Tenang Siang bertemu Za, maka terjadilah Ikhfa."
+            "explanation": "Nun sukun bertemu za, maka terjadi ikhfa."
           },
           "1": {
-            "explanation": "Tenang Siang bertemu Shin, maka terjadilah Ikhfa."
+            "explanation": "Nun sukun bertemu syin, maka terjadi ikhfa."
           }
         }
       },
       "izhar": {
         "title": "Izhar",
-        "desc": "Clarification",
-        "rule": "Jika Sakin Noon atau Tanween diikuti dengan huruf tenggorokan, maka bunyi Noon diucapkan dengan jelas.",
+        "desc": "Menjelaskan",
+        "rule": "Jika nun sukun atau tanwin bertemu huruf halqi (tenggorokan), bunyi nun dibaca jelas.",
         "examples": {
           "0": {
-            "explanation": "Tenang Siang bertemu Kha, maka terjadilah Izhar."
+            "explanation": "Nun sukun bertemu kha, maka terjadi izhar."
           },
           "1": {
-            "explanation": "Tanween meets Alif, so Izhar occurs."
+            "explanation": "Tanwin bertemu alif (hamzah), maka terjadi izhar."
           }
         }
       },
       "iklab": {
         "title": "Iqlab",
-        "desc": "Conversion",
-        "rule": "Jika Sakin Siang atau Tanween diikuti oleh Ba (ب), bunyi Siang berubah menjadi Meem (م) dengan bunyi sengau.",
+        "desc": "Mengganti",
+        "rule": "Jika nun sukun atau tanwin bertemu ba (ب), bunyi nun berubah menjadi mim dan dibaca dengan dengung.",
         "examples": {
           "0": {
-            "explanation": "Calm Noon bertemu Ba, sehingga berubah menjadi Meem."
+            "explanation": "Nun sukun bertemu ba, sehingga berubah menjadi bunyi mim."
           },
           "1": {
-            "explanation": "Tanween meets Ba, so it converts to Meem."
+            "explanation": "Tanwin bertemu ba, sehingga berubah menjadi bunyi mim."
           }
         }
       },
       "kalkale": {
         "title": "Qalqalah",
-        "desc": "Echoing / Vibration",
-        "rule": "Bila huruf Qalqalah (ق ط ب ج د) bersifat Sakin (memiliki Sukoon), maka diucapkan dengan bunyi yang menggema.",
+        "desc": "Memantul dan bergetar",
+        "rule": "Jika salah satu huruf qalqalah (ق ط ب ج د) bersukun, huruf itu dibaca memantul dengan kuat pada makhrajnya.",
         "examples": {
           "0": {
             "explanation": "Saat waqaf, Qaf dibaca sukun, maka terjadi qalqalah."
@@ -93,93 +93,57 @@
         }
       },
       "med_tabii": {
-        "title": "Natural Madd",
-        "desc": "Elongation of a vowel letter for 2 counts naturally",
-        "rule": "When a madd letter (alif, waw, ya) appears without a hamza or sukoon after it, it is elongated for 2 counts.",
+        "title": "Mad Thabi'i",
+        "desc": "Mad dasar yang alami",
+        "rule": "Jika setelah huruf mad tidak ada sebab mad (hamzah atau sukun), huruf itu dipanjangkan satu alif (dua harakat).",
         "examples": {
           "0": {
-            "explanation": "The alif after ba is elongated naturally for 2 counts."
+            "explanation": "Huruf alif menjadi huruf mad."
           },
           "1": {
-            "explanation": "The ya after mim is elongated naturally for 2 counts."
+            "explanation": "Huruf wawu menjadi huruf mad."
           }
         }
       },
       "ra_hukmu": {
-        "title": "Rules of Ra",
-        "desc": "The letter Ra is pronounced with tafkhim (heavy) or tarqiq (light) based on its position",
-        "rule": "Ra with fatha or dhamma is heavy (tafkhim). Ra with kasra is light (tarqiq). Ra with sukoon depends on the preceding vowel.",
+        "title": "Hukum Ra",
+        "desc": "Cara membaca huruf ra",
+        "rule": "Ra berharakat fathah atau dammah dibaca tebal; berharakat kasrah dibaca tipis. Jika sukun, ditentukan oleh harakat huruf sebelumnya.",
         "examples": {
           "0": {
-            "explanation": "Ra with fatha is pronounced heavy (tafkhim)."
+            "explanation": "Ra berharakat fathah, maka dibaca tebal."
           }
         }
       },
       "med_muttasil": {
-        "title": "Connected Madd",
-        "desc": "When a madd letter is followed by hamza in the same word",
-        "rule": "When a madd letter is followed by hamza in the same word, it is elongated for 4-5 counts.",
+        "title": "Mad Wajib Muttasil",
+        "desc": "Mad dalam satu kata",
+        "rule": "Jika setelah huruf mad ada hamzah dalam kata yang sama, itu Mad Wajib Muttasil dan dibaca lebih panjang.",
         "examples": {
           "0": {
-            "explanation": "The alif before hamza in the same word is elongated for 4-5 counts."
+            "explanation": "Alif dan hamzah berada dalam satu kata, maka dibaca lebih panjang."
           }
         }
       }
     },
-    "makhraj": "Articulation Points",
-    "academy": "Huzur Academy",
-    "mainSubtitle": "Learn tajweed rules with clear and simple guidance.",
-    "module": "Module",
-    "availableLessons": "Available Lessons",
+    "makhraj": "Makharijul Huruf",
+    "academy": "Akademi Huzur",
+    "mainSubtitle": "Pelajari hukum tajwid dengan panduan yang jelas dan sederhana.",
+    "availableLessons": "Pelajaran Tersedia",
     "quiz": "Quiz",
-    "quizTitle": "Tajweed Quiz",
-    "quizSubtitle": "Reinforce what you learned with a quick test.",
-    "quizDesc": "Measure your tajweed knowledge with a short review.",
+    "quizTitle": "Kuis Tajwid",
+    "quizSubtitle": "Perkuat yang sudah kamu pelajari dengan tes singkat.",
+    "quizDesc": "Ukur pengetahuan tajwidmu dengan ulasan singkat.",
     "levels": {
-      "beginner": "Beginner",
-      "beginnerDesc": "Learn the core tajweed rules step by step.",
-      "intermediate": "Intermediate",
-      "intermediateDesc": "Move into intermediate rules that strengthen your recitation.",
-      "advanced": "Advanced",
-      "advancedDesc": "Refine your recitation with advanced tajweed details."
-    },
-    "faq": {
-      "items": {
-        "tenvin": {
-          "question": "Apa itu Tenvin?",
-          "answer": "Tenvin adalah efek suara huruf nun di akhir kata. Ada tiga jenis:\n• Fethatan (ً): Tanvin unggul\n• Kesretan (ٍ): Esre tanvin\n• Dammetan (ٌ): Otre tenvin\nTenvin adalah pembacaan nun di akhir kata tanpa menuliskannya."
-        },
-        "gunne": {
-          "question": "Bagaimana cara membaca dengan cara yang cerah?",
-          "answer": "Ini adalah pembacaan sengau dari huruf gunne, nun dan mim. Dua jumlah gerakan disimpan.\n• Idgam (mealgunne): Jika ي، ن، م، و muncul setelah Nun Calmine\n• Ihfa : Jika ada 15 huruf setelah Nun Calmine (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• Iklab: Jika ب muncul setelah Nun Sakine, maka berubah menjadi pantomim dan dibaca gunneli."
-        },
-        "kalkale": {
-          "question": "Yang manakah huruf Kalkale?",
-          "answer": "Kalkale ada 5 huruf dan dihafal dengan kata \"قطب جد\":\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Cabang)\nKetika huruf-huruf ini tenang (diinfleksikan), terjadi pantulan atau getaran di titik awal."
-        },
-        "med": {
-          "question": "Apa huruf Med?",
-          "answer": "Huruf ekstensi (Med) ada tiga: Elif (ا), Vav (و) dan Ya (ي). Huruf-huruf ini memanjangkan huruf di depannya sebanyak satu elif (kira-kira 1-1,5 detik)."
-        },
-        "makhraj": {
-          "question": "Apa itu Mahraj?",
-          "answer": "Mahrec adalah tempat keluarnya huruf dari mulut. Saat membaca Al-Qur'an, sangat penting untuk mengekstraksi huruf-huruf dari asal yang benar agar maknanya tidak terdistorsi."
-        },
-        "ihfa": {
-          "question": "Bagaimana Ihfa dilakukan?",
-          "answer": "Ihfa artinya bersembunyi dalam kamus. Bila huruf ihfa muncul setelah nun kalem atau tanvin, maksudnya melafalkan bunyi nun dengan cara di sengau dan sedikit disembunyikan."
-        },
-        "sekte": {
-          "question": "Apa itu sekte?",
-          "answer": "Bangjo artinya menghentikan bunyi sejenak dan menunggu tanpa bernapas. Terdapat interupsi di 4 tempat dalam Al-Quran (dalam surat al-Kahfi, Yasin, Kiyame dan Mutaffifin)."
-        },
-        "izhar": {
-          "question": "Apa itu Izhar?",
-          "answer": "Izhar artinya membaca dengan jelas. Jika huruf tenggorokan (ء ه ح خ ع غ) muncul setelah nun atau tenvin yang tenang, maka bunyi nun tersebut dibaca apa adanya, tanpa ditahan atau disembunyikan."
-        }
-      }
+      "beginner": "Pemula",
+      "beginnerDesc": "Pelajari hukum tajwid dasar langkah demi langkah.",
+      "intermediate": "Menengah",
+      "intermediateDesc": "Lanjutkan ke hukum tingkat menengah yang memperkuat bacaanmu.",
+      "advanced": "Lanjutan",
+      "advancedDesc": "Perhalus bacaanmu dengan detail tajwid tingkat lanjut."
     },
     "levelLabel": "Tingkat",
-    "listen": "Dengarkan"
+    "listen": "Dengarkan",
+    "moduleTitle": "Modul {{level}}"
   }
 }

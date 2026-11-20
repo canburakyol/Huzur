@@ -11,7 +11,7 @@ import { logger } from '../../../utils/logger';
 // html2canvas is dynamically imported when needed to reduce initial bundle size
 
 const Stories = memo(() => {
-    const { t, ready } = useTranslation(['translation', 'prayers']);
+    const { t, ready } = useTranslation();
     const { showToast } = useToast();
     const [activeStory, setActiveStory] = useState(null);
     const [isSharing, setIsSharing] = useState(false);

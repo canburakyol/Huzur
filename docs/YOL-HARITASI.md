@@ -16,7 +16,7 @@ sonra **görünüm**, en son **iç kalite**. Yanlış dini bilgi, eski görünü
 | 5 | Dini içerik doğrulaması (5 parça) | Ben | 5 oturum | ✅ 19 Kas |
 | 6 | Mushaf tasarımına taşıma (ekran ekran) | Ben | ~10 oturum | ⬜ |
 | 7 | Teknik borç | Ben | 3–4 oturum | ⬜ |
-| 8 | Almanca / Endonezce çeviri | Ben | 3–4 oturum | 🟨 |
+| 8 | Almanca / Endonezce çeviri | Ben | 3–4 oturum | ✅ 20 Kas (görünen ekranlar) |
 
 ---
 
@@ -117,6 +117,10 @@ Sıra (en çok kullanılan önce):
 
 Her dilde ~1100 metin İngilizce duruyor (en çok: `content`, `hikmet`, `greetingCards`, `deedJournal`, `menu`).
 Bu dillerden indirme olmadığı için en sonda. Önce arayüz metinleri, sonra içerik; dini metinler Türkçe/Arapça kaynaktan.
+- **20 Kas:** Görünen ekranlarda İngilizce kalan metin yok; kalanlar özel ad/terim (Juz, Dhikr, Surah) ya da gizli ekran
+  (Hikmetler, Tebrik Kartları, Amel Defteri — açılırsa önce içerik doğrulanıp sonra çevrilmeli) ya da kullanılmayan `content.*`.
+  Tecvid kuralları tr kaynaktan en/de/id yeniden yazıldı (id makine çevirisi bozuktu, örnekler yanlıştı); ölü ad alanı dosyaları
+  silindi, açılışta yalnızca `translation` + `tajweed` yükleniyor. Tecvid okunuşları (transliteration) hâlâ Türkçe harflerle.
 - **Bitti sayılır:** de/id'de İngilizceyle birebir aynı çok kelimeli metin kalmadı (özel adlar hariç).
 - **Durum (19 Kas):** Arayüz, bildirimler, Kur'an (Bubenheim/Kemenag mealleri), günlük içerik, Esma, hadisler,
   Siyer, Namaz Hocası, Tespihat, kütüphane, fihrist, kelime kelime meal, asistan cevapları ve paylaşım metinleri

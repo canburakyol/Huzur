@@ -552,7 +552,7 @@
   },
   "error": {
     "title": "An Error Occurred",
-    "description": "The application encountered an unexpected error. Please try again.",
+    "description": "Die App ist auf einen unerwarteten Fehler gestoßen. Bitte versuche es erneut.",
     "persistentIssue": "Wenn das Problem bleibt, starte die App bitte neu."
   },
   "ads": {
@@ -643,7 +643,7 @@
     "title": "Islamic Assistant",
     "online": "Online",
     "remaining": "Verbleibend",
-    "welcomeMessage": "As-salamu alaykum. I am your Islamic Assistant. How can I help you?",
+    "welcomeMessage": "As-salamu alaykum. Hier findest du vorbereitete Fragen und Antworten sowie persönliche Empfehlungen.",
     "errorMessage": "Sorry, an error occurred. Please try again.",
     "found": "Verse gefunden",
     "placeholder": "Stelle eine Frage…",
@@ -677,11 +677,11 @@
       "q24": "Was bedeutet es, Salawat zu sprechen?",
       "q25": "Welche Gottesdienste werden in den Kandil-Nächten verrichtet?"
     },
-    "betaWelcomeHint": "Beta mode: You can click on ready-made questions or type a similar question.",
-    "betaUnknownQuestion": "This question is not currently in the Beta ready-answer list. You can click one of the sample questions below.",
+    "betaWelcomeHint": "Tippe auf eine der vorbereiteten Fragen oder schreibe eine ähnliche Frage.",
+    "betaUnknownQuestion": "Diese Frage ist derzeit nicht in der Liste der vorbereiteten Antworten. Wähle eine der Beispielfragen unten.",
     "betaLabel": "Beta",
     "readyQaMode": "Fertige Fragen und Antworten",
-    "betaInputPlaceholder": "Beta: type one of the ready questions or select from below",
+    "betaInputPlaceholder": "Schreibe eine der vorbereiteten Fragen oder wähle unten aus",
     "answers": {
       "q1": "Für das Gebet nimmt man zuerst die Gebetswaschung vor; ist die Gebetszeit eingetreten, wendet man sich zur Qibla und fasst die Absicht. Man beginnt mit dem Eröffnungs-Takbir und vollzieht der Reihe nach Stehen, Verbeugung, Niederwerfungen und Sitzen; im letzten Sitzen spricht man at-Tahiyyat und beendet das Gebet mit dem Friedensgruß.",
       "q2": "Absichtliches Essen oder Trinken, Geschlechtsverkehr, Rauchen und nährende Injektionen brechen das Fasten. In strittigen Fällen ist es am sichersten, eine verlässliche Fiqh-Quelle oder einen Gelehrten zu fragen.",
@@ -816,7 +816,7 @@
     "messages": {
       "loading": "Wird geladen…",
       "noDuas": "Noch keine Gebetsanliegen. Sei der Erste.",
-      "errorSending": "An error occurred while sending the prayer.",
+      "errorSending": "Beim Senden des Bittgebets ist ein Fehler aufgetreten.",
       "aminFailed": "Amin konnte nicht gesendet werden. Bitte versuche es erneut."
     },
     "shareTitle": "Huzur – Gemeinschaft",
@@ -1414,11 +1414,12 @@
     "title": "Dhikr und tägliche Wirde",
     "dailyProgress": "Täglicher Fortschritt",
     "infoNoteReviewed": "Diese Liste enthält Koranverse und allgemeinen Dhikr. Prüfe bei jedem Text die Quellenangabe; die persönliche Erfassung ist kein religiöses Urteil und kein Maß für Annahme.",
-    "reset": "Fortschritt zurücksetzen"
+    "reset": "Fortschritt zurücksetzen",
+    "sourceGeneral": "Allgemein / Quelle nicht angegeben"
   },
   "qibla": {
     "title": "Qibla-Kompass",
-    "instructions": "Hold your phone parallel to the ground and calibrate by drawing figure 8.",
+    "instructions": "Halte dein Handy parallel zum Boden; kalibriere den Kompass bei Bedarf, indem du eine 8 in die Luft zeichnest.",
     "found": "QIBLA GEFUNDEN",
     "permissionDenied": "Kompass-Berechtigung verweigert. Bitte in den Einstellungen erlauben.",
     "notSupported": "Der Kompass wird auf diesem Gerät nicht unterstützt.",
@@ -5259,7 +5260,9 @@
     "prevMonth": "Vorheriger Monat",
     "nextMonth": "Nächster Monat",
     "day": "Tag",
-    "unknownLocation": "Standort unbekannt"
+    "unknownLocation": "Standort unbekannt",
+    "calculated": "Berechnet",
+    "sourceDiyanet": "Quelle: Diyanet"
   },
   "zikirmatik": {
     "popularChoices": "Dhikr",
@@ -5431,7 +5434,9 @@
       "video": "Islamische Akademie",
       "faq": "Fragen & Antworten"
     },
-    "title": "Bibliothek"
+    "title": "Bibliothek",
+    "videoComingSoon": "Videoinhalte folgen in Kürze",
+    "youtubeChannel": "YouTube-Kanal • {{count}} Themen"
   },
   "radio": {
     "selectSurah": "Sure auswählen"
@@ -6168,6 +6173,7 @@
     "assistantUsed": {
       "headline": "Vertiefe die Begleitung",
       "description": "Mit längerem Gedächtnis, tieferer Begleitung und ruhiger Premium-Unterstützung weitergehen."
-    }
+    },
+    "cta": "Mehr Unterstützung ansehen"
   }
 }

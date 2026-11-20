@@ -22,20 +22,10 @@ export const RTL_LANGUAGE_CODES: readonly SupportedLanguageCode[] = [];
 
 export type RtlLanguageCode = typeof RTL_LANGUAGE_CODES[number];
 
+// Preloaded at startup for the current language and its fallbacks. Other namespaces load on demand via useTranslation(ns).
 export const I18N_NAMESPACES = [
   'translation',
-  'components',
-  'surahs',
-  'tajweed',
-  'wordByWord',
-  'prayers',
-  'zikirWorld',
-  'esma',
-  'hadiths',
-  'legal',
-  'multimedia',
-  'prayerTeacher',
-  'tespihat'
+  'tajweed'
 ] as const;
 
 export type I18nNamespace = typeof I18N_NAMESPACES[number];

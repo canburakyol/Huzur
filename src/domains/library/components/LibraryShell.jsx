@@ -137,7 +137,7 @@ function LibraryShell({ onClose, onShowPro, onUpgrade }) {
     if (selectedItem) {
       if (selectedItem.title) {
         return selectedItem.type === 'prayer'
-          ? t(selectedItem.title, { ns: 'prayers', defaultValue: selectedItem.title })
+          ? t(selectedItem.title, { defaultValue: selectedItem.title })
           : selectedItem.title;
       }
 

@@ -1,6 +1,6 @@
 # Localization Audit Report
 
-Generated: 2026-09-12T10:49:07.817Z
+Generated: 2026-11-20T10:29:52.845Z
 
 ## Scope
 - Namespace integrity: `src/config/i18nConfig.js` vs `public/locales/*/*.json`
@@ -13,7 +13,7 @@ Generated: 2026-09-12T10:49:07.817Z
 - Extra language folders: —
 
 ## Namespace Integrity
-- Configured namespaces: `translation`, `components`, `surahs`, `tajweed`, `wordByWord`, `prayers`, `zikirWorld`, `esma`, `hadiths`, `legal`, `multimedia`, `prayerTeacher`, `tespihat`
+- Configured namespaces: `translation`, `tajweed`
 - Missing configured namespaces (any locale): —
 - Extra namespaces on disk (any locale): —
 

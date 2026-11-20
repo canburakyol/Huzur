@@ -4,7 +4,6 @@
     "subtitle": "Kur'an okuyuşunuzu güzelleştirin",
     "academy": "Huzur Akademi",
     "mainSubtitle": "Tecvid kurallarını sade ve anlaşılır adımlarla öğrenin.",
-    "module": "Modülü",
     "availableLessons": "Mevcut Dersler",
     "quiz": "Quiz",
     "quizTitle": "Tecvid Quiz",
@@ -29,42 +28,6 @@
       "title": "AI ile Telaffuz Kontrolü",
       "desc": "Yapay zekâ ile okuyuşunuzu analiz edin ve anlık geri bildirim alın.",
       "comingSoon": "Yakında"
-    },
-    "faq": {
-      "items": {
-        "tenvin": {
-          "question": "Tenvin nedir?",
-          "answer": "Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Üç cesidi vardır:\n• Fethatan (ً): Üstün tenvin\n• Kesretan (ٍ): Esre tenvin\n• Dammetan (ٌ): Ötre tenvin\nTenvin, kelimenin sonundaki nunun yazilmadan okunmasıdır."
-        },
-        "gunne": {
-          "question": "Gunneli okuyuş nasıl olur?",
-          "answer": "Gunne, nun ve mim harflerinin genizden okunmasıdır. İki hareke miktarı tutulur.\n• İdgam (mealgunne): Nun sakineden sonra ي، ن، م، و gelirse\n• İhfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• İklab: Nun sakineden sonra ب gelirse, mime dönüşür ve gunneli okunur."
-        },
-        "kalkale": {
-          "question": "Kalkale harfleri hangileri?",
-          "answer": "Kalkale harfleri 5 tanedir ve \"قطب جد\" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Tı), ب (Be), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) olduğunda, çıkış noktasında bir sıçrama veya titreşim yapılır."
-        },
-        "med": {
-          "question": "Med harfleri nelerdir?",
-          "answer": "Uzatma (Med) harfleri üçtür: Elif (ا), Vav (و) ve Ye (ي). Bu harfler kendinden önceki harfi bir elif miktarı (yaklaşık 1-1,5 saniye) uzatır."
-        },
-        "makhraj": {
-          "question": "Mahrec nedir?",
-          "answer": "Mahrec, harflerin ağızdan çıkış yeridir. Kur'an okurken harflerin doğru mahreclerinden çıkarılması, anlamın bozulmaması için çok önemlidir."
-        },
-        "ihfa": {
-          "question": "İhfa nasıl yapılır?",
-          "answer": "İhfa, sözlükte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiğinde, nun sesini genizden getirerek hafifçe gizleyerek okumaktır."
-        },
-        "sekte": {
-          "question": "Sekte nedir?",
-          "answer": "Sekte, sesi bir an için kesip nefes almadan beklemektir. Kur'an-ı Kerim'de 4 yerde sekte bulunur (Kehf, Yasin, Kıyame ve Mutaffifin surelerinde)."
-        },
-        "izhar": {
-          "question": "İzhar nedir?",
-          "answer": "İzhar, açıkça okumaktır. Sakin nun veya tenvinden sonra boğaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hiç tutulmadan ve gizlenmeden olduğu gibi okunur."
-        }
-      }
     },
     "rules": {
       "med_tabii": {
@@ -115,7 +78,7 @@
             "explanation": "Sakin Nun, Ze harfine uğradığı için ihfa olur."
           },
           "1": {
-            "explanation": "Sakin Nun, Sin harfine uğradığı için ihfa olur."
+            "explanation": "Sakin Nun, Şın harfine uğradığı için ihfa olur."
           }
         }
       },
@@ -180,6 +143,7 @@
       }
     },
     "levelLabel": "Seviye",
-    "listen": "Dinle"
+    "listen": "Dinle",
+    "moduleTitle": "{{level}} Modülü"
   }
 }

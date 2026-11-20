@@ -1414,7 +1414,8 @@
     "title": "Dhikr and daily litanies",
     "dailyProgress": "Daily progress",
     "infoNoteReviewed": "This list contains Qur'anic verses together with general dhikr. Open each text's source to check it; personal tracking is not a religious ruling or a measure of acceptance.",
-    "reset": "Reset progress"
+    "reset": "Reset progress",
+    "sourceGeneral": "General / source not specified"
   },
   "qibla": {
     "title": "Qibla Compass",
@@ -5259,7 +5260,9 @@
     "prevMonth": "Previous month",
     "nextMonth": "Next month",
     "day": "Day",
-    "unknownLocation": "Location unknown"
+    "unknownLocation": "Location unknown",
+    "calculated": "Calculated",
+    "sourceDiyanet": "Source: Diyanet"
   },
   "zikirmatik": {
     "popularChoices": "Dhikr",
@@ -5431,7 +5434,9 @@
       "video": "Islamic academy",
       "faq": "Q&A"
     },
-    "title": "Library"
+    "title": "Library",
+    "videoComingSoon": "Video content is coming soon",
+    "youtubeChannel": "YouTube channel • {{count}} topics"
   },
   "radio": {
     "selectSurah": "Select a surah"
@@ -6168,6 +6173,7 @@
     "assistantUsed": {
       "headline": "Deepen your guidance",
       "description": "Go further with longer memory, deeper follow-up and calm premium support."
-    }
+    },
+    "cta": "See deeper support"
   }
 }

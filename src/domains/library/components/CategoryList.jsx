@@ -26,7 +26,7 @@ const getItemTitle = (item, t) => {
 
   if (item.title) {
     return item.type === 'prayer'
-      ? t(item.title, { ns: 'prayers', defaultValue: item.title })
+      ? t(item.title, { defaultValue: item.title })
       : item.title;
   }
 

@@ -114,7 +114,7 @@ function ItemContent({
               lineHeight: '1.2'
             }}
           >
-            {t(item.title, { ns: 'prayers', defaultValue: item.title })}
+            {t(item.title, { defaultValue: item.title })}
           </h2>
 
           {item.situation ? (
@@ -294,7 +294,7 @@ function ItemContent({
           }}
         >
           <div style={{ textAlign: 'center', color: 'var(--nav-text-muted)', fontSize: '0.85rem', fontWeight: '700' }}>
-            Video içerikler yakında eklenecek
+            {t('library.videoComingSoon', 'Video içerikler yakında eklenecek')}
           </div>
         </div>
       </div>
@@ -335,7 +335,7 @@ function ItemContent({
                 {item.source}
               </div>
               <div className="settings-desc" style={{ color: 'rgba(255,255,255,0.8)', fontWeight: '700' }}>
-                YouTube Kanalı • {item.topics?.length || 0} Konu
+                {t('library.youtubeChannel', { count: item.topics?.length || 0, defaultValue: 'YouTube Kanalı • {{count}} Konu' })}
               </div>
             </div>
           </div>

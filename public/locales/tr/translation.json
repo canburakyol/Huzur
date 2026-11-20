@@ -1528,7 +1528,8 @@
     "title": "Zikir ve Evrad",
     "dailyProgress": "Günlük İlerleme",
     "infoNoteReviewed": "Bu listede Kur’an ayetleri ve genel zikirler birlikte yer alır. Her metnin kaynak bilgisini açarak kontrol edin; kişisel takip, dinî hüküm veya kabul ölçüsü değildir.",
-    "reset": "İlerlemeyi sıfırla"
+    "reset": "İlerlemeyi sıfırla",
+    "sourceGeneral": "Genel / kaynak belirtilmemiş"
   },
   "qibla": {
     "title": "Kıble Pusulası",
@@ -5259,7 +5260,9 @@
     "prevMonth": "Önceki ay",
     "nextMonth": "Sonraki ay",
     "day": "Gün",
-    "unknownLocation": "Konum bilinmiyor"
+    "unknownLocation": "Konum bilinmiyor",
+    "calculated": "Hesaplandı",
+    "sourceDiyanet": "Kaynak: Diyanet"
   },
   "zikirmatik": {
     "popularChoices": "Zikirler",
@@ -5431,7 +5434,9 @@
       "video": "İslami Akademi",
       "faq": "Soru-Cevap"
     },
-    "title": "Kütüphane"
+    "title": "Kütüphane",
+    "videoComingSoon": "Video içerikler yakında eklenecek",
+    "youtubeChannel": "YouTube Kanalı • {{count}} Konu"
   },
   "radio": {
     "selectSurah": "Bir sure seçin"
@@ -6168,6 +6173,7 @@
     "assistantUsed": {
       "headline": "Rehberliği derinleştir",
       "description": "Daha uzun hafıza, daha derin takip ve sakin premium destek ile ilerle."
-    }
+    },
+    "cta": "Daha derin desteği gör"
   }
 }

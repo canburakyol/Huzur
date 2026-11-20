@@ -159,7 +159,7 @@ const TajweedTutor = ({ onClose }) => {
       <div className="practice-info">
         <GraduationCap size={18} aria-hidden="true" />
         <div>
-          <strong>{levelInfo[activeLevel].title} {tt('tajweed.module', 'Modülü')}</strong>
+          <strong>{tt('tajweed.moduleTitle', '{{level}} Modülü', { level: levelInfo[activeLevel].title })}</strong>
           {levelInfo[activeLevel].desc}
         </div>
       </div>

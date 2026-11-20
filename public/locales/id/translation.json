@@ -33,7 +33,7 @@
     "home": "Kembali ke Beranda",
     "all": "Semua",
     "source": "Sumber",
-    "edit": "Edit",
+    "edit": "Ubah",
     "saved": "Tersimpan",
     "badge": "Lencana",
     "days": "Hari",
@@ -552,7 +552,7 @@
   },
   "error": {
     "title": "An Error Occurred",
-    "description": "The application encountered an unexpected error. Please try again.",
+    "description": "Aplikasi mengalami kesalahan tak terduga. Silakan coba lagi.",
     "persistentIssue": "Jika masalah berlanjut, mulai ulang aplikasi."
   },
   "ads": {
@@ -643,7 +643,7 @@
     "title": "Islamic Assistant",
     "online": "Daring",
     "remaining": "Tersisa",
-    "welcomeMessage": "As-salamu alaykum. I am your Islamic Assistant. How can I help you?",
+    "welcomeMessage": "Assalamualaikum. Di sini kamu bisa menemukan tanya jawab siap pakai dan saran pribadi.",
     "errorMessage": "Sorry, an error occurred. Please try again.",
     "found": "ayat ditemukan",
     "placeholder": "Ajukan pertanyaan…",
@@ -677,11 +677,11 @@
       "q24": "Apa yang dimaksud dengan berselawat?",
       "q25": "Apa saja ibadah pada malam-malam kandil?"
     },
-    "betaWelcomeHint": "Beta mode: You can click on ready-made questions or type a similar question.",
-    "betaUnknownQuestion": "This question is not currently in the Beta ready-answer list. You can click one of the sample questions below.",
+    "betaWelcomeHint": "Ketuk salah satu pertanyaan yang tersedia atau tulis pertanyaan serupa.",
+    "betaUnknownQuestion": "Pertanyaan ini belum ada di daftar jawaban siap pakai. Pilih salah satu contoh pertanyaan di bawah.",
     "betaLabel": "Beta",
     "readyQaMode": "Mode tanya-jawab siap",
-    "betaInputPlaceholder": "Beta: type one of the ready questions or select from below",
+    "betaInputPlaceholder": "Tulis salah satu pertanyaan yang tersedia atau pilih di bawah",
     "answers": {
       "q1": "Untuk salat, berwudulah terlebih dahulu; setelah masuk waktu, menghadap kiblat dan berniat. Mulailah dengan takbiratul ihram, lalu kerjakan berdiri, rukuk, sujud, dan duduk secara berurutan; pada duduk terakhir bacalah at-Tahiyyat dan akhiri salat dengan salam.",
       "q2": "Makan atau minum dengan sengaja, berhubungan suami istri, merokok, dan suntikan yang mengenyangkan membatalkan puasa. Dalam perkara yang diperselisihkan, cara paling aman adalah merujuk kitab fikih tepercaya atau bertanya kepada ulama.",
@@ -816,7 +816,7 @@
     "messages": {
       "loading": "Memuat…",
       "noDuas": "Belum ada permohonan doa. Jadilah yang pertama.",
-      "errorSending": "An error occurred while sending the prayer.",
+      "errorSending": "Terjadi kesalahan saat mengirim doa.",
       "aminFailed": "Amin tidak dapat dikirim. Silakan coba lagi."
     },
     "shareTitle": "Huzur – Komunitas",
@@ -1414,11 +1414,12 @@
     "title": "Zikir dan wirid",
     "dailyProgress": "Kemajuan harian",
     "infoNoteReviewed": "Daftar ini berisi ayat Al-Qur'an dan zikir umum. Buka sumber setiap teks untuk memeriksanya; pencatatan pribadi bukan hukum agama atau ukuran diterimanya amal.",
-    "reset": "Atur ulang kemajuan"
+    "reset": "Atur ulang kemajuan",
+    "sourceGeneral": "Umum / sumber tidak disebutkan"
   },
   "qibla": {
     "title": "Kompas Kiblat",
-    "instructions": "Hold your phone parallel to the ground and calibrate by drawing figure 8.",
+    "instructions": "Pegang ponselmu sejajar dengan tanah; jika perlu, kalibrasi kompas dengan menggambar angka 8 di udara.",
     "found": "KIBLAT DITEMUKAN",
     "permissionDenied": "Izin kompas ditolak. Aktifkan di pengaturan.",
     "notSupported": "Kompas tidak didukung di perangkat ini.",
@@ -5259,7 +5260,9 @@
     "prevMonth": "Bulan sebelumnya",
     "nextMonth": "Bulan berikutnya",
     "day": "Hari",
-    "unknownLocation": "Lokasi tidak diketahui"
+    "unknownLocation": "Lokasi tidak diketahui",
+    "calculated": "Dihitung",
+    "sourceDiyanet": "Sumber: Diyanet"
   },
   "zikirmatik": {
     "popularChoices": "Zikir",
@@ -5431,7 +5434,9 @@
       "video": "Akademi Islam",
       "faq": "Tanya jawab"
     },
-    "title": "Perpustakaan"
+    "title": "Perpustakaan",
+    "videoComingSoon": "Konten video segera hadir",
+    "youtubeChannel": "Kanal YouTube • {{count}} topik"
   },
   "radio": {
     "selectSurah": "Pilih surah"
@@ -6168,6 +6173,7 @@
     "assistantUsed": {
       "headline": "Perdalam bimbinganmu",
       "description": "Melangkah lebih jauh dengan memori lebih panjang, pendampingan lebih dalam, dan dukungan premium yang tenang."
-    }
+    },
+    "cta": "Lihat dukungan lebih dalam"
   }
 }
