@@ -34,9 +34,9 @@ const DiscoveryList = ({ title, subtitle, items, t }) => {
         <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1.05rem' }}>{title}</div>
         <div style={{ fontSize: '0.82rem', color: 'var(--nav-text-muted)', fontWeight: '600', marginTop: '4px' }}>{subtitle}</div>
       </div>
-      <div className="sanctuary-stack-list">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
         {items.map((publicFamily) => (
-          <div key={publicFamily.id} className="settings-card sanctuary-family-discovery-card" style={{ padding: '18px 20px', background: 'var(--nav-hover)' }}>
+          <div key={publicFamily.id} className="settings-card" style={{ padding: '18px 20px', background: 'var(--nav-hover)', boxShadow: 'none' }}>
             <div className="flex items-center gap-12">
               <div
                 className="settings-icon-box"

@@ -114,3 +114,11 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Loaders across the app use className="spin"/"pulse"; these classes lived only in screen CSS
+   (Education, WordByWord), so loaders stood still until one of those screens had been opened. */
+.spin { animation: spin 1s linear infinite; }
+.pulse { animation: pulse 2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .spin, .pulse { animation: none; }
+}
