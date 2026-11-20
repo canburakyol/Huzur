@@ -221,7 +221,7 @@ const TajweedQuiz = ({ onBack }) => {
         .quiz-label { font-size: 0.7rem; font-weight: 800; color: var(--nav-text-muted); letter-spacing: 1px; }
 
         .ayah-display {
-            font-family: var(--arabic-font-family);
+            font-family: var(--font-arabic);
             font-size: 2.25rem;
             text-align: center;
             padding: 24px;
@@ -229,7 +229,7 @@ const TajweedQuiz = ({ onBack }) => {
             border: 1px solid var(--nav-border);
             border-radius: 16px;
             margin-bottom: 24px;
-            color: var(--nav-accent);
+            color: var(--ink);
             line-height: 1.6;
         }
 

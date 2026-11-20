@@ -48,7 +48,8 @@
     "minutes": "mnt",
     "appName": "Huzur",
     "ok": "OK",
-    "inFavorites": "Di favorit"
+    "inFavorites": "Di favorit",
+    "locked": "Terkunci"
   },
   "notifications": {
     "prayer": {

@@ -120,6 +120,8 @@
   --font-serif: 'Literata', Georgia, serif;
   --font-main: 'Manrope', 'Segoe UI', system-ui, sans-serif;
   --font-arabic: 'Amiri', 'Noto Naskh Arabic', serif;
+  /* default for screens styled with --arabic-font-family; FontSettings overrides it inline on <html> */
+  --arabic-font-family: var(--font-arabic);
   --font-sans: var(--font-main);
 
   /* Radii */

@@ -1,11 +1,11 @@
 import { useCallback, useState, useRef, useEffect, useMemo } from 'react';
-import { BookOpen, Play, Info, CheckCircle, ChevronRight, GraduationCap, Star, Trophy, Sparkles } from 'lucide-react';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import { BookOpen, Play, CheckCircle, ChevronRight, GraduationCap, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import PageHeader from '../../../components/shared/PageHeader';
 import { getRulesByLevel, TAJWEED_LEVELS } from '../../../data/tajweedData';
 import TajweedQuiz from './TajweedQuiz';
 import { useToast } from '../../../hooks/useToast';
-import './Education.css';
+import '../../../styles/PracticePages.css';
 
 const TajweedTutor = ({ onClose }) => {
   const { t } = useTranslation('tajweed');
@@ -16,30 +16,6 @@ const TajweedTutor = ({ onClose }) => {
   const [showQuiz, setShowQuiz] = useState(false);
   const audioRef = useRef(null);
 
-  const TAJWEED_QA = useMemo(() => ({
-    [tt('tajweed.faq.items.tenvin.question', 'Tenvin nedir?')]: tt('tajweed.faq.items.tenvin.answer', 'Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Uc cesidi vardir:\n• Fethatan (ً): Ustun tenvin\n• Kesretan (ٍ): Esre tenvin\n• Dammetan (ٌ): Otre tenvin\nTenvin, kelimenin sonundaki nunun yazilmadan okunmasidir.'),
-    [tt('tajweed.faq.items.gunne.question', 'Gunneli okuyus nasıl olur?')]: tt('tajweed.faq.items.gunne.answer', 'Gunne, nun ve mim harflerinin genizden okunmasıdır. İki hareke miktarı tutulur.\n• İdgam (mealgunne): Nun sakineden sonra ي، ن، م، و gelirse\n• İhfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• İklab: Nun sakineden sonra ب gelirse, mime dönüşür ve gunneli okunur.'),
-    [tt('tajweed.faq.items.kalkale.question', 'Kalkale harfleri hangileri?')]: tt('tajweed.faq.items.kalkale.answer', 'Kalkale harfleri 5 tanedir ve "قطب جد" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Ti), ب (Ba), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) olduğunda, çıkış noktasında bir sıçrama veya titreşim yapılır.'),
-    [tt('tajweed.faq.items.med.question', 'Med harfleri nelerdir?')]: tt('tajweed.faq.items.med.answer', 'Uzatma (Med) harfleri üçtür: Elif (ا), Vav (و) ve Ya (ي). Bu harfler kendinden önceki harfi bir elif miktarı (yaklaşık 1-1.5 saniye) uzatır.'),
-    [tt('tajweed.faq.items.makhraj.question', 'Mahrec nedir?')]: tt('tajweed.faq.items.makhraj.answer', 'Mahrec, harflerin ağızdan çıkış yeridir. Kuran okurken harflerin doğru mahreclerinden çıkarılması anlamın bozulmaması için çok önemlidir.'),
-    [tt('tajweed.faq.items.ihfa.question', 'İhfa nasıl yapılır?')]: tt('tajweed.faq.items.ihfa.answer', 'Ihfa, sozlukte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiginde, nun sesini genizden getirerek hafifce gizleyerek okumaktir.'),
-    [tt('tajweed.faq.items.sekte.question', 'Sekte nedir?')]: tt('tajweed.faq.items.sekte.answer', 'Sekte, sesi bir an için kesip nefes almadan beklemektir. Kuran-ı Kerim\'de 4 yerde sekte bulunur (Kehf, Yasin, Kıyame ve Mutaffifin surelerinde).'),
-    [tt('tajweed.faq.items.izhar.question', 'İzhar nedir?')]: tt('tajweed.faq.items.izhar.answer', 'İzhar, açıkça okumaktır. Sakin nun veya tenvinden sonra boğaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hiç tutulmadan ve gizlenmeden olduğu gibi okunur.')
-  }), [tt]);
-  /*
-  const TAJWEED_QA_REMOVED = {
-    'Tenvin nedir?': 'Tenvin, kelimenin sonunda bulunan nun harfinin ses etkisidir. Üç çeşidi vardır:\n• Fethatân (ً): Üstün tenvin\n• Kesretân (ٍ): Esre tenvin\n• Dammetân (ٌ): Ötre tenvin\nTenvin, kelimenin sonundaki nunun yazılmadan okunmasıdır.',
-    'Gunneli okuyuş nasıl olur?': 'Gunne, nun ve mim harflerinin genizden okunmasıdır. İki hareke miktarı tutulur.\n• İdğam (mealgünne): Nun sakineden sonra ي، ن، م، w gelirse\n• İhfa: Nun sakineden sonra 15 harf gelirse (ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك)\n• İklab: Nun sakineden sonra ب gelirse, mim\'e dönüşür ve gunneli okunur.',
-    'Kalkale harfleri hangileri?': 'Kalkale harfleri 5 tanedir ve "قطب جد" kelimesiyle ezberlenir:\n• ق (Kaf), ط (Tı), ب (Ba), ج (Cim), د (Dal)\nBu harfler sakin (cezimli) olduğunda, çıkış noktasında bir sıçrama/titreşim yapılır.',
-    'Med harfleri nelerdir?': 'Uzatma (Med) harfleri üçtür: Elif (ا), Vav (و) ve Ya (ي). Bu harfler kendinden önceki harfi bir elif miktarı (yaklaşık 1-1.5 saniye) uzatır.',
-    'Mahreç nedir?': 'Mahreç, harflerin ağızdan çıkış yeridir. Kuran okurken harflerin doğru mahreçlerinden çıkarılması anlamın bozulmaması için çok önemlidir.',
-    'İhfa nasıl yapılır?': 'İhfa, sözlükte gizlemek demektir. Sakin nun veya tenvinden sonra ihfa harfleri geldiğinde, nun sesini genizden (burundan) getirerek hafifçe gizleyerek okumaktır.',
-    'Sekte nedir?': 'Sekte, sesi bir an için kesip nefes almadan beklemektir. Kuran-ı Kerim\'de 4 yerde sekte bulunur (Kehf, Yasin, Kıyame ve Mutaffifin surelerinde).',
-    'İzhar nedir?': 'İzhar, açıkça okumaktır. Sakin nun veya tenvinden sonra boğaz harfleri (ء ه ح خ ع غ) gelirse, nun sesi hiç tutulmadan ve gizlenmeden olduğu gibi okunur.'
-  };
-  */
-
-  // Stop audio helper
   const stopAudio = () => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -48,7 +24,6 @@ const TajweedTutor = ({ onClose }) => {
     }
   };
 
-  // Cleanup audio on unmount
   useEffect(() => {
     return () => stopAudio();
   }, []);
@@ -66,209 +41,154 @@ const TajweedTutor = ({ onClose }) => {
 
   const playAudio = (example) => {
     if (!example.surah || !example.ayah) {
-        showToast(tt('tajweed.audioNotReady', 'Ses dosyası hazır değil.'), 'info');
-        return;
+      showToast(tt('tajweed.audioNotReady', 'Ses dosyası hazır değil.'), 'info');
+      return;
     }
 
     stopAudio();
 
     const surahPad = example.surah.toString().padStart(3, '0');
     const ayahPad = example.ayah.toString().padStart(3, '0');
-    const audioUrl = `https://everyayah.com/data/Alafasy_128kbps/${surahPad}${ayahPad}.mp3`;
-
-    const audio = new Audio(audioUrl);
+    const audio = new Audio(`https://everyayah.com/data/Alafasy_128kbps/${surahPad}${ayahPad}.mp3`);
     audioRef.current = audio;
-    
-    audio.play().catch(e => {
-        if (e.name !== 'AbortError') {
-            showToast(tt('tajweed.audioError', 'Ses calinirken hata olustu.'), 'error');
-        }
+
+    audio.play().catch((e) => {
+      if (e.name !== 'AbortError') {
+        showToast(tt('tajweed.audioError', 'Ses çalınırken hata oluştu.'), 'error');
+      }
     });
   };
 
-  const filteredRules = useMemo(() => {
-    return getRulesByLevel(activeLevel);
-  }, [activeLevel]);
+  const filteredRules = useMemo(() => getRulesByLevel(activeLevel), [activeLevel]);
 
   const levelInfo = {
-    [TAJWEED_LEVELS.BEGINNER]: { title: tt('tajweed.levels.beginner', 'Baslangic'), icon: '🌱', color: 'var(--success)', desc: tt('tajweed.levels.beginnerDesc', 'Temel tecvid kurallarini adim adim ogrenin.') },
-    [TAJWEED_LEVELS.INTERMEDIATE]: { title: tt('tajweed.levels.intermediate', 'Orta Seviye'), icon: '🌿', color: 'var(--brand-ink)', desc: tt('tajweed.levels.intermediateDesc', 'Okuyusunuzu guclendiren orta seviye kurallara gecin.') },
-    [TAJWEED_LEVELS.ADVANCED]: { title: tt('tajweed.levels.advanced', 'Ileri Seviye'), icon: '🌳', color: '#8B5CF6', desc: tt('tajweed.levels.advancedDesc', 'Ileri tecvid detaylariyla tilavetinizi inceltin.') }
+    [TAJWEED_LEVELS.BEGINNER]: { title: tt('tajweed.levels.beginner', 'Başlangıç'), desc: tt('tajweed.levels.beginnerDesc', 'Temel tecvid kurallarını adım adım öğrenin.') },
+    [TAJWEED_LEVELS.INTERMEDIATE]: { title: tt('tajweed.levels.intermediate', 'Orta Seviye'), desc: tt('tajweed.levels.intermediateDesc', 'Okuyuşunuzu güçlendiren orta seviye kurallara geçin.') },
+    [TAJWEED_LEVELS.ADVANCED]: { title: tt('tajweed.levels.advanced', 'İleri Seviye'), desc: tt('tajweed.levels.advancedDesc', 'İleri tecvid detaylarıyla tilavetinizi inceltin.') }
   };
 
   if (showQuiz) {
     return (
-      <div className="education-container manuscript-theme">
-        <div className="manuscript-header">
-          <div className="header-top-nav">
-             <IslamicBackButton onClick={() => setShowQuiz(false)} size="medium" />
-             <div className="glass-pill">{tt('tajweed.quiz', 'Quiz')}</div>
-          </div>
-          <div className="manuscript-header-content reveal-stagger">
-            <h1 className="manuscript-title">{tt('tajweed.quizTitle', 'Tecvid Quiz')}</h1>
-            <p className="manuscript-subtitle">{tt('tajweed.quizDesc', 'Kısa bir tekrar ile tecvid bilginizi ölçün.')}</p>
-          </div>
-        </div>
+      <div className="practice-page">
+        <PageHeader title={tt('tajweed.quizTitle', 'Tecvid Quiz')} subtitle={tt('tajweed.quizDesc', 'Kısa bir tekrar ile tecvid bilginizi ölçün.')} onBack={() => setShowQuiz(false)} />
         <TajweedQuiz onBack={() => setShowQuiz(false)} />
       </div>
     );
   }
 
-  const renderRuleDetail = () => (
-    <div className="manuscript-detail reveal-stagger">
-      <div className="manuscript-card detail-card">
-        <div className="manuscript-icon-ring">
-          <BookOpen size={24} color="var(--edu-gold)" />
-        </div>
-        <h2 className="detail-title">{t(selectedRule.title)}</h2>
-        <p className="detail-description">{t(selectedRule.description)}</p>
-        
-        <div className="manuscript-info-box">
-          <h3 className="info-box-label">{tt('tajweed.rule', 'Kural')}</h3>
-          <p className="info-box-text">{t(selectedRule.rule)}</p>
+  if (selectedRule) {
+    return (
+      <div className="practice-page">
+        <PageHeader title={t(selectedRule.title)} subtitle={levelInfo[activeLevel].title} onBack={handleBack} />
+
+        <p className="practice-lead">{t(selectedRule.description)}</p>
+
+        <div className="practice-info">
+          <BookOpen size={18} aria-hidden="true" />
+          <div>
+            <strong>{tt('tajweed.rule', 'Kural')}</strong>
+            {t(selectedRule.rule)}
+          </div>
         </div>
 
         {selectedRule.makhrajImage && (
-          <div className="makhraj-box-premium">
-            <h3 className="info-box-label">{tt('tajweed.makhraj', 'Mahrec')}</h3>
-            <div className="makhraj-image-frame">
-              <img src={selectedRule.makhrajImage} alt="Makhraj" className="makhraj-image" />
-            </div>
-          </div>
+          <section className="practice-section">
+            <h2 className="practice-section-title">{tt('tajweed.makhraj', 'Mahreç')}</h2>
+            <img src={selectedRule.makhrajImage} alt={tt('tajweed.makhraj', 'Mahreç')} className="practice-panel practice-image" />
+          </section>
         )}
 
-        {selectedRule.letters && (
-          <div className="letters-box-premium">
-            <h3 className="info-box-label">{tt('tajweed.letters', 'Harfler')}</h3>
-            <div className="letters-scroll">
-              {selectedRule.letters.map((letter, i) => (
-                <span key={i} className="manuscript-letter-chip">{letter}</span>
+        {selectedRule.letters?.length > 0 && (
+          <section className="practice-section">
+            <h2 className="practice-section-title">{tt('tajweed.letters', 'Harfler')}</h2>
+            <div className="practice-chip-list" dir="rtl">
+              {selectedRule.letters.map((letter) => (
+                <span key={letter} className="practice-chip practice-chip--arabic" lang="ar">{letter}</span>
               ))}
             </div>
-          </div>
+          </section>
         )}
-      </div>
 
-      <h3 className="manuscript-section-title">{tt('tajweed.examples', 'Ornekler')}</h3>
-      <div className="examples-list-premium">
-        {selectedRule.examples.map((example, i) => (
-          <div key={i} className="manuscript-card example-card-premium reveal-stagger" style={{ '--delay': `${0.2 + i * 0.1}s` }}>
-            <div className="arabic-preview">{example.arabic || example.text}</div>
-            <div className="example-text-content">
-              <div className="example-latin">{example.transliteration}</div>
-              <div className="example-desc">{t(example.explanation)}</div>
-            </div>
-            <button className="premium-play-btn" onClick={() => playAudio(example)}>
-              <Play size={18} fill="currentColor" />
-            </button>
-          </div>
-        ))}
-      </div>
-
-      <div className="manuscript-footer">
-        <button className="manuscript-action-btn" onClick={() => setSelectedRule(null)}>
-          <CheckCircle size={24} />
-          {tt('tajweed.understood', 'Anladim, Devam Et')}
-        </button>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="education-container manuscript-theme">
-      <div className="manuscript-header">
-        <div className="header-top-nav">
-           <IslamicBackButton onClick={handleBack} size="medium" />
-           {selectedRule && <div className="glass-pill">{levelInfo[activeLevel].title}</div>}
-        </div>
-        
-        <div className="manuscript-header-content reveal-stagger">
-          <div className="title-row">
-            <h1 className="manuscript-title">{tt('tajweed.title', 'Tecvid Akademisi')}</h1>
-            <span className="manuscript-badge">{tt('tajweed.academy', 'Huzur Akademi')}</span>
-          </div>
-          <p className="manuscript-subtitle">
-            {selectedRule ? t(selectedRule.title) : tt('tajweed.mainSubtitle', 'Tecvid kurallarını sade ve anlaşılır adımlarla öğrenin.')}
-          </p>
-        </div>
-      </div>
-
-      {selectedRule ? (
-        renderRuleDetail()
-      ) : (
-        <div className="manuscript-main reveal-stagger" style={{ '--delay': '0.2s' }}>
-          {/* Level Tabs */}
-          <div className="manuscript-tabs-container">
-            <div className="manuscript-tabs">
-              {Object.values(TAJWEED_LEVELS).map(level => (
-                <button 
-                  key={level}
-                  className={`royal-tab-btn ${activeLevel === level ? 'active' : ''}`}
-                  onClick={() => setActiveLevel(level)}
-                >
-                  {levelInfo[level].title}
+        <section className="practice-section">
+          <h2 className="practice-section-title">{tt('tajweed.examples', 'Örnekler')}</h2>
+          <div className="practice-list">
+            {selectedRule.examples.map((example, i) => (
+              <div key={i} className="practice-row">
+                <div className="practice-row__body">
+                  <span className="practice-arabic" lang="ar" dir="rtl">{example.arabic || example.text}</span>
+                  {example.transliteration && <span className="practice-row__title">{example.transliteration}</span>}
+                  <span className="practice-row__text">{t(example.explanation)}</span>
+                </div>
+                <button type="button" className="practice-row-action" onClick={() => playAudio(example)} aria-label={tt('tajweed.listen', 'Dinle')}>
+                  <Play size={18} aria-hidden="true" />
                 </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Level Progress/Banner */}
-          <div className="manuscript-banner reveal-stagger" style={{ '--delay': '0.3s' }}>
-             <div className="banner-content">
-                <div className="banner-text">
-                    <h2 className="banner-title">{levelInfo[activeLevel].title} {tt('tajweed.module', 'Modulu')}</h2>
-                    <p className="banner-desc">{levelInfo[activeLevel].desc}</p>
-                </div>
-                <div className="banner-visual">
-                    <div className="progress-decoration">
-                        <GraduationCap size={40} color="var(--edu-gold)" />
-                    </div>
-                </div>
-             </div>
-          </div>
-
-          {/* Rules List */}
-          <div className="rules-grid">
-            <h3 className="grid-label">{tt('tajweed.availableLessons', 'Mevcut Dersler')}</h3>
-            {filteredRules.map((rule, idx) => (
-              <div 
-                key={rule.id} 
-                className="manuscript-card reveal-stagger"
-                onClick={() => setSelectedRule(rule)}
-                style={{ '--delay': `${0.4 + idx * 0.05}s` }}
-              >
-                <div className="rule-card-content">
-                  <div className="rule-meta">
-                    <span className="rule-badge">{levelInfo[activeLevel].title}</span>
-                    <Sparkles size={14} color="var(--edu-gold)" />
-                  </div>
-                  <h3 className="lesson-title">{t(rule.title)}</h3>
-                  <p className="lesson-desc">{t(rule.description)}</p>
-                </div>
-                <div className="rule-action">
-                   <div className="premium-play-ring">
-                     <Play size={12} fill="currentColor" />
-                   </div>
-                </div>
               </div>
             ))}
           </div>
+        </section>
 
-          {/* AI & Quiz Footer */}
-          <div className="action-cards-manuscript">
-            <div className="manuscript-card quiz-card reveal-stagger" onClick={() => setShowQuiz(true)} style={{ '--delay': '0.6s' }}>
-                <Trophy size={32} color="var(--edu-gold)" />
-                <div className="card-text">
-                    <h4>{tt('tajweed.quizTitle', 'Tecvid Quiz')}</h4>
-                    <p>{tt('tajweed.quizSubtitle', 'Öğrendiklerinizi hızlı bir testle pekiştirin.')}</p>
-                </div>
-                <ChevronRight size={20} color="var(--edu-gold)" />
-            </div>
-          </div>
+        <div className="practice-actions">
+          <button type="button" className="practice-primary-button practice-wide" onClick={handleBack}>
+            <CheckCircle size={18} aria-hidden="true" />
+            {tt('tajweed.understood', 'Anladım, Devam Et')}
+          </button>
         </div>
-      )}
+      </div>
+    );
+  }
 
+  return (
+    <div className="practice-page">
+      <PageHeader title={tt('tajweed.title', 'Tecvid Akademisi')} subtitle={tt('tajweed.mainSubtitle', 'Tecvid kurallarını sade ve anlaşılır adımlarla öğrenin.')} onBack={handleBack} />
 
+      <div className="practice-segments" role="tablist" aria-label={tt('tajweed.levelLabel', 'Seviye')}>
+        {Object.values(TAJWEED_LEVELS).map((level) => (
+          <button
+            key={level}
+            type="button"
+            role="tab"
+            aria-selected={activeLevel === level}
+            className={`practice-segment ${activeLevel === level ? 'practice-segment--active' : ''}`}
+            onClick={() => setActiveLevel(level)}
+          >
+            {levelInfo[level].title}
+          </button>
+        ))}
+      </div>
+
+      <div className="practice-info">
+        <GraduationCap size={18} aria-hidden="true" />
+        <div>
+          <strong>{levelInfo[activeLevel].title} {tt('tajweed.module', 'Modülü')}</strong>
+          {levelInfo[activeLevel].desc}
+        </div>
+      </div>
+
+      <section className="practice-section">
+        <h2 className="practice-section-title">{tt('tajweed.availableLessons', 'Mevcut Dersler')}</h2>
+        <div className="practice-list">
+          {filteredRules.map((rule) => (
+            <button key={rule.id} type="button" className="practice-row" onClick={() => setSelectedRule(rule)}>
+              <span className="practice-row__body">
+                <span className="practice-row__title">{t(rule.title)}</span>
+                <span className="practice-row__text">{t(rule.description)}</span>
+              </span>
+              <ChevronRight size={18} aria-hidden="true" />
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="practice-section">
+        <button type="button" className="practice-row" onClick={() => setShowQuiz(true)}>
+          <span className="practice-row__icon"><Trophy size={18} aria-hidden="true" /></span>
+          <span className="practice-row__body">
+            <span className="practice-row__title">{tt('tajweed.quizTitle', 'Tecvid Quiz')}</span>
+            <span className="practice-row__text">{tt('tajweed.quizSubtitle', 'Öğrendiklerinizi hızlı bir testle pekiştirin.')}</span>
+          </span>
+          <ChevronRight size={18} aria-hidden="true" />
+        </button>
+      </section>
     </div>
   );
 };

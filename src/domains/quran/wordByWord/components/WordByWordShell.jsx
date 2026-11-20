@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { Book } from 'lucide-react';
-import IslamicBackButton from '../../../../components/shared/IslamicBackButton';
+import PageHeader from '../../../../components/shared/PageHeader';
 import useWordByWord from '../hooks/useWordByWord';
 import SurahSelector from './SurahSelector';
 import AyahList from './AyahList';
 import WordDetailPanel from './WordDetailPanel';
 import LimitModal from './LimitModal';
+import '../../../../styles/PracticePages.css';
 import './WordByWord.css';
 
 /**
@@ -35,40 +36,12 @@ const WordByWordShell = ({ onClose, onUpgrade, initialSurah = null }) => {
   } = useWordByWord(initialSurah);
 
   return (
-    <div className="settings-container reveal-stagger" style={{ padding: 0 }}>
-      {/* Header */}
-      <div
-        style={{
-          padding: '24px 20px',
-          background: 'linear-gradient(135deg, var(--nav-bg), var(--nav-hover))',
-          borderBottom: '1px solid var(--nav-border)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-          marginBottom: '24px',
-        }}
-      >
-        <IslamicBackButton
-          onClick={showSurahList ? onClose : goToSurahList}
-          size="medium"
-        />
-        <div style={{ flex: 1 }}>
-          <h1 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--nav-text)', fontWeight: '950' }}>
-            {t('wordByWord.title')}
-          </h1>
-          <p style={{ margin: '2px 0 0 0', fontSize: '0.8rem', color: 'var(--nav-text-muted)', fontWeight: '800' }}>
-            {showSurahList ? t('wordByWord.selectSurah') : surahData?.name}
-          </p>
-        </div>
-        {!userIsPro && (
-          <div
-            className="hamburger-level-badge"
-            style={{ background: 'var(--surface-action-soft)', color: 'var(--success-color)', border: '1px solid var(--border-strong)' }}
-          >
-            {t('wordByWord.freeSurahsBadge', { count: freeSurahs.length })}
-          </div>
-        )}
-      </div>
+    <div className="practice-page">
+      <PageHeader
+        title={t('wordByWord.title')}
+        subtitle={showSurahList ? t('wordByWord.selectSurah') : surahData?.name}
+        onBack={showSurahList ? onClose : goToSurahList}
+      />
 
       {/* Content */}
       {showSurahList ? (
@@ -89,20 +62,9 @@ const WordByWordShell = ({ onClose, onUpgrade, initialSurah = null }) => {
               onToggleAyah={toggleAyah}
               onWordClick={handleWordClick}
             />
-            <div style={{ padding: '0 20px' }}>
-              <button
-                className="velocity-target-btn"
-                style={{
-                  marginTop: '32px',
-                  width: '100%',
-                  justifyContent: 'center',
-                  background: 'var(--nav-hover)',
-                  color: 'var(--nav-text)',
-                  borderColor: 'var(--nav-border)',
-                }}
-                onClick={goToSurahList}
-              >
-                <Book size={18} />
+            <div className="practice-actions">
+              <button type="button" className="practice-secondary-button practice-wide" onClick={goToSurahList}>
+                <Book size={18} aria-hidden="true" />
                 {t('wordByWord.changeSurah')}
               </button>
             </div>

@@ -62,9 +62,9 @@ const HatimDetail = ({ hatimId, onBack }) => {
 
   if (error) {
     return (
-      <div className="manuscript-card reveal-stagger" style={{ borderColor: 'var(--danger)' }}>
-        <p className="lesson-title">{t('common.error', 'Hata oluştu')}</p>
-        <p className="lesson-desc">{error}</p>
+      <div className="practice-panel" role="alert">
+        <p className="practice-row__title">{t('common.error', 'Hata oluştu')}</p>
+        <p className="practice-row__text">{error}</p>
       </div>
     );
   }
@@ -74,9 +74,9 @@ const HatimDetail = ({ hatimId, onBack }) => {
   const isMember = hatimDetails.readers?.includes(currentUserId);
   if (!isMember) {
     return (
-      <div className="manuscript-card reveal-stagger" style={{ textAlign: 'center' }}>
+      <div className="practice-panel" style={{ textAlign: 'center' }}>
         <Info size={48} color="var(--soc-teal-dark)" style={{ marginBottom: '15px' }} />
-        <p className="lesson-desc">
+        <p className="practice-row__text">
           {t('hatim.membershipRequired', 'Bu hatimin detaylarını görmek için önce katılmalısınız.')}
         </p>
         <button onClick={onBack} className="sanctuary-btn-primary" style={{ marginTop: '20px', width: '100%' }}>
@@ -160,10 +160,11 @@ const HatimDetail = ({ hatimId, onBack }) => {
       <div className="settings-card hatim-detail-hero">
         <button
           onClick={onBack}
-          className="premium-icon-btn"
-          style={{ background: 'var(--hb-hover)', color: 'var(--hb-accent)', width: '44px', height: '44px', borderRadius: '14px' }}
+          type="button"
+          className="hz-iconbtn"
+          aria-label={t('common.back', 'Geri')}
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={20} strokeWidth={1.75} aria-hidden="true" />
         </button>
 
         <div className="hatim-detail-hero-body">

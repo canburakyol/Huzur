@@ -5,10 +5,11 @@ import { Share } from '@capacitor/share';
 import HatimList from './HatimList';
 import HatimDetail from './HatimDetail';
 import DuaList from './DuaList';
-import IslamicBackButton from '../../../components/shared/IslamicBackButton';
+import PageHeader from '../../../components/shared/PageHeader';
 import { BookOpen, Heart, Share2 } from 'lucide-react';
 import { useToast } from '../../../hooks/useToast';
 import { logger } from '../../../utils/logger';
+import '../../../styles/PracticePages.css';
 import './Social.css';
 
 const SocialDashboard = ({ onClose }) => {
@@ -67,69 +68,45 @@ const SocialDashboard = ({ onClose }) => {
   };
 
   return (
-    <div className="education-container social-sanctuary">
-      {/* Header */}
+    <div className="practice-page social-sanctuary">
       {!selectedHatimId && (
-        <header className="settings-container reveal-stagger sanctuary-header">
-          <div className="sanctuary-header-top">
-            <IslamicBackButton onClick={onClose} size="medium" color="var(--hb-accent)" />
-            <div className="sanctuary-pill">
-              {t('community.sanctuary')}
-            </div>
-            <button
-              className="premium-icon-btn" 
-              type="button"
-              disabled={isSharing}
-              style={{
-                background: 'var(--hb-hover)',
-                color: 'var(--hb-accent)',
-                width: '44px',
-                height: '44px',
-                borderRadius: '14px',
-                opacity: isSharing ? 0.7 : 1,
-                transition: 'opacity 0.2s ease, transform 0.2s ease'
-              }}
-              aria-label={t('community.share', 'Topluluğu paylaş')}
-              onClick={handleShare}
-            >
-              <Share2 size={20} />
-            </button>
-          </div>
+        <>
+          <PageHeader
+            title={activeTab === 'hatim' ? t('community.tabs.hatims') : t('community.tabs.duas')}
+            subtitle={activeTab === 'hatim' ? t('community.hatimDesc') : t('community.duaDesc')}
+            onBack={onClose}
+            action={(
+              <button
+                type="button"
+                className="hz-iconbtn"
+                disabled={isSharing}
+                aria-label={t('community.share', 'Topluluğu paylaş')}
+                onClick={handleShare}
+              >
+                <Share2 size={20} strokeWidth={1.75} aria-hidden="true" />
+              </button>
+            )}
+          />
 
-          <div className="sanctuary-title-wrap">
-            <h1 className="sanctuary-title">
-              {activeTab === 'hatim' ? t('community.tabs.hatims') : t('community.tabs.duas')}
-            </h1>
-            <p className="sanctuary-subtitle">
-              {activeTab === 'hatim' ? t('community.hatimDesc') : t('community.duaDesc')}
-            </p>
+          <div className="practice-segments social-segments" role="tablist" aria-label={t('community.sanctuary')}>
+            {[['hatim', <BookOpen key="i" size={16} aria-hidden="true" />, t('community.tabs.hatims')], ['dua', <Heart key="i" size={16} aria-hidden="true" />, t('community.tabs.duas')]].map(([id, icon, label]) => (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === id}
+                className={`practice-segment ${activeTab === id ? 'practice-segment--active' : ''}`}
+                onClick={() => setActiveTab(id)}
+              >
+                {icon} {label}
+              </button>
+            ))}
           </div>
-          
-          <div className="sanctuary-tabs sanctuary-tabs-main" role="tablist" aria-label="Community tabs">
-            <button
-              onClick={() => setActiveTab('hatim')}
-              className={`sanctuary-tab-btn ${activeTab === 'hatim' ? 'active' : ''}`}
-              role="tab"
-              aria-selected={activeTab === 'hatim'}
-            >
-              <BookOpen size={20} />
-              {t('community.tabs.hatims')}
-            </button>
-            <button
-              onClick={() => setActiveTab('dua')}
-              className={`sanctuary-tab-btn ${activeTab === 'dua' ? 'active' : ''}`}
-              role="tab"
-              aria-selected={activeTab === 'dua'}
-            >
-              <Heart size={20} />
-              {t('community.tabs.duas')}
-            </button>
-          </div>
-        </header>
+        </>
       )}
 
       {/* Content Area */}
-      <div className="sanctuary-content-area reveal-stagger" style={{ '--delay': '0.4s' }}>
+      <div className="sanctuary-content-area">
         {activeTab === 'hatim' && (
           <div className="hatim-section">
             {selectedHatimId ? (

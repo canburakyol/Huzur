@@ -42,7 +42,7 @@ const WordDetailPanel = ({ t, selectedWord, wordAnalysis, onDismiss }) => {
               display: 'block',
               fontSize: '2.5rem',
               fontFamily: 'var(--arabic-font-family)',
-              color: 'var(--nav-accent)',
+              color: 'var(--brand-ink)',
               marginBottom: '8px',
             }}
           >

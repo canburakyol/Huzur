@@ -48,7 +48,8 @@
     "minutes": "Min.",
     "appName": "Huzur",
     "ok": "OK",
-    "inFavorites": "In Favoriten"
+    "inFavorites": "In Favoriten",
+    "locked": "Gesperrt"
   },
   "notifications": {
     "prayer": {

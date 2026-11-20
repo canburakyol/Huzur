@@ -178,6 +178,8 @@
           }
         }
       }
-    }
+    },
+    "levelLabel": "Seviye",
+    "listen": "Dinle"
   }
 }

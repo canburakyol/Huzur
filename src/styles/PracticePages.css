@@ -168,3 +168,8 @@ textarea.practice-field { min-height: 84px; resize: vertical; }
 .tesbih-counter i b { display: block; height: 100%; border-radius: inherit; background: var(--brand); }
 .tesbih-accordion-trigger { min-width: 0; flex: 1; padding: 10px 0; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; }
 .tesbih-chevron-button { width: 32px; height: 40px; min-width: 32px; display: grid; place-items: center; border: 0; background: transparent; color: var(--ink-muted); cursor: pointer; }
+
+.practice-lead { margin: 0 0 14px; font-size: .9rem; line-height: 1.6; color: var(--ink-muted); }
+.practice-arabic { display: block; margin-bottom: 6px; font-family: var(--font-arabic); font-size: 1.5rem; line-height: 1.9; text-align: right; color: var(--ink); }
+.practice-chip--arabic { min-width: 44px; font-family: var(--font-arabic); font-size: 1.2rem; color: var(--ink); text-align: center; }
+.practice-image { display: block; width: 100%; height: auto; padding: 0; overflow: hidden; }

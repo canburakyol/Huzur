@@ -60,7 +60,7 @@ const DuaList = () => {
   );
 
   return (
-    <div className="dua-list">
+    <div className="social-dua-list">
       <div className="reveal-stagger" style={{ marginBottom: '24px' }}>
         <button className="sanctuary-btn-primary" onClick={() => setShowCreateModal(true)} style={{ width: '100%' }}>
           <Plus size={20} />
@@ -68,7 +68,7 @@ const DuaList = () => {
         </button>
       </div>
 
-      <div className="dua-grid reveal-stagger" style={{ '--delay': '0.5s', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div className="social-dua-grid" style={{ '--delay': '0.5s', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {featuredDuas.length > 0 && (
           <div className="sanctuary-section-block">
             <div className="sanctuary-section-header">

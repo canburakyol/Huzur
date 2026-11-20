@@ -2,28 +2,28 @@
 
 /* ── Yerel Sabitler ─────────────────────────────────────────── */
 :root {
-    --soc-emerald:       var(--surface-container);
-    --soc-emerald-dark:  var(--primary-container);
-    --soc-emerald-light: var(--secondary);
-    --soc-teal:          var(--soc-emerald);
-    --soc-teal-dark:     var(--soc-emerald-dark);
-    --soc-teal-light:    var(--soc-emerald-light);
-    --soc-sage:          color-mix(in srgb, var(--secondary) 15%, transparent);
-    --soc-sage-dark:     color-mix(in srgb, var(--tertiary) 25%, transparent);
-    --soc-accent:        var(--tertiary);
-    --soc-accent-light:  var(--tertiary-fixed-dim);
-    --soc-bg:            var(--surface-page);
-    --soc-text:          var(--text-body);
-    --soc-text-muted:    var(--text-subtle);
-    --soc-shadow:        var(--shadow-card);
-    --soc-glass:         var(--surface-card-strong);
-    --soc-card-border:   var(--outline-variant);
-    --soc-surface:       var(--surface-card);
-    --soc-surface-light: var(--surface-action-soft);
+    --soc-emerald:       var(--brand-soft);
+    --soc-emerald-dark:  var(--brand);
+    --soc-emerald-light: var(--brand-ink);
+    --soc-teal:          var(--brand-ink);
+    --soc-teal-dark:     var(--brand-ink);
+    --soc-teal-light:    var(--brand-ink);
+    --soc-sage:          var(--brand-soft);
+    --soc-sage-dark:     color-mix(in srgb, var(--gold) 25%, transparent);
+    --soc-accent:        var(--brand-ink);
+    --soc-accent-light:  var(--gold);
+    --soc-bg:            var(--paper);
+    --soc-text:          var(--ink);
+    --soc-text-muted:    var(--ink-muted);
+    --soc-shadow:        var(--elevation-1);
+    --soc-glass:         var(--paper-raised);
+    --soc-card-border:   var(--line);
+    --soc-surface:       var(--paper-raised);
+    --soc-surface-light: var(--brand-soft);
 }
 
 .social-sanctuary {
-    background: linear-gradient(180deg, var(--surface-page) 0%, var(--surface-dim) 100%);
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper) 100%);
     min-height: 100vh;
 }
 
@@ -37,7 +37,7 @@
     padding: 32px 24px 24px;
     border-bottom: 1px solid var(--soc-card-border);
     border-radius: 0 0 32px 32px;
-    background: var(--surface-card);
+    background: var(--paper-raised);
     backdrop-filter: blur(var(--surface-blur, 16px));
     -webkit-backdrop-filter: blur(var(--surface-blur, 16px));
 }
@@ -55,7 +55,7 @@
     border-radius: 100px;
     font-size: 0.7rem;
     font-weight: 900;
-    color: var(--tertiary);
+    color: var(--brand-ink);
     text-transform: uppercase;
     letter-spacing: 1.5px;
     border: 1px solid rgba(180, 83, 9, 0.3);
@@ -71,14 +71,14 @@
     margin: 0;
     font-size: 2rem;
     font-weight: 950;
-    color: var(--text-primary);
+    color: var(--ink);
     letter-spacing: -0.8px;
 }
 
 .sanctuary-subtitle {
     margin: 0;
     font-size: 0.95rem;
-    color: var(--text-secondary);
+    color: var(--ink-muted);
     opacity: 0.8;
     font-weight: 600;
 }
@@ -98,7 +98,7 @@
     margin-bottom: 8px;
     padding: 6px;
     border-radius: 20px;
-    background: rgba(0, 0, 0, 0.15);
+    background: var(--paper-sunken);
     border: 1px solid var(--soc-card-border);
     gap: 6px;
 }
@@ -121,7 +121,7 @@
 
 .sanctuary-tab-btn.active {
     background: var(--soc-surface-light);
-    color: var(--tertiary);
+    color: var(--brand-ink);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -171,14 +171,14 @@
     margin: 0;
     font-size: 1.25rem;
     font-weight: 950;
-    color: var(--text-primary);
+    color: var(--ink);
     letter-spacing: -0.5px;
 }
 
 .hatim-description {
     margin: 6px 0 0;
     font-size: 0.9rem;
-    color: var(--text-secondary);
+    color: var(--ink-muted);
     opacity: 0.75;
     font-weight: 600;
 }
@@ -189,7 +189,7 @@
     border-radius: 12px;
     font-size: 0.9rem;
     font-weight: 900;
-    color: var(--on-primary);
+    color: var(--on-brand);
     box-shadow: 0 4px 12px rgba(6, 78, 59, 0.3);
     border: 1px solid var(--soc-card-border);
 }
@@ -213,13 +213,13 @@
 
 .hatim-pill.member {
     background: rgba(180, 83, 9, 0.15);
-    color: var(--tertiary);
+    color: var(--brand-ink);
     border: 1px solid rgba(180, 83, 9, 0.25);
 }
 
 .hatim-pill.featured {
     background: rgba(251, 191, 36, 0.14);
-    color: var(--tertiary);
+    color: var(--brand-ink);
     border: 1px solid rgba(251, 191, 36, 0.22);
 }
 
@@ -239,7 +239,7 @@
     justify-content: space-between;
     font-size: 0.8rem;
     font-weight: 900;
-    color: var(--text-secondary);
+    color: var(--ink-muted);
     opacity: 0.6;
     margin-top: 10px;
 }
@@ -248,7 +248,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: var(--tertiary);
+    color: var(--brand-ink);
 }
 
 .hatim-code-button {
@@ -290,7 +290,7 @@
 
 .meta-tag {
     background: var(--soc-sage);
-    color: var(--tertiary);
+    color: var(--brand-ink);
     padding: 4px 10px;
     border-radius: 8px;
     font-size: 0.75rem;
@@ -316,7 +316,7 @@
 
 .hatim-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--soc-emerald-dark) 0%, var(--tertiary) 100%);
+    background: var(--brand);
     border-radius: 4px;
     transition: width 0.6s ease;
 }
@@ -334,13 +334,13 @@
     left: 0;
     bottom: 0;
     width: 4px;
-    background: var(--tertiary);
+    background: var(--brand);
     opacity: 0.6;
 }
 
 .dua-text {
     font-style: italic;
-    color: var(--text-primary);
+    color: var(--ink);
     font-size: 1.05rem;
     line-height: 1.7;
     font-weight: 600;
@@ -373,14 +373,14 @@
     border-radius: 10px;
     font-size: 0.8rem;
     font-weight: 800;
-    color: var(--text-secondary);
+    color: var(--ink-muted);
     opacity: 0.8;
     border: 1px solid var(--soc-card-border);
 }
 
 .dua-author-pill.featured {
     background: rgba(251, 191, 36, 0.12);
-    color: var(--tertiary);
+    color: var(--brand-ink);
 }
 
 .dua-pray-btn {
@@ -394,7 +394,7 @@
     cursor: pointer;
     border: none;
     background: var(--soc-emerald-dark);
-    color: var(--on-primary);
+    color: var(--on-brand);
     box-shadow: 0 4px 12px rgba(6, 78, 59, 0.3);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -402,14 +402,14 @@
 .dua-pray-btn.is-prayed {
     cursor: default;
     background: rgba(6, 78, 59, 0.2);
-    color: var(--tertiary);
+    color: var(--brand-ink);
     box-shadow: none;
     border: 1px solid var(--soc-card-border);
 }
 
 .dua-count {
     background: rgba(255, 255, 255, 0.15);
-    color: var(--on-primary);
+    color: var(--on-brand);
     padding: 2px 8px;
     border-radius: 8px;
     font-size: 0.75rem;
@@ -418,8 +418,8 @@
 }
 
 .dua-pray-btn.is-prayed .dua-count {
-    background: var(--tertiary);
-    color: var(--on-primary);
+    background: var(--brand);
+    color: var(--on-brand);
 }
 
 .sanctuary-empty {
@@ -461,7 +461,7 @@
 .sanctuary-btn-primary {
     flex: 1;
     background: var(--soc-emerald-dark);
-    color: var(--on-primary);
+    color: var(--on-brand);
     border: none;
     padding: 14px;
     border-radius: 16px;
@@ -476,14 +476,14 @@
 
 .sanctuary-btn-primary:active {
     transform: scale(0.96);
-    background: var(--surface-dim);
+    background: var(--paper);
 }
 
 .sanctuary-btn-outline {
     flex: 1;
     background: transparent;
     border: 1.5px solid var(--soc-emerald-dark);
-    color: var(--tertiary);
+    color: var(--brand-ink);
     padding: 14px;
     border-radius: 16px;
     font-weight: 800;
@@ -511,7 +511,7 @@
     margin: 0;
     font-size: 1rem;
     font-weight: 900;
-    color: var(--text-primary);
+    color: var(--ink);
 }
 
 .sanctuary-section-subtitle {
@@ -554,7 +554,7 @@
     font-weight: 900;
     text-align: center;
     letter-spacing: 4px;
-    color: var(--tertiary);
+    color: var(--brand-ink);
     margin: 15px 0;
     background: var(--soc-surface);
 }
@@ -573,7 +573,7 @@
     align-items: flex-start;
     gap: 18px;
     margin-bottom: 24px;
-    border: 1px solid var(--hb-border);
+    border: 1px solid var(--line);
     background:
       radial-gradient(circle at top right, rgba(251, 191, 36, 0.18), transparent 34%),
       linear-gradient(180deg, rgba(6, 78, 59, 0.18) 0%, rgba(4, 47, 46, 0.08) 100%);
@@ -593,7 +593,7 @@
     padding: 6px 10px;
     border-radius: 999px;
     background: rgba(180, 83, 9, 0.12);
-    color: var(--tertiary);
+    color: var(--brand-ink);
     font-size: 0.72rem;
     font-weight: 900;
     letter-spacing: 0.4px;
@@ -604,7 +604,7 @@
     margin: 10px 0 0;
     font-size: 1.3rem;
     font-weight: 950;
-    color: var(--text-primary);
+    color: var(--ink);
     letter-spacing: -0.5px;
 }
 
@@ -641,7 +641,7 @@
     gap: 8px;
     font-size: 1rem;
     font-weight: 950;
-    color: var(--tertiary);
+    color: var(--brand-ink);
 }
 
 .hatim-code-actions {
@@ -658,7 +658,7 @@
     border-radius: 14px;
     padding: 12px 14px;
     background: var(--soc-emerald-dark);
-    color: var(--on-primary);
+    color: var(--on-brand);
     font-size: 0.8rem;
     font-weight: 900;
     box-shadow: 0 8px 16px rgba(6, 78, 59, 0.2);
@@ -666,7 +666,7 @@
 
 .hatim-code-action-btn.secondary {
     background: rgba(180, 83, 9, 0.12);
-    color: var(--tertiary);
+    color: var(--brand-ink);
     border: 1px solid rgba(180, 83, 9, 0.24);
     box-shadow: none;
 }
@@ -674,7 +674,7 @@
 .hatim-detail-grid-card {
     flex-direction: column;
     padding: 24px;
-    border: 1px solid var(--hb-border);
+    border: 1px solid var(--line);
 }
 
 .hatim-grid-header {
@@ -689,14 +689,14 @@
     margin: 0;
     font-size: 0.9rem;
     font-weight: 900;
-    color: var(--text-primary);
+    color: var(--ink);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .hatim-grid-subtitle {
     margin: 8px 0 0;
-    color: var(--text-secondary);
+    color: var(--ink-muted);
     opacity: 0.8;
     font-size: 0.84rem;
     font-weight: 600;
@@ -711,7 +711,7 @@
     border-radius: 999px;
     background: rgba(180, 83, 9, 0.12);
     border: 1px solid rgba(180, 83, 9, 0.2);
-    color: var(--tertiary);
+    color: var(--brand-ink);
     font-size: 0.75rem;
     font-weight: 900;
     white-space: nowrap;
@@ -753,7 +753,7 @@
 .part-number {
     font-size: 1.45rem;
     font-weight: 950;
-    color: var(--text-primary);
+    color: var(--ink);
 }
 
 .part-status-pill {
@@ -765,7 +765,7 @@
     font-size: 0.72rem;
     font-weight: 900;
     background: rgba(255, 255, 255, 0.08);
-    color: var(--text-secondary);
+    color: var(--ink-muted);
 }
 
 .part-owner-name {
@@ -777,12 +777,12 @@
 
 .part-btn-premium.taken-mine .part-status-pill {
     background: rgba(180, 83, 9, 0.16);
-    color: var(--tertiary);
+    color: var(--brand-ink);
 }
 
 .part-btn-premium.completed .part-status-pill {
     background: rgba(255, 255, 255, 0.16);
-    color: var(--on-primary);
+    color: var(--on-brand);
 }
 
 .hatim-legend-premium {
@@ -835,8 +835,8 @@
 .part-btn.free { background: var(--soc-surface); }
 .part-btn.taken-mine {
     background: var(--soc-surface-light);
-    border-color: var(--tertiary);
-    color: var(--tertiary);
+    border-color: var(--brand-ink);
+    color: var(--brand-ink);
 }
 .part-btn.taken-others {
     background: rgba(255, 255, 255, 0.04);
@@ -845,7 +845,7 @@
 }
 .part-btn.completed {
     background: var(--soc-emerald-dark);
-    color: var(--on-primary);
+    color: var(--on-brand);
     border-color: var(--soc-emerald-dark);
 }
 
@@ -904,3 +904,8 @@
         justify-content: center;
     }
 }
+
+/* Mushaf shell: practice-page already pads the screen; two segments, icon beside label */
+.social-sanctuary .sanctuary-content-area { padding: 0; }
+.social-segments { grid-template-columns: repeat(2, 1fr); }
+.social-segments .practice-segment { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
