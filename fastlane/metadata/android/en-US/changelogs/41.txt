@@ -1,0 +1,6 @@
+• More reliable prayer notifications; the next days are scheduled ahead.
+• New look for the Quran reader, missed prayers, Settings, Tajweed and word-by-word.
+• Hadith of the Day on the home screen, only from Sahih al-Bukhari and Sahih Muslim.
+• Text settings now work: Arabic typeface, size and line spacing in the Quran reader.
+• The bottom ad no longer covers the menu; no ads in the first 3 days after install.
+• Content fixes and a security update.

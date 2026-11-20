@@ -1,0 +1,6 @@
+• Namaz bildirimleri daha güvenilir; sonraki günlerin vakitleri de önceden kuruluyor.
+• Yeni görünüm: Kur'an okuyucu, Kaza Takibi, Ayarlar, Tecvid, Kelime Kelime.
+• Ana sayfada Günün Hadisi: yalnızca Buhârî ve Müslim'den.
+• Yazı Ayarları çalışıyor: yazı tipi, boyut ve satır aralığı Kur'an'da uygulanır.
+• Alt reklam menünün üstüne binmiyor; yeni kurulumda ilk 3 gün reklam yok.
+• İçerik düzeltmeleri ve güvenlik güncellemesi.

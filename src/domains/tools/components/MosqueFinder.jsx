@@ -1,6 +1,6 @@
 import React, { Suspense, useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MapPin, Navigation, Loader, RefreshCw } from 'lucide-react';
+import { MapPin, Navigation, Loader, RefreshCw, Landmark } from 'lucide-react';
 import { logger } from '../../../utils/logger';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 
@@ -223,7 +223,7 @@ const MosqueFinder = ({ onClose }) => {
                         background: 'var(--nav-bg)'
                     }}>
                         <div style={{ 
-                            fontSize: '4rem', 
+                            color: 'var(--brand-ink)',
                             marginBottom: '24px',
                             background: 'var(--nav-hover)',
                             width: '120px',
@@ -232,7 +232,7 @@ const MosqueFinder = ({ onClose }) => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: '32px'
-                        }}>📍</div>
+                        }}><MapPin size={48} strokeWidth={1.5} aria-hidden="true" /></div>
                         <div style={{ fontSize: '1.5rem', color: 'var(--nav-text)', marginBottom: '16px', fontWeight: '900' }}>
                             {t('mosqueFinder.permissionTitle', 'Konum İzni Gerekli')}
                         </div>
@@ -317,7 +317,7 @@ const MosqueFinder = ({ onClose }) => {
                                 background: 'var(--nav-hover)',
                                 fontSize: '1.25rem'
                             }}>
-                                🕌
+                                <Landmark size={20} strokeWidth={1.75} aria-hidden="true" />
                             </div>
                             <div className="settings-user-info">
                                 <div className="settings-label" style={{ fontSize: '0.95rem' }}>

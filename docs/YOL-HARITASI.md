@@ -106,6 +106,9 @@ Sıra (en çok kullanılan önce):
 ## 7. Teknik borç
 
 - ✅ `npx tsc --noEmit` sıfır hata (21 Kas). Sırada: CI'a tip kontrolü eklemek.
+- ✅ Capacitor 8.4.3'e sabitlendi (20 Kas; GHSA-rvm3-566m-v7fv). 8.6.x'e geçme: SystemBars orada pencere kökünü
+  dinliyor, AdMob banner'ı da aynı dinleyiciyi eziyor; Android 15+'ta klavye/inset hatası riski. AdMob eklentisi
+  güncellenince yeniden değerlendir.
 - ✅ `scope-files` zaman aşımı ve testlerdeki i18n HTTP istekleri (teardown sonrası AbortError) giderildi.
 - ✅ `reports/*.md` artık yalnızca içerik değişince yeniden yazılıyor.
 - **Bitti sayılır:** `tsc` sıfır hata, test paketi kararlı geçiyor, `git status` temiz kalıyor.

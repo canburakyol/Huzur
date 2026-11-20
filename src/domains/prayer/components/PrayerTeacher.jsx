@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { Award, HelpCircle, ChevronRight, ChevronDown, Check, X } from 'lucide-react';
+import { createElement, useMemo, useState } from 'react';
+import { Award, HelpCircle, ChevronRight, ChevronDown, Check, X, ListOrdered, Headphones, Clock, BookOpen, AlertTriangle, GraduationCap, Trophy, ThumbsUp, Sunrise, Sun, CloudSun, Sunset, Moon, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import IslamicBackButton from '../../../components/shared/IslamicBackButton';
 import {
@@ -14,13 +14,17 @@ import { localizePrayerTeacher } from '../../../data/prayerTeacherTranslations';
 
 // Tab configuration
 const TABS = [
-    { id: 'steps', icon: '📿', label: 'Adımlar' },
-    { id: 'recitations', icon: '🎧', label: 'Okunuşlar' },
-    { id: 'types', icon: '🕐', label: 'Vakit' },
-    { id: 'terms', icon: '📋', label: 'Hükümler' },
-    { id: 'invalidators', icon: '⚠️', label: 'Bozanlar' },
-    { id: 'quiz', icon: '❓', label: 'Quiz' },
+    { id: 'steps', icon: ListOrdered, label: 'Adımlar' },
+    { id: 'recitations', icon: Headphones, label: 'Okunuşlar' },
+    { id: 'types', icon: Clock, label: 'Vakit' },
+    { id: 'terms', icon: BookOpen, label: 'Hükümler' },
+    { id: 'invalidators', icon: AlertTriangle, label: 'Bozanlar' },
+    { id: 'quiz', icon: HelpCircle, label: 'Quiz' },
 ];
+
+const PRAYER_TIME_ICONS = { sabah: Sunrise, ogle: Sun, ikindi: CloudSun, aksam: Sunset, yatsi: Moon };
+
+const LineIcon = ({ icon, size = 22 }) => createElement(icon, { size, strokeWidth: 1.75, 'aria-hidden': true });
 
 function PrayerTeacher({ onClose }) {
     const { t, i18n } = useTranslation();
@@ -112,7 +116,7 @@ function PrayerTeacher({ onClose }) {
                             flex: '0 0 auto'
                         }}
                     >
-                        <span style={{ fontSize: '1.5rem' }}>{tab.icon}</span>
+                        <LineIcon icon={tab.icon} />
                         <span className="uppercase" style={{ fontSize: '0.75rem', fontWeight: '800', letterSpacing: '0.5px' }}>{t(`prayerTeacher.tabs.${tab.id}`, tab.label)}</span>
                     </button>
                 ))}
@@ -136,11 +140,11 @@ function PrayerTeacher({ onClose }) {
                             >
                                 <div className="flex items-center gap-16">
                                     <div className="settings-icon-box" style={{ width: '48px', height: '48px', background: 'var(--nav-hover)', borderRadius: '14px', fontSize: '1.5rem' }}>
-                                        {step.icon}
+                                        {step.id}
                                     </div>
                                     <div className="flex-1">
                                         <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1.05rem' }}>
-                                            {step.id}. {step.name}
+                                            {step.name}
                                         </div>
                                         <div style={{ fontSize: '0.85rem', color: 'var(--nav-text-muted)', fontWeight: '600' }}>
                                             {step.description}
@@ -245,7 +249,7 @@ function PrayerTeacher({ onClose }) {
                             >
                                 <div className="flex items-center gap-16">
                                     <div className="settings-icon-box" style={{ width: '48px', height: '48px', background: 'var(--nav-hover)', fontSize: '1.5rem', borderRadius: '14px' }}>
-                                        {prayer.icon}
+                                        <LineIcon icon={PRAYER_TIME_ICONS[prayer.id] || Star} />
                                     </div>
                                     <div className="flex-1">
                                         <div style={{ fontWeight: '950', color: 'var(--nav-text)', fontSize: '1.1rem' }}>
@@ -329,7 +333,7 @@ function PrayerTeacher({ onClose }) {
                             >
                                 <div className="flex items-center gap-16">
                                     <div className="settings-icon-box rounded-12" style={{ width: '44px', height: '44px', background: 'var(--nav-hover)', fontSize: '1.25rem' }}>
-                                        {term.icon}
+                                        <LineIcon icon={BookOpen} size={20} />
                                     </div>
                                     <div className="flex-1">
                                         <div style={{ fontWeight: '900', color: 'var(--nav-text)', fontSize: '1.05rem' }}>
@@ -380,7 +384,7 @@ function PrayerTeacher({ onClose }) {
                                     }}
                                 >
                                     <div className="settings-icon-box rounded-10" style={{ width: '36px', height: '36px', background: i % 2 === 0 ? 'rgba(var(--nav-accent-rgb, 249, 115, 22), 0.1)' : 'var(--nav-hover)', fontSize: '1.2rem' }}>
-                                        {item.icon}
+                                        {i + 1}
                                     </div>
                                     <span style={{ fontSize: '0.9rem', color: 'var(--nav-text)', fontWeight: '600' }}>{item.text}</span>
                                 </div>
@@ -394,7 +398,7 @@ function PrayerTeacher({ onClose }) {
                     <div className="reveal-stagger">
                         {!quizStarted ? (
                             <div className="settings-card premium-glass hover-lift text-center p-24 flex-col gap-20" style={{ padding: '60px 24px' }}>
-                                <div className="settings-icon-box pulse" style={{ width: '100px', height: '100px', background: 'var(--nav-hover)', color: 'var(--nav-accent)', margin: '0 auto', fontSize: '4rem', borderRadius: '30px' }}>🎓</div>
+                                <div className="settings-icon-box pulse" style={{ width: '100px', height: '100px', background: 'var(--nav-hover)', color: 'var(--nav-accent)', margin: '0 auto', borderRadius: '30px' }}><LineIcon icon={GraduationCap} size={48} /></div>
                                 <h2 className="mb-8" style={{ color: 'var(--nav-text)', fontSize: '1.5rem', fontWeight: '950' }}>{t('prayerTeacher.quiz.title', 'Namaz Bilgi Yarışması')}</h2>
                                 <p className="mb-32" style={{ color: 'var(--nav-text-muted)', fontSize: '0.95rem', fontWeight: '600' }}>
                                     {t('prayerTeacher.quiz.intro', {
@@ -412,8 +416,8 @@ function PrayerTeacher({ onClose }) {
                             </div>
                         ) : quizFinished ? (
                             <div className="settings-card premium-glass hover-lift text-center p-24 flex-col gap-20" style={{ padding: '60px 24px' }}>
-                                <div style={{ fontSize: '5rem', marginBottom: '8px' }}>
-                                    {score >= QUIZ_QUESTIONS.length * 0.7 ? '🏆' : score >= QUIZ_QUESTIONS.length * 0.5 ? '👍' : '📚'}
+                                <div style={{ marginBottom: '8px', color: 'var(--gold-ink)' }}>
+                                    <LineIcon icon={score >= QUIZ_QUESTIONS.length * 0.7 ? Trophy : score >= QUIZ_QUESTIONS.length * 0.5 ? ThumbsUp : BookOpen} size={64} />
                                 </div>
                                 <h2 className="mb-8" style={{ color: 'var(--nav-text)', fontSize: '1.5rem', fontWeight: '950' }}>{t('prayerTeacher.quiz.finished', 'Quiz Tamamlandı!')}</h2>
                                 <div className="settings-icon-box rounded-20" style={{

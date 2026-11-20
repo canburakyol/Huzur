@@ -72,10 +72,10 @@ public class NativeAdBridgePlugin extends Plugin {
     }
 
     /**
-     * On Android 15+ Capacitor pads the WebView's parent by the system bar inset, and the AdMob
-     * banner (a child of that parent) adds the same inset again as a bottom margin. The banner then
-     * sits one navigation-bar height too high and covers the web bottom navigation. Returns that
-     * extra lift in dp so the web layout can reserve it; 0 on older Android.
+     * On Android 15+ the AdMob plugin lifts the banner by the window's bottom inset (a bottom margin),
+     * while Capacitor already keeps the WebView above the navigation bar. The banner then sits one
+     * navigation-bar height above the WebView bottom and covers the web bottom navigation. Returns that
+     * lift in dp, read exactly as the AdMob plugin reads it, so the web layout can reserve it; 0 below 15.
      */
     @PluginMethod
     public void getBannerInsetOffset(PluginCall call) {
@@ -89,9 +89,11 @@ public class NativeAdBridgePlugin extends Plugin {
         activity.runOnUiThread(() -> {
             int offsetDp = 0;
             try {
-                View parent = (View) getBridge().getWebView().getParent();
-                float density = activity.getResources().getDisplayMetrics().density;
-                offsetDp = Math.round(parent.getPaddingBottom() / density);
+                android.view.WindowInsets insets = activity.getWindow().getDecorView().getRootWindowInsets();
+                if (insets != null) {
+                    float density = activity.getResources().getDisplayMetrics().density;
+                    offsetDp = Math.round(insets.getSystemWindowInsetBottom() / density);
+                }
             } catch (Exception e) {
                 Log.w(TAG, "Banner inset offset unavailable", e);
             }

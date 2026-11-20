@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { createElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { X, AlertTriangle, ShieldCheck, Heart, ArrowRight } from 'lucide-react';
+import { X, AlertTriangle, ShieldCheck, Heart, ArrowRight, Wallet, TrendingDown, Settings2, Bug, MessageCircle } from 'lucide-react';
 import { logger } from '../../../utils/logger';
 
 const REASONS = [
-  { id: 'expensive', icon: '💰', labelKey: 'churn.expensive', defaultLabel: 'Çok pahalı' },
-  { id: 'not_using', icon: '📉', labelKey: 'churn.notUsing', defaultLabel: 'Yeterince kullanmıyorum' },
-  { id: 'missing_feature', icon: '⚙️', labelKey: 'churn.missingFeature', defaultLabel: 'Aradığım özellikleri bulamadım' },
-  { id: 'technical', icon: '🐛', labelKey: 'churn.technical', defaultLabel: 'Teknik sorunlar yaşıyorum' },
-  { id: 'other', icon: '💭', labelKey: 'churn.other', defaultLabel: 'Diğer' },
+  { id: 'expensive', icon: Wallet, labelKey: 'churn.expensive', defaultLabel: 'Çok pahalı' },
+  { id: 'not_using', icon: TrendingDown, labelKey: 'churn.notUsing', defaultLabel: 'Yeterince kullanmıyorum' },
+  { id: 'missing_feature', icon: Settings2, labelKey: 'churn.missingFeature', defaultLabel: 'Aradığım özellikleri bulamadım' },
+  { id: 'technical', icon: Bug, labelKey: 'churn.technical', defaultLabel: 'Teknik sorunlar yaşıyorum' },
+  { id: 'other', icon: MessageCircle, labelKey: 'churn.other', defaultLabel: 'Diğer' },
 ];
 
 const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
@@ -101,7 +101,7 @@ const CancelFlowModal = ({ onClose, onConfirmCancel }) => {
                   onClick={() => handleReasonSelect(r.id)}
                   style={reasonBtnStyle}
                 >
-                  <span style={{ fontSize: 20 }}>{r.icon}</span>
+                  {createElement(r.icon, { size: 20, strokeWidth: 1.75, 'aria-hidden': true })}
                   <span style={{ fontWeight: 500 }}>{t(r.labelKey, r.defaultLabel)}</span>
                 </button>
               ))}
