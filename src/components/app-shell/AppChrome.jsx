@@ -70,7 +70,7 @@ function AppChrome({ controller }) {
 
       {!hasBlockingOverlay && (
         <div
-          className={`app-container ${!appInit.isProUser && navigation.activeTab !== 'quran' ? 'has-bottom-banner' : ''}`}
+          className={`app-container ${appInit.bannerEnabled && navigation.activeTab !== 'quran' ? 'has-bottom-banner' : ''}`}
           style={{ position: 'relative', paddingBottom: navigation.activeTab === 'quran' ? '0' : 'var(--bottom-stack-height)' }}
         >
           {navigation.activeTab === 'home' && (

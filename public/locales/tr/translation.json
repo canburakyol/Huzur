@@ -419,7 +419,7 @@
     "time": "Vakti",
     "locationRequired": "Konum doğrulanıyor",
     "locationRequiredDetail": "Vakitleri göstermek için konumunuzu doğrulayın",
-    "nextLabel": "{{prayer}} Vakti"
+    "nextLabel": "{{prayer}} vaktine kalan"
   },
   "splash": {
     "translation": "Rabbim. Göğsümü aç ve işimi kolaylaştır.",
@@ -5370,7 +5370,8 @@
     "turkishSize": "Meal boyutu",
     "lineHeight": "Satır Aralığı",
     "reset": "Varsayılana Sıfırla",
-    "previewMeaning": "Rahman ve Rahim olan Allah'ın adıyla"
+    "previewMeaning": "Rahman ve Rahim olan Allah'ın adıyla",
+    "appliesTo": "Boyut ve satır aralığı Kur'an okuyucuda, Arapça yazı tipi tüm Arapça metinlerde kullanılır."
   },
   "locationConsent": {
     "title": "Konumunu kullanabilir miyiz?",

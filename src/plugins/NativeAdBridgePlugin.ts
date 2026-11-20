@@ -24,6 +24,7 @@ export type NativeAdBridgePlugin = {
   reportImpression(options?: { adId?: string }): Promise<NativeAdResult>;
   reportClick(options?: { adId?: string }): Promise<NativeAdResult>;
   destroy(): Promise<NativeAdResult>;
+  getBannerInsetOffset(): Promise<{ offset: number }>;
 }
 
 const platform = Capacitor.getPlatform();
@@ -49,6 +50,9 @@ const noopPlugin: NativeAdBridgePlugin = {
   },
   async destroy(): Promise<NativeAdResult> {
     return { success: true, platform };
+  },
+  async getBannerInsetOffset(): Promise<{ offset: number }> {
+    return { offset: 0 };
   }
 };
 

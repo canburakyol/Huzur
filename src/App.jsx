@@ -18,7 +18,7 @@ function App() {
         onShowMenu={() => navigation.setShowHamburgerMenu(true)}
         locationName={location.locationName}
         location={location.location}
-        isProUser={controller.appInit.isProUser}
+        bannerEnabled={controller.appInit.bannerEnabled}
       />
     );
   }

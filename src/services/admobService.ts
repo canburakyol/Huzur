@@ -17,6 +17,7 @@ import {
 } from './adEnvironmentService';
 import { ANALYTICS_EVENTS, logEvent } from './analyticsService';
 import { syncBottomBannerReservation } from './bannerLayout';
+import { NativeAdBridge } from '../plugins/NativeAdBridgePlugin';
 
 type AdRuntime = {
     isDebugBuild: boolean;
@@ -60,6 +61,7 @@ type PluginListenerHandle = {
 let isInitialized = false;
 let initializePromise: Promise<boolean> | null = null;
 let listenersRegistered = false;
+let bannerInsetOffset = 0;
 let privacyOptionsRequired = false;
 const adListenerHandles: PluginListenerHandle[] = [];
 export const AD_PRIVACY_OPTIONS_STATUS_EVENT = 'huzur:ad-privacy-options-status';
@@ -107,7 +109,17 @@ const registerAdListeners = async (): Promise<void> => {
     listenersRegistered = true;
 
     adListenerHandles.push(await AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info: { height?: number } | undefined) => {
-        syncBottomBannerReservation(Number(info?.height ?? 0));
+        const height = Number(info?.height ?? 0);
+        syncBottomBannerReservation(height, bannerInsetOffset);
+        if (height <= 0) return;
+        // The navigation bar inset can change (gesture vs. 3-button), so re-read it with each banner size.
+        void NativeAdBridge.getBannerInsetOffset()
+            .then(({ offset }) => Number(offset) || 0, () => 0)
+            .then((offset) => {
+                if (offset === bannerInsetOffset) return;
+                bannerInsetOffset = offset;
+                syncBottomBannerReservation(height, offset);
+            });
     }));
 
     adListenerHandles.push(await AdMob.addListener(BannerAdPluginEvents.Loaded, () => {

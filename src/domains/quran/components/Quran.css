@@ -139,11 +139,13 @@
 .ayah-arabic-display {
     margin: var(--space-3) 0 var(--space-2);
     font-family: var(--font-arabic);
-    font-size: 28px; line-height: 56px;
+    /* Size and spacing come from Yazı Ayarları (fontSettingsService). */
+    font-size: var(--quran-arabic-size, 28px);
+    line-height: var(--quran-line-height, 2);
     direction: rtl; text-align: right;
     color: var(--ink);
 }
-.quran-container.is-simple .ayah-arabic-display { font-size: 34px; line-height: 64px; }
+.quran-container.is-simple .ayah-arabic-display { font-size: calc(var(--quran-arabic-size, 28px) + 6px); }
 
 .ayah-section-label {
     margin-top: var(--space-3);
@@ -152,7 +154,7 @@
     color: var(--gold-ink);
 }
 .ayah-latin-display { margin-top: var(--space-1); font: italic 400 15px/24px var(--font-sans); color: var(--ink-muted); }
-.ayah-meaning-display { margin-top: var(--space-1); font: 400 16px/26px var(--font-sans); color: var(--ink); }
+.ayah-meaning-display { margin-top: var(--space-1); font: 400 var(--quran-translation-size, 16px)/1.6 var(--font-sans); color: var(--ink); }
 
 .show-details-btn {
     margin-top: var(--space-3);

@@ -77,6 +77,10 @@ vi.mock("./adEnvironmentService", () => ({
 }));
 
 vi.mock("./nativeAdService", () => nativeAdServiceMock);
+const bannerInsetMock = vi.hoisted(() => ({ offset: 0 }));
+vi.mock("../plugins/NativeAdBridgePlugin", () => ({
+  NativeAdBridge: { getBannerInsetOffset: vi.fn(async () => ({ offset: bannerInsetMock.offset })) },
+}));
 vi.mock("./analyticsService", () => analyticsMock);
 
 vi.mock("../utils/logger", () => ({
@@ -223,6 +227,25 @@ describe("admobService consent and cleanup", () => {
     onBannerSizeChanged?.({ height: 50 });
 
     expect(document.documentElement.style.getPropertyValue("--ad-height")).toBe("64px");
+  });
+
+  it("lifts the bottom navigation by the extra inset Android 15+ adds to the banner", async () => {
+    let onBannerSizeChanged: ((info: { height?: number }) => void) | undefined;
+    adMobMock.addListener.mockImplementation(async (eventName, callback) => {
+      if (eventName === "bannerSizeChanged") {
+        onBannerSizeChanged = callback;
+      }
+      return { remove: vi.fn(async () => undefined) };
+    });
+    bannerInsetMock.offset = 48;
+    const { adMobService } = await importAdMobService();
+
+    await adMobService.initialize();
+    onBannerSizeChanged?.({ height: 50 });
+    await vi.waitFor(() => {
+      expect(document.documentElement.style.getPropertyValue("--ad-height")).toBe("112px");
+    });
+    bannerInsetMock.offset = 0;
   });
 
   it("tracks rewarded requests and granted rewards", async () => {

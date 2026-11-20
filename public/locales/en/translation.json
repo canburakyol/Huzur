@@ -271,7 +271,7 @@
     "time": "Time",
     "locationRequired": "Verifying location",
     "locationRequiredDetail": "Verify your location to see prayer times",
-    "nextLabel": "{{prayer}} Prayer"
+    "nextLabel": "Time until {{prayer}}"
   },
   "splash": {
     "translation": "My Lord. Expand my chest and ease my task.",
@@ -5370,7 +5370,8 @@
     "turkishSize": "Translation size",
     "lineHeight": "Line spacing",
     "reset": "Reset to default",
-    "previewMeaning": "In the name of Allah, the Entirely Merciful, the Especially Merciful"
+    "previewMeaning": "In the name of Allah, the Entirely Merciful, the Especially Merciful",
+    "appliesTo": "Size and line spacing apply in the Quran reader; the Arabic typeface applies to all Arabic text."
   },
   "locationConsent": {
     "title": "May we use your location?",

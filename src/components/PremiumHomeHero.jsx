@@ -194,7 +194,7 @@ const PremiumHomeHero = memo(({
       {hijriLabel ? <div className="hz-overline hz-hero__hijri">{hijriLabel}</div> : null}
       <h2 className="hz-hero__title">
         {hasTrustedLocation && nextPrayer
-          ? t('prayer.nextLabel', { prayer: getPrayerName(nextPrayer.key), defaultValue: `${getPrayerName(nextPrayer.key)} Vakti` })
+          ? t('prayer.nextLabel', { prayer: getPrayerName(nextPrayer.key), defaultValue: `${getPrayerName(nextPrayer.key)} vaktine kalan` })
           : t('prayer.locationRequiredDetail', 'Vakitleri göstermek için konumunuzu doğrulayın')}
       </h2>
 

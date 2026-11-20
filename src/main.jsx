@@ -18,6 +18,7 @@ import '@fontsource/amiri/latin-400.css'
 import './index.css'
 import './i18n'
 import { initializeThemeMode } from './services/themeModeService'
+import { applyFontSettings, loadFontSettings } from './services/fontSettingsService'
 import { scheduleDeferredTask } from './utils/startupScheduler'
 import { logger } from './utils/logger'
 
@@ -102,6 +103,7 @@ window.addEventListener('unhandledrejection', (event) => {
 })
 
 initializeThemeMode();
+applyFontSettings(loadFontSettings());
 
 try {
   createRoot(document.getElementById('root')).render(

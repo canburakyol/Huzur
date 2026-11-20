@@ -23,14 +23,9 @@ const DAILY_VERSES: Array<{ surah: number; ayah: number; reference: string; arab
     { surah: 65, ayah: 3, reference: 'Talak, 3', arabic: 'وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ', translation: 'Kim Allah\'a tevekkül ederse O, ona yeter.', translations: { en: 'And whoever relies upon Allah – then He is sufficient for him.', de: 'Und wer sich auf Allah verläßt, dem ist Er seine Genüge.', id: 'Dan barangsiapa yang bertawakkal kepada Allah niscaya Allah akan mencukupkan (keperluan)nya.' }, image: '/stories/quran-2.webp' }
 ];
 
-// shortcut: the last two attributions are popular but unverified in the authors' works; replace with sourced sayings on the next content review.
-const DAILY_QUOTES: Array<{ text: string; author: string; translations: Localized; authorLatin: string; image: string }> = [
-    { text: 'Kendini bilen Rabbini bilir.', author: 'Hz. Ali (r.a.)', translations: { en: 'Whoever knows himself knows his Lord.', de: 'Wer sich selbst erkennt, erkennt seinen Herrn.', id: 'Siapa yang mengenal dirinya, mengenal Tuhannya.' }, authorLatin: 'Ali ibn Abi Talib (r.a.)', image: '/stories/mosque-1.webp' },
-    { text: 'Sabır, imanın yarısıdır.', author: 'Abdullah ibn Mesud (r.a.)', translations: { en: 'Patience is half of faith.', de: 'Geduld ist die Hälfte des Glaubens.', id: 'Sabar adalah separuh iman.' }, authorLatin: "Abdullah ibn Mas'ud (r.a.)", image: '/stories/mosque-2.webp' },
-    { text: 'Güzel söz sadakadır.', author: 'Buhârî, Müslim', translations: { en: 'A good word is charity.', de: 'Ein gutes Wort ist eine Wohltat.', id: 'Kata-kata yang baik adalah sedekah.' }, authorLatin: 'Bukhari, Muslim', image: '/stories/mosque-3.webp' },
-    { text: 'Yaratılmışı Yaratan\'dan ötürü sev.', author: 'Yunus Emre', translations: { en: 'Love the created for the sake of the Creator.', de: 'Liebe das Geschöpf um des Schöpfers willen.', id: 'Cintailah makhluk karena Sang Pencipta.' }, authorLatin: 'Yunus Emre', image: '/stories/nature.webp' },
-    { text: 'Her şey zıddıyla kaimdir.', author: 'Mevlana', translations: { en: 'Everything is known through its opposite.', de: 'Alles besteht durch sein Gegenteil.', id: 'Segala sesuatu dikenal melalui lawannya.' }, authorLatin: 'Rumi', image: '/stories/pattern.webp' }
-];
+// Home "Günün Hadisi" draws only from the two Sahih collections, so nothing weak or unsourced reaches the main screen.
+const SAHIH_SOURCES = new Set(['Buhârî', 'Müslim', 'Buhârî, Müslim']);
+const SAHIH_HADITHS = hadiths.filter((h) => SAHIH_SOURCES.has(h.source));
 
 type DailyContent = {
     campaign: { id: string; region: string; variant: string; timezone: string; date: string };
@@ -39,7 +34,7 @@ type DailyContent = {
     verse: { reference: string; arabic: string; translation: string; text: string; image: string; sourceMeta: unknown };
     hadith: { text: string; arabic: string; source: string; image: string; sourceMeta: unknown };
     quote: { text: string; author: string; image: string };
-    insight: { text: string };
+    insight: { text: string; arabic: string; source: string };
     dailyDua: { text: string; arabic: string; title: string; image: string; sourceMeta: unknown };
 };
 
@@ -83,11 +78,10 @@ export const getDailyContent = (language: string = i18n.language || 'tr'): Daily
 
     const dailyHadith = localizeHadith(hadiths[dayOfYear % hadiths.length] as HadithEntry, language);
 
-    const dailyQuote = DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
+    // Offset by half the list so the home card and the Hadiths screen's daily pick differ on most days.
+    const dailySahih = localizeHadith(SAHIH_HADITHS[(dayOfYear + Math.floor(SAHIH_HADITHS.length / 2)) % SAHIH_HADITHS.length] as HadithEntry, language);
     const verseText = isTr ? dailyVerse.translation : loc(dailyVerse.translations);
     const verseReference = isTr ? dailyVerse.reference : `${SURAH_NAMES_LATIN[dailyVerse.surah - 1]} ${dailyVerse.surah}:${dailyVerse.ayah}`;
-    const quoteText = isTr ? dailyQuote.text : loc(dailyQuote.translations);
-    const quoteAuthor = isTr ? dailyQuote.author : dailyQuote.authorLatin;
 
     return {
         campaign,
@@ -141,11 +135,11 @@ export const getDailyContent = (language: string = i18n.language || 'tr'): Daily
             })
         },
         quote: {
-            text: quoteText,
-            author: quoteAuthor,
-            image: dailyQuote.image
+            text: dailySahih.text,
+            author: dailySahih.source || '',
+            image: '/stories/pattern.webp'
         },
-        insight: { text: `"${quoteText}" (${quoteAuthor})` },
+        insight: { text: dailySahih.text, arabic: dailySahih.arabic || '', source: dailySahih.source || '' },
         dailyDua: {
             text: dailyDuaItem.meaning,
             arabic: dailyDuaItem.arabic,

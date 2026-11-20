@@ -173,3 +173,14 @@ textarea.practice-field { min-height: 84px; resize: vertical; }
 .practice-arabic { display: block; margin-bottom: 6px; font-family: var(--font-arabic); font-size: 1.5rem; line-height: 1.9; text-align: right; color: var(--ink); }
 .practice-chip--arabic { min-width: 44px; font-family: var(--font-arabic); font-size: 1.2rem; color: var(--ink); text-align: center; }
 .practice-image { display: block; width: 100%; height: auto; padding: 0; overflow: hidden; }
+
+/* Yazı Ayarları: the preview reads the same variables as the Quran reader */
+.font-preview { text-align: center; }
+.font-preview__arabic { margin: 0; font-family: var(--font-arabic); font-size: var(--quran-arabic-size, 28px); line-height: var(--quran-line-height, 2); color: var(--ink); }
+.font-preview__meaning { margin: 8px 0 0; font-size: var(--quran-translation-size, 16px); line-height: 1.6; color: var(--ink-muted); }
+.font-family-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.font-family { flex-direction: column; justify-content: center; gap: 2px; min-height: 84px; padding: 10px 6px; text-align: center; }
+.font-family__sample { font-size: 1.35rem; line-height: 1.8; color: var(--ink); }
+.font-settings-sizes { display: grid; gap: 18px; }
+.font-setting__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.font-setting__range { flex: 1; min-width: 0; accent-color: var(--brand); }

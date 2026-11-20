@@ -271,7 +271,7 @@
     "time": "Waktu",
     "locationRequired": "Memverifikasi lokasi",
     "locationRequiredDetail": "Verifikasi lokasi Anda untuk melihat jadwal salat",
-    "nextLabel": "Salat {{prayer}}"
+    "nextLabel": "Menuju {{prayer}}"
   },
   "splash": {
     "translation": "Ya Tuhanku, lapangkanlah dadaku dan mudahkanlah urusanku.",
@@ -5370,7 +5370,8 @@
     "turkishSize": "Ukuran terjemahan",
     "lineHeight": "Jarak baris",
     "reset": "Kembalikan ke default",
-    "previewMeaning": "Dengan menyebut nama Allah Yang Maha Pemurah lagi Maha Penyayang"
+    "previewMeaning": "Dengan menyebut nama Allah Yang Maha Pemurah lagi Maha Penyayang",
+    "appliesTo": "Ukuran dan jarak baris berlaku di pembaca Al-Qur'an; jenis huruf Arab berlaku untuk semua teks Arab."
   },
   "locationConsent": {
     "title": "Bolehkah kami menggunakan lokasimu?",

@@ -12,7 +12,7 @@ function AppFeatureOverlay({
   onShowMenu,
   locationName,
   location,
-  isProUser,
+  bannerEnabled,
 }) {
   const isQuranScreen = activeFeature === 'quran';
 
@@ -29,7 +29,7 @@ function AppFeatureOverlay({
   return (
     <div
       data-i18n-autolocalize="true"
-      className={`app-container feature-route-shell${!isQuranScreen && !isProUser ? ' has-bottom-banner' : ''}`}
+      className={`app-container feature-route-shell${!isQuranScreen && bannerEnabled ? ' has-bottom-banner' : ''}`}
     >
       <Suspense fallback={<LoadingSpinner height="100vh" />}>
         <FeatureManager

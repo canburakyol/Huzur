@@ -6,6 +6,7 @@ import { VAKIT_THEMES } from "../data/vakitThemes";
 import { THEMES, ACCENT_COLORS } from "../data/themes";
 import { ONBOARDING_COMPLETED_EVENT, TIMING, STORAGE_KEYS } from "../constants";
 import { storageService } from "../services/storageService";
+import { isInAdGracePeriod } from "../services/adGracePeriod";
 import { logger } from "../utils/logger";
 import { scheduleDeferredTask } from "../utils/startupScheduler";
 import crashlyticsReporter from "../utils/crashlyticsReporter";
@@ -53,6 +54,7 @@ type UseAppInitResult = {
   clearBadge: () => void;
   isProUser: boolean;
   isNewUser: boolean;
+  bannerEnabled: boolean;
 }
 
 const LEGACY_ACCENT_MAP: Record<string, string> = {
@@ -141,6 +143,8 @@ export const useAppInit = (
 
   const [newBadge, setNewBadge] = useState<Badge | null>(initialBadge);
   const [isProUserLocal, setIsProUserLocal] = useState(() => checkIsPro());
+  // Read once per launch; the banner appears on the first app open after the grace period.
+  const [inAdGracePeriod] = useState(() => isInAdGracePeriod(storageService.getNumber("APP_INSTALL_DATE", Date.now())));
   const [onboardingCompleted, setOnboardingCompleted] = useState(() =>
     storageService.getBoolean(STORAGE_KEYS.ONBOARDING_COMPLETED, false)
   );
@@ -302,7 +306,7 @@ export const useAppInit = (
       };
     }
 
-    if (!onboardingCompleted) {
+    if (!onboardingCompleted || inAdGracePeriod) {
       return () => {
         isCancelled = true;
       };
@@ -342,14 +346,16 @@ export const useAppInit = (
     return () => {
       isCancelled = true;
     };
-  }, [activeFeature, activeTab, isLocationConsentVisible, isProUserLocal, onboardingCompleted]);
+  }, [activeFeature, activeTab, inAdGracePeriod, isLocationConsentVisible, isProUserLocal, onboardingCompleted]);
 
   const clearBadge = () => setNewBadge(null);
 
   const installDate = storageService.getNumber("APP_INSTALL_DATE", Date.now());
   const isNewUser = Date.now() - installDate < 7 * 24 * 60 * 60 * 1000;
+  // Reserve the banner band only when a banner can actually be shown.
+  const bannerEnabled = !isProUserLocal && !inAdGracePeriod;
 
-  return { streakData, newBadge, clearBadge, isProUser: isProUserLocal, isNewUser };
+  return { streakData, newBadge, clearBadge, isProUser: isProUserLocal, isNewUser, bannerEnabled };
 };
 
 export default useAppInit;

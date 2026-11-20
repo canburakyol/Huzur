@@ -271,7 +271,7 @@
     "time": "Zeit",
     "locationRequired": "Standort wird überprüft",
     "locationRequiredDetail": "Bestätigen Sie Ihren Standort, um Gebetszeiten zu sehen",
-    "nextLabel": "{{prayer}}-Gebet"
+    "nextLabel": "Zeit bis {{prayer}}"
   },
   "splash": {
     "translation": "Mein Herr, weite mir meine Brust und erleichtere mir meine Angelegenheit.",
@@ -5370,7 +5370,8 @@
     "turkishSize": "Größe der Übersetzung",
     "lineHeight": "Zeilenabstand",
     "reset": "Auf Standard zurücksetzen",
-    "previewMeaning": "Im Namen Allahs, des Allerbarmers, des Barmherzigen"
+    "previewMeaning": "Im Namen Allahs, des Allerbarmers, des Barmherzigen",
+    "appliesTo": "Größe und Zeilenabstand gelten im Koran-Leser, die arabische Schriftart für alle arabischen Texte."
   },
   "locationConsent": {
     "title": "Dürfen wir deinen Standort verwenden?",

@@ -150,10 +150,6 @@ function AppHomeTabContent({
 
         <VerseOfTheDay dailyContent={dailyContent} />
 
-        <Suspense fallback={null}>
-          <NativeAdCard isProUser={isProUser} />
-        </Suspense>
-
         <QuickAccessGrid onSelectFeature={handleSelectFeature} onShowMenu={onShowMenu} />
 
         {shouldShowFirstActivation ? (
@@ -161,6 +157,11 @@ function AppHomeTabContent({
         ) : null}
 
         <DailyInsight dailyContent={dailyContent} />
+
+        {/* The ad closes the feed: prayer times, the verse and the tools come first. */}
+        <Suspense fallback={null}>
+          <NativeAdCard isProUser={isProUser} />
+        </Suspense>
       </main>
     </div>
   );
