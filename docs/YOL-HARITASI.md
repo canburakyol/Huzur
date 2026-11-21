@@ -9,7 +9,7 @@ sonra **görünüm**, en son **iç kalite**. Yanlış dini bilgi, eski görünü
 | # | Adım | Kim | Süre | Durum |
 |---|------|-----|------|-------|
 | 0 | 18.4.0'ı Play Store'a yükle | Sen | 15 dk | ✅ 14 Kas |
-| 1 | Faturalandırmayı aç, fonksiyonları deploy et | Sen + ben | 1 oturum | ⬜ |
+| 1 | Faturalandırmayı aç, fonksiyonları deploy et | Sen + ben | 1 oturum | 🟨 Blaze ✅ · getFamilyMembers ✅ 21 Kas · telefonda deneme kaldı |
 | 2 | Gizlilik URL'si ve yayın sonrası izleme | Sen + ben | 30 dk | 🟨 URL ✅ 14 Kas · vitals: ~17 ve ~21 Kas |
 | 3 | Özel Günler takvimini düzelt | Ben | 1 oturum | ✅ 19 Kas |
 | 4 | Satın alma / geri yükleme testi | Sen + ben | 1 oturum | ⬜ |
@@ -36,6 +36,9 @@ Soru-Cevap, aile hedefleri, davet/ödül ve sunucuya bağlı her özellik kırı
    `firebase deploy --only functions:getFamilyMembers`, sonra gerekiyorsa diğerleri.
 3. **Ben:** Fonksiyon loglarını ve Crashlytics'i kontrol et; telefonda Soru-Cevap ve Aile ekranını dene.
 - **Bitti sayılır:** Soru-Cevap cevap veriyor, Aile ekranı tüm üyeleri gösteriyor, loglarda yeni hata yok.
+- **21 Kas:** Blaze açıldı; fonksiyonlar 'billing disabled' vermiyor (listPublicHatims canlıda çalıştı).
+  `getFamilyMembers` yüklendi (europe-west1, 2. nesil); webde App Check olmadığı için reddediyor, telefonda denenecek.
+  Canlı 33 fonksiyon = koddaki liste. Bütçe uyarısı kurulduğu doğrulanmadı. CLI uyarısı: firebase-functions paketi eski.
 
 ## 2. Gizlilik ve izleme
 
